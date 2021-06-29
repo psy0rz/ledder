@@ -4,8 +4,9 @@ import {Animation} from "./Animation.js";
 export class MatrixCanvas extends Matrix {
   canvas: HTMLCanvasElement;
   canvasContext: CanvasRenderingContext2D;
-  // imageData: ImageData;
-  // imageBuf8: Uint8ClampedArray;
+  imageData: ImageData;
+  imageBuf8: Uint8ClampedArray;
+  imageBuf: ArrayBuffer;
 
   ledSize: number;
   ledSpacing: number;
@@ -21,32 +22,54 @@ export class MatrixCanvas extends Matrix {
     this.ledSpacing=ledSpacing;
 
     this.canvas=document.querySelector(elementId);
+
+    //scaling
+    this.canvas.width=width;
+    this.canvas.height=height;
+    this.canvas.style.width="80%";
+
+    //context and buffer
     this.canvasContext = this.canvas.getContext('2d');
+    this.imageData = this.canvasContext.getImageData(0, 0, width, height);
 
-
-
-    // this.imageData = this.canvasContext.getImageData(0, 0, this.canvas.width, this.canvas.height);
-    // let imageBuf = new ArrayBuffer(this.imageData.data.length);
-    // this.imageBuf8 = new Uint8ClampedArray(imageBuf);
+    this.imageBuf = new ArrayBuffer(this.imageData.data.length);
+    this.imageBuf8 = new Uint8ClampedArray(this.imageBuf);
 
 
 
   }
 
+
   render()
   {
-    this.canvasContext.fillStyle = 'black';
-    this.canvasContext.fillRect(0,0, this.canvas.width, this.canvas.height);
+    this.imageBuf8.fill(0);
 
     for (let i=0, n=this.pixels.length; i<n; ++i)
     {
       const p=this.pixels[i];
 
-      this.canvasContext.fillStyle='rgb(' + p.r + ',' + p.g + ',' + p.b + ')';
-      let x=p.x*this.ledSpacing;
-      let y=p.y*this.ledSpacing;
-      this.canvasContext.fillRect(x,y, this.ledSize, this.ledSize);
+      const offset=p.x*4 + p.y*4*this.canvas.width;
+      this.imageBuf8[offset]=p.r;
+      this.imageBuf8[offset+1]=p.g;
+      this.imageBuf8[offset+2]=p.b;
+      this.imageBuf8[offset+3]=255;
+
+
+
+      // this.canvasContext.fillStyle='rgb(' + p.r + ',' + p.g + ',' + p.b + ')';
+      // let x=p.x*this.ledSpacing;
+      // let y=p.y*this.ledSpacing;
+      // this.canvasContext.fillRect(x,y, this.ledSize, this.ledSize);
     }
+
+    // for (let k=0; k<this.imageBuf8.length; k++)
+    // {
+    //   this.imageBuf8[k]=100;
+    // }
+
+
+      this.imageData.data.set(this.imageBuf8);
+    this.canvasContext.putImageData(this.imageData,0,0);
 
   }
 
