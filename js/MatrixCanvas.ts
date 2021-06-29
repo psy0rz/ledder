@@ -12,8 +12,7 @@ export class MatrixCanvas extends Matrix {
   ledSpacing: number;
 
 
-  animation: Animation;
-  frameNr: number;
+
 
   //width and height are led-matrix-pixels, not canvas pixels.
   constructor(width, height, elementId, ledSize, ledSpacing) {
@@ -55,10 +54,10 @@ export class MatrixCanvas extends Matrix {
   {
     this.imageBuf8.fill(0);
 
-    for (let i=0, n=this.pixels.length; i<n; ++i)
+    for (let i=0, n=this.animations.length; i<n; ++i)
     {
-      const p=this.pixels[i];
-      p.render(this);
+      const a=this.animations[i];
+      a.render(this);
     }
 
     this.imageData.data.set(this.imageBuf8);
@@ -66,23 +65,20 @@ export class MatrixCanvas extends Matrix {
     //this step is the most resource intensive by far:
     this.canvasContext.putImageData(this.imageData,0,0);
 
-  }
-
-  loop()
-  {
-    this.frameNr++;
-    this.animation.loop(this, this.frameNr);
-    this.render();
     let self=this;
     window.requestAnimationFrame(function() { self.loop() });
 
   }
 
-  run(animation: Animation)
+
+
+
+
+  run()
   {
     this.frameNr=0;
-    this.animation=animation;
-    animation.setup(this);
     this.loop();
   }
+
+
 }
