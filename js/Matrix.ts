@@ -31,7 +31,7 @@ export abstract class Matrix {
 
     for (let i = 0, n = this.animations.length; i < n; ++i) {
       const animation = this.animations[i];
-      if (this.frameNr >= animation.nextFrame) {
+      if (animation.nextFrame && this.frameNr >= animation.nextFrame) {
         animation.loop(this, this.frameNr);
         animation.nextFrame = this.frameNr + animation.intervalFrames;
       }

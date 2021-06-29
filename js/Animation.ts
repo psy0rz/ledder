@@ -13,14 +13,18 @@ export class Animation extends DrawContainer {
     }
 
 
-    setup(matrix) {
+    //override this in your class to do one-time setup stuff.
+    //(if you prefer that over doing it in the constructor)
+    setup(matrix: Matrix) {
 
     }
 
-    loop(matrix, frameNr) {
+    //override this in your class to do the actual animation. this is called with every X frames. (depending on interval)
+    loop(matrix: Matrix, frameNr: number) {
 
     }
 
+    //this should render the actual objects of this animation in their current state, to the matrix.
     render(matrix: Matrix) {
       for (let i = 0, n = this.pixels.length; i < n; ++i)
       {
