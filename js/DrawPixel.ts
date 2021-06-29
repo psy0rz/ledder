@@ -11,7 +11,7 @@ export class DrawPixel
   a:number;
 
 
-  constructor(x: number, y:number, r:number=255, g:number=255, b:number=255, a=0) {
+  constructor(x: number, y:number, r:number=255, g:number=255, b:number=255, a=1) {
     this.x=x;
     this.y=y;
 

@@ -43,16 +43,17 @@ export class MatrixCanvas extends Matrix {
   setPixel(x,y, r,g,b,a)
   {
     const offset=x * 4 + (this.height - y - 1) * 4 * this.width;
-    this.imageBuf8[offset]=r;
-    this.imageBuf8[offset+1]=g;
-    this.imageBuf8[offset+2]=b;
-    this.imageBuf8[offset+3]=a;
+    const old_a=1-a;
+
+    this.imageBuf8[offset]=Math.floor(this.imageBuf8[offset]*old_a + r*a);
+    this.imageBuf8[offset+1]=Math.floor(this.imageBuf8[offset+1]*old_a + g*a);
+    this.imageBuf8[offset+2]=Math.floor(this.imageBuf8[offset+2]*old_a + b*a);
   }
 
 
   render()
   {
-    this.imageBuf8.fill(0);
+    this.imageBuf8.fill(255);
 
     for (let i=0, n=this.animations.length; i<n; ++i)
     {
