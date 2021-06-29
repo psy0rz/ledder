@@ -44,31 +44,22 @@ export class MatrixCanvas extends Matrix {
   {
     this.imageBuf8.fill(0);
 
+    const w=this.canvas.width;
+    const h=this.canvas.height;
+
     for (let i=0, n=this.pixels.length; i<n; ++i)
     {
       const p=this.pixels[i];
-
-      const offset=p.x*4 + p.y*4*this.canvas.width;
+      const offset=p.x*4 + (h-p.y-1)*4*w;
       this.imageBuf8[offset]=p.r;
       this.imageBuf8[offset+1]=p.g;
       this.imageBuf8[offset+2]=p.b;
-      this.imageBuf8[offset+3]=255;
-
-
-
-      // this.canvasContext.fillStyle='rgb(' + p.r + ',' + p.g + ',' + p.b + ')';
-      // let x=p.x*this.ledSpacing;
-      // let y=p.y*this.ledSpacing;
-      // this.canvasContext.fillRect(x,y, this.ledSize, this.ledSize);
+      this.imageBuf8[offset+3]=p.a;
     }
 
-    // for (let k=0; k<this.imageBuf8.length; k++)
-    // {
-    //   this.imageBuf8[k]=100;
-    // }
+    this.imageData.data.set(this.imageBuf8);
 
-
-      this.imageData.data.set(this.imageBuf8);
+    //this step is the most resource intensive by far:
     this.canvasContext.putImageData(this.imageData,0,0);
 
   }
