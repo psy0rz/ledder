@@ -1,6 +1,6 @@
-import {PixelContainer} from "./PixelContainer.js";
+import {DrawContainer} from "./DrawContainer.js";
 
-export class Matrix extends PixelContainer {
+export abstract class Matrix extends DrawContainer {
     width: number;
     height: number;
 
@@ -10,9 +10,8 @@ export class Matrix extends PixelContainer {
         this.height=height;
     }
 
-    render()
-    {
-      console.log("Stub, subclass this thing.");
-    }
+    abstract render();
+
+    abstract setPixel(x,y,r,g,b,a);
 }
 

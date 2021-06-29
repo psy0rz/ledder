@@ -11,6 +11,7 @@ export class MatrixCanvas extends Matrix {
   ledSize: number;
   ledSpacing: number;
 
+
   animation: Animation;
   frameNr: number;
 
@@ -39,22 +40,25 @@ export class MatrixCanvas extends Matrix {
 
   }
 
+  //sets a pixel in the render buffer (called from Draw-classes render() functions)
+  setPixel(x,y, r,g,b,a)
+  {
+    const offset=x * 4 + (this.height - y - 1) * 4 * this.width;
+    this.imageBuf8[offset]=r;
+    this.imageBuf8[offset+1]=g;
+    this.imageBuf8[offset+2]=b;
+    this.imageBuf8[offset+3]=a;
+  }
+
 
   render()
   {
     this.imageBuf8.fill(0);
 
-    const w=this.canvas.width;
-    const h=this.canvas.height;
-
     for (let i=0, n=this.pixels.length; i<n; ++i)
     {
       const p=this.pixels[i];
-      const offset=p.x*4 + (h-p.y-1)*4*w;
-      this.imageBuf8[offset]=p.r;
-      this.imageBuf8[offset+1]=p.g;
-      this.imageBuf8[offset+2]=p.b;
-      this.imageBuf8[offset+3]=p.a;
+      p.render(this);
     }
 
     this.imageData.data.set(this.imageBuf8);

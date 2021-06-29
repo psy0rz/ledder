@@ -1,4 +1,6 @@
-export class Pixel
+import {Matrix} from "./Matrix.js";
+
+export class DrawPixel
 {
   x:number;
   y:number;
@@ -17,6 +19,11 @@ export class Pixel
     this.g=g;
     this.b=b;
     this.a=a;
+  }
+
+  render(matrix: Matrix)
+  {
+    matrix.setPixel(this.x, this.y, this.r, this.g, this.b, this.a);
   }
 }
 
