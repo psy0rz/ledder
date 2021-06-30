@@ -1,8 +1,9 @@
-import {MatrixCanvas} from "./MatrixCanvas.js";
+
+import {MatrixWLED} from "./MatrixWLED.js";
 import {AnimationTest} from "./AnimationTest.js";
 
 
-let matrix=new MatrixCanvas(37,8, '#matrix', 5, 16);
+let matrix=new MatrixWLED(37,8, '192.168.13.176');
 
 matrix.addAnimation(new AnimationTest());
 

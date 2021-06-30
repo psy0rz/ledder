@@ -1,6 +1,7 @@
 import {Matrix} from "./Matrix.js";
 import {Animation} from "./Animation.js";
 
+//Matrix driver for Canvas in webbrowser
 export class MatrixCanvas extends Matrix {
   canvas: HTMLCanvasElement;
   canvasContext: CanvasRenderingContext2D;
