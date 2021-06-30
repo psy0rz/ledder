@@ -9,6 +9,7 @@
   "scripts": {
     "build": "parcel build index.html",
     "dev": "parcel index.html --open",
+    "animate": "node js/server.js",
     "start": "npm run build && npm run dev",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

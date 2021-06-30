@@ -27,3 +27,5 @@ dist
 /tile-wide.png
 /doc/TOC.md
 /doc/usage.md
+/js/AnimationTest.js.map
+/js/MatrixWLED.js
