@@ -2,7 +2,7 @@ import { Animation } from "./Animation.js";
 import { DrawPixel } from "./DrawPixel.js";
 export class AnimationTest extends Animation {
     setup(matrix) {
-        this.addPixel(new DrawPixel(0, 5, 255, 0, 0, 1));
+        this.addPixel(new DrawPixel(0, 5, 255, 255, 0, 1));
         // for (let i = 0; i < 600; i++) {
         //     // let blink=new AnimationBlink(matrix, random(30,60), random(30,60));
         //     let blink = new AnimationBlink(matrix, 60, 60, random(-60, 0));

@@ -8,7 +8,7 @@ import { random } from "./util.js";
 
 export class AnimationTest extends Animation {
     setup(matrix: Matrix) {
-      this.addPixel(new DrawPixel(0,5,255,0,0,1));
+      this.addPixel(new DrawPixel(0,5,255,255,0,1));
         // for (let i = 0; i < 600; i++) {
         //     // let blink=new AnimationBlink(matrix, random(30,60), random(30,60));
         //     let blink = new AnimationBlink(matrix, 60, 60, random(-60, 0));

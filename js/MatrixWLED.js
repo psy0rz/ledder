@@ -7,6 +7,9 @@ export class MatrixWLED extends Matrix {
         super(width, height);
         this.buffer = new Uint8Array(this.width * this.height * 3);
         this.socket = dgram.createSocket('udp4');
+        this.socket.on('error', (err) => {
+            console.log(`server error:\n${err.stack}`);
+        });
         this.socket.connect(port, ip);
     }
     //sets a pixel in the render buffer (called from Draw-classes render() functions)
@@ -36,8 +39,9 @@ export class MatrixWLED extends Matrix {
                 changed = true;
             sendBuffer[i + 2] = this.buffer[i];
         }
-        if (changed)
+        if (changed) {
             this.socket.send(sendBuffer);
+        }
     }
     run() {
         const self = this;
