@@ -12,8 +12,8 @@ export class MatrixWLED extends Matrix {
   socket: any;
 
 
-  constructor(width, height, ip, port=21324) {
-    super(width, height);
+  constructor(scheduler, width, height, ip, port=21324) {
+    super(scheduler, width, height);
 
     this.buffer=new Uint8Array(this.width * this.height * 3);
 

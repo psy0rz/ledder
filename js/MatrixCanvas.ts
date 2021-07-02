@@ -1,5 +1,4 @@
 import {Matrix} from "./Matrix.js";
-import {Animation} from "./Animation.js";
 
 //Matrix driver for Canvas in webbrowser
 export class MatrixCanvas extends Matrix {
@@ -16,8 +15,8 @@ export class MatrixCanvas extends Matrix {
 
 
   //width and height are led-matrix-pixels, not canvas pixels.
-  constructor(width, height, elementId, ledSize, ledSpacing) {
-    super(width, height);
+  constructor(scheduler, width, height, elementId, ledSize, ledSpacing) {
+    super(scheduler, width, height);
 
     this.ledSize=ledSize;
     this.ledSpacing=ledSpacing;
@@ -49,26 +48,25 @@ export class MatrixCanvas extends Matrix {
     this.imageBuf8[offset]=Math.floor(this.imageBuf8[offset]*old_a + r*a);
     this.imageBuf8[offset+1]=Math.floor(this.imageBuf8[offset+1]*old_a + g*a);
     this.imageBuf8[offset+2]=Math.floor(this.imageBuf8[offset+2]*old_a + b*a);
+    this.imageBuf8[offset+3]=255; //alpha of canvas itself
   }
 
 
-  render()
+  frame()
   {
-    this.imageBuf8.fill(255);
 
-    for (let i=0, n=this.animations.length; i<n; ++i)
-    {
-      const a=this.animations[i];
-      a.render(this);
-    }
 
-    this.imageData.data.set(this.imageBuf8);
+    this.scheduler.update();
+
+    this.imageBuf8.fill(0); //alpha of all pixels will be 0, so canvas is transparent.
+    this.render();
 
     //this step is the most resource intensive by far:
+    this.imageData.data.set(this.imageBuf8);
     this.canvasContext.putImageData(this.imageData,0,0);
 
     let self=this;
-    window.requestAnimationFrame(function() { self.loop() });
+    window.requestAnimationFrame(function() { self.frame() });
 
   }
 
@@ -78,8 +76,7 @@ export class MatrixCanvas extends Matrix {
 
   run()
   {
-    this.frameNr=0;
-    this.loop();
+    this.frame();
   }
 
 

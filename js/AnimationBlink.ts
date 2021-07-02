@@ -9,14 +9,14 @@ export class AnimationBlink extends Animation {
 
     //use offset to "offset" the first time, so that the animation isnt in sync with other animations.
     constructor(matrix:Matrix, onInterval:number, offInterval:number, offset=0) {
-        super();
+        super(matrix);
 
         this.onInterval = onInterval;
         this.offInterval = offInterval;
         this.alpha = 1;
 
-        matrix.addAnimation(this);
-        matrix.interval(this, onInterval+offset);
+        // matrix.addAnimation(this);
+        // matrix.interval(this, onInterval+offset);
     }
 
     loop(matrix, frameNr) {

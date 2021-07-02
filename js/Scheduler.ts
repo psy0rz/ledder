@@ -30,7 +30,7 @@ class Interval
       {
         this.callback(time);
       }
-      return (true);
+      return true;
 
     }
   }
@@ -51,6 +51,11 @@ export class Scheduler {
       const interval=new Interval(frames, this.frameNr, 0, callback);
       this.intervals.push(interval);
       return(interval);
+    }
+
+    stop(interval:Interval)
+    {
+
     }
 
     //called by matrix on every frame.

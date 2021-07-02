@@ -3,8 +3,8 @@ import { Matrix } from "./Matrix.js";
 import dgram from "dgram";
 //Matrix driver for WLED https://github.com/Aircoookie/WLED/wiki/UDP-Realtime-Control
 export class MatrixWLED extends Matrix {
-    constructor(width, height, ip, port = 21324) {
-        super(width, height);
+    constructor(scheduler, width, height, ip, port = 21324) {
+        super(scheduler, width, height);
         this.buffer = new Uint8Array(this.width * this.height * 3);
         this.socket = dgram.createSocket('udp4');
         this.socket.on('error', (err) => {

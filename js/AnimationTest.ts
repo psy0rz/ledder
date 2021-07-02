@@ -7,9 +7,11 @@ import {Pixel} from "./Pixel.js";
 
 
 export class AnimationTest extends Animation {
-    setup(matrix: Matrix) {
+    constructor(matrix: Matrix) {
+      super(matrix);
 
-      matrix.addPixel(new Pixel(0,5,255,255,0,1));
+      let p=new Pixel(0,5,255,255,0,1);
+      matrix.addPixel(p);
         // for (let i = 0; i < 600; i++) {
         //     // let blink=new AnimationBlink(matrix, random(30,60), random(30,60));
         //     let blink = new AnimationBlink(matrix, 60, 60, random(-60, 0));
@@ -17,7 +19,11 @@ export class AnimationTest extends Animation {
         //
         // }
 
-        matrix.interval(this,1);
+        matrix.scheduler.interval(1,()=>{
+          p.x=(p.x+1)%matrix.width;
+          // console.log("ches", this);
+
+        });
 
 
         // for ( let i=0; i<300; i++)
@@ -28,12 +34,4 @@ export class AnimationTest extends Animation {
 
     }
 
-    loop(matrix: Matrix, frameNr) {
-        let p = this.pixels[0];
-        p.x=(p.x+1)%37;
-        // p.r=Math.random()*255;
-        //
-        // p.g=Math.random()*255;
-        // p.b=Math.random()*255;
-    }
 }
