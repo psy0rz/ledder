@@ -1,13 +1,13 @@
-import {DrawPixel} from "./DrawPixel.js";
+import {Pixel} from "./Pixel.js";
 
-export class DrawContainer {
-    pixels: Array<DrawPixel>;
+export class PixelContainer {
+    pixels: Array<Pixel>;
 
     constructor() {
         this.pixels = [];
     }
 
-    addPixel(pixel: DrawPixel) {
+    addPixel(pixel: Pixel) {
         //already has this object?
         if (this.pixels.indexOf(pixel) != -1)
             return;

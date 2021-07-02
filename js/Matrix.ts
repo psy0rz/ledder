@@ -1,48 +1,28 @@
 import {Animation} from "./Animation.js";
+import {PixelContainer} from "./PixelContainer.js";
+import {Scheduler} from "./Scheduler.js";
 
-export abstract class Matrix {
+export abstract class Matrix extends PixelContainer {
   width: number;
   height: number;
-  frameNr: number;
-  animations: Array<Animation>;
+  scheduler: Scheduler;
 
-  protected constructor(width, height) {
+  protected constructor(scheduler, width, height) {
+    super();
+    this.scheduler=scheduler;
     this.width = width;
     this.height = height;
-    this.frameNr = 0;
-    this.animations=[];
   }
 
-  addAnimation(animation: Animation) {
-    animation.setup(this);
-    this.animations.push(animation);
-    //note that setup has to schedule something, otherwise the animation is done and the added pixels are static
-  }
-
-  interval(animation: Animation, frames) {
-    animation.intervalFrames = frames;
-    animation.nextFrame = this.frameNr + animation.intervalFrames;
-  }
-
-
-  //make sure this is called every frame by your matrix subclass
-  loop() {
-    this.frameNr++;
-
-    for (let i = 0, n = this.animations.length; i < n; ++i) {
-      const animation = this.animations[i];
-      if (animation.nextFrame && this.frameNr >= animation.nextFrame) {
-        animation.loop(this, this.frameNr);
-        animation.nextFrame = this.frameNr + animation.intervalFrames;
-      }
+  render() {
+    //render all pixels (pixels render() function wil call our setPixel one or more times)
+    for (let i = 0, n = this.pixels.length; i < n; ++i) {
+      const p = this.pixels[i];
+      p.render(this);
     }
-
-    this.render();
-
   }
 
 
-  abstract render();
   abstract run();
   abstract setPixel(x, y, r, g, b, a);
 }

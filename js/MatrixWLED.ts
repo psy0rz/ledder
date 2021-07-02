@@ -41,23 +41,19 @@ export class MatrixWLED extends Matrix {
   }
 
 
-  render()
+  frame()
   {
     //store old buffer, create new one
     this.prevBuffer=this.buffer;
     this.buffer=new Uint8Array(this.width * this.height * 3);
 
-    //render all stuff to buffer
-    for (let i=0, n=this.animations.length; i<n; ++i)
-    {
-      const a=this.animations[i];
-      a.render(this);
-    }
+    this.scheduler.update();
+    this.render();
 
     let sendBuffer=new Uint8Array(2 + this.height * this.width*3);
 
     sendBuffer[0]=2;//DRGB protocol
-    sendBuffer[1]=255; //disable timeout
+    sendBuffer[1]=2; //timeout
 
     let changed=false;
     for (let i=0, n=this.buffer.length; i<n; ++i)
@@ -80,8 +76,7 @@ export class MatrixWLED extends Matrix {
   run()
   {
     const self=this;
-    setInterval(function() { self.loop() }, 1000/60);
-
+    setInterval(function() { self.frame() }, 1000/60);
   }
 
 

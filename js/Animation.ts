@@ -1,17 +1,18 @@
 import {Matrix} from "./Matrix.js";
-import {DrawContainer} from "./DrawContainer.js";
+import {PixelContainer} from "./PixelContainer.js";
 
-export class Animation extends DrawContainer {
+export class Animation extends PixelContainer {
 
     nextFrame: number;
     intervalFrames: number;
+    matrix: Matrix;
 
-    constructor()
+    constructor(matrix)
     {
       super();
       this.nextFrame=0;
+      this.matrix=matrix;
     }
-
 
     //override this in your class to do one-time setup stuff.
     //(if you prefer that over doing it in the constructor)
@@ -20,16 +21,8 @@ export class Animation extends DrawContainer {
     }
 
     //override this in your class to do the actual animation. this is called with every X frames. (depending on interval)
-    loop(matrix: Matrix, frameNr: number) {
+    loop(frameNr: number) {
 
     }
 
-    //this should render the actual objects of this animation in their current state, to the matrix.
-    render(matrix: Matrix) {
-      for (let i = 0, n = this.pixels.length; i < n; ++i)
-      {
-        const p = this.pixels[i];
-        p.render(matrix);
-      }
-    }
 }
