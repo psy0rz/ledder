@@ -1,13 +1,16 @@
 import { Animation } from "./Animation.js";
+import { AnimationBlink } from "./AnimationBlink.js";
 import { Pixel } from "./Pixel.js";
 export class AnimationTest extends Animation {
     constructor(matrix) {
         super(matrix);
         let p1 = new Pixel(0, 5, 255, 255, 0, 1);
-        matrix.addPixel(p1);
         let p2 = new Pixel(0, 4, 255, 0, 0, 1);
-        matrix.addPixel(p2);
         let p3 = new Pixel(0, 3, 0, 255, 0, 1);
+        new AnimationBlink(matrix, 50, 50).addPixel(p1);
+        new AnimationBlink(matrix, 50, 10).addPixel(p2);
+        matrix.addPixel(p1);
+        matrix.addPixel(p2);
         matrix.addPixel(p3);
         // for (let i = 0; i < 600; i++) {
         //     // let blink=new AnimationBlink(matrix, random(30,60), random(30,60));
@@ -19,9 +22,8 @@ export class AnimationTest extends Animation {
         //   p1.x=(p1.x+1)%matrix.width;
         //
         // });
-        matrix.scheduler.interval(60.1, (time) => {
+        matrix.scheduler.interval(1, (time) => {
             p2.x = (p2.x + 1) % matrix.width;
-            console.log(time);
         });
         // matrix.scheduler.interval(10.2,()=>{
         //   p3.x=(p3.x+1)%matrix.width;

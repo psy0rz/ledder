@@ -1,18 +1,24 @@
 import {Pixel} from "./Pixel.js";
 
 export class PixelContainer {
-    pixels: Array<Pixel>;
+  pixels: Array<Pixel>;
 
-    constructor() {
-        this.pixels = [];
+  constructor() {
+    this.pixels = [];
+  }
+
+
+  addPixel(...pixels: Array<Pixel>) {
+
+    for (const i in pixels)
+    {
+      if (this.pixels.indexOf(pixels[i]) == -1) {
+        this.pixels.push(pixels[i]);
+      }
+
     }
+    return (this);
+  }
 
-    addPixel(pixel: Pixel) {
-        //already has this object?
-        if (this.pixels.indexOf(pixel) != -1)
-            return;
-
-        this.pixels.push(pixel);
-    }
 
 }
