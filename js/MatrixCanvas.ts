@@ -65,8 +65,7 @@ export class MatrixCanvas extends Matrix {
     this.imageData.data.set(this.imageBuf8);
     this.canvasContext.putImageData(this.imageData,0,0);
 
-    let self=this;
-    window.requestAnimationFrame(function() { self.frame() });
+    window.requestAnimationFrame(() =>{ this.frame() });
 
   }
 

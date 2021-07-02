@@ -7,7 +7,8 @@ class Interval {
     }
     check(time) {
         if (time >= this.nextTime) {
-            this.nextTime = time + this.interval;
+            //note: this also allows for non-interger interval times:
+            this.nextTime = this.nextTime + this.interval;
             if (this.repeat) {
                 this.repeat = this.repeat - 1;
                 this.callback(time);
