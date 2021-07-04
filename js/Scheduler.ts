@@ -4,27 +4,32 @@ import {Animation} from "./Animation.js";
 class Interval {
   interval: number;
   nextTime: number;
-  repeat: number;
   callback: (frameNr: number) => any;
 
   constructor(interval, time, callback) {
     this.interval = interval;
-    // this.repeat=repeat;
     this.nextTime = time + interval;
     this.callback = callback;
   }
 
+  //returns false if interval should be destroyed
   check(time) {
     if (time >= this.nextTime) {
       const newInterval = this.callback(time);
 
-      if (newInterval !== undefined) {
+      //end interval?
+      if (newInterval===false)
+        return false;
+
+      //change interval?
+      if (newInterval !== undefined && newInterval !==true) {
         this.interval = newInterval;
       }
 
-      //note: add to nextTime, instead of time, to allow non-integer intervals
+      //note: we add to nextTime, instead of time, to allow non-integer intervals
       this.nextTime = this.nextTime + this.interval;
     }
+    return true;
   }
 }
 
@@ -53,8 +58,14 @@ export class Scheduler {
   update() {
     this.frameNr++;
 
-    for (let i = 0, n = this.intervals.length; i < n; ++i) {
-      this.intervals[i].check(this.frameNr);
+    let i=0;
+    while(i<this.intervals.length)
+    {
+      if (!this.intervals[i].check(this.frameNr)) {
+        this.intervals.splice(i, 1);
+      }
+      else
+        i++;
     }
   }
 }

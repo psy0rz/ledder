@@ -9,6 +9,7 @@ export class Pixel {
     b: number;
     a: number;
 
+    keep: boolean;
 
     constructor(matrix, x: number, y: number, r: number = 255, g: number = 255, b: number = 255, a = 1) {
         this.x = x;
@@ -18,7 +19,16 @@ export class Pixel {
         this.g = g;
         this.b = b;
         this.a = a;
+
+        this.keep=true;
+
         matrix.addPixel(this);
+    }
+
+    destroy(matrix)
+    {
+      matrix.removePixel(this);
+      this.keep=false;
     }
 
     render(matrix: Matrix) {
@@ -30,7 +40,7 @@ export class PixelStar extends Pixel {
   constructor(matrix, x: number, y: number, r: number = 255, g: number = 255, b: number = 255, a = 1) {
     super(matrix,x,y,r,g,b,a);
 
-    
+
   }
 
   render(matrix)

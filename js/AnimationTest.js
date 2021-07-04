@@ -1,8 +1,9 @@
 import { Animation } from "./Animation.js";
-import { PixelStar } from "./PixelStar.js";
+import { AnimationMovingStarsL } from "./AnimationMovingStarsL.js";
 export class AnimationTest extends Animation {
     constructor(matrix) {
         super(matrix);
+        new AnimationMovingStarsL(matrix);
         // let p1=new Pixel(0,5,255,255,0,1);
         // let p2=new Pixel(0,4,255,0,0,1);
         // let p3=new Pixel(0,3,0,255,0,1);
@@ -28,7 +29,7 @@ export class AnimationTest extends Animation {
         //   new AnimationBlink(matrix, 30+i,30+i).addPixel(p);
         //
         // }
-        new PixelStar(matrix, 3, 3);
+        ``;
         // matrix.scheduler.interval(10,()=>{
         //   p1.x=(p1.x+1)%matrix.width;
         //
