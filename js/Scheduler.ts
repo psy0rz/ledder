@@ -5,7 +5,7 @@ class Interval {
   interval: number;
   nextTime: number;
   repeat: number;
-  callback: (frameNr: number) => undefined;
+  callback: (frameNr: number) => any;
 
   constructor(interval, time, callback) {
     this.interval = interval;

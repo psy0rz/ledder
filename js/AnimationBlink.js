@@ -8,7 +8,6 @@ export class AnimationBlink extends Animation {
         this.offInterval = offInterval;
         this.alpha = 1;
         matrix.scheduler.interval(onInterval + offset, () => {
-            console.log("interva");
             for (let i = 0, n = this.pixels.length; i < n; ++i) {
                 const p = this.pixels[i];
                 p.a = this.alpha;
