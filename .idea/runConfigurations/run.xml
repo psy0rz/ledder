@@ -1,0 +1,7 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="run" type="NodeJSConfigurationType" path-to-js-file="js/server.js" working-dir="$PROJECT_DIR$">
+    <method v="2">
+      <option name="TypeScript.Before.Run" enabled="true" FAIL_ON_ERROR="false" />
+    </method>
+  </configuration>
+</component>

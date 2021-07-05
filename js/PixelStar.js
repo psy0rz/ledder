@@ -1,11 +1,11 @@
 import {Pixel} from "./Pixel.js";
 
 export class PixelStar extends Pixel {
-    constructor(matrix, x, y, r = 255, g = 255, b = 255, a = 1) {
+    constructor(matrix, x, y, r = 64, g = 64, b = 64, a = 1) {
         super(matrix, x, y, r, g, b, a);
 
         this.step = 0;
-        matrix.scheduler.interval(10, () => {
+        matrix.scheduler.interval(3, () => {
             this.step = (this.step + 1) % 3;
             return(this.keep);
         })

@@ -7,7 +7,7 @@ export class AnimationTest extends Animation {
   constructor(matrix: Matrix) {
     super(matrix);
 
-    new AnimationMovingStarsL(matrix);
+    new AnimationMovingStarsL(matrix, 1,2);
     // let p1=new Pixel(0,5,255,255,0,1);
     // let p2=new Pixel(0,4,255,0,0,1);
     // let p3=new Pixel(0,3,0,255,0,1);
