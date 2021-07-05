@@ -13,5 +13,8 @@ export class Matrix extends PixelContainer {
             p.render(this);
         }
     }
+    status() {
+        console.log("Matrix pixels: ", this.pixels.length);
+    }
 }
 //# sourceMappingURL=Matrix.js.map

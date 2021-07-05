@@ -45,5 +45,8 @@ export class Scheduler {
                 i++;
         }
     }
+    status() {
+        console.log("Scheduler intervals: ", this.intervals.length);
+    }
 }
 //# sourceMappingURL=Scheduler.js.map

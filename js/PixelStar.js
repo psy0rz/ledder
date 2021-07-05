@@ -1,7 +1,7 @@
 import {Pixel} from "./Pixel.js";
 
 export class PixelStar extends Pixel {
-    constructor(matrix, x, y, r = 64, g = 64, b = 64, a = 1) {
+  constructor(matrix, x, y, r = 64, g = 64, b = 64, a = 1) {
         super(matrix, x, y, r, g, b, a);
 
         this.step = 0;

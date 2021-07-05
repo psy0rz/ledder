@@ -14,12 +14,14 @@ export class MatrixWLED extends Matrix {
     }
     //sets a pixel in the render buffer (called from Draw-classes render() functions)
     setPixel(x, y, r, g, b, a) {
-        //store pixel in buffer, alphablend with existing values
-        const offset = x * 3 + (this.height - y - 1) * 3 * this.width;
-        const old_a = 1 - a;
-        this.buffer[offset] = Math.floor(this.buffer[offset] * old_a + r * a);
-        this.buffer[offset + 1] = Math.floor(this.buffer[offset + 1] * old_a + g * a);
-        this.buffer[offset + 2] = Math.floor(this.buffer[offset + 2] * old_a + b * a);
+        if (x >= 0 && x < this.width && y >= 0 && y < this.height) {
+            //store pixel in buffer, alphablend with existing values
+            const offset = x * 3 + (this.height - y - 1) * 3 * this.width;
+            const old_a = 1 - a;
+            this.buffer[offset] = Math.floor(this.buffer[offset] * old_a + r * a);
+            this.buffer[offset + 1] = Math.floor(this.buffer[offset + 1] * old_a + g * a);
+            this.buffer[offset + 2] = Math.floor(this.buffer[offset + 2] * old_a + b * a);
+        }
     }
     frame() {
         //store old buffer, create new one
