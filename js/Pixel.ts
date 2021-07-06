@@ -1,5 +1,6 @@
 import {Matrix} from "./Matrix.js";
 
+
 export class Pixel {
     x: number;
     y: number;
@@ -11,7 +12,17 @@ export class Pixel {
 
     keep: boolean;
 
-    constructor(matrix, x: number, y: number, r: number = 255, g: number = 255, b: number = 255, a = 1) {
+  /**
+   * Renders one pixel.
+   * @param matrix Display matrix
+   * @param x
+   * @param y
+   * @param r Red
+   * @param g Green
+   * @param b Blue
+   * @param a Opacity
+   */
+  constructor(matrix, x: number, y: number, r: number = 255, g: number = 255, b: number = 255, a = 1) {
         this.x = x;
         this.y = y;
 

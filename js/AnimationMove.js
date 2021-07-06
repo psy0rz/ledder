@@ -1,6 +1,13 @@
 //moves animations x and y coordiantes in a certain direction with a certain speed
 import { Animation } from "./Animation.js";
 export class AnimationMove extends Animation {
+    /**
+     * Move pixels in specified direction
+     * @param matrix
+     * @param delay Delay between each step
+     * @param xStep Step size of X (can be negative as well)
+     * @param yStep Step size of Y (can be negative as well)
+     */
     constructor(matrix, delay, xStep, yStep) {
         super(matrix);
         matrix.scheduler.interval(delay, (frameNr) => {

@@ -1,5 +1,8 @@
 import {Pixel} from "./Pixel.js";
 
+/**
+ * A list of Pixels
+ */
 export class PixelContainer {
   pixels: Array<Pixel>;
 

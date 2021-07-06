@@ -2,6 +2,9 @@ import {Animation} from "./Animation.js";
 import {PixelContainer} from "./PixelContainer.js";
 import {Scheduler} from "./Scheduler.js";
 
+/**
+ * The matrix is the display and shows the list of pixels. The subclasses are actual implementations for different display types.
+ */
 export abstract class Matrix extends PixelContainer {
   width: number;
   height: number;

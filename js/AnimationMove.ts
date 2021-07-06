@@ -3,10 +3,17 @@ import {Animation} from "./Animation.js";
 
 export class AnimationMove extends Animation {
 
-    constructor(matrix, delay, xStep, yStep) {
+  /**
+   * Move pixels in specified direction
+   * @param matrix
+   * @param delay Delay between each step
+   * @param xStep Step size of X (can be negative as well)
+   * @param yStep Step size of Y (can be negative as well)
+   */
+  constructor(matrix, delay, xStep, yStep) {
         super(matrix);
 
-        matrix.scheduler.interval(delay, (frameNr) => {
+    matrix.scheduler.interval(delay, (frameNr) => {
 
             for (let i = 0, n = this.pixels.length; i < n; ++i) {
                 const p = this.pixels[i];

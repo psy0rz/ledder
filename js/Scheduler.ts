@@ -4,7 +4,7 @@ import {Animation} from "./Animation.js";
 class Interval {
   interval: number;
   nextTime: number;
-  callback: (frameNr: number) => any;
+  callback: (frameNr: number) => number | undefined | boolean;
 
   constructor(interval, time, callback) {
     this.interval = interval;
@@ -44,6 +44,11 @@ export class Scheduler {
 
   }
 
+  /**
+   * Create a new interval
+   * @param frames Interval length, specified as the number of frames. Use 1 to get called for each frame.
+   * @param callback Return false to end the interval. Return a number to change the interval. (Otherwise return true or undefined to keep running.)
+   */
   interval(frames, callback) {
     const interval = new Interval(frames, this.frameNr, callback);
     this.intervals.push(interval);

@@ -1,4 +1,7 @@
 import { PixelContainer } from "./PixelContainer.js";
+/**
+ * The matrix is the display and shows the list of pixels. The subclasses are actual implementations for different display types.
+ */
 export class Matrix extends PixelContainer {
     constructor(scheduler, width, height) {
         super();

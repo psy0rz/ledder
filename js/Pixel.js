@@ -1,4 +1,14 @@
 export class Pixel {
+    /**
+     * Renders one pixel.
+     * @param matrix Display matrix
+     * @param x
+     * @param y
+     * @param r Red
+     * @param g Green
+     * @param b Blue
+     * @param a Opacity
+     */
     constructor(matrix, x, y, r = 255, g = 255, b = 255, a = 1) {
         this.x = x;
         this.y = y;

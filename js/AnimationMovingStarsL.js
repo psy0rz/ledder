@@ -2,6 +2,7 @@ import { Animation } from "./Animation.js";
 import { PixelStar } from "./PixelStar.js";
 import { random } from "./util.js";
 import { AnimationMove } from "./AnimationMove.js";
+
 export class AnimationMovingStarsL extends Animation {
     constructor(matrix, step = 1, delay = 2) {
         super(matrix);
@@ -16,7 +17,10 @@ export class AnimationMovingStarsL extends Animation {
                 return false;
             });
             //schedule creation of next star at random time
-            return (random(10, 30));
+            if (this.keep)
+              return (random(10, 30));
+            else
+              return false;
         });
     }
 }

@@ -7,7 +7,13 @@ export class AnimationBlink extends Animation {
   offInterval: number;
   alpha: number;
 
-  //use offset to "offset" the first time, so that the animation isnt in sync with other animations.
+  /**
+   * Blink pixel via alpha-channel
+   * @param matrix
+   * @param onInterval Time to stay on
+   * @param offInterval Time to stay off
+   * @param offset Offset the first onInterval by this amount.
+   */
   constructor(matrix: Matrix, onInterval: number, offInterval: number, offset = 0) {
     super(matrix);
 

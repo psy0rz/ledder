@@ -1,3 +1,6 @@
+/**
+ * A list of Pixels
+ */
 export class PixelContainer {
     constructor() {
         this.pixels = [];

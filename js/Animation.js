@@ -1,4 +1,7 @@
 import { PixelContainer } from "./PixelContainer.js";
+/**
+ * An animation is a pixelcontainer and animates the properties of those pixels via the scheduler.
+ */
 export class Animation extends PixelContainer {
     constructor(matrix) {
         super();
