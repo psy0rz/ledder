@@ -3,7 +3,7 @@ import {MatrixWLED} from "./MatrixWLED.js";
 import {Scheduler} from "./Scheduler.js";
 
 let scheduler = new Scheduler();
-let matrix=new MatrixWLED(scheduler, 37,8, '192.168.13.176');
+let matrix=new MatrixWLED(scheduler, 37,8, false, false, '192.168.13.176');
 
 import("./AnimationTest.js")
   .then((module) => {

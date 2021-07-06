@@ -3,8 +3,20 @@ import { Matrix } from "./Matrix.js";
 import dgram from "dgram";
 //Matrix driver for WLED https://github.com/Aircoookie/WLED/wiki/UDP-Realtime-Control
 export class MatrixWLED extends Matrix {
-    constructor(scheduler, width, height, ip, port = 21324) {
+    /**
+     * Driver for WLED via UDP protocol
+     * @param scheduler
+     * @param width
+     * @param height
+     * @param flipX Flip X axis
+     * @param flipY Flip Y axis
+     * @param ip IP address
+     * @param port UDP port
+     */
+    constructor(scheduler, width, height, flipX, flipY, ip, port = 21324) {
         super(scheduler, width, height);
+        this.flipX = flipX;
+        this.flipY = flipY;
         this.buffer = new Uint8Array(this.width * this.height * 3);
         this.socket = dgram.createSocket('udp4');
         this.socket.on('error', (err) => {
@@ -15,9 +27,19 @@ export class MatrixWLED extends Matrix {
     //sets a pixel in the render buffer (called from Draw-classes render() functions)
     setPixel(x, y, r, g, b, a) {
         if (x >= 0 && x < this.width && y >= 0 && y < this.height) {
-            //store pixel in buffer, alphablend with existing values
-            const offset = x * 3 + (this.height - y - 1) * 3 * this.width;
+            let physX;
+            let physY;
+            if (this.flipX)
+                physX = this.width - x - 1;
+            else
+                physX = x;
+            if (this.flipY)
+                physY = this.height - y - 1;
+            else
+                physY = y;
+            const offset = physX * 3 + physY * 3 * this.width;
             const old_a = 1 - a;
+            //store pixel in buffer, alphablend with existing values
             this.buffer[offset] = Math.floor(this.buffer[offset] * old_a + r * a);
             this.buffer[offset + 1] = Math.floor(this.buffer[offset + 1] * old_a + g * a);
             this.buffer[offset + 2] = Math.floor(this.buffer[offset + 2] * old_a + b * a);
@@ -31,9 +53,8 @@ export class MatrixWLED extends Matrix {
         this.render();
         let sendBuffer = new Uint8Array(2 + this.height * this.width * 3);
         sendBuffer[0] = 2; //DRGB protocol
-        sendBuffer[1] = 2; //timeout
-        // let changed=false;
-        let changed = true;
+        sendBuffer[1] = 120; //timeout
+        let changed = false;
         for (let i = 0, n = this.buffer.length; i < n; ++i) {
             if (this.buffer[i] != this.prevBuffer[i])
                 changed = true;
