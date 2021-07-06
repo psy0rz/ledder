@@ -5,6 +5,9 @@ export class PixelContainer {
     constructor() {
         this.pixels = [];
     }
+    clear() {
+        this.pixels = [];
+    }
     addPixel(...pixels) {
         for (const i in pixels) {
             if (this.pixels.indexOf(pixels[i]) == -1) {

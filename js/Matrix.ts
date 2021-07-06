@@ -30,6 +30,16 @@ export abstract class Matrix extends PixelContainer {
     console.log("Matrix pixels: ",this.pixels.length);
   }
 
+  /**
+   * Clear all pixels and running intervals
+   */
+  clear()
+  {
+    super.clear();
+    this.scheduler.clear();
+
+  }
+
 
   abstract run();
   abstract setPixel(x, y, r, g, b, a);

@@ -19,5 +19,12 @@ export class Matrix extends PixelContainer {
     status() {
         console.log("Matrix pixels: ", this.pixels.length);
     }
+    /**
+     * Clear all pixels and running intervals
+     */
+    clear() {
+        super.clear();
+        this.scheduler.clear();
+    }
 }
 //# sourceMappingURL=Matrix.js.map

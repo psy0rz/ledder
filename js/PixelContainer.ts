@@ -10,6 +10,10 @@ export class PixelContainer {
     this.pixels = [];
   }
 
+  clear()
+  {
+    this.pixels = [];
+  }
 
   addPixel(...pixels: Array<Pixel>) {
 

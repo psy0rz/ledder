@@ -40,6 +40,12 @@ export class Scheduler {
 
   constructor() {
     this.frameNr = 0;
+    this.clear();
+
+  }
+
+  clear()
+  {
     this.intervals = [];
 
   }

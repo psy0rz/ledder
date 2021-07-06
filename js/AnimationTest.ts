@@ -9,6 +9,7 @@ export class AnimationTest extends Animation {
 
     new AnitmateMatrixtest(matrix);
 
+
     // new Pixel(matrix, 0,matrix.height-1,255,255,255);
     //
     // new Pixel(matrix, matrix.width-1,0,255,0,0);
