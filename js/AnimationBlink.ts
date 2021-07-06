@@ -8,7 +8,7 @@ export class AnimationBlink extends Animation {
   alpha: number;
 
   //use offset to "offset" the first time, so that the animation isnt in sync with other animations.
-  constructor(matrix: Matrix, onInterval: number, offInterval: number, offset = 0, ttl=0) {
+  constructor(matrix: Matrix, onInterval: number, offInterval: number, offset = 0) {
     super(matrix);
 
     this.onInterval = onInterval;

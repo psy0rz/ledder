@@ -32,7 +32,8 @@ export class MatrixWLED extends Matrix {
         let sendBuffer = new Uint8Array(2 + this.height * this.width * 3);
         sendBuffer[0] = 2; //DRGB protocol
         sendBuffer[1] = 2; //timeout
-        let changed = false;
+        // let changed=false;
+        let changed = true;
         for (let i = 0, n = this.buffer.length; i < n; ++i) {
             if (this.buffer[i] != this.prevBuffer[i])
                 changed = true;

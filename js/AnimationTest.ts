@@ -1,13 +1,26 @@
 import {Animation} from "./Animation.js";
 import {Matrix} from "./Matrix.js";
 import {AnimationMovingStarsL} from "./AnimationMovingStarsL.js";
+import {AnimationMove} from "./AnimationMove.js";
+import {Pixel} from "./Pixel.js";
+import {AnimationBlink} from "./AnimationBlink.js";
+import {random} from "./util.js";
 
 
 export class AnimationTest extends Animation {
   constructor(matrix: Matrix) {
     super(matrix);
 
-    new AnimationMovingStarsL(matrix, 1,2);
+    // new AnimationMovingStarsL(matrix, 1,2);
+
+    const p=new Pixel(matrix, matrix.width,3,255,0,0);
+    new AnimationMove(matrix, 4,-1,0).addPixel(p);
+    new AnimationBlink(matrix, 10,10).addPixel(p);
+
+    matrix.scheduler.interval(120, ()=>{
+      p.x=matrix.width;
+    });
+
     // let p1=new Pixel(0,5,255,255,0,1);
     // let p2=new Pixel(0,4,255,0,0,1);
     // let p3=new Pixel(0,3,0,255,0,1);
@@ -19,15 +32,17 @@ export class AnimationTest extends Animation {
     // matrix.addPixel(p2);
     // matrix.addPixel(p3);
 
-    // for (let i = 0; i < 600; i++) {
-    //     let p=new Pixel(random(0, 36), random(0, 7), random(0, 255), random(0, 255), random(0, 255))
-    //     new AnimationBlink(matrix, random(0,60), random(0,60), random(-60, 0)).addPixel(p);
-    //     matrix.addPixel(p);
-    //
-    //     matrix.scheduler.interval(120, ()=>{
-    //       // delete(p);
-    //     })
-    // }
+    for (let i = 0; i < 100; i++) {
+        let p=new Pixel(matrix,random(0, 36), random(0, 7), random(0, 255), random(0, 255), random(0, 255))
+        //new AnimationBlink(matrix, random(0,60), random(0,60), random(-60, 0)).addPixel(p);
+        new AnimationMove(matrix, 5,0,1).addPixel(p);
+        matrix.scheduler.interval(random(0,50),()=>{
+          p.x=random(0,36);
+          p.y=random(0,7);
+        })
+
+
+    }
 
     //pendulum wave
     // for (let i = 0; i < 37; i++) {

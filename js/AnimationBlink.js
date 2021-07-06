@@ -2,7 +2,7 @@
 import { Animation } from "./Animation.js";
 export class AnimationBlink extends Animation {
     //use offset to "offset" the first time, so that the animation isnt in sync with other animations.
-    constructor(matrix, onInterval, offInterval, offset = 0, ttl = 0) {
+    constructor(matrix, onInterval, offInterval, offset = 0) {
         super(matrix);
         this.onInterval = onInterval;
         this.offInterval = offInterval;

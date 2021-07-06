@@ -11,7 +11,7 @@ export class AnimationMovingStarsL extends Animation {
             const mover = new AnimationMove(matrix, delay, -step, 0);
             mover.addPixel(star);
             //destroy star at left side
-            matrix.scheduler.interval(delay * matrix.width / step + 1, () => {
+            matrix.scheduler.interval(delay * matrix.width / step + 10, () => {
                 mover.destroy(true);
                 return false;
             });
