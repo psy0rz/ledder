@@ -11,32 +11,25 @@ export class AnimationTest extends Animation {
   constructor(matrix: Matrix) {
     super(matrix);
 
-    // new AnimationMovingStarsL(matrix, 1,2);
 
-    //test screen
-
-    // //y flip needed?
-    // for (let y = 0; y < matrix.height; y++)
-    //   new Pixel(matrix, 0,y,255/matrix.height*y,0,0);
-
+    //color bar
     for (let x = 0; x < matrix.width; x++) {
       const c=255/matrix.width*(x +1);
-      console.log(c);
       new Pixel(matrix, x, 4, c,0 0);
       new Pixel(matrix, x, 3, 0, c, 0);
       new Pixel(matrix, x, 2, 0, 0,c);
       new Pixel(matrix, x, 1, c,c,c);
     }
 
-    //0,0 is white
-    new Pixel(matrix, 0,0,255,255,255);
-
-    //max,max is blue
-    new Pixel(matrix, matrix.width-1,matrix.height-1,0,0,255);
+    //corners
+    new Pixel(matrix, 0,0,255,0,255);
+    new Pixel(matrix, matrix.width-1,matrix.height-1,255,0,255);
+    new Pixel(matrix, 0,matrix.height-1,255,0,255);
+    new Pixel(matrix, matrix.width-1,0,255,0,255);
 
     //blinkers to test update rate (the first one should almost look static and half brightness)
     for (let x = 1; x < 4; x++)
-      new AnimationBlink(matrix, x,x).addPixel(new Pixel(matrix, x,5,255, 255,255));
+      new AnimationBlink(matrix, x,x).addPixel(new Pixel(matrix, x-1,5,255, 255,255));
 
     //mover to test smoothness
     const m=new Pixel(matrix, 0,6,255, 255,255);
