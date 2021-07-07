@@ -1,31 +1,30 @@
-import { MatrixCanvas } from "./MatrixCanvas.js";
-import { AnimationTest } from "./AnimationTest.js";
+import {MatrixCanvas} from "./MatrixCanvas.js";
+import {AnimationTest} from "./AnimationTest.js";
 import {Scheduler} from "./Scheduler.js";
 
-let scheduler= new Scheduler();
+let scheduler = new Scheduler();
 
 
 let matrix = new MatrixCanvas(scheduler, 37, 8, '#matrix', 5, 16);
 
-scheduler.interval(60,()=>{
+scheduler.interval(60, () => {
   scheduler.status();
   matrix.status();
 });
 
-
-new AnimationTest(matrix);
+// new AnimationTest(matrix);
 matrix.run();
-console.log("ja");
 
 
-import { JSONRPC, JSONRPCResponse, JSONRPCServer, JSONRPCServerAndClient, JSONRPCClient } from "json-rpc-2.0";
+import {JSONRPC, JSONRPCResponse, JSONRPCServer, JSONRPCServerAndClient, JSONRPCClient} from "json-rpc-2.0";
 
-// let ws_url;
-// if (location.protocol === 'http:') {
-//   ws_url = "ws://" + location.host + "/ws";
-//   else
+let ws_url;
+if (location.protocol === 'http:')
+  ws_url = "ws://" + location.host + "/ws";
+else
+  ws_url = "wss://" + location.host + "/ws";
 
-const webSocket = new WebSocket("");
+const webSocket = new WebSocket(ws_url);
 
 const serverAndClient = new JSONRPCServerAndClient(
   new JSONRPCServer(),
@@ -50,9 +49,13 @@ webSocket.onclose = (event) => {
   );
 };
 
-// serverAndClient.addMethod("echo", ({ text }) => text);
+serverAndClient.addMethod("echo", (text) => {
+  console.log("echo", text);
 
-serverAndClient
-  .request("add", { x: 1, y: 2 })
-  .then((result) => console.log(`1 + 2 = ${result}`));
+});
 
+webSocket.onopen = () => {
+  serverAndClient
+    .request("add", {x: 1, y: 2})
+    .then((result) => console.log(`1 + 2 = ${result}`));
+};
