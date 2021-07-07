@@ -2,10 +2,15 @@
 import {MatrixWLED} from "./MatrixWLED.js";
 import {Scheduler} from "./Scheduler.js";
 import express from "express";
+import Bundler from "parcel-bundler";
+
+let bundler = new Bundler('index.html');
+
 
 const app = express()
 const port = 3000
 
+app.use(bundler.middleware());
 app.use(express.static("dist"));
 
 app.get('/geert', (req, res) => {
