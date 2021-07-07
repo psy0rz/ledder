@@ -30,9 +30,9 @@ const serverAndClient = new JSONRPCServerAndClient(
   })
 );
 
-serverAndClient.addMethod('add', (params)=>
+serverAndClient.addMethod('add', ({ x,y } )=>
 {
-  console.log("adding", params);
+  console.log("adding", x,y);
   serverAndClient.request('echo', "moi");
   return(5);
 });
