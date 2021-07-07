@@ -56,6 +56,6 @@ serverAndClient.addMethod("echo", (text) => {
 
 webSocket.onopen = () => {
   serverAndClient
-    .request("add", {x: 1, y: 2})
+    .request("test", {x: 1, y: 2})
     .then((result) => console.log(`1 + 2 = ${result}`));
 };
