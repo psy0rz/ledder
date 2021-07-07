@@ -23,8 +23,8 @@ export class Matrix extends PixelContainer {
      * Clear all pixels and running intervals
      */
     clear() {
-        super.clear();
         this.scheduler.clear();
+        super.clear();
     }
 }
 //# sourceMappingURL=Matrix.js.map

@@ -35,8 +35,8 @@ export abstract class Matrix extends PixelContainer {
    */
   clear()
   {
-    super.clear();
     this.scheduler.clear();
+    super.clear();
 
   }
 

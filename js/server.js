@@ -1,6 +1,21 @@
 
 import {MatrixWLED} from "./MatrixWLED.js";
 import {Scheduler} from "./Scheduler.js";
+import express from "express";
+
+const app = express()
+const port = 3000
+
+app.use(express.static("dist"));
+
+app.get('/geert', (req, res) => {
+  res.send('Hello World!')
+})
+
+app.listen(port, () => {
+  console.log(`Example app listening at http://localhost:${port}`)
+})
+
 
 let scheduler = new Scheduler();
 let matrix=new MatrixWLED(scheduler, 37,8, false, false, '192.168.13.176');
