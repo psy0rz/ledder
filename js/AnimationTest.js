@@ -1,9 +1,9 @@
 import { Animation } from "./Animation.js";
-import { AnitmateMatrixtest } from "./AnitmateMatrixtest.js";
+import { AnimationMatrixtest } from "./AnimationMatrixtest.js";
 export class AnimationTest extends Animation {
     constructor(matrix) {
         super(matrix);
-        new AnitmateMatrixtest(matrix);
+        new AnimationMatrixtest(matrix);
         // new Pixel(matrix, 0,matrix.height-1,255,255,255);
         //
         // new Pixel(matrix, matrix.width-1,0,255,0,0);

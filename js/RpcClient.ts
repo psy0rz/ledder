@@ -45,7 +45,8 @@ export class RpcClient extends Rpc {
       this.serverAndClient.rejectAllPendingRequests(
         `Connection is closed (${event.reason}).`
       );
-      this.closeHandler();
+      if (this.closeHandler!==undefined)
+        this.closeHandler();
     };
 
     this.serverAndClient.addMethod("echo", (text) => {

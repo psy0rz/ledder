@@ -29,7 +29,8 @@ export class RpcClient extends Rpc {
         // On close, make sure to reject all the pending requests to prevent hanging.
         webSocket.onclose = (event) => {
             this.serverAndClient.rejectAllPendingRequests(`Connection is closed (${event.reason}).`);
-            this.closeHandler();
+            if (this.closeHandler !== undefined)
+                this.closeHandler();
         };
         this.serverAndClient.addMethod("echo", (text) => {
             console.log("echo", text);
