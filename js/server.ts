@@ -12,7 +12,7 @@ const runner=new Runner(matrix);
 
 
 rpc.addMethod("run", ({name}) => {
-  runner.run( name);
+  return(runner.run( name));
 });
 
 

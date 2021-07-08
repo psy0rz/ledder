@@ -28,7 +28,7 @@ function bam(category, name)
 
 let rpc=new RpcClient(()=>
 {
-  bam("tests", "AnimationMatrixtest");
+  bam("tests", "AnimationMovingStarsL");
 
 });
 

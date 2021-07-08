@@ -1,8 +1,6 @@
 import {Matrix} from "./Matrix.js";
 import * as animations from "./animations/all.js";
 
-
-
 export class Runner {
     matrix: Matrix;
 
@@ -11,12 +9,16 @@ export class Runner {
     }
 
     /**
-     * Loads and runs specified animation. Returns promise. Animations reside in animations directory.
-     * @param category
-     * @param animation
+     * Loads and runs specified animation. (should be exported by all.js)
+     * @param name
      */
     run(name: string) {
-        this.matrix.clear();
-        new animations[name](this.matrix);
+        if (name in animations) {
+          this.matrix.clear();
+          new animations[name](this.matrix);
+          return true;
+        }
+        else
+          return false;
     }
 }
