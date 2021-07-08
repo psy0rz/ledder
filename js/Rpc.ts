@@ -1,14 +1,14 @@
 export abstract class Rpc {
 
     /**
-     * Add a method to the rpc server
+     * Add a method
      * @param name Method name
      * @param callback Callback function with actual method.
      */
     abstract addMethod(name, callback);
 
     /**
-     * Call a method on the browser side.
+     * Call a method, returns a Promise.
      * @param name Method name
      * @param params Parameters
      */

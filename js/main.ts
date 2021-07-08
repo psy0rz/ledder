@@ -19,7 +19,7 @@ matrix.run();
 
 let rpc=new RpcClient(()=>
 {
-  rpc.request("run", {name: "AnitmateMatrixtest"}).then(()=>
+  rpc.request("run", {name: "AnimationMatrixtest"}).then(()=>
   {
     console.log("hijlup");
   });
