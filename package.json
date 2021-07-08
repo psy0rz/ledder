@@ -7,7 +7,7 @@
   "author": "",
   "type": "module",
   "scripts": {
-    "build": "parcel build index.html",
+    "build": "parcel build index.html server.ts",
     "dev": "parcel index.html --open",
     "run": "node js/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
