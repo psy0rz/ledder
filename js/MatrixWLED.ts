@@ -74,7 +74,9 @@ export class MatrixWLED extends Matrix {
     this.prevBuffer=this.buffer;
     this.buffer=new Uint8Array(this.width * this.height * 3);
 
-    this.scheduler.update();
+    if (this.runScheduler)
+      this.scheduler.update();
+
     this.render();
 
     let sendBuffer=new Uint8Array(2 + this.height * this.width*3);
@@ -103,8 +105,7 @@ export class MatrixWLED extends Matrix {
 
   run()
   {
-    const self=this;
-    setInterval(function() { self.frame() }, 1000/60);
+    setInterval(() => { this.frame() }, 1000/60);
   }
 
 

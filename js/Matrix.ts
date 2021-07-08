@@ -9,12 +9,14 @@ export abstract class Matrix extends PixelContainer {
   width: number;
   height: number;
   scheduler: Scheduler;
+  runScheduler: boolean;
 
   protected constructor(scheduler, width, height) {
     super();
     this.scheduler=scheduler;
     this.width = width;
     this.height = height;
+    this.runScheduler=true; //make false if another matrix is running the scheduler.
   }
 
   render() {

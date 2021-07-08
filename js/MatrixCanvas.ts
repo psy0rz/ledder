@@ -59,7 +59,8 @@ export class MatrixCanvas extends Matrix {
   {
 
 
-    this.scheduler.update();
+    if (this.runScheduler)
+      this.scheduler.update();
 
     this.imageBuf8.fill(0); //alpha of all pixels will be 0, so canvas is transparent.
     this.render();

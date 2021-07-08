@@ -2,3 +2,4 @@
 
 export * from "./AnimationMatrixtest.js"
 export * from "./AnimationMovingStarsL.js"
+export {AnimationStriptest} from "./AnimationStriptest.js";
