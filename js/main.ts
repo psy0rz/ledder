@@ -19,5 +19,10 @@ matrix.run();
 
 let rpc=new RpcClient(()=>
 {
-  rpc.request("run", {name: "AnitmateMatrixtest"});});
+  rpc.request("run", {name: "AnitmateMatrixtest"}).then(()=>
+  {
+    console.log("hijlup");
+  });
+
+});
 
