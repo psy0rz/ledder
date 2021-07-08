@@ -1,8 +1,13 @@
-import {Animation} from "./Animation.js";
-import {Matrix} from "./Matrix.js";
-import {Pixel} from "./Pixel.js";
-import {AnimationBlink} from "./AnimationBlink.js";
-import {AnimationMove} from "./AnimationMove.js";
+// import {Matrix} from "./Matrix.js";
+// import {Pixel} from "./Pixel.js";
+// import {AnimationBlink} from "./AnimationBlink.js";
+// import {AnimationMove} from "./AnimationMove.js";
+
+import {Pixel} from "../../js/Pixel.js";
+import {Animation} from "../../js/Animation.js";
+import {AnimationBlink} from "../../js/AnimationBlink.js";
+import {AnimationMove} from "../../js/AnimationMove.js";
+import {Matrix} from "../../js/Matrix.js";
 
 export class AnimationMatrixtest extends Animation {
 

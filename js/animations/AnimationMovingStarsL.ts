@@ -1,7 +1,7 @@
-import {Animation} from "./Animation.js";
+import {Animation} from "../Animation.js";
 import {PixelStar} from "./PixelStar.js";
-import {random} from "./util.js";
-import {AnimationMove} from "./AnimationMove.js";
+import {random} from "../util.js";
+import {AnimationMove} from "../AnimationMove.js";
 
 export class AnimationMovingStarsL extends Animation {
     constructor(matrix, step = 1, delay = 2) {

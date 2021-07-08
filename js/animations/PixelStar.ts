@@ -1,4 +1,4 @@
-import {Pixel} from "./Pixel.js";
+import {Pixel} from "../Pixel.js";
 
 export class PixelStar extends Pixel {
 

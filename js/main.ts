@@ -1,6 +1,7 @@
 import {MatrixCanvas} from "./MatrixCanvas.js";
 import { RpcClient } from "./RpcClient.js";
 import {Scheduler} from "./Scheduler.js";
+import {Runner} from "./Runner.js";
 
 let scheduler = new Scheduler();
 
@@ -12,17 +13,23 @@ scheduler.interval(60, () => {
   matrix.status();
 });
 
-// new AnimationTest(matrix);
+// new AnimationMatrixtest(matrix);
 matrix.run();
 
+const runner=new Runner(matrix);
 
+
+function bam(category, name)
+{
+  runner.run( name);
+  rpc.request("run", { name });
+
+}
 
 let rpc=new RpcClient(()=>
 {
-  rpc.request("run", {name: "AnimationMatrixtest"}).then(()=>
-  {
-    console.log("hijlup");
-  });
+  bam("tests", "AnimationMatrixtest");
 
 });
+
 
