@@ -4,6 +4,7 @@ import {RpcServer} from "./RpcServer.js";
 import {Runner} from "./Runner.js";
 import {AnimationMatrixtest} from "./animations/AnimationMatrixtest.js";
 import {AnimationStriptest} from "./animations/AnimationStriptest.js";
+import {AnimationMovingStarsL} from "./animations/AnimationMovingStarsL.js";
 
 let rpc = new RpcServer();
 
@@ -21,8 +22,9 @@ matrix2.run();
 
 
 
-new AnimationMatrixtest(matrix1);
-new AnimationStriptest(matrix2);
+// new AnimationMatrixtest(matrix1);
+new AnimationMovingStarsL(matrix1);
+// new AnimationStriptest(matrix2);
 
 
 // const runner=new Runner(matrix1);

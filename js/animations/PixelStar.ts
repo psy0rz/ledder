@@ -1,3 +1,4 @@
+import { ControlValue } from "../ControlValue.js";
 import {Pixel} from "../Pixel.js";
 
 export class PixelStar extends Pixel {
@@ -7,8 +8,10 @@ export class PixelStar extends Pixel {
   constructor(matrix, x, y, r = 64, g = 64, b = 64, a = 1) {
         super(matrix, x, y, r, g, b, a);
 
+        const delay=new ControlValue("Star blink delay", 3, 1,10,0.1 );
+
         this.step = 0;
-        matrix.scheduler.interval(3, () => {
+        matrix.scheduler.interval(delay.value, () => {
             this.step = (this.step + 1) % 3;
             return(this.keep);
         })

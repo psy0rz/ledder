@@ -10,7 +10,7 @@ export class AnimationMove extends Animation {
    * @param xStep Step size of X (can be negative as well)
    * @param yStep Step size of Y (can be negative as well)
    */
-  constructor(matrix, delay, xStep, yStep) {
+  constructor(matrix, delay: number, xStep: number, yStep: number) {
         super(matrix);
 
     matrix.scheduler.interval(delay, (frameNr) => {

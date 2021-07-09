@@ -1,37 +1,10 @@
 //schedules updates for animations, based on frame-updates from the matrix.
-import {Animation} from "./Animation.js";
+import {Control} from "./Control.js";
+import {ControlValue} from "./ControlValue.js";
+import {IntervalControlled} from "./IntervalControlled.js";
+import {IntervalStatic} from "./IntervalStatic.js";
+import {Interval} from "./Interval.js";
 
-class Interval {
-  interval: number;
-  nextTime: number;
-  callback: (frameNr: number) => number | undefined | boolean;
-
-  constructor(interval, time, callback) {
-    this.interval = interval;
-    this.nextTime = time + interval;
-    this.callback = callback;
-  }
-
-  //returns false if interval should be destroyed
-  check(time) {
-    if (time >= this.nextTime) {
-      const newInterval = this.callback(time);
-
-      //end interval?
-      if (newInterval===false)
-        return false;
-
-      //change interval?
-      if (newInterval !== undefined && newInterval !==true) {
-        this.interval = newInterval;
-      }
-
-      //note: we add to nextTime, instead of time, to allow non-integer intervals
-      this.nextTime = this.nextTime + this.interval;
-    }
-    return true;
-  }
-}
 
 export class Scheduler {
 
@@ -53,10 +26,21 @@ export class Scheduler {
   /**
    * Create a new interval
    * @param frames Interval length, specified as the number of frames. Use 1 to get called for each frame.
-   * @param callback Return false to end the interval. Return a number to change the interval. (Otherwise return true or undefined to keep running.)
+   * @param callback Return false to end the interval. Return a number to change the interval. Return false to end the interval.
    */
-  interval(frames, callback) {
-    const interval = new Interval(frames, this.frameNr, callback);
+  interval(frames: number, callback) {
+    const interval = new IntervalStatic(frames, this.frameNr, callback);
+    this.intervals.push(interval);
+    return (interval);
+  }
+
+  /**
+   * Create a new controlled interval.
+   * @param control The controller that sets/modifies the interval.
+   * @param callback Return false to end the interval. Return false to end the interval.
+   */
+  intervalControlled(control: ControlValue, callback) {
+    const interval = new IntervalControlled(control, this.frameNr, callback);
     this.intervals.push(interval);
     return (interval);
   }
