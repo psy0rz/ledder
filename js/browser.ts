@@ -32,4 +32,6 @@ let rpc=new RpcClient(()=>
 
 });
 
+runner.run( "AnimationMovingStarsL");
+
 
