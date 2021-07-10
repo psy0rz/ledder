@@ -8,8 +8,8 @@ export class AnimationMovingStarsL extends Animation {
     constructor(matrix ) {
         super(matrix);
 
-        const step=new ControlValue("Star step", 1, 1, 10, 0.1);
-        const delay=new ControlValue("Star delay", 6, 1, 10,0.1);
+        const step=new ControlValue(matrix,"Star step", 1, 1, 10, 0.1);
+        const delay=new ControlValue(matrix,"Star delay", 6, 1, 10,0.1);
 
         matrix.scheduler.interval(20, () => {
 

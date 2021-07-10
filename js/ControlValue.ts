@@ -1,4 +1,5 @@
 import {Control} from "./Control.js";
+import {Matrix} from "./Matrix.js";
 
 export class ControlValue extends Control {
     value: number;
@@ -14,8 +15,8 @@ export class ControlValue extends Control {
      * @param max Maximum value (inclusive)
      * @param step Step size
      */
-    constructor(name, value, min, max, step = 1) {
-        super(name);
+    constructor(matrix: Matrix, name:string, value:number, min: number, max:number, step:number = 1) {
+        super(matrix,name);
 
         this.value = value;
         this.min = min;

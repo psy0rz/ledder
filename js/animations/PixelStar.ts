@@ -8,7 +8,7 @@ export class PixelStar extends Pixel {
   constructor(matrix, x, y, r = 64, g = 64, b = 64, a = 1) {
         super(matrix, x, y, r, g, b, a);
 
-        const delay=new ControlValue("Star blink delay", 3, 1,10,0.1 );
+        const delay=new ControlValue(matrix, "Star blink delay", 3, 1,10,0.1 );
 
         this.step = 0;
         matrix.scheduler.interval(delay.value, () => {
