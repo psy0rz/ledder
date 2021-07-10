@@ -40,16 +40,16 @@ export class MatrixCanvas extends Matrix {
   }
 
   //sets a pixel in the render buffer (called from Draw-classes render() functions)
-  setPixel(x,y, r,g,b,a)
+  setPixel(x,y, color)
   {
     if (x>=0 && x<this.width && y>=0 && y<this.height) {
 
       const offset = x * 4 + (this.height - y - 1) * 4 * this.width;
-      const old_a = 1 - a;
+      const old_a = 1 - color.a;
 
-      this.imageBuf8[offset] = Math.floor(this.imageBuf8[offset] * old_a + r * a);
-      this.imageBuf8[offset + 1] = Math.floor(this.imageBuf8[offset + 1] * old_a + g * a);
-      this.imageBuf8[offset + 2] = Math.floor(this.imageBuf8[offset + 2] * old_a + b * a);
+      this.imageBuf8[offset] = Math.floor(this.imageBuf8[offset] * old_a + color.r * color.a);
+      this.imageBuf8[offset + 1] = Math.floor(this.imageBuf8[offset + 1] * old_a + color.g * color.a);
+      this.imageBuf8[offset + 2] = Math.floor(this.imageBuf8[offset + 2] * old_a + color.b * color.a);
       this.imageBuf8[offset + 3] = 255; //alpha of canvas itself
     }
   }

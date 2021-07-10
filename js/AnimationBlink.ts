@@ -24,7 +24,7 @@ export class AnimationBlink extends Animation {
     matrix.scheduler.interval(onInterval+offset, () => {
       for (let i = 0, n = this.pixels.length; i < n; ++i) {
         const p = this.pixels[i];
-        p.a = this.alpha;
+        p.color.a = this.alpha;
       }
 
       if (!this.keep)

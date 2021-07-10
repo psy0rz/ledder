@@ -24,6 +24,5 @@ export class ControlValue extends Control {
         this.step = step;
 
     }
-
-
 }
+
