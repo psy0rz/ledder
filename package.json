@@ -22,6 +22,10 @@
     "dgram": "^1.0.1",
     "express": "^4.17.1",
     "express-ws": "^5.0.2",
+    "fomantic-ui-css": "^2.8.8",
+    "foo": "^0.0.7",
+    "jq": "^1.7.2",
+    "jquery": "^3.6.0",
     "json-rpc-2.0": "^0.2.16",
     "parcel-bundler": "^1.12.4",
     "typescript": "^4.3.4"

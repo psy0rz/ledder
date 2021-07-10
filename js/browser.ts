@@ -6,11 +6,15 @@ import {AnimationMovingStarsL} from "./animations/AnimationMovingStarsL.js";
 import iro from "@jaames/iro";
 import ColorPicker = iro.ColorPicker;
 
+import jQuery from 'jquery';
+// @ts-ignore
+window.jQuery=jQuery;
+require("fomantic-ui-css/semantic");
+
 let scheduler = new Scheduler();
 
 
 let matrix = new MatrixCanvas(scheduler, 37, 8, '#matrix', 5, 16);
-console.log("hoi");
 scheduler.interval(60, () => {
   console.log("chop");
   scheduler.status();
@@ -41,4 +45,8 @@ new AnimationMovingStarsL(matrix);
 // runner.run( "AnimationMovingStarsL");
 
 
-ColorPicker(".color",{});
+ColorPicker(".color1",{});
+ColorPicker(".color2",{});
+
+jQuery('.ui.slider')
+  .slider();
