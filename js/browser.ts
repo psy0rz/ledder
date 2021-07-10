@@ -11,19 +11,19 @@ import jQuery from 'jquery';
 window.jQuery=jQuery;
 require("fomantic-ui-css/semantic");
 
-let scheduler = new Scheduler();
-
-
-let matrix = new MatrixCanvas(scheduler, 37, 8, '#matrix', 5, 16);
-scheduler.interval(60, () => {
-  console.log("chop");
-  scheduler.status();
-  matrix.status();
-  console.log(matrix.controlSet.controls);
-  return(true);
-});
-
-new AnimationMovingStarsL(matrix);
+// let scheduler = new Scheduler();
+//
+//
+// let matrix = new MatrixCanvas(scheduler, 37, 8, '#matrix', 5, 16);
+// scheduler.interval(60, () => {
+//   console.log("chop");
+//   scheduler.status();
+//   matrix.status();
+//   console.log(matrix.controlSet.controls);
+//   return(true);
+// });
+//
+// new AnimationMovingStarsL(matrix);
 // matrix.run();
 
 // const runner=new Runner(matrix);
@@ -45,8 +45,8 @@ new AnimationMovingStarsL(matrix);
 // runner.run( "AnimationMovingStarsL");
 
 
-ColorPicker(".color1",{});
-ColorPicker(".color2",{});
 
 jQuery('.ui.slider')
   .slider();
+ColorPicker(".color1",{});
+ColorPicker(".color2",{});

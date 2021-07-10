@@ -16,7 +16,7 @@
   <link rel="apple-touch-icon" href="icon.png">
   <!-- Place favicon.ico in the root directory -->
 
-  <link rel="stylesheet" href="css/normalize.css">
+<!--  <link rel="stylesheet" href="css/normalize.css">-->
   <link rel="stylesheet" href="css/main.css">
   <link rel="stylesheet" type="text/css" href="/node_modules/fomantic-ui-css/semantic.min.css">
 
@@ -26,42 +26,44 @@
 <body>
 
 <!-- Add your site or application content here -->
-<h1>Ledder</h1>
-<canvas id="matrix"></canvas>
 <script type="module" src="js/browser.js"></script>
 
-<script src="js/vendor/modernizr-3.11.2.min.js"></script>
+<!--<script src="js/vendor/modernizr-3.11.2.min.js"></script>-->
 
 
 <div class="ui container">
-  <form class="ui form">
-    <div class="fields">
-      <div class="field">
-        <label>Star color</label>
-        <div class="ui bottom aligned labeled color1"></div>
-      </div>
-
-      <div class="field">
-        <label>Geert color</label>
-        <div class="ui bottom aligned labeled color2"></div>
-      </div>
+  <div class="ui segments ">
+    <div class="ui padded  segment ">
+      <div class="ui  labeled ticked  slider"></div>
+      <button class="ui icon button">
+        <i class="undo icon"></i>
+      </button>
+      <div class="ui top attached label">star speed</div>
     </div>
 
-    <div class="fields">
-      <div class="field">
-        <label>Star speed</label>
-        <div class="ui vertical slider"></div>
-      </div>
-
-      <div class="field">
-        <label>Star speed</label>
-        <div class="ui vertical slider"></div>
-      </div>
+    <div class="ui padded segment ">
+      <div class="ui  slider"></div>
+      <button class="ui icon button">
+        <i class="undo icon"></i>
+      </button>
+      <div class="ui top attached label">star step size</div>
     </div>
 
-  </form>
+
+    <div class="ui padded segment">
+<!--      <label>Star speed</label>-->
+      <div class="ui color1"></div>
+    </div>
+    <div class="ui padded segment">
+<!--      <label>Star speed</label>-->
+      <div class="ui color2"></div>
+    </div>
+
+  </div>
 </div>
 
+
+<!--<canvas id="matrix"></canvas>-->
 
 </body>
 
