@@ -1,8 +1,8 @@
 import {Animation} from "./Animation.js";
 import {PixelContainer} from "./PixelContainer.js";
 import {Scheduler} from "./Scheduler.js";
-import {ControlSet} from "./Control.js";
 import {ColorInterface} from "./ColorInterface.js";
+import {ControlSet} from "./ControlSet.js";
 
 /**
  * The matrix is the display and shows the list of pixels. The subclasses are actual implementations for different display types.

@@ -3,6 +3,8 @@ import { RpcClient } from "./RpcClient.js";
 import {Scheduler} from "./Scheduler.js";
 import {Runner} from "./Runner.js";
 import {AnimationMovingStarsL} from "./animations/AnimationMovingStarsL.js";
+import iro from "@jaames/iro";
+import ColorPicker = iro.ColorPicker;
 
 let scheduler = new Scheduler();
 
@@ -18,7 +20,7 @@ scheduler.interval(60, () => {
 });
 
 new AnimationMovingStarsL(matrix);
-matrix.run();
+// matrix.run();
 
 // const runner=new Runner(matrix);
 //
@@ -39,3 +41,4 @@ matrix.run();
 // runner.run( "AnimationMovingStarsL");
 
 
+ColorPicker(".color",{});
