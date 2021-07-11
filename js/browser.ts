@@ -13,7 +13,7 @@ window.$=$;
 // @ts-ignore
 window.jQuery=$;
 
-import("fomantic-ui-css/semantic");
+require("fomantic-ui-css/semantic");
 
 window.addEventListener('load',
   () => {
@@ -23,7 +23,7 @@ window.addEventListener('load',
 
     container.style.paddingTop = menu.offsetHeight + "px";
   })
-2
+
 
 let scheduler = new Scheduler();
 //
@@ -59,9 +59,10 @@ matrix.run();
 // runner.run( "AnimationMovingStarsL");
 
 
-// jQuery('.ui.slider')
-//   .slider();
 ColorPicker(".color1", {});
 ColorPicker(".color2", {});
 
-matrix.controlSet.generate(document.querySelector("#container"));
+matrix.controlSet.generate(document.querySelector("#controlContainer"));
+// @ts-ignore
+// $('.ui.slider').slider();
+
