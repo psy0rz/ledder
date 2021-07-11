@@ -16,7 +16,7 @@
   <link rel="apple-touch-icon" href="icon.png">
   <!-- Place favicon.ico in the root directory -->
 
-<!--  <link rel="stylesheet" href="css/normalize.css">-->
+  <!--  <link rel="stylesheet" href="css/normalize.css">-->
   <link rel="stylesheet" href="css/main.css">
   <link rel="stylesheet" type="text/css" href="/node_modules/fomantic-ui-css/semantic.min.css">
 
@@ -25,14 +25,24 @@
 
 <body>
 
+<div class="ui top fixed menu" id="menu">
+  <div class="ui menu item">
+
+    <canvas  class="matrix" id="matrix"></canvas>
+
+  </div>
+
+</div>
+
+
 <!-- Add your site or application content here -->
 <script type="module" src="js/browser.js"></script>
 
 <!--<script src="js/vendor/modernizr-3.11.2.min.js"></script>-->
 
 
-<div class="ui container">
-  <div class="ui segments ">
+<div id="container" class="ui container">
+  <div class="ui segments " id="controlContainer">
     <div class="ui padded  segment ">
       <div class="ui  labeled ticked  slider"></div>
       <button class="ui icon button">
@@ -51,19 +61,17 @@
 
 
     <div class="ui padded segment">
-<!--      <label>Star speed</label>-->
+      <!--      <label>Star speed</label>-->
       <div class="ui color1"></div>
     </div>
     <div class="ui padded segment">
-<!--      <label>Star speed</label>-->
+      <!--      <label>Star speed</label>-->
       <div class="ui color2"></div>
     </div>
 
   </div>
 </div>
 
-
-<!--<canvas id="matrix"></canvas>-->
 
 </body>
 

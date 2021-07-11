@@ -1,20 +1,34 @@
 import {MatrixCanvas} from "./MatrixCanvas.js";
-import { RpcClient } from "./RpcClient.js";
+import {RpcClient} from "./RpcClient.js";
 import {Scheduler} from "./Scheduler.js";
 import {Runner} from "./Runner.js";
 import {AnimationMovingStarsL} from "./animations/AnimationMovingStarsL.js";
 import iro from "@jaames/iro";
 import ColorPicker = iro.ColorPicker;
 
-import jQuery from 'jquery';
+//jquery
+import $ from "jquery";
 // @ts-ignore
-window.jQuery=jQuery;
-require("fomantic-ui-css/semantic");
+window.$=$;
+// @ts-ignore
+window.jQuery=$;
 
-// let scheduler = new Scheduler();
+import("fomantic-ui-css/semantic");
+
+window.addEventListener('load',
+  () => {
+    console.log("mo");
+    const container = document.querySelector('#container') as HTMLElement;
+    const menu = document.querySelector('#menu') as HTMLElement;
+
+    container.style.paddingTop = menu.offsetHeight + "px";
+  })
+2
+
+let scheduler = new Scheduler();
 //
 //
-// let matrix = new MatrixCanvas(scheduler, 37, 8, '#matrix', 5, 16);
+let matrix = new MatrixCanvas(scheduler, 37, 8, '#matrix', 5, 16);
 // scheduler.interval(60, () => {
 //   console.log("chop");
 //   scheduler.status();
@@ -23,8 +37,8 @@ require("fomantic-ui-css/semantic");
 //   return(true);
 // });
 //
-// new AnimationMovingStarsL(matrix);
-// matrix.run();
+new AnimationMovingStarsL(matrix);
+matrix.run();
 
 // const runner=new Runner(matrix);
 //
@@ -45,8 +59,9 @@ require("fomantic-ui-css/semantic");
 // runner.run( "AnimationMovingStarsL");
 
 
+// jQuery('.ui.slider')
+//   .slider();
+ColorPicker(".color1", {});
+ColorPicker(".color2", {});
 
-jQuery('.ui.slider')
-  .slider();
-ColorPicker(".color1",{});
-ColorPicker(".color2",{});
+matrix.controlSet.generate(document.querySelector("#container"));

@@ -26,7 +26,8 @@ export class MatrixCanvas extends Matrix {
     //scaling
     this.canvas.width=width;
     this.canvas.height=height;
-    this.canvas.style.width="80%";
+    this.canvas.style.width=width*10+"px";
+    // this.canvas.style.maxWidth=width*10+"px";
 
     //context and buffer
     this.canvasContext = this.canvas.getContext('2d');

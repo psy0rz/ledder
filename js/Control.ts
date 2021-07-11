@@ -10,5 +10,10 @@ export class Control
     matrix.controlSet.addControl(this);
 
   }
+
+  generate(container: HTMLElement)
+  {
+
+  }
 }
 
