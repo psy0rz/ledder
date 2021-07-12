@@ -6,6 +6,7 @@ export class ControlValue extends Control {
   min: number;
   max: number;
   step: number;
+  jqueryElement: JQuery;
 
   /**
    * Controls a value, step determines the minimum resolution.
@@ -16,19 +17,20 @@ export class ControlValue extends Control {
    * @param max Maximum value (inclusive)
    * @param step Step size
    */
-  constructor(matrix: Matrix, name: string, value: number, min: number, max: number, step: number = 1) {
-    super(matrix, name);
+  constructor( name: string, value: number, min: number, max: number, step: number = 1) {
+    super( name);
 
     this.value = value;
     this.min = min;
     this.max = max;
     this.step = step;
 
+
   }
 
   html(container: HTMLElement) {
 
-    const element=$(`
+    this.jqueryElement=$(`
      <div class="ui padded  segment ">
       <div class="ui top attached label">${this.name}</div>
       <div class="ui labeled ticked slider"></div>
@@ -38,10 +40,10 @@ export class ControlValue extends Control {
     </div>
    `);
 
-    $(container).append(element);
+    $(container).append(this.jqueryElement);
 
     // @ts-ignore
-    $('.slider', element).slider({
+    $('.slider', this.jqueryElement).slider({
       min: this.min,
       max: this.max,
       step: this.step,
@@ -52,9 +54,12 @@ export class ControlValue extends Control {
       }
 
     });
+  }
 
-
-
+  destroy()
+  {
+    if (this.jqueryElement!==undefined)
+      this.jqueryElement.remove();
   }
 }
 

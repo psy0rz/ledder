@@ -29,6 +29,9 @@ let scheduler = new Scheduler();
 //
 //
 let matrix = new MatrixCanvas(scheduler, 37, 8, '#matrix', 5, 16);
+
+matrix.preset.enableHtml(document.querySelector("#controlContainer"));
+
 // scheduler.interval(60, () => {
 //   console.log("chop");
 //   scheduler.status();
@@ -59,10 +62,9 @@ matrix.run();
 // runner.run( "AnimationMovingStarsL");
 
 
-ColorPicker(".color1", {});
-ColorPicker(".color2", {});
+// ColorPicker(".color1", {});
+// ColorPicker(".color2", {});
 
-matrix.preset.html(document.querySelector("#controlContainer"));
 // @ts-ignore
 // $('.ui.slider').slider();
 

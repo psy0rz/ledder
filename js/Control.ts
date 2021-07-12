@@ -5,9 +5,8 @@ export class Control
 {
   name: string;
 
-  constructor(matrix: Matrix, name) {
+  constructor(name) {
     this.name=name;
-    matrix.preset.addControl(this);
 
   }
 
@@ -15,5 +14,11 @@ export class Control
   {
 
   }
+
+  destroy()
+  {
+
+  }
+
 }
 

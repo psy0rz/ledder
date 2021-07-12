@@ -9,10 +9,10 @@ export class AnimationMovingStarsL extends Animation {
     constructor(matrix ) {
         super(matrix);
 
-        const step=new ControlValue(matrix,"Star step", 1, 1, 10, 0.1);
-        const delay=new ControlValue(matrix,"Star delay", 6, 1, 10,0.1);
-        const blinkDelay= new ControlValue(matrix, "Star blink", 1,1,10,0.1);
-        const starColor = new ControlColor(matrix, "Star color" , 64,64,64);
+        const step=matrix.preset.value("Star step", 1, 1, 10, 0.1);
+        const delay=matrix.preset.value("Star delay", 6, 1, 10,0.1);
+        const blinkDelay= matrix.preset.value("Star blink", 1,1,10,0.1);
+        const starColor = matrix.preset.color("Star color" , 64,64,64);
 
         matrix.scheduler.interval(20, () => {
 
