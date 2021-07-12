@@ -7,11 +7,11 @@ export class Control
 
   constructor(matrix: Matrix, name) {
     this.name=name;
-    matrix.controlSet.addControl(this);
+    matrix.preset.addControl(this);
 
   }
 
-  generate(container: HTMLElement)
+  html(container: HTMLElement)
   {
 
   }

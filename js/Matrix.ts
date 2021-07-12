@@ -2,7 +2,7 @@ import {Animation} from "./Animation.js";
 import {PixelContainer} from "./PixelContainer.js";
 import {Scheduler} from "./Scheduler.js";
 import {ColorInterface} from "./ColorInterface.js";
-import {ControlSet} from "./ControlSet.js";
+import {Preset} from "./Preset.js";
 
 /**
  * The matrix is the display and shows the list of pixels. The subclasses are actual implementations for different display types.
@@ -12,12 +12,12 @@ export abstract class Matrix extends PixelContainer {
   height: number;
   scheduler: Scheduler;
   runScheduler: boolean;
-  controlSet: ControlSet;
+  preset: Preset;
 
   protected constructor(scheduler, width, height) {
     super();
     this.scheduler=scheduler;
-    this.controlSet=new ControlSet();
+    this.preset=new Preset();
 
     this.width = width;
     this.height = height;
@@ -43,7 +43,7 @@ export abstract class Matrix extends PixelContainer {
    */
   clear()
   {
-    this.controlSet.clear();
+    this.preset.clear();
     this.scheduler.clear();
     super.clear();
 

@@ -62,7 +62,7 @@ matrix.run();
 ColorPicker(".color1", {});
 ColorPicker(".color2", {});
 
-matrix.controlSet.generate(document.querySelector("#controlContainer"));
+matrix.preset.html(document.querySelector("#controlContainer"));
 // @ts-ignore
 // $('.ui.slider').slider();
 

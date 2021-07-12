@@ -26,7 +26,7 @@ export class ControlValue extends Control {
 
   }
 
-  generate(container: HTMLElement) {
+  html(container: HTMLElement) {
 
     const element=$(`
      <div class="ui padded  segment ">
