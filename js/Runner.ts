@@ -1,24 +1,44 @@
 import {Matrix} from "./Matrix.js";
 import * as animations from "./animations/all.js";
+import {PresetStore} from "./PresetStore.js";
 
 export class Runner {
-  matrix: Matrix;
+  matrix: Matrix
+  presetStore: PresetStore
 
-  constructor(matrix) {
-    this.matrix = matrix;
+  constructor(matrix:Matrix, presetStore:PresetStore) {
+    this.matrix = matrix
+    this.presetStore=presetStore
+
   }
 
   /**
-   * Loads and runs specified animation. (should be exported by all.js)
-   * @param name
+   * Runs specified animation with specified preset
+   *
+   * @param animationName
+   * @param presetName
    */
-  run(name: string) {
-    if (name in animations) {
+  run(animationName: string, presetName:string ) {
+    if (animationName in animations) {
       this.matrix.clear();
-      new animations[name](this.matrix);
+      new animations[animationName](this.matrix);
       return true;
     } else
       return false;
+  }
+
+  /**
+   * Returns list of all animations and all preset names
+   */
+  async presets()
+  {
+    let ret={};
+
+    for (const [name, animation] of Object.entries(animations))
+    {
+      ret[name]=await this.presetStore.getPresets(name);
+    }
+    return (ret);
   }
 
 

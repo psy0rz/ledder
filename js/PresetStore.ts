@@ -4,8 +4,6 @@
 
 
 import * as path from "path";
-
-
 import {readFile, writeFile} from "fs/promises";
 import glob from "glob-promise";
 
@@ -18,9 +16,9 @@ export class PresetStore {
   }
 
   /**
-   * Get all preset basenames for specified animation
+   * Get all presets for specified animation
    */
-  getFiles(animationName: string) {
+  getPresets(animationName: string) {
     const pattern = path.join(this.presetPath, animationName, "*.json");
 
     return glob(pattern)
@@ -34,7 +32,7 @@ export class PresetStore {
       })
   }
 
-  presetFilename(animationName: string, presetName: string) {
+  private presetFilename(animationName: string, presetName: string) {
     return (path.join(this.presetPath, animationName, presetName + ".json"));
   }
 

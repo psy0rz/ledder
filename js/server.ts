@@ -40,22 +40,30 @@ matrix1.run();
 //   return(runner.run( name));
 // });
 
-const s=new PresetStore("presets");
+const presetStore=new PresetStore("presets");
+
 rpc.addMethod("getFiles", () => {
-  return(s.getFiles("geert"));
+  return(presetStore.getPresets("geert"));
 
 });
 
+const runner=new Runner(matrix1, presetStore);
+
+
 rpc.addMethod("load", () => {
-  return(s.load("geert", "keutel"));
+  return(presetStore.load("geert", "keutel"));
 
 });
 
 rpc.addMethod("save", (data) => {
-  return(s.save("geert", "keutel", data));
+  return(presetStore.save("geert", "keutel", data));
 
 });
 
+rpc.addMethod("presets", (data) => {
+  return(runner.presets());
+
+});
 
 
 

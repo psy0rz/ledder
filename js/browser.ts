@@ -27,16 +27,16 @@ window.addEventListener('load',
     container.style.paddingTop = menu.offsetHeight + "px";
 
     let rpc = new RpcClient(() => {
-      rpc.request("getFiles", {}).then((res) => {
-        console.log("result", res);
-      });
+      // rpc.request("getFiles", {}).then((res) => {
+      //   console.log("result", res);
+      // });
+      //
+      // rpc.request("load", {}).then((res) => {
+      //     console.log("result load", res)
+      //   }
+      // );
 
-      rpc.request("load", {}).then((res) => {
-          console.log("result load", res);
-        }
-      );
-
-      rpc.request("save", [ 4,5,6]);
+      rpc.request("presets", [ 4,5,6]).then(res=>console.log(res))
 
     });
   })
