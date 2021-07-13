@@ -36,8 +36,10 @@ export class Runner {
 
     for (const [name, animation] of Object.entries(animations))
     {
+      console.log("kira", name);
       ret[name]=await this.presetStore.getPresets(name);
     }
+    console.log("ret", ret);
     return (ret);
   }
 

@@ -18,35 +18,27 @@ export class PresetStore {
   /**
    * Get all presets for specified animation
    */
-  getPresets(animationName: string) {
+  async getPresets(animationName: string) {
     const pattern = path.join(this.presetPath, animationName, "*.json");
 
-    return glob(pattern)
-      .then((files) => {
-        let names = [];
-        for (const file of files) {
-          names.push(path.basename(file, ".json"));
-        }
-        return names
+    let names = [];
+    for (const file of await glob(pattern)) {
+      names.push(path.basename(file, ".json"))
+    }
 
-      })
+    return names
   }
 
   private presetFilename(animationName: string, presetName: string) {
     return (path.join(this.presetPath, animationName, presetName + ".json"));
   }
 
-  load(animationName: string, presetName: string) {
-    return readFile(this.presetFilename(animationName, presetName))
-      .then((data) => {
-        // @ts-ignore
-        return JSON.parse(data);
-      })
+  async load(animationName: string, presetName: string) {
+    return JSON.parse(await readFile(this.presetFilename(animationName, presetName), 'utf8'))
   }
 
-  save(animationName:string, presetName:string, data)
-  {
-    return writeFile(this.presetFilename(animationName, presetName), JSON.stringify(data, undefined,' '))
+  save(animationName: string, presetName: string, data) {
+    return writeFile(this.presetFilename(animationName, presetName), JSON.stringify(data, undefined, ' '), 'utf8')
   }
 
 }
