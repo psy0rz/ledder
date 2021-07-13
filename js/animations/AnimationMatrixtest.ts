@@ -39,6 +39,13 @@ export class AnimationMatrixtest extends Animation {
         for (let x = 1; x < 4; x++)
             new AnimationBlink(matrix, x, x).addPixel(new Pixel(matrix, x - 1, 5, new Color(255, 255, 255)));
 
+
+        //rounding test. pixel on float coordinates, should be 3 white pixels on xy 5 6 7
+        new Pixel(matrix, 5.1, 5.1, new Color(255, 255, 255));
+        new Pixel(matrix, 6.5, 6.5, new Color(255, 255, 255));
+        new Pixel(matrix, 7.9, 7.9, new Color(255, 255, 255));
+
+
         //mover to test smoothness
         const m = new Pixel(matrix, 0, 6, new Color(255, 255, 255));
         new AnimationMove(matrix, 1, 1, 0).addPixel(m);

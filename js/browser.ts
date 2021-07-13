@@ -8,6 +8,7 @@ import ColorPicker = iro.ColorPicker;
 
 //jquery
 import $ from "jquery";
+import {AnimationMatrixtest} from "./animations/AnimationMatrixtest.js";
 // @ts-ignore
 window.$=$;
 // @ts-ignore
@@ -40,8 +41,10 @@ matrix.preset.enableHtml(document.querySelector("#controlContainer"));
 //   return(true);
 // });
 //
-new AnimationMovingStarsL(matrix);
+// new AnimationMovingStarsL(matrix);
+new AnimationMatrixtest(matrix);
 matrix.run();
+//
 
 // const runner=new Runner(matrix);
 //
