@@ -71,6 +71,7 @@ export class Preset {
   }
 
   /**
+   * Get preset-values, in jsonable format.
    * Note: loading and saving is setup in a way so that unused values will never be deleted. It doesnt matter if controls do not yet exists for specific values.
    */
   save()
@@ -84,6 +85,10 @@ export class Preset {
     return this.values
   }
 
+  /**
+   * Set preset values
+   * @param values
+   */
   load(values)
   {
     this.values=values;

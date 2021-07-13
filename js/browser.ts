@@ -9,6 +9,7 @@ import ColorPicker = iro.ColorPicker;
 //jquery
 import $ from "jquery";
 import {AnimationMatrixtest} from "./animations/AnimationMatrixtest.js";
+import {PresetStore} from "./PresetStore.js";
 // @ts-ignore
 window.$=$;
 // @ts-ignore
@@ -16,13 +17,21 @@ window.jQuery=$;
 
 require("fomantic-ui-css/semantic");
 
+
 window.addEventListener('load',
   () => {
-    console.log("mo");
+    console.log("loaded");
     const container = document.querySelector('#container') as HTMLElement;
     const menu = document.querySelector('#menu') as HTMLElement;
 
     container.style.paddingTop = menu.offsetHeight + "px";
+
+    let rpc=new RpcClient(()=>{
+      rpc.request("getFiles",{}).then((res)=>{
+        console.log("result", res);
+      });
+
+    });
   })
 
 

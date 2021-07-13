@@ -5,6 +5,11 @@ import {Runner} from "./Runner.js";
 import {AnimationMatrixtest} from "./animations/AnimationMatrixtest.js";
 import {AnimationStriptest} from "./animations/AnimationStriptest.js";
 import {AnimationMovingStarsL} from "./animations/AnimationMovingStarsL.js";
+import {PresetStore} from "./PresetStore.js";
+import {Preset} from "./Preset.js";
+
+
+
 
 let rpc = new RpcServer();
 
@@ -15,16 +20,17 @@ let matrix1 = new MatrixWLED(scheduler, 37, 8, false, false, '192.168.13.176');
 matrix1.run();
 
 //ceilingstrip
-let matrix2 = new MatrixWLED(scheduler, 138, 1, false, false, '192.168.13.247');
-matrix2.runScheduler=false;
-matrix2.run();
+// let matrix2 = new MatrixWLED(scheduler, 138, 1, false, false, '192.168.13.247');
+// matrix2.runScheduler=false;
+// matrix2.run();
 
 
 
 
 // new AnimationMatrixtest(matrix1);
-new AnimationMovingStarsL(matrix1);
+// new AnimationMovingStarsL(matrix1);
 // new AnimationStriptest(matrix2);
+
 
 
 // const runner=new Runner(matrix1);
@@ -34,6 +40,15 @@ new AnimationMovingStarsL(matrix1);
 //   return(runner.run( name));
 // });
 
+const s=new PresetStore("presets");
+rpc.addMethod("getFiles", () => {
+
+  // s.getFiles("geert").then((f)=> {
+  //   console.log("files", f);
+  // });
+  return(s.getFiles("geert"));
+
+});
 
 
 

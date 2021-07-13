@@ -48,14 +48,14 @@ export class MatrixWLED extends Matrix {
       let physY;
 
       if (this.flipX)
-        physX=this.width-x-1;
+        physX=this.width-~~x-1;
       else
-        physX=x;
+        physX=~~x;
 
       if (this.flipY)
-        physY=this.height-y-1;
+        physY=this.height-~~y-1;
       else
-        physY=y;
+        physY=~~y;
 
       const offset = physX * 3 + physY * 3 * this.width;
       const old_a = 1 - color.a;
