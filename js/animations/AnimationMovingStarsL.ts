@@ -9,21 +9,21 @@ export class AnimationMovingStarsL extends Animation {
     constructor(matrix ) {
         super(matrix);
 
-        const step=matrix.preset.value("Star step", 1, 1, 10, 0.1);
-        const delay=matrix.preset.value("Star delay", 6, 1, 10,0.1);
-        const blinkDelay= matrix.preset.value("Star blink", 1,1,10,0.1);
-        const starColor = matrix.preset.color("Star color" , 64,64,64);
+        const step=matrix.preset.value("Star speed", 0.3, 0.1, 2, 0.1);
+        const blinkDelay= matrix.preset.value("Star twinkle delay", 5.8,1,10,0.1);
+        const starColor = matrix.preset.color("Star color" , 255,255,255);
 
         matrix.scheduler.interval(20, () => {
 
 
             //add new flying star at right side
             const star = new PixelStar(matrix, matrix.width + 2, random(0, matrix.height), starColor, blinkDelay);
-            const mover = new AnimationMove(matrix, delay.value, -step.value, 0)
+            const mover = new AnimationMove(matrix, 1, -step.value, 0)
             mover.addPixel(star);
 
             //destroy star at left side
-            matrix.scheduler.interval(delay.value * matrix.width / step.value + 10, () => {
+            matrix.scheduler.interval((matrix.width+2)/step.value, () => {
+              console.log("del");
                 mover.destroy(true);
                 return false;
             })

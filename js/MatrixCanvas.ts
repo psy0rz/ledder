@@ -45,7 +45,7 @@ export class MatrixCanvas extends Matrix {
   {
     if (x>=0 && x<this.width && y>=0 && y<this.height) {
 
-      const offset = x * 4 + (this.height - y - 1) * 4 * this.width;
+      const offset = ~~x * 4 + (this.height - ~~y - 1) * 4 * this.width;
       const old_a = 1 - color.a;
 
       this.imageBuf8[offset] = Math.floor(this.imageBuf8[offset] * old_a + color.r * color.a);
