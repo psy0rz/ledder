@@ -3,9 +3,9 @@ export abstract class Rpc {
     /**
      * Add a method
      * @param name Method name
-     * @param callback Callback function with actual method.
+     * @param method Callback function with actual method.
      */
-    abstract addMethod(name, callback);
+    abstract addMethod(name, method);
 
     /**
      * Call a method, returns a Promise.

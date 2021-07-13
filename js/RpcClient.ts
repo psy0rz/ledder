@@ -59,8 +59,8 @@ export class RpcClient extends Rpc {
     };
   }
 
-  addMethod(name, callback) {
-    this.serverAndClient.addMethod(name, callback);
+  addMethod(name, method) {
+    this.serverAndClient.addMethod(name, method);
   }
 
   request(name, params) {

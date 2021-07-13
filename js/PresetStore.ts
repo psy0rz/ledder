@@ -2,14 +2,12 @@
  * Handles loading/saving of presets to disk. Can only be used server-side.
  */
 
-// import {join} from "path";
 
 import * as path from "path";
-import * as fs from "fs";
 
-import pkg from 'glob';
 
-const {glob} = pkg;
+import {readFile} from "fs/promises";
+import glob from "glob-promise";
 
 
 export class PresetStore {
@@ -23,34 +21,30 @@ export class PresetStore {
    * Get all preset basenames for specified animation
    */
   getFiles(animationName: string) {
+    const pattern = path.join(this.presetPath, animationName, "*.json");
 
-    return (new Promise((resolve, reject) => {
-      const pattern = path.join(this.presetPath, animationName, "*.json");
-      glob(pattern, {}, (err, files) => {
-        if (err) reject(err);
+    return glob(pattern)
+      .then((files) => {
         let names = [];
         for (const file of files) {
           names.push(path.basename(file, ".json"));
         }
-        resolve(names);
+        return names
+
       })
-    }));
   }
+
 
   presetFilename(animationName: string, presetName: string) {
     return (path.join(this.presetPath, animationName, presetName + ".json"));
   }
 
-  load(animationName: string, presetName: string, callback) {
-    fs.readFile(this.presetFilename(animationName, presetName), (err, data) => {
-      if (err)
-        throw(err);
-
-      // @ts-ignore
-      callback(JSON.parse(data));
-    });
-
+  load(animationName: string, presetName: string) {
+    return readFile(this.presetFilename(animationName, presetName))
+      .then((data) => {
+        // @ts-ignore
+        return JSON.parse(data);
+      })
   }
-
 
 }

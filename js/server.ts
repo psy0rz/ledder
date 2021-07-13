@@ -42,13 +42,15 @@ matrix1.run();
 
 const s=new PresetStore("presets");
 rpc.addMethod("getFiles", () => {
-
-  // s.getFiles("geert").then((f)=> {
-  //   console.log("files", f);
-  // });
   return(s.getFiles("geert"));
 
 });
+
+rpc.addMethod("load", () => {
+  return(s.load("geert", "keutel"));
+
+});
+
 
 
 
