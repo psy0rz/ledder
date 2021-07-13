@@ -41,8 +41,8 @@ matrix.preset.enableHtml(document.querySelector("#controlContainer"));
 //   return(true);
 // });
 //
-// new AnimationMovingStarsL(matrix);
-new AnimationMatrixtest(matrix);
+new AnimationMovingStarsL(matrix);
+// new AnimationMatrixtest(matrix);
 matrix.run();
 //
 

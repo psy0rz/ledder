@@ -61,5 +61,23 @@ export class ControlValue extends Control {
     if (this.jqueryElement!==undefined)
       this.jqueryElement.remove();
   }
+
+  save()
+  {
+    return {
+      value: this.value
+    }
+  }
+
+  load(values)
+  {
+    this.value=values.value;
+
+    //update gui as well?
+    if (this.jqueryElement!==undefined)
+      { // @ts-ignore
+        $('.slider', this.jqueryElement).slider("set value", values.value, false);
+      }
+  }
 }
 

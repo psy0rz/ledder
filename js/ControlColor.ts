@@ -8,7 +8,10 @@ export class ControlColor extends Control implements ColorInterface {
   g: number;
   b: number;
   a: number;
+
+  //html stuff
   jqueryElement: JQuery;
+  picker: ColorPicker;
 
   constructor(name: string, r: number, g: number, b: number, a: number = 1) {
     super(name);
@@ -33,19 +36,20 @@ export class ControlColor extends Control implements ColorInterface {
 
     $(container).append(this.jqueryElement);
 
-    const colorElement=$('.colorpicker', this.jqueryElement)[0];
+    const colorElement = $('.colorpicker', this.jqueryElement)[0];
 
-    const picker=ColorPicker(colorElement,{
+    this.picker = ColorPicker(colorElement, {
       color: this,
     });
 
-    picker.on("color:change", (color)=> {
-      this.r=color.rgba.r;
-      this.g=color.rgba.g;
-      this.b=color.rgba.b;
-      this.a=color.rgba.a;
+    this.picker.on("color:change", (color) => {
+      this.r = color.rgba.r;
+      this.g = color.rgba.g;
+      this.b = color.rgba.b;
+      this.a = color.rgba.a;
 
     });
+
   }
 
   destroy() {
@@ -53,5 +57,23 @@ export class ControlColor extends Control implements ColorInterface {
       this.jqueryElement.remove();
   }
 
+  save() {
+    return {
+      r: this.r,
+      g: this.g,
+      b: this.b,
+      a: this.a
+    }
+  }
 
+  load(values) {
+    this.r = values.r;
+    this.g = values.g;
+    this.b = values.b;
+    this.a = values.a;
+
+    if (this.picker !== undefined) {
+      this.picker.color = values;
+    }
+  }
 }
