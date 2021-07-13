@@ -51,6 +51,10 @@ rpc.addMethod("load", () => {
 
 });
 
+rpc.addMethod("save", (data) => {
+  return(s.save("geert", "keutel", data));
+
+});
 
 
 

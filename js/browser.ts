@@ -36,6 +36,8 @@ window.addEventListener('load',
         }
       );
 
+      rpc.request("save", [ 4,5,6]);
+
     });
   })
 

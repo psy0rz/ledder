@@ -6,7 +6,7 @@
 import * as path from "path";
 
 
-import {readFile} from "fs/promises";
+import {readFile, writeFile} from "fs/promises";
 import glob from "glob-promise";
 
 
@@ -34,7 +34,6 @@ export class PresetStore {
       })
   }
 
-
   presetFilename(animationName: string, presetName: string) {
     return (path.join(this.presetPath, animationName, presetName + ".json"));
   }
@@ -45,6 +44,11 @@ export class PresetStore {
         // @ts-ignore
         return JSON.parse(data);
       })
+  }
+
+  save(animationName:string, presetName:string, data)
+  {
+    return writeFile(this.presetFilename(animationName, presetName), JSON.stringify(data, undefined,' '))
   }
 
 }
