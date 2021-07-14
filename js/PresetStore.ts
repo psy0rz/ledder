@@ -7,6 +7,7 @@ import * as path from "path";
 import {readFile, writeFile} from "fs/promises";
 import glob from "glob-promise";
 import {Preset} from "./Preset.js";
+import * as animations from "./animations/all.js";
 
 
 export class PresetStore {
@@ -17,9 +18,9 @@ export class PresetStore {
   }
 
   /**
-   * Get all presets for specified animation
+   * Get all presetnames for specified animation
    */
-  async getPresets(animationName: string) {
+  async getPresetNames(animationName: string) {
     const pattern = path.join(this.presetPath, animationName, "*.json");
 
     let names = [];
@@ -30,16 +31,40 @@ export class PresetStore {
     return names
   }
 
-  private presetFilename(animationName: string, presetName: string) {
-    return (path.join(this.presetPath, animationName, presetName + ".json"));
-  }
-
   async load(animationName: string, presetName: string) {
     return JSON.parse(await readFile(this.presetFilename(animationName, presetName), 'utf8'))
   }
 
-  save(animationName: string, presetName: string, preset:Preset) {
+  save(animationName: string, presetName: string, preset: Preset) {
     return writeFile(this.presetFilename(animationName, presetName), JSON.stringify(preset, undefined, ' '), 'utf8')
+  }
+
+  /**
+   * Returns list of all animations and all stripped presets, in jsonable format
+   * NOTE: slow, cache?
+   */
+  async getPresets() {
+    let ret = {};
+
+    for (const [animationName, animation] of Object.entries(animations)) {
+      ret[animationName] = {
+        title: animation.title,
+        description: animation.description,
+        presets: {}
+      };
+
+      const presetNames = await this.getPresetNames(animationName)
+      for (const presetName of presetNames) {
+        ret[animationName].presets[presetName] = await this.load(animationName, presetName);
+        //strip stuff
+
+      }
+    }
+    return (ret);
+  }
+
+  private presetFilename(animationName: string, presetName: string) {
+    return (path.join(this.presetPath, animationName, presetName + ".json"));
   }
 
 }

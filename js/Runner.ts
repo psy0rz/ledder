@@ -1,14 +1,11 @@
 import {Matrix} from "./Matrix.js";
 import * as animations from "./animations/all.js";
-import {PresetStore} from "./PresetStore.js";
 
 export class Runner {
   matrix: Matrix
-  presetStore: PresetStore
 
-  constructor(matrix: Matrix, presetStore: PresetStore) {
+  constructor(matrix: Matrix) {
     this.matrix = matrix
-    this.presetStore = presetStore
 
   }
 
@@ -27,22 +24,6 @@ export class Runner {
       return false;
   }
 
-  /**
-   * Returns list of all animations and all preset names in jsonable format
-   */
-  async presets() {
-    let ret = {};
-
-    for (const [name, animation] of Object.entries(animations)) {
-      ret[name] = {
-        title: animation.title,
-        description: animation.description,
-        presets: await this.presetStore.getPresets(name)
-
-      };
-    }
-    return (ret);
-  }
 
 
 }

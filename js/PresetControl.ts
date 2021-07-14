@@ -5,7 +5,7 @@ import {Preset} from "./Preset.js";
 
 
 /**
- * Manages a collection of preset controls.
+ * Manages a collection of preset controls, saves and loads values to Preset
  */
 export class PresetControl {
   controls: Record<string, Control>
@@ -13,6 +13,7 @@ export class PresetControl {
   preset: Preset;
 
   constructor() {
+    this.controls={};
     this.clear();
   }
 
@@ -21,8 +22,9 @@ export class PresetControl {
       control.destroy();
     }
     this.controls = {}
-    this.preset=new Preset();
+    this.preset = undefined;
   }
+
 
   /**
    * Add control to set

@@ -43,11 +43,11 @@ matrix1.run();
 const presetStore=new PresetStore("presets");
 
 rpc.addMethod("getFiles", () => {
-  return(presetStore.getPresets("geert"));
+  return(presetStore.getPresets());
 
 });
 
-const runner=new Runner(matrix1, presetStore);
+const runner=new Runner(matrix1);
 
 
 // @ts-ignore
@@ -55,7 +55,7 @@ rpc.addMethod("presetStore.load",  (params) => presetStore.load(...params))
 // @ts-ignore
 rpc.addMethod("presetStore.save", (params) => presetStore.save(...params))
 
-rpc.addMethod("runner.presets", () => runner.presets())
+rpc.addMethod("presetStore.getPresets", () => presetStore.getPresets())
 
 
 

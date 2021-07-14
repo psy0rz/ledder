@@ -82,7 +82,7 @@ window.addEventListener('load',
 
       let htmlPresets = new HtmlPresets();
 
-      rpc.request("runner.presets").then(presets => {
+      rpc.request("presetStore.getPresets").then(presets => {
         console.log(presets);
         htmlPresets.html(document.querySelector("#presetContainer"), presets);
 
