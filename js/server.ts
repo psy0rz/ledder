@@ -6,7 +6,7 @@ import {AnimationMatrixtest} from "./animations/AnimationMatrixtest.js";
 import {AnimationStriptest} from "./animations/AnimationStriptest.js";
 import {AnimationMovingStarsL} from "./animations/AnimationMovingStarsL.js";
 import {PresetStore} from "./PresetStore.js";
-import {Preset} from "./Preset.js";
+import {PresetControl} from "./PresetControl.js";
 
 
 

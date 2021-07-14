@@ -10,6 +10,7 @@ import ColorPicker = iro.ColorPicker;
 import $ from "jquery";
 import {AnimationMatrixtest} from "./animations/AnimationMatrixtest.js";
 import {PresetStore} from "./PresetStore.js";
+import {Pixel} from "./Pixel.js";
 // @ts-ignore
 window.$ = $;
 // @ts-ignore
@@ -17,32 +18,44 @@ window.jQuery = $;
 
 require("fomantic-ui-css/semantic");
 
+
 /** Manage list of selectable presets
  *
  */
-export class HtmlPresets
-{
+export class HtmlPresets {
 
-  html(container, presets)
-  {
+  html(container, presets: object) {
 
-    for (const [animationName, presetNames] of Object.entries(presets))
-    {
-      let element=$(`
-     <div class="ui padded  segment ">
-      <div class="ui top attached label">${animationName}</div>
-      <div class="ui labeled ticked slider"></div>
-      <button class="ui icon button">
-        <i class="undo icon"></i>
-      </button>
-    </div>
-   `);
+    for (const [animationName, animation] of Object.entries(presets)) {
+      let element = $(`
+       <div class="item">
+          <i class="folder icon"></i>
+          <div class="content">
+            <div class="header">${animation.title}</div>
+            <div class="description">${animation.description}</div>
+            <div class="list"></div>
+          </div>
+       </div>
+      `);
 
-      $(container).append(element);
+      $(container).append(element)
+      const presetContainer = $('.list', element);
 
+      for (let preset of animation.presets) {
+        console.log("chus ", preset);
+        let element = $(`
+           <div class="item">
+              <i class="folder icon"></i>
+              <div class="content">
+                <div class="header">Preset ${preset}</div>
+                <div class="description">tjus</div>
+              </div>
+           </div>
+        `);
+        presetContainer.append(element);
+
+      }
     }
-
-
   }
 }
 
@@ -67,11 +80,11 @@ window.addEventListener('load',
       // rpc.request("presetStore.load",  "geert" , "keutel" )
       //   .then( res=>console.log(res))
 
-      let htmlPresets=new HtmlPresets();
+      let htmlPresets = new HtmlPresets();
 
-      rpc.request("runner.presets").then(presets=>{
+      rpc.request("runner.presets").then(presets => {
         console.log(presets);
-        htmlPresets.html(document.querySelector("#presetContainer"), presets );
+        htmlPresets.html(document.querySelector("#presetContainer"), presets);
 
       })
       // htmlPresets.reload().then(res=>console.log(res));

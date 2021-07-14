@@ -29,6 +29,7 @@ export class Control
 
   save()
   {
+    return {}
 
   }
 
