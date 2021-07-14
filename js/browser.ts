@@ -17,10 +17,30 @@ window.jQuery = $;
 
 require("fomantic-ui-css/semantic");
 
+/** Manage list of selectable presets
+ *
+ */
+export class HtmlPresets
+{
+  container: HTMLElement;
+  rpc: RpcClient;
+
+  constructor (container, rpc )
+  {
+    this.container=container;
+    this.rpc=rpc;
+    this.reload();
+  }
+
+  async reload()
+  {
+    let presets=await this.rpc.request("runner.presets");
+
+  }
+}
 
 window.addEventListener('load',
   () => {
-    console.log("loaded");
     const container = document.querySelector('#container') as HTMLElement;
     const menu = document.querySelector('#menu') as HTMLElement;
 
@@ -36,7 +56,9 @@ window.addEventListener('load',
       //   }
       // );
 
-      rpc.request("presets", [ 4,5,6]).then(res=>console.log(res))
+
+      rpc.request("presetStore.load",  "geert" , "keutel" )
+        .then( res=>console.log(res))
 
     });
   })

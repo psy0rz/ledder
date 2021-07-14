@@ -58,7 +58,7 @@ export class RpcServer extends Rpc {
     this.serverAndClient.addMethod(name, method);
   }
 
-  request(name, params)
+  request(name, ...params)
   {
     return(this.serverAndClient.request(name, params));
   }

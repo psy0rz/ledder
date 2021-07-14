@@ -23,7 +23,6 @@ export class AnimationMovingStarsL extends Animation {
 
             //destroy star at left side
             matrix.scheduler.interval((matrix.width+2)/step.value, () => {
-              console.log("del");
                 mover.destroy(true);
                 return false;
             })

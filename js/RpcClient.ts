@@ -10,11 +10,11 @@ export class RpcClient extends Rpc {
   openHandler: () => void;
   closeHandler: () => void;
 
-  constructor(openHandler, closeHandler=undefined) {
+  constructor(openHandler, closeHandler = undefined) {
     super();
 
-    this.openHandler=openHandler;
-    this.closeHandler=closeHandler;
+    this.openHandler = openHandler;
+    this.closeHandler = closeHandler;
 
     let ws_url;
     if (location.protocol === 'http:')
@@ -40,12 +40,12 @@ export class RpcClient extends Rpc {
       this.serverAndClient.receiveAndSend(JSON.parse(event.data.toString()));
     };
 
-// On close, make sure to reject all the pending requests to prevent hanging.
+    // On close, make sure to reject all the pending requests to prevent hanging.
     webSocket.onclose = (event) => {
       this.serverAndClient.rejectAllPendingRequests(
         `Connection is closed (${event.reason}).`
       );
-      if (this.closeHandler!==undefined)
+      if (this.closeHandler !== undefined)
         this.closeHandler();
     };
 
@@ -63,8 +63,8 @@ export class RpcClient extends Rpc {
     this.serverAndClient.addMethod(name, method);
   }
 
-  request(name, params) {
-    return(this.serverAndClient.request(name, params));
+  request(name, ...params) {
+    return (this.serverAndClient.request(name, params));
   }
 
 

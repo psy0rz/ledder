@@ -50,20 +50,14 @@ rpc.addMethod("getFiles", () => {
 const runner=new Runner(matrix1, presetStore);
 
 
-rpc.addMethod("load", () => {
-  return(presetStore.load("geert", "keutel"));
+// @ts-ignore
+rpc.addMethod("presetStore.load",  (params) => presetStore.load(...params))
+// @ts-ignore
+rpc.addMethod("presetStore.save", (params) => presetStore.save(...params))
 
-});
+rpc.addMethod("runner.presets", () => runner.presets())
 
-rpc.addMethod("save", (data) => {
-  return(presetStore.save("geert", "keutel", data));
 
-});
-
-rpc.addMethod("presets", (data) => {
-  return(runner.presets());
-
-});
 
 
 

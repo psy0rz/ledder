@@ -12,6 +12,6 @@ export abstract class Rpc {
      * @param name Method name
      * @param params Parameters
      */
-    abstract request(name, params);
+    abstract request(name, ...params);
 
 }
