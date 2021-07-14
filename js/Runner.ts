@@ -6,9 +6,9 @@ export class Runner {
   matrix: Matrix
   presetStore: PresetStore
 
-  constructor(matrix:Matrix, presetStore:PresetStore) {
+  constructor(matrix: Matrix, presetStore: PresetStore) {
     this.matrix = matrix
-    this.presetStore=presetStore
+    this.presetStore = presetStore
 
   }
 
@@ -18,7 +18,7 @@ export class Runner {
    * @param animationName
    * @param presetName
    */
-  run(animationName: string, presetName:string ) {
+  run(animationName: string, presetName: string) {
     if (animationName in animations) {
       this.matrix.clear();
       new animations[animationName](this.matrix);
@@ -28,15 +28,18 @@ export class Runner {
   }
 
   /**
-   * Returns list of all animations and all preset names
+   * Returns list of all animations and all preset names in jsonable format
    */
-  async presets()
-  {
-    let ret={};
+  async presets() {
+    let ret = {};
 
-    for (const [name, animation] of Object.entries(animations))
-    {
-      ret[name]=await this.presetStore.getPresets(name);
+    for (const [name, animation] of Object.entries(animations)) {
+      ret[name] = {
+        title: animation.title,
+        description: animation.description,
+        presets: await this.presetStore.getPresets(name)
+
+      };
     }
     return (ret);
   }

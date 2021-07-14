@@ -2,6 +2,9 @@ import {Control} from "./Control.js";
 import {ControlValue} from "./ControlValue.js";
 import {ControlColor} from "./ControlColor.js";
 
+/**
+ * Manages a collection of controls.
+ */
 export class Preset {
   controls: Record<string, Control>
   htmlContainer: HTMLElement;
@@ -53,6 +56,9 @@ export class Preset {
     return this.controls[name];
   }
 
+  /**
+   * Get or create color-control with specified name
+   */
   color(name: string, r: number, g: number, b: number, a: number = 1) {
     if (!(name in this.controls)) {
       this.add(new ControlColor(name, r, g, b, a));

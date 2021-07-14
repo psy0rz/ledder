@@ -6,6 +6,10 @@ import { ControlValue } from "../ControlValue.js";
 import {ControlColor} from "../ControlColor.js";
 
 export class AnimationMovingStarsL extends Animation {
+
+    static title="Moving stars left"
+    static description="Used in nyancat :)"
+
     constructor(matrix ) {
         super(matrix);
 

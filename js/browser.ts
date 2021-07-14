@@ -22,19 +22,26 @@ require("fomantic-ui-css/semantic");
  */
 export class HtmlPresets
 {
-  container: HTMLElement;
-  rpc: RpcClient;
 
-  constructor (container, rpc )
+  html(container, presets)
   {
-    this.container=container;
-    this.rpc=rpc;
-    this.reload();
-  }
 
-  async reload()
-  {
-    let presets=await this.rpc.request("runner.presets");
+    for (const [animationName, presetNames] of Object.entries(presets))
+    {
+      let element=$(`
+     <div class="ui padded  segment ">
+      <div class="ui top attached label">${animationName}</div>
+      <div class="ui labeled ticked slider"></div>
+      <button class="ui icon button">
+        <i class="undo icon"></i>
+      </button>
+    </div>
+   `);
+
+      $(container).append(element);
+
+    }
+
 
   }
 }
@@ -57,8 +64,17 @@ window.addEventListener('load',
       // );
 
 
-      rpc.request("presetStore.load",  "geert" , "keutel" )
-        .then( res=>console.log(res))
+      // rpc.request("presetStore.load",  "geert" , "keutel" )
+      //   .then( res=>console.log(res))
+
+      let htmlPresets=new HtmlPresets();
+
+      rpc.request("runner.presets").then(presets=>{
+        console.log(presets);
+        htmlPresets.html(document.querySelector("#presetContainer"), presets );
+
+      })
+      // htmlPresets.reload().then(res=>console.log(res));
 
     });
   })
@@ -79,7 +95,7 @@ matrix.preset.enableHtml(document.querySelector("#controlContainer"));
 //   return(true);
 // });
 //
-new AnimationMovingStarsL(matrix);
+// new AnimationMovingStarsL(matrix);
 // new AnimationMatrixtest(matrix);
 matrix.run();
 //
