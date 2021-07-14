@@ -57,7 +57,7 @@ export class PresetStore {
       for (const presetName of presetNames) {
         ret[animationName].presets[presetName] = await this.load(animationName, presetName);
         //strip stuff
-
+        delete ret[animationName].presets[presetName].values;
       }
     }
     return (ret);

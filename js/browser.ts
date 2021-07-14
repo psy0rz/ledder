@@ -24,9 +24,8 @@ require("fomantic-ui-css/semantic");
  */
 export class HtmlPresets {
 
-  html(container, presets: object) {
-
-    for (const [animationName, animation] of Object.entries(presets)) {
+  html(container, animations: object) {
+    for (const [animationName, animation] of Object.entries(animations)) {
       let element = $(`
        <div class="item">
           <i class="folder icon"></i>
@@ -37,18 +36,17 @@ export class HtmlPresets {
           </div>
        </div>
       `);
-
       $(container).append(element)
+
       const presetContainer = $('.list', element);
 
-      for (let preset of animation.presets) {
-        console.log("chus ", preset);
+      for (const [presetName, preset] of Object.entries(animation.presets as object)) {
         let element = $(`
            <div class="item">
               <i class="folder icon"></i>
               <div class="content">
-                <div class="header">Preset ${preset}</div>
-                <div class="description">tjus</div>
+                <div class="header">${preset.title}</div>
+                <div class="description">${preset.description}</div>
               </div>
            </div>
         `);
