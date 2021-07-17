@@ -64,7 +64,14 @@ export class RpcClient extends Rpc {
   }
 
   request(name, ...params) {
-    return (this.serverAndClient.request(name, params));
+    try {
+
+      return (this.serverAndClient.request(name, params));
+    }
+    catch(e)
+    {
+      console.error("hier" , e);
+    }
   }
 
 

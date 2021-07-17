@@ -1,27 +1,31 @@
 import $ from "jquery";
+import {progressDone, progressStart} from "./util.js";
 
 /** Manage list of clickable presets
  *
  */
 export class HtmlPresets {
 
-    selector: string
+  selector: string
 
-    constructor(selector, callback) {
-        this.selector = selector;
+  constructor(selector, callback) {
+    this.selector = selector;
 
-        $("#presetContainer").on('click', '.item', (e) => {
-            e.stopPropagation();
-            callback(e.currentTarget.dataset.animation, e.currentTarget.dataset.preset);
-        })
+    $(selector).on('click', '.item', (e) => {
+      progressStart();
+      e.stopPropagation();
+      callback(e.currentTarget.dataset.animation, e.currentTarget.dataset.preset).finally((e) => {
+        progressDone();
+      })
+    });
 
-    }
+  }
 
-    update(animations: object) {
-        $(this.selector).empty();
+  update(animations: object) {
+    $(this.selector).empty();
 
-        for (const [animationName, animation] of Object.entries(animations)) {
-            let element = $(`
+    for (const [animationName, animation] of Object.entries(animations)) {
+      let element = $(`
        <div class="item" data-animation="${animationName}">
           <i class="folder icon"></i>
           <div class="content">
@@ -31,12 +35,12 @@ export class HtmlPresets {
           </div>
        </div>
       `);
-            $(this.selector).append(element)
+      $(this.selector).append(element)
 
-            const presetContainer = $('.list', element);
+      const presetContainer = $('.list', element);
 
-            for (const [presetName, preset] of Object.entries(animation.presets as object)) {
-                let element = $(`
+      for (const [presetName, preset] of Object.entries(animation.presets as object)) {
+        let element = $(`
            <div class="item" data-animation="${animationName}" data-preset="${presetName}">
 <!--              <div class="right floated content">-->
 <!--                   <div class="ui button">play</div>-->
@@ -48,9 +52,9 @@ export class HtmlPresets {
               </div>
            </div>
         `);
-                presetContainer.append(element);
+        presetContainer.append(element);
 
-            }
-        }
+      }
     }
+  }
 }

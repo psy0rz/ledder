@@ -1,11 +1,11 @@
 import {MatrixCanvas} from "./MatrixCanvas.js";
 import {RpcClient} from "./RpcClient.js";
 import {Scheduler} from "./Scheduler.js";
-import iro from "@jaames/iro";
 
 //jquery
 import $ from "jquery";
 import {HtmlPresets} from "./HtmlPresets.js";
+import {error, progressStart} from "./util.js";
 // @ts-ignore
 window.$ = $;
 // @ts-ignore
@@ -16,15 +16,12 @@ require("fomantic-ui-css/semantic");
 
 let rpc;
 
-async function run(animationName, presetName)
-{
-  try
-  {
+async function run(animationName, presetName) {
+  try {
     await rpc.request("runner.run", animationName, presetName);
-  }
-  catch (e)
-  {
-    console.error(e);
+    console.log("klar");
+  } catch (e) {
+    error("Can't start animation", e);
   }
 }
 
@@ -36,8 +33,7 @@ window.addEventListener('load',
     container.style.paddingTop = menu.offsetHeight + "px";
 
 
-
-     rpc = new RpcClient(() => {
+    rpc = new RpcClient(() => {
 
       let scheduler = new Scheduler();
       let matrix = new MatrixCanvas(scheduler, 37, 8, '#matrix', 5, 16);

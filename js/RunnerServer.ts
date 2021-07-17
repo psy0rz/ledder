@@ -22,7 +22,9 @@ export class RunnerServer {
    * @param animationName
    * @param presetName
    */
-  run(animationName: string, presetName: string) {
+  async run(animationName: string, presetName: string) {
+
+
     if (animationName in animations) {
       console.log("Runner: starting", animationName, presetName)
       this.matrix.clear()
