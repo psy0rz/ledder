@@ -6,6 +6,10 @@
   "license": "GPL",
   "author": "",
   "type": "module",
+  "browserslist": [
+    "last 1 Chrome version",
+    "last 1 firefox version"
+  ],
   "scripts": {
     "build": "parcel build index.html server.ts",
     "dev": "parcel index.html --open",

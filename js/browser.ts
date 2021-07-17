@@ -1,16 +1,11 @@
 import {MatrixCanvas} from "./MatrixCanvas.js";
 import {RpcClient} from "./RpcClient.js";
 import {Scheduler} from "./Scheduler.js";
-import {Runner} from "./Runner.js";
-import {AnimationMovingStarsL} from "./animations/AnimationMovingStarsL.js";
 import iro from "@jaames/iro";
-import ColorPicker = iro.ColorPicker;
 
 //jquery
 import $ from "jquery";
-import {AnimationMatrixtest} from "./animations/AnimationMatrixtest.js";
-import {PresetStore} from "./PresetStore.js";
-import {Pixel} from "./Pixel.js";
+import {HtmlPresets} from "./HtmlPresets.js";
 // @ts-ignore
 window.$ = $;
 // @ts-ignore
@@ -19,42 +14,13 @@ window.jQuery = $;
 require("fomantic-ui-css/semantic");
 
 
-/** Manage list of selectable presets
- *
- */
-export class HtmlPresets {
+let rpc;
 
-  html(container, animations: object) {
-    for (const [animationName, animation] of Object.entries(animations)) {
-      let element = $(`
-       <div class="item">
-          <i class="folder icon"></i>
-          <div class="content">
-            <div class="header">${animation.title}</div>
-            <div class="description">${animation.description}</div>
-            <div class="list"></div>
-          </div>
-       </div>
-      `);
-      $(container).append(element)
+async function test(animationName, presetName)
+{
+  let preset=await rpc.request("presetStore.load", animationName, presetName);
+  console.log(preset);
 
-      const presetContainer = $('.list', element);
-
-      for (const [presetName, preset] of Object.entries(animation.presets as object)) {
-        let element = $(`
-           <div class="item">
-              <i class="folder icon"></i>
-              <div class="content">
-                <div class="header">${preset.title}</div>
-                <div class="description">${preset.description}</div>
-              </div>
-           </div>
-        `);
-        presetContainer.append(element);
-
-      }
-    }
-  }
 }
 
 window.addEventListener('load',
@@ -64,7 +30,9 @@ window.addEventListener('load',
 
     container.style.paddingTop = menu.offsetHeight + "px";
 
-    let rpc = new RpcClient(() => {
+
+
+     rpc = new RpcClient(() => {
       // rpc.request("getFiles", {}).then((res) => {
       //   console.log("result", res);
       // });
@@ -78,25 +46,34 @@ window.addEventListener('load',
       // rpc.request("presetStore.load",  "geert" , "keutel" )
       //   .then( res=>console.log(res))
 
-      let htmlPresets = new HtmlPresets();
+      let scheduler = new Scheduler();
+      let matrix = new MatrixCanvas(scheduler, 37, 8, '#matrix', 5, 16);
+      matrix.preset.enableHtml(document.querySelector("#controlContainer"));
+      matrix.run();
 
       rpc.request("presetStore.getPresets").then(presets => {
-        console.log(presets);
-        htmlPresets.html(document.querySelector("#presetContainer"), presets);
-
+        htmlPresets.update(presets);
       })
-      // htmlPresets.reload().then(res=>console.log(res));
+
+
+
+
+      let htmlPresets = new HtmlPresets("#presetContainer", test);
+      // (animationName, presetName) => {
+      //   test();
+        // rpc.request("presetStore.load", animationName, presetName).then((result)=>{
+        //  console.log(result);
+        // })
+
+      // })
+
+
+
 
     });
   })
 
 
-let scheduler = new Scheduler();
-//
-//
-let matrix = new MatrixCanvas(scheduler, 37, 8, '#matrix', 5, 16);
-
-matrix.preset.enableHtml(document.querySelector("#controlContainer"));
 
 // scheduler.interval(60, () => {
 //   console.log("chop");
@@ -108,7 +85,6 @@ matrix.preset.enableHtml(document.querySelector("#controlContainer"));
 //
 // new AnimationMovingStarsL(matrix);
 // new AnimationMatrixtest(matrix);
-matrix.run();
 //
 
 // const runner=new Runner(matrix);
