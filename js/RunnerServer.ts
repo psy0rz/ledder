@@ -1,7 +1,6 @@
 import {Matrix} from "./Matrix.js";
 import * as animations from "./animations/all.js";
 import {PresetStore} from "./PresetStore.js";
-import {PresetControl} from "./PresetControl.js";
 
 /**
  * Server side runner
@@ -36,3 +35,4 @@ export class RunnerServer {
       return false
   }
 }
+

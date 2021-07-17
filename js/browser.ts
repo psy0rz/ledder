@@ -6,6 +6,7 @@ import {Scheduler} from "./Scheduler.js";
 import $ from "jquery";
 import {HtmlPresets} from "./HtmlPresets.js";
 import {error, progressReset, progressStart} from "./util.js";
+import {RunnerBrowser} from "./RunnerBrowser.js";
 // @ts-ignore
 window.$ = $;
 // @ts-ignore
@@ -15,9 +16,11 @@ require("fomantic-ui-css/semantic");
 
 
 let rpc;
+let runnerBrowser;
 
 async function run(animationName, presetName) {
   try {
+    runnerBrowser.run(animationName, presetName);
     await rpc.request("runner.run", animationName, presetName);
     console.log("klar");
   } catch (e) {
@@ -32,17 +35,18 @@ window.addEventListener('load',
 
     container.style.paddingTop = menu.offsetHeight + "px";
 
+    let scheduler = new Scheduler();
+    let matrix = new MatrixCanvas(scheduler, 37, 8, '#matrix', 5, 16);
+    matrix.preset.enableHtml(document.querySelector("#controlContainer"));
+    matrix.run();
+
+    runnerBrowser = new RunnerBrowser(matrix, rpc);
+
     let htmlPresets = new HtmlPresets("#presetContainer", run);
 
-    let matrix;
     rpc = new RpcClient(() => {
 
       progressReset();
-
-      let scheduler = new Scheduler();
-      matrix = new MatrixCanvas(scheduler, 37, 8, '#matrix', 5, 16);
-      matrix.preset.enableHtml(document.querySelector("#controlContainer"));
-      matrix.run();
 
       rpc.request("presetStore.getPresets").then(presets => {
         htmlPresets.update(presets);
