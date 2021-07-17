@@ -11,6 +11,8 @@ export class PresetControl {
   controls: Record<string, Control>
   htmlContainer: HTMLElement;
   preset: Preset;
+  valueChangedCallback: (control: Control)=>void
+
 
   constructor() {
     this.controls={};
@@ -40,7 +42,7 @@ export class PresetControl {
 
     //html generation enabled?
     if (this.htmlContainer!==undefined)
-      control.html(this.htmlContainer);
+      control.html(this.htmlContainer, this.valueChangedCallback);
   }
 
   /**
@@ -74,9 +76,10 @@ export class PresetControl {
   /**
    * Enable generating actual html controls in specified container.
    */
-  enableHtml(container: HTMLElement) {
+  enableHtml(container: HTMLElement,   changedCallback: (control: Control)=>void) {
 
     this.htmlContainer = container;
+    this.valueChangedCallback=changedCallback;
   }
 
   /**

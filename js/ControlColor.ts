@@ -22,7 +22,9 @@ export class ControlColor extends Control implements ColorInterface {
   }
 
 
-  html(container: HTMLElement) {
+  html(container: HTMLElement, changedCallback) {
+
+    super.html(container, changedCallback);
 
     this.jqueryElement = $(`
      <div class="ui padded  segment ">
@@ -47,6 +49,7 @@ export class ControlColor extends Control implements ColorInterface {
       this.g = color.rgba.g;
       this.b = color.rgba.b;
       this.a = color.rgba.a;
+      this.changed();
 
     });
 

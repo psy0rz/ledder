@@ -1,6 +1,7 @@
 import {Matrix} from "./Matrix.js";
 import {RpcClient} from "./RpcClient.js";
 import * as animations from "./animations/all.js";
+import {Control} from "./Control.js";
 
 /**
  * Browser side runner
@@ -27,6 +28,18 @@ export class RunnerBrowser {
   }
 
   /**
+   * Called when a value of a preset control has been changed.
+   * @param control
+   */
+  async valueChanged(control: Control)
+  {
+    if (this.live)
+    {
+      await this.rpc.request("runner.setValue", control.name, control.save());
+    }
+  }
+
+  /**
    * Runs specified animation with specified preset
    *
    * @param animationName
@@ -44,7 +57,9 @@ export class RunnerBrowser {
       this.animationName = animationName
       new animations[animationName](this.matrix)
 
-      await this.send();
+      if (this.live)
+        await this.send();
+
       return true
     } else
       return false

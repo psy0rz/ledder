@@ -35,7 +35,6 @@ window.addEventListener('load',
 
     let scheduler = new Scheduler();
     let matrix = new MatrixCanvas(scheduler, 37, 8, '#matrix', 5, 16);
-    matrix.preset.enableHtml(document.querySelector("#controlContainer"));
     matrix.run();
 
     let htmlPresets = new HtmlPresets("#presetContainer", run);
@@ -53,6 +52,7 @@ window.addEventListener('load',
     });
 
     runnerBrowser = new RunnerBrowser(matrix, rpc);
+    matrix.preset.enableHtml(document.querySelector("#controlContainer"));
 
     $("#send-once").on('click', ()=>{
       runnerBrowser.send();

@@ -7,6 +7,7 @@ import {Matrix} from "./Matrix.js";
 export class Control
 {
   name: string;
+  changedCallback: (control: Control)=>void
 
   constructor(name) {
     this.name=name;
@@ -16,9 +17,11 @@ export class Control
   /**
    * Generate html code for this control and enable browser interaction.
    * @param container
+   * @param changedCallback
    */
-  html(container: HTMLElement)
+  html(container: HTMLElement, changedCallback)
   {
+    this.changedCallback=changedCallback;
 
   }
 
@@ -35,6 +38,13 @@ export class Control
 
   load(values)
   {
+
+  }
+
+  changed()
+  {
+    if (this.changedCallback!==undefined):
+      this.changedCallback(this);
 
   }
 

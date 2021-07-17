@@ -28,7 +28,9 @@ export class ControlValue extends Control {
 
   }
 
-  html(container: HTMLElement) {
+  html(container: HTMLElement, changedCallback) {
+
+    super.html(container, changedCallback);
 
     this.jqueryElement=$(`
      <div class="ui padded  segment ">
@@ -51,6 +53,7 @@ export class ControlValue extends Control {
       onMove: (value)=>
       {
         this.value=value;
+        this.changed();
       }
 
     });
