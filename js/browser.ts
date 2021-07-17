@@ -18,9 +18,14 @@ let rpc;
 
 async function run(animationName, presetName)
 {
-  // let preset=await rpc.request("presetStore.load", animationName, presetName);
-  await rpc.request("runner.run", animationName, presetName);
-
+  try
+  {
+    await rpc.request("runner.run", animationName, presetName);
+  }
+  catch (e)
+  {
+    console.error(e);
+  }
 }
 
 window.addEventListener('load',
@@ -33,18 +38,6 @@ window.addEventListener('load',
 
 
      rpc = new RpcClient(() => {
-      // rpc.request("getFiles", {}).then((res) => {
-      //   console.log("result", res);
-      // });
-      //
-      // rpc.request("load", {}).then((res) => {
-      //     console.log("result load", res)
-      //   }
-      // );
-
-
-      // rpc.request("presetStore.load",  "geert" , "keutel" )
-      //   .then( res=>console.log(res))
 
       let scheduler = new Scheduler();
       let matrix = new MatrixCanvas(scheduler, 37, 8, '#matrix', 5, 16);
@@ -55,60 +48,7 @@ window.addEventListener('load',
         htmlPresets.update(presets);
       })
 
-
-
-
       let htmlPresets = new HtmlPresets("#presetContainer", run);
-      // (animationName, presetName) => {
-      //   test();
-        // rpc.request("presetStore.load", animationName, presetName).then((result)=>{
-        //  console.log(result);
-        // })
-
-      // })
-
-
-
 
     });
   })
-
-
-
-// scheduler.interval(60, () => {
-//   console.log("chop");
-//   scheduler.status();
-//   matrix.status();
-//   console.log(matrix.controlSet.controls);
-//   return(true);
-// });
-//
-// new AnimationMovingStarsL(matrix);
-// new AnimationMatrixtest(matrix);
-//
-
-// const runner=new Runner(matrix);
-//
-//
-// function bam(category, name)
-// {
-//   runner.run( name);
-//   rpc.request("run", { name });
-//
-// }
-
-// let rpc=new RpcClient(()=>
-// {
-//   bam("tests", "AnimationMovingStarsL");
-//
-// });
-
-// runner.run( "AnimationMovingStarsL");
-
-
-// ColorPicker(".color1", {});
-// ColorPicker(".color2", {});
-
-// @ts-ignore
-// $('.ui.slider').slider();
-
