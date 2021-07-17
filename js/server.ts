@@ -1,7 +1,7 @@
 import {Scheduler} from "./Scheduler.js";
 import {MatrixWLED} from "./MatrixWLED.js";
 import {RpcServer} from "./RpcServer.js";
-import {Runner} from "./Runner.js";
+import {RunnerServer} from "./RunnerServer.js";
 import {AnimationMatrixtest} from "./animations/AnimationMatrixtest.js";
 import {AnimationStriptest} from "./animations/AnimationStriptest.js";
 import {AnimationMovingStarsL} from "./animations/AnimationMovingStarsL.js";
@@ -41,21 +41,19 @@ matrix1.run();
 // });
 
 const presetStore=new PresetStore("presets");
-
-rpc.addMethod("getFiles", () => {
-  return(presetStore.getPresets());
-
-});
-
-const runner=new Runner(matrix1);
+const runner = new RunnerServer(matrix1, presetStore);
 
 
+//RPC bindings
+
+rpc.addMethod("presetStore.getPresets", () => presetStore.getPresets())
 // @ts-ignore
 rpc.addMethod("presetStore.load",  (params) => presetStore.load(...params))
 // @ts-ignore
 rpc.addMethod("presetStore.save", (params) => presetStore.save(...params))
+// @ts-ignore
+rpc.addMethod("runner.run", (params) => runner.run(...params))
 
-rpc.addMethod("presetStore.getPresets", () => presetStore.getPresets())
 
 
 

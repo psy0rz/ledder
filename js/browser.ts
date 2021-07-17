@@ -16,10 +16,10 @@ require("fomantic-ui-css/semantic");
 
 let rpc;
 
-async function test(animationName, presetName)
+async function run(animationName, presetName)
 {
-  let preset=await rpc.request("presetStore.load", animationName, presetName);
-  console.log(preset);
+  // let preset=await rpc.request("presetStore.load", animationName, presetName);
+  await rpc.request("runner.run", animationName, presetName);
 
 }
 
@@ -58,7 +58,7 @@ window.addEventListener('load',
 
 
 
-      let htmlPresets = new HtmlPresets("#presetContainer", test);
+      let htmlPresets = new HtmlPresets("#presetContainer", run);
       // (animationName, presetName) => {
       //   test();
         // rpc.request("presetStore.load", animationName, presetName).then((result)=>{

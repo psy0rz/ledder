@@ -22,7 +22,7 @@ export class PresetControl {
       control.destroy();
     }
     this.controls = {}
-    this.preset = undefined;
+    this.preset = new Preset();
   }
 
 
