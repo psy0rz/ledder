@@ -6,6 +6,10 @@ import {AnimationMove} from "../AnimationMove.js";
 import {Color} from "../Color.js";
 
 export class AnimationStriptest extends Animation {
+
+  static title="Strip test"
+  static description="To verify functionality of a led strip."
+
   constructor(matrix: Matrix) {
     super(matrix);
 

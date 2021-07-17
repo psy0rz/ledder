@@ -16,6 +16,13 @@ export class RpcClient extends Rpc {
     this.openHandler = openHandler;
     this.closeHandler = closeHandler;
 
+    this.connect();
+  }
+
+  connect()
+  {
+    console.log("startt")
+
     let ws_url;
     if (location.protocol === 'http:')
       ws_url = "ws://" + location.host + "/ws";
@@ -45,8 +52,13 @@ export class RpcClient extends Rpc {
       this.serverAndClient.rejectAllPendingRequests(
         `Connection is closed (${event.reason}).`
       );
+
+      console.log("disc")
+      setTimeout(()=> this.connect(), 1000);
+
       if (this.closeHandler !== undefined)
         this.closeHandler();
+
     };
 
     this.serverAndClient.addMethod("echo", (text) => {

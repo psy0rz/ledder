@@ -32,3 +32,10 @@ export function progressDone()
     $("#loader").removeClass("active");
   }
 }
+
+export function progressReset()
+{
+  loaders=0;
+  $("#loader").removeClass("active");
+
+}

@@ -5,7 +5,7 @@ import {Scheduler} from "./Scheduler.js";
 //jquery
 import $ from "jquery";
 import {HtmlPresets} from "./HtmlPresets.js";
-import {error, progressStart} from "./util.js";
+import {error, progressReset, progressStart} from "./util.js";
 // @ts-ignore
 window.$ = $;
 // @ts-ignore
@@ -32,11 +32,15 @@ window.addEventListener('load',
 
     container.style.paddingTop = menu.offsetHeight + "px";
 
+    let htmlPresets = new HtmlPresets("#presetContainer", run);
 
+    let matrix;
     rpc = new RpcClient(() => {
 
+      progressReset();
+
       let scheduler = new Scheduler();
-      let matrix = new MatrixCanvas(scheduler, 37, 8, '#matrix', 5, 16);
+      matrix = new MatrixCanvas(scheduler, 37, 8, '#matrix', 5, 16);
       matrix.preset.enableHtml(document.querySelector("#controlContainer"));
       matrix.run();
 
@@ -44,7 +48,9 @@ window.addEventListener('load',
         htmlPresets.update(presets);
       })
 
-      let htmlPresets = new HtmlPresets("#presetContainer", run);
 
+    }, () => {
+      matrix.clear();
     });
+
   })
