@@ -21,8 +21,6 @@ let runnerBrowser;
 async function run(animationName, presetName) {
   try {
     runnerBrowser.run(animationName, presetName);
-    await rpc.request("runner.run", animationName, presetName);
-    console.log("klar");
   } catch (e) {
     error("Can't start animation", e);
   }
@@ -40,8 +38,6 @@ window.addEventListener('load',
     matrix.preset.enableHtml(document.querySelector("#controlContainer"));
     matrix.run();
 
-    runnerBrowser = new RunnerBrowser(matrix, rpc);
-
     let htmlPresets = new HtmlPresets("#presetContainer", run);
 
     rpc = new RpcClient(() => {
@@ -52,9 +48,21 @@ window.addEventListener('load',
         htmlPresets.update(presets);
       })
 
-
     }, () => {
       matrix.clear();
+    });
+
+    runnerBrowser = new RunnerBrowser(matrix, rpc);
+
+    $("#send-once").on('click', ()=>{
+      runnerBrowser.send();
+    });
+
+    $("#send-live").on('click', ()=>{
+      runnerBrowser.live=!runnerBrowser.live;
+      $("#send-once").toggleClass("disabled");
+      $("#send-live").toggleClass("red");
+      runnerBrowser.send();
     });
 
   })

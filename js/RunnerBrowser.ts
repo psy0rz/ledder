@@ -6,32 +6,47 @@ import * as animations from "./animations/all.js";
  * Browser side runner
  */
 export class RunnerBrowser {
-    matrix: Matrix
-    rpc: RpcClient
+  matrix: Matrix
+  rpc: RpcClient
+  animationName: string
+  live: boolean;
 
-    constructor(matrix: Matrix, rpc: RpcClient) {
-        this.matrix = matrix
-        this.rpc = rpc;
+  constructor(matrix: Matrix, rpc: RpcClient) {
+    this.matrix = matrix
+    this.rpc = rpc;
+    this.live=false;
 
-    }
+  }
 
-    /**
-     * Runs specified animation with specified preset
-     *
-     * @param animationName
-     * @param presetName
-     */
-    async run(animationName: string, presetName: string) {
+  /** Send current running animation and preset to server
+   *
+   */
+  async send() {
+
+    await this.rpc.request("runner.run", this.animationName, this.matrix.preset.save());
+  }
+
+  /**
+   * Runs specified animation with specified preset
+   *
+   * @param animationName
+   * @param presetName
+   */
+  async run(animationName: string, presetName: string) {
 
 
-        if (animationName in animations) {
-            console.log("Runner: starting", animationName, presetName)
-            this.matrix.clear()
-            if (presetName)
-                this.matrix.preset.load(await this.rpc.request("presetStore.load", animationName, presetName));
-            new animations[animationName](this.matrix)
-            return true
-        } else
-            return false
-    }
+    if (animationName in animations) {
+      console.log("Runner: starting", animationName, presetName)
+      this.matrix.clear()
+      if (presetName)
+        this.matrix.preset.load(await this.rpc.request("presetStore.load", animationName, presetName));
+
+      this.animationName = animationName
+      new animations[animationName](this.matrix)
+
+      await this.send();
+      return true
+    } else
+      return false
+  }
 }
