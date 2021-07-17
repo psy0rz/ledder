@@ -17,6 +17,7 @@ export abstract class Matrix extends PixelContainer {
   protected constructor(scheduler, width, height) {
     super();
     this.scheduler=scheduler;
+    //note: named preset instead of presetControl to make it more friendly for enduser
     this.preset=new PresetControl();
 
     this.width = width;

@@ -27,17 +27,7 @@ export class RunnerBrowser {
     await this.rpc.request("runner.run", this.animationName, this.matrix.preset.save());
   }
 
-  /**
-   * Called when a value of a preset control has been changed.
-   * @param control
-   */
-  async valueChanged(control: Control)
-  {
-    if (this.live)
-    {
-      await this.rpc.request("runner.setValue", control.name, control.save());
-    }
-  }
+
 
   /**
    * Runs specified animation with specified preset

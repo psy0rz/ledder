@@ -52,7 +52,10 @@ window.addEventListener('load',
     });
 
     runnerBrowser = new RunnerBrowser(matrix, rpc);
-    matrix.preset.enableHtml(document.querySelector("#controlContainer"));
+    matrix.preset.enableHtml(document.querySelector("#controlContainer"), (controlName, values)=>{
+      if (runnerBrowser.live)
+        rpc.request("matrix.preset.updateValue", controlName, values)
+    });
 
     $("#send-once").on('click', ()=>{
       runnerBrowser.send();

@@ -6,7 +6,7 @@
 import * as path from "path";
 import {readFile, writeFile} from "fs/promises";
 import glob from "glob-promise";
-import {Preset} from "./Preset.js";
+import {PresetValues} from "./PresetValues.js";
 import * as animations from "./animations/all.js";
 
 
@@ -35,7 +35,7 @@ export class PresetStore {
     return JSON.parse(await readFile(this.presetFilename(animationName, presetName), 'utf8'))
   }
 
-  save(animationName: string, presetName: string, preset: Preset) {
+  save(animationName: string, presetName: string, preset: PresetValues) {
     return writeFile(this.presetFilename(animationName, presetName), JSON.stringify(preset, undefined, ' '), 'utf8')
   }
 

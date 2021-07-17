@@ -1,7 +1,7 @@
-/** Actual preset-data
+/** Actual preset-values
  * (jsonable)
  */
-export class Preset {
+export class PresetValues {
     values: Record<string, Record<string, any>>
     title: string;
     description: string;

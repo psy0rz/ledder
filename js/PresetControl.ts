@@ -1,7 +1,7 @@
 import {Control} from "./Control.js";
 import {ControlValue} from "./ControlValue.js";
 import {ControlColor} from "./ControlColor.js";
-import {Preset} from "./Preset.js";
+import {PresetValues} from "./PresetValues.js";
 
 
 /**
@@ -10,8 +10,8 @@ import {Preset} from "./Preset.js";
 export class PresetControl {
   controls: Record<string, Control>
   htmlContainer: HTMLElement;
-  preset: Preset;
-  valueChangedCallback: (control: Control)=>void
+  presetValues: PresetValues;
+  valuesChangedCallback: (controlName, values)=>void
 
 
   constructor() {
@@ -24,7 +24,7 @@ export class PresetControl {
       control.destroy();
     }
     this.controls = {}
-    this.preset = new Preset();
+    this.presetValues = new PresetValues();
   }
 
 
@@ -37,12 +37,12 @@ export class PresetControl {
     this.controls[control.name]=control;
 
     //already has a preset in values?
-    if (control.name in this.preset.values)
-      control.load(this.preset.values[control.name]);
+    if (control.name in this.presetValues.values)
+      control.load(this.presetValues.values[control.name]);
 
     //html generation enabled?
     if (this.htmlContainer!==undefined)
-      control.html(this.htmlContainer, this.valueChangedCallback);
+      control.html(this.htmlContainer, this.valuesChangedCallback);
   }
 
   /**
@@ -76,10 +76,10 @@ export class PresetControl {
   /**
    * Enable generating actual html controls in specified container.
    */
-  enableHtml(container: HTMLElement,   changedCallback: (control: Control)=>void) {
+  enableHtml(container: HTMLElement,   changedCallback: (controlName, values)=>void) {
 
     this.htmlContainer = container;
-    this.valueChangedCallback=changedCallback;
+    this.valuesChangedCallback=changedCallback;
   }
 
   /**
@@ -90,10 +90,10 @@ export class PresetControl {
   {
     for (const [name, control] of Object.entries(this.controls))
     {
-      this.preset.values[name]=control.save();
+      this.presetValues.values[name]=control.save();
     }
 
-    return this.preset
+    return this.presetValues
   }
 
   /**
@@ -102,12 +102,24 @@ export class PresetControl {
    */
   load(preset)
   {
-    this.preset=preset;
+    this.presetValues=preset;
 
     for (const [name, control] of Object.entries(this.controls))
     {
-      if (name in this.preset.values)
-        control.load(this.preset.values[name]);
+      if (name in this.presetValues.values)
+        control.load(this.presetValues.values[name]);
     }
   }
+
+  /**
+   * Update values of a specific controlled. (called by browser to update server)
+   * @param controlName
+   * @param values
+   */
+  updateValue(controlName, values)
+  {
+    this.presetValues.values[controlName]=values;
+    this.controls[controlName].load(values);
+  }
+
 }

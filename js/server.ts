@@ -54,6 +54,9 @@ rpc.addMethod("presetStore.save", (params) => presetStore.save(...params))
 // @ts-ignore
 rpc.addMethod("runner.run", (params) => runner.run(...params))
 
+//todo: make multi-matrix
+// @ts-ignore
+rpc.addMethod("matrix.preset.updateValue", (params) => matrix1.preset.updateValue(...params))
 
 
 

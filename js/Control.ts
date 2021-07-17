@@ -7,7 +7,7 @@ import {Matrix} from "./Matrix.js";
 export class Control
 {
   name: string;
-  changedCallback: (control: Control)=>void
+  changedCallback: (controlName, values)=>void
 
   constructor(name) {
     this.name=name;
@@ -43,8 +43,8 @@ export class Control
 
   changed()
   {
-    if (this.changedCallback!==undefined):
-      this.changedCallback(this);
+    if (this.changedCallback!==undefined)
+      this.changedCallback(this.name, this.save());
 
   }
 

@@ -1,7 +1,7 @@
 import {Matrix} from "./Matrix.js";
 import * as animations from "./animations/all.js";
 import {PresetStore} from "./PresetStore.js";
-import {Preset} from "./Preset.js";
+import {PresetValues} from "./PresetValues.js";
 
 /**
  * Server side runner
@@ -22,7 +22,7 @@ export class RunnerServer {
    * @param animationName
    * @param preset
    */
-  async run(animationName: string, preset: Preset) {
+  async run(animationName: string, preset: PresetValues) {
 
 
     if (animationName in animations) {
