@@ -25,6 +25,13 @@ export class PresetControl {
     }
     this.controls = {}
     this.presetValues = new PresetValues();
+
+    if (this.htmlContainer!==undefined)
+    {
+      $(".control-counter").text(0);
+      $(".toggle-controls").addClass("disabled");
+    }
+
   }
 
 
@@ -42,7 +49,11 @@ export class PresetControl {
 
     //html generation enabled?
     if (this.htmlContainer!==undefined)
+    {
       control.html(this.htmlContainer, this.valuesChangedCallback);
+      $(".control-counter").text(Object.keys(this.controls).length);
+      $(".toggle-controls").removeClass("disabled");
+    }
   }
 
   /**

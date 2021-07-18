@@ -27,8 +27,6 @@ export class RunnerBrowser {
     await this.rpc.request("runner.run", this.animationName, this.matrix.preset.save());
   }
 
-
-
   /**
    * Runs specified animation with specified preset
    *

@@ -70,7 +70,12 @@ window.addEventListener('load',
       runnerBrowser.send();
     });
 
-    // $("#controls-page").hide();
+    $(".toggle-controls").on('click', ()=>{
+      $("#controls-page").toggle();
+      $("#animation-page").toggle();
+    });
+    $("#controls-page").hide();
+
 
 
 
