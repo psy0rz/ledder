@@ -73,6 +73,8 @@ window.addEventListener('load',
     $(".toggle-controls").on('click', ()=>{
       $("#controls-page").toggle();
       $("#animation-page").toggle();
+      $(window).trigger("resize");
+
     });
     $("#controls-page").hide();
 
