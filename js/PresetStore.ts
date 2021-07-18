@@ -20,22 +20,25 @@ export class PresetStore {
   /**
    * Get all presetnames for specified animation
    */
-  async getPresetNames(animationName: string) {
-    const pattern = path.join(this.presetPath, animationName, "*.json");
-
+  async getPresetNames(presetDir: string) {
+    const pattern = path.join(this.presetPath, presetDir, "*.json");
     let names = [];
     for (const file of await glob(pattern)) {
       names.push(path.basename(file, ".json"))
     }
-
     return names
   }
 
-  async load(animationName: string, presetName: string) {
-    return JSON.parse(await readFile(this.presetFilename(animationName, presetName), 'utf8'))
+  /**
+   * Return preset in PresetValues format
+   * @param presetDir
+   * @param presetName
+   */
+  async load(presetDir: string, presetName: string) {
+    return JSON.parse(await readFile(this.presetFilename(presetDir, presetName), 'utf8'))
   }
 
-  save(animationName: string, presetName: string, preset: PresetValues) {
+  async save(animationName: string, presetName: string, preset: PresetValues) {
     return writeFile(this.presetFilename(animationName, presetName), JSON.stringify(preset, undefined, ' '), 'utf8')
   }
 
@@ -53,18 +56,18 @@ export class PresetStore {
         presets: {}
       };
 
-      const presetNames = await this.getPresetNames(animationName)
+      const presetNames = await this.getPresetNames(animation.presetDir)
       for (const presetName of presetNames) {
-        ret[animationName].presets[presetName] = await this.load(animationName, presetName);
-        //strip stuff
+        ret[animationName].presets[presetName] = await this.load(animation.presetDir, presetName);
+        //strip stuff to keep it smaller
         delete ret[animationName].presets[presetName].values;
       }
     }
     return (ret);
   }
 
-  private presetFilename(animationName: string, presetName: string) {
-    return (path.join(this.presetPath, animationName, presetName + ".json"));
+  private presetFilename(presetDir: string, presetName: string) {
+    return (path.join(this.presetPath, presetDir, presetName + ".json"));
   }
 
 }

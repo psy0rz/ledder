@@ -7,8 +7,11 @@ import {ControlColor} from "../ControlColor.js";
 
 export class AnimationMovingStarsL extends Animation {
 
+    static category="Fun"
     static title="Moving stars left"
     static description="Used in nyancat :)"
+    static presetDir="Moving stars"
+
 
     constructor(matrix ) {
         super(matrix);

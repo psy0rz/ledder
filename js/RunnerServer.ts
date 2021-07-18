@@ -28,9 +28,12 @@ export class RunnerServer {
     if (animationName in animations) {
       console.log("Runner: starting", animationName, preset)
       this.matrix.clear()
+
+      const animationClass=animations[animationName];
+
       if (preset)
         this.matrix.preset.load(preset);
-      new animations[animationName](this.matrix)
+      new animationClass(this.matrix)
       return true
     } else
       return false

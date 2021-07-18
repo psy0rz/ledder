@@ -16,7 +16,7 @@ require("fomantic-ui-css/semantic");
 
 
 let rpc;
-let runnerBrowser;
+let runnerBrowser:RunnerBrowser;
 
 async function run(animationName, presetName) {
   try {

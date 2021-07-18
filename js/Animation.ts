@@ -10,8 +10,10 @@ export class Animation extends PixelContainer {
   matrix: Matrix;
   keep: boolean;
 
+  static category="Misc"
   static title="Untitled"
   static description=""
+  static presetDir="Temporary"
 
   constructor(matrix) {
     super();

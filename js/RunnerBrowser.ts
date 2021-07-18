@@ -41,11 +41,14 @@ export class RunnerBrowser {
     if (animationName in animations) {
       console.log("Runner: starting", animationName, presetName)
       this.matrix.clear()
+
+      const animationClass=animations[animationName];
+
       if (presetName)
-        this.matrix.preset.load(await this.rpc.request("presetStore.load", animationName, presetName));
+        this.matrix.preset.load(await this.rpc.request("presetStore.load", animationClass.presetDir, presetName));
 
       this.animationName = animationName
-      new animations[animationName](this.matrix)
+      new animationClass(this.matrix)
 
       if (this.live)
         await this.send();
