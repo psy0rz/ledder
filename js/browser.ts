@@ -31,10 +31,9 @@ window.addEventListener('load',
     const container = document.querySelector('#container') as HTMLElement;
     const menu = document.querySelector('#menu') as HTMLElement;
 
-    container.style.paddingTop = menu.offsetHeight + "px";
 
     let scheduler = new Scheduler();
-    let matrix = new MatrixCanvas(scheduler, 37, 8, '#matrix', 5, 16);
+    let matrix = new MatrixCanvas(scheduler, 40, 8, '#matrix');
     matrix.run();
 
     let htmlPresets = new HtmlPresets("#presetContainer", run);
@@ -56,6 +55,9 @@ window.addEventListener('load',
       if (runnerBrowser.live)
         rpc.request("matrix.preset.updateValue", controlName, values)
     });
+
+    container.style.paddingTop = menu.offsetHeight + "px";
+
 
     $("#send-once").on('click', ()=>{
       runnerBrowser.send();

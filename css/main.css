@@ -10,4 +10,15 @@
   image-rendering:crisp-edges;               /* CSS4 Proposed  */
   image-rendering:pixelated;                 /* CSS4 Proposed  */
   -ms-interpolation-mode:nearest-neighbor;   /* IE8+           */
+
+
+}
+
+.matrix-zoom
+{
+  position: fixed;
+  width: 100%;
+  height: auto !important;
+  top: 0;
+  left: 0;
 }

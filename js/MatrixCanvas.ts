@@ -8,26 +8,27 @@ export class MatrixCanvas extends Matrix {
   imageBuf8: Uint8ClampedArray;
   imageBuf: ArrayBuffer;
 
-  ledSize: number;
-  ledSpacing: number;
 
 
 
 
   //width and height are led-matrix-pixels, not canvas pixels.
-  constructor(scheduler, width, height, elementId, ledSize, ledSpacing) {
+  constructor(scheduler, width, height, elementId) {
     super(scheduler, width, height);
 
-    this.ledSize=ledSize;
-    this.ledSpacing=ledSpacing;
 
     this.canvas=document.querySelector(elementId);
 
+    $(elementId).on('click', ()=>
+    {
+      $(elementId).toggleClass("matrix-zoom");
+    })
+
     //scaling
-    this.canvas.width=width;
-    this.canvas.height=height;
-    this.canvas.style.width=width*10+"px";
-    // this.canvas.style.maxWidth=width*10+"px";
+    this.canvas.width=width
+    this.canvas.height=height
+    this.canvas.style.height="100%";
+
 
     //context and buffer
     this.canvasContext = this.canvas.getContext('2d');
