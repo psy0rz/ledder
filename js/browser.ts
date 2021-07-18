@@ -70,4 +70,16 @@ window.addEventListener('load',
       runnerBrowser.send();
     });
 
+    $("#controls-page").hide();
+
+    // @ts-ignore
+    setTimeout(()=>{
+      // @ts-ignore
+      $('.ui.sticky').sticky({
+        context: '#stickcont'
+      })
+      ;
+
+    },1000);
+
   })
