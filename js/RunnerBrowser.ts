@@ -5,7 +5,7 @@ import {Control} from "./Control.js";
 import $ from "jquery";
 
 /**
- * Browser side runner
+ * Browser side animation runner
  */
 export class RunnerBrowser {
   matrix: Matrix
@@ -32,7 +32,25 @@ export class RunnerBrowser {
 
   updateHtml()
   {
+    if (this.live)
+    {
+      $("#ledder-send-once").addClass("disabled");
+      $("#ledder-send-live").addClass("red");
+    }
+    else
+    {
+      $("#ledder-send-once").removeClass("disabled");
+      $("#ledder-send-live").removeClass("red");
+    }
 
+    //update html fields
+    if (this.presetName)
+      $(".ledder-selected-preset").text(this.presetName);
+    else
+      $(".ledder-selected-preset").text("(new)");
+    $(".ledder-selected-animation").text(this.animationName);
+    // @ts-ignore
+    $(".ledder-selected-animation-title").text(this.animationClass.title);
   }
 
   /**
@@ -65,6 +83,7 @@ export class RunnerBrowser {
       if (this.live)
         await this.send();
 
+      this.updateHtml()
       return true
     } else
       return false

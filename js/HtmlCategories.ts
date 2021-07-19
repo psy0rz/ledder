@@ -22,10 +22,10 @@ export class HtmlCategories {
 
   async reload(rpc) {
     let categories=await rpc.request("presetStore.getCategories")
-    this.update(categories);
+    this.updateHtml(categories);
   }
 
-  update(categories: object) {
+  updateHtml(categories: object) {
     this.container.empty();
 
     for (const [categoryName, category] of Object.entries(categories)) {

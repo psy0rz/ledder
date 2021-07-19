@@ -22,11 +22,11 @@ export class HtmlPresets {
   async reload(rpc, categoryName)
   {
     let animations=await rpc.request("presetStore.getPresets", categoryName)
-    this.update(animations)
+    this.updateHtml(animations)
 
   }
 
-  update(animations: object) {
+  updateHtml(animations: object) {
     this.container.empty();
 
     for (const [animationName, animation] of Object.entries(animations)) {

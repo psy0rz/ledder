@@ -18,28 +18,6 @@ require("fomantic-ui-css/semantic");
 let rpc;
 let runnerBrowser: RunnerBrowser;
 
-function updateRunnerHtml()
-{
-  if (runnerBrowser.live)
-  {
-    $("#ledder-send-once").addClass("disabled");
-    $("#ledder-send-live").addClass("red");
-  }
-  else
-  {
-    $("#ledder-send-once").removeClass("disabled");
-    $("#ledder-send-live").removeClass("red");
-  }
-
-  //update html fields
-  if (runnerBrowser.presetName)
-    $(".ledder-selected-preset").text(runnerBrowser.presetName);
-  else
-    $(".ledder-selected-preset").text("(new)");
-  $(".ledder-selected-animation").text(runnerBrowser.animationName);
-  // @ts-ignore
-  $(".ledder-selected-animation-title").text(runnerBrowser.animationClass.title);
-}
 
 
 
@@ -61,7 +39,6 @@ window.addEventListener('load',
     let htmlPresets = new HtmlPresets(async (animationName, presetName)=> {
       try {
         await runnerBrowser.run(animationName, presetName);
-        updateRunnerHtml()
       } catch (e) {
         error("Can't start animation", e);
       }
@@ -94,7 +71,7 @@ window.addEventListener('load',
 
     $("#ledder-send-live").on('click', () => {
       runnerBrowser.live = !runnerBrowser.live;
-      updateRunnerHtml();
+      runnerBrowser.updateHtml();
       runnerBrowser.send();
     })
 
