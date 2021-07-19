@@ -32,7 +32,7 @@ export class PresetControl {
       $(".ledder-control-counter").text(0);
       $(".ledder-show-control-page").addClass("disabled");
     }
-
+7
   }
 
 
