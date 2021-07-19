@@ -69,19 +69,18 @@ window.addEventListener('load',
 
     let htmlPresets = new HtmlPresets("#ledder-preset-container", run);
 
-    let htmlCategories = new HtmlCategories("#ledder-category-container", async (categoryName) => {
-      htmlPresets.update(await rpc.request("presetStore.getPresets", categoryName))
-      $(".ledder-selected-category").text(categoryName);
-      showPage("#ledder-preset-page");
-    });
 
     rpc = new RpcClient(() => {
 
       progressReset();
-      rpc.request("presetStore.getCategories").then(categories => {
-        console.log("Categories: ", categories);
-        htmlCategories.update(categories);
-      })
+
+      let htmlCategories = new HtmlCategories( rpc,async (categoryName) => {
+
+        htmlPresets.update(await rpc.request("presetStore.getPresets", categoryName))
+        $(".ledder-selected-category").text(categoryName);
+        showPage("#ledder-preset-page");
+      });
+
     }, () => {
       matrix.clear();
     });

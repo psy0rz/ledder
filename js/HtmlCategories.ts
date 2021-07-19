@@ -1,29 +1,37 @@
 import $ from "jquery";
 import {progressDone, progressStart} from "./util.js";
+import {RpcClient} from "./RpcClient.js";
 
 /*
  * Manage browser html list of categories.
  */
 export class HtmlCategories {
-    selector: string;
+  container: JQuery
+  rpc: RpcClient
 
-    constructor(selector, callback) {
-        this.selector = selector;
+  constructor(rpc, callback) {
+    this.rpc=rpc;
+    this.container = $("#ledder-category-container");
+    this.reload();
 
-        $(selector).on('click', '.item', (e) => {
-            progressStart();
-            e.stopPropagation();
-            callback(e.currentTarget.dataset.category).finally((e) => {
-                progressDone();
-            })
-        });
-    }
+    this.container.on('click', '.item', (e) => {
+      e.stopPropagation();
+      callback(e.currentTarget.dataset.category)
+    })
+  }
 
-    update(categories: object) {
-        $(this.selector).empty();
 
-        for (const [categoryName, category] of Object.entries(categories)) {
-            let element = $(`
+  async reload() {
+    this.rpc.request("presetStore.getCategories").then(categories => {
+      this.update(categories);
+    })
+  }
+
+  update(categories: object) {
+    this.container.empty();
+
+    for (const [categoryName, category] of Object.entries(categories)) {
+      let element = $(`
        <div class="item" data-category="${categoryName}">
           <i class="list icon"></i>
           <div class="content">
@@ -32,8 +40,8 @@ export class HtmlCategories {
           </div>
        </div>
       `);
-            $(this.selector).append(element)
+      this.container.append(element)
 
-        }
     }
+  }
 }
