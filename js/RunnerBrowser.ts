@@ -19,7 +19,7 @@ export class RunnerBrowser {
   constructor(matrix: Matrix, rpc: RpcClient) {
     this.matrix = matrix
     this.rpc = rpc;
-    this.live=true;
+    this.live = true;
 
     this.updateHtml();
 
@@ -43,15 +43,11 @@ export class RunnerBrowser {
     await this.rpc.request("runner.run", this.animationName, this.matrix.preset.save());
   }
 
-  updateHtml()
-  {
-    if (this.live)
-    {
+  updateHtml() {
+    if (this.live) {
       $("#ledder-send-once").addClass("disabled");
       $("#ledder-send-live").addClass("red");
-    }
-    else
-    {
+    } else {
       $("#ledder-send-once").removeClass("disabled");
       $("#ledder-send-live").removeClass("red");
     }
@@ -82,13 +78,12 @@ export class RunnerBrowser {
       console.log("Runner: starting", animationName, presetName)
       this.matrix.clear()
 
-      this.animationClass=animations[animationName];
+      this.animationClass = animations[animationName];
 
-      if (presetName)
-        {
-          // @ts-ignore
-          this.matrix.preset.load(await this.rpc.request("presetStore.load", this.animationClass.presetDir, presetName));
-        }
+      if (presetName) {
+        // @ts-ignore
+        this.matrix.preset.load(await this.rpc.request("presetStore.load", this.animationClass.presetDir, presetName));
+      }
 
       this.animationName = animationName
       this.presetName = presetName
@@ -108,12 +103,16 @@ export class RunnerBrowser {
   /** Save current preset
    *
    */
-  async presetSave()
-  {
-    let preset=this.matrix.preset.save();
+  async presetSave() {
+    let preset = this.matrix.preset.save();
 
     // @ts-ignore
     await this.rpc.request("presetStore.save", this.animationClass.presetDir, this.presetName, preset);
-    info("Saved preset "+this.presetName, "" , 1000)
+    info("Saved preset " + this.presetName, "", 1000)
+  }
+
+  async presetDelete() {
+    // @ts-ignore
+    await this.rpc.request("presetStore.delete", this.animationClass.presetDir, this.presetName);
   }
 }

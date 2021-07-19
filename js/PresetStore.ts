@@ -4,7 +4,7 @@
 
 
 import * as path from "path";
-import {readFile, writeFile} from "fs/promises";
+import {readFile, writeFile, rm} from "fs/promises";
 import glob from "glob-promise";
 import {PresetValues} from "./PresetValues.js";
 import * as animations from "./animations/all.js";
@@ -45,6 +45,12 @@ export class PresetStore {
     )
   }
 
+  async delete(presetDir: string, presetName: string) {
+
+    return rm(
+      this.presetFilename(presetDir, presetName))
+  }
+
   async getCategories() {
     let cat = {};
     for (const [animationName, animation] of Object.entries(animations)) {
@@ -83,6 +89,7 @@ export class PresetStore {
     return (ret);
   }
 
+  //FIXME: make secure
   private presetFilename(presetDir: string, presetName: string) {
     return (path.join(this.presetPath, presetDir, presetName + ".json"));
   }

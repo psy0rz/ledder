@@ -68,6 +68,11 @@ window.addEventListener('load',
       return(htmlPresets.reload(rpc))
     })
 
+    $("#ledder-delete-preset").on('click', async ()=>{
+      await runnerBrowser.presetDelete();
+      return(htmlPresets.reload(rpc))
+    })
+
 
     //Page switching
     showPage("#ledder-category-page");

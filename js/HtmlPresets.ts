@@ -53,8 +53,8 @@ export class HtmlPresets {
            <div class="item" data-animation="${animationName}" data-preset="${presetName}">
               <i class="folder icon"></i>
               <div class="content">
-                <div class="header">${preset.title}</div>
-                <div class="description">${preset.description} [${presetName}]</div>
+                <div class="header">${presetName}</div>
+                <div class="description">${preset.description}</div>
               </div>
            </div>
         `);
