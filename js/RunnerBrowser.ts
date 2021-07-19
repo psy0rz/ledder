@@ -114,5 +114,6 @@ export class RunnerBrowser {
   async presetDelete() {
     // @ts-ignore
     await this.rpc.request("presetStore.delete", this.animationClass.presetDir, this.presetName);
+    this.presetName=undefined
   }
 }

@@ -43,9 +43,11 @@ window.addEventListener('load',
     let htmlCategories = new HtmlCategories( async (categoryName) => {
       htmlPresets.reload(rpc,categoryName);
       showPage("#ledder-preset-page");
+
+
     });
 
-    rpc = new RpcClient(() => {
+    rpc = new RpcClient(async () => {
 
       progressReset();
       htmlCategories.reload(rpc)
@@ -59,7 +61,7 @@ window.addEventListener('load',
 
     matrix.preset.enableHtml(document.querySelector("#ledder-controls"), (controlName, values) => {
       if (runnerBrowser.live)
-        rpc.request("matrix.preset.updateValue", controlName, values)
+        rpc.notify("matrix.preset.updateValue", controlName, values)
     })
 
 

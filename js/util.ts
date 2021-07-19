@@ -33,7 +33,7 @@ let loaders=0;
 export function progressStart()
 {
   loaders++;
-  $("#loader").addClass("active");
+  $("#ledder-loader").addClass("active");
 
 }
 
@@ -42,13 +42,13 @@ export function progressDone()
   loaders--;
   if (!loaders)
   {
-    $("#loader").removeClass("active");
+    $("#ledder-loader").removeClass("active");
   }
 }
 
 export function progressReset()
 {
   loaders=0;
-  $("#loader").removeClass("active");
+  $("#ledder-loader").removeClass("active");
 
 }

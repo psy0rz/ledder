@@ -1,5 +1,6 @@
 import {JSONRPCClient, JSONRPCServer, JSONRPCServerAndClient} from "json-rpc-2.0";
 import {Rpc} from "./Rpc.js";
+import {error, progressDone, progressStart} from "./util.js";
 
 /***
  * Browser-side rpc client that connect to server handles rpc calls to/from server.
@@ -19,8 +20,7 @@ export class RpcClient extends Rpc {
     this.connect();
   }
 
-  connect()
-  {
+  connect() {
     console.log("startt")
 
     let ws_url;
@@ -54,7 +54,7 @@ export class RpcClient extends Rpc {
       );
 
       console.log("disc")
-      setTimeout(()=> this.connect(), 1000);
+      setTimeout(() => this.connect(), 1000);
 
       if (this.closeHandler !== undefined)
         this.closeHandler();
@@ -75,16 +75,42 @@ export class RpcClient extends Rpc {
     this.serverAndClient.addMethod(name, method);
   }
 
-  request(name, ...params) {
-    try {
+  /**
+   * Makes a request to the server. Also shows progress-indicator and shows execptions to the user. (slower)
+   * @param name
+   * @param params
+   */
+  async request(name, ...params) {
 
-      return (this.serverAndClient.request(name, params));
-    }
-    catch(e)
-    {
-      console.error("hier" , e);
+    try {
+      progressStart()
+      let result=await this.serverAndClient.request(name, params)
+      progressDone()
+      return(result)
+    } catch (e) {
+      progressDone()
+      error("Request failed", e)
+      throw(e)
     }
   }
 
+  /**
+   * Make a request to server, without any extra processing. (faster)
+   * @param name
+   * @param params
+   */
+  async requestRaw(name, ...params) {
+      return(this.serverAndClient.request(name, params))
+  }
+
+  /** Send a notify, doesnt return anything. (fastest)
+   *
+   * @param name
+   * @param params
+   */
+  async notify(name, ...params)
+  {
+    this.serverAndClient.notify(name, params)
+  }
 
 }

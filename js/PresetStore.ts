@@ -46,7 +46,6 @@ export class PresetStore {
   }
 
   async delete(presetDir: string, presetName: string) {
-
     return rm(
       this.presetFilename(presetDir, presetName))
   }
