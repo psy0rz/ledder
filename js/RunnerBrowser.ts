@@ -18,8 +18,20 @@ export class RunnerBrowser {
   constructor(matrix: Matrix, rpc: RpcClient) {
     this.matrix = matrix
     this.rpc = rpc;
-    this.live=false;
+    this.live=true;
 
+    this.updateHtml();
+
+    $("#ledder-send-live").on('click', () => {
+      this.live = !this.live;
+      this.updateHtml();
+      if (this.live)
+        this.send();
+    })
+
+    $("#ledder-send-once").on('click', () => {
+      this.send();
+    })
   }
 
   /** Send current running animation and preset to server
@@ -49,8 +61,11 @@ export class RunnerBrowser {
     else
       $(".ledder-selected-preset").text("(new)");
     $(".ledder-selected-animation").text(this.animationName);
-    // @ts-ignore
-    $(".ledder-selected-animation-title").text(this.animationClass.title);
+
+    if (this.animationClass) {
+      // @ts-ignore
+      $(".ledder-selected-animation-title").text(this.animationClass.title);
+    }
   }
 
   /**

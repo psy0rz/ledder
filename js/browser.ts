@@ -18,10 +18,6 @@ require("fomantic-ui-css/semantic");
 let rpc;
 let runnerBrowser: RunnerBrowser;
 
-
-
-
-
 function showPage(selector) {
   $(".ledder-page").hide();
   $(selector).show();
@@ -60,24 +56,12 @@ window.addEventListener('load',
 
 
     runnerBrowser = new RunnerBrowser(matrix, rpc);
+
     matrix.preset.enableHtml(document.querySelector("#ledder-controls"), (controlName, values) => {
       if (runnerBrowser.live)
         rpc.request("matrix.preset.updateValue", controlName, values)
     })
 
-    // container.style.paddingTop = topMenu.offsetHeight + "px";
-
-
-
-    $("#ledder-send-live").on('click', () => {
-      runnerBrowser.live = !runnerBrowser.live;
-      runnerBrowser.updateHtml();
-      runnerBrowser.send();
-    })
-
-    $("#ledder-send-once").on('click', () => {
-      runnerBrowser.send();
-    })
 
     $("#ledder-save-preset").on('click', async ()=>{
       console.log("hhhhh")
