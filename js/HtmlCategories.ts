@@ -1,6 +1,9 @@
 import $ from "jquery";
 import {progressDone, progressStart} from "./util.js";
 
+/*
+ * Manage browser html list of categories.
+ */
 export class HtmlCategories {
     selector: string;
 

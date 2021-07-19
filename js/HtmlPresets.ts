@@ -1,7 +1,7 @@
 import $ from "jquery";
 import {progressDone, progressStart} from "./util.js";
 
-/** Manage list of clickable presets
+/** Manage browser html list of animations and presets
  *
  */
 export class HtmlPresets {

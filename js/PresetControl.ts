@@ -5,7 +5,8 @@ import {PresetValues} from "./PresetValues.js";
 
 
 /**
- * Manages a collection of preset controls, saves and loads values to Preset
+ * Manages a collection of preset controls, saves and loads values to Preset.
+ * Does browser-html stuff
  */
 export class PresetControl {
   controls: Record<string, Control>
@@ -28,8 +29,8 @@ export class PresetControl {
 
     if (this.htmlContainer!==undefined)
     {
-      $(".control-counter").text(0);
-      $(".toggle-controls").addClass("disabled");
+      $(".ledder-control-counter").text(0);
+      $(".ledder-show-control-page").addClass("disabled");
     }
 
   }
@@ -51,8 +52,8 @@ export class PresetControl {
     if (this.htmlContainer!==undefined)
     {
       control.html(this.htmlContainer, this.valuesChangedCallback);
-      $(".control-counter").text(Object.keys(this.controls).length);
-      $(".toggle-controls").removeClass("disabled");
+      $(".ledder-control-counter").text(Object.keys(this.controls).length);
+      $(".ledder-show-control-page").removeClass("disabled");
     }
   }
 
