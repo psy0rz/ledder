@@ -21,7 +21,7 @@ export class MatrixCanvas extends Matrix {
 
     $(elementId).on('click', ()=>
     {
-      $(elementId).toggleClass("matrix-zoom");
+      $(elementId).toggleClass("ledder-matrix-zoom");
     })
 
     //scaling

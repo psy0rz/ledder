@@ -27,8 +27,6 @@ async function run(animationName, presetName) {
   }
 }
 
-
-
 function showPage(selector) {
   $(".ledder-page").hide();
   $(selector).show();
@@ -91,12 +89,7 @@ window.addEventListener('load',
     //Page switching
     showPage("#ledder-category-page");
     $(".ledder-show-preset-page").on('click', () => showPage("#ledder-preset-page"))
-    $(".ledder-show-controls-page").on('click', () => showPage("#ledder-controls-page"))
-    $(".ledder-show-category-page").on('click', () =>
-    {
-      console.log("ch")
-      showPage("#ledder-category-page");
-    })
-
+    $(".ledder-show-control-page").on('click', () => showPage("#ledder-control-page"))
+    $(".ledder-show-category-page").on('click', () => showPage("#ledder-category-page"))
   })
 

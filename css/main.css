@@ -1,4 +1,4 @@
-.matrix {
+.ledder-matrix {
   background: black;
   border-style: solid;
   border-color: gray;
@@ -14,7 +14,7 @@
 
 }
 
-.matrix-zoom
+.ledder-matrix-zoom
 {
   position: fixed;
   width: 100%;
