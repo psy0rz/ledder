@@ -80,11 +80,13 @@
       </a>
     </div>
 
+    <h3>Category: <span class="ledder-selected-category"></span></h3>
+
     <div class="ui selection list" id="ledder-preset-container">
     </div>
   </div>
 
-<!--  Preset controls page-->
+  <!--  Preset controls page-->
   <div id="ledder-control-page" class="ledder-page">
     <div class="ui top fixed  menu">
       <a class="item ledder-show-preset-page">
@@ -93,12 +95,22 @@
       <div class="header item">
         Controls
       </div>
-      <a class="item">
+      <a id="#ledder-save-preset" class="item">
         <i class="save icon"></i>
+      </a>
+      <a class="item">
+        <i class="trash alternate outline icon"></i>
+      </a>
+      <a class="item">
+        <i class="copy outline icon"></i>
       </a>
     </div>
 
-    <div class="ui segments" id="ledder-control-container" >
+    <h3>Preset: <span class="ledder-selected-preset"></span></h3>
+    <p>(for animation: <span class="ledder-selected-animation-title"></span>)</p>
+
+
+    <div class="ui segments" id="ledder-controls">
     </div>
   </div>
 

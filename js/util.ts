@@ -16,6 +16,19 @@ export function error(title: string, message: string, time = 10000) {
   });
 }
 
+export function info(title: string, message: string, time = 2000)
+{
+  // @ts-ignore
+  $("body").toast({
+    class: "info",
+    title: title
+    ,
+    message: message,
+    displayTime: time
+  });
+
+}
+
 let loaders=0;
 export function progressStart()
 {

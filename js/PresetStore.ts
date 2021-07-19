@@ -38,8 +38,11 @@ export class PresetStore {
     return JSON.parse(await readFile(this.presetFilename(presetDir, presetName), 'utf8'))
   }
 
-  async save(animationName: string, presetName: string, preset: PresetValues) {
-    return writeFile(this.presetFilename(animationName, presetName), JSON.stringify(preset, undefined, ' '), 'utf8')
+  async save(presetDir: string, presetName: string, preset: PresetValues) {
+    return writeFile(
+      this.presetFilename(presetDir, presetName),
+      JSON.stringify(preset, undefined, ' '), 'utf8'
+    )
   }
 
   async getCategories() {

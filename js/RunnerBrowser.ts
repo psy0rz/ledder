@@ -2,6 +2,7 @@ import {Matrix} from "./Matrix.js";
 import {RpcClient} from "./RpcClient.js";
 import * as animations from "./animations/all.js";
 import {Control} from "./Control.js";
+import $ from "jquery";
 
 /**
  * Browser side runner
@@ -10,6 +11,8 @@ export class RunnerBrowser {
   matrix: Matrix
   rpc: RpcClient
   animationName: string
+  presetName: string
+  animationClass: Animation
   live: boolean;
 
   constructor(matrix: Matrix, rpc: RpcClient) {
@@ -27,6 +30,11 @@ export class RunnerBrowser {
     await this.rpc.request("runner.run", this.animationName, this.matrix.preset.save());
   }
 
+  updateHtml()
+  {
+
+  }
+
   /**
    * Runs specified animation with specified preset
    *
@@ -40,13 +48,19 @@ export class RunnerBrowser {
       console.log("Runner: starting", animationName, presetName)
       this.matrix.clear()
 
-      const animationClass=animations[animationName];
+      this.animationClass=animations[animationName];
 
       if (presetName)
-        this.matrix.preset.load(await this.rpc.request("presetStore.load", animationClass.presetDir, presetName));
+        {
+          // @ts-ignore
+          this.matrix.preset.load(await this.rpc.request("presetStore.load", this.animationClass.presetDir, presetName));
+        }
 
       this.animationName = animationName
-      new animationClass(this.matrix)
+      this.presetName = presetName
+
+      // @ts-ignore
+      new this.animationClass(this.matrix)
 
       if (this.live)
         await this.send();
@@ -54,5 +68,16 @@ export class RunnerBrowser {
       return true
     } else
       return false
+  }
+
+  /** Save current preset
+   *
+   */
+  async presetSave()
+  {
+    let preset=this.matrix.preset.save();
+
+    // @ts-ignore
+    await this.rpc.request("presetStore.save", this.animationClass.presetDir, this.presetName, preset);
   }
 }

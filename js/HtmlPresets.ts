@@ -30,7 +30,7 @@ export class HtmlPresets {
           <i class="folder icon"></i>
           <div class="content">
             <div class="header">${animation.title}</div>
-            <div class="description">${animation.description}</div>
+            <div class="description">${animation.description} [${animationName}]</div>
             <div class="ui list"></div>
           </div>
        </div>
@@ -42,13 +42,10 @@ export class HtmlPresets {
       for (const [presetName, preset] of Object.entries(animation.presets as object)) {
         let element = $(`
            <div class="item" data-animation="${animationName}" data-preset="${presetName}">
-<!--              <div class="right floated content">-->
-<!--                   <div class="ui button">play</div>-->
-<!--              </div>-->
               <i class="folder icon"></i>
               <div class="content">
                 <div class="header">${preset.title}</div>
-                <div class="description">${preset.description}</div>
+                <div class="description">${preset.description} [${presetName}]</div>
               </div>
            </div>
         `);
