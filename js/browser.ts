@@ -42,14 +42,7 @@ function updateRunnerHtml()
 }
 
 
-async function run(animationName, presetName) {
-  try {
-    await runnerBrowser.run(animationName, presetName);
-    updateRunnerHtml()
-  } catch (e) {
-    error("Can't start animation", e);
-  }
-}
+
 
 function showPage(selector) {
   $(".ledder-page").hide();
@@ -59,27 +52,30 @@ function showPage(selector) {
 
 window.addEventListener('load',
   () => {
-    // const container = document.querySelector('#ledder-container') as HTMLElement;
-    // const topMenu = document.querySelector('#top-menu') as HTMLElement;
-
 
     let scheduler = new Scheduler();
     let matrix = new MatrixCanvas(scheduler, 40, 8, '#ledder-preview');
     matrix.run();
 
-    let htmlPresets = new HtmlPresets("#ledder-preset-container", run);
 
+    let htmlPresets = new HtmlPresets(async (animationName, presetName)=> {
+      try {
+        await runnerBrowser.run(animationName, presetName);
+        updateRunnerHtml()
+      } catch (e) {
+        error("Can't start animation", e);
+      }
+    })
+
+    let htmlCategories = new HtmlCategories( async (categoryName) => {
+      htmlPresets.reload(rpc,categoryName);
+      showPage("#ledder-preset-page");
+    });
 
     rpc = new RpcClient(() => {
 
       progressReset();
-
-      let htmlCategories = new HtmlCategories( rpc,async (categoryName) => {
-
-        htmlPresets.update(await rpc.request("presetStore.getPresets", categoryName))
-        $(".ledder-selected-category").text(categoryName);
-        showPage("#ledder-preset-page");
-      });
+      htmlCategories.reload(rpc)
 
     }, () => {
       matrix.clear();

@@ -1,28 +1,33 @@
 import $ from "jquery";
 import {progressDone, progressStart} from "./util.js";
+import {RpcClient} from "./RpcClient.js";
 
 /** Manage browser html list of animations and presets
  *
  */
 export class HtmlPresets {
 
-  selector: string
+  container: JQuery
 
-  constructor(selector, callback) {
-    this.selector = selector;
+  constructor(callback) {
+    this.container=$("#ledder-preset-container");
 
-    $(selector).on('click', '.item', (e) => {
-      progressStart();
+    this.container.on('click', '.item', (e) => {
       e.stopPropagation();
-      callback(e.currentTarget.dataset.animation, e.currentTarget.dataset.preset).finally((e) => {
-        progressDone();
-      })
+      callback(e.currentTarget.dataset.animation, e.currentTarget.dataset.preset)
     });
 
   }
 
+  async reload(rpc, categoryName)
+  {
+    let animations=await rpc.request("presetStore.getPresets", categoryName)
+    this.update(animations)
+
+  }
+
   update(animations: object) {
-    $(this.selector).empty();
+    this.container.empty();
 
     for (const [animationName, animation] of Object.entries(animations)) {
       let element = $(`
@@ -35,7 +40,7 @@ export class HtmlPresets {
           </div>
        </div>
       `);
-      $(this.selector).append(element)
+      this.container.append(element)
 
       const presetContainer = $('.list', element);
 

@@ -7,24 +7,22 @@ import {RpcClient} from "./RpcClient.js";
  */
 export class HtmlCategories {
   container: JQuery
-  rpc: RpcClient
 
-  constructor(rpc, callback) {
-    this.rpc=rpc;
+  constructor(callback) {
     this.container = $("#ledder-category-container");
-    this.reload();
 
     this.container.on('click', '.item', (e) => {
       e.stopPropagation();
-      callback(e.currentTarget.dataset.category)
+      let categoryName=e.currentTarget.dataset.category
+      $(".ledder-selected-category").text(categoryName);
+      callback(categoryName)
     })
   }
 
 
-  async reload() {
-    this.rpc.request("presetStore.getCategories").then(categories => {
-      this.update(categories);
-    })
+  async reload(rpc) {
+    let categories=await rpc.request("presetStore.getCategories")
+    this.update(categories);
   }
 
   update(categories: object) {
