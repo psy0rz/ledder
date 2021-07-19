@@ -25,48 +25,66 @@
 
 <body class="">
 
-<div id="loader" class="ui loader"></div>
+<div id="ledder-loader" class="ui loader"></div>
 
 
 <div class="ui bottom fixed menu" id="menu">
   <div class="ui fitted item">
     <div class="ui icon buttons">
-      <button id="send-once" class="ui button"><i class="upload icon"></i></button>
-      <button id="send-live" class="ui button"><i class="circle icon"></i></button>
+      <button id="ledder-send-once" class="ui button"><i class="upload icon"></i></button>
+      <button id="ledder-send-live" class="ui button"><i class="circle icon"></i></button>
     </div>
   </div>
 
   <div class="ui fitted item">
-    <canvas class="matrix" id="matrix"></canvas>
+    <canvas class="ledder-matrix" id="ledder-preview"></canvas>
   </div>
 </div>
 
 
-<!-- Add your site or application content here -->
 <script type="module" src="js/browser.js"></script>
 
 
-<div id="container">
+<div id="ledder-container" style="padding-top: 45px;">
 
-  <div id="animation-page">
-    <div class="ui top fixed  menu">
+  <!-- Category page -->
+  <div id="ledder-category-page" class="ledder-page">
+    <div class="ui top fixed menu">
       <div class="header item">
-        Animations
+        Ledder
       </div>
-      <a class="item toggle-controls disabled">
-        <i class="sliders horizontal icon"></i>
-        <div class="ui label control-counter">0</div>
+
+      <a class="item ">
+        <i class="settings icon"></i>
       </a>
     </div>
 
-    <div class="ui selection list" id="presetContainer">
+    <h3>Categories</h3>
+    <div class="ui selection list" id="ledder-category-container">
     </div>
-
   </div>
 
-  <div id="controls-page">
+
+  <!-- Animation overview page -->
+  <div id="ledder-presets-page" class="ledder-page">
+    <div class="ui top fixed menu">
+      <div class="header item">
+        Animations
+      </div>
+      <a class="item ledder-show-controls-page disabled">
+        <i class="sliders horizontal icon"></i>
+        <div class="ui label ledder-control-counter">0</div>
+      </a>
+    </div>
+
+    <div class="ui selection list" id="ledder-preset-container">
+    </div>
+  </div>
+
+<!--  Preset controls page-->
+  <div id="ledder-controls-page" class="ledder-page">
     <div class="ui top fixed  menu">
-      <a class="item toggle-controls">
+      <a class="item" class="show-presets-page">
         <i class="arrow left icon"></i>
       </a>
       <div class="header item">
@@ -77,9 +95,11 @@
       </a>
     </div>
 
-    <div class="ui segments" id="controlContainer">
+    <div class="ui segments" id="ledder-control-container" >
     </div>
   </div>
+
+
 </div>
 
 

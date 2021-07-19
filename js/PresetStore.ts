@@ -42,25 +42,37 @@ export class PresetStore {
     return writeFile(this.presetFilename(animationName, presetName), JSON.stringify(preset, undefined, ' '), 'utf8')
   }
 
+  async getCategories() {
+    let cat = new Set();
+    for (const [animationName, animation] of Object.entries(animations)) {
+      cat.add(animation.category);
+    }
+  }
+
+
   /**
    * Returns list of all animations and all stripped presets, in jsonable format
    * NOTE: slow, cache?
    */
-  async getPresets() {
+  async getPresets(categoryName: string) {
     let ret = {};
 
     for (const [animationName, animation] of Object.entries(animations)) {
-      ret[animationName] = {
-        title: animation.title,
-        description: animation.description,
-        presets: {}
-      };
 
-      const presetNames = await this.getPresetNames(animation.presetDir)
-      for (const presetName of presetNames) {
-        ret[animationName].presets[presetName] = await this.load(animation.presetDir, presetName);
-        //strip stuff to keep it smaller
-        delete ret[animationName].presets[presetName].values;
+      if (categoryName === animation.category) {
+
+        ret[animationName] = {
+          title: animation.title,
+          description: animation.description,
+          presets: {}
+        };
+
+        const presetNames = await this.getPresetNames(animation.presetDir)
+        for (const presetName of presetNames) {
+          ret[animationName].presets[presetName] = await this.load(animation.presetDir, presetName);
+          //strip stuff to keep it smaller
+          delete ret[animationName].presets[presetName].values;
+        }
       }
     }
     return (ret);

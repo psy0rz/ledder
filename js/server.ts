@@ -46,14 +46,14 @@ const runner = new RunnerServer(matrix1, presetStore);
 
 //RPC bindings
 
-rpc.addMethod("presetStore.getPresets", () => presetStore.getPresets())
+// @ts-ignore
+rpc.addMethod("presetStore.getPresets", (params) => presetStore.getPresets(...params))
 // @ts-ignore
 rpc.addMethod("presetStore.load",  (params) => presetStore.load(...params))
 // @ts-ignore
 rpc.addMethod("presetStore.save", (params) => presetStore.save(...params))
 // @ts-ignore
 rpc.addMethod("runner.run", (params) => runner.run(...params))
-
 //todo: make multi-matrix
 // @ts-ignore
 rpc.addMethod("matrix.preset.updateValue", (params) => matrix1.preset.updateValue(...params))

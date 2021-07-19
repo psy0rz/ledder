@@ -13,7 +13,7 @@ export class Animation extends PixelContainer {
   static category="Misc"
   static title="Untitled"
   static description=""
-  static presetDir="Temporary"
+  static presetDir=Animation.title
 
   constructor(matrix) {
     super();

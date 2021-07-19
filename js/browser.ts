@@ -5,7 +5,7 @@ import {Scheduler} from "./Scheduler.js";
 //jquery
 import $ from "jquery";
 import {HtmlPresets} from "./HtmlPresets.js";
-import {error, progressReset, progressStart} from "./util.js";
+import {error, progressReset} from "./util.js";
 import {RunnerBrowser} from "./RunnerBrowser.js";
 // @ts-ignore
 window.$ = $;
@@ -16,7 +16,7 @@ require("fomantic-ui-css/semantic");
 
 
 let rpc;
-let runnerBrowser:RunnerBrowser;
+let runnerBrowser: RunnerBrowser;
 
 async function run(animationName, presetName) {
   try {
@@ -26,23 +26,29 @@ async function run(animationName, presetName) {
   }
 }
 
+function showPage(selector) {
+  $(".ledder-page").hide();
+  $(selector).show();
+  $(window).trigger("resize");
+}
+
 window.addEventListener('load',
   () => {
-    const container = document.querySelector('#container') as HTMLElement;
-    const menu = document.querySelector('#menu') as HTMLElement;
+    // const container = document.querySelector('#ledder-container') as HTMLElement;
+    // const topMenu = document.querySelector('#top-menu') as HTMLElement;
 
 
     let scheduler = new Scheduler();
-    let matrix = new MatrixCanvas(scheduler, 40, 8, '#matrix');
+    let matrix = new MatrixCanvas(scheduler, 40, 8, '#ledder-preview');
     matrix.run();
 
-    let htmlPresets = new HtmlPresets("#presetContainer", run);
+    let htmlPresets = new HtmlPresets("#ledder-preset-container", run);
 
     rpc = new RpcClient(() => {
 
       progressReset();
 
-      rpc.request("presetStore.getPresets").then(presets => {
+      rpc.request("presetStore.getPresets", "Basic").then(presets => {
         htmlPresets.update(presets);
       })
 
@@ -51,34 +57,31 @@ window.addEventListener('load',
     });
 
     runnerBrowser = new RunnerBrowser(matrix, rpc);
-    matrix.preset.enableHtml(document.querySelector("#controlContainer"), (controlName, values)=>{
+    matrix.preset.enableHtml(document.querySelector("#ledder-control-container"), (controlName, values) => {
       if (runnerBrowser.live)
         rpc.request("matrix.preset.updateValue", controlName, values)
     });
 
-    container.style.paddingTop = menu.offsetHeight + "px";
+    // container.style.paddingTop = topMenu.offsetHeight + "px";
 
 
-    $("#send-once").on('click', ()=>{
+    $("#ledder-send-once").on('click', () => {
       runnerBrowser.send();
     });
 
-    $("#send-live").on('click', ()=>{
-      runnerBrowser.live=!runnerBrowser.live;
-      $("#send-once").toggleClass("disabled");
-      $("#send-live").toggleClass("red");
+    $("#ledder-send-live").on('click', () => {
+      runnerBrowser.live = !runnerBrowser.live;
+      $("#ledder-send-once").toggleClass("disabled");
+      $("#ledder-send-live").toggleClass("red");
       runnerBrowser.send();
     });
 
-    $(".toggle-controls").on('click', ()=>{
-      $("#controls-page").toggle();
-      $("#animation-page").toggle();
-      $(window).trigger("resize");
 
-    });
-    $("#controls-page").hide();
-
-
+    //Page switching
+    showPage("#ledder-category-page");
+    $(".show-presets-page").on('click', () => showPage("#ledder-presets-page"))
+    $(".show-controls-page").on('click', () => showPage("#ledder-controls-page"))
 
 
   })
+

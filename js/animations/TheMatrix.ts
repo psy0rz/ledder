@@ -5,12 +5,12 @@ import {AnimationMove} from "../AnimationMove.js";
 import { ControlValue } from "../ControlValue.js";
 import {ControlColor} from "../ControlColor.js";
 
-export class AnimationMovingStarsL extends Animation {
+export class TheMatrix extends Animation {
 
-    static category="Basic"
-    static title="Moving stars left"
-    static description="Used in nyancat :)"
-    static presetDir="Moving stars"
+    static category="Movie FX"
+    static title="The Matrix"
+    static description=""
+    static presetDir="The Matrix"
 
 
     constructor(matrix ) {
