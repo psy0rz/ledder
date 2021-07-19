@@ -3,6 +3,7 @@ import {RpcClient} from "./RpcClient.js";
 import * as animations from "./animations/all.js";
 import {Control} from "./Control.js";
 import $ from "jquery";
+import {info} from "./util.js";
 
 /**
  * Browser side animation runner
@@ -113,5 +114,6 @@ export class RunnerBrowser {
 
     // @ts-ignore
     await this.rpc.request("presetStore.save", this.animationClass.presetDir, this.presetName, preset);
+    info("Saved preset "+this.presetName, "" , 1000)
   }
 }

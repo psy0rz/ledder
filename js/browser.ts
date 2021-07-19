@@ -64,9 +64,8 @@ window.addEventListener('load',
 
 
     $("#ledder-save-preset").on('click', async ()=>{
-      console.log("hhhhh")
       await runnerBrowser.presetSave();
-      info("Save preset", "Saved to"+runnerBrowser.presetName)
+      return(htmlPresets.reload(rpc))
     })
 
 

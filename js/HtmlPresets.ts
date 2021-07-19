@@ -8,6 +8,7 @@ import {RpcClient} from "./RpcClient.js";
 export class HtmlPresets {
 
   container: JQuery
+  categoryName: string
 
   constructor(callback) {
     this.container=$("#ledder-preset-container");
@@ -19,9 +20,12 @@ export class HtmlPresets {
 
   }
 
-  async reload(rpc, categoryName)
+  async reload(rpc, categoryName=undefined)
   {
-    let animations=await rpc.request("presetStore.getPresets", categoryName)
+    if (categoryName)
+      this.categoryName=categoryName;
+
+    let animations=await rpc.request("presetStore.getPresets", this.categoryName)
     this.updateHtml(animations)
 
   }
