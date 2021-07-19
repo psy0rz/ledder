@@ -7,6 +7,7 @@ import $ from "jquery";
 import {HtmlPresets} from "./HtmlPresets.js";
 import {error, progressReset} from "./util.js";
 import {RunnerBrowser} from "./RunnerBrowser.js";
+import {HtmlCategories} from "./HtmlCategories.js";
 // @ts-ignore
 window.$ = $;
 // @ts-ignore
@@ -26,6 +27,8 @@ async function run(animationName, presetName) {
   }
 }
 
+
+
 function showPage(selector) {
   $(".ledder-page").hide();
   $(selector).show();
@@ -44,17 +47,25 @@ window.addEventListener('load',
 
     let htmlPresets = new HtmlPresets("#ledder-preset-container", run);
 
+    let htmlCategories = new HtmlCategories("#ledder-category-container", async (categoryName)=>
+    {
+      htmlPresets.update(await rpc.request("presetStore.getPresets", categoryName))
+      showPage("#ledder-preset-page");
+    });
+
     rpc = new RpcClient(() => {
 
       progressReset();
-
-      rpc.request("presetStore.getPresets", "Basic").then(presets => {
-        htmlPresets.update(presets);
+      rpc.request("presetStore.getCategories").then(categories => {
+        console.log("Categories: ", categories);
+        htmlCategories.update(categories);
       })
-
     }, () => {
       matrix.clear();
     });
+
+
+
 
     runnerBrowser = new RunnerBrowser(matrix, rpc);
     matrix.preset.enableHtml(document.querySelector("#ledder-control-container"), (controlName, values) => {
@@ -79,9 +90,13 @@ window.addEventListener('load',
 
     //Page switching
     showPage("#ledder-category-page");
-    $(".show-presets-page").on('click', () => showPage("#ledder-presets-page"))
-    $(".show-controls-page").on('click', () => showPage("#ledder-controls-page"))
-
+    $(".ledder-show-preset-page").on('click', () => showPage("#ledder-preset-page"))
+    $(".ledder-show-controls-page").on('click', () => showPage("#ledder-controls-page"))
+    $(".ledder-show-category-page").on('click', () =>
+    {
+      console.log("ch")
+      showPage("#ledder-category-page");
+    })
 
   })
 

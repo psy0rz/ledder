@@ -16,7 +16,6 @@ export class HtmlCategories {
         });
     }
 
-
     update(categories: object) {
         $(this.selector).empty();
 

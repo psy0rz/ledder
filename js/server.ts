@@ -47,6 +47,8 @@ const runner = new RunnerServer(matrix1, presetStore);
 //RPC bindings
 
 // @ts-ignore
+rpc.addMethod("presetStore.getCategories", (params) => presetStore.getCategories(...params))
+// @ts-ignore
 rpc.addMethod("presetStore.getPresets", (params) => presetStore.getPresets(...params))
 // @ts-ignore
 rpc.addMethod("presetStore.load",  (params) => presetStore.load(...params))

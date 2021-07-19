@@ -43,10 +43,12 @@ export class PresetStore {
   }
 
   async getCategories() {
-    let cat = new Set();
+    let cat = {};
     for (const [animationName, animation] of Object.entries(animations)) {
-      cat.add(animation.category);
+
+      cat[animation.category]={}; //we can add more metadata if needed
     }
+    return(cat);
   }
 
 
