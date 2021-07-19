@@ -33,15 +33,11 @@ window.addEventListener('load',
 
 
     let htmlPresets = new HtmlPresets(async (animationName, presetName)=> {
-      try {
         await runnerBrowser.run(animationName, presetName);
-      } catch (e) {
-        error("Can't start animation", e);
-      }
     })
 
     let htmlCategories = new HtmlCategories( async (categoryName) => {
-      htmlPresets.reload(rpc,categoryName);
+      await htmlPresets.reload(rpc,categoryName);
       showPage("#ledder-preset-page");
 
 
