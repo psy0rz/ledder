@@ -4,3 +4,4 @@ export interface ColorInterface {
     b: number
     a: number
 }
+

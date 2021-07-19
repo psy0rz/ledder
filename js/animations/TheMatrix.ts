@@ -1,43 +1,48 @@
 import {Animation} from "../Animation.js";
-import {PixelStar} from "./PixelStar.js";
+import {Color} from "../Color.js";
+import {Pixel} from "../Pixel.js";
 import {random} from "../util.js";
+import {AnimationFade} from "../AnimationFade.js";
 import {AnimationMove} from "../AnimationMove.js";
-import { ControlValue } from "../ControlValue.js";
-import {ControlColor} from "../ControlColor.js";
 
 export class TheMatrix extends Animation {
 
-    static category="Movie FX"
-    static title="The Matrix"
-    static description=""
-    static presetDir="The Matrix"
+  static category = "Movie FX"
+  static title = "The Matrix"
+  static description = "bla"
+  static presetDir = "The Matrix"
 
 
-    constructor(matrix ) {
-        super(matrix);
+  constructor(matrix) {
+    super(matrix);
 
-        const step=matrix.preset.value("Star speed", 0.3, 0.1, 2, 0.1);
-        const blinkDelay= matrix.preset.value("Star twinkle delay", 5.8,1,10,0.1);
-        const starColor = matrix.preset.color("Star color" , 255,255,255);
+    const startColor = matrix.preset.color("Start color", 255, 255, 255);
+    const endColor = matrix.preset.color("End color", 0, 128, 0);
+    const fade = matrix.preset.value("Fade length", 60);
+    const speed = matrix.preset.value("Fall speed", 0.3, 0.1, 2, 0.1);
+    const density = matrix.preset.value("Amount of rain", 1, 1, 20, 0.1);
 
-        matrix.scheduler.interval(20, () => {
 
+    matrix.scheduler.interval(60, () => {
 
-            //add new flying star at right side
-            const star = new PixelStar(matrix, matrix.width + 2, random(0, matrix.height), starColor, blinkDelay);
-            const mover = new AnimationMove(matrix, 1, -step.value, 0)
-            mover.addPixel(star);
+      //start new trail
 
-            //destroy star at left side
-            matrix.scheduler.interval((matrix.width+2)/step.value, () => {
-                mover.destroy(true);
-                return false;
-            })
+      let y = matrix.height - 1;
+      let x = random(0,matrix.width-1)
+      let pixels=[];
 
-            //schedule creation of next star at random time
-            return (random(10, 30));
+      matrix.scheduler.interval(10, () => {
 
-        })
+        let color = new Color(startColor.r, startColor.g, startColor.b);
+        const p=new Pixel(matrix, x, y, color);
+        pixels.push(p);
+        new AnimationFade(matrix, color, endColor, fade)
 
-    }
+        y=y-1;
+        return(y>=0)
+
+      })
+    })
+
+  }
 }

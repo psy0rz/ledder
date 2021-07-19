@@ -7,6 +7,7 @@ import {AnimationStriptest} from "./animations/AnimationStriptest.js";
 import {AnimationMovingStarsL} from "./animations/AnimationMovingStarsL.js";
 import {PresetStore} from "./PresetStore.js";
 import {PresetControl} from "./PresetControl.js";
+import {TheMatrix} from "./animations/TheMatrix.js";
 
 
 
@@ -31,6 +32,7 @@ matrix1.run();
 // new AnimationMovingStarsL(matrix1);
 // new AnimationStriptest(matrix2);
 
+new TheMatrix(matrix1);
 
 
 // const runner=new Runner(matrix1);

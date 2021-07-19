@@ -13,7 +13,7 @@ export class ControlColor extends Control implements ColorInterface {
   jqueryElement: JQuery;
   picker: ColorPicker;
 
-  constructor(name: string, r: number, g: number, b: number, a: number = 1) {
+  constructor(name: string, r: number=128, g: number=128, b: number=128, a: number = 1) {
     super(name);
     this.r = r;
     this.g = g;

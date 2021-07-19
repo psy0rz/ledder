@@ -3,3 +3,4 @@
 export * from "./AnimationMatrixtest.js"
 export * from "./AnimationMovingStarsL.js"
 export {AnimationStriptest} from "./AnimationStriptest.js";
+export {TheMatrix} from "./TheMatrix.js";

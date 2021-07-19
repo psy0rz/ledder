@@ -2,9 +2,10 @@
 import {Animation} from "./Animation.js";
 import {Matrix} from "./Matrix.js";
 
+
 export class AnimationBlink extends Animation {
-  onInterval: number;
-  offInterval: number;
+  // onInterval: number;
+  // offInterval: number;
   alpha: number;
 
   /**
@@ -17,8 +18,8 @@ export class AnimationBlink extends Animation {
   constructor(matrix: Matrix, onInterval: number, offInterval: number, offset = 0) {
     super(matrix);
 
-    this.onInterval = onInterval;
-    this.offInterval = offInterval;
+    // this.onInterval = onInterval;
+    // this.offInterval = offInterval;
     this.alpha = 1;
 
     matrix.scheduler.interval(onInterval+offset, () => {
@@ -32,10 +33,10 @@ export class AnimationBlink extends Animation {
 
       if (this.alpha) {
         this.alpha = 0;
-        return(this.onInterval);
+        return(onInterval);
       } else {
         this.alpha = 1;
-        return(this.offInterval);
+        return(offInterval);
       }
 
     })
