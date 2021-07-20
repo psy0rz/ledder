@@ -43,6 +43,12 @@ export class PresetStore {
     return JSON.parse(await readFile(this.presetFilename(presetDir, presetName), 'utf8'))
   }
 
+  /**
+   * Save preset to disk
+   * @param presetDir
+   * @param presetName
+   * @param preset
+   */
   async save(presetDir: string, presetName: string, preset: PresetValues) {
 
     //make sure dir exists
@@ -55,10 +61,21 @@ export class PresetStore {
       //exists
     }
 
-    return writeFile(
+    await writeFile(
       presetFileName,
       JSON.stringify(preset, undefined, ' '), 'utf8'
     )
+
+  }
+
+  /**
+   * Render preview of a preset and save it to disk (usually called after save())
+   */
+  async createPreview(animationName, presetName: string, preset: PresetValues)
+  {
+    const animationClass=animations[animationName]
+    const previewFilename=this.previewFilename(animationClass.presetDir, presetName)
+    return(this.previewStore.render(previewFilename, animationClass, preset))
   }
 
   async delete(presetDir: string, presetName: string) {
@@ -97,14 +114,12 @@ export class PresetStore {
         for (const presetName of presetNames) {
           const preset=ret[animationName].presets[presetName] = await this.load(animationClass.presetDir, presetName);
 
-          //create preview
-          let previewFilename=this.previewFilename(animationClass.presetDir, presetName)
-          await this.previewStore.render(previewFilename, animationClass, preset)
-
-          preset.previewFile=previewFilename
-
           //strip stuff to keep it smaller
           delete preset.values;
+
+          //add preview file
+          preset.previewFile=this.previewFilename(animationClass.presetDir, presetName)
+
 
 
         }

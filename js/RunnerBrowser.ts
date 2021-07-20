@@ -119,7 +119,7 @@ export class RunnerBrowser {
   }
 
 
-  /** Save current preset
+  /** Save current preset to server, and create preview
    *
    */
   async presetSave() {
@@ -127,6 +127,8 @@ export class RunnerBrowser {
 
     // @ts-ignore
     await this.rpc.request("presetStore.save", this.animationClass.presetDir, this.presetName, preset);
+    await this.rpc.request("presetStore.createPreview", this.animationName, this.presetName, preset);
+
     info("Saved preset " + this.presetName, "", 2000)
   }
 

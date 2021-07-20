@@ -60,6 +60,8 @@ rpc.addMethod("presetStore.load",  (params) => presetStore.load(...params))
 // @ts-ignore
 rpc.addMethod("presetStore.save", (params) => presetStore.save(...params))
 // @ts-ignore
+rpc.addMethod("presetStore.createPreview", (params) => presetStore.createPreview(...params))
+// @ts-ignore
 rpc.addMethod("presetStore.delete", (params) => presetStore.delete(...params))
 // @ts-ignore
 rpc.addMethod("runner.run", (params) => runner.run(...params))

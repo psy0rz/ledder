@@ -9,12 +9,19 @@ export class MatrixApng extends Matrix {
 
   imageBuf8: Uint8ClampedArray
   filename: string
-  frames: number
 
-  constructor(scheduler, width, height, frames ) {
+  /**
+   *
+   * @param scheduler
+   * @param width
+   * @param height
+   * @param framesSkip Number of initial frames to skip
+   * @param frameDivider Divide FPS by this. Lower frame rate, but smaller preview images
+   * @param frames Number of ouput frames to generate.
+   */
+  constructor(scheduler, width, height) {
     super(scheduler, width, height);
 
-    this.frames=frames;
 
   }
 
@@ -38,13 +45,26 @@ export class MatrixApng extends Matrix {
   /**
    * Renders the requested nubmer of frames as quickly as possible and returns APNG filedata
    */
-  run()
+  get(animationClass: Animation)
   {
     let imgs=[]
     let dels=[]
 
-    for (let i=0; i<this.frames; i++) {
+
+    // @ts-ignore
+    console.log(animationClass.previewSkip);
+
+    //skip frames, just run scheduler
+    // @ts-ignore
+    for (let i=0; i<animationClass.previewSkip; i++)
       this.scheduler.update();
+
+    // @ts-ignore
+    for (let i=0; i<animationClass.previewFrames; i++) {
+
+      // @ts-ignore
+      for (let d=0; d<animationClass.previewDivider; d++)
+        this.scheduler.update();
 
       //render
       // this.imageBuf8 = new Uint8ClampedArray(this.width * this.height * 4);
@@ -54,10 +74,17 @@ export class MatrixApng extends Matrix {
 
       //add to image list
       imgs.push(this.imageBuf8.buffer)
-      dels.push(1000/60)
+      // @ts-ignore
+      dels.push(1000/60*animationClass.previewDivider)
     }
 
     return(UPNG.encode(imgs, this.width, this.height, 0, dels))
+
+  }
+
+  //not used in this case
+  run()
+  {
 
   }
 

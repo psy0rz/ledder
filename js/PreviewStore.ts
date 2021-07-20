@@ -9,14 +9,14 @@ import {Matrix} from "./Matrix.js";
 
 export class PreviewStore {
 
-    matrix: Matrix
+    matrix: MatrixApng
     presetStore: PresetStore
 
     constructor(presetStore: PresetStore) {
       this.presetStore=presetStore
 
       let scheduler=new Scheduler();
-      this.matrix=new MatrixApng(scheduler, 40,8,600)
+      this.matrix=new MatrixApng(scheduler, 40,8)
 
     }
 
@@ -32,7 +32,7 @@ export class PreviewStore {
       this.matrix.preset.load(preset);
 
     new animationClass(this.matrix)
-    let imageData=this.matrix.run()
+    let imageData=this.matrix.get(animationClass)
 
     await writeFile(filename, Buffer.from(imageData))
   }
