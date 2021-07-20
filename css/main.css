@@ -17,7 +17,7 @@
 
 .ledder-preview-image
 {
-  background: black;
+  background: black !important;
   border-style: solid;
   border-color: gray;
   border-width: 1px;

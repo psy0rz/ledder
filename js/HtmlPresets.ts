@@ -51,11 +51,12 @@ export class HtmlPresets {
       for (const [presetName, preset] of Object.entries(animation.presets as object)) {
         let element = $(`
            <div class="item" data-animation="${animationName}" data-preset="${presetName}">
-              <i class="folder icon"></i>
+<!--              <i class="folder icon"></i>-->
+              <img class="ui image ledder-preview-image" src="${preset.previewFile}">
               <div class="content">
                 <div class="header">${presetName}</div>
                 <div class="description">${preset.description}</div>
-                  <img class="ledder-preview-image" src="${preset.previewFile}">
+<!--                  <img class="ledder-preview-image" src="${preset.previewFile}">-->
               </div>
            </div>
         `);

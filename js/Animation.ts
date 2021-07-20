@@ -18,8 +18,8 @@ export class Animation extends PixelContainer {
 
   //preview settings, fiddle with this to optimize your preview image
   static previewSkip=120 //number of input-frames to skip
-  static previewDivider=2 //divide input FPS by this
-  static previewFrames=120 //preview image should output this many frames
+  static previewDivider=1 //divide input FPS by this
+  static previewFrames=240 //preview image should output this many frames
 
 
   constructor(matrix) {
