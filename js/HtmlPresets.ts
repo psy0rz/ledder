@@ -55,6 +55,7 @@ export class HtmlPresets {
               <div class="content">
                 <div class="header">${presetName}</div>
                 <div class="description">${preset.description}</div>
+                  <img class="ledder-preview-image" src="${preset.previewFile}">
               </div>
            </div>
         `);

@@ -8,13 +8,18 @@ import {readFile, writeFile, rm, mkdir} from "fs/promises";
 import glob from "glob-promise";
 import {PresetValues} from "./PresetValues.js";
 import * as animations from "./animations/all.js";
+import {PreviewStore} from "./PreviewStore.js";
 
 
 export class PresetStore {
   presetPath: string;
+  previewStore: PreviewStore
 
   constructor(presetPath: string) {
     this.presetPath = presetPath;
+
+    this.previewStore=new PreviewStore(this)
+
   }
 
   /**
@@ -78,21 +83,30 @@ export class PresetStore {
   async getPresets(categoryName: string) {
     let ret = {};
 
-    for (const [animationName, animation] of Object.entries(animations)) {
+    for (const [animationName, animationClass] of Object.entries(animations)) {
 
-      if (categoryName === animation.category) {
+      if (categoryName === animationClass.category) {
 
         ret[animationName] = {
-          title: animation.title,
-          description: animation.description,
+          title: animationClass.title,
+          description: animationClass.description,
           presets: {}
         };
 
-        const presetNames = await this.getPresetNames(animation.presetDir)
+        const presetNames = await this.getPresetNames(animationClass.presetDir)
         for (const presetName of presetNames) {
-          ret[animationName].presets[presetName] = await this.load(animation.presetDir, presetName);
+          const preset=ret[animationName].presets[presetName] = await this.load(animationClass.presetDir, presetName);
+
+          //create preview
+          let previewFilename=this.previewFilename(animationClass.presetDir, presetName)
+          await this.previewStore.render(previewFilename, animationClass, preset)
+
+          preset.previewFile=previewFilename
+
           //strip stuff to keep it smaller
-          delete ret[animationName].presets[presetName].values;
+          delete preset.values;
+
+
         }
       }
     }
@@ -104,4 +118,8 @@ export class PresetStore {
     return (path.join(this.presetPath, presetDir, presetName + ".json"));
   }
 
+  //FIXME: make secure
+  private previewFilename(presetDir: string, presetName: string) {
+    return (path.join(this.presetPath, presetDir, presetName + ".png"));
+  }
 }

@@ -69,14 +69,14 @@ rpc.addMethod("matrix.preset.updateValue", (params) => matrix1.preset.updateValu
 
 
 
-async function test()
-{
-  let previewStore=new PreviewStore(presetStore, "dist")
-  console.log(await previewStore.renderPreview("AnimationMatrixtest", ""))
-  console.log(await previewStore.renderPreview("AnimationMovingStarsL", ""))
-}
-
-test()
-
-
+// async function test()
+// {
+//   let previewStore=new PreviewStore(presetStore, "dist")
+//   console.log(await previewStore.renderPreview("AnimationMatrixtest", ""))
+//   console.log(await previewStore.renderPreview("AnimationMovingStarsL", ""))
+// }
+//
+// test()
+//
+//
 

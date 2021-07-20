@@ -42,6 +42,9 @@ export class RpcServer extends Rpc {
       });
     });
 
+    //allow acces to presets dir to get preview-files
+    app.use("/presets", express.static("presets"));
+
     //automatic run parcel bundler on filesystem changes
     app.use(bundler.middleware());
 
