@@ -35,20 +35,21 @@ export class RunnerBrowser {
     })
   }
 
-  /** Send current running animation and preset to server
+  /** Send current running animation and preset to server, and restart local animation as well
    *
    */
   async send() {
 
     await this.rpc.request("runner.run", this.animationName, this.matrix.preset.save());
+    this.restart()
   }
 
   updateHtml() {
     if (this.live) {
-      $("#ledder-send-once").addClass("disabled");
+      // $("#ledder-send-once").addClass("disabled");
       $("#ledder-send-live").addClass("red");
     } else {
-      $("#ledder-send-once").removeClass("disabled");
+      // $("#ledder-send-once").removeClass("disabled");
       $("#ledder-send-live").removeClass("red");
     }
 
@@ -64,6 +65,20 @@ export class RunnerBrowser {
       $(".ledder-selected-animation-title").text(this.animationClass.title);
     }
   }
+
+  /**
+   * Restart the current animation, keeping the same preset values
+   */
+  restart()
+  {
+    // let preset=this.matrix.preset.save();
+    this.matrix.clear(true);
+    // this.matrix.preset.load(preset);
+    // @ts-ignore
+    new this.animationClass(this.matrix)
+
+  }
+
 
   /**
    * Runs specified animation with specified preset

@@ -36,9 +36,9 @@ export class ControlValue extends Control {
      <div class="ui padded  segment ">
       <div class="ui top attached label">${this.name}</div>
       <div class="ui labeled ticked slider"></div>
-      <button class="ui icon button">
-        <i class="undo icon"></i>
-      </button>
+<!--      <button class="ui icon button">-->
+<!--        <i class="undo icon"></i>-->
+<!--      </button>-->
     </div>
    `);
 

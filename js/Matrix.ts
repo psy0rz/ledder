@@ -42,9 +42,10 @@ export abstract class Matrix extends PixelContainer {
   /**
    * Clear all pixels and running intervals
    */
-  clear()
+  clear(keepPresets:boolean=false)
   {
-    this.preset.clear();
+    if (!keepPresets)
+      this.preset.clear();
     this.scheduler.clear();
     super.clear();
 
