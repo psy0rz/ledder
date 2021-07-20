@@ -3,7 +3,7 @@ import {RpcClient} from "./RpcClient.js";
 import * as animations from "./animations/all.js";
 import {Control} from "./Control.js";
 import $ from "jquery";
-import {info} from "./util.js";
+import {confirmPromise, info, promptPromise} from "./util.js";
 
 /**
  * Browser side animation runner
@@ -54,10 +54,14 @@ export class RunnerBrowser {
     }
 
     //update html fields
-    if (this.presetName)
+    if (this.presetName) {
       $(".ledder-selected-preset").text(this.presetName);
-    else
+      $("#ledder-delete-preset").removeClass("disabled");
+    } else {
       $(".ledder-selected-preset").text("(new)");
+      $("#ledder-delete-preset").addClass("disabled");
+    }
+
     $(".ledder-selected-animation").text(this.animationName);
 
     if (this.animationClass) {
@@ -69,8 +73,7 @@ export class RunnerBrowser {
   /**
    * Restart the current animation, keeping the same preset values
    */
-  restart()
-  {
+  restart() {
     // let preset=this.matrix.preset.save();
     this.matrix.clear(true);
     // this.matrix.preset.load(preset);
@@ -115,6 +118,7 @@ export class RunnerBrowser {
       return false
   }
 
+
   /** Save current preset
    *
    */
@@ -123,12 +127,33 @@ export class RunnerBrowser {
 
     // @ts-ignore
     await this.rpc.request("presetStore.save", this.animationClass.presetDir, this.presetName, preset);
-    info("Saved preset " + this.presetName, "", 1000)
+    info("Saved preset " + this.presetName, "", 2000)
   }
 
+  /** Prompts for new name and saves preset
+   *
+   */
+
+
+  async presetSaveAs() {
+
+    this.presetName=await promptPromise('Enter preset name', "",this.presetName)
+    await this.presetSave()
+    this.updateHtml()
+  }
+
+
   async presetDelete() {
+
+    if (!this.presetName)
+      return false
+
+    await confirmPromise('Delete preset', 'Do you want to delete preset: ' + this.presetName)
+
     // @ts-ignore
     await this.rpc.request("presetStore.delete", this.animationClass.presetDir, this.presetName);
-    this.presetName=undefined
+    info("Deleted preset " + this.presetName, "", 2000)
+    this.presetName = undefined
+    this.updateHtml()
   }
 }

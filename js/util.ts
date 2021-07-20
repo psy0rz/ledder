@@ -16,8 +16,7 @@ export function error(title: string, message: string, time = 10000) {
   });
 }
 
-export function info(title: string, message: string="", time = 2000)
-{
+export function info(title: string, message: string = "", time = 2000) {
   // @ts-ignore
   $("body").toast({
     class: "info",
@@ -29,26 +28,65 @@ export function info(title: string, message: string="", time = 2000)
 
 }
 
-let loaders=0;
-export function progressStart()
-{
+let loaders = 0;
+
+export function progressStart() {
   loaders++;
   $("#ledder-loader").addClass("active");
 
 }
 
-export function progressDone()
-{
+export function progressDone() {
   loaders--;
-  if (!loaders)
-  {
+  if (!loaders) {
     $("#ledder-loader").removeClass("active");
   }
 }
 
-export function progressReset()
-{
-  loaders=0;
+export function progressReset() {
+  loaders = 0;
   $("#ledder-loader").removeClass("active");
 
 }
+
+/**
+ * Asks user for confirmation, returns Promise
+ * @param title
+ * @param content
+ */
+export async function confirmPromise(title: string, content: string) {
+  return new Promise((resolve, reject) => {
+    // @ts-ignore
+    $('body').modal('confirm', title, content, async (confirmed) => {
+        if (confirmed)
+          resolve(confirmed)
+        else
+          reject(confirmed)
+      }
+    )
+  })
+}
+
+/**
+ * Asks user for input, returns Promise
+ * @param title
+ * @param content
+ * @param defaultValue
+ */
+export async function promptPromise(title:string , content:string, defaultValue:string):Promise<string> {
+  return new Promise((resolve, reject) => {
+    // @ts-ignore
+    $('body').modal('prompt', {
+      title: title,
+      content: content,
+      defaultValue: defaultValue,
+      handler: async name => {
+        if (name)
+          resolve(name)
+        else
+          reject(name)
+      }
+    })
+  })
+}
+

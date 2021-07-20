@@ -4,7 +4,7 @@
 
 
 import * as path from "path";
-import {readFile, writeFile, rm} from "fs/promises";
+import {readFile, writeFile, rm, mkdir} from "fs/promises";
 import glob from "glob-promise";
 import {PresetValues} from "./PresetValues.js";
 import * as animations from "./animations/all.js";
@@ -39,8 +39,19 @@ export class PresetStore {
   }
 
   async save(presetDir: string, presetName: string, preset: PresetValues) {
+
+    //make sure dir exists
+    const presetFileName=this.presetFilename(presetDir, presetName)
+
+    try {
+      await mkdir(path.dirname(presetFileName))
+    }
+    catch(e) {
+      //exists
+    }
+
     return writeFile(
-      this.presetFilename(presetDir, presetName),
+      presetFileName,
       JSON.stringify(preset, undefined, ' '), 'utf8'
     )
   }

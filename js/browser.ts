@@ -62,9 +62,18 @@ window.addEventListener('load',
 
 
     $("#ledder-save-preset").on('click', async ()=>{
-      await runnerBrowser.presetSave();
+      if (runnerBrowser.presetName)
+        await runnerBrowser.presetSave();
+      else
+        await runnerBrowser.presetSaveAs();
       return(htmlPresets.reload(rpc))
     })
+
+    $("#ledder-copy-preset").on('click', async ()=>{
+      await runnerBrowser.presetSaveAs();
+      return(htmlPresets.reload(rpc))
+    })
+
 
     $("#ledder-delete-preset").on('click', async ()=>{
       await runnerBrowser.presetDelete();
