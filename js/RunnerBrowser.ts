@@ -56,10 +56,10 @@ export class RunnerBrowser {
     //update html fields
     if (this.presetName) {
       $(".ledder-selected-preset").text(this.presetName);
-      $("#ledder-delete-preset").removeClass("disabled");
+      $(".ledder-delete-preset").removeClass("disabled");
     } else {
       $(".ledder-selected-preset").text("(new)");
-      $("#ledder-delete-preset").addClass("disabled");
+      $(".ledder-delete-preset").addClass("disabled");
     }
 
     $(".ledder-selected-animation").text(this.animationName);

@@ -75,7 +75,7 @@ window.addEventListener('load',
     })
 
 
-    $("#ledder-delete-preset").on('click', async ()=>{
+    $(".ledder-delete-preset").on('click', async ()=>{
       await runnerBrowser.presetDelete();
       return(htmlPresets.reload(rpc))
     })
