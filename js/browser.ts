@@ -33,14 +33,14 @@ window.addEventListener('load',
 
 
     let htmlPresets = new HtmlPresets(async (animationName, presetName)=> {
+        //user has clicked on a animation/preset
         await runnerBrowser.run(animationName, presetName);
     })
 
     let htmlCategories = new HtmlCategories( async (categoryName) => {
+      //user has clicked on a category
       await htmlPresets.reload(rpc,categoryName);
       showPage("#ledder-preset-page");
-
-
     });
 
     rpc = new RpcClient(async () => {
