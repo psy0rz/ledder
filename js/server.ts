@@ -8,6 +8,8 @@ import {AnimationMovingStarsL} from "./animations/AnimationMovingStarsL.js";
 import {PresetStore} from "./PresetStore.js";
 import {PresetControl} from "./PresetControl.js";
 import {TheMatrix} from "./animations/TheMatrix.js";
+import {MatrixApng} from "./MatrixApng.js";
+import {PreviewStore} from "./PreviewStore.js";
 
 
 
@@ -32,7 +34,8 @@ matrix1.run();
 // new AnimationMovingStarsL(matrix1);
 // new AnimationStriptest(matrix2);
 
-new TheMatrix(matrix1);
+new AnimationMatrixtest(matrix1);
+// new TheMatrix(matrix1);
 
 
 // const runner=new Runner(matrix1);
@@ -66,8 +69,14 @@ rpc.addMethod("matrix.preset.updateValue", (params) => matrix1.preset.updateValu
 
 
 
+async function test()
+{
+  let previewStore=new PreviewStore(presetStore, "dist")
+  console.log(await previewStore.renderPreview("AnimationMatrixtest", ""))
+  console.log(await previewStore.renderPreview("AnimationMovingStarsL", ""))
+}
 
-
+test()
 
 
 
