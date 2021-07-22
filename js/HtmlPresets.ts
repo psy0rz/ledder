@@ -25,7 +25,7 @@ export class HtmlPresets {
     if (categoryName)
       this.categoryName=categoryName;
 
-    let animations=await rpc.request("presetStore.getPresets", this.categoryName)
+    let animations=await rpc.request("presetStore.getAnimationList", this.categoryName)
     this.updateHtml(animations)
 
   }

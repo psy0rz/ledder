@@ -50,10 +50,6 @@ export class MatrixApng extends Matrix {
     let imgs=[]
     let dels=[]
 
-
-    // @ts-ignore
-    console.log(animationClass.previewSkip);
-
     //skip frames, just run scheduler
     // @ts-ignore
     for (let i=0; i<animationClass.previewSkip; i++)

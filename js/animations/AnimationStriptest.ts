@@ -9,6 +9,7 @@ export class AnimationStriptest extends Animation {
 
   static title="Strip test"
   static description="To verify functionality of a led strip."
+  static presetDir="Strip test"
 
   constructor(matrix: Matrix) {
     super(matrix);

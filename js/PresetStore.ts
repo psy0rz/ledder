@@ -4,11 +4,35 @@
 
 
 import * as path from "path";
-import {readFile, writeFile, rm, mkdir} from "fs/promises";
+import {stat, readFile, writeFile, rm, mkdir} from "fs/promises";
 import glob from "glob-promise";
 import {PresetValues} from "./PresetValues.js";
 import * as animations from "./animations/all.js";
 import {PreviewStore} from "./PreviewStore.js";
+
+// import {getMtime} from "./util.js";
+
+/***
+ * Get mtime of filename, returns 0 if it doesnt exist.
+ * @param fileName
+ */
+export async function getMtime(fileName: string) {
+  try {
+    const s = await stat(fileName);
+    return (s.mtimeMs)
+  } catch (e) {
+    return (0)
+  }
+}
+
+export async function createParentDir(fileName: string) {
+  try {
+    await mkdir(path.dirname(fileName))
+  } catch (e) {
+    //exists
+  }
+
+}
 
 
 export class PresetStore {
@@ -43,6 +67,7 @@ export class PresetStore {
     return JSON.parse(await readFile(this.presetFilename(presetDir, presetName), 'utf8'))
   }
 
+
   /**
    * Save preset to disk
    * @param presetDir
@@ -51,20 +76,12 @@ export class PresetStore {
    */
   async save(presetDir: string, presetName: string, preset: PresetValues) {
 
-    //make sure dir exists
     const presetFileName = this.presetFilename(presetDir, presetName)
-
-    try {
-      await mkdir(path.dirname(presetFileName))
-    } catch (e) {
-      //exists
-    }
-
+    await createParentDir(presetFileName);
     await writeFile(
       presetFileName,
       JSON.stringify(preset, undefined, ' '), 'utf8'
     )
-
   }
 
   /**
@@ -73,23 +90,54 @@ export class PresetStore {
   async createPreview(animationName, presetName: string, preset: PresetValues) {
     const animationClass = animations[animationName]
     const previewFilename = this.previewFilename(animationClass.presetDir, presetName)
+    await createParentDir(previewFilename);
     return (this.previewStore.render(previewFilename, animationClass, preset))
   }
 
-  /**
-   * Update all previews for all animation/preset combinations that need it
-   */
-  // async updatePreviews()
-  // {
-  //   for (const [animationName, animationClass] of Object.entries(animations)) {
-  //
-  //   }
 
-  // }
+  /**
+   * Update all previews for all presets that need it. (either presetfile-mtime or animationfile-mtime is newer)
+   * @param animationName
+   * @param animationClass
+   * @param animationMtime
+   */
+  async updatePresetPreviews(animationName, animationClass, animationMtime: number) {
+
+    const presetNames = await this.getPresetNames(animationClass.presetDir)
+    for (const presetName of presetNames) {
+      const previewFilename = this.previewFilename(animationClass.presetDir, presetName)
+      const presetFilename = this.presetFilename(animationClass.presetDir, presetName)
+      const previewMtime = await getMtime(previewFilename)
+      if (previewMtime < animationMtime || previewMtime < await getMtime(presetFilename)) {
+        const preset = await this.load(animationClass.presetDir, presetName);
+        await this.createPreview(animationName, presetName, preset)
+      }
+    }
+
+  }
+
+
+  /**
+   * Update all previews for all animation/preset combinations that need it, according to mtime
+   */
+  async updateAnimationPreviews() {
+
+    for (const [animationName, animationClass] of Object.entries(animations)) {
+      const previewFilename = this.previewFilename(animationClass.presetDir, "")
+      const animationFilename = path.join("animations", animationName + ".ts")
+      const animationMtime = await getMtime(animationFilename)
+      if (await getMtime(previewFilename) <= animationMtime) {
+        await this.createPreview(animationName, "", undefined)
+      }
+
+      await this.updatePresetPreviews(animationName, animationClass, animationMtime)
+
+    }
+  }
 
   async delete(presetDir: string, presetName: string) {
-    return rm(
-      this.presetFilename(presetDir, presetName))
+    await rm(this.presetFilename(presetDir, presetName))
+    await rm(this.previewFilename(presetDir, presetName))
   }
 
   async getCategories() {
@@ -108,13 +156,14 @@ export class PresetStore {
     let ret = {}
     const presetNames = await this.getPresetNames(animationClass.presetDir)
     for (const presetName of presetNames) {
-      const preset = ret[animationName].presets[presetName] = await this.load(animationClass.presetDir, presetName);
+      const preset = ret[presetName] = await this.load(animationClass.presetDir, presetName);
 
       //strip stuff to keep it smaller
       delete preset.values;
 
-      //add preview url
-      preset.previewFile = this.previewFilename(animationClass.presetDir, presetName)
+      //add preview url, browsercache aware
+      const previewFilename=this.previewFilename(animationClass.presetDir, presetName)
+      preset.previewFile = previewFilename + "?" + await getMtime(previewFilename)
     }
     return (ret)
 
@@ -132,10 +181,15 @@ export class PresetStore {
 
       if (categoryName === animationClass.category) {
 
+        const previewFilename=await this.previewFilename(animationClass.presetDir, "");
+
         ret[animationName] = {
           title: animationClass.title,
           description: animationClass.description,
-          presets: await this.getPresetList(animationClass, animationName)
+          presets: await this.getPresetList(animationClass, animationName),
+          //add preview url, browsercache aware
+          previewFile: previewFilename + '?' + await getMtime(previewFilename)
+
         }
       }
     }
@@ -149,6 +203,6 @@ export class PresetStore {
 
   //FIXME: make secure
   private previewFilename(presetDir: string, presetName: string) {
-    return (path.join(this.presetPath, presetDir, presetName + ".png"));
+    return (path.join(this.presetPath, presetDir, presetName + "_.png"));
   }
 }

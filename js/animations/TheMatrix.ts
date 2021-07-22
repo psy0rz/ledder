@@ -10,7 +10,7 @@ export class TheMatrix extends Animation {
   static category = "Movie FX"
   static title = "The Matrix"
   static description = "bla"
-  static presetDir = "The Matrix"
+  static presetDir = "The Matrix";
 
 
   constructor(matrix) {

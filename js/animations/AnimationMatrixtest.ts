@@ -13,7 +13,9 @@ import {Color} from "../Color.js";
 export class AnimationMatrixtest extends Animation {
 
   static title="Matrix test screen"
+  static presetDir="Matrix test"
   static description="To verify correct orientation and color configuration of a matrix"
+
 
   /**
    * Test matrix orientation, border limit, colors and smoothness.

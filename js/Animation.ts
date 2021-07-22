@@ -14,7 +14,7 @@ export class Animation extends PixelContainer {
   static category="Misc"
   static title="Untitled"
   static description=""
-  static presetDir=Animation.title
+  static presetDir="Unspecified"
 
   //preview settings, fiddle with this to optimize your preview image
   static previewSkip=120 //number of input-frames to skip
@@ -39,5 +39,7 @@ export class Animation extends PixelContainer {
     this.pixels = [];
     this.keep = false;
   }
+
+
 
 }

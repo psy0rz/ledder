@@ -25,6 +25,7 @@ export class PreviewStore {
    */
   async render(filename, animationClass, preset)
   {
+    console.log("Rendering preview "+filename);
 
     this.matrix.clear()
 

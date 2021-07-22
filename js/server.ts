@@ -46,6 +46,8 @@ matrix1.run();
 // });
 
 const presetStore=new PresetStore("presets");
+presetStore.updateAnimationPreviews();
+
 const runner = new RunnerServer(matrix1, presetStore);
 
 
