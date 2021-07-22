@@ -5,7 +5,7 @@ import {Scheduler} from "./Scheduler.js";
 //jquery
 import $ from "jquery";
 import {HtmlPresets} from "./HtmlPresets.js";
-import {error, info, progressReset} from "./util.js";
+import {error, info, progressDone, progressReset, progressStart} from "./util.js";
 import {RunnerBrowser} from "./RunnerBrowser.js";
 import {HtmlCategories} from "./HtmlCategories.js";
 // @ts-ignore
@@ -43,13 +43,16 @@ window.addEventListener('load',
       showPage("#ledder-preset-page");
     });
 
+    progressReset()
+    progressStart()
     rpc = new RpcClient(async () => {
-
-      progressReset();
+      progressDone()
       htmlCategories.reload(rpc)
 
     }, () => {
-      matrix.clear();
+      progressReset()
+      progressStart()
+      matrix.clear()
     });
 
 

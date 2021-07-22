@@ -1,10 +1,10 @@
 {
  "values": {
   "Star speed": {
-   "value": 1.9000000000000001
+   "value": 0.1
   },
   "Star twinkle delay": {
-   "value": 1
+   "value": 10
   },
   "Star color": {
    "r": 252,

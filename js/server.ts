@@ -2,16 +2,12 @@ import {Scheduler} from "./Scheduler.js";
 import {MatrixWLED} from "./MatrixWLED.js";
 import {RpcServer} from "./RpcServer.js";
 import {RunnerServer} from "./RunnerServer.js";
-import {AnimationMatrixtest} from "./animations/AnimationMatrixtest.js";
-import {AnimationStriptest} from "./animations/AnimationStriptest.js";
-import {AnimationMovingStarsL} from "./animations/AnimationMovingStarsL.js";
 import {PresetStore} from "./PresetStore.js";
-import {PresetControl} from "./PresetControl.js";
-import {TheMatrix} from "./animations/TheMatrix.js";
-import {MatrixApng} from "./MatrixApng.js";
-import {PreviewStore} from "./PreviewStore.js";
 
 
+
+const presetStore=new PresetStore("presets");
+await presetStore.updateAnimationPreviews(process.argv[2]=='rebuild');
 
 
 let rpc = new RpcServer();
@@ -45,8 +41,6 @@ matrix1.run();
 //   return(runner.run( name));
 // });
 
-const presetStore=new PresetStore("presets");
-presetStore.updateAnimationPreviews();
 
 const runner = new RunnerServer(matrix1, presetStore);
 

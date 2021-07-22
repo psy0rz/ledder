@@ -100,15 +100,16 @@ export class PresetStore {
    * @param animationName
    * @param animationClass
    * @param animationMtime
+   * @param force
    */
-  async updatePresetPreviews(animationName, animationClass, animationMtime: number) {
+  async updatePresetPreviews(animationName, animationClass, animationMtime: number, force:boolean) {
 
     const presetNames = await this.getPresetNames(animationClass.presetDir)
     for (const presetName of presetNames) {
       const previewFilename = this.previewFilename(animationClass.presetDir, presetName)
       const presetFilename = this.presetFilename(animationClass.presetDir, presetName)
       const previewMtime = await getMtime(previewFilename)
-      if (animationMtime==0 || previewMtime < animationMtime || previewMtime < await getMtime(presetFilename)) {
+      if (force || animationMtime==0 || previewMtime < animationMtime || previewMtime < await getMtime(presetFilename)) {
         const preset = await this.load(animationClass.presetDir, presetName);
         await this.createPreview(animationName, presetName, preset)
       }
@@ -120,7 +121,7 @@ export class PresetStore {
   /**
    * Update all previews for all animation/preset combinations that need it, according to mtime
    */
-  async updateAnimationPreviews() {
+  async updateAnimationPreviews(force: boolean) {
 
     for (const [animationName, animationClass] of Object.entries(animations)) {
       const previewFilename = this.previewFilename(animationClass.presetDir, "")
@@ -129,11 +130,11 @@ export class PresetStore {
       if (animationMtime==0)
         console.warn("Cant find "+animationFilename+", always re-creating all previews. (check if filename matches classname)")
 
-      if (animationMtime==0 || await getMtime(previewFilename) <= animationMtime) {
+      if (force || animationMtime==0 || await getMtime(previewFilename) <= animationMtime) {
         await this.createPreview(animationName, "", undefined)
       }
 
-      await this.updatePresetPreviews(animationName, animationClass, animationMtime)
+      await this.updatePresetPreviews(animationName, animationClass, animationMtime, force)
 
     }
   }

@@ -14,7 +14,7 @@ export class RpcServer extends Rpc {
 
   constructor() {
     super();
-    let bundler = new Bundler('index.html', 'tests/animations');
+    let bundler = new Bundler('index.html');
 
     const app = express()
     const port = 3000
@@ -48,12 +48,16 @@ export class RpcServer extends Rpc {
     //automatic run parcel bundler on filesystem changes
     app.use(bundler.middleware());
 
+
+
     //bunder takes care of this
     // app.use(express.static("."));
 
     app.listen(port, () => {
       console.log(`Listening at http://localhost:${port}`)
     })
+
+
   }
 
   addMethod(name, method)
