@@ -1,0 +1,18 @@
+{
+ "values": {
+  "Star speed": {
+   "value": 1.9000000000000001
+  },
+  "Star twinkle delay": {
+   "value": 1
+  },
+  "Star color": {
+   "r": 252,
+   "g": 255,
+   "b": 46,
+   "a": 1
+  }
+ },
+ "title": "Untitled",
+ "description": ""
+}

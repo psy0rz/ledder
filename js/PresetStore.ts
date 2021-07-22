@@ -108,7 +108,7 @@ export class PresetStore {
       const previewFilename = this.previewFilename(animationClass.presetDir, presetName)
       const presetFilename = this.presetFilename(animationClass.presetDir, presetName)
       const previewMtime = await getMtime(previewFilename)
-      if (previewMtime < animationMtime || previewMtime < await getMtime(presetFilename)) {
+      if (animationMtime==0 || previewMtime < animationMtime || previewMtime < await getMtime(presetFilename)) {
         const preset = await this.load(animationClass.presetDir, presetName);
         await this.createPreview(animationName, presetName, preset)
       }
@@ -124,9 +124,12 @@ export class PresetStore {
 
     for (const [animationName, animationClass] of Object.entries(animations)) {
       const previewFilename = this.previewFilename(animationClass.presetDir, "")
-      const animationFilename = path.join("animations", animationName + ".ts")
+      const animationFilename = path.join("js","animations", animationName + ".ts")
       const animationMtime = await getMtime(animationFilename)
-      if (await getMtime(previewFilename) <= animationMtime) {
+      if (animationMtime==0)
+        console.warn("Cant find "+animationFilename+", always re-creating all previews. (check if filename matches classname)")
+
+      if (animationMtime==0 || await getMtime(previewFilename) <= animationMtime) {
         await this.createPreview(animationName, "", undefined)
       }
 
