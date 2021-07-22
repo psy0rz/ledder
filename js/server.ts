@@ -4,11 +4,8 @@ import {RpcServer} from "./RpcServer.js";
 import {RunnerServer} from "./RunnerServer.js";
 import {PresetStore} from "./PresetStore.js";
 
-
-
-const presetStore=new PresetStore("presets");
+const presetStore=new PresetStore("presets")
 await presetStore.updateAnimationPreviews(process.argv[2]=='rebuild');
-
 
 let rpc = new RpcServer();
 
@@ -23,27 +20,7 @@ matrix1.run();
 // matrix2.runScheduler=false;
 // matrix2.run();
 
-
-
-
-// new AnimationMatrixtest(matrix1);
-// new AnimationMovingStarsL(matrix1);
-// new AnimationStriptest(matrix2);
-
-// new AnimationMatrixtest(matrix1);
-// new TheMatrix(matrix1);
-
-
-// const runner=new Runner(matrix1);
-//
-//
-// rpc.addMethod("run", ({name}) => {
-//   return(runner.run( name));
-// });
-
-
 const runner = new RunnerServer(matrix1, presetStore);
-
 
 //RPC bindings
 
@@ -65,16 +42,4 @@ rpc.addMethod("runner.run", (params) => runner.run(...params))
 // @ts-ignore
 rpc.addMethod("matrix.preset.updateValue", (params) => matrix1.preset.updateValue(...params))
 
-
-
-// async function test()
-// {
-//   let previewStore=new PreviewStore(presetStore, "dist")
-//   console.log(await previewStore.renderPreview("AnimationMatrixtest", ""))
-//   console.log(await previewStore.renderPreview("AnimationMovingStarsL", ""))
-// }
-//
-// test()
-//
-//
 
