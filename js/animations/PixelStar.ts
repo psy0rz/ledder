@@ -11,7 +11,7 @@ export class PixelStar extends Pixel {
 
         this.step = 0;
         matrix.scheduler.intervalControlled(delay, () => {
-            this.step = (this.step + 1) % 1;
+            this.step = (this.step + 1) % 3;
             return(this.keep);
         })
 
