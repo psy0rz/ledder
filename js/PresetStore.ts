@@ -18,7 +18,7 @@ export class PresetStore {
   constructor(presetPath: string) {
     this.presetPath = presetPath;
 
-    this.previewStore=new PreviewStore(this)
+    this.previewStore = new PreviewStore(this)
 
   }
 
@@ -35,7 +35,7 @@ export class PresetStore {
   }
 
   /**
-   * Return preset in PresetValues format
+   * Return preset in PresetValues format.
    * @param presetDir
    * @param presetName
    */
@@ -52,12 +52,11 @@ export class PresetStore {
   async save(presetDir: string, presetName: string, preset: PresetValues) {
 
     //make sure dir exists
-    const presetFileName=this.presetFilename(presetDir, presetName)
+    const presetFileName = this.presetFilename(presetDir, presetName)
 
     try {
       await mkdir(path.dirname(presetFileName))
-    }
-    catch(e) {
+    } catch (e) {
       //exists
     }
 
@@ -71,12 +70,22 @@ export class PresetStore {
   /**
    * Render preview of a preset and save it to disk (usually called after save())
    */
-  async createPreview(animationName, presetName: string, preset: PresetValues)
-  {
-    const animationClass=animations[animationName]
-    const previewFilename=this.previewFilename(animationClass.presetDir, presetName)
-    return(this.previewStore.render(previewFilename, animationClass, preset))
+  async createPreview(animationName, presetName: string, preset: PresetValues) {
+    const animationClass = animations[animationName]
+    const previewFilename = this.previewFilename(animationClass.presetDir, presetName)
+    return (this.previewStore.render(previewFilename, animationClass, preset))
   }
+
+  /**
+   * Update all previews for all animation/preset combinations that need it
+   */
+  // async updatePreviews()
+  // {
+  //   for (const [animationName, animationClass] of Object.entries(animations)) {
+  //
+  //   }
+
+  // }
 
   async delete(presetDir: string, presetName: string) {
     return rm(
@@ -87,9 +96,28 @@ export class PresetStore {
     let cat = {};
     for (const [animationName, animation] of Object.entries(animations)) {
 
-      cat[animation.category]={}; //we can add more metadata if needed
+      cat[animation.category] = {}; //we can add more metadata if needed
     }
-    return(cat);
+    return (cat);
+  }
+
+  /*
+   * Gets stripped list of all presets for animation, and adds previewUrl
+   */
+  async getPresetList(animationClass, animationName) {
+    let ret = {}
+    const presetNames = await this.getPresetNames(animationClass.presetDir)
+    for (const presetName of presetNames) {
+      const preset = ret[animationName].presets[presetName] = await this.load(animationClass.presetDir, presetName);
+
+      //strip stuff to keep it smaller
+      delete preset.values;
+
+      //add preview url
+      preset.previewFile = this.previewFilename(animationClass.presetDir, presetName)
+    }
+    return (ret)
+
   }
 
 
@@ -97,7 +125,7 @@ export class PresetStore {
    * Returns list of all animations and all stripped presets, in jsonable format
    * NOTE: slow, cache?
    */
-  async getPresets(categoryName: string) {
+  async getAnimationList(categoryName: string) {
     let ret = {};
 
     for (const [animationName, animationClass] of Object.entries(animations)) {
@@ -107,21 +135,7 @@ export class PresetStore {
         ret[animationName] = {
           title: animationClass.title,
           description: animationClass.description,
-          presets: {}
-        };
-
-        const presetNames = await this.getPresetNames(animationClass.presetDir)
-        for (const presetName of presetNames) {
-          const preset=ret[animationName].presets[presetName] = await this.load(animationClass.presetDir, presetName);
-
-          //strip stuff to keep it smaller
-          delete preset.values;
-
-          //add preview file
-          preset.previewFile=this.previewFilename(animationClass.presetDir, presetName)
-
-
-
+          presets: await this.getPresetList(animationClass, animationName)
         }
       }
     }

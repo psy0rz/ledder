@@ -90,6 +90,8 @@ export class MatrixWLED extends Matrix {
     {
       if (this.buffer[i]!=this.prevBuffer[i])
         changed=true;
+      // //blur with previous frame to make animations smoother?
+      // sendBuffer[i+2]=(this.buffer[i]+this.prevBuffer[i])/2;
       sendBuffer[i+2]=this.buffer[i];
     }
 

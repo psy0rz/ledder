@@ -34,7 +34,7 @@ matrix1.run();
 // new AnimationMovingStarsL(matrix1);
 // new AnimationStriptest(matrix2);
 
-new AnimationMatrixtest(matrix1);
+// new AnimationMatrixtest(matrix1);
 // new TheMatrix(matrix1);
 
 
@@ -54,7 +54,7 @@ const runner = new RunnerServer(matrix1, presetStore);
 // @ts-ignore
 rpc.addMethod("presetStore.getCategories", (params) => presetStore.getCategories(...params))
 // @ts-ignore
-rpc.addMethod("presetStore.getPresets", (params) => presetStore.getPresets(...params))
+rpc.addMethod("presetStore.getAnimationList", (params) => presetStore.getAnimationList(...params))
 // @ts-ignore
 rpc.addMethod("presetStore.load",  (params) => presetStore.load(...params))
 // @ts-ignore
