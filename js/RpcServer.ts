@@ -1,4 +1,4 @@
-import Bundler from "parcel-bundler";
+// import Bundler from "parcel-bundler";
 import express from "express";
 import expressWs from "express-ws";
 import {JSONRPCClient, JSONRPCServer, JSONRPCServerAndClient} from "json-rpc-2.0";
@@ -14,7 +14,7 @@ export class RpcServer extends Rpc {
 
   constructor() {
     super();
-    let bundler = new Bundler('index.html');
+    // let bundler = new Bundler('index.html');
 
     const app = express()
     const port = 3000
@@ -46,12 +46,8 @@ export class RpcServer extends Rpc {
     app.use("/presets", express.static("presets"));
 
     //automatic run parcel bundler on filesystem changes
-    app.use(bundler.middleware());
-
-
-
-    //bunder takes care of this
-    // app.use(express.static("."));
+    // app.use(bundler.middleware());
+    app.use(express.static("dist"));
 
     app.listen(port, () => {
       console.log(`Listening at http://localhost:${port}`)

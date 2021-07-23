@@ -6,3 +6,5 @@ dist
 .cache
 /yarn.lock
 /yarn-error.log
+.parcel-cache
+

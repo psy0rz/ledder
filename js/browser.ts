@@ -91,3 +91,5 @@ window.addEventListener('load',
     $(".ledder-show-category-page").on('click', () => showPage("#ledder-category-page"))
   })
 
+
+console.log("moin");
