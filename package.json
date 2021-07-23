@@ -11,15 +11,17 @@
     "last 1 firefox version"
   ],
   "scripts": {
-    "dev": "tsc-watch --onSuccess \"sh -c 'npx parcel build --no-content-hash index.html && node js/server.js'\"",
-    "build": "tsc && parcel build index.html",
+    "dev": "concurrently \"tsc-watch --onSuccess 'node js/server.js'\" \"parcel watch index.html\"",
+    "build": "tsc --build && parcel build index.html",
     "start": "node js/server.js"
   },
   "devDependencies": {
     "@parcel/packager-raw-url": "2.0.0-beta.2",
     "@parcel/transformer-webmanifest": "2.0.0-beta.2",
+    "concurrently": "^6.2.0",
     "marked": "^2.1.3",
     "parcel": "^2.0.0-beta.2",
+    "tsc-watch": "^4.4.0",
     "typescript": "^4.3.5"
   },
   "dependencies": {
@@ -36,7 +38,6 @@
     "jq": "^1.7.2",
     "jquery": "^3.6.0",
     "json-rpc-2.0": "^0.2.16",
-    "tsc-watch": "^4.4.0",
     "upng-js": "^2.1.0"
   }
 }
