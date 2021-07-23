@@ -35,7 +35,8 @@ export class AnimationMovingStarsL extends Animation {
             })
 
             //schedule creation of next star at random time
-            return (random(10, 30));
+            //return (random(10, 30));
+          return(2)
 
         })
 

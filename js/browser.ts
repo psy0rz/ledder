@@ -43,13 +43,20 @@ window.addEventListener('load',
       showPage("#ledder-preset-page");
     });
 
+    let reload=false
     progressReset()
     progressStart()
     rpc = new RpcClient(async () => {
-      progressDone()
-      htmlCategories.reload(rpc)
-
+      if (reload) {
+        //reload page to make animation development easier
+        window.location.reload();
+      }
+      else {
+        progressDone()
+        htmlCategories.reload(rpc)
+      }
     }, () => {
+      reload=true
       progressReset()
       progressStart()
       matrix.clear()
@@ -90,6 +97,3 @@ window.addEventListener('load',
     $(".ledder-show-control-page").on('click', () => showPage("#ledder-control-page"))
     $(".ledder-show-category-page").on('click', () => showPage("#ledder-category-page"))
   })
-
-
-console.log("moin");

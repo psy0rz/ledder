@@ -21,7 +21,7 @@ export class RpcClient extends Rpc {
   }
 
   connect() {
-    console.log("startt")
+
 
     let ws_url;
     if (location.protocol === 'http:')
@@ -53,7 +53,6 @@ export class RpcClient extends Rpc {
         `Connection is closed (${event.reason}).`
       );
 
-      console.log("disc")
       setTimeout(() => this.connect(), 1000);
 
       if (this.closeHandler !== undefined)
@@ -61,10 +60,6 @@ export class RpcClient extends Rpc {
 
     };
 
-    this.serverAndClient.addMethod("echo", (text) => {
-      console.log("echo", text);
-
-    });
 
     webSocket.onopen = () => {
       this.openHandler();
