@@ -181,6 +181,8 @@ export class PresetStore {
   async getAnimationList(categoryName: string) {
     let ret = {};
 
+    console.log("getAnimationList", categoryName)
+
     for (const [animationName, animationClass] of Object.entries(animations)) {
 
       if (categoryName === animationClass.category) {

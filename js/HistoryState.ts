@@ -20,6 +20,11 @@ export class HistoryState {
       this.changed(this.get())
     }, false);
 
+
+  }
+
+  load()
+  {
     //inital page load
     this.changed(this.get())
   }
@@ -51,7 +56,7 @@ export class HistoryState {
    */
   get() {
     try {
-      return (rison.decode(document.location.hash.substring(1)))
+      return (rison.decode(decodeURI(document.location.hash.substring(1))))
     } catch (e) {
       return ({})
     }
@@ -68,7 +73,10 @@ export class HistoryState {
     Object.assign(newState, changedFields)
 
     let s = rison.encode(newState)
-    history.pushState(undefined, "", "#" + s)
+    console.log("encoded ", s)
+    // history.pushState(undefined, "", "#" + s)
+    // @ts-ignore
+    window.location="#" +s;
 
     this.changed(newState)
 
