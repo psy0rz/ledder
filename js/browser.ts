@@ -29,7 +29,7 @@ window.addEventListener('load', () => {
 
   let htmlPresets = new HtmlPresets(async (animationName, presetName) => {
     //user has clicked on a animation/preset
-    await runnerBrowser.run(animationName, presetName);
+    historyState.push({animationName:animationName, presetName:presetName})
   })
 
   let htmlCategories = new HtmlCategories(async (categoryName) => {
@@ -71,6 +71,13 @@ window.addEventListener('load', () => {
       console.log("load" , changedFields)
       htmlPresets.reload(rpc, changedFields['categoryName']);
     }
+
+    //run animation
+    if (changedFields['animationName'])
+    {
+      runnerBrowser.run(changedFields['animationName'], changedFields['presetName']);
+    }
+
   })
 
 
