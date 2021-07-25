@@ -6,13 +6,13 @@ import rison from "rison-node"
  * the callback is called with the changed fields as argument.
  */
 export class HistoryState {
-  private changedCallback: (changedFields: {}) => void;
+  private changedCallback: (newState, changedFields: {}) => void;
   private currentState: {};
 
   /**
    *
    */
-  constructor(changedCallback: (changedFields) => void) {
+  constructor(changedCallback: (newState, changedFields) => void) {
     this.changedCallback = changedCallback
     this.currentState = {}
 
@@ -35,17 +35,17 @@ export class HistoryState {
   private changed(newState)
   {
     //determine what is changed compared to previous state, and call the handler
-    let changedFields={}
+    let changedFields=[]
     for (const key of Object.keys(newState))
     {
       if (newState[key]!=this.currentState[key])
       {
-        changedFields[key]=newState[key];
+        changedFields.push(key)
       }
     }
 
-    if (Object.keys(changedFields).length)
-      this.changedCallback(changedFields)
+    if (changedFields.length)
+      this.changedCallback(newState,changedFields)
 
     this.currentState=newState
 
@@ -64,16 +64,15 @@ export class HistoryState {
 
   /**
    * Merge new fields with current state and push on history stack (changedCallback will be called)
-   * @param changedFields
+   * @param updateFields
    */
-  push(changedFields) {
+  push(updateFields) {
 
     let newState={}
     Object.assign(newState, this.currentState)
-    Object.assign(newState, changedFields)
+    Object.assign(newState, updateFields)
 
     let s = rison.encode(newState)
-    console.log("encoded ", s)
     // history.pushState(undefined, "", "#" + s)
     // @ts-ignore
     window.location="#" +s;

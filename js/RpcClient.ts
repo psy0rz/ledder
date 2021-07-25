@@ -90,7 +90,7 @@ export class RpcClient extends Rpc {
   }
 
   /**
-   * Make a request to server, without any extra processing. (faster)
+   * Make a request to server, without any extra processing and exception handling (faster)
    * @param name
    * @param params
    */

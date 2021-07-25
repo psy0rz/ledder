@@ -58,24 +58,23 @@ window.addEventListener('load', () => {
   });
 
   //handle stuff that depends on the url #hash:
-  let historyState = new HistoryState(changedFields => {
+  let historyState = new HistoryState((newState, changedFields) => {
     //show page
-    if (changedFields['page']) {
+    if (changedFields.includes('page')) {
       $(".ledder-page").hide();
-      $(changedFields['page']).show();
+      $(newState['page']).show();
       $(window).trigger("resize");
     }
 
     //load category
-    if (changedFields['categoryName']) {
-      console.log("load" , changedFields)
-      htmlPresets.reload(rpc, changedFields['categoryName']);
+    if (changedFields.includes('categoryName')) {
+      htmlPresets.reload(rpc, newState['categoryName']);
     }
 
     //run animation
-    if (changedFields['animationName'])
+    if (changedFields.includes('presetName'))
     {
-      runnerBrowser.run(changedFields['animationName'], changedFields['presetName']);
+      runnerBrowser.run(newState['animationName'], newState['presetName']);
     }
 
   })
@@ -105,7 +104,7 @@ window.addEventListener('load', () => {
 
   $(".ledder-delete-preset").on('click', async () => {
     await runnerBrowser.presetDelete();
-    return (htmlPresets.reload(rpc))
+    await htmlPresets.reload(rpc)
   })
 
 
@@ -118,6 +117,11 @@ window.addEventListener('load', () => {
   $(".ledder-back").on('click', () => history.back())
 
 
+  //statistics
+  setInterval(()=>{
+    $(".ledder-schedule-count").text(scheduler.intervals.length)
+    $(".ledder-pixel-count").text(matrix.pixels.length)
+  },1000)
 
 })
 

@@ -95,9 +95,10 @@ export class MatrixWLED extends Matrix {
       sendBuffer[i+2]=this.buffer[i];
     }
 
-    if (changed) {
+    // if (changed) {
+    //always send at 60 updates/s, otherwise it will stutter
         this.socket.send(sendBuffer);
-    }
+    // }
 
   }
 

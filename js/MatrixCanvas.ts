@@ -78,8 +78,6 @@ export class MatrixCanvas extends Matrix {
 
 
 
-
-
   run()
   {
     this.frame();
