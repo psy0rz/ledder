@@ -11,7 +11,7 @@
     "last 1 firefox version"
   ],
   "scripts": {
-    "dev": "concurrently \"tsc-watch --onSuccess 'node js/server.js'\" \"parcel watch --no-hmr index.html\"",
+    "dev": "concurrently \"tsc-watch --onSuccess 'node js/server.js'\" \"parcel watch index.html\"",
     "build": "tsc --build && parcel build index.html",
     "start": "node js/server.js"
   },
@@ -38,6 +38,7 @@
     "jq": "^1.7.2",
     "jquery": "^3.6.0",
     "json-rpc-2.0": "^0.2.16",
+    "rison-node": "^2.1.1",
     "upng-js": "^2.1.0"
   }
 }

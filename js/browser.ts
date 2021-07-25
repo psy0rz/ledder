@@ -5,9 +5,11 @@ import {Scheduler} from "./Scheduler.js";
 //jquery
 import $ from "jquery";
 import {HtmlPresets} from "./HtmlPresets.js";
-import {error, info, progressDone, progressReset, progressStart} from "./util.js";
+import {progressDone, progressReset, progressStart} from "./util.js";
 import {RunnerBrowser} from "./RunnerBrowser.js";
 import {HtmlCategories} from "./HtmlCategories.js";
+import {HistoryState} from "./HistoryState.js";
+
 // @ts-ignore
 window.$ = $;
 // @ts-ignore
@@ -15,8 +17,17 @@ window.jQuery = $;
 
 require("fomantic-ui-css/semantic");
 
+
 let rpc;
 let runnerBrowser: RunnerBrowser;
+
+let h=new HistoryState(state=>console.log(state))
+// @ts-ignore
+window.h=h;
+// h.push({a:1 , b:2});
+// h.push({a:1 , b:3});
+
+
 
 function showPage(selector) {
   $(".ledder-page").hide();
