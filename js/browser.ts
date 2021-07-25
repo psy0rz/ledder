@@ -19,21 +19,8 @@ require("fomantic-ui-css/semantic");
 
 
 let rpc;
+let historyState;
 let runnerBrowser: RunnerBrowser;
-
-let h=new HistoryState(state=>console.log(state))
-// @ts-ignore
-window.h=h;
-// h.push({a:1 , b:2});
-// h.push({a:1 , b:3});
-
-
-
-function showPage(selector) {
-  $(".ledder-page").hide();
-  $(selector).show();
-  $(window).trigger("resize");
-}
 
 window.addEventListener('load',
   () => {
@@ -43,31 +30,30 @@ window.addEventListener('load',
     matrix.run();
 
 
-    let htmlPresets = new HtmlPresets(async (animationName, presetName)=> {
-        //user has clicked on a animation/preset
-        await runnerBrowser.run(animationName, presetName);
+    let htmlPresets = new HtmlPresets(async (animationName, presetName) => {
+      //user has clicked on a animation/preset
+      await runnerBrowser.run(animationName, presetName);
     })
 
-    let htmlCategories = new HtmlCategories( async (categoryName) => {
+    let htmlCategories = new HtmlCategories(async (categoryName) => {
       //user has clicked on a category
-      await htmlPresets.reload(rpc,categoryName);
-      showPage("#ledder-preset-page");
+      await htmlPresets.reload(rpc, categoryName);
+      historyState.push({page: "#ledder-preset-page"})
     });
 
-    let reload=false
+    let reload = false
     progressReset()
     progressStart()
     rpc = new RpcClient(async () => {
       if (reload) {
         //reload page to make animation development easier
         window.location.reload();
-      }
-      else {
+      } else {
         progressDone()
         htmlCategories.reload(rpc)
       }
     }, () => {
-      reload=true
+      reload = true
       progressReset()
       progressStart()
       matrix.clear()
@@ -82,29 +68,44 @@ window.addEventListener('load',
     })
 
 
-    $("#ledder-save-preset").on('click', async ()=>{
+    $("#ledder-save-preset").on('click', async () => {
       if (runnerBrowser.presetName)
         await runnerBrowser.presetSave();
       else
         await runnerBrowser.presetSaveAs();
-      return(htmlPresets.reload(rpc))
+      return (htmlPresets.reload(rpc))
     })
 
-    $("#ledder-copy-preset").on('click', async ()=>{
+    $("#ledder-copy-preset").on('click', async () => {
       await runnerBrowser.presetSaveAs();
-      return(htmlPresets.reload(rpc))
+      return (htmlPresets.reload(rpc))
     })
 
 
-    $(".ledder-delete-preset").on('click', async ()=>{
+    $(".ledder-delete-preset").on('click', async () => {
       await runnerBrowser.presetDelete();
-      return(htmlPresets.reload(rpc))
+      return (htmlPresets.reload(rpc))
     })
 
 
     //Page switching
-    showPage("#ledder-category-page");
-    $(".ledder-show-preset-page").on('click', () => showPage("#ledder-preset-page"))
-    $(".ledder-show-control-page").on('click', () => showPage("#ledder-control-page"))
-    $(".ledder-show-category-page").on('click', () => showPage("#ledder-category-page"))
+    if (!historyState.get()['page'])
+      historyState.push({page: "#ledder-category-page"})
+    $(".ledder-show-preset-page").on('click', () => historyState.push({page: "#ledder-preset-page"}))
+    $(".ledder-show-control-page").on('click', () => historyState.push({page: "#ledder-control-page"}))
+    $(".ledder-show-category-page").on('click', () => historyState.push({page: "#ledder-category-page"}))
+    $(".ledder-back").on('click', ()=>history.back())
   })
+
+
+/**
+ * Handle page-change events
+ */
+historyState = new HistoryState(changedFields => {
+  if ('page' in changedFields) {
+    $(".ledder-page").hide();
+    $(changedFields['page']).show();
+    $(window).trigger("resize");
+  }
+
+})
