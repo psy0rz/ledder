@@ -1,0 +1,36 @@
+{
+ "values": {
+  "Start color": {
+   "r": 255,
+   "g": 255,
+   "b": 255,
+   "a": 1
+  },
+  "Tail color": {
+   "r": 0,
+   "g": 128,
+   "b": 0,
+   "a": 1
+  },
+  "Start fade interval": {
+   "value": 11
+  },
+  "Tail fade interval": {
+   "value": 34
+  },
+  "Fall interval": {
+   "value": 4.9
+  },
+  "Create interval": {
+   "value": 4
+  },
+  "Slow trials (percent)": {
+   "value": 10
+  },
+  "Slow fall interval": {
+   "value": 7
+  }
+ },
+ "title": "Untitled",
+ "description": ""
+}
