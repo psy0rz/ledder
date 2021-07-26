@@ -33,7 +33,7 @@ export class PreviewStore {
       this.matrix.preset.load(preset);
 
     new animationClass(this.matrix)
-    let imageData=this.matrix.get(animationClass)
+    let imageData=await this.matrix.get(animationClass)
 
     await writeFile(filename, Buffer.from(imageData))
   }

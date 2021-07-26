@@ -44,8 +44,9 @@ export class MatrixApng extends Matrix {
 
   /**
    * Renders the requested nubmer of frames as quickly as possible and returns APNG filedata
+   * NOTE: async to give eventloop opertunity to handle promises.
    */
-  get(animationClass: Animation)
+  async get(animationClass: Animation)
   {
     let imgs=[]
     let dels=[]
@@ -53,14 +54,14 @@ export class MatrixApng extends Matrix {
     //skip frames, just run scheduler
     // @ts-ignore
     for (let i=0; i<animationClass.previewSkip; i++)
-      this.scheduler.update();
+      await this.scheduler.update();
 
     // @ts-ignore
     for (let i=0; i<animationClass.previewFrames; i++) {
 
       // @ts-ignore
       for (let d=0; d<animationClass.previewDivider; d++)
-        this.scheduler.update();
+        await this.scheduler.update();
 
       //render
       // this.imageBuf8 = new Uint8ClampedArray(this.width * this.height * 4);
