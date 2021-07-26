@@ -61,9 +61,9 @@ export class MatrixWLED extends Matrix {
       const old_a = 1 - color.a;
 
       //store pixel in buffer, alphablend with existing values
-      this.buffer[offset] = Math.floor(this.buffer[offset] * old_a + color.r * color.a);
-      this.buffer[offset + 1] = Math.floor(this.buffer[offset + 1] * old_a + color.g * color.a);
-      this.buffer[offset + 2] = Math.floor(this.buffer[offset + 2] * old_a + color.b * color.a);
+      this.buffer[offset] = ~~(this.buffer[offset] * old_a + color.r * color.a);
+      this.buffer[offset + 1] = ~~(this.buffer[offset + 1] * old_a + color.g * color.a);
+      this.buffer[offset + 2] = ~~(this.buffer[offset + 2] * old_a + color.b * color.a);
     }
   }
 

@@ -33,7 +33,7 @@ export class AnimationFade extends Animation {
 
       this.frameNr--;
 
-      //make sure last step is exact on colorEnd
+      //make sure last step is exact on colorEnd (rounding errors)
       if (this.frameNr <= 0) {
           Object.assign(color, colorEnd);
           return false
