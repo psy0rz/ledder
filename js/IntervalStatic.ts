@@ -7,9 +7,9 @@ export class IntervalStatic extends Interval {
 
     constructor(interval, time, callback) {
         super();
-        this.interval = interval;
-        this.nextTime = time + interval;
-        this.callback = callback;
+        this.interval = interval
+        this.nextTime = time + interval
+        this.callback = callback
     }
 
     //returns false if interval should be destroyed
@@ -19,7 +19,7 @@ export class IntervalStatic extends Interval {
 
             //end interval?
             if (newInterval === false)
-                return false;
+              return false;
 
             //change interval?
             if (newInterval !== undefined && newInterval !== true) {
@@ -31,4 +31,5 @@ export class IntervalStatic extends Interval {
         }
         return true;
     }
+
 }

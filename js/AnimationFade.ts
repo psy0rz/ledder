@@ -10,6 +10,7 @@ export class AnimationFade extends Animation {
   stepG: number
   stepB: number
   frameNr: number
+  promise: Promise<unknown>
 
   /**
    * A plain linear fade that fades color to colorEnd within specified number of frames
@@ -28,7 +29,7 @@ export class AnimationFade extends Animation {
     this.stepG=(colorEnd.g-color.g)/frames.value;
     this.stepB=(colorEnd.b-color.b)/frames.value;
 
-    matrix.scheduler.interval(1, () => {
+    this.promise=matrix.scheduler.interval(1, () => {
 
       this.frameNr--;
 

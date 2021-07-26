@@ -2,6 +2,11 @@
 import { stat } from "fs/promises";
 import $ from "jquery";
 
+/**
+ * Number from min to max (inclusive)
+ * @param min
+ * @param max
+ */
 export function random(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min)
 }
@@ -10,8 +15,7 @@ export function error(title: string, message: string, time = 10000) {
   // @ts-ignore
   $("body").toast({
     class: "error",
-    title: title
-    ,
+    title: title,
     message: message,
     displayTime: time
   });

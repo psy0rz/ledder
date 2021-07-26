@@ -17,8 +17,7 @@ export class Scheduler {
 
   }
 
-  clear()
-  {
+  clear() {
     this.intervals = [];
 
   }
@@ -29,9 +28,13 @@ export class Scheduler {
    * @param callback Return false to end the interval. Return a number to change the interval. Return false to end the interval.
    */
   interval(frames: number, callback) {
-    const interval = new IntervalStatic(frames, this.frameNr, callback);
-    this.intervals.push(interval);
-    return (interval);
+
+    return new Promise((resolve, reject) => {
+      const interval = new IntervalStatic(frames, this.frameNr, callback);
+      interval.resolve = resolve
+      this.intervals.push(interval);
+    })
+
   }
 
   /**
@@ -40,32 +43,32 @@ export class Scheduler {
    * @param callback Return false to end the interval. Return false to end the interval.
    */
   intervalControlled(control: ControlValue, callback) {
-    const interval = new IntervalControlled(control, this.frameNr, callback);
-    this.intervals.push(interval);
-    return (interval);
+    return new Promise((resolve, reject) => {
+      const interval = new IntervalControlled(control, this.frameNr, callback);
+      interval.resolve = resolve
+      this.intervals.push(interval);
+    })
   }
 
-  stop(interval: Interval) {
-
-  }
+  // stop(interval: Interval) {
+  //
+  // }
 
   //called by matrix on every frame.
   update() {
     this.frameNr++;
 
-    let i=0;
-    while(i<this.intervals.length)
-    {
+    let i = 0;
+    while (i < this.intervals.length) {
       if (!this.intervals[i].check(this.frameNr)) {
+        this.intervals[i].resolve(true)
         this.intervals.splice(i, 1);
-      }
-      else
+      } else
         i++;
     }
   }
 
-  status()
-  {
-    console.log("Scheduler intervals: ",this.intervals.length);
+  status() {
+    console.log("Scheduler intervals: ", this.intervals.length);
   }
 }
