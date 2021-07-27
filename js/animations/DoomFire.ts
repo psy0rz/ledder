@@ -24,20 +24,21 @@ export class DoomFire extends Animation {
     const numberOfPixels = matrix.width * matrix.height
 
     //create initial fire pixels
-    for (let i = 0; i <= numberOfPixels; i++) {
+    for (let i = 0; i < numberOfPixels; i++) {
       firePixels[i] = 0;
-      new Pixel(matrix, i % matrix.width, matrix.height - i / matrix.width, new Color(0, 0, 0))
+      new Pixel(matrix, i % matrix.width, matrix.height - ~~(i / matrix.width)-1, new Color(0, 0, 0))
     }
 
+    //set a firepixel to a specified intensity
     function setFirePixel(pixelIndex, intensity: number)
     {
       if (pixelIndex<0)
         return
       firePixels[pixelIndex] = intensity;
       matrix.pixels[pixelIndex].color = fireColors[intensity]
-
     }
 
+    //actual fire algorithm
     function updateFireIntensityPerPixel(currentPixelIndex) {
       const belowPixelIndex = currentPixelIndex + matrix.width;
 
@@ -57,9 +58,8 @@ export class DoomFire extends Animation {
       setFirePixel(updatePixel, newFireIntensity)
     }
 
+    //fire update loop
     matrix.scheduler.intervalControlled(intervalControl, () => {
-
-
         for (let col = 0; col < matrix.width; col++) {
 
           //update fire source
@@ -71,8 +71,6 @@ export class DoomFire extends Animation {
             updateFireIntensityPerPixel(pixelIndex);
           }
         }
-
-
     })
 
 
