@@ -1,0 +1,15 @@
+{
+ "values": {
+  "Fire decay": {
+   "value": 42
+  },
+  "Wind": {
+   "value": 1.2
+  },
+  "Update interval": {
+   "value": 2
+  }
+ },
+ "title": "Untitled",
+ "description": ""
+}

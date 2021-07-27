@@ -3,7 +3,6 @@ import {Color} from "../Color.js";
 import {Pixel} from "../Pixel.js";
 import {random} from "../util.js";
 import {AnimationFade} from "../AnimationFade.js";
-import {AnimationMove} from "../AnimationMove.js";
 
 /**
  * "Rules" of the matrix rain code, by watching the original scene: https://www.youtube.com/watch?v=8ZdpA3p9ZMY :
@@ -19,7 +18,7 @@ export class TheMatrix extends Animation {
 
   static category = "Movie FX"
   static title = "The Matrix"
-  static description = "bla"
+  static description = "Rain code from The Matrix. "
   static presetDir = "The Matrix";
 
 
@@ -84,3 +83,5 @@ export class TheMatrix extends Animation {
     })
   }
 }
+
+

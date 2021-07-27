@@ -60,11 +60,19 @@ export class Scheduler {
 
     let i = 0;
     while (i < this.intervals.length) {
-      if (!this.intervals[i].check(this.frameNr)) {
-        this.intervals[i].resolve(true)
+      try {
+        if (!this.intervals[i].check(this.frameNr)) {
+          this.intervals[i].resolve(true)
+          this.intervals.splice(i, 1);
+        } else
+          i++;
+      }
+      catch(e)
+      {
+        console.error("Exception during animation interval:", e)
+        //remove this interval since its broken
         this.intervals.splice(i, 1);
-      } else
-        i++;
+      }
     }
   }
 

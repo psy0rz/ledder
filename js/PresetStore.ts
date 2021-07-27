@@ -111,7 +111,13 @@ export class PresetStore {
       const previewMtime = await getMtime(previewFilename)
       if (force || animationMtime==0 || previewMtime < animationMtime || previewMtime < await getMtime(presetFilename)) {
         const preset = await this.load(animationClass.presetDir, presetName);
-        await this.createPreview(animationName, presetName, preset)
+        try {
+          await this.createPreview(animationName, presetName, preset)
+        }
+        catch(e)
+        {
+          console.error("Error while rendering preset preview: ",e)
+        }
       }
     }
 
@@ -131,7 +137,13 @@ export class PresetStore {
         console.warn("Cant find "+animationFilename+", always re-creating all previews. (check if filename matches classname)")
 
       if (force || animationMtime==0 || await getMtime(previewFilename) <= animationMtime) {
-        await this.createPreview(animationName, "", undefined)
+        try {
+          await this.createPreview(animationName, "", undefined)
+        }
+        catch(e)
+        {
+          console.error("Error while rendering animation preview: ",e)
+        }
       }
 
       await this.updatePresetPreviews(animationName, animationClass, animationMtime, force)

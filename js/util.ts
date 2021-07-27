@@ -1,6 +1,8 @@
 // min and max included
 import { stat } from "fs/promises";
 import $ from "jquery";
+import convert from "color-convert"
+import {Color} from "./Color.js";
 
 /**
  * Number from min to max (inclusive)
@@ -95,3 +97,19 @@ export async function promptPromise(title:string , content:string, defaultValue:
   })
 }
 
+
+
+
+//calculate converion table for fire-intensity (0-100) to Color()
+export function calculateFireColors() {
+
+  const colors = []
+  for (let i = 0; i <= 100; i++) {
+    const colorH = Math.round(i * 40 / 100);
+    const colorS = 100;
+    const colorL = i;
+    const rgb = convert.hsl.rgb([colorH, colorS, colorL])
+    colors.push(new Color(rgb[0], rgb[1], rgb[2]))
+  }
+  return (colors)
+}

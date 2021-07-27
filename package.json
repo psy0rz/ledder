@@ -28,6 +28,7 @@
     "@jaames/iro": "^5.5.2",
     "@types/jquery": "^3.5.6",
     "@types/node": "^16.4.0",
+    "color-convert": "^2.0.1",
     "dgram": "^1.0.1",
     "express": "^4.17.1",
     "express-ws": "^5.0.2",
