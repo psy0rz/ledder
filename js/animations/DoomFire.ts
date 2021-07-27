@@ -63,7 +63,7 @@ export class DoomFire extends Animation {
         for (let col = 0; col < matrix.width; col++) {
 
           //update fire source
-          setFirePixel((numberOfPixels - matrix.width) + col,startIntensityControl.value)
+          setFirePixel(numberOfPixels - matrix.width + col,startIntensityControl.value)
 
           for (let row = 0; row < matrix.height; row++) {
             const pixelIndex = col + (matrix.width * row);
