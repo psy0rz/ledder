@@ -5,12 +5,21 @@ import convert from "color-convert"
 import {Color} from "./Color.js";
 
 /**
- * Number from min to max (inclusive)
+ * Integer number from min to max (inclusive)
  * @param min
  * @param max
  */
 export function random(min, max) {
-  return Math.floor(Math.random() * (max - min + 1) + min)
+  return ~~(Math.random() * (max - min + 1) + min)
+}
+
+/**
+ * Floating number from min to max (inclusive min, but never reaches max)
+ * @param min
+ * @param max
+ */
+export function randomFloat(min, max) {
+  return (Math.random() * (max - min ) + min)
 }
 
 export function error(title: string, message: string, time = 10000) {

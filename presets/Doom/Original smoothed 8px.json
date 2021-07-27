@@ -7,13 +7,16 @@
    "value": 1.2
   },
   "Update interval": {
-   "value": 4.3
+   "value": 3
   },
   "Start intensity": {
    "value": 100
   },
   "Smoothing": {
    "value": 0.7
+  },
+  "Start intensity randomizer": {
+   "value": 0
   }
  },
  "title": "Untitled",

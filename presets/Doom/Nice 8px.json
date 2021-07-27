@@ -1,22 +1,22 @@
 {
  "values": {
   "Fire decay": {
-   "value": 42
+   "value": 39
   },
   "Wind": {
    "value": 1.2
   },
   "Update interval": {
-   "value": 3
+   "value": 4.1
   },
   "Start intensity": {
    "value": 100
   },
-  "Start intensity randomizer": {
-   "value": 0
-  },
   "Smoothing": {
-   "value": 0
+   "value": 0.7
+  },
+  "Start intensity randomizer": {
+   "value": 0.43
   }
  },
  "title": "Untitled",

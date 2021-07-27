@@ -1,5 +1,5 @@
 import {Animation} from "../Animation.js";
-import {calculateFireColors} from "../util.js";
+import {calculateFireColors, random, randomFloat} from "../util.js";
 import {Pixel} from "../Pixel.js";
 import {Color} from "../Color.js";
 
@@ -17,6 +17,7 @@ export class DoomFire extends Animation {
     const windControl = matrix.preset.value("Wind", 1.4, 0, 5, .1);
     const intervalControl = matrix.preset.value("Update interval", 1, 1, 6, .1);
     const startIntensityControl = matrix.preset.value("Start intensity", 100, 0, 100, 1);
+    const randomIntensityControl = matrix.preset.value("Start intensity randomizer", 0, 0, 1, 0.01);
     const smoothingControl = matrix.preset.value("Smoothing", 0, 0, 1, 0.01);
 
     const fireColors = calculateFireColors();
@@ -39,11 +40,6 @@ export class DoomFire extends Animation {
       if (pixelIndex<0)
         return
       firePixels[pixelIndex] = intensity;
-
-      // smoothedPixels[pixelIndex]=~~((smoothedPixels[pixelIndex]+firePixels[pixelIndex])/2)
-      // smoothedPixels[pixelIndex]=firePixels[pixelIndex]
-
-      // matrix.pixels[pixelIndex].color = fireColors[smoothedPixels[pixelIndex]]
     }
 
     //actual fire algorithm
@@ -71,7 +67,7 @@ export class DoomFire extends Animation {
         for (let col = 0; col < matrix.width; col++) {
 
           //update fire source
-          setFirePixel(numberOfPixels - matrix.width + col,startIntensityControl.value)
+          setFirePixel(numberOfPixels - matrix.width + col,~~(startIntensityControl.value * randomFloat(1-randomIntensityControl.value,1)))
 
           for (let row = 0; row < matrix.height; row++) {
             const pixelIndex = col + (matrix.width * row);
@@ -81,16 +77,12 @@ export class DoomFire extends Animation {
         }
     })
 
-    //output loop (smoohting)
+    //output loop (smoothing)
     matrix.scheduler.interval(1, () => {
 
       for (let i = 0; i < numberOfPixels; i++) {
-        // if (smoothedPixels[i]<firePixels[i])
-        //   smoothedPixels[i]=firePixels[i];
-        // else if (smoothedPixels[i]>firePixels[i])
-        //   smoothedPixels[i]--;
 
-        smoothedPixels[i]=~~(firePixels[i]*(1-smoothingControl.value) + smoothedPixels[i]*smoothingControl.value)
+        smoothedPixels[i]=~~(firePixels[i]*(1-smoothingControl.value) + smoothedPixels[i]*smoothingControl.value   )
 
         matrix.pixels[i].color = fireColors[smoothedPixels[i]]
 
