@@ -7,7 +7,7 @@ import {Color} from "../Color.js";
 export class DoomFire extends Animation {
   static category = "Fire"
   static title = "Doom"
-  static description = "From the game Doom. Based on https://github.com/filipedeschamps/doom-fire-algorithm/blob/master/playground/render-with-canvas-and-hsl-colors/fire.js"
+  static description = "Based on <a href='https://github.com/filipedeschamps/doom-fire-algorithm/blob/master/playground/render-with-canvas-and-hsl-colors/fire.js'>this.</a>"
   static presetDir = "Doom";
 
   constructor(matrix) {
@@ -16,6 +16,7 @@ export class DoomFire extends Animation {
     const decayControl = matrix.preset.value("Fire decay", 40, 1, 120, 1);
     const windControl = matrix.preset.value("Wind", 1.4, 0, 5, .1);
     const intervalControl = matrix.preset.value("Update interval", 1, 1, 6, .1);
+    const startIntensityControl = matrix.preset.value("Start intensity", 100, 0, 100, 1);
 
     const fireColors = calculateFireColors();
 
@@ -25,16 +26,16 @@ export class DoomFire extends Animation {
     //create initial fire pixels
     for (let i = 0; i <= numberOfPixels; i++) {
       firePixels[i] = 0;
-      new Pixel(matrix, i % matrix.width, matrix.height - i / matrix.width, new Color(0, 0, 255))
+      new Pixel(matrix, i % matrix.width, matrix.height - i / matrix.width, new Color(0, 0, 0))
     }
 
-    //create fire source
-    for (let col = 0; col <= matrix.width; col++) {
-      const overflowPixelIndex = numberOfPixels;
-      const pixelIndex = (overflowPixelIndex - matrix.width) + col;
+    function setFirePixel(pixelIndex, intensity: number)
+    {
+      if (pixelIndex<0)
+        return
+      firePixels[pixelIndex] = intensity;
+      matrix.pixels[pixelIndex].color = fireColors[intensity]
 
-      firePixels[pixelIndex] = 100;
-      matrix.pixels[pixelIndex].color = fireColors[100]
     }
 
     function updateFireIntensityPerPixel(currentPixelIndex) {
@@ -52,17 +53,18 @@ export class DoomFire extends Animation {
         newFireIntensity = 0;
 
       const updatePixel=currentPixelIndex - wind;
-      firePixels[updatePixel] = newFireIntensity;
 
-      //assign actual color to actual matrix pixel
-      if (updatePixel>0) {
-        matrix.pixels[updatePixel].color = fireColors[newFireIntensity]
-      }
+      setFirePixel(updatePixel, newFireIntensity)
     }
 
     matrix.scheduler.intervalControlled(intervalControl, () => {
 
+
         for (let col = 0; col < matrix.width; col++) {
+
+          //update fire source
+          setFirePixel((numberOfPixels - matrix.width) + col,startIntensityControl.value)
+
           for (let row = 0; row < matrix.height; row++) {
             const pixelIndex = col + (matrix.width * row);
 
