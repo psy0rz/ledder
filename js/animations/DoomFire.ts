@@ -17,15 +17,19 @@ export class DoomFire extends Animation {
     const windControl = matrix.preset.value("Wind", 1.4, 0, 5, .1);
     const intervalControl = matrix.preset.value("Update interval", 1, 1, 6, .1);
     const startIntensityControl = matrix.preset.value("Start intensity", 100, 0, 100, 1);
+    const smoothingControl = matrix.preset.value("Smoothing", 0, 0, 1, 0.01);
 
     const fireColors = calculateFireColors();
 
     const firePixels = []
+    const smoothedPixels=[]
+
     const numberOfPixels = matrix.width * matrix.height
 
     //create initial fire pixels
     for (let i = 0; i < numberOfPixels; i++) {
       firePixels[i] = 0;
+      smoothedPixels[i] = 0;
       new Pixel(matrix, i % matrix.width, matrix.height - ~~(i / matrix.width)-1, new Color(0, 0, 0))
     }
 
@@ -35,7 +39,11 @@ export class DoomFire extends Animation {
       if (pixelIndex<0)
         return
       firePixels[pixelIndex] = intensity;
-      matrix.pixels[pixelIndex].color = fireColors[intensity]
+
+      // smoothedPixels[pixelIndex]=~~((smoothedPixels[pixelIndex]+firePixels[pixelIndex])/2)
+      // smoothedPixels[pixelIndex]=firePixels[pixelIndex]
+
+      // matrix.pixels[pixelIndex].color = fireColors[smoothedPixels[pixelIndex]]
     }
 
     //actual fire algorithm
@@ -73,6 +81,22 @@ export class DoomFire extends Animation {
         }
     })
 
+    //output loop (smoohting)
+    matrix.scheduler.interval(1, () => {
+
+      for (let i = 0; i < numberOfPixels; i++) {
+        // if (smoothedPixels[i]<firePixels[i])
+        //   smoothedPixels[i]=firePixels[i];
+        // else if (smoothedPixels[i]>firePixels[i])
+        //   smoothedPixels[i]--;
+
+        smoothedPixels[i]=~~(firePixels[i]*(1-smoothingControl.value) + smoothedPixels[i]*smoothingControl.value)
+
+        matrix.pixels[i].color = fireColors[smoothedPixels[i]]
+
+      }
+
+    })
 
   }
 

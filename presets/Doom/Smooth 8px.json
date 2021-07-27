@@ -1,0 +1,21 @@
+{
+ "values": {
+  "Fire decay": {
+   "value": 39
+  },
+  "Wind": {
+   "value": 1.2
+  },
+  "Update interval": {
+   "value": 4.3
+  },
+  "Start intensity": {
+   "value": 100
+  },
+  "Smoothing": {
+   "value": 0.7
+  }
+ },
+ "title": "Untitled",
+ "description": ""
+}
