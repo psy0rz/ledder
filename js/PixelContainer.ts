@@ -85,7 +85,7 @@ export class PixelContainer {
     {
       const ourPixelIndex=this.pixels.indexOf(pixels[i]);
       if (ourPixelIndex != -1) {
-        this.pixels.splice(ourPixelIndex);
+        this.pixels.splice(ourPixelIndex,1);
       }
     }
     return (this);
