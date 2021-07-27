@@ -24,7 +24,7 @@ export class AnimationMovingStarsL extends Animation {
 
 
             //add new flying star at right side
-            const star = new PixelStar(matrix, matrix.width + 2, random(0, matrix.height), starColor, blinkDelay);
+            const star = new PixelStar(matrix, matrix.width + 2, random(0, matrix.height), starColor, blinkDelay, true);
             const mover = new AnimationMove(matrix, 1, -step.value, 0)
             mover.addPixel(star);
 

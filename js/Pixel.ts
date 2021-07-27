@@ -13,11 +13,12 @@ export class Pixel implements PixelInterface {
   /**
    * Renders one pixel.
    * @param matrix Display matrix
-   * @param x
-   * @param y
-   * @param color
+   * @param x X coord
+   * @param y Y coord
+   * @param color Color object
+   * @param bg Make true to add to background
    */
-  constructor(matrix, x: number, y: number, color:ColorInterface) {
+  constructor(matrix, x: number, y: number, color:ColorInterface, bg=false) {
         this.x = x;
         this.y = y;
 
@@ -25,7 +26,10 @@ export class Pixel implements PixelInterface {
 
         this.keep=true;
 
-        matrix.addPixel(this);
+        if (bg)
+          matrix.addPixelBG(this);
+        else
+          matrix.addPixel(this);
     }
 
     destroy(matrix)

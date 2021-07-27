@@ -3,6 +3,7 @@ import {Animation} from "./Animation.js";
 import {Matrix} from "./Matrix.js";
 
 
+
 export class AnimationBlink extends Animation {
   // onInterval: number;
   // offInterval: number;

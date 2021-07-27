@@ -39,6 +39,34 @@ export class PixelContainer {
     return (this);
   }
 
+  //add pixel to "background" (e.g. add to front of pixel list)
+  addPixelBG(...pixels: Array<Pixel>) {
+
+    for (const i in pixels)
+    {
+      if (this.pixels.indexOf(pixels[i]) == -1) {
+        this.pixels.unshift(pixels[i]);
+      }
+
+    }
+    return (this);
+  }
+
+  //add pixels to background
+  addPixelsBG(pixels: Array<Pixel>) {
+
+    for (const i in pixels)
+    {
+      if (this.pixels.indexOf(pixels[i]) == -1) {
+        this.pixels.unshift(pixels[i]);
+      }
+
+    }
+    return (this);
+  }
+
+
+
   removePixel(...pixels: Array<Pixel>)
   {
     for (const i in pixels)

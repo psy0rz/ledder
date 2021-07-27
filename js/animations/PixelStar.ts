@@ -6,8 +6,8 @@ export class PixelStar extends Pixel {
 
   step: number;
 
-  constructor(matrix, x, y, color: ColorInterface, delay: ControlValue) {
-        super(matrix, x, y, color);
+  constructor(matrix, x, y, color: ColorInterface, delay: ControlValue, bg=false) {
+        super(matrix, x, y, color, bg);
 
         this.step = 0;
         matrix.scheduler.intervalControlled(delay, () => {

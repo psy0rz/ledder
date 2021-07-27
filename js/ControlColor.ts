@@ -43,6 +43,22 @@ export class ControlColor extends Control implements ColorInterface {
     this.picker = ColorPicker(colorElement, {
       width: 200,
       color: this,
+      layout: [
+        {
+          component: iro.ui.Wheel,
+        },
+        {
+          component: iro.ui.Slider,
+        },
+        {
+          component: iro.ui.Slider,
+          options: {
+            sliderType: 'alpha'
+
+          }
+        }
+      ]
+
     });
 
     this.picker.on("color:change", (color) => {

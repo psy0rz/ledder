@@ -1,7 +1,8 @@
 import {Animation} from "../Animation.js";
-import {calculateFireColors, random, randomFloat} from "../util.js";
+import {calculateFireColors, randomFloat} from "../util.js";
 import {Pixel} from "../Pixel.js";
 import {Color} from "../Color.js";
+import {AnimationAsciiArt} from "../AnimationAsciiArt.js";
 
 
 export class DoomFire extends Animation {
@@ -12,6 +13,7 @@ export class DoomFire extends Animation {
 
   constructor(matrix) {
     super(matrix);
+
 
     const decayControl = matrix.preset.value("Fire decay", 40, 1, 120, 1);
     const windControl = matrix.preset.value("Wind", 1.4, 0, 5, .1);

@@ -16,7 +16,7 @@ export class Animation extends PixelContainer {
   static description=""
   static presetDir="Unspecified"
 
-  //preview settings, fiddle with this to optimize your preview image
+  //preview settings, fiddle with this to optimize your preview image (usually no need to change)
   static previewSkip=120 //number of input-frames to skip
   static previewDivider=1 //divide input FPS by this
   static previewFrames=240 //preview image should output this many frames
