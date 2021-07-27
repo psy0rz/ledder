@@ -9,8 +9,9 @@ export class AnimationMove extends Animation {
    * @param delay Delay between each step
    * @param xStep Step size of X (can be negative as well)
    * @param yStep Step size of Y (can be negative as well)
+   * @param wrap Wrap pixels around if they go outside of the matrix
    */
-  constructor(matrix, delay: number, xStep: number, yStep: number) {
+  constructor(matrix, delay: number, xStep: number, yStep: number, wrap=false) {
         super(matrix);
 
     matrix.scheduler.interval(delay, (frameNr) => {
@@ -19,6 +20,20 @@ export class AnimationMove extends Animation {
                 const p = this.pixels[i];
                 p.x = p.x + xStep;
                 p.y = p.y + yStep;
+
+                if (wrap)
+                {
+                  if (p.x>=matrix.width)
+                    p.x-=matrix.width
+                  else if (p.x<0)
+                    p.x+=matrix.width
+
+                  if (p.y>=matrix.height)
+                    p.y-=matrix.height
+                  else if (p.y<0)
+                    p.y+=matrix.height
+                }
+
             }
 
             return (this.keep);
