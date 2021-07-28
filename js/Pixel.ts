@@ -35,6 +35,7 @@ export class Pixel implements PixelInterface {
     destroy(matrix)
     {
       matrix.removePixel(this);
+      this.keep=false
     }
 
     render(matrix: Matrix) {

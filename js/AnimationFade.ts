@@ -3,6 +3,7 @@ import {Matrix} from "./Matrix.js";
 import {ColorInterface} from "./ColorInterface.js";
 import {ValueInterface} from "./ValueInterface.js";
 import {Color} from "./Color.js";
+import {random, randomFloat} from "./util.js";
 
 export class AnimationFade extends Animation {
 
@@ -13,36 +14,44 @@ export class AnimationFade extends Animation {
   promise: Promise<unknown>
 
   /**
-   * A plain linear fade that fades color to colorEnd within specified number of frames
-   * Note that this directly manipulates the specified color-object. No need to add pixels.
+   * A plain linear fade that fades color to colorTarget within specified number of frames
+   * Note that this directly manipulates the specified color-object. No need to add pixels for that purpose.
+   * You can add them if you want to auto removePixels them (see removePixels)
    * @param matrix
-   * @param color
-   * @param colorEnd
-   * @param frames
+   * @param color Color object to modify
+   * @param colorTarget Target color to fade to
+   * @param frames Number of frames to get to target
+   * @param randomizer Randomize frames count by this factor. (0-1)
+   * @param removePixels Set true to removePixels pixels from matrix after fade is complete. (Add pixels to this object in that case)
    */
-  constructor(matrix: Matrix, color: ColorInterface, colorEnd: ColorInterface, frames: ValueInterface) {
+  constructor(matrix: Matrix, color: ColorInterface, colorTarget: ColorInterface, frames: ValueInterface, randomizer: ValueInterface = undefined, removePixels = false) {
     super(matrix);
 
-    this.frameNr = frames.value;
+    if (randomizer != undefined)
+      this.frameNr = frames.value * randomFloat(1 - randomizer.value, 1 + randomizer.value);
+    else
+      this.frameNr = frames.value;
 
-    this.stepR=(colorEnd.r-color.r)/frames.value;
-    this.stepG=(colorEnd.g-color.g)/frames.value;
-    this.stepB=(colorEnd.b-color.b)/frames.value;
+    this.stepR = (colorTarget.r - color.r) / this.frameNr;
+    this.stepG = (colorTarget.g - color.g) / this.frameNr;
+    this.stepB = (colorTarget.b - color.b) / this.frameNr;
 
-    this.promise=matrix.scheduler.interval(1, () => {
+    this.promise = matrix.scheduler.interval(1, () => {
 
       this.frameNr--;
 
-      //make sure last step is exact on colorEnd (rounding errors)
+      //make sure last step is exact on colorTarget (rounding errors)
       if (this.frameNr <= 0) {
-          Object.assign(color, colorEnd);
-          return false
+        Object.assign(color, colorTarget);
+        if (removePixels)
+          this.destroy(true)
+        return false
       }
 
       //since all the pixels use this color-object, we can manipulate it directly:
-      color.r+=this.stepR;
-      color.g+=this.stepG;
-      color.b+=this.stepB;
+      color.r += this.stepR;
+      color.g += this.stepG;
+      color.b += this.stepB;
 
       if (!this.keep)
         return false;

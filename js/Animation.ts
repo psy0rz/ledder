@@ -33,7 +33,7 @@ export class Animation extends PixelContainer {
   destroy(destroyPixels = true) {
     if (destroyPixels) {
       for (let i = 0, n = this.pixels.length; i < n; ++i) {
-        this.pixels[i].destroy(this.matrix);
+        this.matrix.removePixels(this.pixels);
       }
     }
     this.pixels = [];

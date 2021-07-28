@@ -8,7 +8,7 @@ import {Color} from "./Color.js";
 //https://en.wikipedia.org/wiki/Web_colors
 const internetColorMap = {
   w: new Color(0xff, 0xff, 0xff),   //white
-  5: new Color(0x05, 0x05, 0x05),   //gray
+  5: new Color(0x80, 0x80, 0x80),   //gray
   0: new Color(0, 0, 0),            //black
 
   r: new Color(0xff, 0, 0),         //100% red
@@ -22,7 +22,7 @@ const internetColorMap = {
   b: new Color(0, 0, 0xff),         //100% blue
   n: new Color(0, 0, 0x80),         //navy
   f: new Color(0xff, 0, 0xff),      //fuchsia
-  p: new Color(0xff, 0, 0x40),      //purple
+  p: new Color(0x80, 0, 0x80),      //purple
 }
 
 

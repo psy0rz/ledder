@@ -31,6 +31,7 @@ export class AnimationMovingStarsL extends Animation {
             //destroy star at left side
             matrix.scheduler.interval((matrix.width+2)/step.value, () => {
                 mover.destroy(true);
+                star.destroy(matrix)
                 return false;
             })
 
