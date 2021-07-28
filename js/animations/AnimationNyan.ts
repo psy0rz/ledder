@@ -72,16 +72,14 @@ export class AnimationNyan
     let y = 2;
     const black = new Color(0, 0, 0);
 
-    // const rainbowMover = new AnimationMove(matrix, flyIntervalControl.value, -1, 0)
-
     const controlFade = matrix.preset.value("Rainbow fade speed", 30, 1, 120, 1);
     const controlFadeRnd = matrix.preset.value("Rainbow fade randomizer", 0.1, 0, 0.5, 0.01);
 
     //wobble rainbow
     matrix.scheduler.interval(10, () => {
       y = (y + 1) % 2;
-
     })
+
 
     //draw rainbow
     matrix.scheduler.interval(flyIntervalControl.value, () => {
@@ -95,9 +93,9 @@ export class AnimationNyan
         new Color(0x00, 0x80, 0xff),
         new Color(0x80, 0x00, 0xff)
       ]
+
       for (let c=0; c<6; c++)
       {
-        // let c=random(0,colors.length-1)
         new AnimationFade(matrix, colors[c], black, controlFade, controlFadeRnd, true)
           .addPixel(new Pixel(matrix, x,c+y+1,colors[c]))
       }
