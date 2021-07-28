@@ -1,7 +1,6 @@
 import {Matrix} from "./Matrix.js";
 import {RpcClient} from "./RpcClient.js";
 import * as animations from "./animations/all.js";
-import {Control} from "./Control.js";
 import $ from "jquery";
 import {confirmPromise, info, promptPromise} from "./util.js";
 

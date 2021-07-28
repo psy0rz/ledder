@@ -1,6 +1,3 @@
-import {Matrix} from "./Matrix.js";
-
-
 /**
  * Base class for all controls. Keep in mind that a control has to function properly both in and outside the browser.
  */

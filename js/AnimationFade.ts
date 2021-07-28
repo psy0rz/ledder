@@ -2,8 +2,7 @@ import {Animation} from "./Animation.js";
 import {Matrix} from "./Matrix.js";
 import {ColorInterface} from "./ColorInterface.js";
 import {ValueInterface} from "./ValueInterface.js";
-import {Color} from "./Color.js";
-import {random, randomFloat} from "./util.js";
+import {randomFloat} from "./util.js";
 
 export class AnimationFade extends Animation {
 

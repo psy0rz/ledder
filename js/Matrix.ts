@@ -1,4 +1,3 @@
-import {Animation} from "./Animation.js";
 import {PixelContainer} from "./PixelContainer.js";
 import {Scheduler} from "./Scheduler.js";
 import {ColorInterface} from "./ColorInterface.js";

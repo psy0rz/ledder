@@ -1,5 +1,4 @@
 //schedules updates for animations, based on frame-updates from the matrix.
-import {Control} from "./Control.js";
 import {ControlValue} from "./ControlValue.js";
 import {IntervalControlled} from "./IntervalControlled.js";
 import {IntervalStatic} from "./IntervalStatic.js";

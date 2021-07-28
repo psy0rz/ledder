@@ -9,8 +9,6 @@ import {Color} from "../Color.js";
 
 
 import {AnimationFade} from "../AnimationFade.js";
-import {random, randomFloat} from "../util.js";
-import {ControlValue} from "../ControlValue.js";
 
 //Nyancat, based on https://github.com/bertrik/nyancat/blob/master/nyancat.c
 

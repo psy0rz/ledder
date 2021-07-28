@@ -4,7 +4,7 @@
 
 
 import * as path from "path";
-import {stat, readFile, writeFile, rm, mkdir} from "fs/promises";
+import {mkdir, readFile, rm, stat, writeFile} from "fs/promises";
 import glob from "glob-promise";
 import {PresetValues} from "./PresetValues.js";
 import * as animations from "./animations/all.js";

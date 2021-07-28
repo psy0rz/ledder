@@ -1,6 +1,4 @@
 import $ from "jquery";
-import {progressDone, progressStart} from "./util.js";
-import {RpcClient} from "./RpcClient.js";
 
 /*
  * Manage browser html list of categories.

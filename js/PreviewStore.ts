@@ -1,10 +1,7 @@
-import * as path from "path";
-import {readFile, writeFile, rm, mkdir} from "fs/promises";
-import * as animations from "./animations/all.js";
+import {writeFile} from "fs/promises";
 import {PresetStore} from "./PresetStore.js";
 import {MatrixApng} from "./MatrixApng.js";
 import {Scheduler} from "./Scheduler.js";
-import {Matrix} from "./Matrix.js";
 
 
 export class PreviewStore {

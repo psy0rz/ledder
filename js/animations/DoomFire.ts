@@ -2,7 +2,6 @@ import {Animation} from "../Animation.js";
 import {calculateFireColors, randomFloat} from "../util.js";
 import {Pixel} from "../Pixel.js";
 import {Color} from "../Color.js";
-import {AnimationAsciiArt} from "../AnimationAsciiArt.js";
 
 
 export class DoomFire extends Animation {

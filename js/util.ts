@@ -1,5 +1,4 @@
 // min and max included
-import { stat } from "fs/promises";
 import $ from "jquery";
 import convert from "color-convert"
 import {Color} from "./Color.js";

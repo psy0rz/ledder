@@ -1,5 +1,4 @@
 import {Control} from "./Control.js";
-import {Matrix} from "./Matrix.js";
 
 export class ControlValue extends Control {
   value: number;
