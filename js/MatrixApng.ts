@@ -34,9 +34,9 @@ export class MatrixApng extends Matrix {
       const offset = ~~x * 4 + (this.height - ~~y - 1) * 4 * this.width;
       const old_a = 1 - color.a;
 
-      this.imageBuf8[offset] = ~~(this.imageBuf8[offset] * old_a + color.r * color.a);
-      this.imageBuf8[offset + 1] = ~~(this.imageBuf8[offset + 1] * old_a + color.g * color.a);
-      this.imageBuf8[offset + 2] = ~~(this.imageBuf8[offset + 2] * old_a + color.b * color.a);
+      this.imageBuf8[offset] = (this.imageBuf8[offset] * old_a + color.r * color.a);
+      this.imageBuf8[offset + 1] = (this.imageBuf8[offset + 1] * old_a + color.g * color.a);
+      this.imageBuf8[offset + 2] = (this.imageBuf8[offset + 2] * old_a + color.b * color.a);
       this.imageBuf8[offset + 3] = 255; //alpha of canvas itself
     }
   }

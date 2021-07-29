@@ -24,8 +24,8 @@ let gamma = [
 //Matrix driver for WLED https://github.com/Aircoookie/WLED/wiki/UDP-Realtime-Control
 export class MatrixWLED extends Matrix {
 
-  buffer: Uint8Array;
-  prevBuffer: Uint8Array;
+  buffer: Uint8ClampedArray;
+  prevBuffer: Uint8ClampedArray;
   socket: any;
   flipX: boolean;
   flipY: boolean;
@@ -46,7 +46,7 @@ export class MatrixWLED extends Matrix {
     this.flipX=flipX;
     this.flipY=flipY;
 
-    this.buffer=new Uint8Array(this.width * this.height * 3);
+    this.buffer=new Uint8ClampedArray(this.width * this.height * 3);
 
     this.socket = dgram.createSocket('udp4');
 
@@ -79,9 +79,9 @@ export class MatrixWLED extends Matrix {
       const old_a = 1 - color.a;
 
       //store pixel in buffer, alphablend with existing values
-      this.buffer[offset] = ~~(this.buffer[offset] * old_a + gamma[~~color.r] * color.a);
-      this.buffer[offset + 1] = ~~(this.buffer[offset + 1] * old_a + gamma[~~color.g] * color.a);
-      this.buffer[offset + 2] = ~~(this.buffer[offset + 2] * old_a + gamma[~~color.b] * color.a);
+      this.buffer[offset] = (this.buffer[offset] * old_a + gamma[~~color.r] * color.a);
+      this.buffer[offset + 1] = (this.buffer[offset + 1] * old_a + gamma[~~color.g] * color.a);
+      this.buffer[offset + 2] = (this.buffer[offset + 2] * old_a + gamma[~~color.b] * color.a);
     }
   }
 
@@ -90,7 +90,7 @@ export class MatrixWLED extends Matrix {
   {
     //store old buffer, create new one
     this.prevBuffer=this.buffer;
-    this.buffer=new Uint8Array(this.width * this.height * 3);
+    this.buffer=new Uint8ClampedArray(this.width * this.height * 3);
 
     if (this.runScheduler)
       this.scheduler.update();
