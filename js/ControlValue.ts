@@ -49,6 +49,7 @@ export class ControlValue extends Control {
       max: this.max,
       step: this.step,
       start: this.value,
+
       onMove: (value)=>
       {
         this.value=value;

@@ -3,6 +3,8 @@ import {glow} from "./DoomFire.js";
 import {Pixel} from "../Pixel.js";
 import {Color} from "../Color.js";
 import {random} from "../util.js";
+import {Control} from "../Control.js";
+import {ControlValue} from "../ControlValue.js";
 
 export class BrainsmokeFire extends Animation {
 
@@ -20,6 +22,9 @@ export class BrainsmokeFire extends Animation {
   colortab: any
   xypixels: any
   black: Color
+  private minIntensityControl: ControlValue;
+  private maxIntensityControl: ControlValue;
+  private wildnessIntensityControl: ControlValue;
 
 
 
@@ -65,7 +70,10 @@ export class BrainsmokeFire extends Animation {
     for (let m = 0; m < 2048; m++)
       this.mapping.push(~~Math.min(((m / 256) ** 1.25 / 3.7 * 256), 2047))
 
-    // console.log(this.mapping)
+
+    this.minIntensityControl = matrix.preset.value("Fire minimum intensity", 0, 0, 2047, 20);
+    this.maxIntensityControl = matrix.preset.value("Fire maximum intensity", 650, 0, 2047, 20);
+    this.wildnessIntensityControl = matrix.preset.value("Fire wildness", 100000, 0, 2047, 20);
 
     const fireintervalControl = matrix.preset.value("Fire interval", 60/50, 1, 10, 0.1) //best at 50fps according to brainsmoke
     matrix.scheduler.intervalControlled(fireintervalControl,()=>
@@ -110,15 +118,9 @@ export class BrainsmokeFire extends Animation {
 
         //below-bottom row is glowing
         if (y == h) {
-          // s =glow(this.old[y][x], 0, 2000, 500)
-          //  s=2047
-          if (random(0,1))
-            s=650
-          else
-            s=0
+          //(original is random switching between only 0 and 650, not in between.)
+          s =glow(this.old[y][x], this.minIntensityControl.value, this.maxIntensityControl.value, this.wildnessIntensityControl.value)
 
-          // s += 650 * (r & 1)
-          // r >>= 1
         } else
           //other rows decay
         {
