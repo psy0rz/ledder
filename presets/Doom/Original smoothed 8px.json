@@ -17,6 +17,15 @@
   },
   "Start intensity randomizer": {
    "value": 0
+  },
+  "Fire minimum intensity": {
+   "value": 100
+  },
+  "Fire maximum intensity": {
+   "value": 100
+  },
+  "Fire wildness": {
+   "value": 10
   }
  },
  "title": "Untitled",
