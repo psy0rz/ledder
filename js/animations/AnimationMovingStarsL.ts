@@ -2,6 +2,8 @@ import {Animation} from "../Animation.js";
 import {PixelStar} from "./PixelStar.js";
 import {random} from "../util.js";
 import {AnimationMove} from "../AnimationMove.js";
+import { Pixel } from "../Pixel.js";
+import { Color } from "../Color.js";
 
 export class AnimationMovingStarsL extends Animation {
 

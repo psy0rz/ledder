@@ -27,12 +27,6 @@ export class AnimationNyan
 
     new AnimationMovingStarsL(matrix);
 
-    // const background=new Color(0,0x40,0x80)
-    // for (let x=0; x<matrix.width; x++)
-    //   for (let y=0; y<matrix.height; y++)
-    //     new Pixel(matrix, x,y, background)
-
-
     const body = new AnimationAsciiArt(matrix, 6, 7, `
       .00000000.
       0ffffpfff0
@@ -42,7 +36,6 @@ export class AnimationNyan
       0fpffpfff0
       .00000000.
     `)
-
 
     const head = new AnimationAsciiArt(matrix, 12, 7, `
       .00...00.
@@ -92,10 +85,9 @@ export class AnimationNyan
         new Color(0x80, 0x00, 0xff)
       ]
 
-      for (let c=0; c<6; c++)
-      {
+      for (let c = 0; c < 6; c++) {
         new AnimationFade(matrix, colors[c], black, controlFade, controlFadeRnd, true)
-          .addPixel(new Pixel(matrix, x,c+y+1,colors[c]))
+          .addPixel(new Pixel(matrix, x, c + y + 1, colors[c]))
       }
 
     })
