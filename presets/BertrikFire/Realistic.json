@@ -1,0 +1,21 @@
+{
+ "values": {
+  "Fire interval": {
+   "value": 3
+  },
+  "Fire height": {
+   "value": 8
+  },
+  "Fire minimum intensity": {
+   "value": 31
+  },
+  "Fire maximum intensity": {
+   "value": 59
+  },
+  "Fire wildness": {
+   "value": 74
+  }
+ },
+ "title": "Untitled",
+ "description": ""
+}

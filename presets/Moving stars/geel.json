@@ -7,10 +7,19 @@
    "value": 10
   },
   "Star color": {
-   "r": 38,
+   "r": 16,
    "g": 0,
-   "b": 255,
+   "b": 105,
    "a": 1
+  },
+  "Star move interval": {
+   "value": 3
+  },
+  "Star twinkle interval": {
+   "value": 5.8
+  },
+  "Star density": {
+   "value": 10
   }
  },
  "title": "Untitled",
