@@ -1,5 +1,5 @@
 import {Animation} from "../Animation.js";
-import {calculateFireColors, random, randomFloat} from "../util.js";
+import {calculateFireColors, random} from "../util.js";
 import {Pixel} from "../Pixel.js";
 import {Color} from "../Color.js";
 

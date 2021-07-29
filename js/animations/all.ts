@@ -7,6 +7,7 @@ export {AnimationStriptest} from "./AnimationStriptest.js";
 export {TheMatrix} from "./TheMatrix.js";
 export {DoomFire} from "./DoomFire.js";
 export * from "./BertrikFire.js";
+export * from "./BrainsmokeFire.js";
 
 export {AnimationNyan} from "./AnimationNyan.js";
 

@@ -82,6 +82,9 @@ export class MatrixWLED extends Matrix {
       this.buffer[offset] = (this.buffer[offset] * old_a + gamma[~~color.r] * color.a);
       this.buffer[offset + 1] = (this.buffer[offset + 1] * old_a + gamma[~~color.g] * color.a);
       this.buffer[offset + 2] = (this.buffer[offset + 2] * old_a + gamma[~~color.b] * color.a);
+      // this.buffer[offset] = (this.buffer[offset] * old_a + ~~color.r * color.a);
+      // this.buffer[offset + 1] = (this.buffer[offset + 1] * old_a + ~~color.g * color.a);
+      // this.buffer[offset + 2] = (this.buffer[offset + 2] * old_a + ~~color.b * color.a);
     }
   }
 

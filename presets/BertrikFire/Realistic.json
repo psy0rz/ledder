@@ -7,13 +7,16 @@
    "value": 8
   },
   "Fire minimum intensity": {
-   "value": 31
+   "value": 15
   },
   "Fire maximum intensity": {
    "value": 59
   },
   "Fire wildness": {
-   "value": 74
+   "value": 23
+  },
+  "Fire decay": {
+   "value": 4
   }
  },
  "title": "Untitled",
