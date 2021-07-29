@@ -3,6 +3,7 @@ import {ControlValue} from "./ControlValue.js";
 import {IntervalControlled} from "./IntervalControlled.js";
 import {IntervalStatic} from "./IntervalStatic.js";
 import {Interval} from "./Interval.js";
+import {ValueInterface} from "./ValueInterface.js";
 
 
 export class Scheduler {
@@ -39,13 +40,13 @@ export class Scheduler {
 
   /**
    * Create a new controlled interval.
-   * @param control The controller that sets/modifies the interval.
+   * @param value The controller that sets/modifies the interval.
    * @param callback Return false to end the interval. Return false to end the interval.
    * @param offset Offset the interval by this number of frames
    */
-  intervalControlled(control: ControlValue, callback, offset=0) {
+  intervalControlled(value: ValueInterface, callback, offset=0) {
     return new Promise((resolve, reject) => {
-      const interval = new IntervalControlled(control, this.frameNr+offset, callback);
+      const interval = new IntervalControlled(value, this.frameNr+offset, callback);
       interval.resolve = resolve
       this.intervals.push(interval);
     })

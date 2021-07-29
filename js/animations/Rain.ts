@@ -28,7 +28,7 @@ export class Rain extends Animation {
       const p = new Pixel(matrix, random(0, matrix.width - 2), random(0,matrix.height - 1), color);
       new AnimationFade(matrix, color, endColor, fade)
 
-      const mover = new AnimationMove(matrix, 1, 0, -speed.value)
+      const mover = new AnimationMove(matrix, {value:1}, {value:0}, {value:-speed.value})
       mover.addPixel(p);
 
       //destroy at end

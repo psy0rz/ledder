@@ -2,44 +2,45 @@ import {Animation} from "../Animation.js";
 import {PixelStar} from "./PixelStar.js";
 import {random} from "../util.js";
 import {AnimationMove} from "../AnimationMove.js";
-import { Pixel } from "../Pixel.js";
-import { Color } from "../Color.js";
+import {Pixel} from "../Pixel.js";
+import {Color} from "../Color.js";
 
 export class AnimationMovingStarsL extends Animation {
 
-    static category="Basic"
-    static title="Moving stars left"
-    static description="Used in nyancat :)"
-    static presetDir="Moving stars"
+  static category = "Basic"
+  static title = "Moving stars left"
+  static description = "Used in nyancat :)"
+  static presetDir = "Moving stars"
 
 
-    constructor(matrix ) {
-        super(matrix);
+  constructor(matrix) {
+    super(matrix);
 
-        const step=matrix.preset.value("Star speed", 0.3, 0.1, 2, 0.1);
-        const blinkDelay= matrix.preset.value("Star twinkle delay", 5.8,1,10,0.1);
-        const starColor = matrix.preset.color("Star color" , 255,255,255);
+    const intervalControl = matrix.preset.value("Star move interval", 3, 1, 30, 0.1);
+    const blinkDelayControl = matrix.preset.value("Star twinkle interval", 5.8, 1, 10, 0.1);
+    const starDensityControl = matrix.preset.value("Star density", 10, 1, 100, 1)
+    const starColorControl = matrix.preset.color("Star color", 128, 128, 128);
 
-        matrix.scheduler.interval(20, () => {
+    matrix.scheduler.interval(20, () => {
 
 
-            //add new flying star at right side
-            const star = new PixelStar(matrix, matrix.width + 2, random(0, matrix.height), starColor, blinkDelay, true);
-            const mover = new AnimationMove(matrix, 1, -step.value, 0)
-            mover.addPixel(star);
+      //add new flying star at right side
+      const star = new PixelStar(matrix, matrix.width + 2, random(0, matrix.height), starColorControl, blinkDelayControl, true);
+      const mover = new AnimationMove(matrix, intervalControl, {value: -1}, {value: 0})
+      mover.addPixel(star);
 
-            //destroy star at left side
-            matrix.scheduler.interval((matrix.width+2)/step.value, () => {
-                mover.destroy(true);
-                star.destroy(matrix)
-                return false;
-            })
+      //destroy star at left side
+      matrix.scheduler.interval((matrix.width + 2) * intervalControl.value, () => {
+        mover.destroy(true);
+        star.destroy(matrix)
+        return false;
+      })
 
-            //schedule creation of next star at random time
-            return (random(10, 30));
-          // return(1);
-        //
-        })
+      //schedule creation of next star at random time
+      return (random(intervalControl.value, (100 * intervalControl.value) / starDensityControl.value));
+      // return(1);
+      //
+    })
 
-    }
+  }
 }

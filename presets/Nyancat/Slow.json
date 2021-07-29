@@ -25,16 +25,16 @@
    "value": 3
   },
   "Rainbow fade speed": {
-   "value": 30
+   "value": 120
   },
   "Rainbow fade randomizer": {
-   "value": 0.1
+   "value": 0.15
   },
   "Nyan move interval": {
-   "value": 3
+   "value": 15.5
   },
   "Nyan wobble interval": {
-   "value": 15
+   "value": 19.7
   }
  },
  "title": "Untitled",

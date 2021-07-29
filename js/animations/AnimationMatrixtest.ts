@@ -53,7 +53,7 @@ export class AnimationMatrixtest extends Animation {
 
         //mover to test smoothness
         const m = new Pixel(matrix, 0, 6, new Color(255, 255, 255));
-        new AnimationMove(matrix, 1, 1, 0).addPixel(m);
+        new AnimationMove(matrix, {value: 1}, {value: 1}, {value: 0} ).addPixel(m);
         matrix.scheduler.interval(matrix.width, () => {
             m.x = 0;
         })

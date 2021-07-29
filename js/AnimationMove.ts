@@ -1,5 +1,6 @@
 //moves animations x and y coordiantes in a certain direction with a certain speed
 import {Animation} from "./Animation.js";
+import {ValueInterface} from "./ValueInterface.js";
 
 export class AnimationMove extends Animation {
 
@@ -11,15 +12,15 @@ export class AnimationMove extends Animation {
    * @param yStep Step size of Y (can be negative as well)
    * @param wrap Wrap pixels around if they go outside of the matrix
    */
-  constructor(matrix, delay: number, xStep: number, yStep: number, wrap=false) {
+  constructor(matrix, delay: ValueInterface, xStep: ValueInterface, yStep: ValueInterface, wrap=false) {
         super(matrix);
 
-    matrix.scheduler.interval(delay, (frameNr) => {
+    matrix.scheduler.intervalControlled(delay, (frameNr) => {
 
             for (let i = 0, n = this.pixels.length; i < n; ++i) {
                 const p = this.pixels[i];
-                p.x = p.x + xStep;
-                p.y = p.y + yStep;
+                p.x = p.x + xStep.value;
+                p.y = p.y + yStep.value;
 
                 if (wrap)
                 {

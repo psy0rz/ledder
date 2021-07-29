@@ -37,7 +37,7 @@ export class AnimationNyan
       .00000000.
     `)
 
-    const head = new AnimationAsciiArt(matrix, 12, 7, `
+    const head = new AnimationAsciiArt(matrix, 12, 8, `
       .00...00.
       .0500050.
       05w05w050
@@ -48,14 +48,15 @@ export class AnimationNyan
     `)
 
 
-    const flyIntervalControl = matrix.preset.value("Fly interval", 3, 1, 60, 1);
+    const moveIntervalControl = matrix.preset.value("Nyan move interval", 3, 1, 20, 0.1);
+    const wobbleIntervalControl = matrix.preset.value("Nyan wobble interval", 15, 1, 20, 0.1);
 
 
-    new AnimationWobbleY(matrix, 1, 10, 1).addPixels(body.pixels)
-    new AnimationWobbleX(matrix, 1, 10, 9).addPixels(head.pixels)
-    new AnimationWobbleY(matrix, 1, 10, 7).addPixels(head.pixels)
+    new AnimationWobbleY(matrix, {value: 1}, wobbleIntervalControl, 0).addPixels(body.pixels)
+    new AnimationWobbleY(matrix, {value: -1}, wobbleIntervalControl, wobbleIntervalControl.value*1/2).addPixels(head.pixels)
+    new AnimationWobbleX(matrix, {value: 1}, wobbleIntervalControl, wobbleIntervalControl.value*1/3).addPixels(head.pixels)
 
-    new AnimationMove(matrix, flyIntervalControl.value, 1, 0, true).addPixels(head.pixels).addPixels(body.pixels)
+    new AnimationMove(matrix, moveIntervalControl, {value: 1}, {value: 0}, true).addPixels(head.pixels).addPixels(body.pixels)
 
 
     //rainbow :)
@@ -67,13 +68,13 @@ export class AnimationNyan
     const controlFadeRnd = matrix.preset.value("Rainbow fade randomizer", 0.1, 0, 0.5, 0.01);
 
     //wobble rainbow
-    matrix.scheduler.interval(10, () => {
+    matrix.scheduler.intervalControlled(wobbleIntervalControl, () => {
       y = (y + 1) % 2;
     })
 
 
     //draw rainbow
-    matrix.scheduler.interval(flyIntervalControl.value, () => {
+    matrix.scheduler.intervalControlled(moveIntervalControl, () => {
       x = (x + 1) % matrix.width;
 
       const colors = [

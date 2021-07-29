@@ -1,15 +1,15 @@
-import {ControlValue} from "./ControlValue.js";
 import {Interval} from "./Interval.js";
+import {ValueInterface} from "./ValueInterface.js";
 
 /**
  * Interval that can be modified by a controller
  */
 export class IntervalControlled extends  Interval {
-    intervalControl: ControlValue;
+    intervalControl: ValueInterface;
     nextTime: number;
     callback: (frameNr: number) => number | undefined | boolean;
 
-    constructor(intervalControl: ControlValue, time, callback) {
+    constructor(intervalControl: ValueInterface, time, callback) {
         super();
         this.intervalControl = intervalControl;
         this.nextTime = time + intervalControl.value;
