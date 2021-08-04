@@ -72,7 +72,7 @@ window.addEventListener('load', () => {
     }
 
     //run animation
-    if (changedFields.includes('presetName'))
+    if (changedFields.includes('animationName') || changedFields.includes('presetName'))
     {
       runnerBrowser.run(newState['animationName'], newState['presetName']);
     }
