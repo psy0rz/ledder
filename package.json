@@ -12,11 +12,13 @@
   ],
   "scripts": {
     "dev": "concurrently \"tsc-watch --onSuccess 'node js/server.js'\" \"parcel watch index.html\"",
+    "autobuild": "concurrently \"tsc-watch\" \"parcel watch index.html\"",
     "build": "tsc --build && parcel build index.html",
     "start": "node js/server.js"
   },
   "devDependencies": {
     "@parcel/packager-raw-url": "2.0.0-rc.0",
+    "@parcel/transformer-image": "2.0.0-rc.0",
     "@parcel/transformer-webmanifest": "2.0.0-rc.0",
     "concurrently": "^6.2.0",
     "marked": "^2.1.3",
