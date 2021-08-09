@@ -13,13 +13,13 @@ let rpc = new RpcServer();
 let scheduler = new Scheduler();
 
 //cone display
-let matrix1 = new MatrixWLED(scheduler, 37, 8, false, false, '192.168.13.176');
-matrix1.run();
+// let matrix1 = new MatrixWLED(scheduler, 37, 8, false, false, '192.168.13.176');
+// matrix1.run();
 
 
 //led display matrix on raspberry
-// let matrix1 = new MatrixRPIzigzag(scheduler, 32, 1);
-// matrix1.run();
+let matrix1 = new MatrixRPIzigzag(scheduler, 32, 1);
+matrix1.run();
 
 
 //ceilingstrip
