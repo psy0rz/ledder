@@ -60,6 +60,7 @@ export class MatrixCanvas extends Matrix {
 
   frame()
   {
+    this.canvasContext.putImageData(this.imageData,0,0);
 
 
     if (this.runScheduler)
@@ -70,7 +71,6 @@ export class MatrixCanvas extends Matrix {
 
     //this step is the most resource intensive by far:
     this.imageData.data.set(this.imageBuf8);
-    this.canvasContext.putImageData(this.imageData,0,0);
 
     window.requestAnimationFrame(() =>{ this.frame() });
 

@@ -3,6 +3,7 @@ import {MatrixWLED} from "./MatrixWLED.js";
 import {RpcServer} from "./RpcServer.js";
 import {RunnerServer} from "./RunnerServer.js";
 import {PresetStore} from "./PresetStore.js";
+import {MatrixRPIzigzag} from "./MatrixRPIzigzag.js";
 
 const presetStore=new PresetStore("presets")
 await presetStore.updateAnimationPreviews(process.argv[2]=='rebuild');
@@ -15,10 +16,17 @@ let scheduler = new Scheduler();
 let matrix1 = new MatrixWLED(scheduler, 37, 8, false, false, '192.168.13.176');
 matrix1.run();
 
+
+//led display matrix on raspberry
+// let matrix1 = new MatrixRPIzigzag(scheduler, 32, 1);
+// matrix1.run();
+
+
 //ceilingstrip
 // let matrix2 = new MatrixWLED(scheduler, 138, 1, false, false, '192.168.13.247');
 // matrix2.runScheduler=false;
 // matrix2.run();
+
 
 const runner = new RunnerServer(matrix1, presetStore);
 

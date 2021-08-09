@@ -5,6 +5,9 @@ import {PresetControl} from "./PresetControl.js";
 
 /**
  * The matrix is the display and shows the list of pixels. The subclasses are actual implementations for different display types.
+ * Usually its enough to just implement run() and setPixel.
+ * run() should call render() with the prefrerred framerate. (should be 60fps)
+ * render() will in turn call setpixel() to set the actual pixels.
  */
 export abstract class Matrix extends PixelContainer {
   width: number;

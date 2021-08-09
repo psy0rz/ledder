@@ -25,7 +25,6 @@ let gamma = [
 export class MatrixWLED extends Matrix {
 
   buffer: Uint8ClampedArray;
-  prevBuffer: Uint8ClampedArray;
   socket: any;
   flipX: boolean;
   flipY: boolean;
@@ -91,15 +90,7 @@ export class MatrixWLED extends Matrix {
 
   frame()
   {
-    //store old buffer, create new one
-    this.prevBuffer=this.buffer;
-    this.buffer=new Uint8ClampedArray(this.width * this.height * 3);
-
-    if (this.runScheduler)
-      this.scheduler.update();
-
-    this.render();
-
+    //we want the sending to be timed exactly, so do that first:
     let sendBuffer=new Uint8Array(2 + this.height * this.width*3);
 
     sendBuffer[0]=2;//DRGB protocol
@@ -109,17 +100,18 @@ export class MatrixWLED extends Matrix {
 
     for (let i=0, n=this.buffer.length; i<n; ++i)
     {
-      if (this.buffer[i]!=this.prevBuffer[i])
-        changed=true;
-      // //blur with previous frame to make animations smoother?
-      // sendBuffer[i+2]=(this.buffer[i]+this.prevBuffer[i])/2;
       sendBuffer[i+2]=this.buffer[i];
     }
 
-    // if (changed) {
-    //always send at 60 updates/s, otherwise it will stutter
-        this.socket.send(sendBuffer);
-    // }
+    this.socket.send(sendBuffer);
+
+    //clear
+    this.buffer=new Uint8ClampedArray(this.width * this.height * 3);
+
+    if (this.runScheduler)
+      this.scheduler.update();
+
+    this.render();
 
   }
 
@@ -131,6 +123,7 @@ export class MatrixWLED extends Matrix {
   {
     setInterval(() => { this.frame() }, 1000/60);
   }
+
 
 
 }

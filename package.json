@@ -44,5 +44,8 @@
     "opentype": "^0.1.2",
     "rison-node": "^2.1.1",
     "upng-js": "^2.1.0"
+  },
+  "optionalDependencies": {
+    "rpi-ws281x-smi": "../rpi-ws281x-smi"
   }
 }
