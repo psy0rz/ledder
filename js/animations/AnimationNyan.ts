@@ -9,6 +9,7 @@ import {Color} from "../Color.js";
 
 
 import {AnimationFade} from "../AnimationFade.js";
+import {AnimationFadeOut} from "../AnimationFadeOut.js";
 
 //Nyancat, based on https://github.com/bertrik/nyancat/blob/master/nyancat.c
 
@@ -87,7 +88,7 @@ export class AnimationNyan
       ]
 
       for (let c = 0; c < 6; c++) {
-        new AnimationFade(matrix, colors[c], black, controlFade, controlFadeRnd, true)
+        new AnimationFadeOut(matrix, colors[c], controlFade, controlFadeRnd, true)
           .addPixel(new Pixel(matrix, x, c + y + 1, colors[c]))
       }
 
