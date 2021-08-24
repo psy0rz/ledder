@@ -2,6 +2,8 @@ import {Matrix} from "./Matrix.js"
 import leds from "rpi-ws281x-smi"
 import {Color} from "./Color.js";
 
+import {gamma} from "./MatrixWLED.js";
+
 
 /**
  * Implements an array of "zigzag" matrix display on the Raspberry PI.
@@ -25,14 +27,17 @@ export class MatrixRPIzigzag extends Matrix {
 
   setPixel(x, y, color) {
 
+    const floor_y=~~y;
+    const floor_x=~~x;
+
     // if (x&1)
     //   leds.setPixel(~~(x/this.displayWidth), ((x%this.displayWidth) * this.height) + y, color.b | color.r << 8 | color.g << 16)
     // else
     //   leds.setPixel(~~(x/this.displayWidth), ((x%this.displayWidth) * this.height) + (this.height-y-1), color.b | color.r << 8 | color.g << 16)
-    if (x&1)
-      leds.setPixel(~~(x/this.displayWidth), ((x%this.displayWidth) * this.height) + y, color.r, color.g, color.b, color.a)
+    if (floor_x&1)
+      leds.setPixel(~~(floor_x/this.displayWidth), ((floor_x%this.displayWidth) * this.height) + floor_y, gamma[color.r], gamma[color.g], gamma[color.b], color.a)
     else
-      leds.setPixel(~~(x/this.displayWidth), ((x%this.displayWidth) * this.height) + (this.height-y-1),  color.r, color.g, color.b, color.a)
+      leds.setPixel(~~(floor_x/this.displayWidth), ((floor_x%this.displayWidth) * this.height) + (this.height-floor_y-1),  gamma[color.r], gamma[color.g], gamma[color.b], color.a)
 
   }
 

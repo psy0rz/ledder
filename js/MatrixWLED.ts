@@ -3,7 +3,7 @@ import {Matrix} from "./Matrix.js";
 // @ts-ignore
 import dgram from "dgram";
 
-let gamma = [
+export let gamma = [
   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1,
   1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2,
