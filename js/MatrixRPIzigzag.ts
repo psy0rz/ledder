@@ -30,14 +30,10 @@ export class MatrixRPIzigzag extends Matrix {
     const floor_y=~~y;
     const floor_x=~~x;
 
-    // if (x&1)
-    //   leds.setPixel(~~(x/this.displayWidth), ((x%this.displayWidth) * this.height) + y, color.b | color.r << 8 | color.g << 16)
-    // else
-    //   leds.setPixel(~~(x/this.displayWidth), ((x%this.displayWidth) * this.height) + (this.height-y-1), color.b | color.r << 8 | color.g << 16)
     if (floor_x&1)
-      leds.setPixel(~~(floor_x/this.displayWidth), ((floor_x%this.displayWidth) * this.height) + floor_y, gamma[color.r], gamma[color.g], gamma[color.b], color.a)
+      leds.setPixel(~~(floor_x/this.displayWidth), ((floor_x%this.displayWidth) * this.height) + floor_y, gamma[~~color.r], gamma[~~color.g], gamma[~~color.b], color.a)
     else
-      leds.setPixel(~~(floor_x/this.displayWidth), ((floor_x%this.displayWidth) * this.height) + (this.height-floor_y-1),  gamma[color.r], gamma[color.g], gamma[color.b], color.a)
+      leds.setPixel(~~(floor_x/this.displayWidth), ((floor_x%this.displayWidth) * this.height) + (this.height-floor_y-1),  gamma[~~color.r], gamma[~~color.g], gamma[~~color.b], color.a)
 
   }
 
