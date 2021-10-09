@@ -49,8 +49,7 @@ export class MatrixPixelflut extends Matrix {
 
   }
 
-  send(message)
-  {
+  send(message) {
     // console.log(message);
     const raw_message = Buffer.from(message);
     this.socket.send(raw_message, 0, raw_message.length, this.port, this.host, function (err, bytes) {
@@ -64,30 +63,30 @@ export class MatrixPixelflut extends Matrix {
     // console.log(this.buf.length)
 
     let message = "";
-    for (let i = 0; i < this.buf.length; i++)
-    {
+    for (let i = 0; i < this.buf.length; i++) {
       const x = ~~(i % this.width);
-      const y = this.height - ~~(i / this.width) -1 ;
+      const y = this.height - ~~(i / this.width) - 1;
       const c = this.buf[i];
       const prevC = this.bufPrev[i];
 
       //only send changed pixels
-      // if (c!==undefined && ( prevC===undefined || c.r!=prevC.r || c.g != prevC.g || c.b != prevC.b )) {
-        if (c!==undefined ) {
-          message = message + 'PX ' + x + ' ' + y + ' ' + (~~c.r).toString(16).padStart(2,'0') + (~~c.g).toString(16).padStart(2,'0') + (~~c.b).toString(16).padStart(2,'0') + '\n';
-        }
-        else
-        {
-          message = message + 'PX ' + x + ' ' + y + ' ' + '000000\n';
-        }
-        //actually send
-        if (message.length >= 1500) {
-          this.send(message);
-          message = "";
-        }
+      if (c === undefined && prevC !== undefined) {
+        //pixel disappeared, turn off
+        message = message + 'PX ' + x + ' ' + y + ' ' + '000000\n';
+      } else if (c !== undefined && (prevC === undefined || c.r != prevC.r || c.g != prevC.g || c.b != prevC.b)) {
+        //pixel changed
+        message = message + 'PX ' + x + ' ' + y + ' ' + (~~c.r).toString(16).padStart(2, '0') + (~~c.g).toString(16).padStart(2, '0') + (~~c.b).toString(16).padStart(2, '0') + '\n';
+      }
+
+
+      //actually send
+      if (message.length >= 1500) {
+        this.send(message);
+        message = "";
+      }
 
     }
-    if (message!=="")
+    if (message !== "")
       this.send(message);
 
     //swap buffers
