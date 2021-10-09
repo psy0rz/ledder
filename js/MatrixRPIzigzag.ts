@@ -1,6 +1,5 @@
 import {Matrix} from "./Matrix.js"
 import leds from "rpi-ws281x-smi"
-import {Color} from "./Color.js";
 
 import {gamma} from "./MatrixWLED.js";
 
@@ -60,3 +59,5 @@ export class MatrixRPIzigzag extends Matrix {
 
 
 }
+
+

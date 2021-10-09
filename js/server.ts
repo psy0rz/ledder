@@ -4,6 +4,7 @@ import {RpcServer} from "./RpcServer.js";
 import {RunnerServer} from "./RunnerServer.js";
 import {PresetStore} from "./PresetStore.js";
 import {MatrixRPIzigzag} from "./MatrixRPIzigzag.js";
+import {MatrixPixelflut} from "./MatrixPixelflut.js";
 
 const presetStore=new PresetStore("presets")
 await presetStore.updateAnimationPreviews(process.argv[2]=='rebuild');
@@ -13,19 +14,25 @@ let rpc = new RpcServer();
 let scheduler = new Scheduler();
 
 //cone display
-// let matrix1 = new MatrixWLED(scheduler, 37, 8, false, false, '192.168.13.176');
+//let matrix1 = new MatrixWLED(scheduler, 37, 8, false, false, '192.168.13.176');
+// let matrix1 = new MatrixWLED(scheduler, 37, 8, false, false, '10.0.0.112');
 // matrix1.run();
 
 
 //led display matrix on raspberry
-let matrix1 = new MatrixRPIzigzag(scheduler, 32, 5);
-matrix1.run();
+// let matrix1 = new MatrixRPIzigzag(scheduler, 32, 5);
+// matrix1.run();
 
 
 //ceilingstrip
 // let matrix2 = new MatrixWLED(scheduler, 138, 1, false, false, '192.168.13.247');
 // matrix2.runScheduler=false;
 // matrix2.run();
+
+//pixelflut nurdspace
+let matrix1 = new MatrixPixelflut(scheduler, "10.208.42.159", 5003, 128, 32);
+matrix1.run();
+
 
 
 const runner = new RunnerServer(matrix1, presetStore);
