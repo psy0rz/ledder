@@ -13,11 +13,11 @@ import {AnimationFadeOut} from "../AnimationFadeOut.js";
 
 //Nyancat, based on https://github.com/bertrik/nyancat/blob/master/nyancat.c
 
-export class AnimationNyan
+export class AnimationNyanNurdspace
   extends Animation {
 
   static category = "Memes"
-  static title = "Nyancat"
+  static title = "Nyancat longgggg"
   static description = "Based on <a href='https://github.com/bertrik/nyancat/blob/master/nyancat.c'>this</a>"
   static presetDir = "Nyancat";
 
