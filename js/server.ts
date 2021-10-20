@@ -41,6 +41,27 @@ let scheduler = new Scheduler();
 
 const runner = new RunnerServer(matrix1, presetStore);
 
+
+//default animation
+runner.run("AnimationNyan", {
+  values: {
+    'Star speed': { value: 0.3 },
+    'Star twinkle delay': { value: 5.8 },
+    'Star color': { r: 87, g: 129, b: 255, a: 0.05 },
+    'Star move interval': { value: 3 },
+    'Star twinkle interval': { value: 5.8 },
+    'Star density': { value: 10 },
+    'Fly interval': { value: 3 },
+    'Rainbow fade speed': { value: 120 },
+    'Rainbow fade randomizer': { value: 0.1 },
+    'Nyan move interval': { value: 3 },
+    'Nyan wobble interval': { value: 15 }
+  },
+  title: 'Untitled',
+    description: ''
+});
+
+
 //RPC bindings
 
 // @ts-ignore
