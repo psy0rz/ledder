@@ -20,8 +20,8 @@ let scheduler = new Scheduler();
 
 
 //led display matrix on raspberry
-// let matrix1 = new MatrixRPIzigzag(scheduler, 32, 5);
-// matrix1.run();
+ let matrix1 = new MatrixRPIzigzag(scheduler, 32, 5);
+ matrix1.run();
 
 
 //ceilingstrip
@@ -30,8 +30,12 @@ let scheduler = new Scheduler();
 // matrix2.run();
 
 //pixelflut nurdspace
-let matrix1 = new MatrixPixelflut(scheduler, "10.208.42.159", 5003, 128, 32);
-matrix1.run();
+//let matrix1 = new MatrixPixelflut(scheduler, "10.208.42.159", 5003, 128, 32);
+//matrix1.run();
+//
+//pixelflut nurdspace
+// let matrix1 = new MatrixPixelflut(scheduler, "10.208.42.159", 5008, 64, 24);
+// matrix1.run();
 
 
 
