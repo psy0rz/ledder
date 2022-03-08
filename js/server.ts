@@ -1,13 +1,13 @@
 import {Scheduler} from "./Scheduler.js";
-import {MatrixWLED} from "./MatrixWLED.js";
 import {RpcServer} from "./RpcServer.js";
 import {RunnerServer} from "./RunnerServer.js";
 import {PresetStore} from "./PresetStore.js";
 import {MatrixRPIzigzag} from "./MatrixRPIzigzag.js";
-import {MatrixPixelflut} from "./MatrixPixelflut.js";
 
-const presetStore=new PresetStore("presets")
-await presetStore.updateAnimationPreviews(process.argv[2]=='rebuild');
+
+
+const presetStore = new PresetStore("presets")
+await presetStore.updateAnimationPreviews(process.argv[2] == 'rebuild');
 
 let rpc = new RpcServer();
 
@@ -20,8 +20,8 @@ let scheduler = new Scheduler();
 
 
 //led display matrix on raspberry
- let matrix1 = new MatrixRPIzigzag(scheduler, 32, 5);
- matrix1.run();
+// let matrix1 = new MatrixRPIzigzag(scheduler, 32, 5);
+// matrix1.run();
 
 
 //ceilingstrip
@@ -38,28 +38,27 @@ let scheduler = new Scheduler();
 // matrix1.run();
 
 
+// const runner = new RunnerServer(matrix1, presetStore);
 
-const runner = new RunnerServer(matrix1, presetStore);
 
-
-//default animation
-runner.run("AnimationNyan", {
-  values: {
-    'Star speed': { value: 0.3 },
-    'Star twinkle delay': { value: 5.8 },
-    'Star color': { r: 87, g: 129, b: 255, a: 0.05 },
-    'Star move interval': { value: 3 },
-    'Star twinkle interval': { value: 5.8 },
-    'Star density': { value: 10 },
-    'Fly interval': { value: 3 },
-    'Rainbow fade speed': { value: 120 },
-    'Rainbow fade randomizer': { value: 0.1 },
-    'Nyan move interval': { value: 3 },
-    'Nyan wobble interval': { value: 15 }
-  },
-  title: 'Untitled',
-    description: ''
-});
+// //default animation
+// runner.run("AnimationNyan", {
+//   values: {
+//     'Star speed': {value: 1.3},
+//     'Star twinkle delay': {value: 5.8},
+//     'Star color': {r: 87, g: 129, b: 255, a: 0.05},
+//     'Star move interval': {value: 3},
+//     'Star twinkle interval': {value: 5.8},
+//     'Star density': {value: 10},
+//     'Fly interval': {value: 3},
+//     'Rainbow fade speed': {value: 120},
+//     'Rainbow fade randomizer': {value: 0.1},
+//     'Nyan move interval': {value: 30},
+//     'Nyan wobble interval': {value: 15}
+//   },
+//   title: 'Untitled',
+//   description: ''
+// });
 
 
 //RPC bindings
@@ -69,7 +68,7 @@ rpc.addMethod("presetStore.getCategories", (params) => presetStore.getCategories
 // @ts-ignore
 rpc.addMethod("presetStore.getAnimationList", (params) => presetStore.getAnimationList(...params))
 // @ts-ignore
-rpc.addMethod("presetStore.load",  (params) => presetStore.load(...params))
+rpc.addMethod("presetStore.load", (params) => presetStore.load(...params))
 // @ts-ignore
 rpc.addMethod("presetStore.save", (params) => presetStore.save(...params))
 // @ts-ignore

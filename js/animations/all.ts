@@ -12,3 +12,4 @@ export * from "./BrainsmokeFire.js";
 export {AnimationNyan} from "./AnimationNyan.js";
 export {AnimationNyanNurdspace} from "./AnimationNyanNurdspace.js";
 
+export {Font} from "./Font.js";

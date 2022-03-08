@@ -9,6 +9,8 @@ import {PresetControl} from "./PresetControl.js";
  * run() should call this.scheduler.update() and render() with the prefrerred framerate. (should be 60fps)
  * render() will in turn call setpixel() to set the actual pixels. (there its usually stored in a buffer)
  * run is then reponsible for sending the rendered buffer to the actual display.
+ *
+ * Pixels() will ddd themself to the matrix.
  */
 export abstract class Matrix extends PixelContainer {
   width: number;
