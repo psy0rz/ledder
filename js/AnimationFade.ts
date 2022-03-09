@@ -26,6 +26,10 @@ export class AnimationFade extends Animation {
   constructor(matrix: Matrix, color: ColorInterface, colorTarget: ColorInterface, frames: ValueInterface, randomizer: ValueInterface = undefined, removePixels = false) {
     super(matrix);
 
+    if (color.busy)
+      return;
+    color.busy=true
+
     if (randomizer != undefined)
       this.frameNr = frames.value * randomFloat(1 - randomizer.value, 1 + randomizer.value);
     else
@@ -44,6 +48,7 @@ export class AnimationFade extends Animation {
         Object.assign(color, colorTarget);
         if (removePixels)
           this.destroy(true)
+        color.busy=false;
         return false
       }
 

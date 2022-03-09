@@ -8,6 +8,7 @@ import {AnimationWobbleX} from "../AnimationWobbleX.js";
 import { AnimationWobbleY } from "../AnimationWobbleY.js";
 import {FontSimple8x8} from "../fonts/FontSimple8x8.js";
 import {AnimationMarquee} from "../AnimationMarquee.js";
+import {AnimationTwinkle} from "../AnimationTwinkle.js";
 
 
 
@@ -21,11 +22,11 @@ export class Font extends Animation {
   constructor(matrix) {
     super(matrix);
 
-    const intervalControl = matrix.preset.value("Speed", 1, 1, 5, 0.1);
+    const intervalControl = matrix.preset.value("Speed", 50, 1, 50, 0.1);
     const colorControl = matrix.preset.color("color");
 
-    new AnimationMarquee(matrix, intervalControl, "Dit is een test!       ", FontSimple8x8, colorControl)
-
+    let marquee=new AnimationMarquee(matrix, intervalControl, "Dit is een test!       ", FontSimple8x8, colorControl)
+    new AnimationTwinkle(matrix, marquee.pixels)
     // let t = "HACK";
     //
     // for (var i=0; i<t.length; i++) {

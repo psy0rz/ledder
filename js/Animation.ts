@@ -30,8 +30,8 @@ export class Animation extends PixelContainer {
 
   //unschedules animation, removes pixels.
   //Also removes pixels from matrix if fromMatrix=true.
-  destroy(destroyPixels = true) {
-    if (destroyPixels) {
+  destroy(fromMatrix = true) {
+    if (fromMatrix) {
       for (let i = 0, n = this.pixels.length; i < n; ++i) {
         this.matrix.removePixels(this.pixels);
       }

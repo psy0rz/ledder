@@ -1,12 +1,12 @@
 {
  "values": {
   "Speed": {
-   "value": 1
+   "value": 47.5
   },
   "color": {
-   "r": 255,
-   "g": 0,
-   "b": 30,
+   "r": 84,
+   "g": 133,
+   "b": 255,
    "a": 1
   },
   "Twinkle speed": {
