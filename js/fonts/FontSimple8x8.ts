@@ -1,5 +1,7 @@
 //based on https://github.com/stonkpunk/my-npm-modules/blob/main/simple-bitmap-font/index.js
 
+import {FontInterface} from "./FontInterface.js";
+
 var font_data = [
   [0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00],   // U+0000 (nul)
   [0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00],   // U+0001
@@ -130,13 +132,6 @@ var font_data = [
   [0x6E, 0x3B, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00],   // U+007E (~)
   [0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00]    // U+007F
 ];
-
-abstract  class FontInterface {
-  static width: number;
-
-  static height: number;
-  static data: {};
-}
 
 
 export class FontSimple8x8 extends FontInterface {
