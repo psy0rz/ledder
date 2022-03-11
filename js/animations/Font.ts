@@ -22,10 +22,10 @@ export class Font extends Animation {
   constructor(matrix) {
     super(matrix);
 
-    const intervalControl = matrix.preset.value("Speed", 50, 1, 50, 0.1);
+    const intervalControl = matrix.preset.value("Speed", 50, 1, 10, 1);
     const colorControl = matrix.preset.color("color");
 
-    let marquee=new AnimationMarquee(matrix, intervalControl, "Dit is een test!       ", FontSimple8x8, colorControl)
+    let marquee=new AnimationMarquee(matrix, intervalControl, "Welkom bij Hackerspace Drenthe.     ", FontSimple8x8, colorControl)
     new AnimationTwinkle(matrix, marquee.pixels)
     // let t = "HACK";
     //
