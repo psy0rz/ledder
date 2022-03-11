@@ -1,3 +1,5 @@
+//this is the javascript entrypoint in on the browser side. (included from index.html)
+
 import {MatrixCanvas} from "./MatrixCanvas.js";
 import {RpcClient} from "./RpcClient.js";
 import {Scheduler} from "./Scheduler.js";
@@ -24,7 +26,7 @@ let runnerBrowser: RunnerBrowser;
 window.addEventListener('load', () => {
 
   let scheduler = new Scheduler();
-  let matrix = new MatrixCanvas(scheduler, 40, 8, '#ledder-preview');
+  let matrix = new MatrixCanvas(scheduler, 80, 8, '#ledder-preview');
   matrix.run();
 
   let htmlPresets = new HtmlPresets(async (animationName, presetName) => {
@@ -55,6 +57,7 @@ window.addEventListener('load', () => {
     progressReset()
     progressStart()
     matrix.clear()
+
   });
 
   //handle stuff that depends on the url #hash:

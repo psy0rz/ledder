@@ -49,8 +49,8 @@ export class AnimationNyan
     `)
 
 
-    const moveIntervalControl = matrix.preset.value("Nyan move interval", 3, 1, 20, 0.1);
-    const wobbleIntervalControl = matrix.preset.value("Nyan wobble interval", 15, 1, 20, 0.1);
+    const moveIntervalControl = matrix.preset.value("Nyan move interval", 3, 1, 20, 0);
+    const wobbleIntervalControl = matrix.preset.value("Nyan wobble interval", 15, 1, 20, 0);
 
 
     new AnimationWobbleY(matrix, {value: 1}, wobbleIntervalControl, 0).addPixels(body.pixels)

@@ -108,10 +108,13 @@ export class RunnerBrowser {
       // @ts-ignore
       new this.animationClass(this.matrix)
 
+
+      this.updateHtml()
+
+      //do this as last step since it might fail
       if (this.live)
         await this.send();
 
-      this.updateHtml()
       return true
     } else
       return false

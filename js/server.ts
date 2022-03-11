@@ -39,7 +39,7 @@ let scheduler = new Scheduler();
 
 
 // const runner = new RunnerServer(matrix1, presetStore);
-
+const runner=undefined
 
 // //default animation
 // runner.run("AnimationNyan", {
@@ -77,7 +77,10 @@ rpc.addMethod("presetStore.createPreview", (params) => presetStore.createPreview
 // @ts-ignore
 rpc.addMethod("presetStore.delete", (params) => presetStore.delete(...params))
 // @ts-ignore
-rpc.addMethod("runner.run", (params) => runner.run(...params))
+rpc.addMethod("runner.run", (params) => {
+  if (runner!==undefined)
+    runner.run(...params)
+})
 //todo: make multi-matrix
 // @ts-ignore
 rpc.addMethod("matrix.preset.updateValue", (params) => matrix1.preset.updateValue(...params))
