@@ -60,6 +60,7 @@ let scheduler = new Scheduler();
 //   description: ''
 // });
 
+// runner.run("Font", await presetStore.load("Font", "nice"))
 
 //RPC bindings
 
