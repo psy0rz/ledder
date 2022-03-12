@@ -40,7 +40,7 @@ export class RunnerBrowser {
   async send() {
 
     await this.rpc.request("runner.run", this.animationName, this.matrix.preset.save());
-    this.restart()
+    // this.restart()
   }
 
   updateHtml() {

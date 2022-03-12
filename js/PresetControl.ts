@@ -115,6 +115,7 @@ export class PresetControl {
   {
     this.presetValues=preset;
 
+    //update existing controls
     for (const [name, control] of Object.entries(this.controls))
     {
       if (name in this.presetValues.values)
