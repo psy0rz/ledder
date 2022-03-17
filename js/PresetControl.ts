@@ -15,6 +15,7 @@ export class PresetControl {
   valuesChangedCallback: (controlName, values)=>void
 
 
+
   constructor() {
     this.controls={};
     this.clear();
@@ -32,7 +33,6 @@ export class PresetControl {
       $(".ledder-control-counter").text(0);
       $(".ledder-show-control-page").addClass("disabled");
     }
-7
   }
 
 
@@ -65,21 +65,24 @@ export class PresetControl {
    * @param max Maximum value (inclusive)
    * @param step Step size
    */
-  value(name: string, value: number, min: number, max: number, step: number = 1) {
+  value(name: string, value: number, min: number, max: number, step: number = 1):ControlValue {
     if (!(name in this.controls)) {
       this.add(new ControlValue(name, value, min, max, step));
     }
 
+    // @ts-ignore
     return this.controls[name];
   }
 
   /**
    * Get or create color-control with specified name
    */
-  color(name: string, r: number=128, g: number=128, b: number=128, a: number = 1) {
+  color(name: string, r: number=128, g: number=128, b: number=128, a: number = 1):ControlColor {
     if (!(name in this.controls)) {
       this.add(new ControlColor(name, r, g, b, a));
     }
+
+    // @ts-ignore
     return this.controls[name];
   }
 

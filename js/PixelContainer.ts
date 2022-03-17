@@ -10,7 +10,7 @@ export class PixelContainer {
     this.pixels = [];
   }
 
-  clear()
+  reset()
   {
     this.pixels = [];
   }

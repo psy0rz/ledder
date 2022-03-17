@@ -27,7 +27,7 @@ export class RunnerServer {
 
     if (animationName in animations) {
       console.log("Runner: starting", animationName, preset)
-      this.matrix.clear()
+      this.matrix.reset()
 
       const animationClass=animations[animationName];
 

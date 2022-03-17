@@ -26,7 +26,8 @@ let runnerBrowser: RunnerBrowser;
 window.addEventListener('load', () => {
 
   let scheduler = new Scheduler();
-  let matrix = new MatrixCanvas(scheduler, 80, 8, '#ledder-preview');
+  // let matrix = new MatrixCanvas(scheduler, 75, 8, '#ledder-preview');
+  let matrix = new MatrixCanvas(scheduler, 60, 10, '#ledder-preview');
   matrix.run();
 
   let htmlPresets = new HtmlPresets(async (animationName, presetName) => {
@@ -56,7 +57,7 @@ window.addEventListener('load', () => {
     reload = true
     progressReset()
     progressStart()
-    matrix.clear()
+    matrix.reset()
 
   });
 

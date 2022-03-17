@@ -3,6 +3,7 @@ import {RpcServer} from "./RpcServer.js";
 import {RunnerServer} from "./RunnerServer.js";
 import {PresetStore} from "./PresetStore.js";
 import {MatrixRPIzigzag} from "./MatrixRPIzigzag.js";
+import {MatrixWLED} from "./MatrixWLED.js";
 
 
 
@@ -14,9 +15,9 @@ let rpc = new RpcServer();
 let scheduler = new Scheduler();
 
 //cone display
-//let matrix1 = new MatrixWLED(scheduler, 37, 8, false, false, '192.168.13.176');
+let matrix1 = new MatrixWLED(scheduler, 37, 8, false, false, '192.168.13.176');
 // let matrix1 = new MatrixWLED(scheduler, 37, 8, false, false, '10.0.0.112');
-// matrix1.run();
+{ matrix1.run(); }
 
 
 //led display matrix on raspberry
@@ -38,8 +39,8 @@ let scheduler = new Scheduler();
 // matrix1.run();
 
 
-// const runner = new RunnerServer(matrix1, presetStore);
-const runner=undefined
+const runner = new RunnerServer(matrix1, presetStore);
+// const runner=undefined
 
 // //default animation
 // runner.run("AnimationNyan", {
@@ -79,7 +80,9 @@ rpc.addMethod("presetStore.delete", (params) => presetStore.delete(...params))
 // @ts-ignore
 rpc.addMethod("runner.run", (params) => {
   if (runner!==undefined)
-    runner.run(...params)
+    { // @ts-ignore
+      runner.run(...params)
+    }
 })
 //todo: make multi-matrix
 // @ts-ignore

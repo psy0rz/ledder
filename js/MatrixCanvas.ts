@@ -60,8 +60,9 @@ export class MatrixCanvas extends Matrix {
 
   frame()
   {
-    this.canvasContext.putImageData(this.imageData,0,0);
+    setTimeout(()=>this.frame(), 1000/this.fpsControl.value)
 
+    this.canvasContext.putImageData(this.imageData,0,0);
 
     if (this.runScheduler)
       this.scheduler.update();
@@ -72,7 +73,8 @@ export class MatrixCanvas extends Matrix {
     //this step is the most resource intensive by far:
     this.imageData.data.set(this.imageBuf8);
 
-    window.requestAnimationFrame(() =>{ this.frame() });
+    // window.requestAnimationFrame(() =>{ this.frame() });
+
 
   }
 
@@ -81,6 +83,7 @@ export class MatrixCanvas extends Matrix {
   run()
   {
     this.frame();
+
   }
 
 

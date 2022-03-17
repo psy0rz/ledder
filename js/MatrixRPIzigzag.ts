@@ -37,26 +37,23 @@ export class MatrixRPIzigzag extends Matrix {
   }
 
 
-  run() {
-    let nr=0;
-    setInterval(() => {
-      leds.send(); //timed exactly
+  frame()
+  {
+    setTimeout(()=>this.frame(), 1000/this.fpsControl.value)
 
-      if (this.runScheduler)
-        this.scheduler.update();
+    leds.send(); //timed exactly
 
-      leds.clear();
-      this.render();
+    if (this.runScheduler)
+      this.scheduler.update();
 
-       nr=(nr+1)%255
-      // this.setPixel(2,2,new Color(0,nr,0))
-      // leds.setPixel(5,10, nr<<16);
-
-
-    }, 1000/60);
+    leds.clear();
+    this.render();
 
   }
 
+  run() {
+    this.frame()
+  }
 
 }
 

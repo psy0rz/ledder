@@ -74,7 +74,7 @@ export class RunnerBrowser {
    */
   restart() {
     // let preset=this.matrix.preset.save();
-    this.matrix.clear(true);
+    this.matrix.reset(true);
     // this.matrix.preset.load(preset);
     // @ts-ignore
     new this.animationClass(this.matrix)
@@ -93,7 +93,7 @@ export class RunnerBrowser {
 
     if (animationName in animations) {
       console.log("Runner: starting", animationName, presetName)
-      this.matrix.clear()
+      this.matrix.reset()
 
       this.animationClass = animations[animationName];
 
@@ -105,6 +105,7 @@ export class RunnerBrowser {
       this.animationName = animationName
       this.presetName = presetName
 
+      //create the actual animation
       // @ts-ignore
       new this.animationClass(this.matrix)
 

@@ -95,22 +95,22 @@ export class MatrixPixelflut extends Matrix {
 
   }
 
+  frame()
+  {
+    setTimeout(()=>this.frame(), 1000/this.fpsControl.value)
+
+    if (this.runScheduler)
+      this.scheduler.update();
+
+    this.render();
+
+    //send changes
+    this.sendchanges();
+
+  }
 
   run() {
-    let nr = 0;
-    setInterval(() => {
-
-
-      if (this.runScheduler)
-        this.scheduler.update();
-
-      this.render();
-
-      //send changes
-      this.sendchanges();
-
-
-    }, 1000 / 60);
+    this.frame()
 
   }
 

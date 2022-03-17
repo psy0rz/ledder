@@ -2,6 +2,8 @@ import {PixelContainer} from "./PixelContainer.js";
 import {Scheduler} from "./Scheduler.js";
 import {ColorInterface} from "./ColorInterface.js";
 import {PresetControl} from "./PresetControl.js";
+import {Control} from "./Control.js";
+import {ControlValue} from "./ControlValue.js";
 
 /**
  * The matrix is the display and shows the list of pixels. The subclasses are actual implementations for different display types.
@@ -13,21 +15,23 @@ import {PresetControl} from "./PresetControl.js";
  * Pixels() will ddd themself to the matrix.
  */
 export abstract class Matrix extends PixelContainer {
-  width: number;
-  height: number;
-  scheduler: Scheduler;
-  runScheduler: boolean;
-  preset: PresetControl;
+  width: number
+  height: number
+  scheduler: Scheduler
+  runScheduler: boolean
+  preset: PresetControl
+  fpsControl: ControlValue
 
   protected constructor(scheduler, width, height) {
     super();
-    this.scheduler=scheduler;
+    this.scheduler = scheduler;
     //note: named preset instead of presetControl to make it more friendly for enduser
-    this.preset=new PresetControl();
+    this.preset = new PresetControl();
+    this.fpsControl = this.preset.value("FPS", 60, 1, 120, 1)
 
     this.width = width;
     this.height = height;
-    this.runScheduler=true; //make false if another matrix is running the scheduler.
+    this.runScheduler = true; //make false if another matrix is running the scheduler.
 
   }
 
@@ -39,26 +43,28 @@ export abstract class Matrix extends PixelContainer {
     }
   }
 
-  status()
-  {
-    console.log("Matrix pixels: ",this.pixels.length);
+  status() {
+    console.log("Matrix pixels: ", this.pixels.length);
   }
 
   /**
    * Clear all pixels and running intervals
    */
-  clear(keepPresets:boolean=false)
-  {
-    if (!keepPresets)
+  reset(keepPresets: boolean = false) {
+    if (!keepPresets) {
       this.preset.clear();
+      this.fpsControl = this.preset.value("FPS", 60, 1, 120, 1)
+    }
     this.scheduler.clear();
-    super.clear();
+    super.reset();
+
 
   }
 
 
   abstract run();
-  abstract setPixel(x:number, y:number, color: ColorInterface);
+
+  abstract setPixel(x: number, y: number, color: ColorInterface);
 }
 
 

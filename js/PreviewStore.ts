@@ -24,7 +24,7 @@ export class PreviewStore {
   {
     console.log("Rendering preview "+filename);
 
-    this.matrix.clear()
+    this.matrix.reset()
 
     if (preset)
       this.matrix.preset.load(preset);

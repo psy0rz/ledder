@@ -28,6 +28,8 @@ export class MatrixWLED extends Matrix {
   socket: any;
   flipX: boolean;
   flipY: boolean;
+  ip: string;
+  port: number;
 
   /**
    * Driver for WLED via UDP protocol
@@ -45,6 +47,9 @@ export class MatrixWLED extends Matrix {
     this.flipX=flipX;
     this.flipY=flipY;
 
+    this.ip=ip;
+    this.port=port;
+
     this.buffer=new Uint8ClampedArray(this.width * this.height * 3);
 
     this.socket = dgram.createSocket('udp4');
@@ -52,7 +57,6 @@ export class MatrixWLED extends Matrix {
     this.socket.on('error', (err) => {
       console.log(`server error:\n${err.stack}`);
     });
-    this.socket.connect(port, ip);
 
   }
 
@@ -90,6 +94,8 @@ export class MatrixWLED extends Matrix {
 
   frame()
   {
+    setTimeout(()=> this.frame(), 1000/this.fpsControl.value)
+
     //we want the sending to be timed exactly, so do that first:
     let sendBuffer=new Uint8Array(2 + this.height * this.width*3);
 
@@ -121,7 +127,9 @@ export class MatrixWLED extends Matrix {
 
   run()
   {
-    setInterval(() => { this.frame() }, 1000/60);
+    this.socket.on('connect', ()=> this.frame())
+    this.socket.connect(this.port, this.ip)
+
   }
 
 
