@@ -114,7 +114,7 @@ export class MatrixWLED extends Matrix {
     this.buffer=new Uint8ClampedArray(this.width * this.height * 3);
 
     if (this.runScheduler) {
-      console.log(this)
+      // console.log(this)
 
       this.scheduler.update();
     }

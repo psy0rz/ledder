@@ -16,7 +16,7 @@ let startupPresetName="slow"
 
 
 //cone display
-matrixList.push(new MatrixWLED(scheduler, 37, 8, false, false, '192.168.13.176'))
+// matrixList.push(new MatrixWLED(scheduler, 37, 8, false, false, '192.168.13.176'))
 
 //led display matrix on raspberry
 // matrixList.push(new MatrixRPIzigzag(scheduler, 32, 5));

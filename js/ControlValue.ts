@@ -16,8 +16,8 @@ export class ControlValue extends Control {
    * @param max Maximum value (inclusive)
    * @param step Step size NOTE: step 0.1 might make the browser slow. usually its better to disable stepping by setting it to 0
    */
-  constructor( name: string, value: number, min: number, max: number, step: number = 1) {
-    super( name);
+  constructor(name: string, value: number, min: number, max: number, step: number = 1) {
+    super(name);
 
     this.value = value;
     this.min = min;
@@ -31,9 +31,10 @@ export class ControlValue extends Control {
 
     super.html(container, changedCallback);
 
-    this.jqueryElement=$(`
+    this.jqueryElement = $(`
      <div class="ui padded  segment ">
       <div class="ui top attached label">${this.name}</div>
+      <div class="ui label current-value">${this.value}</div>
       <div class="ui labeled ticked slider"></div>
 <!--      <button class="ui icon button">-->
 <!--        <i class="undo icon"></i>-->
@@ -50,37 +51,34 @@ export class ControlValue extends Control {
       step: this.step,
       start: this.value,
 
-      onMove: (value)=>
-      {
-        this.value=value;
+      onMove: (value) => {
+        this.value = value;
+        $('.current-value', this.jqueryElement).text(value)
         this.changed();
       }
 
     });
   }
 
-  destroy()
-  {
-    if (this.jqueryElement!==undefined)
+  destroy() {
+    if (this.jqueryElement !== undefined)
       this.jqueryElement.remove();
   }
 
-  save()
-  {
+  save() {
     return {
       value: this.value
     }
   }
 
-  load(values)
-  {
-    this.value=values.value;
+  load(values) {
+    this.value = values.value;
 
     //update gui as well?
-    if (this.jqueryElement!==undefined)
-      { // @ts-ignore
-        $('.slider', this.jqueryElement).slider("set value", values.value, false);
-      }
+    if (this.jqueryElement !== undefined) { // @ts-ignore
+      $('.slider', this.jqueryElement).slider("set value", values.value, false);
+      $('.current-value', this.jqueryElement).text(values.value)
+    }
   }
 }
 
