@@ -1,0 +1,18 @@
+{
+ "values": {
+  "FPS": {
+   "value": 60
+  },
+  "Marquee interval": {
+   "value": 4
+  },
+  "Text color": {
+   "r": 148,
+   "g": 64,
+   "b": 0,
+   "a": 1
+  }
+ },
+ "title": "Untitled",
+ "description": ""
+}

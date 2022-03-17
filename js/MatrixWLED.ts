@@ -102,7 +102,6 @@ export class MatrixWLED extends Matrix {
     sendBuffer[0]=2;//DRGB protocol
     sendBuffer[1]=120; //timeout
 
-    let changed=false;
 
     for (let i=0, n=this.buffer.length; i<n; ++i)
     {
@@ -114,8 +113,11 @@ export class MatrixWLED extends Matrix {
     //clear
     this.buffer=new Uint8ClampedArray(this.width * this.height * 3);
 
-    if (this.runScheduler)
+    if (this.runScheduler) {
+      console.log(this)
+
       this.scheduler.update();
+    }
 
     this.render();
 

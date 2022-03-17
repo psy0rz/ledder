@@ -24,7 +24,6 @@ export class RunnerServer {
    */
   async run(animationName: string, preset: PresetValues) {
 
-
     if (animationName in animations) {
       console.log("Runner: starting", animationName, preset)
       this.matrix.reset()

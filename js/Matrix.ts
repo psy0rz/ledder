@@ -55,7 +55,8 @@ export abstract class Matrix extends PixelContainer {
       this.preset.clear();
       this.fpsControl = this.preset.value("FPS", 60, 1, 120, 1)
     }
-    this.scheduler.clear();
+    if (this.runScheduler)
+      this.scheduler.clear();
     super.reset();
 
 
