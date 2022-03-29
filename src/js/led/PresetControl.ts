@@ -135,8 +135,8 @@ export class PresetControl {
         control.load(this.presetValues.values[name]);
     }
 
-    if (this.htmlEnabled)
-      sveltePresets.update(p=>p)
+    // if (this.htmlEnabled)
+    //   sveltePresets.update(p=>p)
   }
 
   /**
