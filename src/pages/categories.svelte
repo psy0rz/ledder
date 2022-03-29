@@ -61,7 +61,7 @@
     } from 'framework7-svelte';
     import {rpc} from "../js/RpcClient.js";
     // import * as animationClasses from "../js/led/animations/all.js";
-    import {sveltePresets, svelteAnimationName} from "../js/svelteStore.js"
+    import {sveltePresets, svelteSelected} from "../js/svelteStore.js"
 
 
     // let categoryPromise = rpc.request("presetStore.getCategories")
@@ -71,7 +71,7 @@
     async function run(animation, preset)
     {
         // console.log("run", animation, preset)
-        svelteAnimationName.set( animation.name);
+        svelteSelected.set({ animationName: animation.name, presetName: preset.name});
 
 
         // let preset=await rpc.request("presetStore.load", animationClass.presetDir, preset.name)

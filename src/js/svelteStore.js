@@ -3,7 +3,7 @@ import { writable } from 'svelte/store';
 
 export const sveltePresets = writable( [])
 
-export const svelteAnimationName = writable()
+export const svelteSelected = writable({ animationName: "", presetName:"" })
 
 
 // import { createStore } from 'framework7/lite';

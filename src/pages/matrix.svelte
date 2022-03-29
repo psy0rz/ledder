@@ -8,7 +8,7 @@ import {tick} from "svelte";
 import { onMount } from 'svelte';
 import {RunnerBrowser} from "../js/RunnerBrowser.js";
 
-import {sveltePresets, svelteAnimationName} from "../js/svelteStore.js"
+import {svelteSelected, sveltePresets} from "../js/svelteStore.js"
 
 onMount(async ()=>{
     let scheduler = new Scheduler();
@@ -17,10 +17,8 @@ onMount(async ()=>{
     let runnerBrowser = new RunnerBrowser(matrix);
     matrix.preset.enableHtml()
 
-    svelteAnimationName.subscribe(animationName=>{
-        console.log("update", animationName)
-        runnerBrowser.run(animationName, "")
-
+    svelteSelected.subscribe(selected=>{
+        runnerBrowser.run(selected.animationName, selected.presetName)
     })
 
 
