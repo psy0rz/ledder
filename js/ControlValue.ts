@@ -1,10 +1,12 @@
 import {Control} from "./Control.js";
 
 export class ControlValue extends Control {
-  value: number;
-  min: number;
-  max: number;
-  step: number;
+  value: number
+  loadedValue: number
+  min: number
+  max: number
+  step: number
+
   jqueryElement: JQuery;
 
   /**
@@ -19,10 +21,11 @@ export class ControlValue extends Control {
   constructor(name: string, value: number, min: number, max: number, step: number = 1) {
     super(name);
 
-    this.value = value;
-    this.min = min;
-    this.max = max;
-    this.step = step;
+    this.value = value
+    this.loadedValue = value
+    this.min = min
+    this.max = max
+    this.step = step
 
 
   }
@@ -36,13 +39,23 @@ export class ControlValue extends Control {
       <div class="ui top attached label">${this.name}</div>
       <div class="ui label current-value">${this.value}</div>
       <div class="ui labeled ticked slider"></div>
-<!--      <button class="ui icon button">-->
-<!--        <i class="undo icon"></i>-->
-<!--      </button>-->
+      <button class="ui icon disabled button undo-action">
+        <i class="undo icon"></i>
+      </button>
     </div>
    `);
 
     $(container).append(this.jqueryElement);
+
+    //restore loaded value when clicking undo
+    $('.undo-action', this.jqueryElement).on('click', () => {
+console.log("undo", this.loadedValue)
+      this.value = this.loadedValue
+      this.updateHtml()
+      this.changed()
+
+    })
+
 
     // @ts-ignore
     $('.slider', this.jqueryElement).slider({
@@ -54,10 +67,26 @@ export class ControlValue extends Control {
       onMove: (value) => {
         this.value = value;
         $('.current-value', this.jqueryElement).text(value)
+        $('.undo-action', this.jqueryElement).removeClass('disabled')
         this.changed();
       }
 
     });
+  }
+
+  //update html with whats in this.value
+  updateHtml()
+  {
+    //update gui as well?
+    if (this.jqueryElement !== undefined) { // @ts-ignore
+      $('.slider', this.jqueryElement).slider("set value", this.value, false);
+      $('.current-value', this.jqueryElement).text(this.value)
+      if (this.value==this.loadedValue)
+        $('.undo-action', this.jqueryElement).addClass('disabled')
+      else
+        $('.undo-action', this.jqueryElement).removeClass('disabled')
+
+    }
   }
 
   destroy() {
@@ -71,14 +100,13 @@ export class ControlValue extends Control {
     }
   }
 
-  load(values) {
-    this.value = values.value;
 
-    //update gui as well?
-    if (this.jqueryElement !== undefined) { // @ts-ignore
-      $('.slider', this.jqueryElement).slider("set value", values.value, false);
-      $('.current-value', this.jqueryElement).text(values.value)
-    }
+
+  load(values) {
+    this.value = values.value
+    this.loadedValue = values.value
+
+    this.updateHtml()
   }
 }
 

@@ -29,6 +29,9 @@
   },
   "Slow fall interval": {
    "value": 7
+  },
+  "FPS": {
+   "value": 60
   }
  },
  "title": "Untitled",
