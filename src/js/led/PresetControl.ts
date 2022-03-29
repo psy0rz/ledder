@@ -59,7 +59,9 @@ export class PresetControl {
     if (this.htmlEnabled)
     {
       sveltePresets.update(p=>{
-        p.push(control); console.log("na push", p);return p})
+        p.push(control)
+        return p
+      })
     }
 
   }
