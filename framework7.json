@@ -1,0 +1,19 @@
+{
+  "cwd": "/home/psy/test/tabbedsvelte",
+  "type": [
+    "web"
+  ],
+  "name": "My App",
+  "framework": "svelte",
+  "template": "tabs",
+  "bundler": "vite",
+  "cssPreProcessor": false,
+  "theming": {
+    "customColor": false,
+    "color": "#007aff",
+    "darkTheme": false,
+    "iconFonts": true,
+    "fillBars": false
+  },
+  "customBuild": false
+}

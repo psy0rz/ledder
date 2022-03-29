@@ -1,0 +1,42 @@
+{
+ "values": {
+  "Star speed": {
+   "value": 0.3
+  },
+  "Star twinkle delay": {
+   "value": 5.8
+  },
+  "Star color": {
+   "r": 236,
+   "g": 255,
+   "b": 222,
+   "a": 0.39
+  },
+  "Star move interval": {
+   "value": 4.8
+  },
+  "Star twinkle interval": {
+   "value": 3.1
+  },
+  "Star density": {
+   "value": 5
+  },
+  "Fly interval": {
+   "value": 3
+  },
+  "Rainbow fade speed": {
+   "value": 120
+  },
+  "Rainbow fade randomizer": {
+   "value": 0.1
+  },
+  "Nyan move interval": {
+   "value": 4.9
+  },
+  "Nyan wobble interval": {
+   "value": 15
+  }
+ },
+ "title": "",
+ "description": ""
+}
