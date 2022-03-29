@@ -18,6 +18,7 @@ onMount(async ()=>{
     matrix.preset.enableHtml()
 
     svelteSelected.subscribe(selected=>{
+
         runnerBrowser.run(selected.animationName, selected.presetName)
     })
 

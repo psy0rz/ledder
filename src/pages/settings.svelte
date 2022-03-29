@@ -3,7 +3,7 @@
 
     {#each $sveltePresets as preset, i}
         <BlockTitle>{preset.name}</BlockTitle>
-        <Block inset >
+        <Block inset>
             {#if preset instanceof ControlValue }
                 <Range value="{preset.value}"
                        min="{preset.min}"
@@ -26,9 +26,17 @@
 
                         colorPickerParams={{
                             containerEl: "#color-picker-"+i,
-                            modules: ["wheel", "alpha-slider"]
-
+                            modules: ["wheel", "alpha-slider"],
+                            on: {
+                                change: (e,c)=>{
+                                    preset.r=c.rgb[0]
+                                    preset.g=c.rgb[1]
+                                    preset.b=c.rgb[2]
+                                    preset.a=c.alpha
+                                }
+                            }
                         }}
+
                 />
             {:else}
                 <b>Unknown control type!</b>
@@ -44,15 +52,9 @@
     import {
         Page,
         Navbar,
-        List,
-        ListInput,
-        ListItem,
-        Toggle,
         BlockTitle,
-        Row,
-        Button,
         Range,
-        Block, BlockFooter, Input
+        Block, Input
     } from 'framework7-svelte';
 
     import {sveltePresets} from "../js/svelteStore.js"
