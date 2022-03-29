@@ -16,7 +16,7 @@ export class RunnerBrowser {
 
   constructor(matrix: Matrix) {
     this.matrix = matrix
-    this.live = true;
+    this.live = false;
 
     // this.updateHtml();
 

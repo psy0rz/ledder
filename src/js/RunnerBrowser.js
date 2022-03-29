@@ -8,7 +8,7 @@ import { rpc } from "./RpcClient.js";
 export class RunnerBrowser {
     constructor(matrix) {
         this.matrix = matrix;
-        this.live = true;
+        this.live = false;
         // this.updateHtml();
         // $("#ledder-send-live").on('click', () => {
         //   this.live = !this.live;

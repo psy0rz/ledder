@@ -30,19 +30,20 @@
 
         <!-- Tabbar for switching views-tabs -->
         <Toolbar tabbar labels bottom>
-            <Link tabLink="#view-home" tabLinkActive iconIos="f7:house_fill" iconAurora="f7:house_fill"
-                  iconMd="material:home" text="Home"/>
             <Link tabLink="#view-categories" iconIos="f7:square_list_fill" iconAurora="f7:square_list_fill"
-                  iconMd="material:view_list" text="Categories"/>
+                  iconMd="material:view_list" text="Animations"/>
+<!--            <Link tabLink="#view-home" tabLinkActive iconIos="f7:house_fill" iconAurora="f7:house_fill"-->
+<!--                  iconMd="material:home" text="Home"/>-->
             <Link tabLink="#view-settings" iconIos="f7:gear" iconAurora="f7:gear" iconMd="material:settings"
                   text="Settings"/>
         </Toolbar>
 
-        <!-- Your main view/tab, should have "view-main" class. It also has "tabActive" prop -->
-        <View id="view-home" main tab tabActive browserHistory="true"   url="/"/>
-
         <!-- Catalog View -->
-        <View id="view-categories" name="categories" tab url="/categories/"/>
+        <View id="view-categories" name="categories" main tab tabActive browserHistory="true"  url="/categories/"/>
+
+        <!-- Your main view/tab, should have "view-main" class. It also has "tabActive" prop -->
+<!--        <View id="view-home" tab url="/"/>-->
+
 
         <!-- Settings View -->
         <View id="view-settings" name="settings" tab url="/settings/"/>
@@ -122,7 +123,7 @@
     import Matrix from "../pages/matrix.svelte"
 
     import routes from '../js/routes';
-    import store from '../js/store';
+    // import store from '../js/store';
 
 
     // Framework7 Parameters
@@ -132,7 +133,7 @@
 
 
         // App store
-        store: store,
+        // store: store,
         // App routes
         routes: routes,
     };

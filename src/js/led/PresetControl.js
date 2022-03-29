@@ -1,6 +1,7 @@
 import { ControlValue } from "./ControlValue.js";
 import { ControlColor } from "./ControlColor.js";
 import { PresetValues } from "./PresetValues.js";
+import { sveltePresets } from "../svelteStore.js";
 /**
  * Manages a collection of preset controls, saves and loads values to Preset.
  * Does browser-html stuff
@@ -16,9 +17,8 @@ export class PresetControl {
         }
         this.controls = {};
         this.presetValues = new PresetValues();
-        if (this.htmlContainer !== undefined) {
-            // $(".ledder-control-counter").text(0);
-            // $(".ledder-show-control-page").addClass("disabled");
+        if (this.enableHtml) {
+            sveltePresets.set([]);
         }
     }
     /**
@@ -31,10 +31,18 @@ export class PresetControl {
         if (control.name in this.presetValues.values)
             control.load(this.presetValues.values[control.name]);
         //html generation enabled?
-        if (this.htmlContainer !== undefined) {
-            control.html(this.htmlContainer, this.valuesChangedCallback);
-            // $(".ledder-control-counter").text(Object.keys(this.controls).length);
-            // $(".ledder-show-control-page").removeClass("disabled");
+        // if (this.htmlContainer!==undefined)
+        // {
+        //   control.html(this.htmlContainer, this.valuesChangedCallback);
+        //   // $(".ledder-control-counter").text(Object.keys(this.controls).length);
+        //   // $(".ledder-show-control-page").removeClass("disabled");
+        // }
+        if (this.htmlEnabled) {
+            sveltePresets.update(p => {
+                p.push(control);
+                console.log("na push", p);
+                return p;
+            });
         }
     }
     /**
@@ -65,9 +73,10 @@ export class PresetControl {
     /**
      * Enable generating actual html controls in specified container.
      */
-    enableHtml(container, changedCallback) {
-        this.htmlContainer = container;
-        this.valuesChangedCallback = changedCallback;
+    // enableHtml(container: HTMLElement,   changedCallback: (controlName, values)=>void) {
+    enableHtml() {
+        this.htmlEnabled = true;
+        // this.valuesChangedCallback=changedCallback
     }
     /**
      * Save current control values to current preset and return it

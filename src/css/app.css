@@ -19,6 +19,9 @@
     position: absolute;
     right: 0;
     top: 0;
+    height: 24px;
+    width: 180px;
+
     z-index:10000;
 }
 

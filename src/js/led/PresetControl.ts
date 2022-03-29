@@ -1,8 +1,9 @@
-import {Control} from "./Control.js";
-import {ControlValue} from "./ControlValue.js";
-import {ControlColor} from "./ControlColor.js";
-import {PresetValues} from "./PresetValues.js";
+import {Control} from "./Control.js"
+import {ControlValue} from "./ControlValue.js"
+import {ControlColor} from "./ControlColor.js"
+import {PresetValues} from "./PresetValues.js"
 
+import { sveltePresets } from "../svelteStore.js"
 
 /**
  * Manages a collection of preset controls, saves and loads values to Preset.
@@ -10,8 +11,9 @@ import {PresetValues} from "./PresetValues.js";
  */
 export class PresetControl {
   controls: Record<string, Control>
-  htmlContainer: HTMLElement;
-  presetValues: PresetValues;
+  // htmlContainer: HTMLElement;
+  htmlEnabled: boolean
+  presetValues: PresetValues
   valuesChangedCallback: (controlName, values)=>void
 
 
@@ -28,10 +30,9 @@ export class PresetControl {
     this.controls = {}
     this.presetValues = new PresetValues();
 
-    if (this.htmlContainer!==undefined)
+    if (this.enableHtml)
     {
-      // $(".ledder-control-counter").text(0);
-      // $(".ledder-show-control-page").addClass("disabled");
+      sveltePresets.set([])
     }
   }
 
@@ -49,12 +50,18 @@ export class PresetControl {
       control.load(this.presetValues.values[control.name]);
 
     //html generation enabled?
-    if (this.htmlContainer!==undefined)
+    // if (this.htmlContainer!==undefined)
+    // {
+    //   control.html(this.htmlContainer, this.valuesChangedCallback);
+    //   // $(".ledder-control-counter").text(Object.keys(this.controls).length);
+    //   // $(".ledder-show-control-page").removeClass("disabled");
+    // }
+    if (this.htmlEnabled)
     {
-      control.html(this.htmlContainer, this.valuesChangedCallback);
-      // $(".ledder-control-counter").text(Object.keys(this.controls).length);
-      // $(".ledder-show-control-page").removeClass("disabled");
+      sveltePresets.update(p=>{
+        p.push(control); console.log("na push", p);return p})
     }
+
   }
 
   /**
@@ -90,10 +97,11 @@ export class PresetControl {
   /**
    * Enable generating actual html controls in specified container.
    */
-  enableHtml(container: HTMLElement,   changedCallback: (controlName, values)=>void) {
+  // enableHtml(container: HTMLElement,   changedCallback: (controlName, values)=>void) {
+    enableHtml() {
 
-    this.htmlContainer = container;
-    this.valuesChangedCallback=changedCallback;
+    this.htmlEnabled=true
+    // this.valuesChangedCallback=changedCallback
   }
 
   /**

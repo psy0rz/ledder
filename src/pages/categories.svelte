@@ -60,16 +60,22 @@
         Subnavbar
     } from 'framework7-svelte';
     import {rpc} from "../js/RpcClient.js";
+    // import * as animationClasses from "../js/led/animations/all.js";
+    import {sveltePresets, svelteAnimationName} from "../js/svelteStore.js"
 
 
     // let categoryPromise = rpc.request("presetStore.getCategories")
     let animationsPromise
 
-    async function run(animationName, presetName)
+
+    async function run(animation, preset)
     {
-        console.log("run", animationName, presetName)
-        let preset=await rpc.request("presetStore.load", "asf", presetName)
-        console.log(preset)
+        // console.log("run", animation, preset)
+        svelteAnimationName.set( animation.name);
+
+
+        // let preset=await rpc.request("presetStore.load", animationClass.presetDir, preset.name)
+        // console.log(preset)
     }
 
     function fetch() {

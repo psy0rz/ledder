@@ -10,9 +10,9 @@ export class MatrixCanvas extends Matrix {
         //   $(elementId).toggleClass("ledder-matrix-zoom");
         // })
         //scaling
-        this.canvas.width = width * 4;
-        this.canvas.height = height * 4;
-        // this.canvas.style.height="100%";
+        this.canvas.width = width;
+        this.canvas.height = height;
+        // this.canvas.style.height="24px";
         //context and buffer
         this.canvasContext = this.canvas.getContext('2d');
         this.imageData = this.canvasContext.getImageData(0, 0, width, height);

@@ -13,7 +13,7 @@ import NotFoundPage from '../pages/404.svelte';
 var routes = [
   {
     path: '/',
-    component: HomePage,
+    component: CategoriesPage,
   },
   {
     path: '/about/',
@@ -23,10 +23,10 @@ var routes = [
     path: '/form/',
     component: FormPage,
   },
-  {
-    path: '/categories/',
-    component: CategoriesPage,
-  },
+  // {
+  //   path: '/categories/',
+  //   component: CategoriesPage,
+  // },
   {
     path: '/product/:id/',
     component: ProductPage,
