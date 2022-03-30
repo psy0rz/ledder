@@ -120,6 +120,9 @@
         Views
     } from 'framework7-svelte';
 
+    //important (otherwise weird startup errors in dev mode):
+    import 'framework7/lite';
+
     import Matrix from "../pages/matrix.svelte"
 
     import routes from '../js/routes';
