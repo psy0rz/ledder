@@ -37,10 +37,11 @@
 </Page>
 
 <script>
+
     import {
         Block,
         BlockHeader,
-        Button,
+        Button, f7ready,
         Icon,
         List,
         ListGroup,
@@ -52,29 +53,24 @@
         Searchbar,
         Subnavbar
     } from 'framework7-svelte';
-    import {rpc} from "../js/RpcClient.js";
-    // import * as animationClasses from "../js/led/animations/all.js";
     import {sveltePresets, svelteSelected, svelteSelectedTitle} from "../js/svelteStore.js"
     import {svelteAnimations} from "../js/svelteStore.js";
     import {runnerBrowser} from "../js/RunnerBrowser.js";
-
-
-    // let categoryPromise = rpc.request("presetStore.getCategories")
-    let animationsPromise
-
-
-    async function run(animation, preset)
-    {
-        // console.log("run", animation, preset)
-        svelteSelected.set({ animationName: animation.name, presetName: preset.name});
-
-
-        // let preset=await rpc.request("presetStore.load", animationClass.presetDir, preset.name)
-        // console.log(preset)
-    }
-
-    runnerBrowser.refreshAnimationList()
+    import {onMount} from "svelte";
 
     let search = ""
+
+    async function run(animation, preset) {
+        // console.log("run", animation, preset)
+        svelteSelected.set({animationName: animation.name, presetName: preset.name});
+
+
+    }
+
+    onMount(()=>{
+        f7ready(()=>{
+            runnerBrowser.refreshAnimationList()
+        })
+    })
 </script>
 

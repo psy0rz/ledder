@@ -102,7 +102,6 @@
     async function onSave()
     {
         console.log(this)
-        // this.$set( { disabled: true })
         if ($svelteSelected.presetName)
         {
             saveDisabled=true

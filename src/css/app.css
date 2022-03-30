@@ -52,3 +52,12 @@
     left: 0;
 }
 
+.error
+{
+    --f7-toast-bg-color: red;
+}
+
+.info
+{
+    --f7-toast-bg-color: green;
+}

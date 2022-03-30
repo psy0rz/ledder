@@ -7,7 +7,7 @@ import {Scheduler} from "./led/Scheduler.js";
 //jquery
 // import $ from "jquery";
 // import {HtmlPresets} from "./HtmlPresets.js";
-// import {progressDone, progressReset, progressStart} from "./util.js";
+import {progressDone, progressReset, progressStart} from "./util.js";
 import {RunnerBrowser} from "./RunnerBrowser.js";
 // import {HtmlCategories} from "./HtmlCategories.js";
 // import {HistoryState} from "./HistoryState.js";
@@ -42,21 +42,21 @@ window.addEventListener('load', () => {
 
   //connect to server via websocket:
   let reload = false
-  // progressReset()
-  // progressStart()
+  progressReset()
+  progressStart()
   rpc = new RpcClient(async () => {
     if (reload) {
       //reload page to make animation development easier
       window.location.reload();
     } else {
-      // progressDone()
+      progressDone()
       // htmlCategories.reload(rpc)
       // historyState.load();
     }
   }, () => {
     reload = true
-    // progressReset()
-    // progressStart()
+    progressReset()
+    progressStart()
     matrix.reset()
 
   });

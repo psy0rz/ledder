@@ -1,7 +1,7 @@
 import {JSONRPCClient, JSONRPCServer, JSONRPCServerAndClient} from "json-rpc-2.0";
 import {Rpc} from "./Rpc.js";
 import {RpcServer} from "./RpcServer.js";
-// import {error, progressDone, progressStart} from "./util.js";
+import {error, progressDone, progressStart} from "./led/util.js";
 
 /***
  * Browser-side rpc client that connect to server handles rpc calls to/from server.
@@ -82,16 +82,15 @@ class RpcClient extends Rpc {
   async request(name, ...params) {
 
     try {
-      // progressStart()
+      progressStart()
       let result=await this.serverAndClient.request(name, params)
       // console.log(result)
-      // progressDone()
+      progressDone()
       return(result)
     } catch (e) {
-      // progressDone()
-      // error("Request failed", e)
+      progressDone()
+      error("RPC request failed", e)
       console.error("RPC error", name, params, e)
-
       throw(e)
     }
   }

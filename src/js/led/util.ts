@@ -2,6 +2,7 @@
 // import $ from "jquery";
 import convert from "color-convert"
 import {Color} from "./Color.js";
+import {f7} from "framework7-svelte";
 
 /**
  * Integer number from min to max (inclusive)
@@ -9,7 +10,7 @@ import {Color} from "./Color.js";
  * @param max
  */
 export function random(min, max) {
-  return Math.floor(Math.random() * (max - min +1) + min)
+    return Math.floor(Math.random() * (max - min + 1) + min)
 
 }
 
@@ -19,51 +20,59 @@ export function random(min, max) {
  * @param max
  */
 export function randomFloat(min, max) {
-  return (Math.random() * (max - min ) + min)
+    return (Math.random() * (max - min) + min)
 }
 
 export function error(title: string, message: string, time = 10000) {
-  // @ts-ignore
-  $("body").toast({
-    class: "error",
-    title: title,
-    message: message,
-    displayTime: time
+  console.error(`ERROR: ${title}: ${message}`)
+  f7.toast.show({
+    text: `<i class="material-icons">error</i> <b>${title}</b><p>${message}`,
+    position: 'top',
+    destroyOnClose: true,
+    closeTimeout: time,
+    cssClass: 'error',
+    closeButton:true
   });
+
 }
 
 export function info(title: string, message: string = "", time = 2000) {
-  // @ts-ignore
-  $("body").toast({
-    class: "info",
-    title: title
-    ,
-    message: message,
-    displayTime: time
-  });
+
+    console.log(`INFO: ${title}: ${message}`)
+    f7.toast.show({
+        text: `<i class="material-icons">info</i> <b>${title}</b><p>${message}`,
+        position: 'top',
+        destroyOnClose: true,
+        closeTimeout: time,
+        cssClass: 'info',
+        closeButton:true
+    });
+
 
 }
 
 let loaders = 0;
 
-// export function progressStart() {
-//   loaders++;
-//   $("#ledder-loader").addClass("active");
-//
-// }
-//
-// export function progressDone() {
-//   loaders--;
-//   if (!loaders) {
-//     $("#ledder-loader").removeClass("active");
-//   }
-// }
-//
-// export function progressReset() {
-//   loaders = 0;
-//   $("#ledder-loader").removeClass("active");
-//
-// }
+export function progressStart() {
+  if (!loaders)
+    f7.preloader.show()
+
+  loaders++;
+
+}
+
+export function progressDone() {
+  loaders--;
+  if (!loaders) {
+    f7.preloader.hide()
+  }
+}
+
+export function progressReset() {
+  loaders = 0;
+  f7.preloader.hide()
+
+}
 
 /**
  * Asks user for confirmation, returns Promise
@@ -71,16 +80,16 @@ let loaders = 0;
  * @param content
  */
 export async function confirmPromise(title: string, content: string) {
-  return new Promise((resolve, reject) => {
-    // @ts-ignore
-    $('body').modal('confirm', title, content, async (confirmed) => {
-        if (confirmed)
-          resolve(confirmed)
-        else
-          reject(confirmed)
-      }
-    )
-  })
+    return new Promise((resolve, reject) => {
+        // @ts-ignore
+        $('body').modal('confirm', title, content, async (confirmed) => {
+                if (confirmed)
+                    resolve(confirmed)
+                else
+                    reject(confirmed)
+            }
+        )
+    })
 }
 
 /**
@@ -89,47 +98,44 @@ export async function confirmPromise(title: string, content: string) {
  * @param content
  * @param defaultValue
  */
-export async function promptPromise(title:string , content:string, defaultValue:string):Promise<string> {
-  return new Promise((resolve, reject) => {
-    // @ts-ignore
-    $('body').modal('prompt', {
-      title: title,
-      content: content,
-      defaultValue: defaultValue,
-      handler: async name => {
-        if (name)
-          resolve(name)
-        else
-          reject(name)
-      }
+export async function promptPromise(title: string, content: string, defaultValue: string): Promise<string> {
+    return new Promise((resolve, reject) => {
+        // @ts-ignore
+        $('body').modal('prompt', {
+            title: title,
+            content: content,
+            defaultValue: defaultValue,
+            handler: async name => {
+                if (name)
+                    resolve(name)
+                else
+                    reject(name)
+            }
+        })
     })
-  })
 }
-
-
 
 
 //calculate converion table for fire-intensity (0-100) to Color()
 export function calculateFireColors() {
 
-  const colors = []
-  for (let i = 0; i <= 100; i++) {
-    const colorH = Math.round(i * 40 / 100);
-    const colorS = 100;
-    const colorL = i;
-    const rgb = convert.hsl.rgb([colorH, colorS, colorL])
-    colors.push(new Color(rgb[0], rgb[1], rgb[2]))
-  }
-  return (colors)
+    const colors = []
+    for (let i = 0; i <= 100; i++) {
+        const colorH = Math.round(i * 40 / 100);
+        const colorS = 100;
+        const colorL = i;
+        const rgb = convert.hsl.rgb([colorH, colorS, colorL])
+        colors.push(new Color(rgb[0], rgb[1], rgb[2]))
+    }
+    return (colors)
 }
 
 //check if its a number and in this range or throw error
-export function numberCheck(desc, number, min=undefined, max=undefined)
-{
-  if (isNaN(number))
-      throw (`${desc}: '${number}' is not a number`)
-  if (min!==undefined && number<min)
-    throw (`${desc}: is ${number} but should be at least ${min}`)
-  if (max!==undefined && number>max)
-    throw (`${desc}: is ${number} but should be at most ${max}`)
+export function numberCheck(desc, number, min = undefined, max = undefined) {
+    if (isNaN(number))
+        throw (`${desc}: '${number}' is not a number`)
+    if (min !== undefined && number < min)
+        throw (`${desc}: is ${number} but should be at least ${min}`)
+    if (max !== undefined && number > max)
+        throw (`${desc}: is ${number} but should be at most ${max}`)
 }

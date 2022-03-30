@@ -2,6 +2,7 @@ import * as animations from "./led/animations/all.js";
 import { rpc } from "./RpcClient.js";
 import { tick } from "svelte";
 import { svelteAnimations } from "./svelteStore.js";
+import { info } from "./led/util.js";
 // import $ from "jquery";
 // import {confirmPromise, info, promptPromise} from "./util.js";
 /**
@@ -109,7 +110,7 @@ export class RunnerBrowser {
         await rpc.request("presetStore.save", this.animationClass.presetDir, this.presetName, preset);
         await rpc.request("presetStore.createPreview", this.animationName, this.presetName, preset);
         await this.refreshAnimationList();
-        // info("Saved preset " + this.presetName, "", 2000)
+        info("Saved preset " + this.presetName, "", 2000);
     }
     /** Prompts for new name and saves preset
      *
