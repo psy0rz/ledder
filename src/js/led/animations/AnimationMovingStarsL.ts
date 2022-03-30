@@ -4,6 +4,7 @@ import {random} from "../util.js";
 import {AnimationMove} from "../AnimationMove.js";
 import {Pixel} from "../Pixel.js";
 import {Color} from "../Color.js";
+import { Matrix } from "../Matrix.js";
 
 export class AnimationMovingStarsL extends Animation {
 
@@ -13,11 +14,11 @@ export class AnimationMovingStarsL extends Animation {
   static presetDir = "Moving stars"
 
 
-  constructor(matrix) {
+  constructor(matrix: Matrix) {
     super(matrix);
 
-    const intervalControl = matrix.preset.value("Star move interval", 3, 1, 30, 0);
-    const blinkDelayControl = matrix.preset.value("Star twinkle interval", 5.8, 1, 10, 0);
+    const intervalControl = matrix.preset.value("Star move interval", 3, 1, 30, 0.1);
+    const blinkDelayControl = matrix.preset.value("Star twinkle interval", 5.8, 1, 10, 0.1);
     const starDensityControl = matrix.preset.value("Star density", 10, 1, 100, 1)
     const starColorControl = matrix.preset.color("Star color", 128, 128, 128);
 

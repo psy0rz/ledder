@@ -1,6 +1,7 @@
 import {Matrix} from "./led/Matrix.js";
 import * as animations from "./led/animations/all.js";
 import {rpc} from "./RpcClient.js";
+import {tick} from "svelte";
 // import $ from "jquery";
 // import {confirmPromise, info, promptPromise} from "./util.js";
 
@@ -92,6 +93,7 @@ export class RunnerBrowser {
     if (animationName in animations) {
       console.log("Runner: starting", animationName, presetName)
       this.matrix.reset()
+      await tick()
 
       this.animationClass = animations[animationName];
 

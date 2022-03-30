@@ -5,7 +5,9 @@ import {Color} from "../Color.js";
 import {random} from "../util.js";
 import {Control} from "../Control.js";
 import {ControlValue} from "../ControlValue.js";
+import {Matrix} from "../Matrix.js";
 
+//best at 50fps according to brainsmoke
 export class BrainsmokeFire extends Animation {
 
   static category = "Fire"
@@ -28,7 +30,7 @@ export class BrainsmokeFire extends Animation {
 
 
 
-  constructor(matrix) {
+  constructor(matrix:Matrix) {
     super(matrix);
 
     this.old = []
@@ -75,7 +77,7 @@ export class BrainsmokeFire extends Animation {
     this.maxIntensityControl = matrix.preset.value("Fire maximum intensity", 650, 0, 2047, 20);
     this.wildnessIntensityControl = matrix.preset.value("Fire wildness", 100000, 0, 2047, 20);
 
-    const fireintervalControl = matrix.preset.value("Fire interval", 60/50, 1, 10, 0.1) //best at 50fps according to brainsmoke
+    const fireintervalControl = matrix.preset.value("Fire interval",1, 1, 10, 0.1)
     matrix.scheduler.intervalControlled(fireintervalControl,()=>
     {
       this.next()

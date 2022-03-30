@@ -10,6 +10,7 @@ import {Color} from "../Color.js";
 
 import {AnimationFade} from "../AnimationFade.js";
 import {AnimationFadeOut} from "../AnimationFadeOut.js";
+import {Matrix} from "../Matrix.js";
 
 //Nyancat, based on https://github.com/bertrik/nyancat/blob/master/nyancat.c
 
@@ -22,7 +23,7 @@ export class AnimationNyan
   static presetDir = "Nyancat";
 
 
-  constructor(matrix) {
+  constructor(matrix: Matrix) {
     super(matrix);
 
 
@@ -49,8 +50,8 @@ export class AnimationNyan
     `)
 
 
-    const moveIntervalControl = matrix.preset.value("Nyan move interval", 3, 1, 20, 0);
-    const wobbleIntervalControl = matrix.preset.value("Nyan wobble interval", 15, 1, 20, 0);
+    const moveIntervalControl = matrix.preset.value("Nyan move interval", 3, 1, 20, 0.1);
+    const wobbleIntervalControl = matrix.preset.value("Nyan wobble interval", 15, 1, 20, 0.1);
 
 
     new AnimationWobbleY(matrix, {value: 1}, wobbleIntervalControl, 0).addPixels(body.pixels)

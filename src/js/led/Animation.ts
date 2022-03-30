@@ -22,7 +22,8 @@ export class Animation extends PixelContainer {
   static previewFrames=240 //preview image should output this many frames
 
 
-  constructor(matrix) {
+
+  constructor(matrix: Matrix) {
     super();
     this.matrix = matrix;
     this.keep=true;

@@ -1,5 +1,5 @@
 <Page name="settings" on:pageTabShow={ e=> { presets=$sveltePresets} }>
-    <Navbar title="Settings"/>
+    <Navbar title="{$svelteSelected.animationName}, {$svelteSelected.presetName}"/>
 
     {#each presets as preset, i}
         <BlockTitle>{preset.name}</BlockTitle>
@@ -10,7 +10,7 @@
                         min={preset.min}
                         max={preset.max}
                         step={preset.step}
-                ></Stepper>
+                />
                 <Range value={preset.value}
                        min={preset.min}
                        max={preset.max}
@@ -36,7 +36,9 @@
                             containerEl: "#color-picker-"+i,
                             modules: ["wheel", "alpha-slider"],
                             on: {
+
                                 change: (e,c)=>{
+                                    //we use this instead of onChange, because we want realtime updates
                                     preset.r=c.rgb[0]
                                     preset.g=c.rgb[1]
                                     preset.b=c.rgb[2]
@@ -65,10 +67,20 @@
         Block, Input, Stepper
     } from 'framework7-svelte';
 
-    import {sveltePresets} from "../js/svelteStore.js"
+    import {sveltePresets, svelteSelected} from "../js/svelteStore.js"
     import {ControlValue} from "../js/led/ControlValue.js";
     import {ControlColor} from "../js/led/ControlColor.js";
 
     let presets=[]
+
+    let currentAnimationName="";
+    svelteSelected.subscribe(selected=>
+    {
+            if (currentAnimationName!=selected.animationName) {
+                //make sure presets is cleared, otherwise svelte incorrectly updates sliders in some cases
+                currentAnimationName = selected.animationName
+                presets = []
+            }
+    })
 
 </script>

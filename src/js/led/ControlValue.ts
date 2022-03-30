@@ -1,4 +1,5 @@
 import {Control} from "./Control.js";
+import {numberCheck} from "./util.js";
 
 export class ControlValue extends Control {
   value: number;
@@ -18,6 +19,11 @@ export class ControlValue extends Control {
    */
   constructor( name: string, value: number, min: number, max: number, step: number = 1) {
     super( name);
+
+    numberCheck(`${name} value`, value)
+    numberCheck(`${name} min`, min)
+    numberCheck(`${name} max`, max)
+    numberCheck(`${name} step`, step,0.0001)
 
     this.value = value;
     this.min = min;
@@ -59,11 +65,11 @@ export class ControlValue extends Control {
 //     });
   }
 
-  destroy()
-  {
-    // if (this.jqueryElement!==undefined)
-    //   this.jqueryElement.remove();
-  }
+  // destroy()
+  // {
+  //   // if (this.jqueryElement!==undefined)
+  //   //   this.jqueryElement.remove();
+  // }
 
   save()
   {

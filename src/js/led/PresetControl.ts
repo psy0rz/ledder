@@ -5,6 +5,7 @@ import {PresetValues} from "./PresetValues.js"
 
 import { sveltePresets } from "../svelteStore.js"
 import {numberCheck} from "./util.js";
+import {tick} from "svelte";
 
 /**
  * Manages a collection of preset controls, saves and loads values to Preset.
@@ -24,16 +25,17 @@ export class PresetControl {
     this.clear();
   }
 
-  clear() {
-    for (const [name, control] of Object.entries(this.controls)) {
-      control.destroy();
-    }
+   clear() {
+    // for (const [name, control] of Object.entries(this.controls)) {
+    //   control.destroy();
+    // }
     this.controls = {}
-    this.presetValues = new PresetValues();
+    this.presetValues = new PresetValues()
 
-    if (this.enableHtml)
+    if (this.htmlEnabled)
     {
       sveltePresets.set([])
+
     }
   }
 
@@ -77,10 +79,6 @@ export class PresetControl {
    */
   value(name: string, value: number, min: number, max: number, step: number = 1):ControlValue {
     if (!(name in this.controls)) {
-      numberCheck(`${name} value`, value)
-      numberCheck(`${name} min`, min)
-      numberCheck(`${name} max`, max)
-      numberCheck(`${name} step`, step,0.0001)
       this.add(new ControlValue(name, value, min, max, step));
     }
 

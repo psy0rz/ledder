@@ -72,10 +72,10 @@ export class ControlColor extends Control implements ColorInterface {
 
   }
 
-  destroy() {
-    // if (this.jqueryElement !== undefined)
-    //   this.jqueryElement.remove();
-  }
+  // destroy() {
+  //   // if (this.jqueryElement !== undefined)
+  //   //   this.jqueryElement.remove();
+  // }
 
   save() {
     return {

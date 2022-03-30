@@ -3,15 +3,16 @@ import {Animation} from "./Animation.js";
 import {AnimationFade} from "./AnimationFade.js";
 import {random} from "./util.js";
 import {Color} from "./Color.js";
+import {Matrix} from "./Matrix.js";
 
 
 export class AnimationTwinkle extends Animation {
-  constructor(matrix, pixels) {
+  constructor(matrix: Matrix, pixels) {
     super(matrix);
 
-    const intervalControl = matrix.preset.value("Twinkle speed", 2, 1, 10, 0);
+    const intervalControl = matrix.preset.value("Twinkle speed", 2, 1, 10, 0.1);
     const fadeColor = matrix.preset.color("Twinkle color");
-    const fadeSpeed = matrix.preset.value("Twinkle fade speed", 30, 1, 120, 0)
+    const fadeSpeed = matrix.preset.value("Twinkle fade speed", 30, 1, 120, 0.1)
 
     matrix.scheduler.intervalControlled(intervalControl, () => {
       if (pixels.length) {

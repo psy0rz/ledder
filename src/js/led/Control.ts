@@ -22,10 +22,10 @@ export class Control
 
   }
 
-  destroy()
-  {
-
-  }
+  // destroy()
+  // {
+  //
+  // }
 
   save()
   {

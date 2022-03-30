@@ -4,6 +4,7 @@ import {FontInterface} from "../fonts/FontInterface.js";
 import {ColorInterface} from "../ColorInterface.js";
 import {Pixel} from "../Pixel.js";
 import {FontSimple8x8} from "../fonts/FontSimple8x8.js";
+import {Matrix} from "../Matrix.js";
 
 export class AnimationMarquee extends Animation {
 
@@ -13,7 +14,7 @@ export class AnimationMarquee extends Animation {
   static category = "Marquees"
 
 
-  constructor(matrix, ) {
+  constructor(matrix:Matrix ) {
     super(matrix);
 
     const font=FontSimple8x8
