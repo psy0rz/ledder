@@ -1,17 +1,24 @@
-<Page name="settings">
+<Page name="settings" on:pageTabShow={ e=> { presets=$sveltePresets} }>
     <Navbar title="Settings"/>
 
-    {#each $sveltePresets as preset, i}
+    {#each presets as preset, i}
         <BlockTitle>{preset.name}</BlockTitle>
         <Block inset>
             {#if preset instanceof ControlValue }
-                <Range value="{preset.value}"
-                       min="{preset.min}"
-                       max="{preset.max}"
-                       step="{preset.step}"
-                       scale="true"
-                       scaleSteps=5
-                       label=true
+                <Stepper
+                        bind:value={preset.value}
+                        min={preset.min}
+                        max={preset.max}
+                        step={preset.step}
+                ></Stepper>
+                <Range value={preset.value}
+                       min={preset.min}
+                       max={preset.max}
+                       step={preset.step}
+                       scaleSteps={5}
+                       scaleSubSteps={5}
+                       scale
+                       label={true}
                        on:rangeChange={ e=> { preset.value=e.detail[0] } }/>
             {:else if preset instanceof ControlColor}
                 <div style="max-width: 200px" id="color-picker-{i}"></div>
@@ -19,6 +26,7 @@
                         type="colorpicker"
                         label="Color Wheel"
                         placeholder="Color"
+                        readonly
                         value={{
                             rgb: [preset.r, preset.g, preset.b],
                             alpha: preset.a
@@ -54,12 +62,13 @@
         Navbar,
         BlockTitle,
         Range,
-        Block, Input
+        Block, Input, Stepper
     } from 'framework7-svelte';
 
     import {sveltePresets} from "../js/svelteStore.js"
     import {ControlValue} from "../js/led/ControlValue.js";
     import {ControlColor} from "../js/led/ControlColor.js";
 
+    let presets=[]
 
 </script>
