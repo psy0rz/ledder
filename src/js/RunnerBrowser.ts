@@ -2,6 +2,7 @@ import {Matrix} from "./led/Matrix.js";
 import * as animations from "./led/animations/all.js";
 import {rpc} from "./RpcClient.js";
 import {tick} from "svelte";
+import {svelteAnimations} from "./svelteStore.js";
 // import $ from "jquery";
 // import {confirmPromise, info, promptPromise} from "./util.js";
 
@@ -15,9 +16,7 @@ export class RunnerBrowser {
   animationClass: Animation
   live: boolean;
 
-  constructor(matrix: Matrix) {
-    this.matrix = matrix
-    this.live = false;
+  constructor() {
 
     // this.updateHtml();
 
@@ -31,6 +30,13 @@ export class RunnerBrowser {
     // $("#ledder-send-once").on('click', () => {
     //   this.send();
     // })
+    this.live = false;
+  }
+
+  init(matrix:Matrix)
+  {
+    this.matrix = matrix
+
   }
 
   /** Send current running animation and preset to server, and restart local animation as well
@@ -121,6 +127,12 @@ export class RunnerBrowser {
       return false
   }
 
+  async refreshAnimationList()
+  {
+    svelteAnimations.set(await rpc.request("presetStore.getAnimationList"))
+  }
+
+
 
   /** Save current preset to server, and create preview
    *
@@ -131,6 +143,7 @@ export class RunnerBrowser {
     // @ts-ignore
     await rpc.request("presetStore.save", this.animationClass.presetDir, this.presetName, preset);
     await rpc.request("presetStore.createPreview", this.animationName, this.presetName, preset);
+    await this.refreshAnimationList()
 
     // info("Saved preset " + this.presetName, "", 2000)
   }
@@ -138,8 +151,6 @@ export class RunnerBrowser {
   /** Prompts for new name and saves preset
    *
    */
-
-
   async presetSaveAs() {
 
     // this.presetName=await promptPromise('Enter preset name', "",this.presetName)
@@ -162,3 +173,5 @@ export class RunnerBrowser {
     // this.updateHtml()
   }
 }
+
+export let runnerBrowser=new RunnerBrowser()

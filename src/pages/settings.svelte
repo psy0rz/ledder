@@ -2,7 +2,15 @@
     <Navbar title="Controls"
      subtitle={$svelteSelectedTitle}
 
-    />
+    >
+
+    </Navbar>
+
+    <Toolbar position="top" >
+        <Button iconMd="material:save" on:click={ onSave } />
+        <Button iconMd="material:delete" on:click={ onDelete } />
+        <Button iconMd="material:file_copy" on:click={ onCopy } />
+    </Toolbar>
 
     {#each presets as preset, i}
         <BlockTitle>{preset.name}</BlockTitle>
@@ -67,12 +75,14 @@
         Navbar,
         BlockTitle,
         Range,
-        Block, Input, Stepper
+        Block, Input, Stepper, Button, Toolbar, Icon, Link, NavRight
     } from 'framework7-svelte';
 
     import {sveltePresets, svelteSelected, svelteSelectedTitle} from "../js/svelteStore.js"
     import {ControlValue} from "../js/led/ControlValue.js";
     import {ControlColor} from "../js/led/ControlColor.js";
+    import {runnerBrowser} from "../js/RunnerBrowser.js";
+
 
     let presets=[]
 
@@ -85,5 +95,25 @@
                 presets = []
             }
     })
+
+    function onSave()
+    {
+        if ($svelteSelected.presetName)
+        {
+            runnerBrowser.presetSave()
+        }
+        else
+            onCopy()
+
+    }
+
+    function onDelete()
+    {
+
+    }
+    function onCopy()
+    {
+
+    }
 
 </script>

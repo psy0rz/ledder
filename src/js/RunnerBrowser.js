@@ -1,15 +1,14 @@
 import * as animations from "./led/animations/all.js";
 import { rpc } from "./RpcClient.js";
 import { tick } from "svelte";
+import { svelteAnimations } from "./svelteStore.js";
 // import $ from "jquery";
 // import {confirmPromise, info, promptPromise} from "./util.js";
 /**
  * Browser side animation runner
  */
 export class RunnerBrowser {
-    constructor(matrix) {
-        this.matrix = matrix;
-        this.live = false;
+    constructor() {
         // this.updateHtml();
         // $("#ledder-send-live").on('click', () => {
         //   this.live = !this.live;
@@ -21,6 +20,10 @@ export class RunnerBrowser {
         // $("#ledder-send-once").on('click', () => {
         //   this.send();
         // })
+        this.live = false;
+    }
+    init(matrix) {
+        this.matrix = matrix;
     }
     /** Send current running animation and preset to server, and restart local animation as well
      *
@@ -94,6 +97,9 @@ export class RunnerBrowser {
         else
             return false;
     }
+    async refreshAnimationList() {
+        svelteAnimations.set(await rpc.request("presetStore.getAnimationList"));
+    }
     /** Save current preset to server, and create preview
      *
      */
@@ -102,6 +108,7 @@ export class RunnerBrowser {
         // @ts-ignore
         await rpc.request("presetStore.save", this.animationClass.presetDir, this.presetName, preset);
         await rpc.request("presetStore.createPreview", this.animationName, this.presetName, preset);
+        await this.refreshAnimationList();
         // info("Saved preset " + this.presetName, "", 2000)
     }
     /** Prompts for new name and saves preset
@@ -123,4 +130,5 @@ export class RunnerBrowser {
         // this.updateHtml()
     }
 }
+export let runnerBrowser = new RunnerBrowser();
 //# sourceMappingURL=RunnerBrowser.js.map

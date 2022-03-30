@@ -11,12 +11,12 @@
         </Subnavbar>
     </Navbar>
 
-    {#await animationsPromise}
+    {#if $svelteAnimations.length==0}
         <Preloader/>
         <Message>Loading list</Message>
-    {:then animations}
+    {:else}
         <List mediaList ul={false}>
-            {#each animations as animation}
+            {#each $svelteAnimations as animation}
                 <ListGroup >
                     <ListItem title="{animation.title}"  groupTitle >
                         <img src="{animation.previewFile}" slot="media" class="ledder-preview-image" />
@@ -33,16 +33,7 @@
                 </ListGroup>
             {/each}
         </List>
-    {:catch error}
-        <Block>
-            <BlockHeader textColor="red">
-                <Icon material="error"/>
-                Error while getting data
-            </BlockHeader>
-            ({error})
-        </Block>
-        <Button on:click={fetch}>Retry</Button>
-    {/await}
+    {/if}
 </Page>
 
 <script>
@@ -64,6 +55,8 @@
     import {rpc} from "../js/RpcClient.js";
     // import * as animationClasses from "../js/led/animations/all.js";
     import {sveltePresets, svelteSelected, svelteSelectedTitle} from "../js/svelteStore.js"
+    import {svelteAnimations} from "../js/svelteStore.js";
+    import {runnerBrowser} from "../js/RunnerBrowser.js";
 
 
     // let categoryPromise = rpc.request("presetStore.getCategories")
@@ -80,11 +73,7 @@
         // console.log(preset)
     }
 
-    function fetch() {
-        animationsPromise = rpc.request("presetStore.getAnimationList")
-    }
-
-    fetch()
+    runnerBrowser.refreshAnimationList()
 
     let search = ""
 </script>

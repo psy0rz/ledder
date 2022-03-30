@@ -7,9 +7,9 @@
    "value": 10
   },
   "Star color": {
-   "r": 16,
-   "g": 0,
-   "b": 105,
+   "r": 229,
+   "g": 255,
+   "b": 0,
    "a": 1
   },
   "Star move interval": {
@@ -20,6 +20,9 @@
   },
   "Star density": {
    "value": 10
+  },
+  "FPS": {
+   "value": 96
   }
  },
  "title": "",

@@ -8,4 +8,5 @@ export const svelteSelected = writable({ animationName: "", presetName:"" })
 //human readable title for selected animation/preset combo
 export const svelteSelectedTitle =writable("")
 
+export const svelteAnimations = writable([])
 

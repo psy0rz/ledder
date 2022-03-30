@@ -5,17 +5,17 @@ import {Scheduler} from "../js/led/Scheduler.js";
 import {MatrixCanvas} from "../js/led/MatrixCanvas.js";
 import {tick} from "svelte";
 import { onMount } from 'svelte';
-import {RunnerBrowser} from "../js/RunnerBrowser.js";
+import {runnerBrowser} from "../js/RunnerBrowser.js";
 
 import {svelteSelected, sveltePresets, svelteSelectedTitle} from "../js/svelteStore.js"
 import { f7 } from 'framework7-svelte';
 
+
 onMount(async ()=>{
-    console.log(app)
     let scheduler = new Scheduler();
     let matrix = new MatrixCanvas(scheduler, 60, 8, '#ledder-preview');
     matrix.run();
-    let runnerBrowser = new RunnerBrowser(matrix);
+    runnerBrowser.init(matrix)
     matrix.preset.enableHtml()
 
     svelteSelected.subscribe(async selected=>{
