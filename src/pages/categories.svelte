@@ -1,5 +1,7 @@
 <Page name="categories">
-    <Navbar title="Categories">
+    <Navbar title="Animations"
+            subtitle={$svelteSelectedTitle}
+    >
         <Subnavbar inner={false}>
             <Searchbar bind:value={search}
                        searchContainer=".search-list"
@@ -61,7 +63,7 @@
     } from 'framework7-svelte';
     import {rpc} from "../js/RpcClient.js";
     // import * as animationClasses from "../js/led/animations/all.js";
-    import {sveltePresets, svelteSelected} from "../js/svelteStore.js"
+    import {sveltePresets, svelteSelected, svelteSelectedTitle} from "../js/svelteStore.js"
 
 
     // let categoryPromise = rpc.request("presetStore.getCategories")

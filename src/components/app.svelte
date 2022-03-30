@@ -35,7 +35,7 @@
 <!--            <Link tabLink="#view-home" tabLinkActive iconIos="f7:house_fill" iconAurora="f7:house_fill"-->
 <!--                  iconMd="material:home" text="Home"/>-->
             <Link tabLink="#view-settings" iconIos="f7:gear" iconAurora="f7:gear" iconMd="material:settings"
-                  text="Settings"/>
+                  text="Controls"/>
         </Toolbar>
 
         <!-- Catalog View -->

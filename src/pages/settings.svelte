@@ -1,5 +1,8 @@
 <Page name="settings" on:pageTabShow={ e=> { presets=$sveltePresets} }>
-    <Navbar title="{$svelteSelected.animationName}, {$svelteSelected.presetName}"/>
+    <Navbar title="Controls"
+     subtitle={$svelteSelectedTitle}
+
+    />
 
     {#each presets as preset, i}
         <BlockTitle>{preset.name}</BlockTitle>
@@ -67,7 +70,7 @@
         Block, Input, Stepper
     } from 'framework7-svelte';
 
-    import {sveltePresets, svelteSelected} from "../js/svelteStore.js"
+    import {sveltePresets, svelteSelected, svelteSelectedTitle} from "../js/svelteStore.js"
     import {ControlValue} from "../js/led/ControlValue.js";
     import {ControlColor} from "../js/led/ControlColor.js";
 
