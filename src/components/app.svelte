@@ -32,17 +32,22 @@
         <Toolbar tabbar labels bottom>
             <Link tabLink="#view-categories" iconIos="f7:square_list_fill" iconAurora="f7:square_list_fill"
                   iconMd="material:view_list" text="Animations"/>
-<!--            <Link tabLink="#view-home" tabLinkActive iconIos="f7:house_fill" iconAurora="f7:house_fill"-->
-<!--                  iconMd="material:home" text="Home"/>-->
+            <!--            <Link tabLink="#view-home" tabLinkActive iconIos="f7:house_fill" iconAurora="f7:house_fill"-->
+            <!--                  iconMd="material:home" text="Home"/>-->
             <Link tabLink="#view-settings" iconIos="f7:gear" iconAurora="f7:gear" iconMd="material:settings"
-                  text="Controls"/>
+                  text="Controls">
+                {#if $sveltePresets.length > 1}
+                    <Badge color="red">{ $sveltePresets.length}</Badge>
+                {/if}
+
+            </Link>
         </Toolbar>
 
         <!-- Catalog View -->
-        <View id="view-categories" name="categories" main tab tabActive browserHistory="true"  url="/categories/"/>
+        <View id="view-categories" name="categories" main tab tabActive browserHistory="true" url="/categories/"/>
 
         <!-- Your main view/tab, should have "view-main" class. It also has "tabActive" prop -->
-<!--        <View id="view-home" tab url="/"/>-->
+        <!--        <View id="view-home" tab url="/"/>-->
 
 
         <!-- Settings View -->
@@ -99,7 +104,7 @@
     import {onMount} from 'svelte';
 
     import {
-        App,
+        App, Badge,
         Block,
         BlockFooter,
         f7,
@@ -119,6 +124,9 @@
         View,
         Views
     } from 'framework7-svelte';
+
+    import {sveltePresets} from "../js/svelteStore.js";
+
 
     //important (otherwise weird startup errors in dev mode):
     import 'framework7/lite';
