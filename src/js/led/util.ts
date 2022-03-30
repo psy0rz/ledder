@@ -24,15 +24,15 @@ export function randomFloat(min, max) {
 }
 
 export function error(title: string, message: string, time = 10000) {
-  console.error(`ERROR: ${title}: ${message}`)
-  f7.toast.show({
-    text: `<i class="material-icons">error</i> <b>${title}</b><p>${message}`,
-    position: 'top',
-    destroyOnClose: true,
-    closeTimeout: time,
-    cssClass: 'error',
-    closeButton:true
-  });
+    console.error(`ERROR: ${title}: ${message}`)
+    f7.toast.show({
+        text: `<i class="material-icons">error</i> <b>${title}</b><p>${message}`,
+        position: 'top',
+        destroyOnClose: true,
+        closeTimeout: time,
+        cssClass: 'error',
+        closeButton: true
+    });
 
 }
 
@@ -45,7 +45,7 @@ export function info(title: string, message: string = "", time = 2000) {
         destroyOnClose: true,
         closeTimeout: time,
         cssClass: 'info',
-        closeButton:true
+        closeButton: true
     });
 
 
@@ -54,23 +54,23 @@ export function info(title: string, message: string = "", time = 2000) {
 let loaders = 0;
 
 export function progressStart() {
-  if (!loaders)
-    f7.preloader.show()
+    if (!loaders)
+        f7.preloader.show()
 
-  loaders++;
+    loaders++;
 
 }
 
 export function progressDone() {
-  loaders--;
-  if (!loaders) {
-    f7.preloader.hide()
-  }
+    loaders--;
+    if (!loaders) {
+        f7.preloader.hide()
+    }
 }
 
 export function progressReset() {
-  loaders = 0;
-  f7.preloader.hide()
+    loaders = 0;
+    f7.preloader.hide()
 
 }
 
@@ -80,15 +80,16 @@ export function progressReset() {
  * @param content
  */
 export async function confirmPromise(title: string, content: string) {
-    return new Promise((resolve, reject) => {
-        // @ts-ignore
-        $('body').modal('confirm', title, content, async (confirmed) => {
-                if (confirmed)
-                    resolve(confirmed)
-                else
-                    reject(confirmed)
-            }
-        )
+    return new Promise<void>((resolve, reject) => {
+        f7.dialog.confirm(
+            content,
+            title,
+            () => {
+                resolve()
+            },
+            () => {
+                reject()
+            })
     })
 }
 
@@ -100,18 +101,15 @@ export async function confirmPromise(title: string, content: string) {
  */
 export async function promptPromise(title: string, content: string, defaultValue: string): Promise<string> {
     return new Promise((resolve, reject) => {
-        // @ts-ignore
-        $('body').modal('prompt', {
-            title: title,
-            content: content,
-            defaultValue: defaultValue,
-            handler: async name => {
-                if (name)
-                    resolve(name)
-                else
-                    reject(name)
-            }
-        })
+        f7.dialog.prompt(
+            content,
+            title,
+            (ok) => {
+                resolve(ok)
+            }, (cancel) => {
+                reject(cancel)
+            },
+            defaultValue)
     })
 }
 

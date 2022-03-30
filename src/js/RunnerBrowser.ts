@@ -3,7 +3,7 @@ import * as animations from "./led/animations/all.js";
 import {rpc} from "./RpcClient.js";
 import {tick} from "svelte";
 import {svelteAnimations} from "./svelteStore.js";
-import {info} from "./led/util.js";
+import {confirmPromise, info} from "./led/util.js";
 // import $ from "jquery";
 // import {confirmPromise, info, promptPromise} from "./util.js";
 
@@ -96,11 +96,10 @@ export class RunnerBrowser {
    */
   async run(animationName: string, presetName: string) {
 
-
     if (animationName in animations) {
       console.log("Runner: starting", animationName, presetName)
       this.matrix.reset()
-      await tick()
+      // await tick()
 
       this.animationClass = animations[animationName];
 
@@ -165,13 +164,13 @@ export class RunnerBrowser {
     if (!this.presetName)
       return false
 
-    // await confirmPromise('Delete preset', 'Do you want to delete preset: ' + this.presetName)
+    await confirmPromise('Delete preset', 'Do you want to delete preset: ' + this.presetName)
 
     // @ts-ignore
     await rpc.request("presetStore.delete", this.animationClass.presetDir, this.presetName);
-    // info("Deleted preset " + this.presetName, "", 2000)
-    this.presetName = undefined
-    // this.updateHtml()
+    info("Deleted preset " + this.presetName, "", 2000)
+    await this.refreshAnimationList()
+
   }
 }
 

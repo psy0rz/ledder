@@ -11,7 +11,7 @@
         </Subnavbar>
     </Navbar>
 
-    {#if $svelteAnimations.length==0}
+    {#if $svelteAnimations.length===0}
         <Preloader/>
         <Message>Loading list</Message>
     {:else}
@@ -22,11 +22,11 @@
                         <img src="{animation.previewFile}" slot="media" class="ledder-preview-image" />
                     </ListItem>
 
-                    <ListItem title="{animation.title}" text="{animation.description} ({animation.name})" >
+                    <ListItem title="{animation.title}" text="{animation.description} ({animation.name})" on:click={e=>runnerBrowser.run(animation.name, "")} >
                         <img src="{animation.previewFile}" slot="media" class="ledder-preview-image"/>
                     </ListItem>
                     {#each animation.presets as preset}
-                        <ListItem title="{preset.name}" subtitle="{preset.title}" text="{preset.description}" on:click={e=>run(animation, preset)}>
+                        <ListItem title="{preset.name}" subtitle="{preset.title}" text="{preset.description}" on:click={e=>runnerBrowser.run(animation.name, preset.name)}>
                             <img src="{preset.previewFile}" slot="media" class="ledder-preview-image"/>
                         </ListItem>
                     {/each}
@@ -60,13 +60,10 @@
 
     let search = ""
 
-    async function run(animation, preset) {
-        // console.log("run", animation, preset)
-        svelteSelected.set({animationName: animation.name, presetName: preset.name});
-
-
-    }
-
+    // async function run(animation, preset) {
+    //     svelteSelected.set({animationName: animation.name, presetName: preset.name});
+    // }
+console.log("jahoor")
     onMount(()=>{
         f7ready(()=>{
             runnerBrowser.refreshAnimationList()

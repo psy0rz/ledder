@@ -10,7 +10,7 @@
     <Toolbar position="top" >
         <Button iconMd="material:save" onClick={ onSave }  disabled={saveDisabled}/>
         <Button iconMd="material:delete" onClick={ onDelete } disabled={deleteDisabled }/>
-        <Button iconMd="material:file_copy" onClick={ onCopy } disabled={copyDisabled }/>
+        <Button iconMd="material:file_copy" onClick={ onSaveAs } disabled={copyDisabled }/>
     </Toolbar>
 
     {#each presets as preset, i}
@@ -76,13 +76,14 @@
         Navbar,
         BlockTitle,
         Range,
-        Block, Input, Stepper, Button, Toolbar, Icon, Link, NavRight
+        Block, Input, Stepper, Button, Toolbar, Icon, Link, NavRight, f7
     } from 'framework7-svelte';
 
     import {sveltePresets, svelteSelected, svelteSelectedTitle} from "../js/svelteStore.js"
     import {ControlValue} from "../js/led/ControlValue.js";
     import {ControlColor} from "../js/led/ControlColor.js";
     import {runnerBrowser} from "../js/RunnerBrowser.js";
+    import  categories from "../pages/categories.svelte";
 
 
     let presets=[]
@@ -110,15 +111,19 @@
 
         }
         else
-            onCopy()
+            onSaveAs()
 
     }
 
-    function onDelete()
+    async function onDelete()
     {
+         await runnerBrowser.presetDelete()
+         f7.tab.show('#view-categories' )
+        svelteSelected.set({animationName: $svelteSelected.animationName, presetName: "" });
 
     }
-    function onCopy()
+
+    function onSaveAs()
     {
 
     }
