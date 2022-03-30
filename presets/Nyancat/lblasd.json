@@ -35,6 +35,9 @@
   },
   "Nyan wobble interval": {
    "value": 15
+  },
+  "FPS": {
+   "value": 60
   }
  },
  "title": "",

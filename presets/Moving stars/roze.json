@@ -11,6 +11,18 @@
    "g": 0,
    "b": 234,
    "a": 1
+  },
+  "FPS": {
+   "value": 60
+  },
+  "Star move interval": {
+   "value": 3
+  },
+  "Star twinkle interval": {
+   "value": 5.8
+  },
+  "Star density": {
+   "value": 10
   }
  },
  "title": "",

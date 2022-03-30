@@ -1,3 +1,4 @@
+
 <Page name="settings" on:pageTabShow={ e=> { presets=$sveltePresets} }>
     <Navbar title="Controls"
      subtitle={$svelteSelectedTitle}
@@ -7,9 +8,9 @@
     </Navbar>
 
     <Toolbar position="top" >
-        <Button iconMd="material:save" on:click={ onSave } />
-        <Button iconMd="material:delete" on:click={ onDelete } />
-        <Button iconMd="material:file_copy" on:click={ onCopy } />
+        <Button iconMd="material:save" onClick={ onSave }  disabled={saveDisabled}/>
+        <Button iconMd="material:delete" onClick={ onDelete } disabled={deleteDisabled }/>
+        <Button iconMd="material:file_copy" onClick={ onCopy } disabled={copyDisabled }/>
     </Toolbar>
 
     {#each presets as preset, i}
@@ -85,6 +86,8 @@
 
 
     let presets=[]
+    let button
+    let saveDisabled, copyDisabled, deleteDisabled;
 
     let currentAnimationName="";
     svelteSelected.subscribe(selected=>
@@ -96,11 +99,16 @@
             }
     })
 
-    function onSave()
+    async function onSave()
     {
+        console.log(this)
+        // this.$set( { disabled: true })
         if ($svelteSelected.presetName)
         {
-            runnerBrowser.presetSave()
+            saveDisabled=true
+            await runnerBrowser.presetSave()
+            saveDisabled=false
+
         }
         else
             onCopy()
