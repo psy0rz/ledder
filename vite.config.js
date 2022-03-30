@@ -32,6 +32,7 @@ export default {
   },
   server: {
     host: true,
+    force: true
   },
 
 };
