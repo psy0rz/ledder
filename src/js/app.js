@@ -26,7 +26,7 @@ rpc.init(
         const app = new App({
             target: document.getElementById('app'),
         });
-        window.app=app
+
 
     },
     //disconnected

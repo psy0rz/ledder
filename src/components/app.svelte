@@ -131,7 +131,7 @@
 
     // Framework7 Parameters
     let f7params = {
-        name: 'My App', // App name
+        name: 'Ledder', // App name
         theme: 'auto', // Automatic theme detection
 
 

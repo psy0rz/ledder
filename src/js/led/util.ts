@@ -122,3 +122,14 @@ export function calculateFireColors() {
   }
   return (colors)
 }
+
+//check if its a number and in this range or throw error
+export function numberCheck(desc, number, min=undefined, max=undefined)
+{
+  if (isNaN(number))
+      throw (`${desc}: '${number}' is not a number`)
+  if (min!==undefined && number<min)
+    throw (`${desc}: is ${number} but should be at least ${min}`)
+  if (max!==undefined && number>max)
+    throw (`${desc}: is ${number} but should be at most ${max}`)
+}

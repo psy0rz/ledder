@@ -17,7 +17,15 @@ let startupPresetName="slow"
 
 
 //cone display
-matrixList.push(new MatrixWLED(scheduler, 37, 8, false, false, '192.168.13.176'))
+try {
+
+  matrixList.push(new MatrixWLED(scheduler, 37, 8, false, false, '192.168.13.176'))
+}
+catch (e)
+{
+  console.log(e)
+  console.error(e)
+}
 
 //led display matrix on raspberry
 // matrixList.push(new MatrixRPIzigzag(scheduler, 32, 5));
@@ -28,7 +36,6 @@ matrixList.push(new MatrixWLED(scheduler, 37, 8, false, false, '192.168.13.176')
 //pixelflut nurdspace
 // matrixList.push(new MatrixPixelflut(scheduler, "10.208.42.159", 5003, 128, 32))
 // matrixList.push(new MatrixPixelflut(scheduler, "10.208.42.159", 5008, 64, 24))
-
 
 //init preset store
 const presetStore = new PresetStore("presets")
