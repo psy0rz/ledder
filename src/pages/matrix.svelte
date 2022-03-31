@@ -6,8 +6,9 @@ import {tick} from "svelte";
 import { onMount } from 'svelte';
 import {runnerBrowser} from "../js/RunnerBrowser.js";
 
-import { sveltePresets, svelteSelectedTitle} from "../js/svelteStore.js"
+import {svelteLive, sveltePresets, svelteSelectedTitle} from "../js/svelteStore.js"
 import {f7, Page} from 'framework7-svelte';
+import {rpc} from "../js/RpcClient.js";
 
 
 onMount(async ()=> {
@@ -15,6 +16,10 @@ onMount(async ()=> {
     let matrix = new MatrixCanvas(scheduler, 60, 8, '#ledder-preview');
     matrix.run();
     runnerBrowser.init(matrix)
-    matrix.preset.enableHtml()
+
+    matrix.preset.enableHtml( (controlName, controlValues)=>{
+        if ($svelteLive)
+            rpc.notify("matrix.preset.updateValue", controlName, controlValues)
+    })
 })
 </script>

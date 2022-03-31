@@ -18,8 +18,6 @@ export class PresetControl {
   presetValues: PresetValues
   valuesChangedCallback: (controlName, values)=>void
 
-
-
   constructor() {
     this.controls={};
     this.clear();
@@ -53,14 +51,13 @@ export class PresetControl {
       control.load(this.presetValues.values[control.name]);
 
     //html generation enabled?
-    // if (this.htmlContainer!==undefined)
-    // {
-    //   control.html(this.htmlContainer, this.valuesChangedCallback);
-    //   // $(".ledder-control-counter").text(Object.keys(this.controls).length);
-    //   // $(".ledder-show-control-page").removeClass("disabled");
-    // }
     if (this.htmlEnabled)
     {
+      //   // $(".ledder-control-counter").text(Object.keys(this.controls).length);
+      //   // $(".ledder-show-control-page").removeClass("disabled");
+      control.html(this.valuesChangedCallback)
+
+      //add preset to svelte preset list
       sveltePresets.update(p=>{
         p.push(control)
         return p
@@ -102,11 +99,10 @@ export class PresetControl {
   /**
    * Enable generating actual html controls in specified container.
    */
-  // enableHtml(container: HTMLElement,   changedCallback: (controlName, values)=>void) {
-    enableHtml() {
+    enableHtml(changedCallback: (controlName, values)=>void) {
 
     this.htmlEnabled=true
-    // this.valuesChangedCallback=changedCallback
+    this.valuesChangedCallback=changedCallback
   }
 
   /**

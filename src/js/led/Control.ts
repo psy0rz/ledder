@@ -13,10 +13,9 @@ export class Control
 
   /**
    * Generate html code for this control and enable browser interaction.
-   * @param container
    * @param changedCallback
    */
-  html(container: HTMLElement, changedCallback)
+  html(changedCallback)
   {
     this.changedCallback=changedCallback;
 

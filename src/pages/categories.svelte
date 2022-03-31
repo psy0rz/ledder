@@ -8,9 +8,12 @@
                        searchIn=".item-title"
 
             />
-            <Menu class="color-theme-red">
-                <MenuItem iconMd="material:settings" href="/settings"/>
-                <MenuItem iconMd="material:upload"/>
+            <Menu class="color-theme-white">
+                <MenuItem iconMd="material:settings" href="/settings" title="Controls"/>
+                <MenuItem class="disabled" iconMd="material:upload" title="Activate animation" onClick={ ()=> runnerBrowser.send()  }/>
+                <MenuItem iconMd="material:radio_button_unchecked"  title="Update live">
+                    <Toggle></Toggle>
+                </MenuItem>
             </Menu>
 
         </Subnavbar>
@@ -59,7 +62,7 @@
         Page,
         Preloader,
         Searchbar,
-        Subnavbar, View
+        Subnavbar, Toggle, View
     } from 'framework7-svelte';
     import {sveltePresets, svelteSelectedTitle} from "../js/svelteStore.js"
     import {svelteAnimations} from "../js/svelteStore.js";

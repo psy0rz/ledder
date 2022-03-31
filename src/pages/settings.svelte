@@ -13,6 +13,7 @@
                 <MenuItem iconMd="material:save" onClick={ onSave } disabled={saveDisabled}/>
                 <MenuItem iconMd="material:delete" onClick={ onDelete } disabled={deleteDisabled }/>
                 <MenuItem iconMd="material:file_copy" onClick={ onSaveAs } disabled={copyDisabled }/>
+                <MenuItem iconMd="material:upload" title="Activate animation" onClick={ ()=> runnerBrowser.send()  }/>
             </Menu>
 
         </Subnavbar>
@@ -44,7 +45,10 @@
                        scaleSubSteps={5}
                        scale
                        label={true}
-                       on:rangeChange={ e=> { preset.value=e.detail[0] } }/>
+                       on:rangeChange={ e=> {
+                           preset.value=e.detail[0]
+                           preset.changed()
+                       } }/>
             {:else if preset instanceof ControlColor}
                 <div style="max-width: 200px" id="color-picker-{i}"></div>
                 <Input
@@ -68,6 +72,7 @@
                                     preset.g=c.rgb[1]
                                     preset.b=c.rgb[2]
                                     preset.a=c.alpha
+                                    preset.changed()
                                 }
                             }
                         }}

@@ -22,9 +22,9 @@ export class ControlColor extends Control implements ColorInterface {
   }
 
 
-  html(container: HTMLElement, changedCallback) {
-
-    super.html(container, changedCallback);
+  // html(container: HTMLElement, changedCallback) {
+  //
+  //   super.html(container, changedCallback);
 
 //     this.jqueryElement = $(`
 //      <div class="ui padded  segment ">
@@ -70,7 +70,7 @@ export class ControlColor extends Control implements ColorInterface {
 //
 //     });
 
-  }
+  // }
 
   // destroy() {
   //   // if (this.jqueryElement !== undefined)
