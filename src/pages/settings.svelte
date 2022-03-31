@@ -94,28 +94,18 @@
 
 
     async function onSave() {
-        // console.log(this)
-        // if ($svelteSelected.presetName)
-        // {
-        //     saveDisabled=true
         await runnerBrowser.presetSave()
-        //     saveDisabled=false
-        //
-        // }
-        // else
-        //     onSaveAs()
 
     }
 
     async function onDelete() {
         await runnerBrowser.presetDelete()
         f7.tab.show('#view-categories')
-        // svelteSelected.set({animationName: $svelteSelected.animationName, presetName: "" });
 
     }
 
     async function onSaveAs() {
-        await runnerBrowser.presetSaveAs()
+        await runnerBrowser.presetSave(true)
 
     }
 

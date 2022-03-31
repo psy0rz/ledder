@@ -1,7 +1,7 @@
 import * as animations from "./led/animations/all.js";
 import { rpc } from "./RpcClient.js";
 import { svelteAnimations, svelteSelectedAnimationName, svelteSelectedTitle } from "./svelteStore.js";
-import { confirmPromise, info } from "./led/util.js";
+import { confirmPromise, info, promptPromise } from "./led/util.js";
 // import $ from "jquery";
 // import {confirmPromise, info, promptPromise} from "./util.js";
 /**
@@ -105,21 +105,18 @@ export class RunnerBrowser {
     /** Save current preset to server, and create preview
      *
      */
-    async presetSave() {
+    async presetSave(saveAs = false) {
+        if (this.presetName == "" || saveAs)
+            this.presetName = await promptPromise('Enter preset name', "", this.presetName);
+        if (this.presetName == "")
+            return;
         let preset = this.matrix.preset.save();
         // @ts-ignore
         await rpc.request("presetStore.save", this.animationClass.presetDir, this.presetName, preset);
         await rpc.request("presetStore.createPreview", this.animationName, this.presetName, preset);
         await this.refreshAnimationList();
+        await this.run(this.animationName, this.presetName);
         info("Saved preset " + this.presetName, "", 2000);
-    }
-    /** Prompts for new name and saves preset
-     *
-     */
-    async presetSaveAs() {
-        // this.presetName=await promptPromise('Enter preset name', "",this.presetName)
-        await this.presetSave();
-        // this.updateHtml()
     }
     async presetDelete() {
         if (!this.presetName)
@@ -128,6 +125,8 @@ export class RunnerBrowser {
         // @ts-ignore
         await rpc.request("presetStore.delete", this.animationClass.presetDir, this.presetName);
         info("Deleted preset " + this.presetName, "", 2000);
+        this.presetName = "";
+        await this.run(this.animationName, this.presetName);
         await this.refreshAnimationList();
     }
 }
