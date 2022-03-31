@@ -15,7 +15,6 @@ import '../css/app.css';
 // Import App Component
 import App from '../components/app.svelte';
 import {rpc} from "./RpcClient.js";
-import {info, error} from "../js/led/util.js";
 
 // Init F7 Svelte Plugin
 Framework7.use(Framework7Svelte)
@@ -27,13 +26,13 @@ rpc.init(
         const app = new App({
             target: document.getElementById('app'),
         });
-
-
-
     },
     //disconnected
     async () => {
 
     })
+
+rpc.connect('192.168.13.109')
+// rpc.connect()
 
 

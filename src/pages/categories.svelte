@@ -39,17 +39,17 @@
             {#each $svelteAnimations as animation}
                 <ListGroup>
                     <ListItem title="{animation.title}" groupTitle>
-                        <img src="{animation.previewFile}" slot="media" class="ledder-preview-image"/>
+                        <img src="{rpc.url}/{animation.previewFile}" slot="media" class="ledder-preview-image"/>
                     </ListItem>
 
                     <ListItem title="{animation.title}" text="{animation.description} ({animation.name})"
                               href="/{animation.name}">
-                        <img src="{animation.previewFile}" slot="media" class="ledder-preview-image"/>
+                        <img src="{rpc.url}/{animation.previewFile}" slot="media" class="ledder-preview-image"/>
                     </ListItem>
                     {#each animation.presets as preset}
                         <ListItem title="{preset.name}" subtitle="{preset.title}" text="{preset.description}"
                                   href="/{animation.name}/{preset.name}">
-                            <img src="{preset.previewFile}" slot="media" class="ledder-preview-image"/>
+                            <img src="{rpc.url}/{preset.previewFile}" slot="media" class="ledder-preview-image"/>
                         </ListItem>
                     {/each}
                 </ListGroup>
@@ -79,6 +79,7 @@
     import {svelteAnimations} from "../js/svelteStore.js";
     import {runnerBrowser} from "../js/RunnerBrowser.js";
     import {onMount} from "svelte";
+    import {rpc} from "../js/RpcClient.js";
 
     let search = ""
 

@@ -5,11 +5,12 @@ import {gamma} from "./MatrixWLED.js";
 
 
 /**
- * Implements an array of "zigzag" matrix display on the Raspberry PI.
+ * Implements an array of up down "zigzag" matrix display on the Raspberry PI.
+ * This is a typical ws2812 8x32 display from ali express. It zigzags up and down.
  * Uses rpi-ws281x-smi to drive up to 8 displays in parallel.
  * All displays should be oriented from left to right, starting with channel 0.
  */
-export class MatrixRPIzigzag extends Matrix {
+export class MatrixRPIupdown extends Matrix {
   private displayWidth: number;
 
   /*

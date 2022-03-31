@@ -4,8 +4,6 @@ import {ControlColor} from "./ControlColor.js"
 import {PresetValues} from "./PresetValues.js"
 
 import { sveltePresets } from "../svelteStore.js"
-import {numberCheck} from "./util.js";
-import {tick} from "svelte";
 
 /**
  * Manages a collection of preset controls, saves and loads values to Preset.

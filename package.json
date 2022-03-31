@@ -35,6 +35,7 @@
     "glob-promise": "^4.2.0",
     "json-rpc-2.0": "^0.2.16",
     "material-icons": "^1.10.8",
+    "rpi-ws281x-smi": "../rpi-ws281x-smi",
     "skeleton-elements": "^3.5.0",
     "svelte": "^3.46.4",
     "swiper": "^6.8.4",
@@ -45,7 +46,7 @@
     "cpy-cli": "^4.1.0",
     "cross-env": "^7.0.3",
     "postcss-preset-env": "^6.7.1",
-    "vite": "^2.8.6",
-    "typescript": "^4.3.5"
+    "typescript": "^4.3.5",
+    "vite": "^2.8.6"
   }
 }

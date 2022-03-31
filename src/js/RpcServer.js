@@ -2,7 +2,10 @@ import express from "express";
 import expressWs from "express-ws";
 import { JSONRPCClient, JSONRPCServer, JSONRPCServerAndClient } from "json-rpc-2.0";
 import { Rpc } from "./Rpc.js";
-import { createServer } from "vite";
+let vite;
+if (process.env.NODE_ENV == 'development')
+    vite = await import("vite");
+// import {createServer} from "vite"
 /**
  * Nodejs server-side webserver that handles static files and json-rpc-2.0 requests via websocket.
  */
@@ -14,7 +17,7 @@ export class RpcServer extends Rpc {
         const rpcServer = this;
         // use vite's connect instance as middleware, when in dev mode
         if (process.env.NODE_ENV == 'development') {
-            createServer({
+            vite.createServer({
                 server: { middlewareMode: "html" },
             }).then(vite => {
                 app.use(vite.middlewares);

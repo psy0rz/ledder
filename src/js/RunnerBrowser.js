@@ -20,7 +20,7 @@ export class RunnerBrowser {
         // $("#ledder-send-once").on('click', () => {
         //   this.send();
         // })
-        this.live = false;
+        // this.live = false;
     }
     init(matrix) {
         this.matrix = matrix;
@@ -81,19 +81,17 @@ export class RunnerBrowser {
             this.animationClass = animations[animationName];
             // @ts-ignore
             svelteSelectedTitle.set(`${this.animationClass.title} -> ${presetName}`);
+            console.log("111");
             if (presetName) {
                 // @ts-ignore
                 this.matrix.preset.load(await rpc.request("presetStore.load", this.animationClass.presetDir, presetName));
             }
+            console.log("222");
             this.animationName = animationName;
             this.presetName = presetName;
             //create the actual animation (this will also create the controls in the webbrowser via svelte reactivity)
             // @ts-ignore
             new this.animationClass(this.matrix);
-            // this.updateHtml()
-            //do this as last step since it might fail
-            if (this.live)
-                await this.send();
             return true;
         }
         else

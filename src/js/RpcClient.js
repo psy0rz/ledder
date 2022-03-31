@@ -8,18 +8,27 @@ class RpcClient extends Rpc {
     constructor() {
         super();
     }
-    init(openHandler, closeHandler = undefined) {
+    init(openHandler, closeHandler = undefined, ws_url = undefined) {
         this.openHandler = openHandler;
         this.closeHandler = closeHandler;
-        this.connect();
     }
-    connect() {
+    connect(ip) {
         let ws_url;
-        if (location.protocol === 'http:')
-            ws_url = "ws://" + location.host + "/ws";
-        else
-            ws_url = "wss://" + location.host + "/ws";
+        if (ip === undefined) {
+            if (location.protocol === 'http:')
+                ws_url = "ws://" + location.host + "/ws";
+            else
+                ws_url = "wss://" + location.host + "/ws";
+            this.url = `${location.protocol}//${location.host}`;
+            console.log("Preview url is", this.url);
+        }
+        else {
+            ws_url = `ws://${ip}:3000/ws`;
+            this.url = `http://${ip}:3000`;
+        }
+        console.log(`Connecting to websocket ${ws_url}`);
         const webSocket = new WebSocket(ws_url);
+        console.log("DONE", webSocket);
         this.serverAndClient = new JSONRPCServerAndClient(new JSONRPCServer(), new JSONRPCClient((request) => {
             try {
                 webSocket.send(JSON.stringify(request));
@@ -29,17 +38,20 @@ class RpcClient extends Rpc {
                 return Promise.reject(error);
             }
         }));
+        console.log("DONE2");
         webSocket.onmessage = (event) => {
             this.serverAndClient.receiveAndSend(JSON.parse(event.data.toString()));
         };
         // On close, make sure to reject all the pending requests to prevent hanging.
         webSocket.onclose = (event) => {
+            console.log("WS Closed", webSocket);
             this.serverAndClient.rejectAllPendingRequests(`Connection is closed (${event.reason}).`);
-            setTimeout(() => this.connect(), 1000);
+            setTimeout(() => this.connect(ip), 1000);
             if (this.closeHandler !== undefined)
                 this.closeHandler();
         };
         webSocket.onopen = () => {
+            console.log("WS open");
             this.openHandler();
         };
     }

@@ -2,7 +2,6 @@ import {PixelContainer} from "./PixelContainer.js";
 import {Scheduler} from "./Scheduler.js";
 import {ColorInterface} from "./ColorInterface.js";
 import {PresetControl} from "./PresetControl.js";
-import {Control} from "./Control.js";
 import {ControlValue} from "./ControlValue.js";
 
 /**
