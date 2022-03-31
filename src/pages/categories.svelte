@@ -3,11 +3,6 @@
             subtitle={$svelteSelectedTitle}
     >
         <Subnavbar inner={false}>
-            <Searchbar bind:value={search}
-                       searchContainer=".search-list"
-                       searchIn=".item-title"
-
-            />
             <Menu class="color-theme-white">
                 <MenuItem iconMd="material:settings"
                           href="/settings"
@@ -26,6 +21,11 @@
                           } } >
                 </MenuItem>
             </Menu>
+            <Searchbar bind:value={search}
+                       searchContainer=".search-list"
+                       searchIn=".item-title"
+
+            />
 
         </Subnavbar>
     </Navbar>

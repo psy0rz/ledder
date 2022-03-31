@@ -1,6 +1,6 @@
 import * as animations from "./led/animations/all.js";
 import { rpc } from "./RpcClient.js";
-import { svelteAnimations, svelteSelectedAnimationName, svelteSelectedTitle, svelteLive } from "./svelteStore.js";
+import { svelteAnimations, svelteSelectedAnimationName, svelteSelectedTitle } from "./svelteStore.js";
 import { confirmPromise, info, promptPromise } from "./led/util.js";
 // import $ from "jquery";
 // import {confirmPromise, info, promptPromise} from "./util.js";
@@ -20,7 +20,7 @@ export class RunnerBrowser {
         // $("#ledder-send-once").on('click', () => {
         //   this.send();
         // })
-        svelteLive.subscribe( (l)=>{ this.live=l })
+        this.live = false;
     }
     init(matrix) {
         this.matrix = matrix;
@@ -32,7 +32,31 @@ export class RunnerBrowser {
         await rpc.request("runner.run", this.animationName, this.matrix.preset.save());
         // this.restart()
     }
-
+    // updateHtml() {
+    //   if (this.live) {
+    //     // $("#ledder-send-once").addClass("disabled");
+    //     $("#ledder-send-live").addClass("red");
+    //   } else {
+    //     // $("#ledder-send-once").removeClass("disabled");
+    //     $("#ledder-send-live").removeClass("red");
+    //   }
+    //
+    //   //update html fields
+    //   if (this.presetName) {
+    //     $(".ledder-selected-preset").text(this.presetName);
+    //     $(".ledder-delete-preset").removeClass("disabled");
+    //   } else {
+    //     $(".ledder-selected-preset").text("(new)");
+    //     $(".ledder-delete-preset").addClass("disabled");
+    //   }
+    //
+    //   $(".ledder-selected-animation").text(this.animationName);
+    //
+    //   if (this.animationClass) {
+    //     // @ts-ignore
+    //     $(".ledder-selected-animation-title").text(this.animationClass.title);
+    //   }
+    // }
     /**
      * Restart the current animation, keeping the same preset values
      */
