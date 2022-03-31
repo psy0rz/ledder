@@ -4,13 +4,24 @@
 
     >
 
+        <Subnavbar>
+            <Menu class="color-theme-red" >
+
+                <MenuItem class="color-theme-red" iconMd="material:save" onClick={ onSave } disabled={saveDisabled}/>
+                <MenuItem iconMd="material:delete" onClick={ onDelete } disabled={deleteDisabled }/>
+                <MenuItem iconMd="material:file_copy" onClick={ onSaveAs } disabled={copyDisabled }/>
+            </Menu>
+
+        </Subnavbar>
+
     </Navbar>
 
-    <Toolbar position="top">
-        <Button iconMd="material:save" onClick={ onSave } disabled={saveDisabled}/>
-        <Button iconMd="material:delete" onClick={ onDelete } disabled={deleteDisabled }/>
-        <Button iconMd="material:file_copy" onClick={ onSaveAs } disabled={copyDisabled }/>
-    </Toolbar>
+<!--    <Toolbar position="top">-->
+<!--        <Button iconMd="material:save" onClick={ onSave } disabled={saveDisabled}/>-->
+<!--        <Button iconMd="material:delete" onClick={ onDelete } disabled={deleteDisabled }/>-->
+<!--        <Button iconMd="material:file_copy" onClick={ onSaveAs } disabled={copyDisabled }/>-->
+<!--    </Toolbar>-->
+
 
     {#each presets as preset, i (preset.name)}
         <BlockTitle>{preset.name}</BlockTitle>
@@ -74,7 +85,7 @@
         Navbar,
         BlockTitle,
         Range,
-        Block, Input, Stepper, Button, Toolbar, Icon, Link, NavRight, f7
+        Block, Input, Stepper, Button, Toolbar, Icon, Link, NavRight, f7, Menu, MenuItem, Subnavbar
     } from 'framework7-svelte';
 
     import {sveltePresets, svelteSelectedAnimationName, svelteSelectedTitle} from "../js/svelteStore.js"
