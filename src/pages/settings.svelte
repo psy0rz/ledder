@@ -1,6 +1,9 @@
-<Page name="settings" on:pageTabShow={ e=> { presets=$sveltePresets} }>
+<Page name="settings"
+      stacked={true}
+      onPageMounted={ e=> { presets=$sveltePresets} }>
     <Navbar title="Controls"
             subtitle={$svelteSelectedTitle}
+            backLink="Back"
 
     >
 
@@ -85,18 +88,21 @@
         Navbar,
         BlockTitle,
         Range,
-        Block, Input, Stepper, Button, Toolbar, Icon, Link, NavRight, f7, Menu, MenuItem, Subnavbar
+        Block, Input, Stepper, Button, Toolbar, Icon, Link, NavRight, f7, Menu, MenuItem, Subnavbar,
     } from 'framework7-svelte';
 
     import {sveltePresets, svelteSelectedAnimationName, svelteSelectedTitle} from "../js/svelteStore.js"
     import {ControlValue} from "../js/led/ControlValue.js";
     import {ControlColor} from "../js/led/ControlColor.js";
     import {runnerBrowser} from "../js/RunnerBrowser.js";
+    // import {router} from "express/lib/application.js";
 
 
     let presets = []
     let button
     let saveDisabled, copyDisabled, deleteDisabled;
+
+    export let f7router
 
     svelteSelectedAnimationName.subscribe(selected => {
         // make sure to clear the list on animation change to net get confused
@@ -111,7 +117,7 @@
 
     async function onDelete() {
         await runnerBrowser.presetDelete()
-        f7.tab.show('#view-categories')
+        f7router.back()
 
     }
 

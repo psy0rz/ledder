@@ -1,10 +1,11 @@
 <App { ...f7params }>
     <Matrix/>
 
-    <View  name="categories" >
+    <View  name="categories" restoreScrollTopOnBack={true}>
         <Categories/>
     </View>
-    <View  name="animation-runner" main browserHistory={true} reloadPages={true} style="display: none">
+
+    <View  name="animation-runner" main browserHistory={true} reloadPages={true} style="display: none" >
     </View>
 
 
