@@ -63,7 +63,6 @@
     // async function run(animation, preset) {
     //     svelteSelected.set({animationName: animation.name, presetName: preset.name});
     // }
-console.log("jahoor")
     onMount(()=>{
         f7ready(()=>{
             runnerBrowser.refreshAnimationList()

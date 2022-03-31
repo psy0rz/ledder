@@ -101,13 +101,12 @@ export class RunnerBrowser {
 
 
       this.matrix.reset()
-      await tick()
+      svelteSelectedAnimationName.set(animationName)
 
       this.animationClass = animations[animationName];
 
       // @ts-ignore
       svelteSelectedTitle.set(`${this.animationClass.title} -> ${presetName}`)
-      svelteSelectedAnimationName.set(animationName)
 
 
       if (presetName) {

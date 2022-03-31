@@ -12,7 +12,7 @@
         <Button iconMd="material:file_copy" onClick={ onSaveAs } disabled={copyDisabled }/>
     </Toolbar>
 
-    {#each presets as preset, i}
+    {#each presets as preset, i (preset.name)}
         <BlockTitle>{preset.name}</BlockTitle>
         <Block inset>
             {#if preset instanceof ControlValue }
@@ -67,7 +67,6 @@
         leeg??
     {/each}
 
-
 </Page>
 <script>
     import {
@@ -82,7 +81,6 @@
     import {ControlValue} from "../js/led/ControlValue.js";
     import {ControlColor} from "../js/led/ControlColor.js";
     import {runnerBrowser} from "../js/RunnerBrowser.js";
-    import categories from "../pages/categories.svelte";
 
 
     let presets = []
@@ -90,9 +88,10 @@
     let saveDisabled, copyDisabled, deleteDisabled;
 
     svelteSelectedAnimationName.subscribe(selected => {
-        //make sure to clear the list on animation change to net get confused
+        // make sure to clear the list on animation change to net get confused
         presets = []
     })
+
 
     async function onSave() {
         // console.log(this)
