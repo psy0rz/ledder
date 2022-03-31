@@ -1,6 +1,7 @@
 import * as animations from "./led/animations/all.js";
 import { rpc } from "./RpcClient.js";
-import { svelteAnimations } from "./svelteStore.js";
+import { tick } from "svelte";
+import { svelteAnimations, svelteSelectedAnimationName, svelteSelectedTitle } from "./svelteStore.js";
 import { confirmPromise, info } from "./led/util.js";
 // import $ from "jquery";
 // import {confirmPromise, info, promptPromise} from "./util.js";
@@ -77,15 +78,18 @@ export class RunnerBrowser {
         if (animationName in animations) {
             console.log("Runner: starting", animationName, presetName);
             this.matrix.reset();
-            // await tick()
+            await tick();
             this.animationClass = animations[animationName];
+            // @ts-ignore
+            svelteSelectedTitle.set(`${this.animationClass.title} -> ${presetName}`);
+            svelteSelectedAnimationName.set(animationName);
             if (presetName) {
                 // @ts-ignore
                 this.matrix.preset.load(await rpc.request("presetStore.load", this.animationClass.presetDir, presetName));
             }
             this.animationName = animationName;
             this.presetName = presetName;
-            //create the actual animation
+            //create the actual animation (this will also create the controls in the webbrowser via svelte reactivity)
             // @ts-ignore
             new this.animationClass(this.matrix);
             // this.updateHtml()

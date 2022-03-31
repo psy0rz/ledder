@@ -1,14 +1,13 @@
-
 <Page name="settings" on:pageTabShow={ e=> { presets=$sveltePresets} }>
     <Navbar title="Controls"
-     subtitle={$svelteSelectedTitle}
+            subtitle={$svelteSelectedTitle}
 
     >
 
     </Navbar>
 
-    <Toolbar position="top" >
-        <Button iconMd="material:save" onClick={ onSave }  disabled={saveDisabled}/>
+    <Toolbar position="top">
+        <Button iconMd="material:save" onClick={ onSave } disabled={saveDisabled}/>
         <Button iconMd="material:delete" onClick={ onDelete } disabled={deleteDisabled }/>
         <Button iconMd="material:file_copy" onClick={ onSaveAs } disabled={copyDisabled }/>
     </Toolbar>
@@ -79,52 +78,45 @@
         Block, Input, Stepper, Button, Toolbar, Icon, Link, NavRight, f7
     } from 'framework7-svelte';
 
-    import {sveltePresets, svelteSelected, svelteSelectedTitle} from "../js/svelteStore.js"
+    import {sveltePresets, svelteSelectedAnimationName, svelteSelectedTitle} from "../js/svelteStore.js"
     import {ControlValue} from "../js/led/ControlValue.js";
     import {ControlColor} from "../js/led/ControlColor.js";
     import {runnerBrowser} from "../js/RunnerBrowser.js";
-    import  categories from "../pages/categories.svelte";
+    import categories from "../pages/categories.svelte";
 
 
-    let presets=[]
+    let presets = []
     let button
     let saveDisabled, copyDisabled, deleteDisabled;
 
-    let currentAnimationName="";
-    svelteSelected.subscribe(selected=>
-    {
-            if (currentAnimationName!=selected.animationName) {
-                //make sure presets is cleared, otherwise svelte incorrectly updates sliders in some cases
-                currentAnimationName = selected.animationName
-                presets = []
-            }
+    svelteSelectedAnimationName.subscribe(selected => {
+        //make sure to clear the list on animation change to net get confused
+        presets = []
     })
 
-    async function onSave()
-    {
-        console.log(this)
-        if ($svelteSelected.presetName)
-        {
-            saveDisabled=true
-            await runnerBrowser.presetSave()
-            saveDisabled=false
-
-        }
-        else
-            onSaveAs()
-
-    }
-
-    async function onDelete()
-    {
-         await runnerBrowser.presetDelete()
-         f7.tab.show('#view-categories' )
-        svelteSelected.set({animationName: $svelteSelected.animationName, presetName: "" });
+    async function onSave() {
+        // console.log(this)
+        // if ($svelteSelected.presetName)
+        // {
+        //     saveDisabled=true
+        await runnerBrowser.presetSave()
+        //     saveDisabled=false
+        //
+        // }
+        // else
+        //     onSaveAs()
 
     }
 
-    function onSaveAs()
-    {
+    async function onDelete() {
+        await runnerBrowser.presetDelete()
+        f7.tab.show('#view-categories')
+        // svelteSelected.set({animationName: $svelteSelected.animationName, presetName: "" });
+
+    }
+
+    async function onSaveAs() {
+        await runnerBrowser.presetSaveAs()
 
     }
 

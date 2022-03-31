@@ -7,7 +7,7 @@ import {tick} from "svelte";
 import { onMount } from 'svelte';
 import {runnerBrowser} from "../js/RunnerBrowser.js";
 
-import {svelteSelected, sveltePresets, svelteSelectedTitle} from "../js/svelteStore.js"
+import { sveltePresets, svelteSelectedTitle} from "../js/svelteStore.js"
 import { f7 } from 'framework7-svelte';
 
 
@@ -18,23 +18,23 @@ onMount(async ()=>{
     runnerBrowser.init(matrix)
     matrix.preset.enableHtml()
 
-    svelteSelected.subscribe(async selected=>{
-
-        try
-        {
-            await runnerBrowser.run(selected.animationName, selected.presetName)
-            if (runnerBrowser.animationClass)
-                svelteSelectedTitle.set(`${runnerBrowser.animationClass.title} -> ${selected.presetName}`)
-        }
-        catch (e)
-        {
-            console.error(e)
-            f7.dialog.alert(
-                `${selected.animationName}, ${selected.presetName}:<br>${e.toString()}`,
-                `Error while loading animation`,
-            )
-        }
-    })
+    // svelteSelected.subscribe(async selected=>{
+    //
+    //     try
+    //     {
+    //         await runnerBrowser.run(selected.animationName, selected.presetName)
+    //         if (runnerBrowser.animationClass)
+    //             svelteSelectedTitle.set(`${runnerBrowser.animationClass.title} -> ${selected.presetName}`)
+    //     }
+    //     catch (e)
+    //     {
+    //         console.error(e)
+    //         f7.dialog.alert(
+    //             `${selected.animationName}, ${selected.presetName}:<br>${e.toString()}`,
+    //             `Error while loading animation`,
+    //         )
+    //     }
+    // })
 
 
 })

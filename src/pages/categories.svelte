@@ -53,7 +53,7 @@
         Searchbar,
         Subnavbar
     } from 'framework7-svelte';
-    import {sveltePresets, svelteSelected, svelteSelectedTitle} from "../js/svelteStore.js"
+    import {sveltePresets,  svelteSelectedTitle} from "../js/svelteStore.js"
     import {svelteAnimations} from "../js/svelteStore.js";
     import {runnerBrowser} from "../js/RunnerBrowser.js";
     import {onMount} from "svelte";
