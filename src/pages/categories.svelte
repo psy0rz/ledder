@@ -9,10 +9,21 @@
 
             />
             <Menu class="color-theme-white">
-                <MenuItem iconMd="material:settings" href="/settings" title="Controls"/>
-                <MenuItem class="disabled" iconMd="material:upload" title="Activate animation" onClick={ ()=> runnerBrowser.send()  }/>
-                <MenuItem iconMd="material:radio_button_unchecked"  title="Update live">
-                    <Toggle></Toggle>
+                <MenuItem iconMd="material:settings"
+                          href="/settings"
+                          title="Controls"/>
+                <MenuItem class={$svelteLive?'disabled':''}
+                          iconMd="material:upload"
+                          title="Activate animation"
+                          onClick={ ()=> runnerBrowser.send()  } />
+                <MenuItem iconMd='material:radio_button_checked'
+                          class={$svelteLive?'bg-color-red':''}
+                          title="Update live"
+                          onClick={ ()=> {
+                                $svelteLive=!$svelteLive
+                                if ($svelteLive)
+                                    runnerBrowser.send()
+                          } } >
                 </MenuItem>
             </Menu>
 
@@ -64,7 +75,7 @@
         Searchbar,
         Subnavbar, Toggle, View
     } from 'framework7-svelte';
-    import {sveltePresets, svelteSelectedTitle} from "../js/svelteStore.js"
+    import {svelteSelectedTitle, svelteLive} from "../js/svelteStore.js"
     import {svelteAnimations} from "../js/svelteStore.js";
     import {runnerBrowser} from "../js/RunnerBrowser.js";
     import {onMount} from "svelte";

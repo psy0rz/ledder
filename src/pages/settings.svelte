@@ -8,23 +8,24 @@
     >
 
         <Subnavbar>
-            <Menu class="color-theme-red" >
+            <Menu class="color-theme-red">
 
                 <MenuItem iconMd="material:save" onClick={ onSave } disabled={saveDisabled}/>
                 <MenuItem iconMd="material:delete" onClick={ onDelete } disabled={deleteDisabled }/>
                 <MenuItem iconMd="material:file_copy" onClick={ onSaveAs } disabled={copyDisabled }/>
-                <MenuItem iconMd="material:upload" title="Activate animation" onClick={ ()=> runnerBrowser.send()  }/>
+                <MenuItem iconMd="material:upload" title="Activate animation" class={$svelteLive?'disabled':''}
+                          onClick={ ()=> runnerBrowser.send()  }/>
             </Menu>
 
         </Subnavbar>
 
     </Navbar>
 
-<!--    <Toolbar position="top">-->
-<!--        <Button iconMd="material:save" onClick={ onSave } disabled={saveDisabled}/>-->
-<!--        <Button iconMd="material:delete" onClick={ onDelete } disabled={deleteDisabled }/>-->
-<!--        <Button iconMd="material:file_copy" onClick={ onSaveAs } disabled={copyDisabled }/>-->
-<!--    </Toolbar>-->
+    <!--    <Toolbar position="top">-->
+    <!--        <Button iconMd="material:save" onClick={ onSave } disabled={saveDisabled}/>-->
+    <!--        <Button iconMd="material:delete" onClick={ onDelete } disabled={deleteDisabled }/>-->
+    <!--        <Button iconMd="material:file_copy" onClick={ onSaveAs } disabled={copyDisabled }/>-->
+    <!--    </Toolbar>-->
 
 
     {#each presets as preset, i (preset.name)}
@@ -96,7 +97,7 @@
         Block, Input, Stepper, Button, Toolbar, Icon, Link, NavRight, f7, Menu, MenuItem, Subnavbar,
     } from 'framework7-svelte';
 
-    import {sveltePresets, svelteSelectedAnimationName, svelteSelectedTitle} from "../js/svelteStore.js"
+    import {sveltePresets, svelteSelectedAnimationName, svelteSelectedTitle, svelteLive} from "../js/svelteStore.js"
     import {ControlValue} from "../js/led/ControlValue.js";
     import {ControlColor} from "../js/led/ControlColor.js";
     import {runnerBrowser} from "../js/RunnerBrowser.js";
