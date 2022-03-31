@@ -9,12 +9,31 @@ import SettingsPage from '../pages/settings.svelte';
 import DynamicRoutePage from '../pages/dynamic-route.svelte';
 import RequestAndLoad from '../pages/request-and-load.svelte';
 import NotFoundPage from '../pages/404.svelte';
+import Matrix from '../pages/matrix.svelte'
+import AnimationRunner from '../pages/animationrunner.svelte'
 
 var routes = [
   {
-    path: '/',
-    component: CategoriesPage,
+    path: '/:animationName/:presetName',
+    component: AnimationRunner,
+    viewName: 'animation-runner',
+    browserHistory: true
   },
+  {
+    path: '/:animationName',
+    component: AnimationRunner,
+    viewName: 'animation-runner',
+    browserHistory: true
+  },
+
+  // {
+  //   path: '/:animationName',
+  //   component: CategoriesPage,
+  // },
+  // {
+  //   path: '/',
+  //   component: CategoriesPage,
+  // },
   {
     path: '/about/',
     component: AboutPage,
@@ -24,7 +43,7 @@ var routes = [
     component: FormPage,
   },
   // {
-  //   path: '/categories/',
+  //   path: '/',
   //   component: CategoriesPage,
   // },
   {

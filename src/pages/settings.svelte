@@ -7,7 +7,7 @@
         <Subnavbar>
             <Menu class="color-theme-red" >
 
-                <MenuItem class="color-theme-red" iconMd="material:save" onClick={ onSave } disabled={saveDisabled}/>
+                <MenuItem iconMd="material:save" onClick={ onSave } disabled={saveDisabled}/>
                 <MenuItem iconMd="material:delete" onClick={ onDelete } disabled={deleteDisabled }/>
                 <MenuItem iconMd="material:file_copy" onClick={ onSaveAs } disabled={copyDisabled }/>
             </Menu>

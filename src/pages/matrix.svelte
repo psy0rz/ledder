@@ -1,5 +1,4 @@
 <canvas class="ledder-matrix" id="ledder-preview"></canvas>
-
 <script>
 import {Scheduler} from "../js/led/Scheduler.js";
 import {MatrixCanvas} from "../js/led/MatrixCanvas.js";
@@ -8,37 +7,14 @@ import { onMount } from 'svelte';
 import {runnerBrowser} from "../js/RunnerBrowser.js";
 
 import { sveltePresets, svelteSelectedTitle} from "../js/svelteStore.js"
-import { f7 } from 'framework7-svelte';
+import {f7, Page} from 'framework7-svelte';
 
 
-onMount(async ()=>{
+onMount(async ()=> {
     let scheduler = new Scheduler();
     let matrix = new MatrixCanvas(scheduler, 60, 8, '#ledder-preview');
     matrix.run();
     runnerBrowser.init(matrix)
     matrix.preset.enableHtml()
-
-    // svelteSelected.subscribe(async selected=>{
-    //
-    //     try
-    //     {
-    //         await runnerBrowser.run(selected.animationName, selected.presetName)
-    //         if (runnerBrowser.animationClass)
-    //             svelteSelectedTitle.set(`${runnerBrowser.animationClass.title} -> ${selected.presetName}`)
-    //     }
-    //     catch (e)
-    //     {
-    //         console.error(e)
-    //         f7.dialog.alert(
-    //             `${selected.animationName}, ${selected.presetName}:<br>${e.toString()}`,
-    //             `Error while loading animation`,
-    //         )
-    //     }
-    // })
-
-
 })
-
-
-
 </script>
