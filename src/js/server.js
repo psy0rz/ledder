@@ -10,7 +10,7 @@ let scheduler = new Scheduler();
 let matrixList = [];
 let startupAnimation = "AnimationMarquee";
 let startupPresetDir = "Marquee";
-let startupPresetName = "slow";
+let startupPresetName = "groot";
 try {
     //led cone ding
     // matrixList.push(new MatrixWLED(scheduler, 37, 8, false, false, '192.168.13.176'))
@@ -32,10 +32,7 @@ catch (e) {
 const presetStore = new PresetStore("presets");
 if (process.argv[2] != 'skip')
     presetStore.updateAnimationPreviews(process.argv[2] == 'rebuild');
-let startupPreset;
-presetStore.load(startupPresetDir, startupPresetName).then((r) => {
-    startupPreset = r;
-});
+let startupPreset = await presetStore.load(startupPresetDir, startupPresetName);
 //create run all the matrixes
 let runners = [];
 let primary = true;

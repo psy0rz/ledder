@@ -14,7 +14,7 @@ let matrixList = []
 
 let startupAnimation = "AnimationMarquee"
 let startupPresetDir = "Marquee"
-let startupPresetName = "slow"
+let startupPresetName = "groot"
 
 
 try {
@@ -41,12 +41,10 @@ try {
 
 //init preset store
 const presetStore = new PresetStore("presets")
-if (process.argv[2] !='skip')
+if (process.argv[2] != 'skip')
     presetStore.updateAnimationPreviews(process.argv[2] == 'rebuild');
-let startupPreset
-presetStore.load(startupPresetDir, startupPresetName).then((r) => {
-    startupPreset = r
-})
+
+let startupPreset=await presetStore.load(startupPresetDir, startupPresetName)
 
 //create run all the matrixes
 let runners = []
