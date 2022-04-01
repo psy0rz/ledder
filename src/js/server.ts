@@ -3,8 +3,8 @@ import {RpcServer} from "./RpcServer.js";
 import {RunnerServer} from "./RunnerServer.js";
 import {PresetStore} from "./PresetStore.js";
 import {PresetValues} from "./led/PresetValues.js";
-import { matrixList } from "../../matrixconf.js"
-
+import {matrixList, mqttHost, mqttOpts, nodename} from "../../matrixconf.js"
+import mqtt from 'mqtt'
 
 console.log("starting..")
 
@@ -27,12 +27,12 @@ const presetStore = new PresetStore("presets")
 if (process.argv[2] != 'skip')
     presetStore.updateAnimationPreviews(process.argv[2] == 'rebuild');
 
-let startupPreset = new PresetValues()
-try {
-    startupPreset = await presetStore.load(startupPresetDir, startupPresetName)
-} catch (e) {
-    console.error(e)
-}
+// let startupPreset = new PresetValues()
+// try {
+//     startupPreset = await presetStore.load(startupPresetDir, startupPresetName)
+// } catch (e) {
+//     console.error(e)
+// }
 
 //create run all the matrixes
 let runners = []
@@ -44,9 +44,30 @@ for (const matrix of matrixList) {
     matrix.run()
 
     let runner = new RunnerServer(matrix, presetStore)
-    runner.run(startupAnimation, startupPreset)
+    runner.runName(startupAnimation, startupPresetName)
     runners.push(runner)
 }
+
+/////////////////////////mqtt stuff
+const client  = mqtt.connect(mqttHost,mqttOpts)
+
+client.on('connect', function () {
+    client.subscribe(`/HACKERSPACE/${nodename}/run`, function (err) {
+    })
+})
+
+client.on('message', async  (topic, message) =>{
+    let str=message.toString()
+    console.log("MQTT received: ",str)
+    let pars=str.split('/', 2)
+
+    for (const runner of runners) {
+        await runner.runName(...pars)
+    }
+})
+
+
+
 
 
 //RPC bindings
@@ -67,7 +88,6 @@ rpc.addMethod("presetStore.createPreview", (params) => presetStore.createPreview
 rpc.addMethod("presetStore.delete", (params) => presetStore.delete(...params))
 // @ts-ignore
 rpc.addMethod("runner.run", (params) => {
-    rpc
     for (const runner of runners) {
         runner.run(...params)
     }

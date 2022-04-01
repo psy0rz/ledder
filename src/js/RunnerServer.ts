@@ -38,6 +38,17 @@ export class RunnerServer {
       return false
   }
 
+  //load presetName and run
+  async runName(animationName, presetName)
+  {
+    let preset=undefined
+    if (presetName) {
+      preset = await this.presetStore.load(animations[animationName].presetDir, presetName)
+    }
+
+    await this.run(animationName, preset)
+  }
+
 
 }
 

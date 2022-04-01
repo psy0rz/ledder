@@ -127,6 +127,8 @@ export class PresetStore {
      */
     async updateAnimationPreviews(force: boolean) {
 
+        console.log("Rendering previews...")
+
         for (const [animationName, animationClass] of Object.entries(animations)) {
             const previewFilename = this.previewFilename(animationClass.presetDir, "")
             const animationFilename = path.join("src", "js", "led", "animations", animationName + ".ts")
@@ -145,6 +147,7 @@ export class PresetStore {
             await this.updatePresetPreviews(animationName, animationClass, animationMtime, force)
 
         }
+        console.log("Preview rendering complete")
     }
 
     async delete(presetDir: string, presetName: string) {
