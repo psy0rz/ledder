@@ -18,8 +18,9 @@ onMount(async ()=> {
     runnerBrowser.init(matrix)
 
     matrix.preset.enableHtml( (controlName, controlValues)=>{
-        if ($svelteLive)
+        if ($svelteLive) {
             rpc.notify("matrix.preset.updateValue", controlName, controlValues)
+        }
     })
 })
 </script>

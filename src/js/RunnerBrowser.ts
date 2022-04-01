@@ -107,13 +107,11 @@ export class RunnerBrowser {
 
       // @ts-ignore
       svelteSelectedTitle.set(`${this.animationClass.title} -> ${presetName}`)
-console.log("111")
 
       if (presetName) {
         // @ts-ignore
         this.matrix.preset.load(await rpc.request("presetStore.load", this.animationClass.presetDir, presetName));
       }
-      console.log("222")
 
       this.animationName = animationName
       this.presetName = presetName

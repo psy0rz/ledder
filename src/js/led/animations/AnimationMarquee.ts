@@ -19,7 +19,7 @@ export class AnimationMarquee extends Animation {
     super(matrix);
 
     const font=FontSimple8x8
-    const text="HSD  "
+    const text="Welkom bij Hackerspace Drenthe    "
 
     const width = text.length * font.width;
     let char_nr = 0;
