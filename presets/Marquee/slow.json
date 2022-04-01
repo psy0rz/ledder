@@ -4,13 +4,25 @@
    "value": 60
   },
   "Marquee interval": {
-   "value": 4
+   "value": 2
   },
   "Text color": {
    "r": 148,
    "g": 64,
    "b": 0,
    "a": 1
+  },
+  "Twinkle speed": {
+   "value": 2
+  },
+  "Twinkle color": {
+   "r": 128,
+   "g": 128,
+   "b": 128,
+   "a": 1
+  },
+  "Twinkle fade speed": {
+   "value": 30
   }
  },
  "title": "",

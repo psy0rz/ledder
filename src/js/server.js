@@ -6,7 +6,7 @@ import mqtt from 'mqtt';
 console.log("starting..");
 let startupAnimation = "AnimationMarquee";
 let startupPresetDir = "Marquee";
-let startupPresetName = "groot";
+let startupPresetName = "slow";
 try {
 }
 catch (e) {
