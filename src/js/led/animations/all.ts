@@ -13,3 +13,4 @@ export {AnimationNyan} from "./AnimationNyan.js";
 export {AnimationNyanNurdspace} from "./AnimationNyanNurdspace.js";
 
 export {AnimationMarquee} from "./AnimationMarquee.js"
+export {Countdown} from "./Countdown.js"

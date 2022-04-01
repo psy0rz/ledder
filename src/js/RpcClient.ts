@@ -48,7 +48,6 @@ class RpcClient extends Rpc {
 
 
     const webSocket = new WebSocket(ws_url);
-    console.log("DONE", webSocket)
 
     this.serverAndClient = new JSONRPCServerAndClient(
       new JSONRPCServer(),
@@ -61,7 +60,6 @@ class RpcClient extends Rpc {
         }
       })
     );
-    console.log("DONE2")
 
     webSocket.onmessage = (event) => {
       this.serverAndClient.receiveAndSend(JSON.parse(event.data.toString()));

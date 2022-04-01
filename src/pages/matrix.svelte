@@ -13,7 +13,7 @@ import {rpc} from "../js/RpcClient.js";
 
 onMount(async ()=> {
     let scheduler = new Scheduler();
-    let matrix = new MatrixCanvas(scheduler, 60, 8, '#ledder-preview');
+    let matrix = new MatrixCanvas(scheduler, 75, 8, '#ledder-preview');
     matrix.run();
     runnerBrowser.init(matrix)
 
