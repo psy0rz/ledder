@@ -23,7 +23,7 @@ try {
     // pixelflut nurdspace
     // matrixList.push(new MatrixPixelflut(scheduler, "10.208.42.159", 5003, 128, 32))
     // matrixList.push(new MatrixPixelflut(scheduler, "10.208.42.159", 5008, 64, 24))
-    matrixList.push(new MatrixRPIleftright(scheduler, 75, 4));
+    matrixList.push(new MatrixRPIleftright(scheduler, 75, 4, 2, 1));
 }
 catch (e) {
     console.error(e);
