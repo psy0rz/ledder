@@ -41,7 +41,8 @@ try {
 
 //init preset store
 const presetStore = new PresetStore("presets")
-presetStore.updateAnimationPreviews(process.argv[2] == 'rebuild');
+if (process.argv[2] !='skip')
+    presetStore.updateAnimationPreviews(process.argv[2] == 'rebuild');
 let startupPreset
 presetStore.load(startupPresetDir, startupPresetName).then((r) => {
     startupPreset = r

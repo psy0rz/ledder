@@ -5,6 +5,7 @@ import {ColorInterface} from "../ColorInterface.js";
 import {Pixel} from "../Pixel.js";
 import {FontSimple8x8} from "../fonts/FontSimple8x8.js";
 import {Matrix} from "../Matrix.js";
+import {AnimationTwinkle} from "../AnimationTwinkle.js";
 
 export class AnimationMarquee extends Animation {
 
@@ -26,6 +27,8 @@ export class AnimationMarquee extends Animation {
 
     const intervalControl = matrix.preset.value("Marquee interval", 2, 1, 10, 1);
     const colorControl = matrix.preset.color("Text color");
+
+    new AnimationTwinkle(matrix, this.pixels)
 
     matrix.scheduler.intervalControlled(intervalControl, () => {
 
