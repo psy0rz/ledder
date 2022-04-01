@@ -42,3 +42,5 @@ Thumbs.db
 www/
 
 yarn.lock
+
+matrixconf.js
