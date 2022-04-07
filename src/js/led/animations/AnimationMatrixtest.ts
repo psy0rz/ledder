@@ -10,7 +10,7 @@ import {AnimationMove} from "../AnimationMove.js";
 import {Matrix} from "../Matrix.js";
 import {Color} from "../Color.js";
 
-export class AnimationMatrixtest extends Animation {
+export default class AnimationMatrixtest extends Animation {
 
   static title="Matrix test screen"
   static presetDir="Matrix test"

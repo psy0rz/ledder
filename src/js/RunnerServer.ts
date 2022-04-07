@@ -1,5 +1,4 @@
 import {Matrix} from "./led/Matrix.js";
-import * as animations from "./led/animations/all.js";
 import {PresetStore} from "./PresetStore.js";
 import {PresetValues} from "./led/PresetValues.js";
 

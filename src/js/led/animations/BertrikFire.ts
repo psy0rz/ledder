@@ -4,7 +4,7 @@ import {Pixel} from "../Pixel.js";
 import {Color} from "../Color.js";
 import { glow} from "./DoomFire.js";
 
-export class BertrikFire extends Animation {
+export default class BertrikFire extends Animation {
   static category = "Fire"
   static title = "Bertrik"
   static description = "A more realistic fire, based on <a href='https://github.com/bertrik/nyancat/blob/master/fire.c'>this.</a>"

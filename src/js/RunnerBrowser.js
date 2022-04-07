@@ -1,4 +1,3 @@
-import * as animations from "./led/animations/all.js";
 import { rpc } from "./RpcClient.js";
 import { svelteAnimations, svelteSelectedAnimationName, svelteSelectedTitle } from "./svelteStore.js";
 import { confirmPromise, info, promptPromise } from "./led/util.js";
@@ -74,26 +73,23 @@ export class RunnerBrowser {
      * @param presetName
      */
     async run(animationName, presetName) {
-        if (animationName in animations) {
-            console.log("Runner: starting", animationName, presetName);
-            this.matrix.reset();
-            svelteSelectedAnimationName.set(animationName);
-            this.animationClass = animations[animationName];
+        console.log("Runner: starting", animationName, presetName);
+        // this.animationClass = animations[animationName];
+        let module = await import(`./led/animations/${animationName}.js`);
+        this.animationClass = module.default;
+        this.matrix.reset();
+        svelteSelectedAnimationName.set(animationName);
+        // @ts-ignore
+        svelteSelectedTitle.set(`${this.animationClass.title} -> ${presetName}`);
+        if (presetName) {
             // @ts-ignore
-            svelteSelectedTitle.set(`${this.animationClass.title} -> ${presetName}`);
-            if (presetName) {
-                // @ts-ignore
-                this.matrix.preset.load(await rpc.request("presetStore.load", this.animationClass.presetDir, presetName));
-            }
-            this.animationName = animationName;
-            this.presetName = presetName;
-            //create the actual animation (this will also create the controls in the webbrowser via svelte reactivity)
-            // @ts-ignore
-            new this.animationClass(this.matrix);
-            return true;
+            this.matrix.preset.load(await rpc.request("presetStore.load", this.animationClass.presetDir, presetName));
         }
-        else
-            return false;
+        this.animationName = animationName;
+        this.presetName = presetName;
+        //create the actual animation (this will also create the controls in the webbrowser via svelte reactivity)
+        // @ts-ignore
+        new this.animationClass(this.matrix);
     }
     async refreshAnimationList() {
         svelteAnimations.set(await rpc.request("presetStore.getAnimationList"));

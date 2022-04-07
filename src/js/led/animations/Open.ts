@@ -8,7 +8,7 @@ import {Matrix} from "../Matrix.js";
 import {AnimationTwinkle} from "../AnimationTwinkle.js";
 import { Color } from "../Color.js";
 
-export class Open extends Animation {
+export default class Open extends Animation {
 
   static title = "Open"
   static description = ""

@@ -10,7 +10,7 @@ function paddy(num, padlen, padchar = '0') {
     return (pad + num).slice(-pad.length);
 }
 
-export class Countdown extends Animation {
+export default class Countdown extends Animation {
 
     static title = "Count down timer"
     static description = ""

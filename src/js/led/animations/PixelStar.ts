@@ -2,7 +2,7 @@ import {ControlValue} from "../ControlValue.js";
 import {Pixel} from "../Pixel.js";
 import {ColorInterface} from "../ColorInterface.js";
 
-export class PixelStar extends Pixel {
+export default class PixelStar extends Pixel {
 
   step: number;
 

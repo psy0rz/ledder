@@ -5,7 +5,7 @@ import {Pixel} from "../Pixel.js";
 import {AnimationFade} from "../AnimationFade.js";
 import {Color} from "../Color.js";
 
-export class Rain extends Animation {
+export default class Rain extends Animation {
 
   static category = "Misc"
   static title = "Rain"

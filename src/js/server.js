@@ -13,9 +13,7 @@ catch (e) {
     console.error(e);
 }
 //init preset store
-const presetStore = new PresetStore("presets");
-if (process.argv[2] != 'skip')
-    presetStore.updateAnimationPreviews(process.argv[2] == 'rebuild');
+const presetStore = new PresetStore("led/animations", "presets");
 // let startupPreset = new PresetValues()
 // try {
 //     startupPreset = await presetStore.load(startupPresetDir, startupPresetName)

@@ -1,16 +1,12 @@
 import {writeFile} from "fs/promises";
-import {PresetStore} from "../PresetStore.js";
 import {MatrixApng} from "./MatrixApng.js";
 import {Scheduler} from "./Scheduler.js";
 
-
+//handles creation of previews
 export class PreviewStore {
 
     matrix: MatrixApng
-    presetStore: PresetStore
-
-    constructor(presetStore: PresetStore) {
-      this.presetStore=presetStore
+    constructor() {
 
       let scheduler=new Scheduler();
       this.matrix=new MatrixApng(scheduler, 40,8)

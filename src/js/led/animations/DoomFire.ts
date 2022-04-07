@@ -15,7 +15,7 @@ export function glow(current:number, min:number, max:number, wildness:number) {
   return (current)
 }
 
-export class DoomFire extends Animation {
+export default class DoomFire extends Animation {
   static category = "Fire"
   static title = "Doom"
   static description = "Pixel art from the game, based on <a href='https://github.com/filipedeschamps/doom-fire-algorithm/blob/master/playground/render-with-canvas-and-hsl-colors/fire.js'>this.</a>"

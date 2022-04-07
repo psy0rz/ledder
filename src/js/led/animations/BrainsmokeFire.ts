@@ -8,7 +8,7 @@ import {ControlValue} from "../ControlValue.js";
 import {Matrix} from "../Matrix.js";
 
 //best at 50fps according to brainsmoke
-export class BrainsmokeFire extends Animation {
+export default class BrainsmokeFire extends Animation {
 
   static category = "Fire"
   static title = "Brainsmoke"

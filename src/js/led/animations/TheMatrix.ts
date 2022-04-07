@@ -14,7 +14,7 @@ import {AnimationFade} from "../AnimationFade.js";
 
  */
 
-export class TheMatrix extends Animation {
+export default class TheMatrix extends Animation {
 
   static category = "Movie FX"
   static title = "The Matrix"

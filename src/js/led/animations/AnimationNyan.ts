@@ -1,5 +1,5 @@
 import {Animation} from "../Animation.js";
-import {AnimationMovingStarsL} from "./AnimationMovingStarsL.js";
+import AnimationMovingStarsL from "./AnimationMovingStarsL.js";
 import {AnimationAsciiArt} from "../AnimationAsciiArt.js";
 import {AnimationMove} from "../AnimationMove.js";
 import {AnimationWobbleX} from "../AnimationWobbleX.js";
@@ -14,7 +14,7 @@ import {Matrix} from "../Matrix.js";
 
 //Nyancat, based on https://github.com/bertrik/nyancat/blob/master/nyancat.c
 
-export class AnimationNyan
+export default class AnimationNyan
   extends Animation {
 
   static category = "Memes"

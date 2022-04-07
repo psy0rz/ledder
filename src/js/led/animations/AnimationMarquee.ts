@@ -7,7 +7,7 @@ import {FontSimple8x8} from "../fonts/FontSimple8x8.js";
 import {Matrix} from "../Matrix.js";
 import {AnimationTwinkle} from "../AnimationTwinkle.js";
 
-export class AnimationMarquee extends Animation {
+export default class AnimationMarquee extends Animation {
 
   static title = "Basic marquee"
   static description = ""

@@ -1,12 +1,12 @@
 import {Animation} from "../Animation.js";
-import {PixelStar} from "./PixelStar.js";
+import PixelStar from "./PixelStar.js";
 import {random} from "../util.js";
 import {AnimationMove} from "../AnimationMove.js";
 import {Pixel} from "../Pixel.js";
 import {Color} from "../Color.js";
 import { Matrix } from "../Matrix.js";
 
-export class AnimationMovingStarsL extends Animation {
+export default class AnimationMovingStarsL extends Animation {
 
   static category = "Basic"
   static title = "Moving stars left"
