@@ -48,10 +48,8 @@ client.on('message', async (topic, message) => {
 });
 //RPC bindings
 let rpc = new RpcServer();
-// @ts-ignore
-rpc.addMethod("presetStore.getCategories", (params) => presetStore.getCategories(...params));
-// @ts-ignore
-rpc.addMethod("presetStore.getAnimationList", (params) => presetStore.getAnimationList(...params));
+// rpc.addMethod("presetStore.getCategories", (params) => presetStore.getCategories(...params))
+rpc.addMethod("presetStore.loadAnimationPresetList", (params) => presetStore.loadAnimationPresetList());
 // @ts-ignore
 rpc.addMethod("presetStore.load", (params) => presetStore.load(...params));
 // @ts-ignore

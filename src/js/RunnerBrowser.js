@@ -92,7 +92,7 @@ export class RunnerBrowser {
         new this.animationClass(this.matrix);
     }
     async refreshAnimationList() {
-        svelteAnimations.set(await rpc.request("presetStore.getAnimationList"));
+        svelteAnimations.set(await rpc.request("presetStore.loadAnimationPresetList"));
     }
     /** Save current preset to server, and create preview
      *

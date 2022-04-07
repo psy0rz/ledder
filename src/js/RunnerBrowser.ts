@@ -119,7 +119,7 @@ export class RunnerBrowser {
     }
 
     async refreshAnimationList() {
-        svelteAnimations.set(await rpc.request("presetStore.getAnimationList"))
+        svelteAnimations.set(await rpc.request("presetStore.loadAnimationPresetList"))
     }
 
 

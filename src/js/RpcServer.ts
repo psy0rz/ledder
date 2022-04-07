@@ -70,7 +70,7 @@ export class RpcServer extends Rpc {
 
     }
 
-    addMethod(name, method) {
+    addMethod(name, method: ([...params])=> void) {
         this.serverAndClient.addMethod(name, method);
     }
 

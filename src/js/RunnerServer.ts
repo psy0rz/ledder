@@ -23,26 +23,22 @@ export class RunnerServer {
    */
   async run(animationName: string, preset: PresetValues) {
 
-    if (animationName in animations) {
+      let animationClass=await this.presetStore.loadAnimation(animationName)
       console.log("Runner: starting", animationName, preset)
       this.matrix.reset()
-
-      const animationClass=animations[animationName];
 
       if (preset)
         this.matrix.preset.load(preset);
       new animationClass(this.matrix)
-      return true
-    } else
-      return false
   }
 
   //load presetName and run
   async runName(animationName, presetName)
   {
     let preset=undefined
+    let animationClass=await this.presetStore.loadAnimation(animationName)
     if (presetName) {
-      preset = await this.presetStore.load(animations[animationName].presetDir, presetName)
+      preset = await this.presetStore.load(animationClass.presetDir, presetName)
     }
 
     await this.run(animationName, preset)
