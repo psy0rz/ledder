@@ -1,6 +1,5 @@
 //led utils
 
-import convert from "color-convert"
 import {Color} from "./Color.js";
 
 /**
@@ -29,11 +28,12 @@ export function calculateFireColors() {
 
     const colors = []
     for (let i = 0; i <= 100; i++) {
-        const colorH = Math.round(i * 40 / 100);
-        const colorS = 100;
-        const colorL = i;
-        const rgb = convert.hsl.rgb([colorH, colorS, colorL])
-        colors.push(new Color(rgb[0], rgb[1], rgb[2]))
+        const colorH = (i * 40 / 100)/360
+        const colorS = 1;
+        const colorL = i/100;
+        const c=new Color()
+        c.setHsl(colorH, colorS, colorL)
+        colors.push(c)
     }
     return (colors)
 }

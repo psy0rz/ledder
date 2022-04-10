@@ -26,6 +26,9 @@
   },
   "Fire wildness": {
    "value": 10
+  },
+  "FPS": {
+   "value": 60
   }
  },
  "title": "",

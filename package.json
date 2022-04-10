@@ -23,7 +23,6 @@
   ],
   "dependencies": {
     "@types/node": "^16.4.0",
-    "color-convert": "^2.0.1",
     "dgram": "^1.0.1",
     "dom7": "^3.0.0",
     "express": "^4.17.1",
