@@ -61,7 +61,8 @@ export class RpcServer extends Rpc {
         //allow acces to presets dir to get preview-files
         app.use("/presets", express.static("presets"));
 
-        app.use(express.static("www"));
+        if (process.env.NODE_ENV != 'development')
+            app.use(express.static("www"));
 
         app.listen(port, () => {
             console.log(`Listening at http://localhost:${port}`)

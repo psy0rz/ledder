@@ -8,7 +8,7 @@
   "license": "UNLICENSED",
   "scripts": {
     "start": "npm run dev",
-    "dev": "rm -rf www ; node src/js/build.js;cross-env NODE_ENV=development node src/js/server.js",
+    "dev": "node src/js/build.js;cross-env NODE_ENV=development node src/js/server.js",
     "build": "tsc -p src/js;node src/js/build.js;cross-env NODE_ENV=production vite build",
     "production": "cross-env NODE_ENV=production node src/js/server.js",
     "postinstall": "cpy ./node_modules/framework7-icons/fonts/*.* ./src/fonts/ && cpy ./node_modules/material-icons/iconfont/*.* ./src/fonts/ --flat"
