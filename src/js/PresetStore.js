@@ -28,7 +28,7 @@ export async function createParentDir(fileName) {
     }
 }
 export class PresetStore {
-    constructor(animationPath, presetPath) {
+    constructor(animationPath = "src/js/led/animations", presetPath = "presets") {
         this.presetPath = presetPath;
         this.animationPath = animationPath;
     }
@@ -125,7 +125,7 @@ export class PresetStore {
             try {
                 let animationClass = await this.loadAnimation(animationName);
                 const previewFilename = this.previewFilename(animationClass.presetDir, "");
-                const animationFilename = path.join("src", "js", "led", "animations", animationName + ".ts");
+                const animationFilename = path.join(__dirname, "js", "led", "animations", animationName + ".ts");
                 const animationMtime = await getMtime(animationFilename);
                 if (animationMtime == 0)
                     console.warn("Cant find " + animationFilename + ", always re-creating all previews. (check if filename matches classname)");

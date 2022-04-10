@@ -99,8 +99,9 @@ class RpcClient extends Rpc {
 
     try {
       progressStart()
+      // console.log("RPC request", name, params)
       let result=await this.serverAndClient.request(name, params)
-      // console.log(result)
+      console.log("RPC",name, params,result)
       progressDone()
       return(result)
     } catch (e) {

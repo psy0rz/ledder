@@ -7,13 +7,8 @@ console.log("starting..");
 let startupAnimation = "AnimationMarquee";
 let startupPresetDir = "Marquee";
 let startupPresetName = "slow";
-try {
-}
-catch (e) {
-    console.error(e);
-}
 //init preset store
-const presetStore = new PresetStore("led/animations", "presets");
+const presetStore = new PresetStore();
 // let startupPreset = new PresetValues()
 // try {
 //     startupPreset = await presetStore.load(startupPresetDir, startupPresetName)

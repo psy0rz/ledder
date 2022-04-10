@@ -2,6 +2,6 @@
 
 import {PresetStore} from "./PresetStore.js";
 
-const presetStore = new PresetStore("./src/js/led/animations","presets")
+const presetStore = new PresetStore()
 await presetStore.updateAnimationPresetList()
 await presetStore.updateAnimationPreviews(false)
