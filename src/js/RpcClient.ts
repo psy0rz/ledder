@@ -24,7 +24,7 @@ class RpcClient extends Rpc {
 
   }
 
-  connect(ip) {
+  connect(ip=undefined) {
 
     let ws_url
 

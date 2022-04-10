@@ -12,7 +12,7 @@ class RpcClient extends Rpc {
         this.openHandler = openHandler;
         this.closeHandler = closeHandler;
     }
-    connect(ip) {
+    connect(ip = undefined) {
         let ws_url;
         if (ip === undefined) {
             if (location.protocol === 'http:')
