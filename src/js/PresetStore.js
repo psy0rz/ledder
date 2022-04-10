@@ -4,7 +4,7 @@
 import * as path from "path";
 import { mkdir, readFile, rm, stat, writeFile } from "fs/promises";
 import glob from "glob-promise";
-import { PreviewStore } from "./led/PreviewStore.js";
+import { PreviewStore } from "./PreviewStore.js";
 import { Animation } from "./led/Animation.js";
 /***
  * Get mtime of filename, returns 0 if it doesnt exist.
@@ -125,7 +125,7 @@ export class PresetStore {
             try {
                 let animationClass = await this.loadAnimation(animationName);
                 const previewFilename = this.previewFilename(animationClass.presetDir, "");
-                const animationFilename = path.join(__dirname, "js", "led", "animations", animationName + ".ts");
+                const animationFilename = path.join("src", "js", "led", "animations", animationName + ".ts");
                 const animationMtime = await getMtime(animationFilename);
                 if (animationMtime == 0)
                     console.warn("Cant find " + animationFilename + ", always re-creating all previews. (check if filename matches classname)");

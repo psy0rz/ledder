@@ -1,6 +1,6 @@
 import {writeFile} from "fs/promises";
-import {MatrixApng} from "./MatrixApng.js";
-import {Scheduler} from "./Scheduler.js";
+import {MatrixApng} from "./led/MatrixApng.js";
+import {Scheduler} from "./led/Scheduler.js";
 
 //handles creation of previews
 export class PreviewStore {
