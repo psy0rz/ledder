@@ -6,7 +6,6 @@ export class ControlValue extends Control {
   min: number;
   max: number;
   step: number;
-  // jqueryElement: JQuery;
 
   /**
    * Controls a value, step determines the minimum resolution.
@@ -33,43 +32,6 @@ export class ControlValue extends Control {
 
   }
 
-  // html(container: HTMLElement, changedCallback) {
-  //
-  //   super.html(container, changedCallback);
-
-//     this.jqueryElement=$(`
-//      <div class="ui padded  segment ">
-//       <div class="ui top attached label">${this.name}</div>
-//       <div class="ui labeled ticked slider"></div>
-// <!--      <button class="ui icon button">-->
-// <!--        <i class="undo icon"></i>-->
-// <!--      </button>-->
-//     </div>
-//    `);
-//
-//     $(container).append(this.jqueryElement);
-//
-//     // @ts-ignore
-//     $('.slider', this.jqueryElement).slider({
-//       min: this.min,
-//       max: this.max,
-//       step: this.step,
-//       start: this.value,
-//
-//       onMove: (value)=>
-//       {
-//         this.value=value;
-//         this.changed();
-//       }
-//
-//     });
-//   }
-
-  // destroy()
-  // {
-  //   // if (this.jqueryElement!==undefined)
-  //   //   this.jqueryElement.remove();
-  // }
 
   save()
   {
@@ -82,11 +44,6 @@ export class ControlValue extends Control {
   {
     this.value=values.value;
 
-    //update gui as well?
-    // if (this.jqueryElement!==undefined)
-    //   { // @ts-ignore
-    //     $('.slider', this.jqueryElement).slider("set value", values.value, false);
-    //   }
   }
 }
 

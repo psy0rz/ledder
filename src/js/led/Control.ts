@@ -21,10 +21,6 @@ export class Control
 
   }
 
-  // destroy()
-  // {
-  //
-  // }
 
   save()
   {
