@@ -1,7 +1,3 @@
-// import {Matrix} from "./Matrix.js";
-// import {Pixel} from "./Pixel.js";
-// import {AnimationBlink} from "./AnimationBlink.js";
-// import {AnimationMove} from "./AnimationMove.js";
 
 import {Pixel} from "../Pixel.js";
 import {Animation} from "../Animation.js";

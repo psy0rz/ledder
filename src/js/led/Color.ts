@@ -1,5 +1,4 @@
 import {ColorInterface} from "./ColorInterface.js";
-import convert from "color-convert"
 
 export class Color implements ColorInterface {
     r: number

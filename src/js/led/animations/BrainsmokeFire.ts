@@ -2,8 +2,6 @@ import {Animation} from "../Animation.js";
 import {glow} from "./DoomFire.js";
 import {Pixel} from "../Pixel.js";
 import {Color} from "../Color.js";
-import {random} from "../util.js";
-import {Control} from "../Control.js";
 import {ControlValue} from "../ControlValue.js";
 import {Matrix} from "../Matrix.js";
 

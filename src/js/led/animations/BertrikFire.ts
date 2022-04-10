@@ -1,5 +1,4 @@
 import {Animation} from "../Animation.js";
-import {random} from "../util.js";
 import {Pixel} from "../Pixel.js";
 import {Color} from "../Color.js";
 import { glow} from "./DoomFire.js";

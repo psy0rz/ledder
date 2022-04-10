@@ -1,7 +1,4 @@
 import {Animation} from "../Animation.js";
-import {ValueInterface} from "../ValueInterface.js";
-import {FontInterface} from "../fonts/FontInterface.js";
-import {ColorInterface} from "../ColorInterface.js";
 import {Pixel} from "../Pixel.js";
 import {FontSimple8x8} from "../fonts/FontSimple8x8.js";
 import {Matrix} from "../Matrix.js";

@@ -8,7 +8,6 @@ import {Pixel} from "../Pixel.js";
 import {Color} from "../Color.js";
 
 
-import {AnimationFade} from "../AnimationFade.js";
 import {AnimationFadeOut} from "../AnimationFadeOut.js";
 import {Matrix} from "../Matrix.js";
 

@@ -2,6 +2,8 @@
 import {Animation} from "./Animation.js";
 import {Matrix} from "./Matrix.js";
 
+//TODO: dit zijn effecten en geen animaties. refacter en verplaats naar effects/
+//mogen ook geen controls aanmaken
 
 export class AnimationBlink extends Animation {
   // onInterval: number;

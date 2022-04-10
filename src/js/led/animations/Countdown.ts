@@ -2,8 +2,6 @@ import {Animation} from "../Animation.js";
 import {Pixel} from "../Pixel.js";
 import {FontSimple8x8} from "../fonts/FontSimple8x8.js";
 import {Matrix} from "../Matrix.js";
-import {colorHslToRgb} from "framework7/types/shared/utils.js";
-import {Color} from "../Color.js";
 
 function paddy(num, padlen, padchar = '0') {
     var pad = new Array(1 + padlen).join(padchar);

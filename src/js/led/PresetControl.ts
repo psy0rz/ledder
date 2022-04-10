@@ -3,15 +3,14 @@ import {ControlValue} from "./ControlValue.js"
 import {ControlColor} from "./ControlColor.js"
 import {PresetValues} from "./PresetValues.js"
 
+//TODO: remove from this file and use callbacks
 import { sveltePresets } from "../svelteStore.js"
 
 /**
  * Manages a collection of preset controls, saves and loads values to Preset.
- * Does browser-html stuff
  */
 export class PresetControl {
   controls: Record<string, Control>
-  // htmlContainer: HTMLElement;
   htmlEnabled: boolean
   presetValues: PresetValues
   valuesChangedCallback: (controlName, values)=>void
@@ -22,9 +21,6 @@ export class PresetControl {
   }
 
    clear() {
-    // for (const [name, control] of Object.entries(this.controls)) {
-    //   control.destroy();
-    // }
     this.controls = {}
     this.presetValues = new PresetValues()
 
@@ -51,8 +47,6 @@ export class PresetControl {
     //html generation enabled?
     if (this.htmlEnabled)
     {
-      //   // $(".ledder-control-counter").text(Object.keys(this.controls).length);
-      //   // $(".ledder-show-control-page").removeClass("disabled");
       control.html(this.valuesChangedCallback)
 
       //add preset to svelte preset list
