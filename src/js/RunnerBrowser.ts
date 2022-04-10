@@ -1,7 +1,7 @@
 import {Matrix} from "./led/Matrix.js";
 import {rpc} from "./RpcClient.js";
 import {svelteAnimations, svelteSelectedAnimationName, svelteSelectedTitle} from "./svelteStore.js";
-import {confirmPromise, info, promptPromise} from "./led/util.js";
+import {confirmPromise, info, promptPromise} from "./util.js";
 // import $ from "jquery";
 // import {confirmPromise, info, promptPromise} from "./util.js";
 

@@ -1,7 +1,7 @@
 import {JSONRPCClient, JSONRPCServer, JSONRPCServerAndClient} from "json-rpc-2.0";
 import {Rpc} from "./Rpc.js";
 import {RpcServer} from "./RpcServer.js";
-import {error, progressDone, progressStart} from "./led/util.js";
+import {error, progressDone, progressStart} from "./util.js";
 
 /***
  * Browser-side rpc client that connect to server handles rpc calls to/from server.

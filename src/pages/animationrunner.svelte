@@ -5,7 +5,7 @@
   import {runnerBrowser} from "../js/RunnerBrowser.js";
   import {onMount} from "svelte";
   import {svelteLive} from "../js/svelteStore.js";
-  import {error} from "../js/led/util.js";
+  import {error} from "../js/util.js";
   export let animationName=""
   export let presetName=""
 
