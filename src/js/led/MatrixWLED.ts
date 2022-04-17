@@ -108,7 +108,6 @@ export class MatrixWLED extends Matrix {
       sendBuffer[i+2]=this.buffer[i];
     }
 
-    this.socket.send(sendBuffer);
 
     //clear
     this.buffer=new Uint8ClampedArray(this.width * this.height * 3);
