@@ -99,9 +99,9 @@ export class MatrixLedstream extends Matrix {
 
     frame() {
         const frameDelay=~~(1000/this.fpsControl.value)
-
-
         const now=Date.now();
+
+        //increase time with exact framedelay instead of sending now, since setInterval is jittery
         this.lastTime=this.lastTime+frameDelay;
         //too far off, reset
         if (Math.abs(now-this.lastTime)>frameDelay)
@@ -111,7 +111,6 @@ export class MatrixLedstream extends Matrix {
             setTimeout(() => this.frame(), frameDelay)
         }
         else
-        //increase time with exact framedelay instead of sending now, since setInterval is jittery
         {
             const interval=this.lastTime-now+frameDelay;
             setTimeout(() => this.frame(), interval)

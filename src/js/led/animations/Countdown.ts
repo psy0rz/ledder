@@ -21,7 +21,7 @@ export default class Countdown extends Animation {
 
         const font = FontSimple8x8
 
-        let targetDate = new Date('2022-04-02T13:22:42');
+        let targetDate = new Date('2022-04-18T23:22:42');
 
         // let targetDate = new Date('2022-04-01T12:37:42');
 
