@@ -10,7 +10,10 @@
    "value": 100000
   },
   "Fire interval": {
-   "value": 1.2
+   "value": 1
+  },
+  "FPS": {
+   "value": 50
   }
  },
  "title": "",

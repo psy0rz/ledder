@@ -4,13 +4,49 @@ import {Matrix} from "./Matrix.js";
 // @ts-ignore
 import dgram from "dgram";
 import {gamma} from "./MatrixWLED.js";
+import {random} from "./util.js";
 
 const headerLength = 2;
+
+
+class MulticastSync
+{
+    socket: dgram.Socket;
+    packet: Uint8Array;
+    interval: number;
+
+    constructor(groupIp, port, interval) {
+        this.socket = dgram.createSocket('udp4')
+
+
+        this.interval=interval;
+
+        this.packet=new Uint8Array(2);
+
+        this.socket.on('connect', () =>
+        {
+            setInterval( ()=>this.pulse(), this.interval)
+            // this.pulse()
+        })
+        this.socket.connect(port, groupIp)
+    }
+
+    pulse()
+    {
+        //note: setInterval would be more precise, but we need to use the same method as other places.
+        // setTimeout( ()=>this.pulse(), this.interval)
+        this.packet[1]=(this.interval>>8)
+        this.packet[0]=(this.interval&0xff)
+        this.socket.send(this.packet);
+
+    }
+
+}
 
 export class MatrixLedstream extends Matrix {
 
     packets: Uint8ClampedArray[];
-    socket: any;
+    socket: dgram.Socket;
     flipX: boolean;
     flipY: boolean;
     ip: string;
@@ -20,6 +56,8 @@ export class MatrixLedstream extends Matrix {
     channels: number;
     frameNr:number;
 
+
+    syncer: MulticastSync;
 
     /**
      * Matrix driver for https://github.com/psy0rz/ledstream
@@ -34,6 +72,8 @@ export class MatrixLedstream extends Matrix {
     constructor(scheduler, channels, width, height, ip, port = 21324) {
         super(scheduler, width, height);
 
+
+        this.syncer=new MulticastSync('239.137.111.222', 65001, 1000)
 
         this.ip = ip;
         this.port = port;
@@ -85,7 +125,7 @@ export class MatrixLedstream extends Matrix {
 
 
     frame() {
-        setTimeout(() => this.frame(), 1000 / this.fpsControl.value)
+        // setTimeout(() => this.frame(), 1000 / this.fpsControl.value)
 
 
         this.frameNr=(this.frameNr+1)%255;
@@ -94,6 +134,11 @@ export class MatrixLedstream extends Matrix {
             this.packets[c][0]=this.frameNr;
             this.packets[c][1]=c;
 
+
+
+            // if (random(0,100)>20)
+
+            // @ts-ignore
             this.socket.send(this.packets[c]);
             //clear
             this.packets[c]=new Uint8ClampedArray(headerLength + (this.width * this.chanHeight * 3))
@@ -111,7 +156,10 @@ export class MatrixLedstream extends Matrix {
 
 
     run() {
-        this.socket.on('connect', () => this.frame())
+        this.socket.on('connect', () => {
+            setInterval(() => this.frame(), 16.666)
+
+        })
         this.socket.connect(this.port, this.ip)
 
     }
