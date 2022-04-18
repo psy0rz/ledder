@@ -13,6 +13,7 @@ export class MatrixLedstream extends Matrix {
 
     packets: Uint8ClampedArray[];
     socket: dgram.Socket;
+    socket2: dgram.Socket;
     flipX: boolean;
     flipY: boolean;
     ip: string;
@@ -51,6 +52,7 @@ export class MatrixLedstream extends Matrix {
         this.packets = [];
 
         // this.frameNr=0;
+        this.lastTime=Date.now()
 
         for (let c = 0; c < channels; c++) {
             this.packets.push(new Uint8ClampedArray(headerLength + (this.width * this.chanHeight * 3)));
@@ -62,6 +64,10 @@ export class MatrixLedstream extends Matrix {
             console.log(`server error:\n${err.stack}`);
         });
 
+        this.socket2 = dgram.createSocket('udp4');
+        this.socket2.on('error', (err) => {
+            console.log(`server error:\n${err.stack}`);
+        });
     }
 
     //sets a pixel in the render buffer (called from Draw-classes render() functions)
@@ -92,26 +98,32 @@ export class MatrixLedstream extends Matrix {
 
 
     frame() {
-        const delay=~~(1000/this.fpsControl.value)
-        setTimeout(() => this.frame(), delay)
-
-        // console.log(Date.now()-this.lastTime);
-        // this.lastTime=Date.now();
+        const frameDelay=~~(1000/this.fpsControl.value)
 
 
-        // this.frameNr=(this.frameNr+1)%255;
-
-        // const now=(~~(Date.now()/delay)*delay);
         const now=Date.now();
-        // console.log(now-this.lastTime);
-        this.lastTime=now;
+        this.lastTime=this.lastTime+frameDelay;
+        //too far off, reset
+        if (Math.abs(now-this.lastTime)>frameDelay)
+        {
+            console.log("MatrixLedstream: resetting timing")
+            this.lastTime=now;
+            setTimeout(() => this.frame(), frameDelay)
+        }
+        else
+        //increase time with exact framedelay instead of sending now, since setInterval is jittery
+        {
+            const interval=this.lastTime-now+frameDelay;
+            setTimeout(() => this.frame(), interval)
+        }
+
 
 
         for (let c = 0; c < this.channels; c++) {
-            this.packets[c][3] = ((now  >> 24) & 0xff)
-            this.packets[c][2] = ((now  >> 16) & 0xff)
-            this.packets[c][1] = ((now  >> 8) & 0xff)
-            this.packets[c][0] = (now & 0xff)
+            this.packets[c][3] = ((this.lastTime  >> 24) & 0xff)
+            this.packets[c][2] = ((this.lastTime  >> 16) & 0xff)
+            this.packets[c][1] = ((this.lastTime  >> 8) & 0xff)
+            this.packets[c][0] = (this.lastTime & 0xff)
             this.packets[c][4]=c;
             // this.packets[c][5]=;//unused
             // this.packets[c][6]=;
@@ -123,6 +135,8 @@ export class MatrixLedstream extends Matrix {
 
             // @ts-ignore
             this.socket.send(this.packets[c]);
+            // @ts-ignore
+            this.socket2.send(this.packets[c]);
             //clear
             this.packets[c]=new Uint8ClampedArray(headerLength + (this.width * this.chanHeight * 3))
         }
@@ -143,6 +157,7 @@ export class MatrixLedstream extends Matrix {
             this.frame()
 
         })
+        this.socket2.connect(this.port, '192.168.13.147')
         this.socket.connect(this.port, this.ip)
 
     }

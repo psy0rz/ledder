@@ -1,14 +1,14 @@
 {
  "values": {
   "FPS": {
-   "value": 60
+   "value": 30
   },
   "Marquee interval": {
-   "value": 2
+   "value": 1
   },
   "Text color": {
-   "r": 148,
-   "g": 64,
+   "r": 255,
+   "g": 107,
    "b": 0,
    "a": 1
   },
