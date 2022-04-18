@@ -4,44 +4,10 @@ import {Matrix} from "./Matrix.js";
 // @ts-ignore
 import dgram from "dgram";
 import {gamma} from "./MatrixWLED.js";
-import {random} from "./util.js";
+import {MulticastSync} from "./MulticastSync.js";
 
-const headerLength = 2;
+const headerLength = 8;
 
-
-class MulticastSync
-{
-    socket: dgram.Socket;
-    packet: Uint8Array;
-    interval: number;
-
-    constructor(groupIp, port, interval) {
-        this.socket = dgram.createSocket('udp4')
-
-
-        this.interval=interval;
-
-        this.packet=new Uint8Array(2);
-
-        this.socket.on('connect', () =>
-        {
-            setInterval( ()=>this.pulse(), this.interval)
-            // this.pulse()
-        })
-        this.socket.connect(port, groupIp)
-    }
-
-    pulse()
-    {
-        //note: setInterval would be more precise, but we need to use the same method as other places.
-        // setTimeout( ()=>this.pulse(), this.interval)
-        this.packet[1]=(this.interval>>8)
-        this.packet[0]=(this.interval&0xff)
-        this.socket.send(this.packet);
-
-    }
-
-}
 
 export class MatrixLedstream extends Matrix {
 
@@ -54,8 +20,9 @@ export class MatrixLedstream extends Matrix {
 
     chanHeight: number;
     channels: number;
-    frameNr:number;
+    // frameNr:number;
 
+    lastTime:number;
 
     syncer: MulticastSync;
 
@@ -83,7 +50,7 @@ export class MatrixLedstream extends Matrix {
 
         this.packets = [];
 
-        this.frameNr=0;
+        // this.frameNr=0;
 
         for (let c = 0; c < channels; c++) {
             this.packets.push(new Uint8ClampedArray(headerLength + (this.width * this.chanHeight * 3)));
@@ -125,14 +92,28 @@ export class MatrixLedstream extends Matrix {
 
 
     frame() {
-        // setTimeout(() => this.frame(), 1000 / this.fpsControl.value)
+        setTimeout(() => this.frame(), 1000 / this.fpsControl.value)
+
+        // console.log(Date.now()-this.lastTime);
+        // this.lastTime=Date.now();
 
 
-        this.frameNr=(this.frameNr+1)%255;
+        // this.frameNr=(this.frameNr+1)%255;
+
+        const now=Date.now();
+        // console.log(now-this.lastTime);
+        this.lastTime=now;
+
 
         for (let c = 0; c < this.channels; c++) {
-            this.packets[c][0]=this.frameNr;
-            this.packets[c][1]=c;
+            this.packets[c][3] = ((now  >> 24) & 0xff)
+            this.packets[c][2] = ((now  >> 16) & 0xff)
+            this.packets[c][1] = ((now  >> 8) & 0xff)
+            this.packets[c][0] = (now & 0xff)
+            this.packets[c][4]=c;
+            // this.packets[c][5]=;//unused
+            // this.packets[c][6]=;
+            // this.packets[c][7]=;
 
 
 
@@ -157,7 +138,7 @@ export class MatrixLedstream extends Matrix {
 
     run() {
         this.socket.on('connect', () => {
-            setInterval(() => this.frame(), 16.666)
+            this.frame()
 
         })
         this.socket.connect(this.port, this.ip)
