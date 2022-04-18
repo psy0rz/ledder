@@ -92,7 +92,8 @@ export class MatrixLedstream extends Matrix {
 
 
     frame() {
-        setTimeout(() => this.frame(), 1000 / this.fpsControl.value)
+        const delay=~~(1000/this.fpsControl.value)
+        setTimeout(() => this.frame(), delay)
 
         // console.log(Date.now()-this.lastTime);
         // this.lastTime=Date.now();
@@ -100,6 +101,7 @@ export class MatrixLedstream extends Matrix {
 
         // this.frameNr=(this.frameNr+1)%255;
 
+        // const now=(~~(Date.now()/delay)*delay);
         const now=Date.now();
         // console.log(now-this.lastTime);
         this.lastTime=now;
