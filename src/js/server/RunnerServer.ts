@@ -1,6 +1,6 @@
-import {Matrix} from "./led/Matrix.js";
+import {Matrix} from "../ledder/Matrix.js";
 import {PresetStore} from "./PresetStore.js";
-import {PresetValues} from "./led/PresetValues.js";
+import {PresetValues} from "../ledder/PresetValues.js";
 
 /**
  * Server side runner

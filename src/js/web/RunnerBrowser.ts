@@ -1,4 +1,4 @@
-import {Matrix} from "./led/Matrix.js";
+import {Matrix} from "../ledder/Matrix.js";
 import {rpc} from "./RpcClient.js";
 import {svelteAnimations, svelteSelectedAnimationName, svelteSelectedTitle} from "./svelteStore.js";
 import {confirmPromise, info, promptPromise} from "./util.js";
@@ -95,7 +95,7 @@ export class RunnerBrowser {
 
         console.log("Runner: starting", animationName, presetName)
         // this.animationClass = animations[animationName];
-        let module = await import(`./led/animations/${animationName}.js`)
+        let module = await import(`../ledder/animations/${animationName}.js`)
         this.animationClass=module.default
 
         this.matrix.reset()

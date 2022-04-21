@@ -5,9 +5,9 @@
 import * as path from "path";
 import {mkdir, readFile, rm, stat, writeFile} from "fs/promises";
 import glob from "glob-promise";
-import {PresetValues} from "./led/PresetValues.js";
+import {PresetValues} from "../ledder/PresetValues.js";
 import {PreviewStore} from "./PreviewStore.js";
-import {Animation} from "./led/Animation.js";
+import {Animation} from "../ledder/Animation.js";
 
 
 /***
@@ -37,7 +37,7 @@ export class PresetStore {
     presetPath: string;
     animationPath: string;
 
-    constructor(animationPath: string="src/js/led/animations", presetPath: string="presets") {
+    constructor(animationPath: string="src/js/ledder/animations", presetPath: string="presets") {
         this.presetPath = presetPath;
         this.animationPath = animationPath
 
@@ -57,7 +57,7 @@ export class PresetStore {
     //dynamicly loads an animation class from disk and returns the Class
     async loadAnimation(animationName: string): Promise<typeof Animation> {
         //hack: this path is relative to the current file instead of current working dir.
-        let filename = "./led/animations/" + animationName + ".js"
+        let filename = "../ledder/animations/" + animationName + ".js"
         console.log("loading", filename)
         let module = await import(filename)
 
@@ -158,7 +158,7 @@ export class PresetStore {
 
                 let animationClass = await this.loadAnimation(animationName)
                 const previewFilename = this.previewFilename(animationClass.presetDir, "")
-                const animationFilename = path.join("src", "js", "led", "animations", animationName + ".ts")
+                const animationFilename = path.join("src", "js", "ledder", "animations", animationName + ".js")
                 const animationMtime = await getMtime(animationFilename)
                 if (animationMtime == 0)
                     console.warn("Cant find " + animationFilename + ", always re-creating all previews. (check if filename matches classname)")

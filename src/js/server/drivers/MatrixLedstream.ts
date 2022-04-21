@@ -1,4 +1,4 @@
-import {Matrix} from "./Matrix.js";
+import {Matrix} from "../../ledder/Matrix.js";
 
 
 // @ts-ignore

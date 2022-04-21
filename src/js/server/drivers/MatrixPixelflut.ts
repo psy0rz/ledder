@@ -1,5 +1,5 @@
-import {Matrix} from "./Matrix.js";
-import {Color} from "./Color.js";
+import {Matrix} from "../../ledder/Matrix.js";
+import {Color} from "../../ledder/Color.js";
 import * as dgram from "dgram";
 import {Socket} from "dgram";
 

@@ -1,7 +1,7 @@
 // import {MatrixRPIupdown} from "./led/MatrixRPIupdown.js";
-import {MatrixWLED} from "./src/js/led/MatrixWLED.js";
-import {MatrixRPIleftright} from "./src/js/led/MatrixRPIleftright.js";
-import {Scheduler} from "./src/js/led/Scheduler.js";
+import {MatrixWLED} from "src/js/server/drivers/MatrixWLED.ts";
+import {MatrixRPIleftright} from "src/js/server/drivers/MatrixRPIleftright.ts";
+import {Scheduler} from "src/js/ledder/Scheduler.ts";
 
 let scheduler = new Scheduler();
 

@@ -2,7 +2,7 @@
 import express from "express";
 import expressWs from "express-ws";
 import {JSONRPCClient, JSONRPCServer, JSONRPCServerAndClient} from "json-rpc-2.0";
-import {Rpc} from "./Rpc.js";
+import {Rpc} from "../Rpc.js";
 
 let vite
 if (process.env.NODE_ENV == 'development')

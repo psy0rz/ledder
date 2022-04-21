@@ -19,14 +19,14 @@
         View,
     } from 'framework7-svelte';
 
-    import {sveltePresets} from "../js/svelteStore.js";
+    import {sveltePresets} from "../js/web/svelteStore.js";
 
     //important (otherwise weird startup errors in dev mode):
     import 'framework7/lite';
 
     import Matrix from "../pages/matrix.svelte"
 
-    import routes from '../js/routes';
+    import routes from '../js/web/routes.js';
     import Categories from '../pages/categories.svelte'
     // import Test from '../pages/test.svelte'
     // import store from '../js/store';

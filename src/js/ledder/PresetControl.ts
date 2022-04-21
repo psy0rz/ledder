@@ -4,7 +4,7 @@ import {ControlColor} from "./ControlColor.js"
 import {PresetValues} from "./PresetValues.js"
 
 //TODO: remove from this file and use callbacks
-import { sveltePresets } from "../svelteStore.js"
+import { sveltePresets } from "../web/svelteStore.js"
 
 /**
  * Manages a collection of preset controls, saves and loads values to Preset.

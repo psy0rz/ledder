@@ -1,14 +1,12 @@
 <canvas class="ledder-matrix" id="ledder-preview"></canvas>
 <script>
-import {Scheduler} from "../js/led/Scheduler.js";
-import {MatrixCanvas} from "../js/led/MatrixCanvas.js";
-import {tick} from "svelte";
+import {Scheduler} from "../js/ledder/Scheduler.js";
+import {MatrixCanvas} from "../js/web/MatrixCanvas.js";
 import { onMount } from 'svelte';
-import {runnerBrowser} from "../js/RunnerBrowser.js";
+import {runnerBrowser} from "../js/web/RunnerBrowser.js";
 
-import {svelteLive, sveltePresets, svelteSelectedTitle} from "../js/svelteStore.js"
-import {f7, Page} from 'framework7-svelte';
-import {rpc} from "../js/RpcClient.js";
+import {svelteLive, sveltePresets, svelteSelectedTitle} from "../js/web/svelteStore.js"
+import {rpc} from "../js/web/RpcClient.js";
 
 
 onMount(async ()=> {

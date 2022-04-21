@@ -97,10 +97,10 @@
         Block, Input, Stepper, Button, Toolbar, Icon, Link, NavRight, f7, Menu, MenuItem, Subnavbar,
     } from 'framework7-svelte';
 
-    import {sveltePresets, svelteSelectedAnimationName, svelteSelectedTitle, svelteLive} from "../js/svelteStore.js"
-    import {ControlValue} from "../js/led/ControlValue.js";
-    import {ControlColor} from "../js/led/ControlColor.js";
-    import {runnerBrowser} from "../js/RunnerBrowser.js";
+    import {sveltePresets, svelteSelectedAnimationName, svelteSelectedTitle, svelteLive} from "../js/web/svelteStore.js"
+    import {ControlValue} from "../js/ledder/ControlValue.js";
+    import {ControlColor} from "../js/ledder/ControlColor.js";
+    import {runnerBrowser} from "../js/web/RunnerBrowser.js";
     // import {router} from "express/lib/application.js";
 
 

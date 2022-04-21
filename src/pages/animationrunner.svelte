@@ -2,10 +2,10 @@
 </Page>
 <script>
   import {f7ready, Page} from 'framework7-svelte';
-  import {runnerBrowser} from "../js/RunnerBrowser.js";
+  import {runnerBrowser} from "../js/web/RunnerBrowser.js";
   import {onMount} from "svelte";
-  import {svelteLive} from "../js/svelteStore.js";
-  import {error} from "../js/util.js";
+  import {svelteLive} from "../js/web/svelteStore.js";
+  import {error} from "../js/web/util.js";
   export let animationName=""
   export let presetName=""
 

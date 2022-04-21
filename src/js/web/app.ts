@@ -9,11 +9,11 @@ import Framework7Svelte from 'framework7-svelte';
 import 'framework7/framework7-bundle.css';
 
 // Import Icons and App Custom Styles
-import '../css/icons.css';
-import '../css/app.css';
+import '../../css/icons.css';
+import '../../css/app.css';
 
 // Import App Component
-import App from '../components/app.svelte';
+import App from '../../components/app.svelte';
 import {rpc} from "./RpcClient.js";
 
 // Init F7 Svelte Plugin

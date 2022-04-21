@@ -33,7 +33,7 @@
 
     {#if $svelteAnimations.length === 0}
         <Preloader/>
-        <Message>Loading list</Message>
+        <Message>Loading list...</Message>
     {:else}
         <List mediaList ul={false}>
             {#each $svelteAnimations as animation}
@@ -75,17 +75,18 @@
         Searchbar,
         Subnavbar, Toggle, View
     } from 'framework7-svelte';
-    import {svelteSelectedTitle, svelteLive} from "../js/svelteStore.js"
-    import {svelteAnimations} from "../js/svelteStore.js";
-    import {runnerBrowser} from "../js/RunnerBrowser.js";
+    import {svelteSelectedTitle, svelteLive} from "../js/web/svelteStore.js"
+    import {svelteAnimations} from "../js/web/svelteStore.js";
+    import {runnerBrowser} from "../js/web/RunnerBrowser.js";
     import {onMount} from "svelte";
-    import {rpc} from "../js/RpcClient.js";
+    import {rpc} from "../js/web/RpcClient.js";
 
     let search = ""
 
     onMount(() => {
         f7ready(() => {
             runnerBrowser.refreshAnimationList()
+
         })
     })
 </script>
