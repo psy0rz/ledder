@@ -143,7 +143,7 @@ export class RunnerBrowser {
 
         await this.run(this.animationName, this.presetName)
 
-        info("Saved preset " + this.presetName, "", 2000)
+        info("Saved preset " + this.presetName, "", 1000)
     }
 
 

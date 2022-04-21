@@ -1,31 +1,31 @@
 {
  "values": {
   "FPS": {
-   "value": 16
+   "value": 60
   },
   "Marquee interval": {
-   "value": 2
+   "value": 1
   },
   "Text color": {
-   "r": 0,
-   "g": 255,
-   "b": 1,
+   "r": 255,
+   "g": 224,
+   "b": 0,
    "a": 1
   },
   "Twinkle speed": {
    "value": 2
   },
   "Twinkle color": {
-   "r": 128,
-   "g": 128,
-   "b": 128,
+   "r": 168,
+   "g": 168,
+   "b": 168,
    "a": 1
   },
   "Twinkle fade speed": {
-   "value": 30
+   "value": 70.10000000000001
   },
   "Text": {
-   "text": "ABCabc123 "
+   "text": "Welkom bij hackerspace Drenthe \\o/   "
   }
  },
  "title": "",

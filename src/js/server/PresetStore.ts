@@ -103,7 +103,7 @@ export class PresetStore {
             presetFileName,
             JSON.stringify(preset, undefined, ' '), 'utf8'
         )
-        this.updateAnimationPresetList()
+        await this.updateAnimationPresetList()
     }
 
     /**
@@ -114,8 +114,9 @@ export class PresetStore {
 
         const animationClass = await this.loadAnimation(animationName)
         const previewFilename = this.previewFilename(animationClass.presetDir, presetName)
-        await createParentDir(previewFilename);
-        return (previewStore.render(previewFilename, animationClass, preset))
+        await createParentDir(previewFilename)
+        await previewStore.render(previewFilename, animationClass, preset)
+        await this.updateAnimationPresetList()
     }
 
 
