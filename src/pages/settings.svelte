@@ -1,6 +1,6 @@
 <Page name="settings"
       stacked={true}
-      onPageMounted={ e=> { presets=$sveltePresets} }>
+      onPageMounted={ ()=> { presets=$sveltePresets} }>
     <Navbar title="Controls"
             subtitle={$svelteSelectedTitle}
             backLink="Back"
@@ -79,8 +79,11 @@
                         }}
 
                 />
+            {:else if preset instanceof ControlInput}
+                <Input type="textarea"  bind:value={preset.text}
+                />
             {:else}
-                <b>Unknown control type!</b>
+                <b>Unknown control type: {preset.name} !</b>
             {/if}
         </Block>
     {:else}
@@ -94,13 +97,14 @@
         Navbar,
         BlockTitle,
         Range,
-        Block, Input, Stepper, Button, Toolbar, Icon, Link, NavRight, f7, Menu, MenuItem, Subnavbar,
+        Block, Input, Stepper,       Menu, MenuItem, Subnavbar,
     } from 'framework7-svelte';
 
     import {sveltePresets, svelteSelectedAnimationName, svelteSelectedTitle, svelteLive} from "../js/web/svelteStore.js"
     import {ControlValue} from "../js/ledder/ControlValue.js";
     import {ControlColor} from "../js/ledder/ControlColor.js";
     import {runnerBrowser} from "../js/web/RunnerBrowser.js";
+    import {ControlInput} from "../js/ledder/ControlInput.js";
     // import {router} from "express/lib/application.js";
 
 
@@ -110,7 +114,7 @@
 
     export let f7router
 
-    svelteSelectedAnimationName.subscribe(selected => {
+    svelteSelectedAnimationName.subscribe(() => {
         // make sure to clear the list on animation change to net get confused
         presets = []
     })

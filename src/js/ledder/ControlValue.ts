@@ -9,7 +9,6 @@ export class ControlValue extends Control {
 
   /**
    * Controls a value, step determines the minimum resolution.
-   * @param matrix
    * @param name Name of the control
    * @param value Initial value
    * @param min Minimum value (inclusive)

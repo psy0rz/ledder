@@ -16,9 +16,9 @@ export default class AnimationMarquee extends Animation {
     super(matrix);
 
     const font=FontSimple8x8
-    const text="Welkom bij Hackerspace Drenthe    "
+    const input=matrix.preset.input('Text', "ABCabc123 ")
 
-    const width = text.length * font.width;
+    // const width = text.length * font.width;
     let char_nr = 0;
     let x = 0;
 
@@ -40,21 +40,21 @@ export default class AnimationMarquee extends Animation {
       }
 
       //add column to the right
-      const c = text[char_nr];
-      for (let y=0; y<font.height; y++)
-      {
-        if (font.data[c][x][y])
-        {
-          this.addPixel(new Pixel(matrix, matrix.width-1,y, colorControl))
-        }
+      const c = input.text[char_nr];
+      if (c!==undefined) {
+        for (let y = 0; y < font.height; y++) {
+          if (font.data[c][x][y]) {
+            this.addPixel(new Pixel(matrix, matrix.width - 1, y, colorControl))
+          }
 
+        }
       }
 
       //goto next column
       x = x + 1;
       if (x == font.width) {
         char_nr++
-        if (char_nr>=text.length)
+        if (char_nr>=input.text.length)
           char_nr=0
         x=0;
       }

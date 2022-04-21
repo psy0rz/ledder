@@ -2,6 +2,7 @@ import {Control} from "./Control.js"
 import {ControlValue} from "./ControlValue.js"
 import {ControlColor} from "./ControlColor.js"
 import {PresetValues} from "./PresetValues.js"
+import {ControlInput} from "./ControlInput.js"
 
 
 /**
@@ -15,6 +16,7 @@ export class PresetControl {
     updateValuesCallback: (controlName, values) => void
 
     constructor() {
+
         this.controls = {};
         this.clear();
     }
@@ -77,6 +79,16 @@ export class PresetControl {
         // @ts-ignore
         return this.controls[name];
     }
+
+    input(name: string, text:string): ControlInput {
+        if (!(name in this.controls)) {
+            this.add(new ControlInput(name, text));
+        }
+
+        // @ts-ignore
+        return this.controls[name];
+    }
+
 
 
 
