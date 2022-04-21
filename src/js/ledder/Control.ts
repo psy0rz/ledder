@@ -12,10 +12,8 @@ export class Control
   }
 
   /**
-   * Generate html code for this control and enable browser interaction.
-   * @param changedCallback
    */
-  html(changedCallback)
+  setChangedCallback(changedCallback)
   {
     this.changedCallback=changedCallback;
 

@@ -42,7 +42,7 @@ export class PresetControl {
             control.load(this.presetValues.values[control.name]);
 
         if (this.updateValuesCallback)
-            control.html(this.updateValuesCallback)
+            control.setChangedCallback(this.updateValuesCallback)
 
         if (this.addControlCallback)
             this.addControlCallback(control)
