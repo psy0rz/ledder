@@ -42,10 +42,16 @@ for (const matrix of matrixList) {
 /////////////////////////mqtt stuff
 const client  = mqtt.connect(mqttHost,mqttOpts)
 
-client.on('connect', function () {
+client.on('connect', ()=> {
+    console.log("Connected to ", mqttHost)
     client.subscribe(`/HACKERSPACE/${nodename}/run`, function (err) {
     })
 })
+
+client.on('error', (e)=>{
+//    console.error("MQTT error: ",e)
+});
+
 
 client.on('message', async  (topic, message) =>{
     let str=message.toString()
