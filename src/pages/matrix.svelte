@@ -15,10 +15,26 @@ onMount(async ()=> {
     matrix.run();
     runnerBrowser.init(matrix)
 
-    matrix.preset.enableHtml( (controlName, controlValues)=>{
-        if ($svelteLive) {
-            rpc.notify("matrix.preset.updateValue", controlName, controlValues)
+    matrix.preset.setCallbacks(
+        ()=>{
+            //reset
+            sveltePresets.set([])
+
+        },
+        (control)=>{
+            //add control
+            sveltePresets.update(p => {
+                p.push(control)
+                return p
+            })
+
+        },
+        (controlName, controlValues)=>{
+            //update values on server side
+            if ($svelteLive) {
+                rpc.notify("matrix.preset.updateValue", controlName, controlValues)
+            }
         }
-    })
+    )
 })
 </script>
