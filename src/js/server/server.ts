@@ -3,6 +3,8 @@ import {RunnerServer} from "./RunnerServer.js";
 import {PresetStore} from "./PresetStore.js";
 import {matrixList, mqttHost, mqttOpts, nodename} from "../../../matrixconf.js"
 import mqtt from 'mqtt'
+import {Scheduler} from "../ledder/Scheduler.js";
+import {MatrixWebsocket} from "./drivers/MatrixWebsocket.js";
 
 console.log("starting..")
 
@@ -37,6 +39,18 @@ for (const matrix of matrixList) {
     runners.push(runner)
 }
 
+//test
+let scheduler = new Scheduler();
+let m=new MatrixWebsocket(scheduler, 75,8, undefined)
+m.runScheduler=false
+// m.run()
+let runner = new RunnerServer(m, presetStore)
+runner.runName(startupAnimation, startupPresetName)
+runners.push(runner)
+
+
+
+
 /////////////////////////mqtt stuff
 const client  = mqtt.connect(mqttHost,mqttOpts)
 
@@ -63,7 +77,7 @@ client.on('message', async  (topic, message) =>{
 
 
 //RPC bindings
-let rpc = new RpcServer();
+let rpc = new RpcServer(m);
 
 
 rpc.addMethod("presetStore.loadAnimationPresetList", (params) => presetStore.loadAnimationPresetList())

@@ -62,7 +62,8 @@ class RpcClient extends Rpc {
     );
 
     webSocket.onmessage = (event) => {
-      this.serverAndClient.receiveAndSend(JSON.parse(event.data.toString()));
+      if (event.data[0]=="{")
+        this.serverAndClient.receiveAndSend(JSON.parse(event.data.toString()));
     };
 
     // On close, make sure to reject all the pending requests to prevent hanging.

@@ -3,6 +3,8 @@ import expressWs from "express-ws";
 import {JSONRPCServer} from "json-rpc-2.0";
 import {Rpc} from "../Rpc.js";
 import {WsContext} from "./WsContext.js";
+import {Scheduler} from "../ledder/Scheduler.js";
+import {MatrixWebsocket} from "./drivers/MatrixWebsocket.js";
 
 let vite
 if (process.env.NODE_ENV == 'development')
@@ -16,9 +18,11 @@ if (process.env.NODE_ENV == 'development')
 export class RpcServer extends Rpc {
 
     serverAndClient: JSONRPCServer<WsContext>;
+    m:MatrixWebsocket
 
-    constructor() {
+    constructor(m) {
         super();
+        this.m=m
 
         const app = express()
         const port = 3000
@@ -42,6 +46,9 @@ export class RpcServer extends Rpc {
         app.ws('/ws', (ws, req) => {
 
             let context=new WsContext()
+
+                this.m.ws=ws
+
 
             ws.on('message', async (msg) => {
                 const response = await this.serverAndClient.receive(JSON.parse(msg.toString()), context);
