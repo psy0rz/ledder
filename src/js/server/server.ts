@@ -62,14 +62,10 @@ client.on('message', async  (topic, message) =>{
 })
 
 
-
-
-
 //RPC bindings
 let rpc = new RpcServer();
 
 
-// rpc.addMethod("presetStore.getCategories", (params) => presetStore.getCategories(...params))
 rpc.addMethod("presetStore.loadAnimationPresetList", (params) => presetStore.loadAnimationPresetList())
 
 rpc.addMethod("presetStore.load", (params) => presetStore.load(params[0], params[1]))

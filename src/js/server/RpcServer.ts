@@ -39,8 +39,6 @@ export class RpcServer extends Rpc {
 
         this.serverAndClient = new JSONRPCServer<WsContext>()
 
-
-
         app.ws('/ws', (ws, req) => {
 
             let context=new WsContext()
