@@ -1,12 +1,12 @@
-
 import express from "express";
 import expressWs from "express-ws";
 import {JSONRPCClient, JSONRPCServer, JSONRPCServerAndClient} from "json-rpc-2.0";
 import {Rpc} from "../Rpc.js";
+import {monitorEventLoopDelay} from "perf_hooks";
 
 let vite
 if (process.env.NODE_ENV == 'development')
-   vite = await import("vite")
+    vite = await import("vite")
 
 
 // import {createServer} from "vite"
@@ -16,7 +16,7 @@ if (process.env.NODE_ENV == 'development')
  */
 export class RpcServer extends Rpc {
 
-    serverAndClient: JSONRPCServerAndClient;
+    serverAndClient: JSONRPCServer;
 
     constructor() {
         super();
@@ -24,7 +24,6 @@ export class RpcServer extends Rpc {
         const app = express()
         const port = 3000
 
-        const rpcServer = this
 
         // use vite's connect instance as middleware, when in dev mode
         if (process.env.NODE_ENV == 'development') {
@@ -37,24 +36,32 @@ export class RpcServer extends Rpc {
         }
         expressWs(app);
 
-        let lastWs;
+        // let lastWs;
 
-        rpcServer.serverAndClient = new JSONRPCServerAndClient(
-            new JSONRPCServer(),
-            new JSONRPCClient((request) => {
-                try {
-                    lastWs.send(JSON.stringify(request));
-                    return Promise.resolve();
-                } catch (error) {
-                    return Promise.reject(error);
-                }
-            })
-        );
+        this.serverAndClient = new JSONRPCServer()
+
+        //new JSONRPCServer()
+        // new JSONRPCClient((request) => {
+        //     try {
+        //         request.send(JSON.stringify(request));
+        //         return Promise.resolve();
+        //     } catch (error) {
+        //         return Promise.reject(error);
+        //     }
+        // })
+        // );
 
         app.ws('/ws', (ws, req) => {
-            lastWs = ws;
-            ws.on('message', (msg) => {
-                rpcServer.serverAndClient.receiveAndSend(JSON.parse(msg.toString()));
+            // lastWs = ws;
+            console.log("JO SOCKET")
+            ws.on('message', async (msg) => {
+                const response = await this.serverAndClient.receive(JSON.parse(msg.toString()));
+                // if (response)
+                ws.send(JSON.stringify(response))
+                // else
+                //     ws.respond(204);
+
+
             });
         });
 
@@ -71,13 +78,13 @@ export class RpcServer extends Rpc {
 
     }
 
-    addMethod(name, method: ([...params])=> void) {
+    addMethod(name, method: ([...params]) => void) {
         this.serverAndClient.addMethod(name, method);
     }
 
-    request(name, ...params) {
-        return (this.serverAndClient.request(name, params));
-    }
+    // request(name, ...params) {
+    //     return (this.serverAndClient.request(name, params));
+    // }
 
 }
 
