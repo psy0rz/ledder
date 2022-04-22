@@ -71,15 +71,15 @@ let rpc = new RpcServer();
 
 // rpc.addMethod("presetStore.getCategories", (params) => presetStore.getCategories(...params))
 rpc.addMethod("presetStore.loadAnimationPresetList", (params) => presetStore.loadAnimationPresetList())
-// @ts-ignore
-rpc.addMethod("presetStore.load", (params) => presetStore.load(...params))
-// @ts-ignore
-rpc.addMethod("presetStore.save", (params) => presetStore.save(...params))
-// @ts-ignore
-rpc.addMethod("presetStore.createPreview", (params) => presetStore.createPreview(...params))
-// @ts-ignore
-rpc.addMethod("presetStore.delete", (params) => presetStore.delete(...params))
-// @ts-ignore
+
+rpc.addMethod("presetStore.load", (params) => presetStore.load(params[0], params[1]))
+
+rpc.addMethod("presetStore.save", (params) => presetStore.save(params[0], params[1], params[2]))
+
+rpc.addMethod("presetStore.createPreview", (params) => presetStore.createPreview(params[0], params[1], params[2]))
+
+rpc.addMethod("presetStore.delete", (params) => presetStore.delete(params[0], params[1]))
+
 rpc.addMethod("runner.run", (params) => {
     for (const runner of runners) {
         runner.run(...params)
@@ -87,7 +87,6 @@ rpc.addMethod("runner.run", (params) => {
 })
 
 //todo: make multi-matrix
-// @ts-ignore
 rpc.addMethod("matrix.preset.updateValue", (params) => {
     for (const matrix of matrixList) {
         matrix.preset.updateValue(...params)

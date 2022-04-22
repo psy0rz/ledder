@@ -1,22 +1,21 @@
 import express from "express";
 import expressWs from "express-ws";
-import {JSONRPCClient, JSONRPCServer, JSONRPCServerAndClient} from "json-rpc-2.0";
+import {JSONRPCServer} from "json-rpc-2.0";
 import {Rpc} from "../Rpc.js";
-import {monitorEventLoopDelay} from "perf_hooks";
+import {WsContext} from "./WsContext.js";
 
 let vite
 if (process.env.NODE_ENV == 'development')
     vite = await import("vite")
 
 
-// import {createServer} from "vite"
 
 /**
  * Nodejs server-side webserver that handles static files and json-rpc-2.0 requests via websocket.
  */
 export class RpcServer extends Rpc {
 
-    serverAndClient: JSONRPCServer;
+    serverAndClient: JSONRPCServer<WsContext>;
 
     constructor() {
         super();
@@ -38,29 +37,18 @@ export class RpcServer extends Rpc {
 
         // let lastWs;
 
-        this.serverAndClient = new JSONRPCServer()
+        this.serverAndClient = new JSONRPCServer<WsContext>()
 
-        //new JSONRPCServer()
-        // new JSONRPCClient((request) => {
-        //     try {
-        //         request.send(JSON.stringify(request));
-        //         return Promise.resolve();
-        //     } catch (error) {
-        //         return Promise.reject(error);
-        //     }
-        // })
-        // );
+
 
         app.ws('/ws', (ws, req) => {
-            // lastWs = ws;
-            console.log("JO SOCKET")
+
+            let context=new WsContext()
+
             ws.on('message', async (msg) => {
-                const response = await this.serverAndClient.receive(JSON.parse(msg.toString()));
+                const response = await this.serverAndClient.receive(JSON.parse(msg.toString()), context);
                 if (response)
                     ws.send(JSON.stringify(response))
-                // else
-                //     ws.respond(204);
-
 
             });
         });
@@ -78,7 +66,7 @@ export class RpcServer extends Rpc {
 
     }
 
-    addMethod(name, method: ([...params]) => void) {
+    addMethod(name, method: (params: any[], context:WsContext) => void) {
         this.serverAndClient.addMethod(name, method);
     }
 
