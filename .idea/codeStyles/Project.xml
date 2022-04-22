@@ -2,11 +2,9 @@
   <code_scheme name="Project" version="173">
     <JSCodeStyleSettings version="0">
       <option name="USE_EXPLICIT_JS_EXTENSION" value="TRUE" />
-      <option name="IMPORT_PREFER_ABSOLUTE_PATH" value="TRUE" />
     </JSCodeStyleSettings>
     <TypeScriptCodeStyleSettings version="0">
       <option name="USE_EXPLICIT_JS_EXTENSION" value="TRUE" />
-      <option name="IMPORT_PREFER_ABSOLUTE_PATH" value="TRUE" />
     </TypeScriptCodeStyleSettings>
   </code_scheme>
 </component>
