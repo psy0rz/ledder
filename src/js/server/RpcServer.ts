@@ -56,8 +56,8 @@ export class RpcServer extends Rpc {
             console.log("JO SOCKET")
             ws.on('message', async (msg) => {
                 const response = await this.serverAndClient.receive(JSON.parse(msg.toString()));
-                // if (response)
-                ws.send(JSON.stringify(response))
+                if (response)
+                    ws.send(JSON.stringify(response))
                 // else
                 //     ws.respond(204);
 
@@ -82,9 +82,9 @@ export class RpcServer extends Rpc {
         this.serverAndClient.addMethod(name, method);
     }
 
-    // request(name, ...params) {
-    //     return (this.serverAndClient.request(name, params));
-    // }
+    request(name, ...params) {
+        // return (this.serverAndClient.request(name, params));
+    }
 
 }
 
