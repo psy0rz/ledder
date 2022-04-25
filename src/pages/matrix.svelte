@@ -20,7 +20,22 @@
             // matrix.run();
             runnerBrowser.init(rpc.matrix)
 
+            rpc.addMethod('control.reset', ()=>
+            {
+                sveltePresets.set([])
+            })
+
+            rpc.addMethod('control.add', (params)=>{
+                sveltePresets.update(p => {
+                    p.push(params[0])
+                    return p
+                })
+            })
+
+
             await rpc.request('context.startPreview', width, height)
+
+
 
             /**
              rpc.matrix.preset.setCallbacks(

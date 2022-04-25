@@ -1,6 +1,6 @@
 import express from "express";
 import expressWs from "express-ws";
-import {JSONRPCServer} from "json-rpc-2.0";
+import {JSONRPCClient, JSONRPCServer, JSONRPCServerAndClient} from "json-rpc-2.0";
 import {Rpc} from "../Rpc.js";
 import {WsContext} from "./WsContext.js";
 
@@ -14,7 +14,7 @@ if (process.env.NODE_ENV == 'development')
  */
 export class RpcServer extends Rpc {
 
-    server: JSONRPCServer<WsContext>;
+    server: JSONRPCServerAndClient<WsContext, WsContext>;
 
     constructor() {
         super();
@@ -36,21 +36,31 @@ export class RpcServer extends Rpc {
 
         // let lastWs;
 
-        this.server = new JSONRPCServer<WsContext>()
+        this.server = new JSONRPCServerAndClient<WsContext, WsContext>(
+            new JSONRPCServer<WsContext>(),
+            new JSONRPCClient<WsContext>((request, context) => {
+                try {
+                    context.ws.send(JSON.stringify(request));
+                    return Promise.resolve();
+                } catch (error) {
+                    return Promise.reject(error);
+                }
+            })
+        );
 
         app.ws('/ws', (ws, req) => {
-            let context = new WsContext(ws)
+            let context = new WsContext( ws, this.server)
 
             ws.on('message', async (msg) => {
-                console.log("RPC request: ", msg)
+                // console.log("RPC request: ", msg)
                 try {
                     const request = JSON.parse(msg.toString())
-                    console.log("RPC request: ", request)
+                    // console.log("RPC request: ", request)
 
-                    const response = await this.server.receive(request, context);
-                    console.log("RPC response", response)
-                    if (response)
-                        ws.send(JSON.stringify(response))
+                    const response = await this.server.receiveAndSend(request, context, context);
+                    // console.log("RPC response", response)
+                    // if (response)
+                    //     ws.send(JSON.stringify(response))
                 } catch (e) {
                     console.log("RPC error: ", e)
                     throw(e)
@@ -78,8 +88,7 @@ export class RpcServer extends Rpc {
     }
 
     request(name, ...params) {
-        // return (this.serverAndClient.request(name, params));
+        throw("Use wsContext.request to send request to the proper client.")
     }
-
 }
 

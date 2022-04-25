@@ -4,6 +4,7 @@
 export class Control
 {
   name: string;
+  type: string;
   changedCallback: (controlName, values)=>void
 
   constructor(name) {

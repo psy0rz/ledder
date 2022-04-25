@@ -31,7 +31,7 @@
     {#each presets as preset, i (preset.name)}
         <BlockTitle>{preset.name}</BlockTitle>
         <Block inset>
-            {#if preset instanceof ControlValue }
+            {#if preset.type === 'value' }
                 <Stepper
                         bind:value={preset.value}
                         min={preset.min}
@@ -50,7 +50,7 @@
                            preset.value=e.detail[0]
                            preset.changed()
                        } }/>
-            {:else if preset instanceof ControlColor}
+            {:else if preset.type === 'color'}
                 <div style="max-width: 200px" id="color-picker-{i}"></div>
                 <Input
                         type="colorpicker"
@@ -79,8 +79,8 @@
                         }}
 
                 />
-            {:else if preset instanceof ControlInput}
-                <Input type="textarea"  bind:value={preset.text}
+            {:else if preset.type==='input'}
+                <Input type="textarea" bind:value={preset.text}
                 />
             {:else}
                 <b>Unknown control type: {preset.name} !</b>
@@ -97,7 +97,7 @@
         Navbar,
         BlockTitle,
         Range,
-        Block, Input, Stepper,       Menu, MenuItem, Subnavbar,
+        Block, Input, Stepper, Menu, MenuItem, Subnavbar,
     } from 'framework7-svelte';
 
     import {sveltePresets, svelteSelectedAnimationName, svelteSelectedTitle, svelteLive} from "../js/web/svelteStore.js"

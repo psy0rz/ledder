@@ -23,10 +23,11 @@ export class ControlValue extends Control {
     numberCheck(`${name} max`, max)
     numberCheck(`${name} step`, step,0.0001)
 
-    this.value = value;
-    this.min = min;
-    this.max = max;
-    this.step = step;
+    this.type='value'
+    this.value = value
+    this.min = min
+    this.max = max
+    this.step = step
 
 
   }

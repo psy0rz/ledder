@@ -11,7 +11,8 @@ export class ControlInput extends Control {
   constructor( name: string, text: string) {
     super( name);
 
-    this.text = text;
+    this.type='input'
+    this.text = text
 
   }
 
