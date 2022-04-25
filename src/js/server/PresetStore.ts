@@ -116,7 +116,7 @@ export class PresetStore {
         const previewFilename = this.previewFilename(animationClass.presetDir, presetName)
         await createParentDir(previewFilename)
         await previewStore.render(previewFilename, animationClass, preset)
-        await this.updateAnimationPresetList()
+        //await this.updateAnimationPresetList()
     }
 
 

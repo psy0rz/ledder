@@ -9,6 +9,7 @@ import {MatrixWebsocket} from "./drivers/MatrixWebsocket.js";
 console.log("starting..")
 
 
+//TODO: move to a settings page
 
 let startupAnimation = "AnimationMarquee"
 let startupPresetDir = "Marquee"
@@ -17,13 +18,6 @@ let startupPresetName = "slow"
 
 //init preset store
 const presetStore = new PresetStore()
-
-// let startupPreset = new PresetValues()
-// try {
-//     startupPreset = await presetStore.load(startupPresetDir, startupPresetName)
-// } catch (e) {
-//     console.error(e)
-// }
 
 //create run all the matrixes
 let runners = []
@@ -38,17 +32,6 @@ for (const matrix of matrixList) {
     runner.runName(startupAnimation, startupPresetName)
     runners.push(runner)
 }
-
-//test
-let scheduler = new Scheduler();
-let m=new MatrixWebsocket(scheduler, 75,8, undefined)
-m.runScheduler=false
-// m.run()
-let runner = new RunnerServer(m, presetStore)
-runner.runName(startupAnimation, startupPresetName)
-runners.push(runner)
-
-
 
 
 /////////////////////////mqtt stuff
@@ -77,7 +60,7 @@ client.on('message', async  (topic, message) =>{
 
 
 //RPC bindings
-let rpc = new RpcServer(m);
+let rpc = new RpcServer();
 
 
 rpc.addMethod("presetStore.loadAnimationPresetList", (params) => presetStore.loadAnimationPresetList())
@@ -90,14 +73,21 @@ rpc.addMethod("presetStore.createPreview", (params) => presetStore.createPreview
 
 rpc.addMethod("presetStore.delete", (params) => presetStore.delete(params[0], params[1]))
 
-rpc.addMethod("runner.run", (params) => {
+rpc.addMethod("runner.run", (params, context) => {
+
+    if (context.runner)
+        context.runner.run(params[0], params[1])
+
     for (const runner of runners) {
         runner.run(...params)
     }
 })
 
-//todo: make multi-matrix
-rpc.addMethod("matrix.preset.updateValue", (params) => {
+rpc.addMethod("matrix.preset.updateValue", (params, context) => {
+
+    if (context.runner)
+        context.runner.matrix.preset.updateValue(params[0], params[1])
+
     for (const matrix of matrixList) {
         matrix.preset.updateValue(...params)
     }

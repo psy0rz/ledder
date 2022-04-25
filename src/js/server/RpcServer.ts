@@ -3,8 +3,6 @@ import expressWs from "express-ws";
 import {JSONRPCServer} from "json-rpc-2.0";
 import {Rpc} from "../Rpc.js";
 import {WsContext} from "./WsContext.js";
-import {Scheduler} from "../ledder/Scheduler.js";
-import {MatrixWebsocket} from "./drivers/MatrixWebsocket.js";
 
 let vite
 if (process.env.NODE_ENV == 'development')
@@ -17,12 +15,10 @@ if (process.env.NODE_ENV == 'development')
  */
 export class RpcServer extends Rpc {
 
-    serverAndClient: JSONRPCServer<WsContext>;
-    m:MatrixWebsocket
+    server: JSONRPCServer<WsContext>;
 
-    constructor(m) {
+    constructor() {
         super();
-        this.m=m
 
         const app = express()
         const port = 3000
@@ -41,17 +37,14 @@ export class RpcServer extends Rpc {
 
         // let lastWs;
 
-        this.serverAndClient = new JSONRPCServer<WsContext>()
+        this.server = new JSONRPCServer<WsContext>()
 
         app.ws('/ws', (ws, req) => {
 
-            let context=new WsContext()
-
-                this.m.ws=ws
-
+            let context=new WsContext(ws)
 
             ws.on('message', async (msg) => {
-                const response = await this.serverAndClient.receive(JSON.parse(msg.toString()), context);
+                const response = await this.server.receive(JSON.parse(msg.toString()), context);
                 if (response)
                     ws.send(JSON.stringify(response))
 
@@ -72,7 +65,7 @@ export class RpcServer extends Rpc {
     }
 
     addMethod(name, method: (params: any[], context:WsContext) => void) {
-        this.serverAndClient.addMethod(name, method);
+        this.server.addMethod(name, method);
     }
 
     request(name, ...params) {
