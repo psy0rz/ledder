@@ -21,12 +21,6 @@
 
     </Navbar>
 
-    <!--    <Toolbar position="top">-->
-    <!--        <Button iconMd="material:save" onClick={ onSave } disabled={saveDisabled}/>-->
-    <!--        <Button iconMd="material:delete" onClick={ onDelete } disabled={deleteDisabled }/>-->
-    <!--        <Button iconMd="material:file_copy" onClick={ onSaveAs } disabled={copyDisabled }/>-->
-    <!--    </Toolbar>-->
-
 
     {#each presets as preset, i (preset.name)}
         <BlockTitle>{preset.name}</BlockTitle>
@@ -38,7 +32,7 @@
                         max={preset.max}
                         step={preset.step}
                 />
-                <Range value={preset.value}
+                <Range bind:value={preset.value}
                        min={preset.min}
                        max={preset.max}
                        step={preset.step}
@@ -48,7 +42,7 @@
                        label={true}
                        on:rangeChange={ e=> {
                            preset.value=e.detail[0]
-                           preset.changed()
+                           rpc.notify("matrix.preset.updateValue", preset.name, preset)
                        } }/>
             {:else if preset.type === 'color'}
                 <div style="max-width: 200px" id="color-picker-{i}"></div>
@@ -66,21 +60,24 @@
                             containerEl: "#color-picker-"+i,
                             modules: ["wheel", "alpha-slider"],
                             on: {
-
                                 change: (e,c)=>{
-                                    //we use this instead of onChange, because we want realtime updates
                                     preset.r=c.rgb[0]
                                     preset.g=c.rgb[1]
                                     preset.b=c.rgb[2]
                                     preset.a=c.alpha
-                                    preset.changed()
+
+                                    rpc.notify("matrix.preset.updateValue", preset.name, preset)
                                 }
                             }
                         }}
 
                 />
-            {:else if preset.type==='input'}
-                <Input type="textarea" bind:value={preset.text}
+            {:else if preset.type === 'input'}
+                <Input type="textarea" value={preset.text}
+                       on:input={ (e)=>{
+                            preset.text=e.detail[0].target.value
+                            rpc.notify("matrix.preset.updateValue", preset.name, preset)
+                       }}
                 />
             {:else}
                 <b>Unknown control type: {preset.name} !</b>
@@ -101,11 +98,8 @@
     } from 'framework7-svelte';
 
     import {sveltePresets, svelteSelectedAnimationName, svelteSelectedTitle, svelteLive} from "../js/web/svelteStore.js"
-    import {ControlValue} from "../js/ledder/ControlValue.js";
-    import {ControlColor} from "../js/ledder/ControlColor.js";
     import {runnerBrowser} from "../js/web/RunnerBrowser.js";
-    import {ControlInput} from "../js/ledder/ControlInput.js";
-    // import {router} from "express/lib/application.js";
+    import {rpc} from "../js/web/RpcClient.js";
 
 
     let presets = []

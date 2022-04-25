@@ -110,7 +110,7 @@ class RpcClient extends Rpc {
       // console.log("RPC start", name, params)
       progressStart()
       let result=await this.serverAndClient.request(name, params)
-      console.log("RPC complete",name, params,result)
+      // console.log("RPC complete",name, params,result)
       progressDone()
       return(result)
     } catch (e) {
@@ -137,6 +137,7 @@ class RpcClient extends Rpc {
    */
   async notify(name, ...params)
   {
+    // console.log("RPC notify",name, params)
     this.serverAndClient.notify(name, params)
   }
 
