@@ -3,18 +3,14 @@ import {RunnerServer} from "./RunnerServer.js";
 import {PresetStore} from "./PresetStore.js";
 import {matrixList, mqttHost, mqttOpts, nodename} from "../../../matrixconf.js"
 import mqtt from 'mqtt'
-import {Scheduler} from "../ledder/Scheduler.js";
-import {MatrixWebsocket} from "./drivers/MatrixWebsocket.js";
 
 console.log("starting..")
 
 
 //TODO: move to a settings page
-
 let startupAnimation = "AnimationMarquee"
 let startupPresetDir = "Marquee"
 let startupPresetName = "slow"
-
 
 //init preset store
 const presetStore = new PresetStore()
@@ -35,6 +31,7 @@ for (const matrix of matrixList) {
 
 
 /////////////////////////mqtt stuff
+//TODO: move
 const client  = mqtt.connect(mqttHost,mqttOpts)
 
 client.on('connect', ()=> {
@@ -73,6 +70,14 @@ rpc.addMethod("presetStore.createPreview", (params) => presetStore.createPreview
 
 rpc.addMethod("presetStore.delete", (params) => presetStore.delete(params[0], params[1]))
 
+rpc.addMethod("context.startPreview", (params, context) => {
+   context.startPreview(presetStore, params[0], params[1])
+})
+
+rpc.addMethod("context.stopPreview", (params, context) => {
+    context.stopPreview()
+})
+
 rpc.addMethod("runner.run", (params, context) => {
 
     if (context.runner)
@@ -80,6 +85,16 @@ rpc.addMethod("runner.run", (params, context) => {
 
     for (const runner of runners) {
         runner.run(...params)
+    }
+})
+
+rpc.addMethod("runner.runName", (params, context) => {
+
+    if (context.runner)
+        context.runner.runName(params[0], params[1])
+
+    for (const runner of runners) {
+        runner.runName(params[0], params[1])
     }
 })
 

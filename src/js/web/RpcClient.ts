@@ -2,6 +2,7 @@ import {JSONRPCClient, JSONRPCServer, JSONRPCServerAndClient} from "json-rpc-2.0
 import {Rpc} from "../Rpc.js";
 import {RpcServer} from "../server/RpcServer.js";
 import {error, progressDone, progressStart} from "./util.js";
+import {MatrixCanvas} from "./MatrixCanvas.js";
 
 /***
  * Browser-side rpc client that connect to server handles rpc calls to/from server.
@@ -12,6 +13,7 @@ class RpcClient extends Rpc {
   openHandler: () => void;
   closeHandler: () => void;
   url: string
+  matrix: MatrixCanvas
 
   constructor() {
     super();
@@ -61,9 +63,15 @@ class RpcClient extends Rpc {
       })
     );
 
-    webSocket.onmessage = (event) => {
+    webSocket.onmessage = async (event) => {
       if (event.data[0]=="{")
         this.serverAndClient.receiveAndSend(JSON.parse(event.data.toString()));
+      else{
+        if (this.matrix)
+          this.matrix.frame(await event.data.arrayBuffer())
+
+      }
+
     };
 
     // On close, make sure to reject all the pending requests to prevent hanging.
@@ -99,16 +107,16 @@ class RpcClient extends Rpc {
   async request(name, ...params) {
 
     try {
+      // console.log("RPC start", name, params)
       progressStart()
-      // console.log("RPC request", name, params)
       let result=await this.serverAndClient.request(name, params)
-      console.log("RPC",name, params,result)
+      console.log("RPC complete",name, params,result)
       progressDone()
       return(result)
     } catch (e) {
+      console.error("RPC error", name, params, e)
       progressDone()
       error("RPC request failed", e)
-      console.error("RPC error", name, params, e)
       throw(e)
     }
   }

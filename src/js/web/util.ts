@@ -4,6 +4,7 @@ import {f7} from "framework7-svelte";
 
 export function error(title: string, message: string, time = 10000) {
     console.error(`ERROR: ${title}: ${message}`)
+    console.log(title, message)
     f7.toast.show({
         text: `<i class="material-icons">error</i> <b>${title}</b><p>${message}`,
         position: 'top',

@@ -9,7 +9,6 @@ if (process.env.NODE_ENV == 'development')
     vite = await import("vite")
 
 
-
 /**
  * Nodejs server-side webserver that handles static files and json-rpc-2.0 requests via websocket.
  */
@@ -40,13 +39,23 @@ export class RpcServer extends Rpc {
         this.server = new JSONRPCServer<WsContext>()
 
         app.ws('/ws', (ws, req) => {
-
-            let context=new WsContext(ws)
+            let context = new WsContext(ws)
 
             ws.on('message', async (msg) => {
-                const response = await this.server.receive(JSON.parse(msg.toString()), context);
-                if (response)
-                    ws.send(JSON.stringify(response))
+                console.log("RPC request: ", msg)
+                try {
+                    const request = JSON.parse(msg.toString())
+                    console.log("RPC request: ", request)
+
+                    const response = await this.server.receive(request, context);
+                    console.log("RPC response", response)
+                    if (response)
+                        ws.send(JSON.stringify(response))
+                } catch (e) {
+                    console.log("RPC error: ", e)
+                    throw(e)
+                }
+
 
             });
         });
@@ -64,7 +73,7 @@ export class RpcServer extends Rpc {
 
     }
 
-    addMethod(name, method: (params: any[], context:WsContext) => void) {
+    addMethod(name, method: (params: any[], context: WsContext) => void) {
         this.server.addMethod(name, method);
     }
 

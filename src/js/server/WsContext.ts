@@ -13,10 +13,10 @@ export class WsContext {
         this.ws=ws
     }
 
-    startPreview(presetStore:PresetStore)
+    startPreview(presetStore:PresetStore, width, height)
     {
         let scheduler = new Scheduler();
-        let matrix=new MatrixWebsocket(scheduler, 75,8, this.ws)
+        let matrix=new MatrixWebsocket(scheduler, width,height, this.ws)
         this.runner = new RunnerServer(matrix, presetStore)
         matrix.run()
     }
