@@ -1,13 +1,14 @@
 import {Matrix} from "../ledder/Matrix.js";
 import {rpc} from "./RpcClient.js";
-import {svelteAnimations, svelteSelectedAnimationName, svelteSelectedTitle} from "./svelteStore.js";
+import {svelteAnimations, sveltePresets, svelteSelectedAnimationName, svelteSelectedTitle} from "./svelteStore.js";
 import {confirmPromise, info, promptPromise} from "./util.js";
+import {MatrixCanvas} from "./MatrixCanvas.js";
 
 /**
  * Browser side animation runner
  */
 export class RunnerBrowser {
-    matrix: Matrix
+    // matrix: Matrix
     animationName: string
     presetName: string
     animationClass: Animation
@@ -17,8 +18,28 @@ export class RunnerBrowser {
 
     }
 
-    init(matrix: Matrix) {
-        this.matrix = matrix
+    async init() {
+        // this.matrix = matrix
+
+        let width = 40
+        let height = 8
+        rpc.matrix = new MatrixCanvas(width, height, '#ledder-preview');
+
+        rpc.addMethod('control.reset', ()=>
+        {
+            sveltePresets.set([])
+        })
+
+        rpc.addMethod('control.add', (params)=>{
+            sveltePresets.update(p => {
+                p.push(params[0])
+                return p
+            })
+        })
+
+
+        await rpc.request('context.startPreview', width, height)
+
 
     }
 

@@ -13,53 +13,7 @@
 
     onMount(async () => {
         f7ready(async () => {
-            // let scheduler = new Scheduler();
-            let width = 40
-            let height = 8
-            rpc.matrix = new MatrixCanvas(width, height, '#ledder-preview');
-            // matrix.run();
-            runnerBrowser.init(rpc.matrix)
-
-            rpc.addMethod('control.reset', ()=>
-            {
-                sveltePresets.set([])
-            })
-
-            rpc.addMethod('control.add', (params)=>{
-                sveltePresets.update(p => {
-                    p.push(params[0])
-                    return p
-                })
-            })
-
-
-            await rpc.request('context.startPreview', width, height)
-
-
-
-            /**
-             rpc.matrix.preset.setCallbacks(
-             ()=>{
-            //reset
-            sveltePresets.set([])
-
-        },
-             (control)=>{
-            //add control
-            sveltePresets.update(p => {
-                p.push(control)
-                return p
-            })
-
-        },
-             (controlName, controlValues)=>{
-            //update values on server side
-            if ($svelteLive) {
-                rpc.notify("matrix.preset.updateValue", controlName, controlValues)
-            }
-        }
-
-             )**/
+            await runnerBrowser.init()
         })
     })
 </script>
