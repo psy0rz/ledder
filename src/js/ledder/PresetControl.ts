@@ -37,11 +37,11 @@ export class PresetControl {
      * @param control
      */
     add(control: Control) {
-        this.controls[control.name] = control;
+        this.controls[control.meta.name] = control;
 
         //already has a preset in values?
-        if (control.name in this.presetValues.values)
-            control.load(this.presetValues.values[control.name]);
+        if (control.meta.name in this.presetValues.values)
+            control.load(this.presetValues.values[control.meta.name]);
 
         if (this.updateValuesCallback)
             control.setChangedCallback(this.updateValuesCallback)

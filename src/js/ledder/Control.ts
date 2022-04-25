@@ -3,12 +3,14 @@
  */
 export class Control
 {
-  name: string;
-  type: string;
+  meta: Record<string,any>
+
   changedCallback: (controlName, values)=>void
 
   constructor(name) {
-    this.name=name;
+    this.meta={}
+    this.meta.name=name;
+
 
   }
 
@@ -35,7 +37,7 @@ export class Control
   changed()
   {
     if (this.changedCallback!==undefined)
-      this.changedCallback(this.name, this.save());
+      this.changedCallback(this.meta.name, this.save());
 
   }
 

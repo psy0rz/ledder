@@ -10,7 +10,7 @@ export class ControlColor extends Control implements ColorInterface {
 
   constructor(name: string, r: number=128, g: number=128, b: number=128, a: number = 1) {
     super(name);
-    this.type='color'
+    this.meta.type='color'
     this.r = r;
     this.g = g;
     this.b = b;

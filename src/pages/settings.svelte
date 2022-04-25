@@ -22,29 +22,29 @@
     </Navbar>
 
 
-    {#each presets as preset, i (preset.name)}
-        <BlockTitle>{preset.name}</BlockTitle>
+    {#each presets as preset, i (preset.meta.name)}
+        <BlockTitle>{preset.meta.name}</BlockTitle>
         <Block inset>
-            {#if preset.type === 'value' }
+            {#if preset.meta.type === 'value' }
                 <Stepper
                         bind:value={preset.value}
-                        min={preset.min}
-                        max={preset.max}
-                        step={preset.step}
+                        min={preset.meta.min}
+                        max={preset.meta.max}
+                        step={preset.meta.step}
                 />
                 <Range bind:value={preset.value}
-                       min={preset.min}
-                       max={preset.max}
-                       step={preset.step}
+                       min={preset.meta.min}
+                       max={preset.meta.max}
+                       step={preset.meta.step}
                        scaleSteps={5}
                        scaleSubSteps={5}
                        scale
                        label={true}
                        on:rangeChange={ e=> {
                            preset.value=e.detail[0]
-                           rpc.notify("matrix.preset.updateValue", preset.name, preset)
+                           rpc.notify("matrix.preset.updateValue", preset.meta.name, preset)
                        } }/>
-            {:else if preset.type === 'color'}
+            {:else if preset.meta.type === 'color'}
                 <div style="max-width: 200px" id="color-picker-{i}"></div>
                 <Input
                         type="colorpicker"
@@ -66,21 +66,21 @@
                                     preset.b=c.rgb[2]
                                     preset.a=c.alpha
 
-                                    rpc.notify("matrix.preset.updateValue", preset.name, preset)
+                                    rpc.notify("matrix.preset.updateValue", preset.meta.name, preset)
                                 }
                             }
                         }}
 
                 />
-            {:else if preset.type === 'input'}
+            {:else if preset.meta.type === 'input'}
                 <Input type="textarea" value={preset.text}
                        on:input={ (e)=>{
                             preset.text=e.detail[0].target.value
-                            rpc.notify("matrix.preset.updateValue", preset.name, preset)
+                            rpc.notify("matrix.preset.updateValue", preset.meta.name, preset)
                        }}
                 />
             {:else}
-                <b>Unknown control type: {preset.name} !</b>
+                <b>Unknown control type: {preset.meta.name} !</b>
             {/if}
         </Block>
     {:else}

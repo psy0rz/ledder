@@ -3,9 +3,6 @@ import {numberCheck} from "./util.js";
 
 export class ControlValue extends Control {
   value: number;
-  min: number;
-  max: number;
-  step: number;
 
   /**
    * Controls a value, step determines the minimum resolution.
@@ -23,11 +20,12 @@ export class ControlValue extends Control {
     numberCheck(`${name} max`, max)
     numberCheck(`${name} step`, step,0.0001)
 
-    this.type='value'
+    this.meta.type='value'
+    this.meta.min=min
+    this.meta.max=max
+    this.meta.step=step
+
     this.value = value
-    this.min = min
-    this.max = max
-    this.step = step
 
 
   }

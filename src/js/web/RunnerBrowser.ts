@@ -14,8 +14,23 @@ export class RunnerBrowser {
     animationClass: Animation
     live: boolean;
 
+    presets: Record<string, any>
+
     constructor() {
 
+    }
+
+    //get current preset values without metadata.
+    save()
+    {
+        const ret={}
+        for(const [name, preset] of Object.entries(this.presets))
+        {
+            const values= {...preset}
+            values.meta=undefined
+            ret[name]=values
+        }
+        return ret
     }
 
     async init() {
@@ -27,10 +42,14 @@ export class RunnerBrowser {
 
         rpc.addMethod('control.reset', ()=>
         {
+            this.presets={}
             sveltePresets.set([])
         })
 
         rpc.addMethod('control.add', (params)=>{
+
+            this.presets[params[0].meta.name]=params[0]
+
             sveltePresets.update(p => {
                 p.push(params[0])
                 return p
@@ -113,11 +132,11 @@ export class RunnerBrowser {
         if (this.presetName == "")
             return
 
-        let preset = this.matrix.preset.save();
+        let values = this.save()
 
         // @ts-ignore
-        await rpc.request("presetStore.save", this.animationClass.presetDir, this.presetName, preset);
-        await rpc.request("presetStore.createPreview", this.animationName, this.presetName, preset);
+        await rpc.request("presetStore.save", this.animationClass.presetDir, this.presetName, values);
+        await rpc.request("presetStore.createPreview", this.animationName, this.presetName, values);
         await this.refreshAnimationList()
 
         await this.run(this.animationName, this.presetName)
