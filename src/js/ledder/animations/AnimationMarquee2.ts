@@ -29,7 +29,7 @@ export default class AnimationMarquee extends Animation {
         // face.setCharSize()
 
 
-        const input = matrix.preset.input('Text', "@ABC.,-")
+        const input = matrix.preset.input('Text', "@ABCabc.,- ")
 
         // const width = text.length * font.width;
         let char_nr = 0;
@@ -69,7 +69,6 @@ export default class AnimationMarquee extends Animation {
                     loadTarget: freetype.RenderMode.NORMAL,
 
 
-
                 });
 
 
@@ -79,32 +78,25 @@ export default class AnimationMarquee extends Animation {
                 // const offset =
 
                 // console.log(glyph)
+                // console.log(input.text[char_nr],glyph)
                 if (glyph.bitmap) {
-
-                    console.log(input.text[char_nr],glyph.bitmap.height,   glyph.metrics.height/64)
-                    const advance=glyph.metrics.horiAdvance/64
-
-                    if (x>=glyph.bitmapLeft && x-glyph.bitmapLeft<glyph.bitmap.width) {
+                    // console.log(input.text[char_nr],glyph.bitmap.height,   glyph.metrics.height/64)
+                    if (x >= glyph.bitmapLeft && x - glyph.bitmapLeft < glyph.bitmap.width) {
                         for (let row = 0; row < glyph.bitmap.height; row++) {
                             const offset = (row * glyph.bitmap.pitch) + x - glyph.bitmapLeft
                             const gray = glyph.bitmap.buffer.readUInt8(offset)
 
                             if (gray > 0)
-                                this.addPixel(new Pixel(matrix, matrix.width - 1,   glyph.bitmapTop - row  , new Color(255, 0, 0, gray / 255)))
+                                this.addPixel(new Pixel(matrix, matrix.width - 1, glyph.bitmapTop - row, new Color(255, 0, 0, gray / 255)))
                         }
                     }
-
-                    //goto next column
-                    x = x + 1;
-                    if (x == advance) {
-                        char_nr++
-                        x = 0;
-                    }
                 }
-                else
-                {
-                    char_nr=char_nr+1
-                    x=0
+
+                //goto next column
+                x = x + 1;
+                if (x == glyph.metrics.horiAdvance / 64) {
+                    char_nr++
+                    x = 0;
                 }
 
             }
