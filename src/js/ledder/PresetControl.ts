@@ -99,7 +99,7 @@ export class PresetControl {
     }
 
     /**
-     * Save current control values to current preset and return it
+     * Return current control values
      * Note: loading and saving is setup in a way so that unused values will never be deleted. It doesnt matter if controls do not yet exists for specific values.
      */
     save() {

@@ -4,7 +4,8 @@ import {PresetStore} from "./PresetStore.js";
 
 const presetStore = new PresetStore()
 await presetStore.updateAnimationPresetList()
-await presetStore.updateAnimationPreviews(false)
+await presetStore.updateAnimationPreviews(process.argv[2]=='--force')
 
 //creating previews changes some metadata (timestamp)
 await presetStore.updateAnimationPresetList()
+

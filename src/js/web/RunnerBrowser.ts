@@ -5,7 +5,7 @@ import {confirmPromise, info, promptPromise} from "./util.js";
 import {MatrixCanvas} from "./MatrixCanvas.js";
 
 /**
- * Browser side animation runner
+ * Browser side animation runner. Note that animation runs on the server side (WsContext.ts) and is actually streamed to browser via MatrixWebsocket
  */
 export class RunnerBrowser {
     // matrix: Matrix
@@ -20,18 +20,6 @@ export class RunnerBrowser {
 
     }
 
-    //get current preset values without metadata.
-    save()
-    {
-        const ret={}
-        for(const [name, preset] of Object.entries(this.presets))
-        {
-            const values= {...preset}
-            values.meta=undefined
-            ret[name]=values
-        }
-        return ret
-    }
 
     async init() {
         // this.matrix = matrix
@@ -39,6 +27,9 @@ export class RunnerBrowser {
         let width = 40
         let height = 8
         rpc.matrix = new MatrixCanvas(width, height, '#ledder-preview');
+
+        this.presets={}
+        sveltePresets.set([])
 
         rpc.addMethod('control.reset', ()=>
         {
@@ -92,27 +83,10 @@ export class RunnerBrowser {
      */
     async run(animationName: string, presetName: string) {
 
-        // console.log("Runner: starting", animationName, presetName)
-        // let module = await import(`../ledder/animations/${animationName}.js`)
-        // this.animationClass=module.default
-        //
-        // this.matrix.reset()
-        // svelteSelectedAnimationName.set(animationName)
-        //
-        // // @ts-ignore
-        // svelteSelectedTitle.set(`${this.animationClass.title} -> ${presetName}`)
-        //
-        // if (presetName) {
-        //     // @ts-ignore
-        //     this.matrix.preset.load(await rpc.request("presetStore.load", this.animationClass.presetDir, presetName));
-        // }
 
         this.animationName = animationName
         this.presetName = presetName
 
-        //create the actual animation (this will also create the controls in the webbrowser via svelte reactivity)
-        // @ts-ignore
-        // new this.animationClass(this.matrix)
 
     }
 
@@ -132,11 +106,10 @@ export class RunnerBrowser {
         if (this.presetName == "")
             return
 
-        let values = this.save()
-
         // @ts-ignore
-        await rpc.request("presetStore.save", this.animationClass.presetDir, this.presetName, values);
-        await rpc.request("presetStore.createPreview", this.animationName, this.presetName, values);
+        // await rpc.request("presetStore.save", this.animationClass.presetDir, this.presetName, values);
+        // await rpc.request("presetStore.createPreview", this.animationName, this.presetName, values);
+        await rpc.request("context.runner.save", this.presetName)
         await this.refreshAnimationList()
 
         await this.run(this.animationName, this.presetName)

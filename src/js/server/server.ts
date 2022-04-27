@@ -62,9 +62,13 @@ let rpc = new RpcServer();
 
 rpc.addMethod("presetStore.loadAnimationPresetList", (params) => presetStore.loadAnimationPresetList())
 
-rpc.addMethod("presetStore.load", (params) => presetStore.load(params[0], params[1]))
+// rpc.addMethod("presetStore.load", (params) => presetStore.load(params[0], params[1]))
 
-rpc.addMethod("presetStore.save", (params) => presetStore.save(params[0], params[1], params[2]))
+rpc.addMethod("context.runner.save", async (params, context) =>
+{
+    if (context.runner)
+        await context.runner.save(params[0])
+})
 
 rpc.addMethod("presetStore.createPreview", (params) => presetStore.createPreview(params[0], params[1], params[2]))
 
