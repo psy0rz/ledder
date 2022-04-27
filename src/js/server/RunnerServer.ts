@@ -88,8 +88,12 @@ export class RunnerServer {
     }
 
     async restart() {
-        if (this.animationName !== undefined)
-            await this.runName(this.animationName, this.presetName)
+        try {
+            if (this.animationName !== undefined)
+                await this.runName(this.animationName, this.presetName)
+        }catch (e) {
+            console.error(e)
+        }
     }
 
     //save current running animation preset
