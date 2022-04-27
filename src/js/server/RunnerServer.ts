@@ -3,7 +3,7 @@ import {PresetStore} from "./PresetStore.js"
 import {PresetValues} from "../ledder/PresetValues.js"
 import {Animation} from "../ledder/Animation.js"
 import * as fs from "fs";
-import { watch } from "fs/promises"
+import {watch} from "fs/promises"
 
 
 /**
@@ -17,6 +17,8 @@ export class RunnerServer {
     animationName: string
     presetName: string
 
+    restartTimeout: any
+    watchAbort: AbortController
 
 
     constructor(matrix: Matrix, presetStore: PresetStore) {
@@ -26,17 +28,28 @@ export class RunnerServer {
 
     }
 
-    async autorestart()
-    {
-        const watcher=watch(this.presetStore.animationPath)
-        let timer
+    async autorestart() {
+        this.watchAbort = new AbortController()
+        let watcher = watch(this.presetStore.animationPath, this.watchAbort)
 
-        for await (const event of watcher) {
-            console.log("Detected animation file change:", event);
-            if (timer!==undefined)
-                clearTimeout(timer)
-            timer=setTimeout( ()=> this.restart(), 100)
+        try {
+            for await (const event of watcher) {
+                console.log("Detected animation file change:", event);
+                if (this.restartTimeout !== undefined)
+                    clearTimeout(this.restartTimeout)
+                this.restartTimeout = setTimeout(() => this.restart(), 100)
+            }
+        } catch (e) {
+            if (e.name === 'AbortError')
+                return
         }
+    }
+
+    //stop everything because of cleanup/close
+    stop() {
+        this.watchAbort.abort()
+        this.matrix.reset()
+
 
     }
 
@@ -59,7 +72,7 @@ export class RunnerServer {
     //load presetName and run
     async runName(animationName: string, presetName: string) {
 
-        this.presetName=presetName
+        this.presetName = presetName
         this.animationName = animationName
         this.animationClass = await this.presetStore.loadAnimation(animationName)
 
@@ -74,27 +87,25 @@ export class RunnerServer {
 
     }
 
-    async restart()
-    {
-        if (this.animationName!==undefined)
+    async restart() {
+        if (this.animationName !== undefined)
             await this.runName(this.animationName, this.presetName)
     }
 
     //save current running animation preset
-    async save(presetName:string) {
-        this.presetName=presetName
+    async save(presetName: string) {
+        this.presetName = presetName
         let presetValues = this.matrix.preset.save()
         await this.presetStore.save(this.animationClass, presetName, presetValues)
         await this.presetStore.createPreview(this.animationClass, presetName, presetValues)
     }
 
     //delete current running animation preset
-    async delete()
-    {
-        if (this.presetName!==undefined) {
+    async delete() {
+        if (this.presetName !== undefined) {
             await this.presetStore.delete(this.animationClass, this.presetName)
             await this.presetStore.updateAnimationPresetList()
-            this.presetName=undefined
+            this.presetName = undefined
         }
     }
 

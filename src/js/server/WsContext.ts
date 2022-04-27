@@ -6,6 +6,7 @@ import {PresetStore} from "./PresetStore.js";
 import {RpcServer} from "./RpcServer.js";
 import {JSONRPCClient, JSONRPCServerAndClient} from "json-rpc-2.0";
 
+
 //Per websocket context, used to generate the preview animation that is shown in the browser.
 //Also handles passing through controls to browser and saving presets
 export class WsContext {
@@ -16,6 +17,8 @@ export class WsContext {
     constructor(ws: WebSocket, client) {
         this.ws = ws
         this.client = client
+
+
     }
 
     //send rpc request to the connected client
@@ -49,9 +52,14 @@ export class WsContext {
 
     stopPreview() {
         //should stop because of gc
-        this.runner = undefined
+        this.runner.stop()
     }
 
+    //websocket closed
+    stop()
+    {
+        this.stopPreview()
+    }
 
 
 }

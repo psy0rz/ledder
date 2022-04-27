@@ -11,7 +11,6 @@ export default class AnimationMarquee extends Animation {
   static presetDir = "Marquee"
   static category = "Marquees"
 
-
   constructor(matrix:Matrix ) {
     super(matrix);
 
