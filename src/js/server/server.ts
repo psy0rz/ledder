@@ -60,9 +60,9 @@ client.on('message', async  (topic, message) =>{
 let rpc = new RpcServer();
 
 
-rpc.addMethod("presetStore.loadAnimationPresetList", (params) => presetStore.loadAnimationPresetList())
-
-// rpc.addMethod("presetStore.load", (params) => presetStore.load(params[0], params[1]))
+rpc.addMethod("presetStore.loadAnimationPresetList", async (params) => {
+    return await presetStore.loadAnimationPresetList()
+})
 
 rpc.addMethod("context.runner.save", async (params, context) =>
 {
@@ -70,45 +70,48 @@ rpc.addMethod("context.runner.save", async (params, context) =>
         await context.runner.save(params[0])
 })
 
-rpc.addMethod("presetStore.createPreview", (params) => presetStore.createPreview(params[0], params[1], params[2]))
-
-rpc.addMethod("presetStore.delete", (params) => presetStore.delete(params[0], params[1]))
-
-rpc.addMethod("context.startPreview", (params, context) => {
-   context.startPreview(presetStore, params[0], params[1])
+rpc.addMethod("context.runner.delete", async (params, context) =>
+{
+    if (context.runner)
+        await context.runner.delete()
 })
 
-rpc.addMethod("context.stopPreview", (params, context) => {
+
+rpc.addMethod("context.startPreview", async (params, context) => {
+   await context.startPreview(presetStore, params[0], params[1])
+})
+
+rpc.addMethod("context.stopPreview", async (params, context) => {
     context.stopPreview()
 })
 
-rpc.addMethod("runner.run", (params, context) => {
+// rpc.addMethod("runner.run", (params, context) => {
+//
+//     if (context.runner)
+//         context.runner.run(params[0], params[1])
+//
+//     for (const runner of runners) {
+//         runner.run(...params)
+//     }
+// })
+
+rpc.addMethod("runner.runName", async (params, context) => {
 
     if (context.runner)
-        context.runner.run(params[0], params[1])
+        await context.runner.runName(params[0], params[1])
 
     for (const runner of runners) {
-        runner.run(...params)
+        await runner.runName(params[0], params[1])
     }
 })
 
-rpc.addMethod("runner.runName", (params, context) => {
+rpc.addMethod("matrix.preset.updateValue", async (params, context) => {
 
     if (context.runner)
-        context.runner.runName(params[0], params[1])
-
-    for (const runner of runners) {
-        runner.runName(params[0], params[1])
-    }
-})
-
-rpc.addMethod("matrix.preset.updateValue", (params, context) => {
-
-    if (context.runner)
-        context.runner.matrix.preset.updateValue(params[0], params[1])
+        await context.runner.matrix.preset.updateValue(params[0], params[1])
 
     for (const matrix of matrixList) {
-        matrix.preset.updateValue(...params)
+        await matrix.preset.updateValue(...params)
     }
 })
 

@@ -55,15 +55,20 @@ export class RpcServer extends Rpc {
                 // console.log("RPC request: ", msg)
                 try {
                     const request = JSON.parse(msg.toString())
-                    // console.log("RPC request: ", request)
+                    console.log("RPC request: ", request)
 
                     const response = await this.server.receiveAndSend(request, context, context);
+                    console.log("RPC DONE" , response)
+                    return Promise.resolve();
+
                     // console.log("RPC response", response)
                     // if (response)
                     //     ws.send(JSON.stringify(response))
                 } catch (e) {
                     console.log("RPC error: ", e)
-                    throw(e)
+                    // return Promise.reject(e);
+
+
                 }
 
 

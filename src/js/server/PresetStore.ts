@@ -89,6 +89,12 @@ export class PresetStore {
         return JSON.parse(await readFile(this.presetFilename(animationClass.presetDir, presetName), 'utf8'))
     }
 
+    async delete(animationClass: typeof Animation, presetName: string) {
+        await rm(this.presetFilename(animationClass.presetDir, presetName))
+        await rm(this.previewFilename(animationClass.presetDir, presetName))
+
+    }
+
 
     /**
      * Save preset to disk
@@ -178,11 +184,6 @@ export class PresetStore {
         console.log("Preview rendering complete")
     }
 
-    async delete(presetDir: string, presetName: string) {
-        await rm(this.presetFilename(presetDir, presetName))
-        await rm(this.previewFilename(presetDir, presetName))
-        // await this.updateAnimationPresetList()
-    }
 
     // async getCategories() {
     //     let cat = new Set();

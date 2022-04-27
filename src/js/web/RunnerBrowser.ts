@@ -125,12 +125,11 @@ export class RunnerBrowser {
 
         await confirmPromise('Delete preset', 'Do you want to delete preset: ' + this.presetName)
 
-        // @ts-ignore
-        await rpc.request("presetStore.delete", this.animationClass.presetDir, this.presetName);
+        await rpc.request("context.runner.delete");
         info("Deleted preset " + this.presetName, "", 2000)
 
         this.presetName = ""
-        await this.run(this.animationName, this.presetName)
+        // await this.run(this.animationName, this.presetName)
 
         await this.refreshAnimationList()
 

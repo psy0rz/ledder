@@ -12,6 +12,7 @@ export class RunnerServer {
     presetStore: PresetStore
     animationClass: typeof Animation
     animation: Animation
+    presetName: string
 
     constructor(matrix: Matrix, presetStore: PresetStore) {
         this.matrix = matrix
@@ -23,36 +24,48 @@ export class RunnerServer {
      * Runs specified animation with specified preset
      *
      */
-    async run(animationName: string, preset: PresetValues) {
-
-        this.animationClass = await this.presetStore.loadAnimation(animationName)
-        console.log("Runner: starting", animationName, preset)
-        this.matrix.reset()
-
-        if (preset)
-            this.matrix.preset.load(preset);
-        this.animation = new this.animationClass(this.matrix)
-    }
+    // async run(animationName: string, preset: PresetValues) {
+    //
+    //     this.animationClass = await this.presetStore.loadAnimation(animationName)
+    //     console.log("Runner: starting", animationName, preset)
+    //     this.matrix.reset()
+    //
+    //     if (preset)
+    //         this.matrix.preset.load(preset);
+    //     this.animation = new this.animationClass(this.matrix)
+    // }
 
     //load presetName and run
     async runName(animationName: string, presetName: string) {
 
+        this.presetName=presetName
         this.animationClass = await this.presetStore.loadAnimation(animationName)
+
         console.log("Runner: starting", animationName, presetName)
         this.matrix.reset()
 
         if (presetName)
             this.matrix.preset.load(await this.presetStore.load(this.animationClass, presetName))
 
+
         this.animation = new this.animationClass(this.matrix)
     }
 
     //save current running animation preset
     async save(presetName:string) {
+        this.presetName=presetName
         let presetValues = this.matrix.preset.save()
         await this.presetStore.save(this.animationClass, presetName, presetValues)
         await this.presetStore.createPreview(this.animationClass, presetName, presetValues)
         await this.presetStore.updateAnimationPresetList()
+    }
+
+    //delete current running animation preset
+    async delete()
+    {
+        if (this.presetName!==undefined)
+            await this.presetStore.delete(this.animationClass, this.presetName)
+        this.presetName=undefined
     }
 
 }
