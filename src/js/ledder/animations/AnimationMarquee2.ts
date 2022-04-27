@@ -21,8 +21,8 @@ export default class AnimationMarquee extends Animation {
         super(matrix);
 
 
-        const face = freetype.NewMemoryFace(readFileSync('fonts/C64_Pro_Mono-STYLE.otf'));
-        // const face = freetype.NewMemoryFace(readFileSync('fonts/C64_Pro-STYLE.otf'));
+        // const face = freetype.NewMemoryFace(readFileSync('fonts/C64_Pro_Mono-STYLE.otf'));
+        const face = freetype.NewMemoryFace(readFileSync('fonts/C64_Pro-STYLE.otf'));
         // const face = freetype.NewMemoryFace(readFileSync('fonts/OpenBaskerville-0.0.53.otf'));
         face.setPixelSizes(0, 8);
 
@@ -48,7 +48,6 @@ export default class AnimationMarquee extends Animation {
                 p.x--
                 if (p.x < 0) {
                     p.destroy(matrix)
-                    this.removePixel(p)
                 }
 
             }
@@ -94,7 +93,7 @@ export default class AnimationMarquee extends Animation {
 
                 //goto next column
                 x = x + 1;
-                if (x == glyph.metrics.horiAdvance / 64) {
+                if (x === glyph.metrics.horiAdvance / 64) {
                     char_nr++
                     x = 0;
                 }
