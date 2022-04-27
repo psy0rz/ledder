@@ -85,15 +85,6 @@ rpc.addMethod("context.stopPreview", async (params, context) => {
     context.stopPreview()
 })
 
-// rpc.addMethod("runner.run", (params, context) => {
-//
-//     if (context.runner)
-//         context.runner.run(params[0], params[1])
-//
-//     for (const runner of runners) {
-//         runner.run(...params)
-//     }
-// })
 
 rpc.addMethod("runner.runName", async (params, context) => {
 
