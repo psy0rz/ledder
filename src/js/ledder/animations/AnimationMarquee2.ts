@@ -21,15 +21,18 @@ export default class AnimationMarquee extends Animation {
         super(matrix);
 
 
-        // const face = freetype.NewMemoryFace(readFileSync('fonts/C64_Pro_Mono-STYLE.otf'));
-        const face = freetype.NewMemoryFace(readFileSync('fonts/C64_Pro-STYLE.otf'));
         // const face = freetype.NewMemoryFace(readFileSync('fonts/OpenBaskerville-0.0.53.otf'));
+        // const face = freetype.NewMemoryFace(readFileSync('fonts/C64_Pro_Mono-STYLE.otf'));
+        // const face = freetype.NewMemoryFace(readFileSync('fonts/C64_Pro-STYLE.otf'));
+        // const face = freetype.NewMemoryFace(readFileSync('fonts/PxPlus_IBM_BIOS.ttf'));
+        const face = freetype.NewMemoryFace(readFileSync('fonts/MSX-Screen0.ttf'));
+
         face.setPixelSizes(0, 8);
 
         // face.setCharSize()
 
 
-        const input = matrix.preset.input('Text', "@ABCabc.,- ")
+        const input = matrix.preset.input('Text', "MSX @ABCabc.,- ")
 
         // const width = text.length * font.width;
         let char_nr = 0;
@@ -67,7 +70,6 @@ export default class AnimationMarquee extends Animation {
                     render: true,
                     loadTarget: freetype.RenderMode.NORMAL,
 
-
                 });
 
 
@@ -85,8 +87,10 @@ export default class AnimationMarquee extends Animation {
                             const offset = (row * glyph.bitmap.pitch) + x - glyph.bitmapLeft
                             const gray = glyph.bitmap.buffer.readUInt8(offset)
 
-                            if (gray > 0)
-                                this.addPixel(new Pixel(matrix, matrix.width - 1, glyph.bitmapTop - row, new Color(255, 0, 0, gray / 255)))
+
+                            // console.log(gray)
+                            if (gray > 128)
+                                this.addPixel(new Pixel(matrix, matrix.width - 1, glyph.bitmapTop - row, new Color(255, 0, 0, 1)))
                         }
                     }
                 }
