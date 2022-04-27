@@ -90,7 +90,7 @@ export default class AnimationMarquee extends Animation {
                             const gray = glyph.bitmap.buffer.readUInt8(offset)
 
                             if (gray > 0)
-                                this.addPixel(new Pixel(matrix, matrix.width - 1, matrix.height - ( matrix.height- glyph.bitmapTop + row )  , new Color(255, 0, 0, gray / 255)))
+                                this.addPixel(new Pixel(matrix, matrix.width - 1,   glyph.bitmapTop - row  , new Color(255, 0, 0, gray / 255)))
                         }
                     }
 
