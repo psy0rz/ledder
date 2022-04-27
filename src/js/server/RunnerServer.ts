@@ -57,15 +57,16 @@ export class RunnerServer {
         let presetValues = this.matrix.preset.save()
         await this.presetStore.save(this.animationClass, presetName, presetValues)
         await this.presetStore.createPreview(this.animationClass, presetName, presetValues)
-        await this.presetStore.updateAnimationPresetList()
     }
 
     //delete current running animation preset
     async delete()
     {
-        if (this.presetName!==undefined)
+        if (this.presetName!==undefined) {
             await this.presetStore.delete(this.animationClass, this.presetName)
-        this.presetName=undefined
+            await this.presetStore.updateAnimationPresetList()
+            this.presetName=undefined
+        }
     }
 
 }

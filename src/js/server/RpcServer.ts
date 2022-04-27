@@ -49,31 +49,21 @@ export class RpcServer extends Rpc {
         );
 
         app.ws('/ws', (ws, req) => {
-            let context = new WsContext( ws, this.server)
+            let context = new WsContext(ws, this.server)
 
             ws.on('message', async (msg) => {
                 // console.log("RPC request: ", msg)
-                try {
-                    const request = JSON.parse(msg.toString())
-                    console.log("RPC request: ", request)
+                const request = JSON.parse(msg.toString())
+                // console.log("RPC request: ", request)
 
-                    const response = await this.server.receiveAndSend(request, context, context);
-                    console.log("RPC DONE" , response)
-                    return Promise.resolve();
-
-                    // console.log("RPC response", response)
-                    // if (response)
-                    //     ws.send(JSON.stringify(response))
-                } catch (e) {
-                    console.log("RPC error: ", e)
-                    // return Promise.reject(e);
+                const response = await this.server.receiveAndSend(request, context, context);
 
 
-                }
+            })
 
 
-            });
-        });
+        })
+
 
         //allow acces to presets dir to get preview-files
         app.use("/presets", express.static("presets"));
@@ -88,7 +78,10 @@ export class RpcServer extends Rpc {
 
     }
 
-    addMethod(name, method: (params: any[], context: WsContext) => void) {
+    addMethod(name, method
+        :
+        (params: any[], context: WsContext) => void
+    ) {
         this.server.addMethod(name, method);
     }
 
