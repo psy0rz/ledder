@@ -44,6 +44,7 @@ export class WsContext {
             (controlName, controlValues) => {
                 this.request("control.update", controlName, controlValues)
             })
+
     }
 
     stopPreview() {

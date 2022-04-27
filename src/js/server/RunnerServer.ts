@@ -2,6 +2,8 @@ import {Matrix} from "../ledder/Matrix.js"
 import {PresetStore} from "./PresetStore.js"
 import {PresetValues} from "../ledder/PresetValues.js"
 import {Animation} from "../ledder/Animation.js"
+import * as fs from "fs";
+import { watch } from "fs/promises"
 
 
 /**
@@ -12,13 +14,32 @@ export class RunnerServer {
     presetStore: PresetStore
     animationClass: typeof Animation
     animation: Animation
+    animationName: string
     presetName: string
+
+
 
     constructor(matrix: Matrix, presetStore: PresetStore) {
         this.matrix = matrix
         this.presetStore = presetStore
+        this.autorestart()
 
     }
+
+    async autorestart()
+    {
+        const watcher=watch(this.presetStore.animationPath)
+        let timer
+
+        for await (const event of watcher) {
+            console.log("Detected animation file change:", event);
+            if (timer!==undefined)
+                clearTimeout(timer)
+            timer=setTimeout( ()=> this.restart(), 100)
+        }
+
+    }
+
 
     /**
      * Runs specified animation with specified preset
@@ -39,6 +60,7 @@ export class RunnerServer {
     async runName(animationName: string, presetName: string) {
 
         this.presetName=presetName
+        this.animationName = animationName
         this.animationClass = await this.presetStore.loadAnimation(animationName)
 
         console.log("Runner: starting", animationName, presetName)
@@ -49,6 +71,13 @@ export class RunnerServer {
 
 
         this.animation = new this.animationClass(this.matrix)
+
+    }
+
+    async restart()
+    {
+        if (this.animationName!==undefined)
+            await this.runName(this.animationName, this.presetName)
     }
 
     //save current running animation preset

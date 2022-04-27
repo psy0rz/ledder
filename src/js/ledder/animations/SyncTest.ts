@@ -9,7 +9,7 @@ import {Color} from "../Color.js";
 export default class SyncTest extends Animation {
 
   static title="Matrix test sync"
-  static presetDir="Matrix test"
+  static presetDir="Sync test"
   static description="Test smoothness and syncronisation of multiple matrixes"
 
 

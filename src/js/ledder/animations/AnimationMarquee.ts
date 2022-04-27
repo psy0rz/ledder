@@ -16,7 +16,7 @@ export default class AnimationMarquee extends Animation {
     super(matrix);
 
     const font=FontSimple8x8
-    const input=matrix.preset.input('Text', "ABCabc123 ")
+    const input=matrix.preset.input('Text', "ABCabc!")
 
     // const width = text.length * font.width;
     let char_nr = 0;
@@ -39,6 +39,12 @@ export default class AnimationMarquee extends Animation {
 
       }
 
+      if (char_nr>=input.text.length)
+        char_nr=0
+
+      if (input.text.length==0)
+        return
+
       //add column to the right
       const c = input.text[char_nr];
       if (c!==undefined) {
@@ -54,8 +60,6 @@ export default class AnimationMarquee extends Animation {
       x = x + 1;
       if (x == font.width) {
         char_nr++
-        if (char_nr>=input.text.length)
-          char_nr=0
         x=0;
       }
 

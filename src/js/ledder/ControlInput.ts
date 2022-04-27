@@ -12,7 +12,7 @@ export class ControlInput extends Control {
     super( name);
 
     this.meta.type='input'
-    this.meta.text = text
+    this.text = text
 
   }
 

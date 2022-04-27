@@ -59,7 +59,7 @@ export class PresetStore {
         //hack: this path is relative to the current file instead of current working dir.
         let filename = "../ledder/animations/" + animationName + ".js"
         console.log("Loading javascript ", filename)
-        let module = await import(filename)
+        let module = await import(filename+"?"+Date.now()) //prevent caching
 
         if (!(module.default.prototype instanceof Animation))
 
