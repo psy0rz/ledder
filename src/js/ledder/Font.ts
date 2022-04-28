@@ -22,11 +22,8 @@ export class Font {
 
     load() {
         if (!this.fontFace) {
-            // this.fontFace = freetype.NewMemoryFace(readFileSync(this.filename));
-            this.fontFace = freetype.NewFace('fonts/EightBit Atari-Regular.ttf');
-
+            this.fontFace = freetype.NewFace(this.filename);
             this.fontFace.setPixelSizes(this.width, this.height);
-
         }
     }
 
