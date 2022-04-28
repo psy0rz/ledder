@@ -20,19 +20,32 @@ export default class AnimationMarquee extends Animation {
     constructor(matrix: Matrix) {
         super(matrix);
 
-
+        // https://damieng.com/typography/zx-origins/#All/All
+        // https://fontstruct.com/gallery/tag/41/Pixels
         // const face = freetype.NewMemoryFace(readFileSync('fonts/OpenBaskerville-0.0.53.otf'));
         // const face = freetype.NewMemoryFace(readFileSync('fonts/C64_Pro_Mono-STYLE.otf'));
         // const face = freetype.NewMemoryFace(readFileSync('fonts/C64_Pro-STYLE.otf'));
         // const face = freetype.NewMemoryFace(readFileSync('fonts/PxPlus_IBM_BIOS.ttf'));
         const face = freetype.NewMemoryFace(readFileSync('fonts/MSX-Screen0.ttf'));
+        // const face = freetype.NewMemoryFace(readFileSync('fonts/EightBit Atari-Regular.ttf'));
+        // const face = freetype.NewMemoryFace(readFileSync('fonts/ZX Sierra Quest.ttf'));
+        // const face = freetype.NewMemoryFace(readFileSync('fonts/Anarchist.ttf'));
+        // const face = freetype.NewMemoryFace(readFileSync('fonts/Skid Row.ttf'));
+        // const face = freetype.NewMemoryFace(readFileSync('fonts/Quasar.ttf'));
+        // const face = freetype.NewMemoryFace(readFileSync('fonts/Computer.ttf'));
+        // const face = freetype.NewMemoryFace(readFileSync('fonts/Picopixel.ttf'));
+        // const face = freetype.NewMemoryFace(readFileSync('fonts/ORG_V01_.TTF'));
+        // const face = freetype.NewMemoryFace(readFileSync('fonts/tiny3x3a.ttf'));
+        // const face = freetype.NewMemoryFace(readFileSync('fonts/tom-thumb.bdf'));
 
         face.setPixelSizes(0, 8);
+
+        let base=0
 
         // face.setCharSize()
 
 
-        const input = matrix.preset.input('Text', "MSX @ABCabc.,- ")
+        const input = matrix.preset.input('Text', "Xx abcdef ABCDEF")
 
         // const width = text.length * font.width;
         let char_nr = 0;
@@ -90,7 +103,7 @@ export default class AnimationMarquee extends Animation {
 
                             // console.log(gray)
                             if (gray > 128)
-                                this.addPixel(new Pixel(matrix, matrix.width - 1, glyph.bitmapTop - row, new Color(255, 0, 0, 1)))
+                                this.addPixel(new Pixel(matrix, matrix.width - 1, glyph.bitmapTop - row+base, new Color(255, 0, 0, 1)))
                         }
                     }
                 }
