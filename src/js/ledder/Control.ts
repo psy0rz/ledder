@@ -1,45 +1,44 @@
 /**
  * Base class for all controls. Keep in mind that a control has to function properly both in and outside the browser.
  */
-export class Control
-{
-  meta: Record<string,any>
+export class Control {
+    meta: Record<string, any>
 
-  changedCallback: (controlName, values)=>void
+    changedCallback: (controlName, values) => void
 
-  constructor(name) {
-    this.meta={}
-    this.meta.name=name;
-
-
-  }
-
-  /**
-   */
-  setChangedCallback(changedCallback)
-  {
-    this.changedCallback=changedCallback;
-
-  }
+    //type is used in webfront end to render correct controls gui
+    constructor(name: string, type: string, resetOnChange: boolean = false) {
+        this.meta = {}
+        this.meta.name = name
+        this.meta.type = type
+        this.meta.resetOnChange = resetOnChange
 
 
-  save()
-  {
-    return {}
+    }
 
-  }
+    /**
+     */
+    setChangedCallback(changedCallback) {
+        this.changedCallback = changedCallback;
 
-  load(values)
-  {
+    }
 
-  }
 
-  changed()
-  {
-    if (this.changedCallback!==undefined)
-      this.changedCallback(this.meta.name, this.save());
+    save() {
+        return {}
 
-  }
+    }
+
+    load(values) {
+
+    }
+
+    changed() {
+        if (this.changedCallback !== undefined)
+            this.changedCallback(this.meta.name, this.save());
+
+    }
+
 
 }
 

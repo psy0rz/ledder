@@ -7,11 +7,11 @@ export class ControlInput extends Control {
    * Text input control
    * @param name Name of the control
    * @param text Initial value
+   * @param resetOnChange Reset animation when value has changed
    */
-  constructor( name: string, text: string) {
-    super( name);
+  constructor( name: string, text: string, resetOnChange: boolean) {
+    super( name, 'input', resetOnChange)
 
-    this.meta.type='input'
     this.text = text
 
   }

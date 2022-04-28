@@ -99,10 +99,12 @@ rpc.addMethod("runner.runName", async (params, context) => {
 rpc.addMethod("matrix.preset.updateValue", async (params, context) => {
 
     if (context.runner)
-        await context.runner.matrix.preset.updateValue(params[0], params[1])
+        if (await context.runner.matrix.preset.updateValue(params[0], params[1]))
+            context.runner.restart(true)
 
-    for (const matrix of matrixList) {
-        await matrix.preset.updateValue(...params)
+    for (const runner of runners) {
+        if (await runner.matrix.preset.updateValue(...params))
+            runner.restart(true)
     }
 })
 

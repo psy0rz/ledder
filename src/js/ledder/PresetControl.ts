@@ -11,6 +11,7 @@ import {ControlInput} from "./ControlInput.js"
 export class PresetControl {
     controls: Record<string, Control>
     presetValues: PresetValues
+    //callsbacks are to send control metadata and values to webgui (in WsContext)
     resetCallback: () => void
     addControlCallback: (control) => void
     updateValuesCallback: (controlName, values) => void
@@ -58,10 +59,11 @@ export class PresetControl {
      * @param min Minimum value (inclusive)
      * @param max Maximum value (inclusive)
      * @param step Step size
+     * @param resetOnChange Reset animation when value has changed
      */
-    value(name: string, value: number, min: number, max: number, step: number = 1): ControlValue {
+    value(name: string, value: number, min: number, max: number, step: number = 1, resetOnChange:boolean=false): ControlValue {
         if (!(name in this.controls)) {
-            this.add(new ControlValue(name, value, min, max, step));
+            this.add(new ControlValue(name, value, min, max, step, resetOnChange));
         }
 
         // @ts-ignore
@@ -71,18 +73,18 @@ export class PresetControl {
     /**
      * Get or create color-control with specified name
      */
-    color(name: string, r: number = 128, g: number = 128, b: number = 128, a: number = 1): ControlColor {
+    color(name: string, r: number = 128, g: number = 128, b: number = 128, a: number = 1, resetOnChange:boolean=false): ControlColor {
         if (!(name in this.controls)) {
-            this.add(new ControlColor(name, r, g, b, a));
+            this.add(new ControlColor(name, r, g, b, a, resetOnChange));
         }
 
         // @ts-ignore
         return this.controls[name];
     }
 
-    input(name: string, text:string): ControlInput {
+    input(name: string, text:string, resetOnChange:boolean=false): ControlInput {
         if (!(name in this.controls)) {
-            this.add(new ControlInput(name, text));
+            this.add(new ControlInput(name, text, resetOnChange));
         }
 
         // @ts-ignore
@@ -128,11 +130,13 @@ export class PresetControl {
      * Update values of a specific controlled. (called by browser to update server)
      * @param controlName
      * @param values
+     * @return True if animation should be restarted/reset
      */
     updateValue(controlName, values) {
         this.presetValues.values[controlName] = values;
         this.controls[controlName].load(values);
-    }
 
+        return (this.controls[controlName].meta.resetOnChange)
+    }
 
 }

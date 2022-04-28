@@ -24,11 +24,12 @@ export class RunnerServer {
     constructor(matrix: Matrix, presetStore: PresetStore) {
         this.matrix = matrix
         this.presetStore = presetStore
-        this.autorestart()
+        this.autoreload()
 
     }
 
-    async autorestart() {
+    //automaticly reload animation file on change to make development easier.
+    async autoreload() {
         this.watchAbort = new AbortController()
         let watcher = watch(this.presetStore.animationPath, this.watchAbort)
 
@@ -37,7 +38,7 @@ export class RunnerServer {
                 console.log("Detected animation file change:", event);
                 if (this.restartTimeout !== undefined)
                     clearTimeout(this.restartTimeout)
-                this.restartTimeout = setTimeout(() => this.restart(), 100)
+                this.restartTimeout = setTimeout(() => this.reload(), 100)
             }
         } catch (e) {
             if (e.name === 'AbortError')
@@ -87,13 +88,21 @@ export class RunnerServer {
 
     }
 
-    async restart() {
+    //force reload of animation from disk
+    async reload() {
         try {
             if (this.animationName !== undefined)
                 await this.runName(this.animationName, this.presetName)
         }catch (e) {
             console.error(e)
         }
+    }
+
+    //restart animation but optionally keep preset values.
+    async restart(keepPresets:boolean=false)
+    {
+        this.matrix.reset(keepPresets)
+        this.animation = new this.animationClass(this.matrix)
     }
 
     //save current running animation preset

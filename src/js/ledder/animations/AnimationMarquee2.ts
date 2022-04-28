@@ -45,7 +45,7 @@ export default class AnimationMarquee2 extends Animation {
 
         const input = matrix.preset.input('Text', "Atari 2600 ")
 
-        const colorControl = matrix.preset.color("Text color", 100,0,0);
+        const colorControl = matrix.preset.color("Text color", 100,0,0, 1);
 
         const charPixels=new CharPixels(matrix, f, input.text, 0, 0, colorControl)
 
