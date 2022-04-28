@@ -14,6 +14,8 @@ export class WsContext {
     client: JSONRPCServerAndClient<WsContext, WsContext>
     runner: RunnerServer
 
+    statsInterval: any
+
     constructor(ws: WebSocket, client) {
         this.ws = ws
         this.client = client
@@ -48,11 +50,17 @@ export class WsContext {
                 this.request("control.update", controlName, controlValues)
             })
 
+        this.statsInterval=setInterval( ()=>{
+            console.log(`Stats: ${matrix.pixels.length} pixels, ${matrix.scheduler.intervals.length} intervals`)
+        }, 3000)
+
     }
 
     stopPreview() {
         //should stop because of gc
         this.runner.stop()
+        clearInterval(this.statsInterval)
+
     }
 
     //websocket closed

@@ -15,6 +15,11 @@ export class PixelContainer {
     this.pixels = [];
   }
 
+  add(pixelContainer: PixelContainer)
+  {
+    this.pixels.push(...pixelContainer.pixels)
+  }
+
   addPixel(...pixels: Array<Pixel>) {
 
     for (const i in pixels)
