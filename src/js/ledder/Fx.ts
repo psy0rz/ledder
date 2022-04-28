@@ -14,5 +14,10 @@ export class Fx {
         this.controlPrefix = controlPrefix
         this.matrix = matrix
     }
+
+    abstract run()
+    {
+
+    }
 }
 

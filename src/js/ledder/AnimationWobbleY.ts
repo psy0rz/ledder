@@ -8,7 +8,7 @@ export class AnimationWobbleY extends Animation {
         super(matrix);
 
         let inverter=1;
-        matrix.scheduler.intervalControlled(interval, () => {
+        matrix.scheduler.intervalControlled(interval, (frameNr) => {
 
                 const step=amount.value * inverter;
                 inverter=inverter*-1

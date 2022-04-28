@@ -1,0 +1,21 @@
+{
+ "values": {
+  "Text color": {
+   "r": 100,
+   "g": 0,
+   "b": 0,
+   "a": 1
+  },
+  "FPS": {
+   "value": 60
+  },
+  "Text": {
+   "text": "Atari 2600 "
+  },
+  "Scroll": {
+   "enabled": false
+  }
+ },
+ "title": "",
+ "description": ""
+}

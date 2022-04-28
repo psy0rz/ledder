@@ -24,10 +24,10 @@ export class Scheduler {
   /**
    * Create a new interval
    * @param frames Interval length, specified as the number of frames. Use 1 to get called for each frame.
-   * @param callback Return false to end the interval. Return a number to change the interval. Return false to end the interval.
+   * @param callback Return false to end the interval. Return a number to change the interval.
    * @param offset Offset the interval by this number of frames
    */
-  interval(frames: number, callback, offset=0) {
+  interval(frames: number, callback: (frameNr: number) => number | void | boolean, offset=0):Promise<any> {
 
     return new Promise((resolve, reject) => {
       const interval = new IntervalStatic(frames, this.frameNr+offset, callback);
@@ -40,10 +40,10 @@ export class Scheduler {
   /**
    * Create a new controlled interval.
    * @param value The controller that sets/modifies the interval.
-   * @param callback Return false to end the interval. Return false to end the interval.
+   * @param callback Return false to end the interval.
    * @param offset Offset the interval by this number of frames
    */
-  intervalControlled(value: ValueInterface, callback, offset=0) {
+  intervalControlled(value: ValueInterface, callback: (frameNr: number) => number | void | boolean, offset=0):Promise<any> {
     return new Promise((resolve, reject) => {
       const interval = new IntervalControlled(value, this.frameNr+offset, callback);
       interval.resolve = resolve

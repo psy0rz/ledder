@@ -59,3 +59,5 @@ export default class AnimationMarquee2 extends Animation {
 
 
 }
+
+
