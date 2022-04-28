@@ -7,6 +7,7 @@ import FxRotateLeft from "../fx/FxRotateLeft.js";
 
 // https://damieng.com/typography/zx-origins/#All/All
 // https://fontstruct.com/gallery/tag/41/Pixels
+// https://github.com/rewtnull/amigafonts
 
 export let fonts={
     'Atari regular': new Font('Atari', 'fonts/EightBit Atari-Regular.ttf', 0, 8, 0),
@@ -37,13 +38,14 @@ export default class AnimationMarquee2 extends Animation {
 
 
 
-        const f = fonts["Computer"]
+        const f = fonts["Atari regular"]
         f.load()
 
 
-        const input = matrix.preset.input('Text', "ABab.,")
 
-        const colorControl = matrix.preset.color("Text color", 255);
+        const input = matrix.preset.input('Text', "Atari 2600 ")
+
+        const colorControl = matrix.preset.color("Text color", 100,0,0);
 
         const charPixels=new CharPixels(matrix, f, input.text, 0, 0, colorControl)
 
