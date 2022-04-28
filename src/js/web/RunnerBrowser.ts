@@ -33,15 +33,19 @@ export class RunnerBrowser {
 
         rpc.addMethod('control.reset', ()=>
         {
+            console.log("Reset controls")
             this.presets={}
             sveltePresets.set([])
         })
 
         rpc.addMethod('control.add', (params)=>{
 
+            console.log("Add control", params[0])
+
             this.presets[params[0].meta.name]=params[0]
 
             sveltePresets.update(p => {
+                console.log("Updating", p)
                 p.push(params[0])
                 return p
             })

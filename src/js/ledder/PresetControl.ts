@@ -3,6 +3,7 @@ import {ControlValue} from "./ControlValue.js"
 import {ControlColor} from "./ControlColor.js"
 import {PresetValues} from "./PresetValues.js"
 import {ControlInput} from "./ControlInput.js"
+import {ControlSwitch} from "./ControlSwitch.js";
 
 
 /**
@@ -91,6 +92,14 @@ export class PresetControl {
         return this.controls[name];
     }
 
+    switch(name: string, enabled:boolean, resetOnChange:boolean=false): ControlSwitch {
+        if (!(name in this.controls)) {
+            this.add(new ControlSwitch(name, enabled, resetOnChange));
+        }
+
+        // @ts-ignore
+        return this.controls[name];
+    }
 
 
 

@@ -1,6 +1,15 @@
 <Page name="settings"
       stacked={true}
-      onPageMounted={ ()=> { presets=$sveltePresets} }>
+      on:pageMounted={ ()=> {
+
+          presets=$sveltePresets
+      }
+
+     }
+
+
+
+>
     <Navbar title="Controls"
             subtitle={$svelteSelectedTitle}
             backLink="Back"
@@ -79,8 +88,14 @@
                             rpc.notify("matrix.preset.updateValue", preset.meta.name, preset)
                        }}
                 />
+            {:else if preset.meta.type === 'switch'}
+                <Toggle checked={preset.enabled} on:toggleChange={ (e)=>
+                {
+                    preset.enabled=e.detail[0]
+                    rpc.notify("matrix.preset.updateValue", preset.meta.name, preset)
+                }}/>
             {:else}
-                <b>Unknown control type: {preset.meta.name} !</b>
+                <b>Unknown control type: {preset.meta.name} has type {preset.meta.type} !</b>
             {/if}
         </Block>
     {:else}
@@ -94,12 +109,13 @@
         Navbar,
         BlockTitle,
         Range,
-        Block, Input, Stepper, Menu, MenuItem, Subnavbar,
+        Block, Input, Stepper, Menu, MenuItem, Subnavbar, Toggle,
     } from 'framework7-svelte';
 
     import {sveltePresets, svelteSelectedAnimationName, svelteSelectedTitle, svelteLive} from "../js/web/svelteStore.js"
     import {runnerBrowser} from "../js/web/RunnerBrowser.js";
     import {rpc} from "../js/web/RpcClient.js";
+    import {tick} from "svelte";
 
 
     let presets = []
@@ -112,7 +128,6 @@
         // make sure to clear the list on animation change to net get confused
         presets = []
     })
-
 
     async function onSave() {
         await runnerBrowser.presetSave()

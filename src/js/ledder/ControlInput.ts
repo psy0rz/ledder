@@ -1,5 +1,6 @@
 import {Control} from "./Control.js";
 
+
 export class ControlInput extends Control {
   text: string;
 

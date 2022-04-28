@@ -50,7 +50,8 @@ export default class AnimationMarquee2 extends Animation {
         const charPixels=new CharPixels(matrix, f, input.text, 0, 0, colorControl)
 
         // new AnimationTwinkle(matrix, this.pixels)
-        // new FxRotateLeft(matrix, charPixels, 'Move')
+        if (matrix.preset.switch('Scroll', false, true).enabled)
+            new FxRotateLeft(matrix, charPixels, 'Move')
 
         // mover.add(pixels)
 

@@ -12,10 +12,9 @@ export default class FxRotateLeft extends Fx {
 
         const delayControl = matrix.preset.value(controlPrefix + ' delay', 1, 0.1, 10, 0.1)
 
-        const paddingControl = matrix.preset.value(controlPrefix + ' padding', 0, 0, matrix.width, 1)
 
-        let left = 0
-        let right = 0
+        // let left = 0
+        // let right = 0
         let bbox = pixelContainer.bbox()
 
         // let startOffset=bbox.xMin
