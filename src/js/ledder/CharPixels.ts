@@ -24,14 +24,14 @@ export class CharPixels extends PixelContainer {
             if (glyph.bitmap) {
 
                 for (let row = 0; row < glyph.bitmap.height; row++) {
+                    const offset = (row * glyph.bitmap.pitch)
+                    const bits = glyph.bitmap.buffer.readUInt8(offset)
                     for (let col = 0; col < glyph.bitmap.width; col++) {
-                        const offset = (row * glyph.bitmap.pitch) + col
-                        const gray = glyph.bitmap.buffer.readUInt8(offset)
 
                         const x = this.width + col + glyph.bitmapLeft
                         const y = glyph.bitmapTop - row + font.baseOffset
 
-                        if (gray > 128)
+                        if (bits & (1 << (7-col) ))
                             this.pixels.push(new Pixel(matrix, x, y, color))
                     }
                 }

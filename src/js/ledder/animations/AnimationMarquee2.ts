@@ -15,14 +15,14 @@ export let fonts={
     'IBM bios': new Font('IBM bios', 'fonts/PxPlus_IBM_BIOS.ttf', 0, 8, 0),
     'MSX': new Font('MSX', 'fonts/MSX-Screen0.ttf', 0, 8, 0),
     'ZX Sierra Quest': new Font('ZX Sierra Quest', 'fonts/ZX Sierra Quest.ttf', 0, 8, 0),
-    'Anarchist': new Font('Anarchist', 'fonts/Anarchist.ttf', 0, 8, -1), //
+    'Anarchist': new Font('Anarchist', 'fonts/Anarchist.ttf', 0, 8, -1),
     'Skid Row': new Font('Skid Row', 'fonts/Skid Row.ttf', 0, 8, 0),
     'Quasar': new Font('Quasar', 'fonts/Quasar.ttf', 0, 8, 0),
     'Computer': new Font('Computer', 'fonts/Computer.ttf', 0, 8, 0),
     'Picopixel': new Font('Picopixel', 'fonts/Picopixel.ttf', 0, 7, 0),
     'ORG v01': new Font('Org v01', 'fonts/ORG_V01_.TTF', 0, 8, 0),
-    'Tiny 3x3': new Font('Tiny 3x3', 'fonts/tiny3x3a.ttf', 0, 5, 0),//
-    'Tom thumb': new Font('Tom thumb', 'fonts/tom-thumb.bdf', 3, 5, 0),//
+    'Tiny 3x3': new Font('Tiny 3x3', 'fonts/tiny3x3a.ttf', 4, 4, 0),
+    'Tom thumb': new Font('Tom thumb', 'fonts/tom-thumb.bdf', 4, 6, 0),
 }
 
 export default class AnimationMarquee2 extends Animation {
@@ -36,11 +36,12 @@ export default class AnimationMarquee2 extends Animation {
         super(matrix);
 
 
-        const f = fonts["Tom thumb"]
+
+        const f = fonts["Computer"]
         f.load()
 
 
-        const input = matrix.preset.input('Text', "Aaq,.@")
+        const input = matrix.preset.input('Text', "ABab.,")
 
         const colorControl = matrix.preset.color("Text color", 255);
 

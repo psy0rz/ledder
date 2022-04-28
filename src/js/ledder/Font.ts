@@ -30,7 +30,9 @@ export class Font {
     getGlyph(charCode: number): Glyph {
         return (this.fontFace.loadChar(charCode, {
             render: true,
-            loadTarget: freetype.RenderMode.NORMAL,
+            loadTarget: freetype.RenderMode.MONO,
+            // monochrome: false,
+            noAutohint: true
         }))
     }
 
