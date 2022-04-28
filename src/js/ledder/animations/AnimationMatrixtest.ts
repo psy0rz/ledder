@@ -31,7 +31,8 @@ export default class AnimationMatrixtest extends Animation {
         }
 
         //corners
-        new Pixel(matrix, 0, 0, new Color(255, 0, 255));
+        new Pixel(matrix, 0, 0, new Color(255, 255, 0));
+
         new Pixel(matrix, matrix.width - 1, matrix.height - 1, new Color(255, 0, 255));
         new Pixel(matrix, 0, matrix.height - 1, new Color(255, 0, 255));
         new Pixel(matrix, matrix.width - 1, 0, new Color(255, 0, 255));

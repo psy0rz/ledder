@@ -6,9 +6,97 @@ import {AnimationTwinkle} from "../AnimationTwinkle.js";
 
 import {mkdir, readFile, rm, stat, writeFile} from "fs/promises";
 import {readFileSync} from "fs";
-import freetype from "freetype2"
+import freetype, {FontFace, Glyph} from "freetype2"
 import {Color} from "../Color.js";
 import {trim_end} from "svelte/types/compiler/utils/trim.js";
+import {stringify} from "querystring";
+import {ColorInterface} from "../ColorInterface.js";
+
+//rendered text, consisting of a bunch of Pixel objects
+export class CharPixels {
+
+    //total width of whole text
+    width: number
+    //total height of whole text
+    height: number
+
+    pixels: Array<Pixel>
+
+    constructor(matrix: Matrix, font: Font, text: number, x: number, y: number, color: ColorInterface) {
+
+        const glyph = font.getGlyph(charCode)
+        this.width = glyph.metrics.horiAdvance / 64
+        this.height = font.height
+
+        this.pixels=[]
+
+        if (glyph.bitmap) {
+
+            for (let row = 0; row < glyph.bitmap.height; row++) {
+                for (let col = 0; col < glyph.bitmap.width; col++) {
+                    const offset = (row * glyph.bitmap.pitch) + col
+                    const gray = glyph.bitmap.buffer.readUInt8(offset)
+
+                    const x = col + glyph.bitmapLeft
+                    const y =  glyph.bitmapTop - row + font.baseOffset
+
+                    console.log(x,y,gray)
+
+                    if (gray > 128)
+                        this.pixels.push(new Pixel(matrix, x, y, color))
+                }
+            }
+        }
+    }
+}
+
+//freetype2 wrapper, specially for low resolution matrix displays and pixelly fonts
+//usually this fonts have one optimum height/width setting
+export class Font {
+    name: string
+    filename: string
+    width: number
+    height: number
+    baseOffset: number
+
+    fontFace: FontFace
+
+    constructor(name: string, filename: string, width: number, height: number, baseOffset: number) {
+        this.name = name
+        this.filename = filename
+        this.width = width
+        this.height = height
+        this.baseOffset = baseOffset
+
+    }
+
+    load() {
+        if (!this.fontFace) {
+            this.fontFace = freetype.NewMemoryFace(readFileSync(this.filename));
+            // this.fontFace = freetype.NewFace('fonts/EightBit Atari-Regular.ttf');
+
+            this.fontFace.setPixelSizes(this.width, this.height);
+
+        }
+    }
+
+    getGlyph(charCode: number): Glyph {
+        return (this.fontFace.loadChar(charCode, {
+            render: true,
+            loadTarget: freetype.RenderMode.NORMAL,
+        }))
+    }
+
+
+}
+
+export class FontMarquee {
+    constructor(matrix: Matrix, controlPrefix: string) {
+
+
+    }
+
+}
 
 export default class AnimationMarquee extends Animation {
 
@@ -20,14 +108,24 @@ export default class AnimationMarquee extends Animation {
     constructor(matrix: Matrix) {
         super(matrix);
 
+
+        const f=new Font('test', 'fonts/EightBit Atari-Regular.ttf', 0, 8, 0)
+        f.load()
+
+
+        new CharPixels(matrix, f, 'C'.charCodeAt(0), 0,0, new Color())
+
+
+        return
+
         // https://damieng.com/typography/zx-origins/#All/All
         // https://fontstruct.com/gallery/tag/41/Pixels
         // const face = freetype.NewMemoryFace(readFileSync('fonts/OpenBaskerville-0.0.53.otf'));
         // const face = freetype.NewMemoryFace(readFileSync('fonts/C64_Pro_Mono-STYLE.otf'));
         // const face = freetype.NewMemoryFace(readFileSync('fonts/C64_Pro-STYLE.otf'));
         // const face = freetype.NewMemoryFace(readFileSync('fonts/PxPlus_IBM_BIOS.ttf'));
-        const face = freetype.NewMemoryFace(readFileSync('fonts/MSX-Screen0.ttf'));
-        // const face = freetype.NewMemoryFace(readFileSync('fonts/EightBit Atari-Regular.ttf'));
+        // const face = freetype.NewMemoryFace(readFileSync('fonts/MSX-Screen0.ttf'));
+        const face = freetype.NewMemoryFace(readFileSync('fonts/EightBit Atari-Regular.ttf'));
         // const face = freetype.NewMemoryFace(readFileSync('fonts/ZX Sierra Quest.ttf'));
         // const face = freetype.NewMemoryFace(readFileSync('fonts/Anarchist.ttf'));
         // const face = freetype.NewMemoryFace(readFileSync('fonts/Skid Row.ttf'));
@@ -40,12 +138,12 @@ export default class AnimationMarquee extends Animation {
 
         face.setPixelSizes(0, 8);
 
-        let base=0
+        let base = 0
 
         // face.setCharSize()
 
 
-        const input = matrix.preset.input('Text', "Xx abcdef ABCDEF")
+        const input = matrix.preset.input('Text', "Atari  2600")
 
         // const width = text.length * font.width;
         let char_nr = 0;
@@ -103,7 +201,7 @@ export default class AnimationMarquee extends Animation {
 
                             // console.log(gray)
                             if (gray > 128)
-                                this.addPixel(new Pixel(matrix, matrix.width - 1, glyph.bitmapTop - row+base, new Color(255, 0, 0, 1)))
+                                this.addPixel(new Pixel(matrix, matrix.width - 1, glyph.bitmapTop - row + base, new Color(255, 0, 0, 1)))
                         }
                     }
                 }
