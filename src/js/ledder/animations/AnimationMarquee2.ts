@@ -47,21 +47,19 @@ export default class AnimationMarquee2 extends Animation {
         // const face = freetype.NewMemoryFace(readFileSync('fonts/tom-thumb.bdf'));
 
 
-        const input = matrix.preset.input('Text', "At")
+        const input = matrix.preset.input('Text', "Atari is the besttt")
 
         const colorControl = matrix.preset.color("Text color", 255);
 
-        const pixels=new CharPixels(matrix, f, input.text, 0, 0, colorControl)
+        const charPixels=new CharPixels(matrix, f, input.text, 0, 0, colorControl)
 
         // new AnimationTwinkle(matrix, this.pixels)
         // const mover=new AnimationMove(matrix, intervalControl, new Value(-1), new Value(0))
-        new FxRotateLeft(matrix, pixels, 'Move')
+        new FxRotateLeft(matrix, charPixels, 'Move')
 
         // mover.add(pixels)
 
-
-
-
     }
+
 
 }

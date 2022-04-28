@@ -41,4 +41,14 @@ export class CharPixels extends PixelContainer {
 
         }
     }
+
+    //usefull for rotate and other fx
+    bbox() {
+        return ({
+            xMin: 0,
+            yMin: 0,
+            yMax: this.height,
+            xMax: this.width
+        })
+    }
 }

@@ -85,7 +85,7 @@ export class PixelContainer {
         return (this);
     }
 
-    //get bounding box
+    //get bounding box (override if needed)
     bbox() {
         if (!this.pixels.length) {
             return undefined
