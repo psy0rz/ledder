@@ -8,6 +8,7 @@ import {CharPixels} from "../CharPixels.js";
 import {Font} from "../Font.js";
 import {AnimationMove} from "../AnimationMove.js";
 import {Value} from "../Value.js";
+import FxRotateLeft from "../fx/FxRotateLeft.js";
 
 
 export default class AnimationMarquee2 extends Animation {
@@ -46,17 +47,17 @@ export default class AnimationMarquee2 extends Animation {
         // const face = freetype.NewMemoryFace(readFileSync('fonts/tom-thumb.bdf'));
 
 
-        const input = matrix.preset.input('Text', "Atari  2600")
+        const input = matrix.preset.input('Text', "At")
 
-        const intervalControl = matrix.preset.value("Marquee interval", 1, 1, 10, 1);
         const colorControl = matrix.preset.color("Text color", 255);
 
         const pixels=new CharPixels(matrix, f, input.text, 0, 0, colorControl)
 
         // new AnimationTwinkle(matrix, this.pixels)
-        const mover=new AnimationMove(matrix, intervalControl, new Value(-1), new Value(0))
+        // const mover=new AnimationMove(matrix, intervalControl, new Value(-1), new Value(0))
+        new FxRotateLeft(matrix, pixels, 'Move')
 
-        mover.add(pixels)
+        // mover.add(pixels)
 
 
 
