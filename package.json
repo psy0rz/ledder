@@ -35,6 +35,7 @@
     "json-rpc-2.0": "^0.2.16",
     "material-icons": "^1.10.8",
     "mqtt": "^4.3.7",
+    "node-abort-controller": "^3.0.1",
     "rpi-ws281x-smi": "../rpi-ws281x-smi",
     "skeleton-elements": "^3.5.0",
     "svelte": "^3.46.4",
