@@ -13,6 +13,7 @@ export default class PoliceLights extends Animation {
 
 
     async run(matrix: Matrix, scheduler: Scheduler, control: PresetControl) {
+
         const color1Control = matrix.preset.color("Color 1", 255, 0, 0, 1);
 
         for (let x = 0; x < matrix.width / 5; x++)

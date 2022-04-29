@@ -1,6 +1,7 @@
 import {writeFile} from "fs/promises";
 import {MatrixApng} from "./drivers/MatrixApng.js";
 import {Scheduler} from "../ledder/Scheduler.js";
+import {Animation} from "../ledder/Animation.js";
 
 //handles creation of previews
 export class PreviewStore {
@@ -25,7 +26,14 @@ export class PreviewStore {
     if (preset)
       this.matrix.preset.load(preset);
 
-    new animationClass(this.matrix)
+    let animation:Animation=new animationClass(this.matrix)
+    animation.run(this.matrix, this.matrix.scheduler, this.matrix.preset).then( ()=>{
+      console.log(`PreviewStore: ${filename} finished.`)
+    }).catch ( (e)=>{
+      console.error(`PreviewStore: ${filename} error`,e )
+    })
+
+
     let imageData=await this.matrix.get(animationClass)
 
     await writeFile(filename, Buffer.from(imageData))
