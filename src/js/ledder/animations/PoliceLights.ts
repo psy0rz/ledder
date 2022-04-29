@@ -25,13 +25,22 @@ export default class PoliceLights extends Animation {
         color1Control.a = 0
 
         while (1) {
-            await scheduler.delay(30)
             color1Control.a = 1
-            await scheduler.delay(30)
+            await scheduler.delay(2)
             color1Control.a = 0
+            await scheduler.delay(7)
+            color1Control.a = 1
+            await scheduler.delay(2)
+            color1Control.a = 0
+            await scheduler.delay(7)
+            await scheduler.delay(30)
         }
+
         // }
+
+
     }
+
 
 
 

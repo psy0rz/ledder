@@ -13,15 +13,27 @@ export class Scheduler {
 
     constructor() {
         this.frameNr = 0;
-        this.intervals=[]
+        this.intervals = []
 
     }
 
+    //abort handler for exceptions
+    abortHandler(e) {
+        if (e != 'abort')
+            console.error("Interval: Promise was rejected: ", e)
+    }
+
+
     clear() {
-        for (const interval of this.intervals) {
-            interval.resolve(false)
-        }
-        this.intervals=[]
+        //install exception handlers on all promises first. (in case they dont have one yet)
+        for (const interval of this.intervals)
+            interval.promise.catch(this.abortHandler)
+
+        //now abort them all. this causes loops etc to be aborted as well. (since await will raise an error)
+        for (const interval of this.intervals)
+            interval.reject("abort")
+
+        this.intervals = []
     }
 
     /**
@@ -34,7 +46,7 @@ export class Scheduler {
 
         const interval = new IntervalStatic(frames, this.frameNr + offset, callback);
         this.intervals.push(interval);
-        return (interval.promise())
+        return (interval.createPromise())
     }
 
 
@@ -47,14 +59,15 @@ export class Scheduler {
     intervalControlled(value: ValueInterface, callback: (frameNr: number) => number | void | boolean, offset = 0): Promise<any> {
         const interval = new IntervalControlled(value, this.frameNr + offset, callback);
         this.intervals.push(interval);
-        return (interval.promise())
+        return (interval.createPromise())
     }
 
     delay(frames): Promise<any> {
         const interval = new IntervalOnce(frames, this.frameNr);
         this.intervals.push(interval);
-        return (interval.promise())
+        return (interval.createPromise())
     }
+
 
     //called by matrix on every frame.
     update() {
@@ -72,7 +85,6 @@ export class Scheduler {
             } catch (e) {
                 console.error("Exception during animation interval:", e)
                 //remove this interval since its broken
-                this.intervals[i].resolve(false)
                 this.intervals.splice(i, 1);
             }
         }

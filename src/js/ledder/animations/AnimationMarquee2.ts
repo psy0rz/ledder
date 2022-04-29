@@ -3,6 +3,8 @@ import {Matrix} from "../Matrix.js";
 import {CharPixels} from "../CharPixels.js";
 import {Font} from "../Font.js";
 import FxRotateLeft from "../fx/FxRotateLeft.js";
+import {Scheduler} from "../Scheduler.js";
+import {PresetControl} from "../PresetControl.js";
 
 
 // https://damieng.com/typography/zx-origins/#All/All
@@ -33,27 +35,41 @@ export default class AnimationMarquee2 extends Animation {
     static presetDir = "Marquee2"
     static category = "Marquees"
 
-    constructor(matrix: Matrix) {
-        super(matrix);
-
-
-
+    async run(matrix: Matrix, scheduler: Scheduler, control: PresetControl)
+    {
         const f = fonts["Atari regular"]
         f.load()
 
-
-
         const input = matrix.preset.input('Text', "Atari 2600 ")
 
-        const colorControl = matrix.preset.color("Text color", 100,0,0, 1);
+        const colorControl = control.color("Text color", 100,0,0, 1);
 
         const charPixels=new CharPixels(matrix, f, input.text, 0, 0, colorControl)
 
         // new AnimationTwinkle(matrix, this.pixels)
-        if (matrix.preset.switch('Scroll', false, true).enabled)
-            new FxRotateLeft(matrix, charPixels, 'Move')
+        // if (control.switch('Scroll', false, true).enabled)
+        const rotator=new FxRotateLeft(matrix, "Move" )
 
-        // mover.add(pixels)
+
+
+
+
+        console.log("kk3")
+        rotator.run(charPixels)
+        //     .catch( (e)=>{
+        //     console.log("in het ding")
+        // })
+
+        while(1) {
+
+            await scheduler.delay(60)
+            console.log("moi5")
+
+        }
+
+
+
+
 
     }
 
