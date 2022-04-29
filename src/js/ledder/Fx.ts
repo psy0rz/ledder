@@ -3,7 +3,7 @@ import {Matrix} from "./Matrix.js";
 import {Scheduler} from "./Scheduler.js";
 import {PresetControl} from "./PresetControl.js";
 
-//an effect can be applied to a pixelcontainer
+//an effect can be applied to pixelcontainers or colors usually (via run() )
 export class Fx {
     static title = "Untitled"
 
@@ -18,9 +18,8 @@ export class Fx {
         this.running=true
     }
 
-    //run the fx, while this.running is true
-    //NOTE: This should not be a async function because then it will wrap our promises and exceptions arent catched when aborting intervals
-    run(pixelContainer: PixelContainer, ...any)
+    //run fx on pixels
+    run(...any)
     {
         console.error("Error: This fx has no run() function?")
 

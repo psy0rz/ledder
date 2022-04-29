@@ -1,32 +1,6 @@
 import {Matrix} from "../Matrix.js";
-import {PixelContainer} from "../PixelContainer.js";
 import {Fx} from "../Fx.js";
 import {ControlValue} from "../ControlValue.js";
-
-// export default class FxBlink extends Fx {
-//
-//     static title = "Blink pixels"
-//
-//     constructor(matrix: Matrix, pixelContainer: PixelContainer, controlPrefix: string) {
-//         super(matrix, pixelContainer, controlPrefix)
-//
-//         const delayControl = matrix.preset.value(controlPrefix + ' delay', 1, 0.1, 10, 0.1)
-//
-//         let bbox = pixelContainer.bbox()
-//         let step=-1
-//
-//         matrix.scheduler.intervalControlled(delayControl, (frameNr) => {
-//
-//             for (const p of this.pixelContainer.pixels) {
-//                 p.x = p.x + step
-//                 if (p.x < bbox.xMin)
-//                     p.x = bbox.xMax
-//             }
-//
-//         })
-//     }
-//
-// }
 
 
 export default class FxRotateLeft extends Fx {
@@ -35,10 +9,10 @@ export default class FxRotateLeft extends Fx {
 
     intervalControl: ControlValue
 
-    constructor(matrix: Matrix, controlPrefix: string, delay=1) {
-        super(matrix, controlPrefix,)
+    constructor(matrix: Matrix, controlPrefix: string, interval=1) {
+        super(matrix, controlPrefix)
 
-        this.intervalControl = matrix.preset.value(controlPrefix + ' interval', 1, 1, 60, 1)
+        this.intervalControl = matrix.preset.value(controlPrefix + ' interval', interval, 1, 60, 1)
     }
 
     run(pixelContainer)
@@ -58,3 +32,4 @@ export default class FxRotateLeft extends Fx {
         return (this.promise)
     }
 }
+

@@ -2,9 +2,9 @@ import {Animation} from "../Animation.js";
 import {Matrix} from "../Matrix.js";
 import {CharPixels} from "../CharPixels.js";
 import {Font} from "../Font.js";
-import FxRotateLeft from "../fx/FxRotateLeft.js";
 import {Scheduler} from "../Scheduler.js";
 import {PresetControl} from "../PresetControl.js";
+import FxRotateLeft from "../fx/FxRotateLeft.js";
 
 
 // https://damieng.com/typography/zx-origins/#All/All
