@@ -25,7 +25,7 @@ for (const matrix of matrixList) {
     matrix.run()
 
     let runner = new RunnerServer(matrix, presetStore)
-    runner.runName(startupAnimation, startupPresetName)
+    // runner.runName(startupAnimation, startupPresetName)
     runners.push(runner)
 }
 

@@ -20,10 +20,12 @@ export default class PoliceLights extends Animation {
                 new Pixel(matrix,x,y,color1Control)
 
 
+        matrix.scheduler.interval(30, ()=>{
+
+            color1Control.a=0
 
 
 
+        })
     }
-
-
 }
