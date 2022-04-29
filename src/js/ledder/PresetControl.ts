@@ -4,6 +4,7 @@ import {ControlColor} from "./ControlColor.js"
 import {PresetValues} from "./PresetValues.js"
 import {ControlInput} from "./ControlInput.js"
 import {ControlSwitch} from "./ControlSwitch.js";
+import {Choice, ControlSelect} from "./ControlSelect.js";
 
 
 /**
@@ -101,6 +102,14 @@ export class PresetControl {
         return this.controls[name];
     }
 
+    select(name: string, selected:string, choices: Array<Choice>, resetOnChange:boolean=false): ControlSelect {
+        if (!(name in this.controls)) {
+            this.add(new ControlSelect(name, selected, choices, resetOnChange));
+        }
+
+        // @ts-ignore
+        return this.controls[name];
+    }
 
 
     setCallbacks(reset, addControl, updateValues) {

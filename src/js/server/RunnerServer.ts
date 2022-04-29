@@ -70,6 +70,19 @@ export class RunnerServer {
     //     this.animation = new this.animationClass(this.matrix)
     // }
 
+
+    //create class instance of currently selected animation and run it
+    start() {
+        this.animation = new this.animationClass(this.matrix)
+        this.animation.run(this.matrix, this.matrix.scheduler, this.matrix.preset).then(() => {
+            console.log(`RunnerServer: Animation ${this.animationName} finished.`)
+        }).catch((e) => {
+            if (e != 'abort')
+                console.error(`RunnerServer: Animation ${this.animationName} rejected promise: `, e)
+        })
+    }
+
+
     //load presetName and run
     async runName(animationName: string, presetName: string) {
 
@@ -83,14 +96,7 @@ export class RunnerServer {
         if (presetName)
             this.matrix.preset.load(await this.presetStore.load(this.animationClass, presetName))
 
-
-        this.animation = new this.animationClass(this.matrix)
-        this.animation.run(this.matrix, this.matrix.scheduler, this.matrix.preset).then( ()=>{
-            console.log(`RunnerServer: Animation ${this.animationName} finished.`)
-        }).catch ( (e)=>{
-            if (e!='abort')
-                console.error(`RunnerServer: Animation ${this.animationName} rejected promise: `,e )
-        })
+        this.start()
 
     }
 
@@ -99,16 +105,15 @@ export class RunnerServer {
         try {
             if (this.animationName !== undefined)
                 await this.runName(this.animationName, this.presetName)
-        }catch (e) {
+        } catch (e) {
             console.error(e)
         }
     }
 
     //restart animation but optionally keep preset values.
-    async restart(keepPresets:boolean=false)
-    {
+    async restart(keepPresets: boolean = false) {
         this.matrix.reset(keepPresets)
-        this.animation = new this.animationClass(this.matrix)
+        this.start()
     }
 
     //save current running animation preset

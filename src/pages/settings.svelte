@@ -8,7 +8,6 @@
      }
 
 
-
 >
     <Navbar title="Controls"
             subtitle={$svelteSelectedTitle}
@@ -94,6 +93,23 @@
                     preset.enabled=e.detail[0]
                     rpc.notify("matrix.preset.updateValue", preset.meta.name, preset)
                 }}/>
+            {:else if preset.meta.type === 'select'}
+                <Input
+                        type="select"
+                        label="Select"
+                        value={ preset.selected }
+                        on:input={ (e)=>{
+                            console.log(e)
+                            preset.selected=e.detail[0].target.value
+                            rpc.notify("matrix.preset.updateValue", preset.meta.name, preset)
+                       }}
+
+                >
+                    {#each preset.meta.choices as choice}
+                        <option value="{choice.id}">{choice.name}</option>
+                    {/each}
+                </Input>
+
             {:else}
                 <b>Unknown control type: {preset.meta.name} has type {preset.meta.type} !</b>
             {/if}

@@ -7,13 +7,19 @@
    "a": 1
   },
   "FPS": {
-   "value": 60
+   "value": 23
   },
   "Text": {
    "text": "Atari 2600 "
   },
   "Scroll": {
    "enabled": false
+  },
+  "Font": {
+   "selected": "C64"
+  },
+  "Move interval": {
+   "value": 1
   }
  },
  "title": "",
