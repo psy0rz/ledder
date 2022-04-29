@@ -85,6 +85,11 @@ export class RunnerServer {
 
 
         this.animation = new this.animationClass(this.matrix)
+        this.animation.run(this.matrix, this.matrix.scheduler, this.matrix.preset).then( ()=>{
+            console.log(`RunnerServer: Animation ${this.animationName} finished.`)
+        }).catch ( (e)=>{
+            console.log(`RunnerServer: Animation ${this.animationName} error`,e )
+        })
 
     }
 

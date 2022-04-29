@@ -13,12 +13,14 @@ export class WsContext {
     ws: WebSocket
     client: JSONRPCServerAndClient<WsContext, WsContext>
     runner: RunnerServer
+    id: number
 
     statsInterval: any
 
-    constructor(ws: WebSocket, client) {
+    constructor(ws: WebSocket, client, id) {
         this.ws = ws
         this.client = client
+        this.id = id
 
 
     }
@@ -51,7 +53,7 @@ export class WsContext {
             })
 
         this.statsInterval=setInterval( ()=>{
-            console.log(`Stats: ${matrix.pixels.length} pixels, ${matrix.scheduler.intervals.length} intervals`)
+            console.log(`Stats ${this.id}: ${matrix.pixels.length} pixels, ${matrix.scheduler.intervals.length} intervals`)
         }, 3000)
 
     }

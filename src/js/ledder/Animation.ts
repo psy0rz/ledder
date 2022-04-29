@@ -1,5 +1,7 @@
 import {Matrix} from "./Matrix.js";
 import {PixelContainer} from "./PixelContainer.js";
+import {Scheduler} from "./Scheduler.js";
+import {PresetControl} from "./PresetControl.js";
 
 
 /**
@@ -26,6 +28,12 @@ export class Animation extends PixelContainer {
         super();
         this.matrix = matrix;
         this.keep = true;
+    }
+
+
+    async run(matrix: Matrix, scheduler: Scheduler, control: PresetControl)
+    {
+
     }
 
     //unschedules animation, removes pixels.

@@ -15,9 +15,5 @@ export class Fx {
         this.matrix = matrix
     }
 
-    abstract run()
-    {
-
-    }
 }
 

@@ -1,8 +1,16 @@
 
-export abstract class Interval
+export class Interval
 {
-  resolve: (value:unknown)=> void;
 
-  abstract check(time);
+  resolve: (value: boolean) => void
+
+  check?(time: number): boolean
+
+  promise()
+  {
+    return(new Promise((resolve, reject)=>{
+      this.resolve=resolve
+    }))
+  }
 
 }

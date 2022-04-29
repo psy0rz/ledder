@@ -15,6 +15,7 @@ if (process.env.NODE_ENV == 'development')
 export class RpcServer extends Rpc {
 
     server: JSONRPCServerAndClient<WsContext, WsContext>;
+    idCount: number
 
     constructor() {
         super();
@@ -22,6 +23,7 @@ export class RpcServer extends Rpc {
         const app = express()
         const port = 3000
 
+        this.idCount=0
 
         // use vite's connect instance as middleware, when in dev mode
         if (process.env.NODE_ENV == 'development') {
@@ -49,7 +51,8 @@ export class RpcServer extends Rpc {
         );
 
         app.ws('/ws', (ws, req) => {
-            let context = new WsContext(ws, this.server)
+            this.idCount++
+            let context = new WsContext(ws, this.server, this.idCount)
 
             ws.on('message', async (msg) => {
                 // console.log("RPC request: ", msg)

@@ -33,3 +33,4 @@ export class IntervalStatic extends Interval {
     }
 
 }
+
