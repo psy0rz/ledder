@@ -10,7 +10,7 @@
    "r": 97,
    "g": 96,
    "b": 255,
-   "a": 0
+   "a": 1
   },
   "Flasher off delay": {
    "value": 5
@@ -31,28 +31,28 @@
    "value": -13
   },
   "Text2 offset": {
-   "value": -20
+   "value": -9
   },
   "Text2": {
-   "text": "POLITIE"
+   "text": "APK"
   },
   "Font": {
-   "selected": "MSX"
+   "selected": "C64"
   },
   "Text1 color": {
    "r": 255,
    "g": 0,
    "b": 0,
-   "a": 1
+   "a": 0
   },
   "Text1": {
    "text": "STOP"
   },
   "Text2 color": {
    "r": 255,
-   "g": 0,
-   "b": 0,
-   "a": 0
+   "g": 255,
+   "b": 255,
+   "a": 1
   },
   "Text delay": {
    "value": 60

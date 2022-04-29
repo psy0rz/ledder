@@ -113,6 +113,7 @@ export class RunnerServer {
     //restart animation but optionally keep preset values.
     async restart(keepPresets: boolean = false) {
         this.matrix.reset(keepPresets)
+
         this.start()
     }
 

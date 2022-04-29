@@ -34,6 +34,7 @@ export class Scheduler {
             interval.reject("abort")
 
         this.intervals = []
+        this.frameNr=0
     }
 
     /**

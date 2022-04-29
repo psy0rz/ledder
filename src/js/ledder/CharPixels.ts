@@ -12,7 +12,7 @@ export class CharPixels extends PixelContainer {
     //total height of whole text
     height: number
 
-    constructor(matrix: Matrix, font: Font, text: string, x: number, y: number, color: ColorInterface) {
+    constructor(matrix: Matrix, font: Font, text: string, xStart: number, yStart: number, color: ColorInterface) {
         super()
 
         this.width = 0
@@ -28,8 +28,8 @@ export class CharPixels extends PixelContainer {
                     const bits = glyph.bitmap.buffer.readUInt8(offset)
                     for (let col = 0; col < glyph.bitmap.width; col++) {
 
-                        const x = this.width + col + glyph.bitmapLeft
-                        const y = glyph.bitmapTop - row + font.baseOffset
+                        const x = xStart + this.width + col + glyph.bitmapLeft
+                        const y = yStart + glyph.bitmapTop - row + font.baseOffset
 
                         if (bits & (1 << (7-col) ))
                             this.pixels.push(new Pixel(matrix, x, y, color))

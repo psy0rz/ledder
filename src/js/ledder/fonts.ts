@@ -25,7 +25,7 @@ export let fonts = {
 }
 
 //helper to make it easier to let the user select a font
-export function fontSelect(control:PresetControl, name, selected='C64' ):Font
+export function fontSelect(control:PresetControl, name='Font', selected='C64' ):Font
 {
     let choices = []
     for (const [id, font] of Object.entries(fonts)) {
