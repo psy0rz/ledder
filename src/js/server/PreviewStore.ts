@@ -24,10 +24,10 @@ export class PreviewStore {
     this.matrix.reset()
 
     if (preset)
-      this.matrix.preset.load(preset);
+      this.matrix.control.load(preset);
 
     let animation:Animation=new animationClass(this.matrix)
-    animation.run(this.matrix, this.matrix.scheduler, this.matrix.preset).then( ()=>{
+    animation.run(this.matrix, this.matrix.scheduler, this.matrix.control).then( ()=>{
       console.log(`PreviewStore: ${filename} finished.`)
     }).catch ( (e)=>{
       console.error(`PreviewStore: ${filename} error`,e )

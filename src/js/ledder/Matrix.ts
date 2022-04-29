@@ -18,15 +18,15 @@ export abstract class Matrix extends PixelContainer {
   height: number
   scheduler: Scheduler
   runScheduler: boolean
-  preset: PresetControl
+  control: PresetControl
   fpsControl: ControlValue
 
   protected constructor(scheduler, width, height) {
     super();
     this.scheduler = scheduler;
     //note: named preset instead of presetControl to make it more friendly for enduser
-    this.preset = new PresetControl();
-    this.fpsControl = this.preset.value("FPS", 60, 1, 120, 1)
+    this.control = new PresetControl();
+    this.fpsControl = this.control.value("FPS", 60, 1, 120, 1)
 
     this.width = width;
     this.height = height;
@@ -51,8 +51,8 @@ export abstract class Matrix extends PixelContainer {
    */
   reset(keepPresets: boolean = false) {
     if (!keepPresets) {
-      this.preset.clear();
-      this.fpsControl = this.preset.value("FPS", 60, 1, 120, 1)
+      this.control.clear();
+      this.fpsControl = this.control.value("FPS", 60, 1, 120, 1)
     }
     if (this.runScheduler)
       this.scheduler.clear();

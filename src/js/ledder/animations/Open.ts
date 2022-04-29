@@ -23,7 +23,7 @@ export default class Open extends Animation {
     let char_nr = 0;
     let x = 0;
 
-    const intervalControl = matrix.preset.value("Marquee interval", 1, 1, 10, 1);
+    const intervalControl = matrix.control.value("Marquee interval", 1, 1, 10, 1);
     // const colorControl = matrix.preset.color("Text color");
     // let colorControl=new Color()
 

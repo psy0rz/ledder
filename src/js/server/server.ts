@@ -99,7 +99,7 @@ rpc.addMethod("runner.runName", async (params, context) => {
 rpc.addMethod("matrix.preset.updateValue", async (params, context) => {
 
     if (context.runner)
-        if (context.runner.matrix.preset.updateValue(params[0], params[1])) {
+        if (context.runner.matrix.control.updateValue(params[0], params[1])) {
             context.runner.restart(true)
         }
 

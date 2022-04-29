@@ -16,9 +16,9 @@ export default class FxBlink extends Fx {
     constructor(matrix: Matrix, controlPrefix: string, onDelay=60, offDelay=60, repeat=0) {
         super(matrix, controlPrefix)
 
-        this.onDelay = matrix.preset.value(controlPrefix + ' on delay', onDelay, 1, 120, 1)
-        this.offDelay = matrix.preset.value(controlPrefix + ' off delay', offDelay, 1, 120, 1)
-        this.repeat = matrix.preset.value(controlPrefix + ' repeat', repeat, 0, 120, 1)
+        this.onDelay = matrix.control.value(controlPrefix + ' on delay', onDelay, 1, 120, 1)
+        this.offDelay = matrix.control.value(controlPrefix + ' off delay', offDelay, 1, 120, 1)
+        this.repeat = matrix.control.value(controlPrefix + ' repeat', repeat, 0, 120, 1)
     }
 
     run(...colors:Array<ColorInterface>) {

@@ -41,7 +41,7 @@ export class WsContext {
         this.runner = new RunnerServer(matrix, presetStore)
         matrix.run()
 
-        matrix.preset.setCallbacks(
+        matrix.control.setCallbacks(
             () => {
                 this.request("control.reset")
             },

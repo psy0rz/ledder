@@ -71,11 +71,11 @@ export default class BrainsmokeFire extends Animation {
       this.mapping.push(~~Math.min(((m / 256) ** 1.25 / 3.7 * 256), 2047))
 
 
-    this.minIntensityControl = matrix.preset.value("Fire minimum intensity", 0, 0, 2047, 20);
-    this.maxIntensityControl = matrix.preset.value("Fire maximum intensity", 650, 0, 2047, 20);
-    this.wildnessIntensityControl = matrix.preset.value("Fire wildness", 100000, 0, 2047, 20);
+    this.minIntensityControl = matrix.control.value("Fire minimum intensity", 0, 0, 2047, 20);
+    this.maxIntensityControl = matrix.control.value("Fire maximum intensity", 650, 0, 2047, 20);
+    this.wildnessIntensityControl = matrix.control.value("Fire wildness", 100000, 0, 2047, 20);
 
-    const fireintervalControl = matrix.preset.value("Fire interval",1, 1, 10, 0.1)
+    const fireintervalControl = matrix.control.value("Fire interval",1, 1, 10, 0.1)
     matrix.scheduler.intervalControlled(fireintervalControl,()=>
     {
       this.next()

@@ -74,7 +74,7 @@ export class RunnerServer {
     //create class instance of currently selected animation and run it
     start() {
         this.animation = new this.animationClass(this.matrix)
-        this.animation.run(this.matrix, this.matrix.scheduler, this.matrix.preset).then(() => {
+        this.animation.run(this.matrix, this.matrix.scheduler, this.matrix.control).then(() => {
             console.log(`RunnerServer: Animation ${this.animationName} finished.`)
         }).catch((e) => {
             if (e != 'abort')
@@ -94,7 +94,7 @@ export class RunnerServer {
         this.matrix.reset()
 
         if (presetName)
-            this.matrix.preset.load(await this.presetStore.load(this.animationClass, presetName))
+            this.matrix.control.load(await this.presetStore.load(this.animationClass, presetName))
 
         this.start()
 
@@ -119,7 +119,7 @@ export class RunnerServer {
     //save current running animation preset
     async save(presetName: string) {
         this.presetName = presetName
-        let presetValues = this.matrix.preset.save()
+        let presetValues = this.matrix.control.save()
         await this.presetStore.save(this.animationClass, presetName, presetValues)
         await this.presetStore.createPreview(this.animationClass, presetName, presetValues)
         await this.presetStore.updateAnimationPresetList()

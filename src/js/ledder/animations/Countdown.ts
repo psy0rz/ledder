@@ -25,9 +25,9 @@ export default class Countdown extends Animation {
 
         // let targetDate = new Date('2022-04-01T12:37:42');
 
-        const intervalControl = matrix.preset.value("Marquee interval", 1, 1, 10, 1);
+        const intervalControl = matrix.control.value("Marquee interval", 1, 1, 10, 1);
         // const textColor=new Color()
-        const textColor = matrix.preset.color("Text color", 255, 0, 0, 1);
+        const textColor = matrix.control.color("Text color", 255, 0, 0, 1);
 
 
         let blinkdir = 1 / 60

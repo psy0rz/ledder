@@ -49,8 +49,8 @@ export default class AnimationNyan
     `)
 
 
-    const moveIntervalControl = matrix.preset.value("Nyan move interval", 3, 1, 20, 0.1);
-    const wobbleIntervalControl = matrix.preset.value("Nyan wobble interval", 15, 1, 20, 0.1);
+    const moveIntervalControl = matrix.control.value("Nyan move interval", 3, 1, 20, 0.1);
+    const wobbleIntervalControl = matrix.control.value("Nyan wobble interval", 15, 1, 20, 0.1);
 
 
     new AnimationWobbleY(matrix, {value: 1}, wobbleIntervalControl, 0).addPixels(body.pixels)
@@ -65,8 +65,8 @@ export default class AnimationNyan
     let y = 2;
     const black = new Color(0, 0, 0);
 
-    const controlFade = matrix.preset.value("Rainbow fade speed", 30, 1, 120, 1);
-    const controlFadeRnd = matrix.preset.value("Rainbow fade randomizer", 0.1, 0, 0.5, 0.01);
+    const controlFade = matrix.control.value("Rainbow fade speed", 30, 1, 120, 1);
+    const controlFadeRnd = matrix.control.value("Rainbow fade randomizer", 0.1, 0, 0.5, 0.01);
 
     //wobble rainbow
     matrix.scheduler.intervalControlled(wobbleIntervalControl, () => {

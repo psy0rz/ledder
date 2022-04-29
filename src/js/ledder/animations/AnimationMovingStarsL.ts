@@ -16,10 +16,10 @@ export default class AnimationMovingStarsL extends Animation {
   constructor(matrix: Matrix) {
     super(matrix);
 
-    const intervalControl = matrix.preset.value("Star move interval", 3, 1, 30, 0.1);
-    const blinkDelayControl = matrix.preset.value("Star twinkle interval", 5.8, 1, 10, 0.1);
-    const starDensityControl = matrix.preset.value("Star density", 10, 1, 100, 1)
-    const starColorControl = matrix.preset.color("Star color", 128, 128, 128);
+    const intervalControl = matrix.control.value("Star move interval", 3, 1, 30, 0.1);
+    const blinkDelayControl = matrix.control.value("Star twinkle interval", 5.8, 1, 10, 0.1);
+    const starDensityControl = matrix.control.value("Star density", 10, 1, 100, 1)
+    const starColorControl = matrix.control.color("Star color", 128, 128, 128);
 
     matrix.scheduler.interval(20, () => {
 

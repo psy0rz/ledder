@@ -15,14 +15,14 @@ export default class AnimationMarquee extends Animation {
     super(matrix);
 
     const font=FontSimple8x8
-    const input=matrix.preset.input('Text', "ABCabc!")
+    const input=matrix.control.input('Text', "ABCabc!")
 
     // const width = text.length * font.width;
     let char_nr = 0;
     let x = 0;
 
-    const intervalControl = matrix.preset.value("Marquee interval", 2, 1, 10, 1);
-    const colorControl = matrix.preset.color("Text color");
+    const intervalControl = matrix.control.value("Marquee interval", 2, 1, 10, 1);
+    const colorControl = matrix.control.color("Text color");
 
     new AnimationTwinkle(matrix, this.pixels)
 
