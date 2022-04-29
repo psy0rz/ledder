@@ -26,15 +26,15 @@ export default class TheMatrix extends Animation {
   constructor(matrix) {
     super(matrix);
 
-    const startColor = matrix.preset.color("Start color", 255, 255, 255);
-    const endColor = matrix.preset.color("Tail color", 0, 128, 0);
-    const fadeStart = matrix.preset.value("Start fade interval", 10, 1, 120, 1);
-    const fadeTail = matrix.preset.value("Tail fade interval", 30, 1, 120, 1);
-    const speed = matrix.preset.value("Fall interval", 5, 1, 30, 0.1);
-    const createinterval = matrix.preset.value("Create interval", 1, 1, 40, 1);
+    const startColor = matrix.control.color("Start color", 255, 255, 255);
+    const endColor = matrix.control.color("Tail color", 0, 128, 0);
+    const fadeStart = matrix.control.value("Start fade interval", 10, 1, 120, 1);
+    const fadeTail = matrix.control.value("Tail fade interval", 30, 1, 120, 1);
+    const speed = matrix.control.value("Fall interval", 5, 1, 30, 0.1);
+    const createinterval = matrix.control.value("Create interval", 1, 1, 40, 1);
 
-    const slowprecentage = matrix.preset.value("Slow trials (percent)", 10, 0, 100, 1);
-    const speedSlow = matrix.preset.value("Slow fall interval", 10, 1, 100, 1);
+    const slowprecentage = matrix.control.value("Slow trials (percent)", 10, 0, 100, 1);
+    const speedSlow = matrix.control.value("Slow fall interval", 10, 1, 100, 1);
 
     const black = new Color(0, 0, 0)
 

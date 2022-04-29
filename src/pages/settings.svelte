@@ -50,7 +50,7 @@
                        label={true}
                        on:rangeChange={ e=> {
                            preset.value=e.detail[0]
-                           rpc.notify("matrix.preset.updateValue", preset.meta.name, preset)
+                           rpc.notify("matrix.control.updateValue", preset.meta.name, preset)
                        } }/>
             {:else if preset.meta.type === 'color'}
                 <div style="max-width: 200px" id="color-picker-{i}"></div>
@@ -74,7 +74,7 @@
                                     preset.b=c.rgb[2]
                                     preset.a=c.alpha
 
-                                    rpc.notify("matrix.preset.updateValue", preset.meta.name, preset)
+                                    rpc.notify("matrix.control.updateValue", preset.meta.name, preset)
                                 }
                             }
                         }}
@@ -84,14 +84,14 @@
                 <Input type="textarea" value={preset.text}
                        on:input={ (e)=>{
                             preset.text=e.detail[0].target.value
-                            rpc.notify("matrix.preset.updateValue", preset.meta.name, preset)
+                            rpc.notify("matrix.control.updateValue", preset.meta.name, preset)
                        }}
                 />
             {:else if preset.meta.type === 'switch'}
                 <Toggle checked={preset.enabled} on:toggleChange={ (e)=>
                 {
                     preset.enabled=e.detail[0]
-                    rpc.notify("matrix.preset.updateValue", preset.meta.name, preset)
+                    rpc.notify("matrix.control.updateValue", preset.meta.name, preset)
                 }}/>
             {:else if preset.meta.type === 'select'}
                 <Input
@@ -101,7 +101,7 @@
                         on:input={ (e)=>{
                             console.log(e)
                             preset.selected=e.detail[0].target.value
-                            rpc.notify("matrix.preset.updateValue", preset.meta.name, preset)
+                            rpc.notify("matrix.control.updateValue", preset.meta.name, preset)
                        }}
 
                 >

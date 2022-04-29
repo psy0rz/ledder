@@ -16,11 +16,11 @@ export default class Rain extends Animation {
   constructor(matrix) {
     super(matrix);
 
-    const startColor = matrix.preset.color("Start color", 255, 255, 255);
-    const endColor = matrix.preset.color("End color", 0, 128, 0);
-    const fade = matrix.preset.value("Fade length", 60);
-    const speed = matrix.preset.value("Fall speed", 0.3, 0.1, 2, 0.1);
-    const density = matrix.preset.value("Amount of rain", 1, 1, 20, 0.1);
+    const startColor = matrix.control.color("Start color", 255, 255, 255);
+    const endColor = matrix.control.color("End color", 0, 128, 0);
+    const fade = matrix.control.value("Fade length", 60);
+    const speed = matrix.control.value("Fall speed", 0.3, 0.1, 2, 0.1);
+    const density = matrix.control.value("Amount of rain", 1, 1, 20, 0.1);
 
     matrix.scheduler.interval(20, () => {
 

@@ -24,7 +24,7 @@ export default class Open extends Animation {
     let x = 0;
 
     const intervalControl = matrix.control.value("Marquee interval", 1, 1, 10, 1);
-    // const colorControl = matrix.preset.color("Text color");
+    // const colorControl = matrix.control.color("Text color");
     // let colorControl=new Color()
 
     new AnimationTwinkle(matrix, this.pixels)

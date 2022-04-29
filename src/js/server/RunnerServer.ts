@@ -66,7 +66,7 @@ export class RunnerServer {
     //     this.matrix.reset()
     //
     //     if (preset)
-    //         this.matrix.preset.load(preset);
+    //         this.matrix.control.load(preset);
     //     this.animation = new this.animationClass(this.matrix)
     // }
 

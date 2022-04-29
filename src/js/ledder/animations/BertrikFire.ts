@@ -100,11 +100,11 @@ export default class BertrikFire extends Animation {
       }
     }
 
-    const fireintervalControl = matrix.preset.value("Fire interval", 3, 1, 10, 0.1)
-    const minIntensityControl = matrix.preset.value("Fire minimum intensity", 20, 0, palet.length-1, 1);
-    const maxIntensityControl = matrix.preset.value("Fire maximum intensity", 74, 0, palet.length-1, 1);
-    const wildnessIntensityControl = matrix.preset.value("Fire wildness", 10, 0, palet.length-1, 1);
-    const decayControl = matrix.preset.value("Fire decay", 4, 1, 10, 1)
+    const fireintervalControl = matrix.control.value("Fire interval", 3, 1, 10, 0.1)
+    const minIntensityControl = matrix.control.value("Fire minimum intensity", 20, 0, palet.length-1, 1);
+    const maxIntensityControl = matrix.control.value("Fire maximum intensity", 74, 0, palet.length-1, 1);
+    const wildnessIntensityControl = matrix.control.value("Fire wildness", 10, 0, palet.length-1, 1);
+    const decayControl = matrix.control.value("Fire decay", 4, 1, 10, 1)
 
 
     matrix.scheduler.intervalControlled(fireintervalControl, () => {

@@ -26,13 +26,13 @@ export default class DoomFire extends Animation {
     super(matrix);
 
 
-    const decayControl = matrix.preset.value("Fire decay", 40, 1, 120, 1);
-    const windControl = matrix.preset.value("Wind", 1.4, 0, 5, .1);
-    const intervalControl = matrix.preset.value("Update interval", 1, 1, 6, .1);
-    const minIntensityControl = matrix.preset.value("Fire minimum intensity", 20, 0, 100, 1);
-    const maxIntensityControl = matrix.preset.value("Fire maximum intensity", 100, 0, 100, 1);
-    const wildnessIntensityControl = matrix.preset.value("Fire wildness", 10, 0, 100, 1);
-    const smoothingControl = matrix.preset.value("Smoothing", 0, 0, 1, 0.01);
+    const decayControl = matrix.control.value("Fire decay", 40, 1, 120, 1);
+    const windControl = matrix.control.value("Wind", 1.4, 0, 5, .1);
+    const intervalControl = matrix.control.value("Update interval", 1, 1, 6, .1);
+    const minIntensityControl = matrix.control.value("Fire minimum intensity", 20, 0, 100, 1);
+    const maxIntensityControl = matrix.control.value("Fire maximum intensity", 100, 0, 100, 1);
+    const wildnessIntensityControl = matrix.control.value("Fire wildness", 10, 0, 100, 1);
+    const smoothingControl = matrix.control.value("Smoothing", 0, 0, 1, 0.01);
 
     const fireColors = calculateFireColors();
 

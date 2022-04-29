@@ -96,7 +96,7 @@ rpc.addMethod("runner.runName", async (params, context) => {
     }
 })
 
-rpc.addMethod("matrix.preset.updateValue", async (params, context) => {
+rpc.addMethod("matrix.control.updateValue", async (params, context) => {
 
     if (context.runner)
         if (context.runner.matrix.control.updateValue(params[0], params[1])) {
@@ -104,7 +104,7 @@ rpc.addMethod("matrix.preset.updateValue", async (params, context) => {
         }
 
     for (const runner of runners) {
-        if (runner.matrix.preset.updateValue(...params))
+        if (runner.matrix.control.updateValue(...params))
             runner.restart(true)
     }
 })
