@@ -63,6 +63,9 @@ export class Scheduler {
     }
 
     delay(frames): Promise<any> {
+        if (frames==0)
+            return
+
         const interval = new IntervalOnce(frames, this.frameNr);
         this.intervals.push(interval);
         return (interval.createPromise())

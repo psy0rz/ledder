@@ -30,13 +30,13 @@ export default class PoliceLights extends Animation {
 
         const blinker = new FxBlink(matrix, 'Flasher', 2, 4, 4)
 
-        const wait = control.value('Wait', 30, 0, 120, 1)
+        const wait = control.value('Wait', 0, 0, 120, 1)
 
         while (1) {
             await blinker.run(color1Control)
-            // color1Control.a = 0
+            await scheduler.delay(wait.value)
             await blinker.run(color2Control)
-            // color1Control.a = 0
+            await scheduler.delay(wait.value)
         }
 
     }

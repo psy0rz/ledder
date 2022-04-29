@@ -1,0 +1,33 @@
+{
+ "values": {
+  "Color 2": {
+   "r": 96,
+   "g": 96,
+   "b": 255,
+   "a": 0
+  },
+  "Color 1": {
+   "r": 97,
+   "g": 96,
+   "b": 255,
+   "a": 0
+  },
+  "Flasher off delay": {
+   "value": 5
+  },
+  "Flasher repeat": {
+   "value": 2
+  },
+  "FPS": {
+   "value": 60
+  },
+  "Flasher on delay": {
+   "value": 5
+  },
+  "Wait": {
+   "value": 0
+  }
+ },
+ "title": "",
+ "description": ""
+}
