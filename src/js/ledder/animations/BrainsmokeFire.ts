@@ -79,6 +79,7 @@ export default class BrainsmokeFire extends Animation {
     matrix.scheduler.intervalControlled(fireintervalControl,()=>
     {
       this.next()
+      return true
     })
 
   }

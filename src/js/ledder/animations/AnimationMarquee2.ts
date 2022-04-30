@@ -28,7 +28,7 @@ export default class AnimationMarquee2 extends Animation {
         if (control.switch('Scroll', false, true).enabled) {
             const rotator = new FxRotateLeft(matrix, "Move")
 
-            rotator.run(charPixels)
+            await rotator.run(charPixels)
         }
         //     .catch( (e)=>{
         //     console.log("in het ding")

@@ -10,10 +10,10 @@
    "r": 97,
    "g": 96,
    "b": 255,
-   "a": 0
+   "a": 1
   },
   "Flasher off delay": {
-   "value": 5
+   "value": 7
   },
   "Flasher repeat": {
    "value": 2
@@ -22,7 +22,7 @@
    "value": 60
   },
   "Flasher on delay": {
-   "value": 5
+   "value": 7
   },
   "Wait": {
    "value": 0
@@ -43,7 +43,7 @@
    "r": 255,
    "g": 0,
    "b": 0,
-   "a": 1
+   "a": 0
   },
   "Text1": {
    "text": "STOP"
@@ -52,7 +52,7 @@
    "r": 255,
    "g": 0,
    "b": 0,
-   "a": 0
+   "a": 1
   },
   "Text delay": {
    "value": 60

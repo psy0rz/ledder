@@ -25,6 +25,7 @@ export class AnimationTwinkle extends Animation {
           p.color=target;
         })
       }
+      return true
     })
   }
 }

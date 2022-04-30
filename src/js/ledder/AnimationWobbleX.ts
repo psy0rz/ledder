@@ -16,6 +16,7 @@ export class AnimationWobbleX extends Animation {
         for (let i = 0, n = this.pixels.length; i < n; ++i)
           this.pixels[i].x += step;
 
+        return true
       }, offset
     )
 

@@ -117,6 +117,7 @@ export default class BertrikFire extends Animation {
       this.move_fire(field, this.matrix.height, decayControl.value)
       this.save_image(field, palet)
 
+      return true
     })
 
   }

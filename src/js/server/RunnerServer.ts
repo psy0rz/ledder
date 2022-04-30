@@ -73,13 +73,19 @@ export class RunnerServer {
 
     //create class instance of currently selected animation and run it
     start() {
-        this.animation = new this.animationClass(this.matrix)
-        this.animation.run(this.matrix, this.matrix.scheduler, this.matrix.control).then(() => {
-            console.log(`RunnerServer: Animation ${this.animationName} finished.`)
-        }).catch((e) => {
-            if (e != 'abort')
-                console.error(`RunnerServer: Animation ${this.animationName} rejected promise: `, e)
-        })
+        console.log(`RunnerServer: Starting ${this.animationName}`)
+        try {
+            this.animation = new this.animationClass(this.matrix)
+            this.animation.run(this.matrix, this.matrix.scheduler, this.matrix.control).then(() => {
+                console.log(`RunnerServer: Animation ${this.animationName} finished.`)
+            }).catch((e) => {
+                if (e != 'abort')
+                    console.error(`RunnerServer: Animation ${this.animationName} rejected promise: `, e)
+            })
+        } catch (e) {
+            console.error("RunnerServer: Exception in animation", e)
+
+        }
     }
 
 

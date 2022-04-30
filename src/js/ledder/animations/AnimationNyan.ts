@@ -71,6 +71,7 @@ export default class AnimationNyan
     //wobble rainbow
     matrix.scheduler.intervalControlled(wobbleIntervalControl, () => {
       y = (y + 1) % 2;
+      return true
     })
 
 
@@ -91,6 +92,7 @@ export default class AnimationNyan
         new AnimationFadeOut(matrix, colors[c], controlFade, controlFadeRnd, true)
           .addPixel(new Pixel(matrix, x, c + y + 1, colors[c]))
       }
+      return true
 
     })
 

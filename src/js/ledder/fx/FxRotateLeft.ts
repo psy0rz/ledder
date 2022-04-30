@@ -26,7 +26,7 @@ export default class FxRotateLeft extends Fx {
                 if (p.x < bbox.xMin)
                     p.x = bbox.xMax
             }
-            return (this.running)
+            return (this.running && pixelContainer.pixels.length)
         })
 
         return (this.promise)

@@ -10,13 +10,13 @@
    "value": 23
   },
   "Text": {
-   "text": "Atari 2600 "
+   "text": ""
   },
   "Scroll": {
-   "enabled": false
+   "enabled": true
   },
   "Font": {
-   "selected": "C64"
+   "selected": "IBM bios"
   },
   "Move interval": {
    "value": 1

@@ -49,7 +49,7 @@ export default class TheMatrix extends Animation {
 
       //1 trail-head per column max.
       if (trails[x])
-        return
+        return true
 
       trails[x] = true
 
@@ -79,7 +79,9 @@ export default class TheMatrix extends Animation {
           return false
         }
         y--;
+        return true;
       })
+      return true
     })
   }
 }

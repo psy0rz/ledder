@@ -53,6 +53,7 @@ export default class AnimationMatrixtest extends Animation {
         new AnimationMove(matrix, {value: 1}, {value: 1}, {value: 0} ).addPixel(m);
         matrix.scheduler.interval(matrix.width, () => {
             m.x = 0;
+            return true
         })
     }
 

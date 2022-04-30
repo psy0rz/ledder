@@ -16,7 +16,10 @@ export class AnimationWobbleY extends Animation {
                 for (let i = 0, n = this.pixels.length; i < n; ++i)
                     this.pixels[i].y += step;
 
+                return true
+
             }, offset
+
         )
 
     }

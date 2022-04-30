@@ -52,7 +52,7 @@ export default class Open extends Animation {
         if (font.data[c][x][y])
         {
           let color=new Color()
-          color.setHsl(hue,100,50)
+          color.setHsl(hue/360,1,0.5)
           this.addPixel(new Pixel(matrix, matrix.width-1,y, color))
         }
 
@@ -67,7 +67,7 @@ export default class Open extends Animation {
         x=0;
       }
 
-
+      return true
     })
 
   }

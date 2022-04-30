@@ -19,7 +19,7 @@ export default class AnimationNyanNurdspace
   static category = "Memes"
   static title = "Nyancat longgggg"
   static description = "Based on <a href='https://github.com/bertrik/nyancat/blob/master/nyancat.c'>this</a>"
-  static presetDir = "Nyancat";
+  static presetDir = "Nyancat long";
 
 
   constructor(matrix) {
@@ -81,6 +81,7 @@ export default class AnimationNyanNurdspace
       l=l+1;
       if (l<8)
         body();
+      return (true)
     })
 
     //rainbow :)
@@ -94,6 +95,7 @@ export default class AnimationNyanNurdspace
     //wobble rainbow
     matrix.scheduler.intervalControlled(wobbleIntervalControl, () => {
       y = (y + 1) % 2;
+      return (true)
     })
 
 
@@ -114,6 +116,7 @@ export default class AnimationNyanNurdspace
         new AnimationFadeOut(matrix, colors[c], controlFade, controlFadeRnd, true)
           .addPixel(new Pixel(matrix, x-70, c + y + 1, colors[c]))
       }
+      return (true)
 
     })
 

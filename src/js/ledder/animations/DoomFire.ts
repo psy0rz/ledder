@@ -90,8 +90,10 @@ export default class DoomFire extends Animation {
             updateFireIntensityPerPixel(pixelIndex);
           }
         }
+      return true
       }
-    )
+
+  )
 
     //output loop (smoothing)
     matrix.scheduler.interval(1, () => {
@@ -99,6 +101,7 @@ export default class DoomFire extends Animation {
         smoothedPixels          [i] = ~~(firePixels[i] * (1 - smoothingControl.value) + smoothedPixels[i] * smoothingControl.value)
         matrix.pixels          [i].color = fireColors[smoothedPixels[i]]
       }
+      return true
     })
   }
 }
