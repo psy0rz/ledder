@@ -1,8 +1,6 @@
 <Page name="settings"
-      stacked={true}
       on:pageMounted={ ()=> {
 
-          presets=$sveltePresets
       }
 
      }
@@ -23,6 +21,12 @@
                 <MenuItem iconMd="material:file_copy" onClick={ onSaveAs } disabled={copyDisabled }/>
                 <MenuItem iconMd="material:upload" title="Activate animation" class={$svelteLive?'disabled':''}
                           onClick={ ()=> runnerBrowser.send()  }/>
+                <MenuItem iconMd="material:save" onClick={ ()=>{
+                    console.log("sdf")
+                    rpc.request("runner.runName", "PoliceLights", "");
+
+
+                 } } />
             </Menu>
 
         </Subnavbar>
@@ -30,7 +34,7 @@
     </Navbar>
 
 
-    {#each presets as preset, i (preset.meta.name)}
+    {#each $sveltePresets as preset, i (preset.meta.name)}
         <BlockTitle>{preset.meta.name}</BlockTitle>
         <Block inset>
             {#if preset.meta.type === 'value' }
@@ -134,16 +138,16 @@
     import {tick} from "svelte";
 
 
-    let presets = []
+    // let presets = []
     let button
     let saveDisabled, copyDisabled, deleteDisabled;
 
     export let f7router
 
-    svelteSelectedAnimationName.subscribe(() => {
-        // make sure to clear the list on animation change to net get confused
-        presets = []
-    })
+    // svelteSelectedAnimationName.subscribe(() => {
+    //     // make sure to clear the list on animation change to net get confused
+    //     presets = []
+    // })
 
     async function onSave() {
         await runnerBrowser.presetSave()

@@ -16,7 +16,7 @@ var routes = [
   {
     path: '/settings',
     component: SettingsPage,
-    keepAlive: true
+    // keepAlive: true
   },
   {
     path: '/:animationName/:presetName',

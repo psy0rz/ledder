@@ -3,6 +3,7 @@ import {rpc} from "./RpcClient.js";
 import {svelteAnimations, sveltePresets, svelteSelectedAnimationName, svelteSelectedTitle} from "./svelteStore.js";
 import {confirmPromise, info, promptPromise} from "./util.js";
 import {MatrixCanvas} from "./MatrixCanvas.js";
+import {tick} from "svelte";
 
 /**
  * Browser side animation runner. Note that animation runs on the server side (WsContext.ts) and is actually streamed to browser via MatrixWebsocket
@@ -31,14 +32,15 @@ export class RunnerBrowser {
         this.presets={}
         sveltePresets.set([])
 
-        rpc.addMethod('control.reset', ()=>
+        rpc.addMethod('control.reset', async ()=>
         {
             console.log("Reset controls")
             this.presets={}
             sveltePresets.set([])
+            await tick()
         })
 
-        rpc.addMethod('control.add', (params)=>{
+        rpc.addMethod('control.add', async (params)=>{
 
             console.log("Add control", params[0])
 
