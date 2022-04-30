@@ -1,0 +1,66 @@
+{
+ "values": {
+  "Star color": {
+   "r": 80,
+   "g": 80,
+   "b": 80,
+   "a": 1
+  },
+  "Text color": {
+   "r": 0,
+   "g": 41,
+   "b": 255,
+   "a": 1
+  },
+  "Scroll": {
+   "enabled": true
+  },
+  "Text": {
+   "text": "Welkom bij hackerspace drenthe!    (Dat ding hieronder is Nyan cat :)    "
+  },
+  "FPS": {
+   "value": 60
+  },
+  "Star move interval": {
+   "value": 3
+  },
+  "Star twinkle interval": {
+   "value": 5.8
+  },
+  "Star density": {
+   "value": 10
+  },
+  "Nyan move interval": {
+   "value": 3
+  },
+  "Nyan wobble interval": {
+   "value": 15
+  },
+  "Rainbow fade speed": {
+   "value": 107
+  },
+  "Rainbow fade randomizer": {
+   "value": 0.1
+  },
+  "Font": {
+   "selected": "C64"
+  },
+  "Move interval": {
+   "value": 1
+  },
+  "Twinkle color": {
+   "r": 255,
+   "g": 255,
+   "b": 255,
+   "a": 1
+  },
+  "Twinkle fade speed": {
+   "value": 18.3
+  },
+  "Twinkle speed": {
+   "value": 1
+  }
+ },
+ "title": "",
+ "description": ""
+}

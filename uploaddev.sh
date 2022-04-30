@@ -11,4 +11,5 @@ STUFF="src"
 
 #find $STUFF|entr -s "npm run build; rsync -avx $STUFF root@$IP:ledder && ssh root@$IP 'pkill node ;cd ledder && node js/server.js'"
 #npm run build
-find $STUFF| entr -r -s "rsync -avx $STUFF root@$IP:ledder && ssh root@$IP 'pkill node; cd ledder && NODE_ENV=production node src/js/server.js skip'"
+#find $STUFF| entr -r -s "rsync -avx . root@$IP:ledder && ssh root@$IP 'pkill node; tmux new -d \"cd /root/ledder; node src/js/server/server.js\" '"
+find $STUFF| entr -r -s "rsync --delete -avx . root@$IP:ledder && ssh root@$IP 'pkill node; cd /root/ledder; NODE_ENV=development node src/js/server/server.js '"

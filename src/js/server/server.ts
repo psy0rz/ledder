@@ -1,16 +1,12 @@
 import {RpcServer} from "./RpcServer.js";
 import {RunnerServer} from "./RunnerServer.js";
 import {PresetStore} from "./PresetStore.js";
-import {matrixList, mqttHost, mqttOpts, nodename} from "../../../matrixconf.js"
+import {animationName, matrixList, mqttHost, mqttOpts, nodename, presetName} from "../../../matrixconf.js"
 import mqtt from 'mqtt'
 
 console.log("starting..")
 
 
-//TODO: move to a settings page
-let startupAnimation = "AnimationMarquee"
-let startupPresetDir = "Marquee"
-let startupPresetName = "slow"
 
 //init preset store
 const presetStore = new PresetStore()
@@ -25,7 +21,7 @@ for (const matrix of matrixList) {
     matrix.run()
 
     let runner = new RunnerServer(matrix, presetStore)
-    // runner.runName(startupAnimation, startupPresetName)
+    runner.runName(animationName, presetName)
     runners.push(runner)
 }
 

@@ -63,6 +63,7 @@ export default class PoliceLights extends Animation {
                 colorText1.a = 1
                 colorText2.a = 0
             }
+            return true
         })
 
         while (1) {

@@ -85,9 +85,10 @@ export class MatrixLedstreamQuad extends Matrix {
             const chanX = floorX % this.chanWidth;
 
             let offset;
-            // if (floorX & 1)
+            if (floorX & 1)
+                offset = headerLength + ((this.height-floorY-1) * 3 + chanX * 3 * this.height);
+            else
                 offset = headerLength + (floorY * 3 + chanX * 3 * this.height);
-            // else
                 // offset = headerLength + (floorY * 3 + chanX * 3 * this.height);
                 // offset = headerLength + ((this.width-floorX-1) * 3 + chanY * 3 * this.width);
 
@@ -97,6 +98,9 @@ export class MatrixLedstreamQuad extends Matrix {
             this.packets[channel][offset] = (this.packets[channel][offset] * old_a + gamma[~~color.r] * color.a);
             this.packets[channel][offset + 1] = (this.packets[channel][offset + 1] * old_a + gamma[~~color.g] * color.a);
             this.packets[channel][offset + 2] = (this.packets[channel][offset + 2] * old_a + gamma[~~color.b] * color.a);
+            // this.packets[channel][offset] = (this.packets[channel][offset] * old_a + ~~color.r * color.a);
+            // this.packets[channel][offset + 1] = (this.packets[channel][offset + 1] * old_a + ~~color.g * color.a);
+            // this.packets[channel][offset + 2] = (this.packets[channel][offset + 2] * old_a + ~~color.b * color.a);
 
         }
     }
@@ -140,7 +144,8 @@ export class MatrixLedstreamQuad extends Matrix {
             // @ts-ignore
             // this.socket2.send(this.packets[c]);
             //clear
-            this.packets[c]=new Uint8ClampedArray(headerLength + (this.width * this.chanHeight * 3))
+
+            this.packets[c]=new Uint8ClampedArray(headerLength + (this.chanWidth * this.height * 3))
         }
 
 

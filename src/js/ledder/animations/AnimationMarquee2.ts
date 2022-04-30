@@ -17,11 +17,8 @@ export default class AnimationMarquee2 extends Animation {
     {
 
         const font = fontSelect(control, 'Font')
-
         const input = matrix.control.input('Text', "Atari 2600 ", true)
-
         const colorControl = control.color("Text color", 100,0,0, 1);
-
         const charPixels=new CharPixels(matrix, font, input.text, 0, 0, colorControl)
 
         // new AnimationTwinkle(matrix, this.pixels)
@@ -30,23 +27,8 @@ export default class AnimationMarquee2 extends Animation {
 
             await rotator.run(charPixels)
         }
-        //     .catch( (e)=>{
-        //     console.log("in het ding")
-        // })
-
-        // while(1) {
-        //
-        //     await scheduler.delay(60)
-        //     console.log("moi5")
-        //
-        // }
-
-
-
-
 
     }
-
 
 }
 

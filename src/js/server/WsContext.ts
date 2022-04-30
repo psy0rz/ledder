@@ -60,7 +60,8 @@ export class WsContext {
 
     stopPreview() {
         //should stop because of gc
-        this.runner.stop()
+        if (this.runner)
+            this.runner.stop()
         clearInterval(this.statsInterval)
 
     }
