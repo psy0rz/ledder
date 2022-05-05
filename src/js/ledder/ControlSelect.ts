@@ -1,12 +1,21 @@
-import {Control} from "./Control.js";
+import {Control, ControlMeta} from "./Control.js";
 
-export interface Choice {
-    id: string;
-    name: string;
+export interface Choice
+{
+    id: string
+    name: string
+}
+
+export type Choices=Array<Choice>
+
+interface ControlSelectMeta extends ControlMeta
+{
+    choices: Choices
 }
 
 export class ControlSelect extends Control {
     selected: string
+    meta: ControlSelectMeta
 
     /**
      * Boolean on/off switch
@@ -15,7 +24,7 @@ export class ControlSelect extends Control {
      * @param choices Choices of select box (key->value)
      * @param resetOnChange Reset animation when value has changed
      */
-    constructor(name: string, selected: string, choices: Array<Choice>, resetOnChange: boolean) {
+    constructor(name: string, selected: string, choices: Choices, resetOnChange: boolean) {
         super(name, 'select', resetOnChange)
 
         this.selected = selected

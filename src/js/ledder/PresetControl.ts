@@ -1,31 +1,39 @@
-import {Control} from "./Control.js"
+import {Control, ControlMeta} from "./Control.js"
 import {ControlValue} from "./ControlValue.js"
 import {ControlColor} from "./ControlColor.js"
 import {PresetValues} from "./PresetValues.js"
 import {ControlInput} from "./ControlInput.js"
 import {ControlSwitch} from "./ControlSwitch.js";
-import {Choice, ControlSelect} from "./ControlSelect.js";
+import {Choices, ControlSelect} from "./ControlSelect.js";
 
+
+interface PresetControlMeta extends ControlMeta
+{
+    controls: Record<string, Control>
+}
 
 /**
  * Manages a collection of preset controls, saves and loads values to Preset.
  */
-export class PresetControl {
-    controls: Record<string, Control>
+export class PresetControl extends Control {
+    // controls: Record<string, Control>
+    meta: PresetControlMeta
     presetValues: PresetValues
     //callsbacks are to send control metadata and values to webgui (in WsContext)
+
     resetCallback: () => void
     addControlCallback: (control) => void
     updateValuesCallback: (controlName, values) => void
 
-    constructor() {
+    constructor(name: string, reloadOnChange:boolean=false) {
+        super(name,'controls',reloadOnChange)
 
-        this.controls = {};
+        this.meta.controls = {};
         this.clear();
     }
 
     clear() {
-        this.controls = {}
+        this.meta.controls = {}
         this.presetValues = new PresetValues()
 
         if (this.resetCallback)
@@ -40,7 +48,7 @@ export class PresetControl {
      * @param control
      */
     add(control: Control) {
-        this.controls[control.meta.name] = control;
+        this.meta.controls[control.meta.name] = control;
 
         //already has a preset in values?
         if (control.meta.name in this.presetValues.values)
@@ -64,7 +72,7 @@ export class PresetControl {
      * @param resetOnChange Reset animation when value has changed
      */
     value(name: string, value: number, min: number, max: number, step: number = 1, resetOnChange:boolean=false): ControlValue {
-        if (!(name in this.controls)) {
+        if (!(name in this.meta.controls)) {
             this.add(new ControlValue(name, value, min, max, step, resetOnChange));
         }
 
@@ -76,7 +84,7 @@ export class PresetControl {
      * Get or create color-control with specified name
      */
     color(name: string, r: number = 128, g: number = 128, b: number = 128, a: number = 1, resetOnChange:boolean=false): ControlColor {
-        if (!(name in this.controls)) {
+        if (!(name in this.meta.controls)) {
             this.add(new ControlColor(name, r, g, b, a, resetOnChange));
         }
 
@@ -85,7 +93,7 @@ export class PresetControl {
     }
 
     input(name: string, text:string, resetOnChange:boolean=false): ControlInput {
-        if (!(name in this.controls)) {
+        if (!(name in this.meta.controls)) {
             this.add(new ControlInput(name, text, resetOnChange));
         }
 
@@ -94,7 +102,7 @@ export class PresetControl {
     }
 
     switch(name: string, enabled:boolean, resetOnChange:boolean=false): ControlSwitch {
-        if (!(name in this.controls)) {
+        if (!(name in this.meta.controls)) {
             this.add(new ControlSwitch(name, enabled, resetOnChange));
         }
 
@@ -102,14 +110,26 @@ export class PresetControl {
         return this.controls[name];
     }
 
-    select(name: string, selected:string, choices: Array<Choice>, resetOnChange:boolean=false): ControlSelect {
-        if (!(name in this.controls)) {
+    select(name: string, selected:string, choices: Choices, resetOnChange:boolean=false): ControlSelect {
+        if (!(name in this.meta.controls)) {
             this.add(new ControlSelect(name, selected, choices, resetOnChange));
         }
 
         // @ts-ignore
         return this.controls[name];
     }
+
+    subControl(name: string, reloadOnChange: boolean)
+    {
+        if (!(name in this.meta.controls)) {
+            this.add(new PresetControl(name,reloadOnChange));
+        }
+
+        // @ts-ignore
+        return this.controls[name];
+
+    }
+
 
 
     setCallbacks(reset, addControl, updateValues) {
@@ -123,7 +143,7 @@ export class PresetControl {
      * Note: loading and saving is setup in a way so that unused values will never be deleted. It doesnt matter if controls do not yet exists for specific values.
      */
     save() {
-        for (const [name, control] of Object.entries(this.controls)) {
+        for (const [name, control] of Object.entries(this.meta.controls)) {
             this.presetValues.values[name] = control.save();
         }
 
@@ -137,7 +157,7 @@ export class PresetControl {
         this.presetValues = preset;
 
         //update existing controls
-        for (const [name, control] of Object.entries(this.controls)) {
+        for (const [name, control] of Object.entries(this.meta.controls)) {
             if (name in this.presetValues.values)
                 control.load(this.presetValues.values[name]);
         }
@@ -152,9 +172,9 @@ export class PresetControl {
      */
     updateValue(controlName, values) {
         this.presetValues.values[controlName] = values;
-        this.controls[controlName].load(values);
+        this.meta.controls[controlName].load(values);
 
-        return (this.controls[controlName].meta.resetOnChange)
+        return (this.meta.controls[controlName].meta.resetOnChange)
     }
 
 }

@@ -36,7 +36,11 @@
     <Block strong>
         <Treeview>
             {#each $sveltePresets as preset, i (preset.meta.name)}
-                <TreeviewItem label="{preset.meta.name}" opened toggle={true} itemToggle>
+                <TreeviewItem label="{preset.meta.name}" opened={geert} toggle={true} itemToggle>
+<span slot="content-start">
+            <Checkbox bind:checked={geert}
+            />
+          </span>
                     <TreeviewItem opened toggle={false}>
 
                   <span slot="content" class="padding-bottom">
@@ -140,7 +144,7 @@
         Treeview,
         TreeviewItem,
         Range,
-        Block, Input, Stepper, Menu, MenuItem, Subnavbar, Toggle,
+        Block, Input, Stepper, Menu, MenuItem, Subnavbar, Toggle, Checkbox,
     } from 'framework7-svelte';
 
     import {sveltePresets, svelteSelectedAnimationName, svelteSelectedTitle, svelteLive} from "../js/web/svelteStore.js"
@@ -148,6 +152,7 @@
     import {rpc} from "../js/web/RpcClient.js";
     import {tick} from "svelte";
 
+    let geert = true
 
     // let presets = []
     let button

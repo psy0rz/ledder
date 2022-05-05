@@ -1,7 +1,17 @@
-import {Control} from "./Control.js";
+import {Control, ControlMeta} from "./Control.js";
 import {numberCheck} from "./util.js";
 
+interface ControlValueMeta extends ControlMeta
+{
+  min: number,
+  max:number,
+  value: number
+  step: number
+}
+
 export class ControlValue extends Control {
+  meta: ControlValueMeta
+
   value: number;
 
   /**

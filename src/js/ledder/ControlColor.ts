@@ -1,6 +1,7 @@
 import {Control} from "./Control.js";
 import {ColorInterface} from "./ColorInterface.js";
 
+
 export class ControlColor extends Control implements ColorInterface {
   r: number;
   g: number;
