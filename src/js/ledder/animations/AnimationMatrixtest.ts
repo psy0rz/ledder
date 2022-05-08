@@ -5,6 +5,8 @@ import {AnimationBlink} from "../AnimationBlink.js";
 import {AnimationMove} from "../AnimationMove.js";
 import {Matrix} from "../Matrix.js";
 import {Color} from "../Color.js";
+import {Scheduler} from "../Scheduler.js";
+import {PresetControl} from "../PresetControl.js";
 
 export default class AnimationMatrixtest extends Animation {
 
@@ -15,13 +17,10 @@ export default class AnimationMatrixtest extends Animation {
 
   /**
    * Test matrix orientation, border limit, colors and smoothness.
-   * @param matrix
    */
-  constructor(matrix: Matrix) {
-        super(matrix);
+  async run(matrix: Matrix, scheduler: Scheduler, controls: PresetControl) {
 
-
-        //color bar
+    //color bar
         for (let x = 0; x < matrix.width; x++) {
             const c = 255 / matrix.width * (x + 1);
             new Pixel(matrix, x, 4, new Color(c, 0, 0));
@@ -51,7 +50,7 @@ export default class AnimationMatrixtest extends Animation {
         //mover to test smoothness
         const m = new Pixel(matrix, 0, 6, new Color(255, 255, 255));
         new AnimationMove(matrix, {value: 1}, {value: 1}, {value: 0} ).addPixel(m);
-        matrix.scheduler.interval(matrix.width, () => {
+        scheduler.interval(matrix.width, () => {
             m.x = 0;
             return true
         })

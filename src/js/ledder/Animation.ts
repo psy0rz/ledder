@@ -31,7 +31,7 @@ export class Animation extends PixelContainer {
     }
 
     //will be overridden in animation subclass
-    async run(matrix: Matrix, scheduler: Scheduler, control: PresetControl)
+    async run(matrix: Matrix, scheduler: Scheduler, controls: PresetControl)
     {
         console.error("Error: This animation has no run() function?")
 

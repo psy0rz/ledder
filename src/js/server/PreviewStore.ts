@@ -2,41 +2,71 @@ import {writeFile} from "fs/promises";
 import {MatrixApng} from "./drivers/MatrixApng.js";
 import {Scheduler} from "../ledder/Scheduler.js";
 import {Animation} from "../ledder/Animation.js";
+import {PresetValues} from "../ledder/PresetValues.js";
+import {PresetControl} from "../ledder/PresetControl.js";
 
 //handles creation of previews
 export class PreviewStore {
 
     matrix: MatrixApng
+    controls: PresetControl
+    scheduler: Scheduler
+
     constructor() {
 
-      let scheduler=new Scheduler();
-      this.matrix=new MatrixApng(scheduler, 40,8)
-
+        this.controls = new PresetControl('Root controls')
+        this.scheduler = new Scheduler();
+        this.matrix = new MatrixApng(40, 8)
     }
 
-  /**
-   * Renders preview to APNG file
-   */
-  async render(filename, animationClass, preset)
-  {
-    console.log("Rendering preview "+filename);
+    clear()
+    {
+        this.scheduler.clear()
+        this.matrix.reset()
+        this.controls.clear()
+    }
 
-    this.matrix.reset()
+    /**
+     * Renders preview to APNG file
+     */
+    async render(filename: string, animationClass: typeof Animation, preset: PresetValues) {
+        console.log("Rendering preview " + filename);
 
-    if (preset)
-      this.matrix.control.load(preset);
+        this.clear()
 
-    let animation:Animation=new animationClass(this.matrix)
-    animation.run(this.matrix, this.matrix.scheduler, this.matrix.control).then( ()=>{
-      console.log(`PreviewStore: ${filename} finished.`)
-    }).catch ( (e)=>{
-      console.error(`PreviewStore: ${filename} error`,e )
-    })
+        if (preset)
+            this.controls.load(preset);
 
+        let animation: Animation = new animationClass(this.matrix)
+        animation.run(this.matrix, this.scheduler, this.controls).then(() => {
+            console.log(`PreviewStore: ${filename} finished.`)
+        }).catch((e) => {
+            console.error(`PreviewStore: ${filename} error`, e)
+        })
 
-    let imageData=await this.matrix.get(animationClass)
+        //FIXME: fps control
+        let fpsControl={ value: 60}
+        //previews shouldnt have a higher than 60fps rate, so just divide more frames above 60fps
+        const divider = ~~((fpsControl.value - 1) / 60) + animationClass.previewDivider
+        const fps = ~~(fpsControl.value / divider )
 
-    await writeFile(filename, Buffer.from(imageData))
-  }
+        //skip frames, just run scheduler
+        for (let i = 0; i < animationClass.previewSkip; i++)
+            this.scheduler.step();
 
+        //render frames
+        for (let i = 0; i < animationClass.previewFrames; i++) {
+            for (let d = 0; d < divider; d++)
+                this.scheduler.step()
+
+            this.matrix.render()
+            this.matrix.frame()
+        }
+
+        //generate and store APNG
+        let imageData = await this.matrix.get(fps)
+        await writeFile(filename, Buffer.from(imageData))
+
+        this.clear()
+    }
 }

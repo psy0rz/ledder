@@ -5,6 +5,7 @@ import {MatrixWebsocket} from "./drivers/MatrixWebsocket.js";
 import {PresetStore} from "./PresetStore.js";
 import {RpcServer} from "./RpcServer.js";
 import {JSONRPCClient, JSONRPCServerAndClient} from "json-rpc-2.0";
+import {PresetControl} from "../ledder/PresetControl.js";
 
 
 //Per websocket context, used to generate the preview animation that is shown in the browser.
@@ -36,12 +37,13 @@ export class WsContext {
     }
 
     startPreview(presetStore: PresetStore, width, height) {
-        let scheduler = new Scheduler();
-        let matrix = new MatrixWebsocket(scheduler, width, height, this.ws)
-        this.runner = new RunnerServer(matrix, presetStore)
-        matrix.run()
+        let controls = new PresetControl('Root controls')
+        let scheduler = new Scheduler(controls);
+        let matrix = new MatrixWebsocket(width, height, this.ws)
+        this.runner = new RunnerServer(matrix, scheduler, controls, presetStore)
+        this.runner.startRenderLoop()
 
-        matrix.control.setCallbacks(
+        controls.setCallbacks(
             () => {
                 this.request("control.reset")
             },
@@ -53,7 +55,7 @@ export class WsContext {
             })
 
         this.statsInterval=setInterval( ()=>{
-            console.log(`Stats ${this.id}: ${matrix.pixels.length} pixels, ${matrix.scheduler.intervals.length} intervals`)
+            console.log(`Stats ${this.id}: ${matrix.pixels.length} pixels, ${scheduler.intervals.length} intervals`)
         }, 3000)
 
     }

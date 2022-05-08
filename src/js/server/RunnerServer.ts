@@ -5,12 +5,17 @@ import {Animation} from "../ledder/Animation.js"
 // import * as fs from "fs";
 import {watch} from "fs/promises"
 import {AbortController} from "node-abort-controller";
+import {Scheduler} from "../ledder/Scheduler.js";
+import {PresetControl} from "../ledder/PresetControl.js";
+import {Interval} from "../ledder/Interval.js";
 
 /**
- * Server side runner
+ * Server side runner. This is the main thing that calls everything to run animations.
  */
 export class RunnerServer {
     matrix: Matrix
+    scheduler: Scheduler
+    controls: PresetControl
     presetStore: PresetStore
     animationClass: typeof Animation
     animation: Animation
@@ -20,12 +25,37 @@ export class RunnerServer {
     restartTimeout: any
     watchAbort: AbortController
 
+    renderInterval: any
 
-    constructor(matrix: Matrix, presetStore: PresetStore) {
+
+    constructor(matrix: Matrix, scheduler: Scheduler, controls: PresetControl, presetStore: PresetStore) {
         this.matrix = matrix
+        this.scheduler=scheduler
+        this.controls=controls
         this.presetStore = presetStore
         this.autoreload()
 
+    }
+
+    startRenderLoop()
+    {
+        let frameNr=0
+        this.renderInterval=setInterval( ()=>
+        {
+            //FIXME: migrate timing loop from matrixledstream
+            this.matrix.frame(frameNr, Date.now())
+            this.scheduler.step()
+            this.matrix.render()
+            frameNr=frameNr+1
+        },16)
+        //FIXME: fps control
+
+
+    }
+
+    stopRenderLoop()
+    {
+        clearInterval(this.renderInterval)
     }
 
     //automaticly reload animation file on change to make development easier.
@@ -48,35 +78,18 @@ export class RunnerServer {
 
     //stop everything because of cleanup/close
     stop() {
+        this.stopRenderLoop()
+        this.scheduler.clear()
         this.watchAbort.abort()
         this.matrix.reset()
-
-
     }
-
-
-    /**
-     * Runs specified animation with specified preset
-     *
-     */
-    // async run(animationName: string, preset: PresetValues) {
-    //
-    //     this.animationClass = await this.presetStore.loadAnimation(animationName)
-    //     console.log("Runner: starting", animationName, preset)
-    //     this.matrix.reset()
-    //
-    //     if (preset)
-    //         this.matrix.control.load(preset);
-    //     this.animation = new this.animationClass(this.matrix)
-    // }
-
 
     //create class instance of currently selected animation and run it
     start() {
         console.log(`RunnerServer: Starting ${this.animationName}`)
         try {
             this.animation = new this.animationClass(this.matrix)
-            this.animation.run(this.matrix, this.matrix.scheduler, this.matrix.control).then(() => {
+            this.animation.run(this.matrix, this.scheduler, this.controls).then(() => {
                 console.log(`RunnerServer: Animation ${this.animationName} finished.`)
             }).catch((e) => {
                 if (e != 'abort')
@@ -87,7 +100,6 @@ export class RunnerServer {
 
         }
     }
-
 
     //load presetName and run
     async runName(animationName: string, presetName: string) {
@@ -100,7 +112,7 @@ export class RunnerServer {
         this.matrix.reset()
 
         if (presetName)
-            this.matrix.control.load(await this.presetStore.load(this.animationClass, presetName))
+            this.controls.load(await this.presetStore.load(this.animationClass, presetName))
 
         this.start()
 
@@ -118,7 +130,9 @@ export class RunnerServer {
 
     //restart animation but optionally keep preset values.
     async restart(keepPresets: boolean = false) {
-        this.matrix.reset(keepPresets)
+        if (!keepPresets)
+            this.controls.clear()
+        this.matrix.reset()
 
         this.start()
     }
@@ -126,7 +140,7 @@ export class RunnerServer {
     //save current running animation preset
     async save(presetName: string) {
         this.presetName = presetName
-        let presetValues = this.matrix.control.save()
+        let presetValues = this.controls.save()
         await this.presetStore.save(this.animationClass, presetName, presetValues)
         await this.presetStore.createPreview(this.animationClass, presetName, presetValues)
         await this.presetStore.updateAnimationPresetList()

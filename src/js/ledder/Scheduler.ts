@@ -4,16 +4,19 @@ import {IntervalStatic} from "./IntervalStatic.js";
 import {Interval} from "./Interval.js";
 import {ValueInterface} from "./ValueInterface.js";
 import {IntervalOnce} from "./IntervalOnce.js";
+import {PresetControl} from "./PresetControl.js";
 
 
 export class Scheduler {
 
     frameNr: number;
     intervals: Array<Interval>
+    // private controls: PresetControl
 
     constructor() {
         this.frameNr = 0;
         this.intervals = []
+        // this.controls=controls
 
     }
 
@@ -73,8 +76,8 @@ export class Scheduler {
     }
 
 
-    //called by matrix on every frame.
-    update() {
+    //called by renderloop on every frame.
+    step() {
         this.frameNr++;
 
         let i = 0;

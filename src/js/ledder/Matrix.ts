@@ -1,7 +1,6 @@
 import {PixelContainer} from "./PixelContainer.js";
 import {Scheduler} from "./Scheduler.js";
 import {ColorInterface} from "./ColorInterface.js";
-import {PresetControl} from "./PresetControl.js";
 import {ControlValue} from "./ControlValue.js";
 
 /**
@@ -16,21 +15,21 @@ import {ControlValue} from "./ControlValue.js";
 export abstract class Matrix extends PixelContainer {
   width: number
   height: number
-  scheduler: Scheduler
-  runScheduler: boolean
-  control: PresetControl
-  fpsControl: ControlValue
+  // scheduler: Scheduler
+  // runScheduler: boolean
+  // fpsControl: ControlValue
 
-  protected constructor(scheduler, width, height) {
+  protected constructor( width, height) {
     super();
-    this.scheduler = scheduler;
+    // this.scheduler = scheduler;
     //note: named preset instead of presetControl to make it more friendly for enduser
-    this.control = new PresetControl();
-    this.fpsControl = this.control.value("FPS", 60, 1, 120, 1)
+    //TODO: move out of matrix. fpsControl should be done in Scheduler()
+    // this.control = new PresetControl('rootcontrol', 'controls');
+    // this.fpsControl = this.scheduler.control.value("FPS", 60, 1, 120, 1)
 
     this.width = width;
     this.height = height;
-    this.runScheduler = true; //make false if another matrix is running the scheduler.
+    // this.runScheduler = true; //make false if another matrix is running the scheduler.
 
   }
 
@@ -47,25 +46,31 @@ export abstract class Matrix extends PixelContainer {
   }
 
   /**
-   * Clear all pixels and running intervals
+   * Clear all pixels
    */
-  reset(keepPresets: boolean = false) {
-    if (this.runScheduler)
-      this.scheduler.clear();
+  // reset(keepPresets: boolean = false) {
+  //   if (this.runScheduler)
+  //     this.scheduler.clear();
+  //
+  //   if (!keepPresets) {
+  //     this.scheduler.control.clear();
+  //     this.fpsControl = this.scheduler.control.value("FPS", 60, 1, 120, 1)
+  //   }
+  //   super.reset();
+  //
+  //
+  // }
 
-    if (!keepPresets) {
-      this.control.clear();
-      this.fpsControl = this.control.value("FPS", 60, 1, 120, 1)
-    }
-    super.reset();
 
+  // abstract run();
 
-  }
+  //implemed in driver subclass:
 
-
-  abstract run();
-
+  //set a pixel with specified color, called for all pixels by render()
   abstract setPixel(x: number, y: number, color: ColorInterface);
-}
 
+  //should send the last rendered frame and prepare for next frame to be filled via setPixel() calls.
+  abstract frame(frameNr: number, timeMs: number)
+
+}
 

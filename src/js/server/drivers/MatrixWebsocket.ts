@@ -6,8 +6,8 @@ export class MatrixWebsocket extends Matrix {
 
 
     //width and height are led-matrix-pixels, not canvas pixels.
-    constructor(scheduler, width, height, ws) {
-        super(scheduler, width, height);
+    constructor( width, height, ws) {
+        super( width, height);
 
 
         this.imageBuf8 = new Uint8ClampedArray(height * width * 4);
@@ -32,24 +32,22 @@ export class MatrixWebsocket extends Matrix {
 
 
     frame() {
-        setTimeout(() => this.frame(), 1000 / this.fpsControl.value)
+        // setTimeout(() => this.frame(), 1000 / this.fpsControl.value)
 
-
-        if (this.runScheduler)
-            this.scheduler.update();
-
-        this.imageBuf8.fill(0); //alpha of all pixels will be 0, so canvas is transparent.
-        this.render();
+        //
+        // if (this.runScheduler)
+        //     this.scheduler.update();
 
         if (this.ws)
             this.ws.send(this.imageBuf8)
 
+        this.imageBuf8.fill(0); //alpha of all pixels will be 0, so canvas is transparent.
+        // this.render();
+
+
     }
 
 
-    run() {
-        this.frame();
-    }
 
 
 }

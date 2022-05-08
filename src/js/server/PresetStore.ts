@@ -142,7 +142,7 @@ export class PresetStore {
                 try {
                     await this.createPreview(animationClass, presetName, preset)
                 } catch (e) {
-                    console.error("Error while rendering preset preview: ", e)
+                    console.error(`Error while rendering preset preview for ${animationClass.title} / ${presetName}: `, e)
                 }
             }
         }
@@ -171,13 +171,15 @@ export class PresetStore {
                     try {
                         await this.createPreview(animationClass, "", undefined)
                     } catch (e) {
-                        console.error("Error while rendering animation preview: ", e)
+                        console.error(`"Error while rendering animation preview for ${animationName}: `, e)
+                        // throw(e)
                     }
                 }
 
                 await this.updatePresetPreviews(animationClass, animationMtime, force)
             } catch (e) {
                 console.log(`Ignored ${animationName}: ${e}`)
+                // throw(e)
             }
 
         }

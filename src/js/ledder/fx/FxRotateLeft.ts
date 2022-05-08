@@ -9,7 +9,7 @@ export default class FxRotateLeft extends Fx {
 
     intervalControl: ControlValue
 
-    constructor(matrix: Matrix, controlPrefix: string, interval=1) {
+    constructor(matrix: Matrix, name:string="Rotate left", interval=1) {
         super(matrix, controlPrefix)
 
         this.intervalControl = matrix.control.value(controlPrefix + ' interval', interval, 1, 60, 1)

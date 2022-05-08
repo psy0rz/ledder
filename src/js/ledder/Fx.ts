@@ -12,8 +12,8 @@ export class Fx {
     promise: Promise<any>
     running: boolean
 
-    constructor(matrix: Matrix, controlPrefix: string) {
-        this.controlPrefix = controlPrefix
+    constructor(matrix: Matrix, name:string) {
+
         this.matrix = matrix
         this.running=true
     }
