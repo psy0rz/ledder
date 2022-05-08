@@ -19,7 +19,7 @@ export class AnimationTwinkle extends Animation {
         const p = pixels[random(0, pixels.length - 1)];
 
         let target =p.color;
-        p.color = new Color(255, 255, 255);
+        p.color = new Color(fadeColor.r, fadeColor.g, fadeColor.b, fadeColor.a);
         let fader=new AnimationFade(matrix, p.color, target, fadeSpeed, {value: 0.1})
         fader.promise.then(()=>{
           p.color=target;
