@@ -7,7 +7,7 @@ import {ControlSwitch} from "./ControlSwitch.js";
 import {Choices, ControlSelect} from "./ControlSelect.js";
 
 
-interface PresetControlMeta extends ControlMeta
+interface ControlsMeta extends ControlMeta
 {
     // controls:  {[key: string]: Control}
     controls: Map<string, Control>
@@ -18,7 +18,7 @@ interface PresetControlMeta extends ControlMeta
  */
 export class Controls extends Control {
     // controls: Record<string, Control>
-    meta: PresetControlMeta
+    meta: ControlsMeta
     presetValues: PresetValues
     //callsbacks are to send control metadata and values to webgui (in WsContext)
 
@@ -56,8 +56,8 @@ export class Controls extends Control {
         if (control.meta.name in this.presetValues.values)
             control.load(this.presetValues.values[control.meta.name]);
 
-        if (this.updateValuesCallback)
-            control.setChangedCallback(this.updateValuesCallback)
+        // if (this.updateValuesCallback)
+        //     control.setChangedCallback(this.updateValuesCallback)
 
         if (this.addControlCallback)
             this.addControlCallback(control)
@@ -130,10 +130,10 @@ export class Controls extends Control {
 
 
 
-    setCallbacks(reset, addControl, updateValues) {
+    setCallbacks(reset, addControl) {
         this.resetCallback = reset
         this.addControlCallback=addControl
-        this.updateValuesCallback=updateValues
+        // this.updateValuesCallback=updateValues
     }
 
     /**

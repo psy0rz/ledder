@@ -49,10 +49,10 @@ export class WsContext {
             },
             (control) => {
                 this.request("control.add", control)
-            },
-            (controlName, controlValues) => {
-                this.request("control.update", controlName, controlValues)
             })
+            // (controlName, controlValues) => {
+            //     this.request("control.update", controlName, controlValues)
+            // })
 
         this.statsInterval=setInterval( ()=>{
             console.log(`Stats ${this.id}: ${matrix.pixels.length} pixels, ${scheduler.intervals.length} intervals`)
