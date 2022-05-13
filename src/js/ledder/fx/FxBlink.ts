@@ -4,6 +4,7 @@ import {Matrix} from "../Matrix.js";
 import {Pixel} from "../Pixel.js";
 import {PixelContainer} from "../PixelContainer.js";
 import {ColorInterface} from "../ColorInterface.js";
+import {PresetControl} from "../PresetControl.js";
 
 export default class FxBlink extends Fx {
 
@@ -13,12 +14,12 @@ export default class FxBlink extends Fx {
     offDelay: ControlValue
     repeat: ControlValue
 
-    constructor(matrix: Matrix, controlPrefix: string, onDelay=60, offDelay=60, repeat=0) {
-        super(matrix, controlPrefix)
+     constructor(matrix: Matrix, controls: PresetControl, onDelay=60, offDelay=60, repeat=0) {
+        super(matrix, controls)
 
-        this.onDelay = matrix.control.value(controlPrefix + ' on delay', onDelay, 1, 120, 1)
-        this.offDelay = matrix.control.value(controlPrefix + ' off delay', offDelay, 1, 120, 1)
-        this.repeat = matrix.control.value(controlPrefix + ' repeat', repeat, 0, 120, 1)
+        this.onDelay = controls.value('on delay', onDelay, 1, 120, 1)
+        this.offDelay = controls.value('off delay', offDelay, 1, 120, 1)
+        this.repeat = controls.value('repeat', repeat, 0, 120, 1)
     }
 
     run(...colors:Array<ColorInterface>) {

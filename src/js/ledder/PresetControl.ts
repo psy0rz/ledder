@@ -9,7 +9,8 @@ import {Choices, ControlSelect} from "./ControlSelect.js";
 
 interface PresetControlMeta extends ControlMeta
 {
-    controls: Record<string, Control>
+    // controls:  {[key: string]: Control}
+    controls: Map<string, Control>
 }
 
 /**
@@ -28,12 +29,13 @@ export class PresetControl extends Control {
     constructor(name: string, reloadOnChange:boolean=false) {
         super(name,'controls',reloadOnChange)
 
-        this.meta.controls = {};
+        this.meta.controls = new Map()
         this.clear();
+
     }
 
     clear() {
-        this.meta.controls = {}
+        this.meta.controls = new Map()
         this.presetValues = new PresetValues()
 
         if (this.resetCallback)
@@ -71,13 +73,13 @@ export class PresetControl extends Control {
      * @param step Step size
      * @param resetOnChange Reset animation when value has changed
      */
-    value(name: string, value: number, min: number, max: number, step: number = 1, resetOnChange:boolean=false): ControlValue {
+    value(name: string, value: number, min: number, max: number, step: number = 1, resetOnChange:boolean=false):  ControlValue  {
         if (!(name in this.meta.controls)) {
             this.add(new ControlValue(name, value, min, max, step, resetOnChange));
         }
 
-        // @ts-ignore
-        return this.controls[name];
+
+        return this.meta.controls[name] ;
     }
 
     /**
@@ -88,8 +90,8 @@ export class PresetControl extends Control {
             this.add(new ControlColor(name, r, g, b, a, resetOnChange));
         }
 
-        // @ts-ignore
-        return this.controls[name];
+
+        return this.meta.controls[name];
     }
 
     input(name: string, text:string, resetOnChange:boolean=false): ControlInput {
@@ -97,8 +99,7 @@ export class PresetControl extends Control {
             this.add(new ControlInput(name, text, resetOnChange));
         }
 
-        // @ts-ignore
-        return this.controls[name];
+        return this.meta.controls[name];
     }
 
     switch(name: string, enabled:boolean, resetOnChange:boolean=false): ControlSwitch {
@@ -106,8 +107,7 @@ export class PresetControl extends Control {
             this.add(new ControlSwitch(name, enabled, resetOnChange));
         }
 
-        // @ts-ignore
-        return this.controls[name];
+        return this.meta.controls[name];
     }
 
     select(name: string, selected:string, choices: Choices, resetOnChange:boolean=false): ControlSelect {
@@ -115,8 +115,7 @@ export class PresetControl extends Control {
             this.add(new ControlSelect(name, selected, choices, resetOnChange));
         }
 
-        // @ts-ignore
-        return this.controls[name];
+        return this.meta.controls[name];
     }
 
     subControl(name: string, reloadOnChange: boolean)
@@ -125,8 +124,7 @@ export class PresetControl extends Control {
             this.add(new PresetControl(name,reloadOnChange));
         }
 
-        // @ts-ignore
-        return this.controls[name];
+        return this.meta.controls[name];
 
     }
 

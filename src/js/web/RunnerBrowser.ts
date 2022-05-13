@@ -112,7 +112,6 @@ export class RunnerBrowser {
         if (this.presetName == "")
             return
 
-        // @ts-ignore
         // await rpc.request("presetStore.save", this.animationClass.presetDir, this.presetName, values);
         // await rpc.request("presetStore.createPreview", this.animationName, this.presetName, values);
         await rpc.request("context.runner.save", this.presetName)

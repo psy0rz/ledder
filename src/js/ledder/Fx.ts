@@ -7,18 +7,20 @@ import {PresetControl} from "./PresetControl.js";
 export class Fx {
     static title = "Untitled"
 
-    controlPrefix: string
-    matrix: Matrix
     promise: Promise<any>
     running: boolean
+    matrix: Matrix
+    controls: PresetControl
 
-    constructor(matrix: Matrix, name:string) {
 
+    constructor(matrix: Matrix, controls: PresetControl) {
         this.matrix = matrix
+        this.controls=controls
+
         this.running=true
     }
 
-    //run fx on pixels
+    //run fx on pixels. Should return a promise and NOT be async.
     run(...any)
     {
         console.error("Error: This fx has no run() function?")

@@ -38,8 +38,8 @@ export class WsContext {
 
     startPreview(presetStore: PresetStore, width, height) {
         let controls = new PresetControl('Root controls')
-        let scheduler = new Scheduler(controls);
-        let matrix = new MatrixWebsocket(width, height, this.ws)
+        let scheduler = new Scheduler();
+        let matrix = new MatrixWebsocket(scheduler, width, height, this.ws)
         this.runner = new RunnerServer(matrix, scheduler, controls, presetStore)
         this.runner.startRenderLoop()
 

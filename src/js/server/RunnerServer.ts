@@ -16,16 +16,17 @@ export class RunnerServer {
     matrix: Matrix
     scheduler: Scheduler
     controls: PresetControl
-    presetStore: PresetStore
-    animationClass: typeof Animation
-    animation: Animation
-    animationName: string
-    presetName: string
 
-    restartTimeout: any
-    watchAbort: AbortController
+    private presetStore: PresetStore
+    private animationClass: typeof Animation
+    private animation: Animation
+    private animationName: string
+    private presetName: string
 
-    renderInterval: any
+    private restartTimeout: any
+    private watchAbort: AbortController
+
+    private renderInterval: any
 
 
     constructor(matrix: Matrix, scheduler: Scheduler, controls: PresetControl, presetStore: PresetStore) {
@@ -92,12 +93,16 @@ export class RunnerServer {
             this.animation.run(this.matrix, this.scheduler, this.controls).then(() => {
                 console.log(`RunnerServer: Animation ${this.animationName} finished.`)
             }).catch((e) => {
-                if (e != 'abort')
+                if (e != 'abort') {
                     console.error(`RunnerServer: Animation ${this.animationName} rejected promise: `, e)
+                    if (process.env.NODE_ENV === 'development')
+                        throw(e)
+                }
             })
         } catch (e) {
             console.error("RunnerServer: Exception in animation", e)
-
+            if (process.env.NODE_ENV === 'development')
+                throw(e)
         }
     }
 

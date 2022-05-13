@@ -38,8 +38,7 @@
             {#each $sveltePresets as preset, i (preset.meta.name)}
                 <TreeviewItem label="{preset.meta.name}" opened={geert} toggle={true} itemToggle>
 <span slot="content-start">
-            <Checkbox bind:checked={geert}
-            />
+
           </span>
                     <TreeviewItem opened toggle={false}>
 

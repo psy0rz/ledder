@@ -15,13 +15,13 @@ import {ControlValue} from "./ControlValue.js";
 export abstract class Matrix extends PixelContainer {
   width: number
   height: number
-  // scheduler: Scheduler
+  scheduler: Scheduler
   // runScheduler: boolean
   // fpsControl: ControlValue
 
-  protected constructor( width, height) {
+  protected constructor( scheduler, width, height) {
     super();
-    // this.scheduler = scheduler;
+    this.scheduler = scheduler;
     //note: named preset instead of presetControl to make it more friendly for enduser
     //TODO: move out of matrix. fpsControl should be done in Scheduler()
     // this.control = new PresetControl('rootcontrol', 'controls');
