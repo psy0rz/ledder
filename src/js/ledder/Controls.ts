@@ -24,7 +24,7 @@ export class Controls extends Control {
 
     resetCallback: () => void
     addControlCallback: (control) => void
-    updateValuesCallback: (controlName, values) => void
+    // updateValuesCallback: (controlName, values) => void
 
     constructor(name: string, reloadOnChange:boolean=false) {
         super(name,'controls',reloadOnChange)
