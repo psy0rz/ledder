@@ -1,5 +1,5 @@
 import {Font} from "./Font.js";
-import {PresetControl} from "./PresetControl.js";
+import {Controls} from "./Controls.js";
 
 //good places for more fonts:
 // https://damieng.com/typography/zx-origins/#All/All
@@ -25,7 +25,7 @@ export let fonts = {
 }
 
 //helper to make it easier to let the user select a font
-export function fontSelect(control:PresetControl, name='Font', selected='C64' ):Font
+export function fontSelect(control:Controls, name='Font', selected='C64' ):Font
 {
     let choices = []
     for (const [id, font] of Object.entries(fonts)) {

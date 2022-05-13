@@ -3,18 +3,18 @@ import {MatrixApng} from "./drivers/MatrixApng.js";
 import {Scheduler} from "../ledder/Scheduler.js";
 import {Animation} from "../ledder/Animation.js";
 import {PresetValues} from "../ledder/PresetValues.js";
-import {PresetControl} from "../ledder/PresetControl.js";
+import {Controls} from "../ledder/Controls.js";
 
 //handles creation of previews
 export class PreviewStore {
 
     matrix: MatrixApng
-    controls: PresetControl
+    controls: Controls
     scheduler: Scheduler
 
     constructor() {
 
-        this.controls = new PresetControl('Root controls')
+        this.controls = new Controls('Root controls')
         this.scheduler = new Scheduler();
         this.matrix = new MatrixApng(40, 8)
     }

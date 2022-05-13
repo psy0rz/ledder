@@ -16,7 +16,7 @@ interface PresetControlMeta extends ControlMeta
 /**
  * Manages a collection of preset controls, saves and loads values to Preset.
  */
-export class PresetControl extends Control {
+export class Controls extends Control {
     // controls: Record<string, Control>
     meta: PresetControlMeta
     presetValues: PresetValues
@@ -121,7 +121,7 @@ export class PresetControl extends Control {
     subControl(name: string, reloadOnChange: boolean)
     {
         if (!(name in this.meta.controls)) {
-            this.add(new PresetControl(name,reloadOnChange));
+            this.add(new Controls(name,reloadOnChange));
         }
 
         return this.meta.controls[name];

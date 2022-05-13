@@ -4,7 +4,7 @@ import {IntervalStatic} from "./IntervalStatic.js";
 import {Interval} from "./Interval.js";
 import {ValueInterface} from "./ValueInterface.js";
 import {IntervalOnce} from "./IntervalOnce.js";
-import {PresetControl} from "./PresetControl.js";
+import {Controls} from "./Controls.js";
 
 
 export class Scheduler {

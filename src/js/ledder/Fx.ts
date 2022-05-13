@@ -1,7 +1,7 @@
 import {PixelContainer} from "./PixelContainer.js";
 import {Matrix} from "./Matrix.js";
 import {Scheduler} from "./Scheduler.js";
-import {PresetControl} from "./PresetControl.js";
+import {Controls} from "./Controls.js";
 
 //an effect can be applied to pixelcontainers or colors usually (via run() )
 export class Fx {
@@ -10,10 +10,10 @@ export class Fx {
     promise: Promise<any>
     running: boolean
     matrix: Matrix
-    controls: PresetControl
+    controls: Controls
 
 
-    constructor(matrix: Matrix, controls: PresetControl) {
+    constructor(matrix: Matrix, controls: Controls) {
         this.matrix = matrix
         this.controls=controls
 

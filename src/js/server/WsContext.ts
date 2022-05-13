@@ -5,7 +5,7 @@ import {MatrixWebsocket} from "./drivers/MatrixWebsocket.js";
 import {PresetStore} from "./PresetStore.js";
 import {RpcServer} from "./RpcServer.js";
 import {JSONRPCClient, JSONRPCServerAndClient} from "json-rpc-2.0";
-import {PresetControl} from "../ledder/PresetControl.js";
+import {Controls} from "../ledder/Controls.js";
 
 
 //Per websocket context, used to generate the preview animation that is shown in the browser.
@@ -37,7 +37,7 @@ export class WsContext {
     }
 
     startPreview(presetStore: PresetStore, width, height) {
-        let controls = new PresetControl('Root controls')
+        let controls = new Controls('Root controls')
         let scheduler = new Scheduler();
         let matrix = new MatrixWebsocket(scheduler, width, height, this.ws)
         this.runner = new RunnerServer(matrix, scheduler, controls, presetStore)
