@@ -22,6 +22,7 @@ export class RunnerServer {
     private animation: Animation
     private animationName: string
     private presetName: string
+    private preset: PresetValues
 
     private restartTimeout: any
     private watchAbort: AbortController
@@ -116,8 +117,10 @@ export class RunnerServer {
         console.log("Runner: starting", animationName, presetName)
         this.matrix.reset()
 
-        if (presetName)
+
+        if (presetName) {
             this.controls.load(await this.presetStore.load(this.animationClass, presetName))
+        }
 
         this.start()
 

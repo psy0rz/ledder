@@ -1,8 +1,11 @@
 /** Actual preset-values
  * (jsonable)
  */
+import {Values} from "./Control.js";
+
+
 export class PresetValues {
-    values: Record<string, Record<string, any>>
+    values: Values
     title: string;
     description: string;
 
@@ -12,3 +15,8 @@ export class PresetValues {
       this.description="";
     }
 }
+
+
+
+
+

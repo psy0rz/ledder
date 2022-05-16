@@ -2,10 +2,14 @@
  * Base class for all controls.
  */
 
+export type Values= Record< string , any>
+
+
+
 export interface ControlMeta  {
     name: string
     type: string
-    resetOnChange: boolean
+    restartOnChange: boolean
 }
 
 export class Control {
@@ -14,11 +18,12 @@ export class Control {
     // changedCallback: (controlName, values) => void
 
     //type is used in webfront end to render correct controls gui
-    constructor(name: string, type: string, resetOnChange: boolean = false) {
+
+    constructor(name: string, type: string, restartOnChange: boolean = false) {
         this.meta= {
             name :name,
             type :type,
-            resetOnChange :resetOnChange
+            restartOnChange :restartOnChange
         }
 
 
@@ -32,14 +37,9 @@ export class Control {
     // }
 
 
-    save() {
-        return {}
+    save?():Values;
 
-    }
-
-    load(values) {
-
-    }
+    load?(values: Values)
 
     // changed() {
     //     if (this.changedCallback !== undefined)

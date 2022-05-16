@@ -1,45 +1,45 @@
-import {Control, ControlMeta} from "./Control.js"
+import {Control, ControlMeta, Values} from "./Control.js"
 import {ControlValue} from "./ControlValue.js"
 import {ControlColor} from "./ControlColor.js"
-import {PresetValues} from "./PresetValues.js"
 import {ControlInput} from "./ControlInput.js"
 import {ControlSwitch} from "./ControlSwitch.js";
 import {Choices, ControlSelect} from "./ControlSelect.js";
 
 
-interface ControlsMeta extends ControlMeta
-{
+type ControlMap = Map<string, Control>
+
+interface ControlsMeta extends ControlMeta {
     // controls:  {[key: string]: Control}
-    controls: Map<string, Control>
+    controls: ControlMap
 }
 
 /**
  * Manages a collection of preset controls, saves and loads values to Preset.
+ * NOTE: This structure is recursive, a Controls() can contain other sub Controls()
  */
 export class Controls extends Control {
-    // controls: Record<string, Control>
     meta: ControlsMeta
-    presetValues: PresetValues
-    //callsbacks are to send control metadata and values to webgui (in WsContext)
+    loadedValues: Values
 
+    //Added controls are send to the webinterface via the addControlCallback.
+    //This is because controls usually are added on the fly in an async fasion.
+    addControlCallback: (controls: Controls) => void
+
+    //remove all controls and reset
     resetCallback: () => void
-    addControlCallback: (control) => void
-    // updateValuesCallback: (controlName, values) => void
 
-    constructor(name: string, reloadOnChange:boolean=false) {
-        super(name,'controls',reloadOnChange)
+    constructor(name: string, restartOnChange: boolean = false) {
+        super(name, 'controls', restartOnChange)
 
-        this.meta.controls = new Map()
         this.clear();
 
     }
 
     clear() {
         this.meta.controls = new Map()
-        this.presetValues = new PresetValues()
+        this.loadedValues = {}
 
-        if (this.resetCallback)
-        {
+        if (this.resetCallback) {
             this.resetCallback()
         }
     }
@@ -53,14 +53,11 @@ export class Controls extends Control {
         this.meta.controls[control.meta.name] = control;
 
         //already has a preset in values?
-        if (control.meta.name in this.presetValues.values)
-            control.load(this.presetValues.values[control.meta.name]);
-
-        // if (this.updateValuesCallback)
-        //     control.setChangedCallback(this.updateValuesCallback)
+        if (control.meta.name in this.loadedValues)
+            control.load(this.loadedValues[control.meta.name]);
 
         if (this.addControlCallback)
-            this.addControlCallback(control)
+            this.addControlCallback(this)
 
     }
 
@@ -73,19 +70,19 @@ export class Controls extends Control {
      * @param step Step size
      * @param resetOnChange Reset animation when value has changed
      */
-    value(name: string, value: number, min: number, max: number, step: number = 1, resetOnChange:boolean=false):  ControlValue  {
+    value(name: string, value: number, min: number, max: number, step: number = 1, resetOnChange: boolean = false): ControlValue {
         if (!(name in this.meta.controls)) {
             this.add(new ControlValue(name, value, min, max, step, resetOnChange));
         }
 
 
-        return this.meta.controls[name] ;
+        return this.meta.controls[name];
     }
 
     /**
      * Get or create color-control with specified name
      */
-    color(name: string, r: number = 128, g: number = 128, b: number = 128, a: number = 1, resetOnChange:boolean=false): ControlColor {
+    color(name: string, r: number = 128, g: number = 128, b: number = 128, a: number = 1, resetOnChange: boolean = false): ControlColor {
         if (!(name in this.meta.controls)) {
             this.add(new ControlColor(name, r, g, b, a, resetOnChange));
         }
@@ -94,7 +91,7 @@ export class Controls extends Control {
         return this.meta.controls[name];
     }
 
-    input(name: string, text:string, resetOnChange:boolean=false): ControlInput {
+    input(name: string, text: string, resetOnChange: boolean = false): ControlInput {
         if (!(name in this.meta.controls)) {
             this.add(new ControlInput(name, text, resetOnChange));
         }
@@ -102,7 +99,7 @@ export class Controls extends Control {
         return this.meta.controls[name];
     }
 
-    switch(name: string, enabled:boolean, resetOnChange:boolean=false): ControlSwitch {
+    switch(name: string, enabled: boolean, resetOnChange: boolean = false): ControlSwitch {
         if (!(name in this.meta.controls)) {
             this.add(new ControlSwitch(name, enabled, resetOnChange));
         }
@@ -110,7 +107,7 @@ export class Controls extends Control {
         return this.meta.controls[name];
     }
 
-    select(name: string, selected:string, choices: Choices, resetOnChange:boolean=false): ControlSelect {
+    select(name: string, selected: string, choices: Choices, resetOnChange: boolean = false): ControlSelect {
         if (!(name in this.meta.controls)) {
             this.add(new ControlSelect(name, selected, choices, resetOnChange));
         }
@@ -118,10 +115,10 @@ export class Controls extends Control {
         return this.meta.controls[name];
     }
 
-    subControl(name: string, reloadOnChange: boolean)
-    {
+    //sub Controls instance.
+    sub(name: string, reloadOnChange: boolean=false) {
         if (!(name in this.meta.controls)) {
-            this.add(new Controls(name,reloadOnChange));
+            this.add(new Controls(name, reloadOnChange));
         }
 
         return this.meta.controls[name];
@@ -129,10 +126,9 @@ export class Controls extends Control {
     }
 
 
-
     setCallbacks(reset, addControl) {
         this.resetCallback = reset
-        this.addControlCallback=addControl
+        this.addControlCallback = addControl
         // this.updateValuesCallback=updateValues
     }
 
@@ -142,34 +138,33 @@ export class Controls extends Control {
      */
     save() {
         for (const [name, control] of Object.entries(this.meta.controls)) {
-            this.presetValues.values[name] = control.save();
+            this.loadedValues[name] = control.save();
         }
 
-        return this.presetValues
+        return this.loadedValues
     }
 
     /**
      * Set different preset
      */
-    load(preset) {
-        this.presetValues = preset;
+    load(values: Values) {
+        this.loadedValues = values
 
         //update existing controls
         for (const [name, control] of Object.entries(this.meta.controls)) {
-            if (name in this.presetValues.values)
-                control.load(this.presetValues.values[name]);
+            if (name in this.loadedValues)
+                control.load(this.loadedValues[name]);
         }
-
-    }
+   }
 
     /**
-     * Update values of a specific controlled. (called by browser to update server)
-     * @param controlName
-     * @param values
+     * Update values of a specific control. (called by browser to update server)
      * @return True if animation should be restarted/reset
      */
-    updateValue(controlName, values) {
-        this.presetValues.values[controlName] = values;
+    updateValue(controlPath: ControlPath, values) {
+
+
+        this.loadedValues[controlName] = values;
         this.meta.controls[controlName].load(values);
 
         return (this.meta.controls[controlName].meta.resetOnChange)

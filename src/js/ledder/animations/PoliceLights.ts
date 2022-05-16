@@ -30,7 +30,7 @@ export default class PoliceLights extends Animation {
                 new Pixel(matrix, x, y, color2Control)
 
 
-        const blinker = new FxBlink(matrix, controls, 2, 4, 4)
+        const blinker = new FxBlink(matrix, controls.sub("blinker"), 2, 4, 4)
 
         const wait = controls.value('Wait', 0, 0, 120, 1)
 
