@@ -44,13 +44,14 @@ export class RunnerBrowser {
 
             console.log("Add control", params[0])
 
-            this.presets[params[0].meta.name]=params[0]
+            // this.presets[params[0].meta.name]=params[0]
 
-            sveltePresets.update(p => {
-                console.log("Updating", p)
-                p.push(params[0])
-                return p
-            })
+            sveltePresets.set(params[0])
+            // sveltePresets.update(p => {
+            //     console.log("Updating", p)
+            //     p.push(params[0])
+            //     return p
+            // })
         })
 
 

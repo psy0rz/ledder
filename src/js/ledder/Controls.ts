@@ -161,13 +161,13 @@ export class Controls extends Control {
      * Update values of a specific control. (called by browser to update server)
      * @return True if animation should be restarted/reset
      */
-    updateValue(controlPath: ControlPath, values) {
-
-
-        this.loadedValues[controlName] = values;
-        this.meta.controls[controlName].load(values);
-
-        return (this.meta.controls[controlName].meta.resetOnChange)
-    }
+    // updateValue(controlPath: ControlPath, values) {
+    //
+    //
+    //     this.loadedValues[controlName] = values;
+    //     this.meta.controls[controlName].load(values);
+    //
+    //     return (this.meta.controls[controlName].meta.resetOnChange)
+    // }
 
 }
