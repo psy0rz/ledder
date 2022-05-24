@@ -16,10 +16,12 @@
     {/if}
 {/each}
 
-<script>
+<script lang="ts">
     import ControlValue from "./ControlValue.svelte";
 
-    export let controls;
+    export let controls:Controls;
     import {BlockHeader, BlockTitle, TreeviewItem} from "framework7-svelte";
+    import {Controls} from "../js/ledder/Controls.js";
+
 
 </script>
