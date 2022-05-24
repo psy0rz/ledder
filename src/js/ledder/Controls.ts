@@ -28,7 +28,7 @@ export class Controls extends Control {
     //remove all controls and reset
     resetCallback: () => void
 
-    constructor(name: string, restartOnChange: boolean = false) {
+    constructor(name: string='root', restartOnChange: boolean = false) {
         super(name, 'controls', restartOnChange)
 
         this.clear();

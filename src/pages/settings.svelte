@@ -35,7 +35,7 @@
     <Block strong>
         <Treeview>
 
-            <ControlControls controls={$sveltePresets}/>
+            <Controls controls={$sveltePresets}/>
 
         </Treeview>
     </Block>
@@ -54,8 +54,7 @@
     import {sveltePresets, svelteSelectedAnimationName, svelteSelectedTitle, svelteLive} from "../js/web/svelteStore.js"
     import {runnerBrowser} from "../js/web/RunnerBrowser.js";
     import {rpc} from "../js/web/RpcClient.js";
-    import {tick} from "svelte";
-    import ControlControls from "../components/ControlControls.svelte";
+    import Controls from "../components/Controls.svelte";
 
     let geert = true
 

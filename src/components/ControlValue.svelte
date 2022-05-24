@@ -18,10 +18,11 @@
                                    //rpc.notify("matrix.control.updateValue", control.meta.name, preset)
                                } }/>
 
-<script>
+<script lang="ts">
     import {Range, Stepper} from "framework7-svelte";
     import {rpc} from "../js/web/RpcClient.js";
+    import {ControlValue} from "../js/ledder/ControlValue.js";
 
-    export let control;
+    export let control:ControlValue;
 
 </script>
