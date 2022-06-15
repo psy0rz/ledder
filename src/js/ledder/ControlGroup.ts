@@ -17,13 +17,13 @@ interface ControlsMeta extends ControlMeta {
  * Manages a collection of preset controls, saves and loads values to Preset.
  * NOTE: This structure is recursive, a Controls() can contain other sub Controls()
  */
-export class Controls extends Control {
+export class ControlGroup extends Control {
     meta: ControlsMeta
     loadedValues: Values
 
     //Added controls are send to the webinterface via the addControlCallback.
     //This is because controls usually are added on the fly in an async fasion.
-    addControlCallback: (controls: Controls) => void
+    addControlCallback: (controls: ControlGroup) => void
 
     //remove all controls and reset
     resetCallback: () => void
@@ -115,10 +115,10 @@ export class Controls extends Control {
         return this.meta.controls[name];
     }
 
-    //sub Controls instance.
-    sub(name: string, reloadOnChange: boolean=false) {
+    //sub Controls group instance.
+    group(name: string, reloadOnChange: boolean=false) {
         if (!(name in this.meta.controls)) {
-            this.add(new Controls(name, reloadOnChange));
+            this.add(new ControlGroup(name, reloadOnChange));
         }
 
         return this.meta.controls[name];

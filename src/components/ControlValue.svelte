@@ -14,8 +14,8 @@
        label={true}
        style="width:400px"
        on:rangeChange={ e=> {
-                                   //control.value=e.detail[0]
-                                   //rpc.notify("matrix.control.updateValue", control.meta.name, preset)
+                                   control.value=e.detail[0]
+                                   rpc.notify("matrix.control.updateValue", path, control.value)
                                } }/>
 
 <script lang="ts">
@@ -24,5 +24,6 @@
     import {ControlValue} from "../js/ledder/ControlValue.js";
 
     export let control:ControlValue;
+    export let path:[];
 
 </script>

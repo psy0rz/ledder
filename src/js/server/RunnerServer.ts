@@ -6,7 +6,7 @@ import {Animation} from "../ledder/Animation.js"
 import {watch} from "fs/promises"
 import {AbortController} from "node-abort-controller";
 import {Scheduler} from "../ledder/Scheduler.js";
-import {Controls} from "../ledder/Controls.js";
+import {ControlGroup} from "../ledder/ControlGroup.js";
 import {Interval} from "../ledder/Interval.js";
 
 /**
@@ -15,7 +15,7 @@ import {Interval} from "../ledder/Interval.js";
 export class RunnerServer {
     matrix: Matrix
     scheduler: Scheduler
-    controls: Controls
+    controls: ControlGroup
 
     private presetStore: PresetStore
     private animationClass: typeof Animation
@@ -30,7 +30,7 @@ export class RunnerServer {
     private renderInterval: any
 
 
-    constructor(matrix: Matrix, scheduler: Scheduler, controls: Controls, presetStore: PresetStore) {
+    constructor(matrix: Matrix, scheduler: Scheduler, controls: ControlGroup, presetStore: PresetStore) {
         this.matrix = matrix
         this.scheduler=scheduler
         this.controls=controls

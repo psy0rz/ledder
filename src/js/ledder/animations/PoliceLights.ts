@@ -2,7 +2,7 @@ import {Animation} from "../Animation.js";
 import {Matrix} from "../Matrix.js";
 import {Pixel} from "../Pixel.js";
 import {Scheduler} from "../Scheduler.js";
-import {Controls} from "../Controls.js";
+import {ControlGroup} from "../ControlGroup.js";
 import FxBlink from "../fx/FxBlink.js";
 import {fontSelect} from "../fonts.js";
 import {CharPixels} from "../CharPixels.js";
@@ -15,7 +15,7 @@ export default class PoliceLights extends Animation {
     static category = "Signal lights"
 
 
-    async run(matrix: Matrix, scheduler: Scheduler, controls: Controls) {
+    async run(matrix: Matrix, scheduler: Scheduler, controls: ControlGroup) {
 
         const color1Control = controls.color("Color 1", 255, 0, 0, 1);
 
@@ -30,7 +30,7 @@ export default class PoliceLights extends Animation {
                 new Pixel(matrix, x, y, color2Control)
 
 
-        const blinker = new FxBlink(matrix, controls.sub("blinker"), 2, 4, 4)
+        const blinker = new FxBlink(matrix, controls.group("blinker"), 2, 4, 4)
 
         const wait = controls.value('Wait', 0, 0, 120, 1)
 

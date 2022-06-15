@@ -4,7 +4,7 @@ import {svelteAnimations, sveltePresets, svelteSelectedAnimationName, svelteSele
 import {confirmPromise, info, promptPromise} from "./util.js";
 import {MatrixCanvas} from "./MatrixCanvas.js";
 import {tick} from "svelte";
-import {Controls} from "../ledder/Controls.js";
+import {ControlGroup} from "../ledder/ControlGroup.js";
 
 /**
  * Browser side animation runner. Note that animation runs on the server side (WsContext.ts) and is actually streamed to browser via MatrixWebsocket
@@ -31,13 +31,13 @@ export class RunnerBrowser {
         rpc.matrix = new MatrixCanvas(width, height, '#ledder-preview');
 
         this.presets={}
-        sveltePresets.set(new Controls())
+        sveltePresets.set(new ControlGroup())
 
         rpc.addMethod('control.reset', async ()=>
         {
             console.log("Reset controls")
             this.presets={}
-            sveltePresets.set(new Controls())
+            sveltePresets.set(new ControlGroup())
             await tick()
         })
 

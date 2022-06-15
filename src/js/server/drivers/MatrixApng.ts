@@ -1,6 +1,6 @@
 import {Matrix} from "../../ledder/Matrix.js";
 import pkg from 'upng-js';
-import {Controls} from "../../ledder/Controls.js";
+import {ControlGroup} from "../../ledder/ControlGroup.js";
 import {Scheduler} from "../../ledder/Scheduler.js";
 
 const UPNG = pkg;

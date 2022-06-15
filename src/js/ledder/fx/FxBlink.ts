@@ -4,7 +4,7 @@ import {Matrix} from "../Matrix.js";
 import {Pixel} from "../Pixel.js";
 import {PixelContainer} from "../PixelContainer.js";
 import {ColorInterface} from "../ColorInterface.js";
-import {Controls} from "../Controls.js";
+import {ControlGroup} from "../ControlGroup.js";
 
 export default class FxBlink extends Fx {
 
@@ -14,7 +14,7 @@ export default class FxBlink extends Fx {
     offDelay: ControlValue
     repeat: ControlValue
 
-     constructor(matrix: Matrix, controls: Controls, onDelay=60, offDelay=60, repeat=0) {
+     constructor(matrix: Matrix, controls: ControlGroup, onDelay=60, offDelay=60, repeat=0) {
         super(matrix, controls)
 
         this.onDelay = controls.value('on delay', onDelay, 1, 120, 1)

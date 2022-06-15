@@ -1,8 +1,8 @@
 //svelte variable store
 import { writable } from 'svelte/store';
-import {Controls} from "../ledder/Controls.js";
+import {ControlGroup} from "../ledder/ControlGroup.js";
 
-export const sveltePresets = writable<Controls>( )
+export const sveltePresets = writable<ControlGroup>( )
 
 // export const svelteSelected = writable({ animationName: "", presetName:"" })
 
