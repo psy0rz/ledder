@@ -8,8 +8,8 @@
        min={control.meta.min}
        max={control.meta.max}
        step={control.meta.step}
-       scaleSteps={5}
-       scaleSubSteps={5}
+       scaleSteps={2}
+       scaleSubSteps={10}
        scale
        label={true}
        style="width:400px"
