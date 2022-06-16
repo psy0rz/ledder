@@ -20,7 +20,7 @@
         }
         if ($svelteLive) {
             // await tick()
-            runnerBrowser.send()
+            await runnerBrowser.send()
         }
 
     })
