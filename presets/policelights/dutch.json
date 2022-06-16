@@ -2,15 +2,15 @@
  "values": {
   "Color 2": {
    "r": 96,
-   "g": 96,
-   "b": 255,
-   "a": 0
+   "g": 255,
+   "b": 192,
+   "a": 1
   },
   "Color 1": {
    "r": 97,
    "g": 96,
    "b": 255,
-   "a": 1
+   "a": 0
   },
   "Flasher off delay": {
    "value": 7
@@ -56,6 +56,17 @@
   },
   "Text delay": {
    "value": 60
+  },
+  "blinker": {
+   "on delay": {
+    "value": 2
+   },
+   "off delay": {
+    "value": 4
+   },
+   "repeat": {
+    "value": 4
+   }
   }
  },
  "title": "",

@@ -44,4 +44,6 @@
 
     let id = path.join("_").replace(/[^a-zA-Z0-9]/g, "_")
 
+    console.log("color" , path, control)
+
 </script>

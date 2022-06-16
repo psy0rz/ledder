@@ -17,6 +17,7 @@ export class PreviewStore {
         this.controls = new ControlGroup('Root controls')
         this.scheduler = new Scheduler();
         this.matrix = new MatrixApng(40, 8)
+        this.matrix.scheduler=this.scheduler
     }
 
     clear()
@@ -35,7 +36,7 @@ export class PreviewStore {
         this.clear()
 
         if (preset)
-            this.controls.load(preset);
+            this.controls.load(preset.values);
 
         let animation: Animation = new animationClass(this.matrix)
         animation.run(this.matrix, this.scheduler, this.controls).then(() => {
