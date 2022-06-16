@@ -77,7 +77,7 @@ export class Scheduler {
 
 
     //called by renderloop on every frame.
-    step() {
+    async step() {
         this.frameNr++;
 
         let i = 0;

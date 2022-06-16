@@ -64,7 +64,7 @@ export abstract class Matrix extends PixelContainer {
   abstract setPixel(x: number, y: number, color: ColorInterface);
 
   //should send the last rendered frame and prepare for next frame to be filled via setPixel() calls.
-  abstract frame(frameNr: number, timeMs: number)
+  abstract frame()
 
 }
 

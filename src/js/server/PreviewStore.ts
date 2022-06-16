@@ -9,12 +9,12 @@ import {ControlGroup} from "../ledder/ControlGroup.js";
 export class PreviewStore {
 
     matrix: MatrixApng
-    controls: ControlGroup
+    controlGroup: ControlGroup
     scheduler: Scheduler
 
     constructor() {
 
-        this.controls = new ControlGroup('Root controls')
+        this.controlGroup = new ControlGroup('Root controls')
         this.scheduler = new Scheduler();
         this.matrix = new MatrixApng(40, 8)
         this.matrix.scheduler=this.scheduler
@@ -24,7 +24,7 @@ export class PreviewStore {
     {
         this.scheduler.clear()
         this.matrix.reset()
-        this.controls.clear()
+        this.controlGroup.clear()
     }
 
     /**
@@ -36,13 +36,17 @@ export class PreviewStore {
         this.clear()
 
         if (preset)
-            this.controls.load(preset.values);
+            this.controlGroup.load(preset.values);
 
         let animation: Animation = new animationClass(this.matrix)
-        animation.run(this.matrix, this.scheduler, this.controls).then(() => {
+        animation.run(this.matrix, this.scheduler, this.controlGroup).then(() => {
             console.log(`PreviewStore: ${filename} finished.`)
         }).catch((e) => {
-            console.error(`PreviewStore: ${filename} error`, e)
+            if (e != 'abort') {
+                console.error(`PreviewStore: ${filename} error`, e)
+                if (process.env.NODE_ENV === 'development')
+                    throw(e)
+            }
         })
 
         //FIXME: fps control
@@ -53,12 +57,13 @@ export class PreviewStore {
 
         //skip frames, just run scheduler
         for (let i = 0; i < animationClass.previewSkip; i++)
-            this.scheduler.step();
+            await this.scheduler.step();
 
         //render frames
         for (let i = 0; i < animationClass.previewFrames; i++) {
-            for (let d = 0; d < divider; d++)
-                this.scheduler.step()
+            for (let d = 0; d < divider; d++) {
+                await this.scheduler.step()
+            }
 
             this.matrix.render()
             this.matrix.frame()

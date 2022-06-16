@@ -7,7 +7,7 @@ import {watch} from "fs/promises"
 import {AbortController} from "node-abort-controller";
 import {Scheduler} from "../ledder/Scheduler.js";
 import {ControlGroup} from "../ledder/ControlGroup.js";
-import {Interval} from "../ledder/Interval.js";
+
 
 /**
  * Server side runner. This is the main thing that calls everything to run animations.
@@ -41,13 +41,13 @@ export class RunnerServer {
     }
 
     startRenderLoop() {
-        let frameNr = 0
-        this.renderInterval = setInterval(() => {
+        // let frameNr = 0
+        this.renderInterval = setInterval(async () => {
             //FIXME: migrate timing loop from matrixledstream
-            this.matrix.frame(frameNr, Date.now())
-            this.scheduler.step()
+            this.matrix.frame()
+            await this.scheduler.step()
             this.matrix.render()
-            frameNr = frameNr + 1
+            // frameNr = frameNr + 1
         }, 16)
         //FIXME: fps control
 
