@@ -14,11 +14,11 @@
        label={true}
        style="width:400px"
        on:rangeChange={ e=> {
-                                   control.value=e.detail[0]
-                                   let values={...control}
-                                   delete values.meta
-                                   rpc.notify("matrix.control.updateValue", path, values)
-                               } }/>
+           control.value=e.detail[0]
+           let values={...control}
+           delete values.meta
+           rpc.notify("matrix.control.updateValue", path, values)
+       } }/>
 
 <script lang="ts">
     import {Range, Stepper} from "framework7-svelte";

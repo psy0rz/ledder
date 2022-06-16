@@ -18,6 +18,8 @@
                 <ControlInput control={control} path={[...path,control.meta.name]}/>
             {:else if control.meta.type === 'switch' }
                 <ControlSwitch control={control} path={[...path,control.meta.name]}/>
+            {:else if control.meta.type === 'select' }
+                <ControlSelect control={control} path={[...path,control.meta.name]}/>
             {:else}
                 <b>Unknown control type: {control.meta.name} has type '{control.meta.type}' !</b>
             {/if}
@@ -37,6 +39,7 @@
     import ControlColor from "./ControlColor.svelte";
     import ControlInput from "./ControlInput.svelte";
     import ControlSwitch from "./ControlSwitch.svelte";
+    import ControlSelect from "./ControlSelect.svelte";
 
 
 </script>
