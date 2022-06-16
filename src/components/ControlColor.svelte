@@ -1,6 +1,3 @@
-
-
-
 <Input
         id="color-picker-{id}"
         type="colorpicker"

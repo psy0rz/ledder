@@ -14,6 +14,8 @@
                 <ControlValue control={control} path={[...path,control.meta.name]}/>
             {:else if control.meta.type === 'color' }
                 <ControlColor control={control} path={[...path,control.meta.name]}/>
+            {:else if control.meta.type === 'input' }
+                <ControlInput control={control} path={[...path,control.meta.name]}/>
             {/if}
         </span>
         </TreeviewItem>
@@ -29,6 +31,7 @@
     import {BlockHeader, BlockTitle, TreeviewItem} from "framework7-svelte";
     import {ControlGroup} from "../js/ledder/ControlGroup.js";
     import ControlColor from "./ControlColor.svelte";
+    import ControlInput from "./ControlInput.svelte";
 
 
 </script>
