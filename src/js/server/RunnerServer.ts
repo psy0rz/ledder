@@ -32,32 +32,29 @@ export class RunnerServer {
 
     constructor(matrix: Matrix, controls: ControlGroup, presetStore: PresetStore) {
         this.matrix = matrix
-        this.scheduler=new Scheduler()
-        this.matrix.scheduler=this.scheduler
-        this.controlGroup=controls
+        this.scheduler = new Scheduler()
+        this.matrix.scheduler = this.scheduler
+        this.controlGroup = controls
         this.presetStore = presetStore
         this.autoreload()
 
     }
 
-    startRenderLoop()
-    {
-        let frameNr=0
-        this.renderInterval=setInterval( ()=>
-        {
+    startRenderLoop() {
+        let frameNr = 0
+        this.renderInterval = setInterval(() => {
             //FIXME: migrate timing loop from matrixledstream
             this.matrix.frame(frameNr, Date.now())
             this.scheduler.step()
             this.matrix.render()
-            frameNr=frameNr+1
-        },16)
+            frameNr = frameNr + 1
+        }, 16)
         //FIXME: fps control
 
 
     }
 
-    stopRenderLoop()
-    {
+    stopRenderLoop() {
         clearInterval(this.renderInterval)
     }
 
@@ -116,11 +113,12 @@ export class RunnerServer {
         this.animationClass = await this.presetStore.loadAnimation(animationName)
 
         console.log("Runner: starting", animationName, presetName)
+        this.scheduler.clear()
         this.matrix.reset()
 
 
         if (presetName) {
-            this.presetValues=await this.presetStore.load(this.animationClass, presetName)
+            this.presetValues = await this.presetStore.load(this.animationClass, presetName)
             this.controlGroup.load(this.presetValues.values)
         }
 
@@ -142,6 +140,7 @@ export class RunnerServer {
     async restart(keepPresets: boolean = false) {
         if (!keepPresets)
             this.controlGroup.clear()
+        this.scheduler.clear()
         this.matrix.reset()
 
         this.start()
