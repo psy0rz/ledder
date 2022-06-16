@@ -122,6 +122,15 @@ export class RunnerServer {
             this.presetValues = await this.presetStore.load(this.animationClass, presetName)
             this.controlGroup.load(this.presetValues.values)
         }
+        else
+        {
+            this.presetValues= {
+                title:"",
+                description:"",
+                values:{}
+            }
+
+        }
 
         this.start()
 

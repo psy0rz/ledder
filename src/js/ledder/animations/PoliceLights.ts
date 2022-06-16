@@ -17,6 +17,8 @@ export default class PoliceLights extends Animation {
 
     async run(matrix: Matrix, scheduler: Scheduler, controls: ControlGroup) {
 
+        const blinker = new FxBlink(matrix, controls.group("blinker"), 2, 4, 4)
+
         const color1Control = controls.color("Color 1", 255, 0, 0, 1);
 
         for (let x = 0; x < matrix.width / 5; x++)
@@ -30,7 +32,6 @@ export default class PoliceLights extends Animation {
                 new Pixel(matrix, x, y, color2Control)
 
 
-        const blinker = new FxBlink(matrix, controls.group("blinker"), 2, 4, 4)
 
         const wait = controls.value('Wait', 0, 0, 120, 1)
 
@@ -65,6 +66,7 @@ export default class PoliceLights extends Animation {
             }
             return true
         })
+
 
         while (1) {
             await blinker.run(color1Control)
