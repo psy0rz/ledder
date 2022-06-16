@@ -71,5 +71,14 @@ export class Pixel implements PixelInterface {
             this.y-=(yMax-yMin)
 
     }
+
+    //remove pixels that are outside this box
+    crop(matrix:Matrix, xMin, yMin, xMax, yMax)
+    {
+        if ((this.x<xMin) ||(this.x>xMax) || (this.y<yMin) || (this.y>yMax))
+            this.destroy(matrix)
+
+    }
+
 }
 

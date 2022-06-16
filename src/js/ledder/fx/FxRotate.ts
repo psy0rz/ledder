@@ -17,22 +17,21 @@ export default class FxRotate extends Fx {
         super(matrix, controlGroup)
 
         this.intervalControl = controlGroup.value('Interval', interval, 1, 60, 1)
-        this.xStepControl = controlGroup.value('X step', xStep,-10,10,1)
-        this.yStepControl = controlGroup.value('Y step', yStep,-10,10,1)
+        this.xStepControl = controlGroup.value('X step', xStep,-5,5,1)
+        this.yStepControl = controlGroup.value('Y step', yStep,-5,5,1)
 
     }
 
     run(pixelContainer:PixelContainer)
     {
         let bbox = pixelContainer.bbox()
-        let step=-1
         this.running=true
         this.promise=this.matrix.scheduler.intervalControlled(this.intervalControl, (frameNr) => {
             for (const p of pixelContainer.pixels) {
                 p.x = p.x + this.xStepControl.value
                 p.y = p.y + this.yStepControl.value
 
-                p.wrap(bbox.xMin, bbox.yMin, bbox.xMax, bbox.yMax)
+                p.wrap( bbox.xMin, bbox.yMin, bbox.xMax, bbox.yMax)
 
             }
             return (this.running && pixelContainer.pixels.length)
