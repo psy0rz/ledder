@@ -99,7 +99,7 @@ export class ControlGroup extends Control {
         return this.meta.controls[name];
     }
 
-    switch(name: string, enabled: boolean, resetOnChange: boolean = false): ControlSwitch {
+    switch(name: string, enabled: boolean, resetOnChange: boolean = true): ControlSwitch {
         if (!(name in this.meta.controls)) {
             this.add(new ControlSwitch(name, enabled, resetOnChange));
         }

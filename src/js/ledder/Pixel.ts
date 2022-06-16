@@ -42,5 +42,34 @@ export class Pixel implements PixelInterface {
     render(matrix: Matrix) {
         matrix.setPixel(this.x, this.y, this.color);
     }
+
+    //limit pixel location to this box (inclusive)
+    limit(xMin, yMin, xMax, yMax)
+    {
+        if (this.x<xMin)
+            this.x=xMin
+        else if (this.x>xMax)
+            this.x=xMax
+
+        if (this.y<yMin)
+            this.y=yMin
+        else if (this.y>yMax)
+            this.y=yMax
+    }
+
+    //keep pixel inside this box by wrapping
+    wrap(xMin, yMin, xMax, yMax)
+    {
+        if (this.x<xMin)
+            this.x+=(xMax-xMin)
+        else if (this.x>xMax)
+            this.x-=(xMax-xMin)
+
+        if (this.y<yMin)
+            this.y+=(yMax-yMin)
+        else if (this.y>yMax)
+            this.y-=(yMax-yMin)
+
+    }
 }
 

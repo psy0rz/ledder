@@ -1,9 +1,6 @@
 import {Fx} from "../Fx.js";
 import {ControlValue} from "../ControlValue.js";
 import {Matrix} from "../Matrix.js";
-import {Pixel} from "../Pixel.js";
-import {PixelContainer} from "../PixelContainer.js";
-import {ColorInterface} from "../ColorInterface.js";
 import {ControlGroup} from "../ControlGroup.js";
 import {Color} from "../Color.js";
 

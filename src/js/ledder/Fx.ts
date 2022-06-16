@@ -13,9 +13,9 @@ export class Fx {
     controls: ControlGroup
 
 
-    constructor(matrix: Matrix, controls: ControlGroup) {
+    constructor(matrix: Matrix, controlGroup: ControlGroup) {
         this.matrix = matrix
-        this.controls=controls
+        this.controls=controlGroup
 
         this.running=true
     }

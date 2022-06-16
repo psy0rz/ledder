@@ -10,7 +10,7 @@ import AnimationMarquee2 from "./AnimationMarquee2.js";
 import AnimationNyan from "./AnimationNyan.js";
 import {fontSelect} from "../fonts.js";
 import {CharPixels} from "../CharPixels.js";
-import FxRotateLeft from "../fx/FxRotateLeft.js";
+import FxRotate from "../fx/FxRotate.js";
 
 export default class HSD extends Animation {
 
@@ -32,7 +32,7 @@ export default class HSD extends Animation {
 
     new AnimationTwinkle(matrix, charPixels.pixels)
     if (control.switch('Scroll', false, true).enabled) {
-      const rotator = new FxRotateLeft(matrix, "Move")
+      const rotator = new FxRotate(matrix, "Move")
 
       await rotator.run(charPixels)
     }

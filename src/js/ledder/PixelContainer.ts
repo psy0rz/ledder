@@ -92,8 +92,8 @@ export class PixelContainer {
         }
         const ret = {
             xMin: this.pixels[0].x,
-            xMax: this.pixels[0].x,
             yMin: this.pixels[0].y,
+            xMax: this.pixels[0].x,
             yMax: this.pixels[0].y,
         }
 
