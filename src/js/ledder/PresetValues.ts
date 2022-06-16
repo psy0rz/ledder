@@ -4,16 +4,11 @@
 import {Values} from "./Control.js";
 
 
-export class PresetValues {
+export type PresetValues ={
     values: Values
     title: string;
     description: string;
 
-    constructor() {
-      this.values={};
-      this.title="";
-      this.description="";
-    }
 }
 
 

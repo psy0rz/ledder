@@ -137,7 +137,7 @@ class RpcClient extends Rpc {
    */
   async notify(name, ...params)
   {
-    console.log("RPC notify",name, params)
+    // console.log("RPC notify",name, params)
     this.serverAndClient.notify(name, params)
   }
 

@@ -15,7 +15,9 @@
        style="width:400px"
        on:rangeChange={ e=> {
                                    control.value=e.detail[0]
-                                   rpc.notify("matrix.control.updateValue", path, control.value)
+                                   let values={...control}
+                                   delete values.meta
+                                   rpc.notify("matrix.control.updateValue", path, values)
                                } }/>
 
 <script lang="ts">

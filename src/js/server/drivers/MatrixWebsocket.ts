@@ -7,8 +7,8 @@ export class MatrixWebsocket extends Matrix {
 
 
     //width and height are led-matrix-pixels, not canvas pixels.
-    constructor(scheduler: Scheduler, width, height, ws) {
-        super( scheduler,width, height);
+    constructor(width, height, ws) {
+        super( width, height);
 
         this.imageBuf8 = new Uint8ClampedArray(height * width * 4);
         this.ws=ws

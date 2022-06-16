@@ -42,6 +42,12 @@ export class Control {
     save?():Values;
 
     load?(values: Values)
+    updateValue(path:[string],value:Values):boolean
+    {
+        this.load(value)
+
+        return (this.meta.restartOnChange)
+    }
 
     // changed() {
     //     if (this.changedCallback !== undefined)

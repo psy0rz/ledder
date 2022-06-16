@@ -15,25 +15,26 @@ import {Interval} from "../ledder/Interval.js";
 export class RunnerServer {
     matrix: Matrix
     scheduler: Scheduler
-    controls: ControlGroup
+    controlGroup: ControlGroup
 
     private presetStore: PresetStore
     private animationClass: typeof Animation
     private animation: Animation
     private animationName: string
     private presetName: string
-    private preset: PresetValues
+    private presetValues: PresetValues
 
     private restartTimeout: any
-    private watchAbort: AbortController
+    private watchAbort: any
 
     private renderInterval: any
 
 
-    constructor(matrix: Matrix, scheduler: Scheduler, controls: ControlGroup, presetStore: PresetStore) {
+    constructor(matrix: Matrix, controls: ControlGroup, presetStore: PresetStore) {
         this.matrix = matrix
-        this.scheduler=scheduler
-        this.controls=controls
+        this.scheduler=new Scheduler()
+        this.matrix.scheduler=this.scheduler
+        this.controlGroup=controls
         this.presetStore = presetStore
         this.autoreload()
 
@@ -91,7 +92,7 @@ export class RunnerServer {
         console.log(`RunnerServer: Starting ${this.animationName}`)
         try {
             this.animation = new this.animationClass(this.matrix)
-            this.animation.run(this.matrix, this.scheduler, this.controls).then(() => {
+            this.animation.run(this.matrix, this.scheduler, this.controlGroup).then(() => {
                 console.log(`RunnerServer: Animation ${this.animationName} finished.`)
             }).catch((e) => {
                 if (e != 'abort') {
@@ -119,7 +120,8 @@ export class RunnerServer {
 
 
         if (presetName) {
-            this.controls.load(await this.presetStore.load(this.animationClass, presetName))
+            this.presetValues=await this.presetStore.load(this.animationClass, presetName)
+            this.controlGroup.load(this.presetValues.values)
         }
 
         this.start()
@@ -139,7 +141,7 @@ export class RunnerServer {
     //restart animation but optionally keep preset values.
     async restart(keepPresets: boolean = false) {
         if (!keepPresets)
-            this.controls.clear()
+            this.controlGroup.clear()
         this.matrix.reset()
 
         this.start()
@@ -148,9 +150,9 @@ export class RunnerServer {
     //save current running animation preset
     async save(presetName: string) {
         this.presetName = presetName
-        let presetValues = this.controls.save()
-        await this.presetStore.save(this.animationClass, presetName, presetValues)
-        await this.presetStore.createPreview(this.animationClass, presetName, presetValues)
+        this.presetValues.values = this.controlGroup.save()
+        await this.presetStore.save(this.animationClass, presetName, this.presetValues)
+        await this.presetStore.createPreview(this.animationClass, presetName, this.presetValues)
         await this.presetStore.updateAnimationPresetList()
     }
 

@@ -28,7 +28,7 @@ export class ControlGroup extends Control {
     //remove all controls and reset
     resetCallback: () => void
 
-    constructor(name: string='root', restartOnChange: boolean = false) {
+    constructor(name: string = 'root', restartOnChange: boolean = false) {
         super(name, 'controls', restartOnChange)
 
         this.clear();
@@ -116,7 +116,7 @@ export class ControlGroup extends Control {
     }
 
     //sub Controls group instance.
-    group(name: string, reloadOnChange: boolean=false) {
+    group(name: string, reloadOnChange: boolean = false) {
         if (!(name in this.meta.controls)) {
             this.add(new ControlGroup(name, reloadOnChange));
         }
@@ -155,7 +155,17 @@ export class ControlGroup extends Control {
             if (name in this.loadedValues)
                 control.load(this.loadedValues[name]);
         }
-   }
+    }
+
+    updateValue(path: [string], values: Values):boolean {
+        if(this.meta.controls[path[0]]!==undefined)
+        {
+
+            return (this.meta.controls[path[0]].updateValue(path.slice(1), values)|| this.meta.restartOnChange)
+        }
+        return false
+
+    }
 
     /**
      * Update values of a specific control. (called by browser to update server)

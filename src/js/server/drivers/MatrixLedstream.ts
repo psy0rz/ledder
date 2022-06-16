@@ -30,15 +30,14 @@ export class MatrixLedstream extends Matrix {
     /**
      * Matrix driver for https://github.com/psy0rz/ledstream
      * We assume it has a Left/Right zigzag pattern, with multiple channels stacked vertically
-     * @param scheduler
      * @param channels Number of channels (zigzag ledstrips)
      * @param width Physical width of matrix.
      * @param height Physical height of matrix. (divded over multiple channels)
      * @param ip IP address
      * @param port UDP port
      */
-    constructor(scheduler, channels, width, height, ip, port = 21324) {
-        super(scheduler, width, height);
+    constructor( channels, width, height, ip, port = 21324) {
+        super( width, height);
 
 
         this.syncer=new MulticastSync('239.137.111.222', 65001, 1000)
@@ -135,16 +134,12 @@ export class MatrixLedstream extends Matrix {
             // @ts-ignore
             this.socket.send(this.packets[c]);
             // @ts-ignore
-            this.socket2.send(this.packets[c]);
+            // this.socket2.send(this.packets[c]);
             //clear
             this.packets[c]=new Uint8ClampedArray(headerLength + (this.width * this.chanHeight * 3))
         }
 
 
-        if (this.runScheduler) {
-
-            this.scheduler.update();
-        }
 
         this.render();
 

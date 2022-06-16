@@ -5,12 +5,7 @@ import {ControlValue} from "./ControlValue.js";
 
 /**
  * The matrix is the display and shows the list of pixels. The subclasses are actual implementations for different display types.
- * Usually its enough to just implement run() and setPixel.
- * run() should call this.scheduler.update() and render() with the prefrerred framerate. (should be 60fps)
- * render() will in turn call setpixel() to set the actual pixels. (there its usually stored in a buffer)
- * run is then reponsible for sending the rendered buffer to the actual display.
- *
- * Pixels() will ddd themself to the matrix.
+ * Usually you only need to implement setPixel() to set a pixel and frame() to send the frame and clear the buffer.
  */
 export abstract class Matrix extends PixelContainer {
   width: number
@@ -19,9 +14,8 @@ export abstract class Matrix extends PixelContainer {
   // runScheduler: boolean
   // fpsControl: ControlValue
 
-  protected constructor( scheduler, width, height) {
+  protected constructor(  width, height) {
     super();
-    this.scheduler = scheduler;
     //note: named preset instead of presetControl to make it more friendly for enduser
     //TODO: move out of matrix. fpsControl should be done in Scheduler()
     // this.control = new PresetControl('rootcontrol', 'controls');

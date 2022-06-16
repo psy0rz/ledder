@@ -85,7 +85,7 @@ export class PresetStore {
      * Return preset in PresetValues format.
 
      */
-    async load(animationClass: typeof Animation, presetName: string) {
+    async load(animationClass: typeof Animation, presetName: string):Promise<PresetValues> {
         return JSON.parse(await readFile(this.presetFilename(animationClass.presetDir, presetName), 'utf8'))
     }
 

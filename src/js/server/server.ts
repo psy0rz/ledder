@@ -3,6 +3,9 @@ import {RunnerServer} from "./RunnerServer.js";
 import {PresetStore} from "./PresetStore.js";
 import {animationName, matrixList, mqttHost, mqttOpts, nodename, presetName} from "../../../matrixconf.js"
 import mqtt from 'mqtt'
+import {ControlGroup} from "../ledder/ControlGroup.js";
+import {Scheduler} from "../ledder/Scheduler.js";
+import {Matrix} from "../ledder/Matrix.js";
 
 console.log("starting..")
 
@@ -12,15 +15,15 @@ console.log("starting..")
 const presetStore = new PresetStore()
 
 //create run all the matrixes
-let runners = []
+let runners:Array<RunnerServer>=[]
 let primary = true;
-for (const matrix of matrixList) {
-    //first one is primary scheduler
-    matrix.runScheduler = primary
-    primary = false;
-    matrix.run()
 
-    let runner = new RunnerServer(matrix, presetStore)
+for (const m of matrixList) {
+    let matrix:Matrix
+    matrix=m
+    let controlGroup = new ControlGroup('Root controls')
+
+    let runner = new RunnerServer(matrix, controlGroup, presetStore)
     runner.runName(animationName, presetName)
     runners.push(runner)
 }
@@ -47,7 +50,7 @@ client.on('message', async  (topic, message) =>{
     let pars=str.split('/', 2)
 
     for (const runner of runners) {
-        await runner.runName(...pars)
+        await runner.runName(pars[0], pars[1])
     }
 })
 
@@ -95,12 +98,12 @@ rpc.addMethod("runner.runName", async (params, context) => {
 rpc.addMethod("matrix.control.updateValue", async (params, context) => {
 
     if (context.runner)
-        if (context.runner.matrix.control.updateValue(params[0], params[1])) {
+        if (context.runner.controlGroup.updateValue(params[0], params[1])) {
             context.runner.restart(true)
         }
 
     for (const runner of runners) {
-        if (runner.matrix.control.updateValue(...params))
+        if (runner.controlGroup.updateValue(params[0], params[1]))
             runner.restart(true)
     }
 })
