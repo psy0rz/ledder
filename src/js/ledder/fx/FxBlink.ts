@@ -5,6 +5,7 @@ import {Pixel} from "../Pixel.js";
 import {PixelContainer} from "../PixelContainer.js";
 import {ColorInterface} from "../ColorInterface.js";
 import {ControlGroup} from "../ControlGroup.js";
+import {Color} from "../Color.js";
 
 export default class FxBlink extends Fx {
 
@@ -22,13 +23,21 @@ export default class FxBlink extends Fx {
         this.repeat = controls.value('repeat', repeat, 0, 120, 1)
     }
 
-    run(...colors:Array<ColorInterface>) {
+    run(...colors:Array<Color>) {
 
         this.running = true
 
         let on=false
         let count=this.offDelay.value
         let repeated=0
+
+        for (const c of colors)
+            if (! (c instanceof Color))
+            {
+                throw("FxBlink can only operate on Color() instances. (Not on color controls)")
+            }
+
+
         this.promise = this.matrix.scheduler.interval(1, (frameNr) => {
             if (on)
             {

@@ -1,5 +1,6 @@
 import {Control} from "./Control.js";
 import {ColorInterface} from "./ColorInterface.js";
+import {Color} from "./Color.js";
 
 
 export class ControlColor extends Control implements ColorInterface {
@@ -18,7 +19,6 @@ export class ControlColor extends Control implements ColorInterface {
   }
 
 
-
   save() {
     return {
       r: this.r,
@@ -33,6 +33,12 @@ export class ControlColor extends Control implements ColorInterface {
     this.g = values.g;
     this.b = values.b;
     this.a = values.a;
+  }
 
+  //returns a copy thats an actual Color() object, and sets restartOnChange to true
+  copy()
+  {
+    this.meta.restartOnChange=true
+    return (new Color(this.r, this.g, this.b, this.a))
   }
 }

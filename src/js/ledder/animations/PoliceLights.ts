@@ -6,6 +6,7 @@ import {ControlGroup} from "../ControlGroup.js";
 import FxBlink from "../fx/FxBlink.js";
 import {fontSelect} from "../fonts.js";
 import {CharPixels} from "../CharPixels.js";
+import {Color} from "../Color.js";
 
 export default class PoliceLights extends Animation {
 
@@ -19,17 +20,18 @@ export default class PoliceLights extends Animation {
 
         const blinker = new FxBlink(matrix, controls.group("blinker"), 2, 4, 4)
 
-        const color1Control = controls.color("Color 1", 255, 0, 0, 1);
+        const color1 = controls.color("Color 1", 255, 0, 0, 1).copy();
+
 
         for (let x = 0; x < matrix.width / 5; x++)
             for (let y = 0; y < matrix.height; y++)
-                new Pixel(matrix, x, y, color1Control)
+                new Pixel(matrix, x, y, color1)
 
-        const color2Control = controls.color("Color 2", 0, 0, 255, 1);
+        const color2 = controls.color("Color 2", 0, 0, 255, 1).copy();
 
         for (let x = matrix.width - (matrix.width / 5); x < matrix.width; x++)
             for (let y = 0; y < matrix.height; y++)
-                new Pixel(matrix, x, y, color2Control)
+                new Pixel(matrix, x, y, color2)
 
 
 
@@ -69,9 +71,9 @@ export default class PoliceLights extends Animation {
 
 
         while (1) {
-            await blinker.run(color1Control)
+            await blinker.run(color1)
             await scheduler.delay(wait.value)
-            await blinker.run(color2Control)
+            await blinker.run(color2)
             await scheduler.delay(wait.value)
         }
 
