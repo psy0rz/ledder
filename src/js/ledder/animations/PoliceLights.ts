@@ -69,15 +69,10 @@ export default class PoliceLights extends Animation {
 
 
         while (1) {
-            console.log("loop")
             await blinker.run(color1Control)
-            console.log("loop2")
             await scheduler.delay(wait.value)
-            console.log("loop3")
             await blinker.run(color2Control)
-            console.log("loop4")
             await scheduler.delay(wait.value)
-            console.log("loop5")
         }
 
     }
