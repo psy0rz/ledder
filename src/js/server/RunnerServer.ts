@@ -115,6 +115,7 @@ export class RunnerServer {
         console.log("Runner: starting", animationName, presetName)
         this.scheduler.clear()
         this.matrix.reset()
+        this.controlGroup.clear()
 
 
         if (presetName) {
