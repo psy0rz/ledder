@@ -14,6 +14,11 @@ export abstract class Matrix extends PixelContainer {
   // runScheduler: boolean
   // fpsControl: ControlValue
 
+  //maximum fps this driver supports
+  maxFps=60
+  //should frametimes be whole numbers (usefull for ledstream)
+  roundFrametime=false
+
   protected constructor(  width, height) {
     super();
     //note: named preset instead of presetControl to make it more friendly for enduser

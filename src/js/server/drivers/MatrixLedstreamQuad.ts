@@ -23,25 +23,24 @@ export class MatrixLedstreamQuad extends Matrix {
     channels: number;
     // frameNr:number;
 
-    lastTime:number;
+    displayTime:number;
 
-    maxFps: number
 
     syncer: MulticastSync
 
     /**
      * Matrix driver for https://github.com/psy0rz/ledstream
      * We assume it has a Left/Right zigzag pattern, with multiple channels stacked vertically
-     * @param scheduler
      * @param channels Number of channels (zigzag ledstrips)
      * @param width Physical width of matrix.
      * @param height Physical height of matrix. (divded over multiple channels)
      * @param ip IP address
      * @param port UDP port
      */
-    constructor(scheduler, channels, width, height, ip, maxFps=60,port = 21324) {
-        super(scheduler, width, height);
-
+    constructor(channels, width, height, ip, maxFps=60,port = 21324) {
+        super( width, height);
+        this.maxFps=maxFps
+        this.roundFrametime=true
 
         this.syncer=new MulticastSync('239.137.111.222', 65001, 1000)
 
@@ -54,7 +53,7 @@ export class MatrixLedstreamQuad extends Matrix {
         this.packets = [];
 
         // this.frameNr=0;
-        this.lastTime=Date.now()
+        this.displayTime=Date.now()
 
         this.maxFps=maxFps
 
@@ -72,6 +71,8 @@ export class MatrixLedstreamQuad extends Matrix {
         // this.socket2.on('error', (err) => {
         //     console.log(`server error:\n${err.stack}`);
         // });
+        this.socket.connect(this.port, this.ip)
+
     }
 
     //sets a pixel in the render buffer (called from Draw-classes render() functions)
@@ -106,32 +107,15 @@ export class MatrixLedstreamQuad extends Matrix {
     }
 
 
-    frame() {
-        const frameDelay=~~(1000/  Math.min(this.maxFps, this.fpsControl.value))
-        const now=Date.now();
-
-        //increase time with exact framedelay instead of sending now, since setInterval is jittery
-        this.lastTime=this.lastTime+frameDelay;
-        //too far off, reset
-        if (Math.abs(now-this.lastTime)>frameDelay)
-        {
-            console.log("MatrixLedstream: resetting timing")
-            this.lastTime=now;
-            setTimeout(() => this.frame(), frameDelay)
-        }
-        else
-        {
-            const interval=this.lastTime-now+frameDelay;
-            setTimeout(() => this.frame(), interval)
-        }
+    frame(displayTime) {
 
 
 
         for (let c = 0; c < this.channels; c++) {
-            this.packets[c][3] = ((this.lastTime  >> 24) & 0xff)
-            this.packets[c][2] = ((this.lastTime  >> 16) & 0xff)
-            this.packets[c][1] = ((this.lastTime  >> 8) & 0xff)
-            this.packets[c][0] = (this.lastTime & 0xff)
+            this.packets[c][3] = ((displayTime  >> 24) & 0xff)
+            this.packets[c][2] = ((displayTime  >> 16) & 0xff)
+            this.packets[c][1] = ((displayTime  >> 8) & 0xff)
+            this.packets[c][0] = (displayTime & 0xff)
             this.packets[c][4]=c;
             // this.packets[c][5]=;//unused
             // this.packets[c][6]=;
@@ -148,26 +132,8 @@ export class MatrixLedstreamQuad extends Matrix {
             this.packets[c]=new Uint8ClampedArray(headerLength + (this.chanWidth * this.height * 3))
         }
 
-
-        if (this.runScheduler) {
-
-            this.scheduler.update();
-        }
-
-        this.render();
-
     }
 
-
-    run() {
-        this.socket.on('connect', () => {
-            this.frame()
-
-        })
-        // this.socket2.connect(this.port, '192.168.13.147')
-        this.socket.connect(this.port, this.ip)
-
-    }
 
 
 }

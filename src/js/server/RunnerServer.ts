@@ -7,6 +7,7 @@ import {watch} from "fs/promises"
 import {AbortController} from "node-abort-controller";
 import {Scheduler} from "../ledder/Scheduler.js";
 import {ControlGroup} from "../ledder/ControlGroup.js";
+import {ControlValue} from "../ledder/ControlValue.js";
 
 
 /**
@@ -31,7 +32,7 @@ export class RunnerServer {
     private lastTime: number
     private keepRendering: boolean
 
-
+    private fpsControl:ControlValue
 
     constructor(matrix: Matrix, controls: ControlGroup, presetStore: PresetStore) {
         this.matrix = matrix
@@ -40,6 +41,7 @@ export class RunnerServer {
         this.controlGroup = controls
         this.presetStore = presetStore
         this.autoreload()
+        this.resetControls()
         console.log("Runner server for ", matrix)
 
     }
@@ -53,9 +55,17 @@ export class RunnerServer {
     async renderFrame(){
 
         const now=Date.now();
-        const frameDelay=(1000/60)
-        //FIXME: fps controllable
-        //FIXME: get max fps and fps-integerroudning from matrix driver
+
+        let fps=this.fpsControl.value
+        let frameDelay:number
+
+        if (fps>this.matrix.maxFps)
+            fps=this.matrix.maxFps
+
+        if (this.matrix.roundFrametime)
+            frameDelay=~~(1000/fps)
+        else
+            frameDelay=(1000/fps)
 
         if (!this.keepRendering)
             return
@@ -133,6 +143,13 @@ export class RunnerServer {
         }
     }
 
+    resetControls()
+    {
+        this.controlGroup.clear()
+        this.fpsControl=this.controlGroup.value("FPS",60,1,120)
+
+    }
+
     //load presetName and run
     async runName(animationName: string, presetName: string) {
 
@@ -143,8 +160,7 @@ export class RunnerServer {
         console.log("Runner: starting", animationName, presetName)
         this.scheduler.clear()
         this.matrix.reset()
-        this.controlGroup.clear()
-
+        this.resetControls()
 
         if (presetName) {
             this.presetValues = await this.presetStore.load(this.animationClass, presetName)
@@ -177,7 +193,7 @@ export class RunnerServer {
     //restart animation but optionally keep preset values.
     async restart(keepPresets: boolean = false) {
         if (!keepPresets)
-            this.controlGroup.clear()
+            this.resetControls()
         this.scheduler.clear()
         this.matrix.reset()
 

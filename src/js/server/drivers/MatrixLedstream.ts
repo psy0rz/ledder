@@ -38,6 +38,7 @@ export class MatrixLedstream extends Matrix {
         super( width, height);
 
 
+        this.roundFrametime=true
 
         this.ip = ip;
         this.port = port;

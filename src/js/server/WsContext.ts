@@ -44,11 +44,9 @@ export class WsContext {
 
         controls.setCallbacks(
             () => {
-                console.log("RESET")
                 this.request("control.reset")
             },
             (control) => {
-                console.log("ADD" ,control)
                 this.request("control.add", control)
             })
             // (controlName, controlValues) => {

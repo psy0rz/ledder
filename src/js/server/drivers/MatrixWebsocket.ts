@@ -10,6 +10,8 @@ export class MatrixWebsocket extends Matrix {
     constructor(width, height, ws) {
         super( width, height);
 
+        this.maxFps=120
+
         this.imageBuf8 = new Uint8ClampedArray(height * width * 4);
         this.ws=ws
 
