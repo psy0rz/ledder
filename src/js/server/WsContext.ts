@@ -24,6 +24,7 @@ export class WsContext {
         this.id = id
 
 
+
     }
 
     //send rpc request to the connected client
@@ -70,6 +71,7 @@ export class WsContext {
     //websocket closed
     stop()
     {
+        console.log(`Stopping ws ${this.id}`)
         this.stopPreview()
     }
 

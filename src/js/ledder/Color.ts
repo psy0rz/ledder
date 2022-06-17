@@ -24,7 +24,10 @@ export class Color implements ColorInterface {
 
         if (s === 0) {
             val = l * 255;
-            return [val, val, val];
+            this.r=l
+            this.g=l
+            this.b=l
+            return ;
         }
 
         if (l < 0.5) {
