@@ -6,7 +6,7 @@ import {AnimationTwinkle} from "../AnimationTwinkle.js";
 import { Color } from "../Color.js";
 import {Scheduler} from "../Scheduler.js";
 import {ControlGroup} from "../ControlGroup.js";
-import AnimationMarquee2 from "./AnimationMarquee2.js";
+import Marquee from "./Marquee.js";
 import AnimationNyan from "./AnimationNyan.js";
 import {fontSelect} from "../fonts.js";
 import {CharPixels} from "../CharPixels.js";

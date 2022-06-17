@@ -6,7 +6,7 @@ import {ControlGroup} from "../ControlGroup.js";
 import FxRotate from "../fx/FxRotate.js";
 import {fontSelect} from "../fonts.js";
 
-export default class AnimationMarquee2 extends Animation {
+export default class Marquee extends Animation {
 
     static title = "freetype marquee"
     static description = ""
@@ -21,7 +21,6 @@ export default class AnimationMarquee2 extends Animation {
         const colorControl = control.color("Text color", 255,0,0, 1);
         const charPixels=new CharPixels(matrix, font, input.text, 0, 0, colorControl)
 
-        // new AnimationTwinkle(matrix, this.pixels)
         if (control.switch('Scroll', true).enabled) {
             const rotator = new FxRotate(matrix,control)
             await rotator.run(charPixels)
