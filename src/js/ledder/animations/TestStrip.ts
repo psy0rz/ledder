@@ -4,15 +4,16 @@ import {Pixel} from "../Pixel.js";
 import {AnimationBlink} from "../AnimationBlink.js";
 import {AnimationMove} from "../AnimationMove.js";
 import {Color} from "../Color.js";
+import {Scheduler} from "../Scheduler.js";
+import {ControlGroup} from "../ControlGroup.js";
 
-export default class AnimationStriptest extends Animation {
+export default class TestStrip extends Animation {
 
   static title="Strip test"
   static description="To verify functionality of a led strip."
   static presetDir="Strip test"
 
-  constructor(matrix: Matrix) {
-    super(matrix);
+  async run(matrix: Matrix, scheduler: Scheduler, controls: ControlGroup) {
 
     //ends
     new Pixel(matrix, 0, 0, new Color(255, 0, 255));

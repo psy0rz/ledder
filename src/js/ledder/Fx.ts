@@ -3,7 +3,7 @@ import {Matrix} from "./Matrix.js";
 import {Scheduler} from "./Scheduler.js";
 import {ControlGroup} from "./ControlGroup.js";
 
-//an effect can be applied to pixelcontainers or colors usually (via run() )
+//an effect can be applied to pixelcontainers or colors  (via run() )
 export class Fx {
     static title = "Untitled"
 

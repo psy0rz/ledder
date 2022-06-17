@@ -8,7 +8,7 @@ import {Color} from "../Color.js";
 import {Scheduler} from "../Scheduler.js";
 import {ControlGroup} from "../ControlGroup.js";
 
-export default class AnimationMatrixtest extends Animation {
+export default class TestMatrix extends Animation {
 
   static title="Matrix test screen"
   static presetDir="Matrix test"

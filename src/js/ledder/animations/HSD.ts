@@ -7,7 +7,7 @@ import { Color } from "../Color.js";
 import {Scheduler} from "../Scheduler.js";
 import {ControlGroup} from "../ControlGroup.js";
 import Marquee from "./Marquee.js";
-import AnimationNyan from "./AnimationNyan.js";
+import Nyan from "./AnimationNyan.js";
 import {fontSelect} from "../fonts.js";
 import {CharPixels} from "../CharPixels.js";
 import FxRotate from "../fx/FxRotate.js";
@@ -23,7 +23,7 @@ export default class HSD extends Animation {
 
 
 
-    new AnimationNyan(matrix)
+    new Nyan(matrix)
 
     const font = fontSelect(control, 'Font')
     const input = matrix.control.input('Text', "Atari 2600 ", true)
