@@ -27,7 +27,10 @@ export class RunnerServer {
     private restartTimeout: any
     private watchAbort: any
 
-    private renderInterval: any
+    // private renderInterval: any
+    private lastTime: number
+    private keepRendering: boolean
+
 
 
     constructor(matrix: Matrix, controls: ControlGroup, presetStore: PresetStore) {
@@ -37,25 +40,50 @@ export class RunnerServer {
         this.controlGroup = controls
         this.presetStore = presetStore
         this.autoreload()
+        console.log("Runner server for ", matrix)
 
     }
 
     startRenderLoop() {
-        // let frameNr = 0
-        this.renderInterval = setInterval(async () => {
-            //FIXME: migrate timing loop from matrixledstream
-            this.matrix.frame()
-            await this.scheduler.step()
-            this.matrix.render()
-            // frameNr = frameNr + 1
-        }, 16)
-        //FIXME: fps control
+        this.keepRendering=true
+        this.lastTime=0
+        this.renderFrame()
+    }
 
+    async renderFrame(){
+
+        const now=Date.now();
+        const frameDelay=(1000/60)
+        //FIXME: fps controllable
+        //FIXME: get max fps and fps-integerroudning from matrix driver
+
+        if (!this.keepRendering)
+            return
+
+        //increase time with exact framedelay instead of sending now, since setInterval is jittery
+        this.lastTime=this.lastTime+frameDelay;
+        //too far off, reset
+        if (Math.abs(now-this.lastTime)>frameDelay)
+        {
+            console.warn("RunnerServer: resetting timing (too slow?)")
+            this.lastTime=now;
+            setTimeout(() => this.renderFrame(), frameDelay)
+        }
+        else
+        {
+            const interval=this.lastTime-now+frameDelay;
+            setTimeout(() => this.renderFrame(), interval)
+        }
+
+        this.matrix.frame(this.lastTime)
+        await this.scheduler.step()
+        this.matrix.render()
 
     }
 
     stopRenderLoop() {
-        clearInterval(this.renderInterval)
+        this.keepRendering=false
+        // clearInterval(this.renderInterval)
     }
 
     //automaticly reload animation file on change to make development easier.

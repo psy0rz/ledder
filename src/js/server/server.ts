@@ -16,7 +16,6 @@ const presetStore = new PresetStore()
 
 //create run all the matrixes
 let runners:Array<RunnerServer>=[]
-let primary = true;
 
 for (const m of matrixList) {
     let matrix:Matrix
@@ -24,6 +23,7 @@ for (const m of matrixList) {
     let controlGroup = new ControlGroup('Root controls')
 
     let runner = new RunnerServer(matrix, controlGroup, presetStore)
+    runner.startRenderLoop()
     runner.runName(animationName, presetName)
     runners.push(runner)
 }
