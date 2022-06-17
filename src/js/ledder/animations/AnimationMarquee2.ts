@@ -17,7 +17,7 @@ export default class AnimationMarquee2 extends Animation {
     {
 
         const font = fontSelect(control, 'Font')
-        const input = control.input('Text', "Atari 2600 ", true)
+        const input = control.input('Text', "Marquee  ", true)
         const colorControl = control.color("Text color", 255,0,0, 1);
         const charPixels=new CharPixels(matrix, font, input.text, 0, 0, colorControl)
 

@@ -10,7 +10,7 @@
    "r": 97,
    "g": 96,
    "b": 255,
-   "a": 0
+   "a": 0.98
   },
   "Flasher off delay": {
    "value": 5
@@ -59,7 +59,7 @@
   },
   "blinker": {
    "on delay": {
-    "value": 2
+    "value": 3
    },
    "off delay": {
     "value": 4

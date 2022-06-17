@@ -13,7 +13,7 @@ export default class FxRotate extends Fx {
     xStepControl: ControlValue
     yStepControl: ControlValue
 
-    constructor(matrix: Matrix, controlGroup: ControlGroup, xStep=-1, yStep=0,interval=1) {
+    constructor(matrix: Matrix, controlGroup: ControlGroup, xStep=-1, yStep=0,interval=2) {
         super(matrix, controlGroup)
 
         this.intervalControl = controlGroup.value('Interval', interval, 1, 60, 1)
