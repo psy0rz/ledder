@@ -20,6 +20,8 @@ export class RpcServer extends Rpc {
     constructor() {
         super();
 
+        console.log("Creating RPC server")
+
         const app = express()
         const port = 3000
 

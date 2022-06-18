@@ -17,11 +17,13 @@ export class WsContext {
     id: number
 
     statsInterval: any
+    started: boolean
 
     constructor(ws: WebSocket, client, id) {
         this.ws = ws
         this.client = client
         this.id = id
+        this.started=false
 
 
 
@@ -38,6 +40,10 @@ export class WsContext {
     }
 
     startPreview(presetStore: PresetStore, width, height) {
+        if (this.started)
+            return
+        this.started=true
+
         let controls = new ControlGroup('Root controls')
         let matrix = new MatrixWebsocket( width, height, this.ws)
         this.runner = new RunnerServer(matrix,  controls, presetStore)
