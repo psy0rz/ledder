@@ -1,4 +1,4 @@
-import {Fx} from "../Fx.js";
+import Fx from "../Fx.js";
 import {ControlValue} from "../ControlValue.js";
 import {Matrix} from "../Matrix.js";
 import {ControlGroup} from "../ControlGroup.js";

@@ -68,11 +68,11 @@ export class ControlGroup extends Control {
      * @param min Minimum value (inclusive)
      * @param max Maximum value (inclusive)
      * @param step Step size
-     * @param resetOnChange Reset animation when value has changed
+     * @param restartOnChange Reset animation when value has changed
      */
-    value(name: string, value: number, min: number, max: number, step: number = 1, resetOnChange: boolean = false): ControlValue {
+    value(name: string, value: number, min: number, max: number, step: number = 1, restartOnChange: boolean = false): ControlValue {
         if (!(name in this.meta.controls)) {
-            this.add(new ControlValue(name, value, min, max, step, resetOnChange));
+            this.add(new ControlValue(name, value, min, max, step, restartOnChange));
         }
 
 
@@ -82,43 +82,43 @@ export class ControlGroup extends Control {
     /**
      * Get or create color-control with specified name
      */
-    color(name: string, r: number = 128, g: number = 128, b: number = 128, a: number = 1, resetOnChange: boolean = false): ControlColor {
+    color(name: string, r: number = 128, g: number = 128, b: number = 128, a: number = 1, restartOnChange: boolean = false): ControlColor {
         if (!(name in this.meta.controls)) {
-            this.add(new ControlColor(name, r, g, b, a, resetOnChange));
+            this.add(new ControlColor(name, r, g, b, a, restartOnChange));
         }
 
 
         return this.meta.controls[name];
     }
 
-    input(name: string, text: string, resetOnChange: boolean = false): ControlInput {
+    input(name: string, text: string, restartOnChange: boolean = false): ControlInput {
         if (!(name in this.meta.controls)) {
-            this.add(new ControlInput(name, text, resetOnChange));
+            this.add(new ControlInput(name, text, restartOnChange));
         }
 
         return this.meta.controls[name];
     }
 
-    switch(name: string, enabled: boolean, resetOnChange: boolean = true): ControlSwitch {
+    switch(name: string, enabled: boolean, restartOnChange: boolean = true): ControlSwitch {
         if (!(name in this.meta.controls)) {
-            this.add(new ControlSwitch(name, enabled, resetOnChange));
+            this.add(new ControlSwitch(name, enabled, restartOnChange));
         }
 
         return this.meta.controls[name];
     }
 
-    select(name: string, selected: string, choices: Choices, resetOnChange: boolean = false): ControlSelect {
+    select(name: string, selected: string, choices: Choices, restartOnChange: boolean = false): ControlSelect {
         if (!(name in this.meta.controls)) {
-            this.add(new ControlSelect(name, selected, choices, resetOnChange));
+            this.add(new ControlSelect(name, selected, choices, restartOnChange));
         }
 
         return this.meta.controls[name];
     }
 
     //sub Controls group instance.
-    group(name: string, reloadOnChange: boolean = false) {
+    group(name: string, restartOnChange: boolean = false) {
         if (!(name in this.meta.controls)) {
-            this.add(new ControlGroup(name, reloadOnChange));
+            this.add(new ControlGroup(name, restartOnChange));
         }
 
         return this.meta.controls[name];

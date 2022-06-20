@@ -1,20 +1,8 @@
 import {Matrix} from "./Matrix.js";
 import {ControlGroup} from "./ControlGroup.js";
-import {PixelContainer} from "./PixelContainer.js";
-
-// export class Draw extends PixelContainer
-// {
-//
-//     constructor(matrix: Matrix, controlGroup: ControlGroup)
-//     {
-//         super()
-//
-//     }
-//
-// }
 
 //an effect can be applied to pixelcontainers or colors  (via run() )
-export class Fx {
+export default class Fx {
     static title = "Untitled"
 
     promise: Promise<any>
@@ -31,9 +19,10 @@ export class Fx {
     }
 
     //run fx on pixels. Should return a promise and NOT be async.
-    run(...any)
+    run(...any):Promise<any>
     {
         console.error("Error: This fx has no run() function?")
+        return (new Promise( undefined))
 
     }
 
