@@ -1,6 +1,7 @@
 import {Matrix} from "./Matrix.js";
 import {PixelInterface} from "./PixelInterface.js";
 import {ColorInterface} from "./ColorInterface.js";
+import {Color} from "./Color.js";
 
 //basic pixel. Will add itself to the display matrix.
 export class Pixel implements PixelInterface {

@@ -1,7 +1,17 @@
-import {PixelContainer} from "./PixelContainer.js";
 import {Matrix} from "./Matrix.js";
-import {Scheduler} from "./Scheduler.js";
 import {ControlGroup} from "./ControlGroup.js";
+import {PixelContainer} from "./PixelContainer.js";
+
+// export class Draw extends PixelContainer
+// {
+//
+//     constructor(matrix: Matrix, controlGroup: ControlGroup)
+//     {
+//         super()
+//
+//     }
+//
+// }
 
 //an effect can be applied to pixelcontainers or colors  (via run() )
 export class Fx {

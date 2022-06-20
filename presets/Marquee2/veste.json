@@ -1,0 +1,33 @@
+{
+ "title": "",
+ "description": "",
+ "values": {
+  "FPS": {
+   "value": 60
+  },
+  "Font": {
+   "selected": "C64"
+  },
+  "Text": {
+   "text": "De nieuwe veste    "
+  },
+  "Text color": {
+   "r": 29,
+   "g": 0,
+   "b": 255,
+   "a": 1
+  },
+  "Scroll": {
+   "enabled": true
+  },
+  "Interval": {
+   "value": 2
+  },
+  "X step": {
+   "value": -1
+  },
+  "Y step": {
+   "value": 0
+  }
+ }
+}
