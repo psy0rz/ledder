@@ -2,6 +2,7 @@ import {PixelContainer} from "./PixelContainer.js";
 import {Scheduler} from "./Scheduler.js";
 import {ColorInterface} from "./ColorInterface.js";
 import {ControlValue} from "./ControlValue.js";
+import BboxInterface from "./BboxInterface.js";
 
 /**
  * The matrix is the display and shows the list of pixels. The subclasses are actual implementations for different display types.
@@ -30,6 +31,17 @@ export abstract class Matrix extends PixelContainer {
     this.height = height;
     // this.runScheduler = true; //make false if another matrix is running the scheduler.
 
+  }
+
+  //bbox of a matrix is the whole screen
+  bbox()
+  {
+    return {
+      xMin:0,
+      yMin:0,
+      xMax: this.width,
+      yMax: this.height
+    }
   }
 
   render() {

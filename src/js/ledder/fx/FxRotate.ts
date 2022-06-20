@@ -3,6 +3,7 @@ import Fx from "../Fx.js";
 import {ControlValue} from "../ControlValue.js";
 import {ControlGroup} from "../ControlGroup.js";
 import {PixelContainer} from "../PixelContainer.js";
+import BboxInterface from "../BboxInterface.js";
 
 
 export default class FxRotate extends Fx {
@@ -22,16 +23,17 @@ export default class FxRotate extends Fx {
 
     }
 
-    run(pixelContainer:PixelContainer)
+    run(pixelContainer:PixelContainer, bbox?:BboxInterface)
     {
-        let bbox = pixelContainer.bbox()
+        if (bbox===undefined)
+            bbox = pixelContainer.bbox()
         this.running=true
         this.promise=this.matrix.scheduler.intervalControlled(this.intervalControl, (frameNr) => {
             for (const p of pixelContainer.pixels) {
                 p.x = p.x + this.xStepControl.value
                 p.y = p.y + this.yStepControl.value
 
-                p.wrap( bbox.xMin, bbox.yMin, bbox.xMax, bbox.yMax)
+                p.wrap( bbox)
 
             }
             return (this.running && pixelContainer.pixels.length)

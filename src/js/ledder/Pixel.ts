@@ -1,7 +1,8 @@
 import {Matrix} from "./Matrix.js";
 import {PixelInterface} from "./PixelInterface.js";
 import {ColorInterface} from "./ColorInterface.js";
-import {Color} from "./Color.js";
+import BboxInterface from "./BboxInterface.js";
+
 
 //basic pixel. Will add itself to the display matrix.
 export class Pixel implements PixelInterface {
@@ -45,38 +46,38 @@ export class Pixel implements PixelInterface {
     }
 
     //limit pixel location to this box (inclusive)
-    limit(xMin, yMin, xMax, yMax)
+    limit(bbox:BboxInterface)
     {
-        if (this.x<xMin)
-            this.x=xMin
-        else if (this.x>xMax)
-            this.x=xMax
+        if (this.x<bbox.xMin)
+            this.x=bbox.xMin
+        else if (this.x>bbox.xMax)
+            this.x=bbox.xMax
 
-        if (this.y<yMin)
-            this.y=yMin
-        else if (this.y>yMax)
-            this.y=yMax
+        if (this.y<bbox.yMin)
+            this.y=bbox.yMin
+        else if (this.y>bbox.yMax)
+            this.y=bbox.yMax
     }
 
-    //keep pixel inside this box by wrapping
-    wrap(xMin, yMin, xMax, yMax)
+    //keep pixel inside this box by wrapping (inclusive)
+    wrap(bbox:BboxInterface)
     {
-        if (this.x<xMin)
-            this.x+=(xMax-xMin)
-        else if (this.x>xMax)
-            this.x-=(xMax-xMin)
+        if (this.x<bbox.xMin)
+            this.x+=(bbox.xMax-bbox.xMin)
+        else if (this.x>bbox.xMax)
+            this.x-=(bbox.xMax-bbox.xMin)
 
-        if (this.y<yMin)
-            this.y+=(yMax-yMin)
-        else if (this.y>yMax)
-            this.y-=(yMax-yMin)
+        if (this.y<bbox.yMin)
+            this.y+=(bbox.yMax-bbox.yMin)
+        else if (this.y>bbox.yMax)
+            this.y-=(bbox.yMax-bbox.yMin)
 
     }
 
-    //remove pixels that are outside this box
-    crop(matrix:Matrix, xMin, yMin, xMax, yMax)
+    //remove pixels that are outside this box (inclusive)
+    crop(matrix:Matrix, bbox:BboxInterface)
     {
-        if ((this.x<xMin) ||(this.x>xMax) || (this.y<yMin) || (this.y>yMax))
+        if ((this.x<bbox.xMin) ||(this.x>bbox.xMax) || (this.y<bbox.yMin) || (this.y>bbox.yMax))
             this.destroy(matrix)
 
     }

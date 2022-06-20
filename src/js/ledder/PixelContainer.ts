@@ -1,4 +1,5 @@
 import {Pixel} from "./Pixel.js";
+import BboxInterface from "./BboxInterface.js";
 
 /**
  * A list of Pixels
@@ -86,7 +87,7 @@ export class PixelContainer {
     }
 
     //get bounding box (override if needed)
-    bbox() {
+    bbox():BboxInterface {
         if (!this.pixels.length) {
             return undefined
         }
