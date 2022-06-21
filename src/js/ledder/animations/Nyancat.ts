@@ -11,8 +11,12 @@ import DrawAsciiArt from "../draw/DrawAsciiArt.js";
 import FxWobble from "../fx/FxWobble.js";
 import FxRotate from "../fx/FxRotate.js";
 import {FxFadeOut} from "../fx/FxFadeOut.js";
+import {calculateFireColors} from "../util.js";
 
 //Nyancat, based on https://github.com/bertrik/nyancat/blob/master/nyancat.c
+
+
+const fireColors=calculateFireColors()
 
 export default class Nyancat extends Animation {
 
@@ -20,7 +24,6 @@ export default class Nyancat extends Animation {
     static title = "Nyancat"
     static description = "Based on <a href='https://github.com/bertrik/nyancat/blob/master/nyancat.c'>this</a>"
     static presetDir = "Nyancat";
-
 
 
     async run(matrix: Matrix, scheduler: Scheduler, controls: ControlGroup) {
@@ -78,17 +81,35 @@ export default class Nyancat extends Animation {
 
 
         //draw rainbow
+        const xStepControl = controls.group('Move').value('X step')
+        const flameControl = controls.switch("Flames", false, false)
         matrix.scheduler.intervalControlled(controls.group('Move').value('Interval'), () => {
-            x = (x + controls.group('Move').value('X step').value) % matrix.width;
+            x = (x + xStepControl.value) % matrix.width;
 
-            const colors = [
-                new Color(0xff, 0x00, 0x00),
-                new Color(0xff, 0x80, 0x00),
-                new Color(0xff, 0xff, 0x00),
-                new Color(0x00, 0xff, 0x00),
-                new Color(0x00, 0x80, 0xff),
-                new Color(0x80, 0x00, 0xff)
-            ]
+            let colors
+            if (flameControl.enabled) {
+
+                colors = [
+                    fireColors[10].copy(),
+                    fireColors[60].copy(),
+                    fireColors[100].copy(),
+                    fireColors[80].copy(),
+                    fireColors[60].copy(),
+                    fireColors[30].copy(),
+                ]
+            } else {
+                colors = [
+
+                    new Color(0x80, 0x00, 0xff),
+                    new Color(0x00, 0x80, 0xff),
+                    new Color(0x00, 0xff, 0x00),
+                    new Color(0xff, 0xff, 0x00),
+                    new Color(0xff, 0x80, 0x00),
+                    new Color(0xff, 0x00, 0x00),
+
+                ]
+
+            }
 
             for (let c = 0; c < 6; c++) {
 
