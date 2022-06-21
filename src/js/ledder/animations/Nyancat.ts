@@ -4,14 +4,13 @@ import {AnimationMove} from "../AnimationMove.js";
 import {Pixel} from "../Pixel.js";
 import {Color} from "../Color.js";
 
-
-import {AnimationFadeOut} from "../AnimationFadeOut.js";
 import {Matrix} from "../Matrix.js";
 import {Scheduler} from "../Scheduler.js";
 import {ControlGroup} from "../ControlGroup.js";
 import DrawAsciiArt from "../draw/DrawAsciiArt.js";
 import FxWobble from "../fx/FxWobble.js";
 import FxRotate from "../fx/FxRotate.js";
+import {FxFadeOut} from "../fx/FxFadeOut.js";
 
 //Nyancat, based on https://github.com/bertrik/nyancat/blob/master/nyancat.c
 
@@ -23,7 +22,10 @@ export default class Nyancat extends Animation {
     static presetDir = "Nyancat";
 
 
+
     async run(matrix: Matrix, scheduler: Scheduler, controls: ControlGroup) {
+
+        let fadeFx = new FxFadeOut(matrix, controls, 30, 4)
 
         let stars = new AnimationMovingStarsL(matrix);
         stars.run(matrix, scheduler, controls.group("Stars"))
@@ -52,12 +54,12 @@ export default class Nyancat extends Animation {
           .0555550.
           ..00000..
         `)
-        new FxWobble(matrix, controls.group("Wobble head x"), 1, 0, 15,10).run(head)
-        new FxWobble(matrix, controls.group("Wobble head y"), 0, 1, 15,5).run(head)
+        new FxWobble(matrix, controls.group("Wobble head x"), 1, 0, 15, 10).run(head)
+        new FxWobble(matrix, controls.group("Wobble head y"), 0, 1, 15, 5).run(head)
 
 
-        new FxRotate(matrix, controls.group('Move'), 1,0,2).run(body, matrix.bbox())
-        new FxRotate(matrix, controls.group('Move'), 1,0,2).run(head, matrix.bbox())
+        new FxRotate(matrix, controls.group('Move'), 1, 0, 2).run(body, matrix.bbox())
+        new FxRotate(matrix, controls.group('Move'), 1, 0, 2).run(head, matrix.bbox())
 
 
         //rainbow :)
@@ -65,8 +67,8 @@ export default class Nyancat extends Animation {
         let y = 2;
         const black = new Color(0, 0, 0);
 
-        const controlFade = controls.value("Rainbow fade speed", 30, 1, 120, 1);
-        const controlFadeRnd = controls.value("Rainbow fade randomizer", 0.1, 0, 0.5, 0.01);
+        // const controlFade = controls.value("Rainbow fade speed", 30, 1, 120, 1);
+        // const controlFadeRnd = controls.value("Rainbow fade randomizer", 0.1, 0, 0.5, 0.01);
 
         //wobble rainbow creation position
         matrix.scheduler.intervalControlled(controls.group('Wobble body').value('Interval'), () => {
@@ -74,9 +76,10 @@ export default class Nyancat extends Animation {
             return true
         })
 
+
         //draw rainbow
         matrix.scheduler.intervalControlled(controls.group('Move').value('Interval'), () => {
-            x = (x + 1) % matrix.width;
+            x = (x + controls.group('Move').value('X step').value) % matrix.width;
 
             const colors = [
                 new Color(0xff, 0x00, 0x00),
@@ -88,8 +91,9 @@ export default class Nyancat extends Animation {
             ]
 
             for (let c = 0; c < 6; c++) {
-                new AnimationFadeOut(matrix, colors[c], controlFade, controlFadeRnd, true)
-                    .addPixel(new Pixel(matrix, x, c + y + 1, colors[c]))
+
+                fadeFx.run(colors[c])
+                new Pixel(matrix, x, c + y + 1, colors[c])
             }
             return true
 

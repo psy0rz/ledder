@@ -1,10 +1,13 @@
 import {Matrix} from "./Matrix.js";
 import {ControlGroup} from "./ControlGroup.js";
 
+
+
 //an effect can be applied to pixelcontainers or colors  (via run() )
 export default class Fx {
     static title = "Untitled"
 
+    //every FX should have one promise that can be awaits for completion of the effect.
     promise: Promise<any>
     running: boolean
     matrix: Matrix
@@ -15,10 +18,13 @@ export default class Fx {
         this.matrix = matrix
         this.controls=controlGroup
 
-        this.running=true
+        this.running=false
     }
 
-    //run fx on pixels. Should return a promise and NOT be async.
+    //Run fx on pixels. Should return promise and NOT use async keyword in function defintion.
+    //Can be called multiple times. Use stop() to stop all running schedulers of this effect.
+    //Note that stop() only returns the last promise.
+    //Run should set this.running to True and it should end when this.running becomes false.
     run(...any):Promise<any>
     {
         console.error("Error: This fx has no run() function?")
@@ -26,7 +32,7 @@ export default class Fx {
 
     }
 
-    //stops the effect
+    //stops the effect. (promise will be fullfilled after stopping)
     async stop()
     {
         this.running=false

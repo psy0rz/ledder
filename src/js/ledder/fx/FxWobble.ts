@@ -23,6 +23,9 @@ export default class FxWobble extends Fx {
     }
 
     run(pixelContainer: PixelContainer) {
+
+        this.running=true
+
         let inverter = 1;
         this.promise=this.matrix.scheduler.intervalControlled(this.intervalControl, (frameNr) => {
 

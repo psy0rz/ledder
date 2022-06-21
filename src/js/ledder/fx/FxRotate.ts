@@ -9,8 +9,6 @@ import BboxInterface from "../BboxInterface.js";
 //Rotate pixels inside a box
 export default class FxRotate extends Fx {
 
-    static title = ""
-
     intervalControl:ControlValue
     xStepControl: ControlValue
     yStepControl: ControlValue
@@ -28,9 +26,11 @@ export default class FxRotate extends Fx {
     //rotate pixels inside specified bbox if specified. (otherwise uses bbox() of pixelcontainer)
     run(pixelContainer:PixelContainer, bbox?:BboxInterface)
     {
+        this.running=true
+
         if (bbox===undefined)
             bbox = pixelContainer.bbox()
-        this.running=true
+
         this.promise=this.matrix.scheduler.intervalControlled(this.intervalControl, (frameNr) => {
             for (const p of pixelContainer.pixels) {
                 p.x = p.x + this.xStepControl.value
