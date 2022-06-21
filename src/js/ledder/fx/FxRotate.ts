@@ -6,13 +6,15 @@ import {PixelContainer} from "../PixelContainer.js";
 import BboxInterface from "../BboxInterface.js";
 
 
+//Rotate pixels inside a box
 export default class FxRotate extends Fx {
 
-    static title = "Rotate pixels inside bounding box of the pixelcontainer"
+    static title = ""
 
     intervalControl:ControlValue
     xStepControl: ControlValue
     yStepControl: ControlValue
+
 
     constructor(matrix: Matrix, controlGroup: ControlGroup, xStep=-1, yStep=0,interval=2) {
         super(matrix, controlGroup)
@@ -23,6 +25,7 @@ export default class FxRotate extends Fx {
 
     }
 
+    //rotate pixels inside specified bbox if specified. (otherwise uses bbox() of pixelcontainer)
     run(pixelContainer:PixelContainer, bbox?:BboxInterface)
     {
         if (bbox===undefined)

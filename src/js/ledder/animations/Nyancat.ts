@@ -11,6 +11,7 @@ import {Scheduler} from "../Scheduler.js";
 import {ControlGroup} from "../ControlGroup.js";
 import DrawAsciiArt from "../draw/DrawAsciiArt.js";
 import FxWobble from "../fx/FxWobble.js";
+import FxRotate from "../fx/FxRotate.js";
 
 //Nyancat, based on https://github.com/bertrik/nyancat/blob/master/nyancat.c
 
@@ -28,6 +29,7 @@ export default class Nyancat extends Animation {
         stars.run(matrix, scheduler, controls.group("Stars"))
 
 
+        //the body and its wobblyness
         const body = new DrawAsciiArt(matrix, 6, 7, `
           .00000000.
           0ffffpfff0
@@ -37,8 +39,10 @@ export default class Nyancat extends Animation {
           0fpffpfff0
           .00000000.
         `)
-        new FxWobble(matrix, controls.group("Wobble body"), 0, 1, 15).run(body)
+        new FxWobble(matrix, controls.group("Wobble body"), 0, -1, 15).run(body)
 
+
+        //the head and its wobblyness
         const head = new DrawAsciiArt(matrix, 12, 8, `
           .00...00.
           .0500050.
@@ -48,20 +52,12 @@ export default class Nyancat extends Animation {
           .0555550.
           ..00000..
         `)
-
         new FxWobble(matrix, controls.group("Wobble head x"), 1, 0, 15,10).run(head)
         new FxWobble(matrix, controls.group("Wobble head y"), 0, 1, 15,5).run(head)
 
 
-        const moveIntervalControl = controls.value("Nyan move interval", 3, 1, 20, 0.1);
-        const wobbleIntervalControl = controls.value("Nyan wobble interval", 15, 1, 20, 0.1);
-
-
-        // new AnimationWobbleY(matrix, {value: 1}, wobbleIntervalControl, 0).addPixels(body.pixels)
-        // new AnimationWobbleY(matrix, {value: -1}, wobbleIntervalControl, wobbleIntervalControl.value * 1 / 2).addPixels(head.pixels)
-        // new AnimationWobbleX(matrix, {value: 1}, wobbleIntervalControl, wobbleIntervalControl.value * 1 / 3).addPixels(head.pixels)
-
-        new AnimationMove(matrix, moveIntervalControl, {value: 1}, {value: 0}, true).addPixels(head.pixels).addPixels(body.pixels)
+        new FxRotate(matrix, controls.group('Move'), 1,0,2).run(body, matrix.bbox())
+        new FxRotate(matrix, controls.group('Move'), 1,0,2).run(head, matrix.bbox())
 
 
         //rainbow :)
@@ -72,15 +68,14 @@ export default class Nyancat extends Animation {
         const controlFade = controls.value("Rainbow fade speed", 30, 1, 120, 1);
         const controlFadeRnd = controls.value("Rainbow fade randomizer", 0.1, 0, 0.5, 0.01);
 
-        //wobble rainbow creation
-        matrix.scheduler.intervalControlled(wobbleIntervalControl, () => {
+        //wobble rainbow creation position
+        matrix.scheduler.intervalControlled(controls.group('Wobble body').value('Interval'), () => {
             y = (y + 1) % 2;
             return true
         })
 
-
         //draw rainbow
-        matrix.scheduler.intervalControlled(moveIntervalControl, () => {
+        matrix.scheduler.intervalControlled(controls.group('Move').value('Interval'), () => {
             x = (x + 1) % matrix.width;
 
             const colors = [

@@ -70,7 +70,7 @@ export class ControlGroup extends Control {
      * @param step Step size
      * @param restartOnChange Reset animation when value has changed
      */
-    value(name: string, value: number, min: number, max: number, step: number = 1, restartOnChange: boolean = false): ControlValue {
+    value(name: string, value=0, min=0, max=100, step: number = 1, restartOnChange: boolean = false): ControlValue {
         if (!(name in this.meta.controls)) {
             this.add(new ControlValue(name, value, min, max, step, restartOnChange));
         }
@@ -116,7 +116,7 @@ export class ControlGroup extends Control {
     }
 
     //sub Controls group instance.
-    group(name: string, restartOnChange: boolean = false) {
+    group(name: string, restartOnChange: boolean = false):ControlGroup {
         if (!(name in this.meta.controls)) {
             this.add(new ControlGroup(name, restartOnChange));
         }
