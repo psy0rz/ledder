@@ -87,7 +87,7 @@ export class RunnerServer {
 
         this.matrix.frame(this.lastTime)
         await this.scheduler.step()
-        this.matrix.render()
+        this.matrix.render(this.matrix)
 
     }
 
@@ -119,27 +119,27 @@ export class RunnerServer {
         this.stopRenderLoop()
         this.scheduler.clear()
         this.watchAbort.abort()
-        this.matrix.reset()
+        this.matrix.clear()
     }
 
     //create class instance of currently selected animation and run it
     start() {
         console.log(`RunnerServer: Starting ${this.animationName}`)
         try {
-            this.animation = new this.animationClass(this.matrix)
+            this.animation = new this.animationClass()
             this.animation.run(this.matrix, this.scheduler, this.controlGroup).then(() => {
                 console.log(`RunnerServer: Animation ${this.animationName} finished.`)
             }).catch((e) => {
                 if (e != 'abort') {
                     console.error(`RunnerServer: Animation ${this.animationName} rejected promise: `, e)
-                    if (process.env.NODE_ENV === 'development')
-                        throw(e)
+                    // if (process.env.NODE_ENV === 'development')
+                    //     throw(e)
                 }
             })
         } catch (e) {
             console.error("RunnerServer: Exception in animation", e)
-            if (process.env.NODE_ENV === 'development')
-                throw(e)
+            // if (process.env.NODE_ENV === 'development')
+            //     throw(e)
         }
     }
 
@@ -159,7 +159,7 @@ export class RunnerServer {
 
         console.log("Runner: starting", animationName, presetName)
         this.scheduler.clear()
-        this.matrix.reset()
+        this.matrix.clear()
         this.resetControls()
 
         if (presetName) {
@@ -195,7 +195,7 @@ export class RunnerServer {
         if (!keepPresets)
             this.resetControls()
         this.scheduler.clear()
-        this.matrix.reset()
+        this.matrix.clear()
 
         this.start()
     }

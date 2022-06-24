@@ -3,6 +3,7 @@ import {ControlValue} from "../ControlValue.js";
 import {Matrix} from "../Matrix.js";
 import {ControlGroup} from "../ControlGroup.js";
 import {Color} from "../Color.js";
+import {Scheduler} from "../Scheduler.js";
 
 export default class FxBlink extends Fx {
 
@@ -12,8 +13,8 @@ export default class FxBlink extends Fx {
     offDelay: ControlValue
     repeat: ControlValue
 
-     constructor(matrix: Matrix, controls: ControlGroup, onDelay=60, offDelay=60, repeat=0) {
-        super(matrix, controls)
+     constructor(scheduler: Scheduler, controls: ControlGroup, onDelay=60, offDelay=60, repeat=0) {
+        super(scheduler, controls)
 
         this.onDelay = controls.value('On delay', onDelay, 1, 120, 1)
         this.offDelay = controls.value('Off delay', offDelay, 1, 120, 1)
@@ -35,7 +36,7 @@ export default class FxBlink extends Fx {
             }
 
 
-        this.promise = this.matrix.scheduler.interval(1, (frameNr) => {
+        this.promise = this.scheduler.interval(1, (frameNr) => {
             if (on)
             {
                 if (count>=this.onDelay.value) {

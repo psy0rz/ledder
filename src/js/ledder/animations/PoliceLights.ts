@@ -5,8 +5,9 @@ import {Scheduler} from "../Scheduler.js";
 import {ControlGroup} from "../ControlGroup.js";
 import FxBlink from "../fx/FxBlink.js";
 import {fontSelect} from "../fonts.js";
-import {CharPixels} from "../CharPixels.js";
+import {DrawText} from "../draw/DrawText.js";
 import {Color} from "../Color.js";
+import {PixelContainer} from "../PixelContainer.js";
 
 export default class PoliceLights extends Animation {
 
@@ -16,22 +17,24 @@ export default class PoliceLights extends Animation {
     static category = "Signal lights"
 
 
-    async run(matrix: Matrix, scheduler: Scheduler, controls: ControlGroup) {
+    async run(parent: PixelContainer, scheduler: Scheduler, controls: ControlGroup) {
 
-        const blinker = new FxBlink(matrix, controls.group("blinker"), 2, 4, 4)
+        const blinker = new FxBlink(scheduler, controls.group("blinker"), 2, 4, 4)
 
         const color1 = controls.color("Color 1", 255, 0, 0, 1).copy();
 
 
-        for (let x = 0; x < matrix.width / 5; x++)
-            for (let y = 0; y < matrix.height; y++)
-                new Pixel(matrix, x, y, color1)
+        for (let x = 0; x < parent.width / 5; x++)
+            for (let y = 0; y < parent.height; y++)
+                parent.add(new Pixel( x, y, color1))
 
         const color2 = controls.color("Color 2", 0, 0, 255, 1).copy();
 
-        for (let x = matrix.width - (matrix.width / 5); x < matrix.width; x++)
-            for (let y = 0; y < matrix.height; y++)
-                new Pixel(matrix, x, y, color2)
+        for (let x = parent.width - (parent.width / 5); x < parent.width; x++)
+            for (let y = 0; y < parent.height; y++)
+                parent.add(new Pixel( x, y, color2))
+
+
 
 
 
@@ -42,13 +45,13 @@ export default class PoliceLights extends Animation {
 
         const colorText1 = controls.color("Text1 color", 255, 0, 0, 1);
         const text1=controls.input('Text1', 'STOP', true)
-        const textOffset1 = controls.value('Text1 offset', -12, -matrix.width, matrix.width, 1, true)
-        const fontPixels1=new CharPixels(matrix, font,text1.text, matrix.width/2 + textOffset1.value,0, colorText1 )
+        const textOffset1 = controls.value('Text1 offset', -12, -parent.width, parent.width, 1, true)
+        parent.add(new DrawText( parent.width/2 + textOffset1.value,0,font,text1.text,  colorText1 ))
 
         const colorText2 = controls.color("Text2 color", 255, 0, 0, 1);
         const text2=controls.input('Text2', 'POLICE', true)
-        const textOffset2 = controls.value('Text2 offset', -18, -matrix.width, matrix.width, 1, true)
-        const fontPixels2=new CharPixels(matrix, font,text2.text, matrix.width/2 + textOffset2.value,0, colorText2 )
+        const textOffset2 = controls.value('Text2 offset', -18, -parent.width, parent.width, 1, true)
+        parent.add(new DrawText( parent.width/2 + textOffset2.value,0,font,text2.text,  colorText2 ))
 
         const textDelay = controls.value('Text delay', 60, 20, 120, 1)
 

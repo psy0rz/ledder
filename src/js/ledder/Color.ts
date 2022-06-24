@@ -6,11 +6,13 @@ export class Color implements ColorInterface {
     b: number
     a: number
 
-    constructor(r: number=255, g: number=255, b: number=255, a: number=1) {
+    constructor(r: number=255, g: number=255, b: number=255, a: number=1, immutable=false) {
         this.r = r;
         this.g = g;
         this.b = b;
         this.a = a;
+        if (immutable)
+            Object.freeze(this)
     }
 
     //borrowed from color-convert npm

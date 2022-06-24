@@ -1,8 +1,9 @@
 import Fx from "../Fx.js";
 import {ControlValue} from "../ControlValue.js";
-import {Matrix} from "../Matrix.js";
 import {ControlGroup} from "../ControlGroup.js";
 import {PixelContainer} from "../PixelContainer.js";
+import {Scheduler} from "../Scheduler.js";
+import {Pixel} from "../Pixel.js";
 
 export default class FxWobble extends Fx {
 
@@ -12,8 +13,8 @@ export default class FxWobble extends Fx {
     offsetControl: ControlValue
 
 
-    constructor(matrix: Matrix, controlGroup: ControlGroup, xAmount: number, yAmount: number, interval: number, offset = 0) {
-        super(matrix, controlGroup);
+    constructor(scheduler: Scheduler, controlGroup: ControlGroup, xAmount: number, yAmount: number, interval: number, offset = 0) {
+        super(scheduler, controlGroup);
 
         this.intervalControl = controlGroup.value("Interval", interval, 1, 60, 1);
         this.offsetControl = controlGroup.value("Interval offset", offset, 0, 60, 1, true);
@@ -22,21 +23,24 @@ export default class FxWobble extends Fx {
 
     }
 
-    run(pixelContainer: PixelContainer) {
+    run(container: PixelContainer) {
 
-        this.running=true
+        this.running = true
 
         let inverter = 1;
-        this.promise=this.matrix.scheduler.intervalControlled(this.intervalControl, (frameNr) => {
+        this.promise = this.scheduler.intervalControlled(this.intervalControl, (frameNr) => {
 
                 inverter = inverter * -1
 
                 const xStep = this.xControl.value * inverter;
                 const yStep = this.yControl.value * inverter;
-                for (let i = 0, n = pixelContainer.pixels.length; i < n; ++i) {
-                    pixelContainer.pixels[i].x += xStep;
-                    pixelContainer.pixels[i].y += yStep;
-                }
+                // for (let i = 0, n = pixelContainer.pixels.length; i < n; ++i) {
+
+                container.forEachPixel( (p)=>{
+                    p.x += xStep;
+                    p.y += yStep;
+                })
+
 
                 return this.running
 

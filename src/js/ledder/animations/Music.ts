@@ -5,7 +5,7 @@ import {Scheduler} from "../Scheduler.js";
 import {ControlGroup} from "../ControlGroup.js";
 import FxBlink from "../fx/FxBlink.js";
 import {fontSelect} from "../fonts.js";
-import {CharPixels} from "../CharPixels.js";
+import {DrawText} from "../draw/DrawText.js";
 
 export default class Music extends Animation {
 

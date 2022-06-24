@@ -1,6 +1,6 @@
 import {Animation} from "../Animation.js";
 import {Matrix} from "../Matrix.js";
-import {CharPixels} from "../CharPixels.js";
+import {DrawText} from "../draw/DrawText.js";
 import {Scheduler} from "../Scheduler.js";
 import {ControlGroup} from "../ControlGroup.js";
 import FxRotate from "../fx/FxRotate.js";
@@ -19,7 +19,7 @@ export default class Marquee extends Animation {
         const font = fontSelect(control, 'Font')
         const input = control.input('Text', "Marquee  ", true)
         const colorControl = control.color("Text color", 255,0,0, 1);
-        const charPixels=new CharPixels(matrix, font, input.text, 0, 0, colorControl)
+        const charPixels=new DrawText(matrix, font, input.text, 0, 0, colorControl)
 
         if (control.switch('Scroll', true).enabled) {
             const rotator = new FxRotate(matrix,control)

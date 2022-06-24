@@ -23,7 +23,7 @@ export class PreviewStore {
     clear()
     {
         this.scheduler.clear()
-        this.matrix.reset()
+        this.matrix.clear()
         this.controlGroup.clear()
     }
 
@@ -38,7 +38,7 @@ export class PreviewStore {
         if (preset)
             this.controlGroup.load(preset.values);
 
-        let animation: Animation = new animationClass(this.matrix)
+        let animation: Animation = new animationClass()
         animation.run(this.matrix, this.scheduler, this.controlGroup).then(() => {
             console.log(`PreviewStore: ${filename} finished.`)
         }).catch((e) => {
@@ -65,7 +65,7 @@ export class PreviewStore {
                 await this.scheduler.step()
             }
 
-            this.matrix.render()
+            this.matrix.render(this.matrix,0,0)
             this.matrix.frame()
         }
 

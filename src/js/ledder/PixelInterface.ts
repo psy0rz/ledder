@@ -8,6 +8,6 @@ export interface PixelInterface {
 
     destroy(matrix);
 
-    render(matrix: Matrix);
+    // render(matrix: Matrix);
 
 }

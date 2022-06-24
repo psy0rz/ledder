@@ -3,14 +3,14 @@ import {Scheduler} from "./Scheduler.js";
 import {ColorInterface} from "./ColorInterface.js";
 import {ControlValue} from "./ControlValue.js";
 import BboxInterface from "./BboxInterface.js";
+import {Pixel} from "./Pixel.js";
 
 /**
  * The matrix is the display and shows the list of pixels. The subclasses are actual implementations for different display types.
  * Usually you only need to implement setPixel() to set a pixel and frame() to send the frame and clear the buffer.
  */
 export abstract class Matrix extends PixelContainer {
-  width: number
-  height: number
+
   scheduler: Scheduler
   // runScheduler: boolean
   // fpsControl: ControlValue
@@ -20,16 +20,14 @@ export abstract class Matrix extends PixelContainer {
   //should frametimes be whole numbers (usefull for ledstream)
   roundFrametime=false
 
+  width: number
+  height: number
+
   protected constructor(  width, height) {
     super();
-    //note: named preset instead of presetControl to make it more friendly for enduser
-    //TODO: move out of matrix. fpsControl should be done in Scheduler()
-    // this.control = new PresetControl('rootcontrol', 'controls');
-    // this.fpsControl = this.scheduler.control.value("FPS", 60, 1, 120, 1)
 
     this.width = width;
     this.height = height;
-    // this.runScheduler = true; //make false if another matrix is running the scheduler.
 
   }
 
@@ -44,16 +42,23 @@ export abstract class Matrix extends PixelContainer {
     }
   }
 
-  render() {
-    //render all pixels (pixels render() function wil call our setPixel one or more times)
-    for (let i = 0, n = this.pixels.length; i < n; ++i) {
-      const p = this.pixels[i];
-      p.render(this);
+  //recursively renders all pixels in this container and its subcontainers
+  render(container:PixelContainer) {
+    for (const p of container)
+    {
+      if (p instanceof Pixel) {
+        if (p.color.a !== 0)
+          this.setPixel(p.x, p.y, p.color);
+      }
+      else
+      {
+        this.render(p)
+      }
     }
   }
 
   status() {
-    console.log("Matrix pixels: ", this.pixels.length);
+    console.log("Matrix pixels: ", this.size);
   }
 
   /**

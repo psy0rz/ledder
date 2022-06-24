@@ -9,7 +9,7 @@ import {ControlGroup} from "../ControlGroup.js";
 import Marquee from "./Marquee.js";
 import Nyan from "./AnimationNyan.js";
 import {fontSelect} from "../fonts.js";
-import {CharPixels} from "../CharPixels.js";
+import {DrawText} from "../draw/DrawText.js";
 import FxRotate from "../fx/FxRotate.js";
 
 export default class HSD extends Animation {
@@ -28,7 +28,7 @@ export default class HSD extends Animation {
     const font = fontSelect(control, 'Font')
     const input = matrix.control.input('Text', "Atari 2600 ", true)
     const colorControl = control.color("Text color", 100,0,0, 1);
-    const charPixels=new CharPixels(matrix, font, input.text, 0, 8, colorControl)
+    const charPixels=new DrawText(matrix, font, input.text, 0, 8, colorControl)
 
     new AnimationTwinkle(matrix, charPixels.pixels)
     if (control.switch('Scroll', false, true).enabled) {

@@ -7,7 +7,6 @@ import {gamma} from "./MatrixWLED.js";
 
 const headerLength = 8;
 
-
 //NOTE: This needs a  MulticastSyncer as well.
 export class MatrixLedstream extends Matrix {
 

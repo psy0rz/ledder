@@ -1,5 +1,5 @@
-import {Matrix} from "./Matrix.js";
 import {ControlGroup} from "./ControlGroup.js";
+import {Scheduler} from "./Scheduler.js";
 
 
 
@@ -10,12 +10,12 @@ export default class Fx {
     //every FX should have one promise that can be awaits for completion of the effect.
     promise: Promise<any>
     running: boolean
-    matrix: Matrix
+    scheduler: Scheduler
     controls: ControlGroup
 
 
-    constructor(matrix: Matrix, controlGroup: ControlGroup) {
-        this.matrix = matrix
+    constructor(scheduler: Scheduler, controlGroup: ControlGroup) {
+        this.scheduler = scheduler
         this.controls=controlGroup
 
         this.running=false
@@ -29,7 +29,6 @@ export default class Fx {
     {
         console.error("Error: This fx has no run() function?")
         return (new Promise( undefined))
-
     }
 
     //stops the effect. (promise will be fullfilled after stopping)

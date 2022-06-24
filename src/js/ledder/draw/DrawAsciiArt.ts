@@ -6,33 +6,27 @@ import {Pixel} from "../Pixel.js";
 //based on official basic webcolors, but modified for better contast on leds
 //https://en.wikipedia.org/wiki/Web_colors
 const internetColorMap = {
-    w: new Color(0xff, 0xff, 0xff),   //white
-    5: new Color(0x80, 0x80, 0x80),   //gray
-    0: new Color(0, 0, 0),            //black
+    w: new Color(0xff, 0xff, 0xff,1 ,true),   //white
+    5: new Color(0x80, 0x80, 0x80,1, true),   //gray
+    0: new Color(0, 0, 0,1, true),            //black
 
-    r: new Color(0xff, 0, 0),         //100% red
-    m: new Color(0x80, 0, 0),         //maroon
-    y: new Color(0xff, 0xff, 0),      //yellow
-    o: new Color(0x80, 0x80, 0),      //olive
-    l: new Color(0, 0xff, 0),         //100% green (lime)
-    g: new Color(0, 0x80, 0),         //green
-    a: new Color(0, 0xff, 0xff),      //aqua
-    t: new Color(0, 0x80, 0x80),      //teal
-    b: new Color(0, 0, 0xff),         //100% blue
-    n: new Color(0, 0, 0x80),         //navy
-    f: new Color(0xff, 0, 0xff),      //fuchsia
-    p: new Color(0x80, 0, 0x80),      //purple
+    r: new Color(0xff, 0, 0,1, true),         //100% red
+    m: new Color(0x80, 0, 0,1, true),         //maroon
+    y: new Color(0xff, 0xff, 0,1, true),      //yellow
+    o: new Color(0x80, 0x80, 0,1, true),      //olive
+    l: new Color(0, 0xff, 0,1, true),         //100% green (lime)
+    g: new Color(0, 0x80, 0,1, true),         //green
+    a: new Color(0, 0xff, 0xff,1, true),      //aqua
+    t: new Color(0, 0x80, 0x80,1, true),      //teal
+    b: new Color(0, 0, 0xff,1, true),         //100% blue
+    n: new Color(0, 0, 0x80,1, true),         //navy
+    f: new Color(0xff, 0, 0xff,1, true),      //fuchsia
+    p: new Color(0x80, 0, 0x80,1, true),      //purple
 }
 
 export default class DrawAsciiArt extends  Draw {
-    constructor(matrix: Matrix, x: number, y: number, ascii:string, copy=true, colorMap=internetColorMap) {
+    constructor(x: number, y: number, ascii:string, copy=true, colorMap=internetColorMap) {
         super();
-
-        // let colorMap
-        // if (customColorMap !== undefined)
-        //     colorMap = customColorMap
-        // else
-        //     colorMap = internetColorMap
 
         let currX = x;
         let currY = y;
@@ -49,9 +43,9 @@ export default class DrawAsciiArt extends  Draw {
                 //add actual pixel with requested color
                 if (colorMap[c] !== undefined) {
                     if (copy)
-                        this.addPixel(new Pixel(matrix, currX, currY, colorMap[c].copy()))
+                        this.add(new Pixel( currX, currY, colorMap[c].copy()))
                     else
-                        this.addPixel(new Pixel(matrix, currX, currY, colorMap[c]))
+                        this.add(new Pixel( currX, currY, colorMap[c]))
                     currX++;
                 }
             }
