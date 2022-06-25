@@ -115,8 +115,14 @@ export default class Nyancat extends Animation {
 
             for (let c = 0; c < 6; c++) {
 
+                const p=new Pixel( x, c + y + 1, colors[c])
+                matrix.add(p)
                 fadeFx.run(colors[c])
-                matrix.add(new Pixel( x, c + y + 1, colors[c]))
+                    .then( ()=> {
+                    matrix.delete(p)
+
+
+                })
             }
             return true
 

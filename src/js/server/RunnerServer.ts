@@ -86,7 +86,7 @@ export class RunnerServer {
         }
 
         this.matrix.frame(this.lastTime)
-        await this.scheduler.step()
+        this.scheduler.step()
         this.matrix.render(this.matrix)
 
     }

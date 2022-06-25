@@ -21,20 +21,29 @@ export class Scheduler {
     }
 
     //abort handler for exceptions
-    abortHandler(e) {
-        if (e != 'abort')
-            console.error("Interval: Promise was rejected: ", e)
-    }
+    // abortHandler(e) {
+    //
+    //     if (e != 'abort')
+    //         console.error("Interval: Promise was rejected: ", e)
+    //     else {
+    //
+    //         console.log("aborted")
+    //     }
+    // }
 
 
     clear() {
         //install exception handlers on all promises first. (in case they dont have one yet)
-        for (const interval of this.intervals)
-            interval.promise.catch(this.abortHandler)
+        // for (const interval of this.intervals) {
+        //     //interval.promise.catch(this.abortHandler)
+        // }
 
         //now abort them all. this causes loops etc to be aborted as well. (since await will raise an error)
         for (const interval of this.intervals)
-            interval.reject("abort")
+        {
+            //console.log("ABORTING", interval)
+               // interval.reject("abort")
+        }
 
         this.intervals = []
         this.frameNr=0
@@ -77,7 +86,7 @@ export class Scheduler {
 
 
     //called by renderloop on every frame.
-    async step() {
+    step() {
         this.frameNr++;
 
         let i = 0;
