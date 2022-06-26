@@ -2,16 +2,11 @@ import {Animation} from "../Animation.js";
 import {Matrix} from "../Matrix.js";
 import {Scheduler} from "../Scheduler.js";
 import {ControlGroup} from "../ControlGroup.js";
-import PixelStar from "./PixelStar.js";
 import {random} from "../util.js";
-import {AnimationMove} from "../AnimationMove.js";
 import DrawAsciiArt from "../draw/DrawAsciiArt.js";
-import {Pixel} from "../Pixel.js";
 import {PixelContainer} from "../PixelContainer.js";
-import FxMove from "../fx/FxMove.js";
 import FxMovie from "../fx/FxMovie.js";
 import FxRotate from "../fx/FxRotate.js";
-import {ColorInterface} from "../ColorInterface.js";
 
 
 let starAscii=[`

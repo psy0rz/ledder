@@ -1,7 +1,7 @@
 {#each Object.values(controlGroup.meta.controls) as control, i (control.meta.name)}
 
     {#if control.meta.type === 'controls'}
-        <TreeviewItem label="{control.meta.name}" opened={true} toggle={true} itemToggle iconMaterial="folder">
+        <TreeviewItem label="{control.meta.name}" opened={ !control.meta.collapsed } toggle={true} itemToggle iconMaterial="folder">
             <svelte:self controlGroup={control} path={[...path,control.meta.name]}/>
         </TreeviewItem>
 

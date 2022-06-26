@@ -11,6 +11,7 @@ type ControlMap = Map<string, Control>
 interface ControlsMeta extends ControlMeta {
     // controls:  {[key: string]: Control}
     controls: ControlMap
+    collapsed: boolean
 }
 
 /**
@@ -28,10 +29,11 @@ export class ControlGroup extends Control {
     //remove all controls and reset
     resetCallback: () => void
 
-    constructor(name: string = 'root', restartOnChange: boolean = false) {
+    constructor(name: string = 'root', restartOnChange: boolean = false, collapsed=false) {
         super(name, 'controls', restartOnChange)
 
         this.clear();
+        this.meta.collapsed=collapsed
 
     }
 
@@ -70,7 +72,7 @@ export class ControlGroup extends Control {
      * @param step Step size
      * @param restartOnChange Reset animation when value has changed
      */
-    value(name: string, value=0, min=0, max=100, step: number = 1, restartOnChange: boolean = false): ControlValue {
+    value(name: string, value = 0, min = 0, max = 100, step: number = 1, restartOnChange: boolean = false): ControlValue {
         if (!(name in this.meta.controls)) {
             this.add(new ControlValue(name, value, min, max, step, restartOnChange));
         }
@@ -116,9 +118,19 @@ export class ControlGroup extends Control {
     }
 
     //sub Controls group instance.
-    group(name: string, restartOnChange: boolean = false):ControlGroup {
+    group(name: string, restartOnChange: boolean = false, collapsed=false): ControlGroup {
         if (!(name in this.meta.controls)) {
-            this.add(new ControlGroup(name, restartOnChange));
+            const controlGroup = new ControlGroup(name, restartOnChange, collapsed)
+            this.add(controlGroup);
+            controlGroup.setCallbacks(
+                () => {
+                    this.clear()
+                },
+                () => {
+                    if (this.addControlCallback)
+                        this.addControlCallback(this)
+                }
+            )
         }
 
         return this.meta.controls[name];
@@ -157,27 +169,14 @@ export class ControlGroup extends Control {
         }
     }
 
-    updateValue(path: [string], values: Values):boolean {
-        if(this.meta.controls[path[0]]!==undefined)
-        {
+    updateValue(path: [string], values: Values): boolean {
+        if (this.meta.controls[path[0]] !== undefined) {
 
-            return (this.meta.controls[path[0]].updateValue(path.slice(1), values)|| this.meta.restartOnChange)
+            return (this.meta.controls[path[0]].updateValue(path.slice(1), values) || this.meta.restartOnChange)
         }
         return false
 
     }
 
-    /**
-     * Update values of a specific control. (called by browser to update server)
-     * @return True if animation should be restarted/reset
-     */
-    // updateValue(controlPath: ControlPath, values) {
-    //
-    //
-    //     this.loadedValues[controlName] = values;
-    //     this.meta.controls[controlName].load(values);
-    //
-    //     return (this.meta.controls[controlName].meta.resetOnChange)
-    // }
 
 }
