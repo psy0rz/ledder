@@ -1,11 +1,11 @@
 import Fx from "../Fx.js";
 import {ControlValue} from "../ControlValue.js";
-import {Matrix} from "../Matrix.js";
 import {ControlGroup} from "../ControlGroup.js";
 import {Color} from "../Color.js";
 import {Scheduler} from "../Scheduler.js";
+import {PixelContainer} from "../PixelContainer.js";
 
-//Blink pixels via alpha channel. (always starts with on, ends with off)
+//Blink pixelcontainers by adding/removing them from the target (always starts with on, ends with off)
 export default class FxBlink extends Fx {
 
     onDelay: ControlValue
@@ -20,20 +20,13 @@ export default class FxBlink extends Fx {
         this.repeat = controls.value('Blink repeat', repeat, 0, 120, 1)
     }
 
-    run(...colors:Array<Color>) {
+    run(source: PixelContainer, target:PixelContainer) {
 
         this.running = true
 
         let on=false
         let count=this.offDelay.value
         let repeated=0
-
-        for (const c of colors)
-            if (! (c instanceof Color))
-            {
-                throw("FxBlink can only operate on Color() instances. (Not on color controls)")
-            }
-
 
         this.promise = this.scheduler.interval(1, (frameNr) => {
             if (on)

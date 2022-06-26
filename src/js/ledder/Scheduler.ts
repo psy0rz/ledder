@@ -10,12 +10,12 @@ import {ControlGroup} from "./ControlGroup.js";
 export class Scheduler {
 
     frameNr: number;
-    intervals: Array<Interval>
+    intervals: Set<Interval>
     // private controls: PresetControl
 
     constructor() {
         this.frameNr = 0;
-        this.intervals = []
+        this.intervals = new Set()
         // this.controls=controls
 
     }
@@ -39,13 +39,13 @@ export class Scheduler {
         // }
 
         //now abort them all. this causes loops etc to be aborted as well. (since await will raise an error)
-        for (const interval of this.intervals)
-        {
+        // for (const interval of this.intervals)
+        // {
             //console.log("ABORTING", interval)
                // interval.reject("abort")
-        }
+        // }
 
-        this.intervals = []
+        this.intervals = new Set()
         this.frameNr=0
     }
 
@@ -58,7 +58,7 @@ export class Scheduler {
     interval(frames: number, callback: (frameNr: number) => number | void | boolean, offset = 0): Promise<any> {
 
         const interval = new IntervalStatic(frames, this.frameNr + offset, callback);
-        this.intervals.push(interval);
+        this.intervals.add(interval);
         return (interval.createPromise())
     }
 
@@ -71,7 +71,7 @@ export class Scheduler {
      */
     intervalControlled(value: ValueInterface, callback: (frameNr: number) => number | void | boolean, offset = 0): Promise<any> {
         const interval = new IntervalControlled(value, this.frameNr + offset, callback);
-        this.intervals.push(interval);
+        this.intervals.add(interval);
         return (interval.createPromise())
     }
 
@@ -80,7 +80,7 @@ export class Scheduler {
             return
 
         const interval = new IntervalOnce(frames, this.frameNr);
-        this.intervals.push(interval);
+        this.intervals.add(interval);
         return (interval.createPromise())
     }
 
@@ -90,23 +90,22 @@ export class Scheduler {
         this.frameNr++;
 
         let i = 0;
-        while (i < this.intervals.length) {
+        for (const interval of this.intervals) {
             try {
-                if (!this.intervals[i].check(this.frameNr)) {
+                if (!interval.check(this.frameNr)) {
 
-                    this.intervals[i].resolve(true)
-                    this.intervals.splice(i, 1);
-                } else
-                    i++;
+                    interval.resolve(true)
+                    this.intervals.delete(interval)
+                }
             } catch (e) {
                 console.error("Exception during animation interval:", e)
                 //remove this interval since its broken
-                this.intervals.splice(i, 1);
+                this.intervals.delete(interval)
             }
         }
     }
 
     status() {
-        console.log("Scheduler intervals: ", this.intervals.length);
+        console.log("Scheduler intervals: ", this.intervals.size);
     }
 }

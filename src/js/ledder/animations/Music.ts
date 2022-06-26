@@ -3,7 +3,7 @@ import {Matrix} from "../Matrix.js";
 import {Pixel} from "../Pixel.js";
 import {Scheduler} from "../Scheduler.js";
 import {ControlGroup} from "../ControlGroup.js";
-import FxBlink from "../fx/FxBlink.js";
+import FxBlinkAlpha from "../fx/FxBlinkAlpha.js";
 import {fontSelect} from "../fonts.js";
 import {DrawText} from "../draw/DrawText.js";
 
@@ -30,7 +30,7 @@ export default class Music extends Animation {
                 new Pixel(matrix, x, y, color2Control)
 
 
-        const blinker = new FxBlink(matrix, 'Flasher', 2, 4, 4)
+        const blinker = new FxBlinkAlpha(matrix, 'Flasher', 2, 4, 4)
 
         const wait = control.value('Wait', 0, 0, 120, 1)
 

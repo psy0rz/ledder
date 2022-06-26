@@ -3,7 +3,7 @@ import {Matrix} from "../Matrix.js";
 import {Pixel} from "../Pixel.js";
 import {Scheduler} from "../Scheduler.js";
 import {ControlGroup} from "../ControlGroup.js";
-import FxBlink from "../fx/FxBlink.js";
+import FxBlinkAlpha from "../fx/FxBlinkAlpha.js";
 import {fontSelect} from "../fonts.js";
 import {Color} from "../Color.js";
 import {PixelContainer} from "../PixelContainer.js";
@@ -19,16 +19,16 @@ export default class PoliceLights extends Animation {
 
     async run(matrix: Matrix, scheduler: Scheduler, controls: ControlGroup) {
 
-        const blinker = new FxBlink(scheduler, controls.group("blinker"), 2, 4, 4)
+        const blinker = new FxBlinkAlpha(scheduler, controls.group("blinker"), 1, 1, 1)
 
-        const color1 = controls.color("Color 1", 255, 0, 0, 1).copy();
+        const color1 = controls.color("Color 1", 255, 0, 0, 0).copy();
 
 
         for (let x = 0; x < matrix.width / 5; x++)
             for (let y = 0; y < matrix.height; y++)
                 matrix.add(new Pixel(x, y, color1))
 
-        const color2 = controls.color("Color 2", 0, 0, 255, 1).copy();
+        const color2 = controls.color("Color 2", 0, 0, 255, 0).copy();
 
         for (let x = matrix.width - (matrix.width / 5); x < matrix.width; x++)
             for (let y = 0; y < matrix.height; y++)
@@ -52,30 +52,35 @@ export default class PoliceLights extends Animation {
 
         const textDelay = controls.value('Text delay', 60, 20, 120, 1)
 
-        colorText1.a = 0.5
-        colorText2.a = 0.5
+        // colorText1.a = 0.5
+        // colorText2.a = 0.5
+        //
+        // scheduler.intervalControlled(textDelay, (frameNr) => {
+        //
+        //     if (colorText1.a) {
+        //         colorText1.a = 0
+        //         colorText2.a = 1
+        //     } else {
+        //         colorText1.a = 1
+        //         colorText2.a = 0
+        //     }
+        //     return true
+        // }).then(() => {
+        //     console.log("then withtout catch")
+        // })
 
-        scheduler.intervalControlled(textDelay, (frameNr) => {
 
-            if (colorText1.a) {
-                colorText1.a = 0
-                colorText2.a = 1
-            } else {
-                colorText1.a = 1
-                colorText2.a = 0
-            }
-            return true
-        }).then(() => {
-            console.log("then withtout catch")
-        })
-
-
-        const t=Date.now()
+        const t = Date.now()
         while (1) {
+            console.log("links")
             await blinker.run(color1)
-            await scheduler.delay(wait.value)
+            if (wait.value)
+                await scheduler.delay(wait.value)
+
+            console.log("rechts")
             await blinker.run(color2)
-            await scheduler.delay(wait.value)
+            if (wait.value)
+                await scheduler.delay(wait.value)
         }
 
     }
