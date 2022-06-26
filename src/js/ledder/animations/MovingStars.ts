@@ -35,9 +35,9 @@ export default class MovingStars extends Animation {
                 `))
 
         star.add(new DrawAsciiArt(x, y, `
+                    .w.
                     ...
-                    ...
-                    ...
+                    .w.
                 `))
         return (star)
     }
@@ -49,13 +49,14 @@ export default class MovingStars extends Animation {
         // const starDensityControl = controls.value("Star density", 10, 1, 100, 1)
         // const starColorControl = controls.color("Star color", 128, 128, 128);
 
-        for (let i=0; i<10; i++) {
+        const starsControl = controls.value("Number of stars", 10, 1, 100, 1, true)
+        for (let i=0; i<starsControl.value; i++) {
 
             const x = random(0, matrix.xMax)
             const y = random(0, matrix.yMax)
             const star=this.createStar(x,y)
-            new FxMovie(scheduler, controls, 30).run(star, matrix)
-            new FxRotate(scheduler, controls, -1,0).run(star, matrix)
+            new FxMovie(scheduler, controls, 5).run(star, matrix, random(0,2))
+            new FxRotate(scheduler, controls, -1,0, 4,2).run(star, matrix)
 
         }
 

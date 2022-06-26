@@ -61,14 +61,14 @@ export class Pixel implements PixelInterface {
     // //keep pixel inside this box by wrapping (inclusive)
     wrap(bbox: BboxInterface) {
         if (this.x < bbox.xMin)
-            this.x += (bbox.xMax - bbox.xMin)
+            this.x += (bbox.xMax - bbox.xMin+1)
         else if (this.x > bbox.xMax)
-            this.x -= (bbox.xMax - bbox.xMin)
+            this.x -= (bbox.xMax - bbox.xMin+1)
 
         if (this.y < bbox.yMin)
-            this.y += (bbox.yMax - bbox.yMin)
+            this.y += (bbox.yMax - bbox.yMin+1)
         else if (this.y > bbox.yMax)
-            this.y -= (bbox.yMax - bbox.yMin)
+            this.y -= (bbox.yMax - bbox.yMin+1)
 
     }
 
