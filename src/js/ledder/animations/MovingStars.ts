@@ -11,16 +11,12 @@ import {PixelContainer} from "../PixelContainer.js";
 import FxMove from "../fx/FxMove.js";
 import FxMovie from "../fx/FxMovie.js";
 
-
-
 export default class MovingStars extends Animation {
 
     static category = "Basic"
     static title = "Moving stars left"
     static description = "Used in nyancat :)"
     static presetDir = "Moving stars"
-
-
 
     async run(matrix: Matrix, scheduler: Scheduler, controls: ControlGroup) {
 
@@ -32,35 +28,35 @@ export default class MovingStars extends Animation {
 //        let mover=new FxMove(scheduler, controls, -1,0)
 
         // for (let i=0; i<10; i++) {
-            let frames = new PixelContainer()
+        let frames = new PixelContainer()
         //
         //     const x=random(0, matrix.xMax)
         //     const y=random(0,matrix.yMax)
-        const x=3
-        const y=3
+        const x = 3
+        const y = 3
 
-            frames.add(new DrawAsciiArt(x, y, `
+        frames.add(new DrawAsciiArt(x, y, `
                     ...
                     .w.
                     ...
                 `))
 
-            frames.add(new DrawAsciiArt(x, y, `
+        frames.add(new DrawAsciiArt(x, y, `
                     .w.
                     w.w
                     .w.
                 `))
 
-            frames.add(new DrawAsciiArt(x, y, `
+        frames.add(new DrawAsciiArt(x, y, `
                     ...
                     ...
                     ...
                 `))
 
-            // mover.run(frames)
+        // mover.run(frames)
+        console.log(frames.dump())
 
-
-        let movie=new FxMovie(scheduler, controls, 30)
+        let movie = new FxMovie(scheduler, controls, 30)
         movie.run(frames, matrix)
 
 
@@ -72,22 +68,22 @@ export default class MovingStars extends Animation {
         //     stars.add(steps[step])
 
 
-            // //add new flying star at right side
-            // const star = new PixelStar(matrix, matrix.width + 2, random(0, matrix.height), starColorControl, blinkDelayControl, true);
-            // const mover = new AnimationMove(matrix, intervalControl, {value: -1}, {value: 0})
-            // mover.addPixel(star);
-            //
-            // //destroy star at left side
-            // matrix.scheduler.interval((matrix.width + 2) * intervalControl.value, () => {
-            //     mover.destroy(true);
-            //     star.destroy(matrix)
-            //     return false;
-            // })
-            //
-            // //schedule creation of next star at random time
-            // return (random(intervalControl.value, (100 * intervalControl.value) / starDensityControl.value));
-            // // return(1);
-            // //
+        // //add new flying star at right side
+        // const star = new PixelStar(matrix, matrix.width + 2, random(0, matrix.height), starColorControl, blinkDelayControl, true);
+        // const mover = new AnimationMove(matrix, intervalControl, {value: -1}, {value: 0})
+        // mover.addPixel(star);
+        //
+        // //destroy star at left side
+        // matrix.scheduler.interval((matrix.width + 2) * intervalControl.value, () => {
+        //     mover.destroy(true);
+        //     star.destroy(matrix)
+        //     return false;
+        // })
+        //
+        // //schedule creation of next star at random time
+        // return (random(intervalControl.value, (100 * intervalControl.value) / starDensityControl.value));
+        // // return(1);
+        // //
         // })
 
     }

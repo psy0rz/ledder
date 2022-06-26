@@ -53,7 +53,7 @@ export abstract class Matrix extends PixelContainer {
     }
   }
 
-  //recursively renders all pixels in this container and its subcontainers
+  //recursively renders all pixels in this pixeltree
   render(container:PixelContainer) {
     for (const p of container)
     {

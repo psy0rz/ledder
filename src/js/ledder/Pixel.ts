@@ -2,6 +2,7 @@ import {Matrix} from "./Matrix.js";
 import {PixelInterface} from "./PixelInterface.js";
 import {ColorInterface} from "./ColorInterface.js";
 import BboxInterface from "./BboxInterface.js";
+import {Color} from "./Color.js";
 
 
 //basic pixel.
@@ -19,30 +20,30 @@ export class Pixel implements PixelInterface {
      * @param x X coord
      * @param y Y coord
      * @param color Color object
-     * @param bg Make true to add to background
      */
-    constructor(x: number, y: number, color: ColorInterface, bg = false) {
+    constructor(x: number, y: number, color: ColorInterface) {
         this.x = x;
         this.y = y;
 
         this.color = color;
 
-        // this.keep=true;
-
-        // if (bg)
-        //   matrix.addPixelBG(this);
-        // else
-        //   matrix.addPixel(this);
     }
 
-    // destroy() {
-        // matrix.removePixel(this);
-        //his.keep=false
-    // }
+    copy(copyColor=false)
+    {
+        if (copyColor)
+            return new Pixel(this.x, this.y, this.color.copy())
+        else
+            return new Pixel(this.x, this.y, this.color)
+    }
 
-    // render(matrix: Matrix) {
-    //     matrix.setPixel(this.x, this.y, this.color);
-    // }
+    //relatively move pixel by this amount
+    move(x: number ,y:number)
+    {
+        this.x+=x
+        this.y+=y
+    }
+
 
     //limit pixel location to this box (inclusive)
     limit(bbox: BboxInterface) {

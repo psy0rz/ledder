@@ -3,6 +3,7 @@ export interface ColorInterface {
     g: number
     b: number
     a: number
-    busy?: boolean;
+
+    copy():ColorInterface
 }
 
