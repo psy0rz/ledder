@@ -5,9 +5,8 @@ import {ControlGroup} from "../ControlGroup.js";
 import {Color} from "../Color.js";
 import {Scheduler} from "../Scheduler.js";
 
+//Blink pixels via alpha channel. (always starts with on, ends with off)
 export default class FxBlink extends Fx {
-
-    static title = "Blink pixels via alpha channel. (always starts with on, ends with off)"
 
     onDelay: ControlValue
     offDelay: ControlValue

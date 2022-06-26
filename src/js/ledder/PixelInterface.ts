@@ -6,7 +6,7 @@ export interface PixelInterface {
     y: number;
     color: ColorInterface;
 
-    destroy(matrix);
+    // destroy(matrix);
 
     // render(matrix: Matrix);
 

@@ -1,4 +1,3 @@
-import {Matrix} from "../Matrix.js";
 import Fx from "../Fx.js";
 import {ControlValue} from "../ControlValue.js";
 import {ControlGroup} from "../ControlGroup.js";
@@ -40,7 +39,7 @@ export default class FxRotate extends Fx {
                 p.wrap( bbox)
 
             })
-            return (this.running && container.size)
+            return (this.running )
         })
 
         return (this.promise)

@@ -19,7 +19,7 @@ export class IntervalControlled extends  Interval {
     //returns false if interval should be destroyed
     check(time) {
         if (time >= this.nextTime) {
-            if (!this.callback(time))
+            if (this.callback(time)===false)
                 return false;
 
             //note: we add to nextTime, instead of time, to allow non-integer intervals

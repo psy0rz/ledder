@@ -4,7 +4,7 @@ import {ColorInterface} from "./ColorInterface.js";
 import BboxInterface from "./BboxInterface.js";
 
 
-//basic pixel. Will add itself to the display matrix.
+//basic pixel.
 export class Pixel implements PixelInterface {
     x: number;
     y: number;
@@ -35,10 +35,10 @@ export class Pixel implements PixelInterface {
         //   matrix.addPixel(this);
     }
 
-    destroy() {
+    // destroy() {
         // matrix.removePixel(this);
         //his.keep=false
-    }
+    // }
 
     // render(matrix: Matrix) {
     //     matrix.setPixel(this.x, this.y, this.color);

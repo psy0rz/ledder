@@ -23,11 +23,22 @@ export abstract class Matrix extends PixelContainer {
   width: number
   height: number
 
+  //to make it compatioble with bboxinterface
+  xMin:number
+  xMax:number
+  yMin:number
+  yMax:number
+
   protected constructor(  width, height) {
     super();
 
     this.width = width;
     this.height = height;
+
+    this.xMin=0
+    this.yMin=0
+    this.xMax=width-1
+    this.yMax=height-1
 
   }
 
@@ -37,8 +48,8 @@ export abstract class Matrix extends PixelContainer {
     return {
       xMin:0,
       yMin:0,
-      xMax: this.width,
-      yMax: this.height
+      xMax: this.width-1,
+      yMax: this.height-1
     }
   }
 
