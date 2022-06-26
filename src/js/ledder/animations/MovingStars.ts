@@ -41,7 +41,7 @@ export default class MovingStars extends Animation {
 
     async run(matrix: Matrix, scheduler: Scheduler, controls: ControlGroup) {
 
-        const starColorControl = controls.color("Star color", 128, 128, 128);
+        const starColorControl = controls.color("Star color", 255, 255, 255, 0.001);
 
         const stars=new PixelContainer()
         matrix.add(stars)
