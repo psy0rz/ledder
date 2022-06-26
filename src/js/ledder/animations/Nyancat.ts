@@ -12,6 +12,7 @@ import {FxFadeOut} from "../fx/FxFadeOut.js";
 import {calculateFireColors} from "../util.js";
 import DrawAsciiArtColor from "../draw/DrawAsciiArtColor.js";
 import {PixelContainer} from "../PixelContainer.js";
+import MovingStars from "./MovingStars.js";
 
 //Nyancat, based on https://github.com/bertrik/nyancat/blob/master/nyancat.c
 
@@ -28,12 +29,16 @@ export default class Nyancat extends Animation {
 
     async run(matrix: Matrix, scheduler: Scheduler, controls: ControlGroup) {
 
-        let fadeFx = new FxFadeOut(scheduler, controls, 30, 4)
+        controls.group("Rainbow")
 
-        // let stars = new MovingStars(parent);
-        // stars.run(parent, scheduler, controls.group("Stars"))
+        //start with the stars in the background
+        let stars = new MovingStars();
+        stars.run(matrix, scheduler, controls.group("Stars"))
 
+
+        //move the whole cat (will add pixels later)
         let cat = new PixelContainer()
+        new FxRotate(scheduler, controls.group('Move'), 1, 0, 2).run(cat, matrix.bbox())
         matrix.add(cat)
 
         //the body and its wobblyness
@@ -64,8 +69,6 @@ export default class Nyancat extends Animation {
         new FxWobble(scheduler, controls.group("Wobble head y", false, true), 0, 1, 15, 5).run(head)
         cat.add(head)
 
-        //move the whole cat
-        new FxRotate(scheduler, controls.group('Move'), 1, 0, 2).run(cat, matrix.bbox())
 
 
         //rainbow :)
@@ -81,6 +84,8 @@ export default class Nyancat extends Animation {
         })
 
         //draw rainbow
+        let fadeFx = new FxFadeOut(scheduler, controls.group("Rainbow"), 30, 4)
+
         const xStepControl = controls.group('Move').value('Rotate X step')
         scheduler.intervalControlled(controls.group('Move').value('Rotate interval'), () => {
             x = (x + xStepControl.value) % matrix.width;
