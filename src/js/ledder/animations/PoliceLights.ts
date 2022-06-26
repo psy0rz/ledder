@@ -43,12 +43,12 @@ export default class PoliceLights extends Animation {
         const colorText1 = controls.color("Text1 color", 255, 0, 0, 1);
         const text1 = controls.input('Text1', 'STOP', true)
         const textOffset1 = controls.value('Text1 offset', -12, -matrix.width, matrix.width, 1, true)
-        matrix.add(new DrawText(matrix.width / 2 + textOffset1.value, 0, font, text1.text, colorText1))
+        matrix.add(new DrawText(matrix.width / 2 + textOffset1.value, 1, font, text1.text, colorText1))
 
         const colorText2 = controls.color("Text2 color", 255, 0, 0, 1);
         const text2 = controls.input('Text2', 'POLICE', true)
         const textOffset2 = controls.value('Text2 offset', -18, -matrix.width, matrix.width, 1, true)
-        matrix.add(new DrawText(matrix.width / 2 + textOffset2.value, 0, font, text2.text, colorText2))
+        matrix.add(new DrawText(matrix.width / 2 + textOffset2.value, 1, font, text2.text, colorText2))
 
         const textDelay = controls.value('Text delay', 60, 20, 120, 1)
 
@@ -69,18 +69,14 @@ export default class PoliceLights extends Animation {
             console.log("then withtout catch")
         })
 
-        //
-        // const t=Date.now()
-        // while (1) {
-        //     console.log("step", t)
-        //     await blinker.run(color1)
-        //     console.log("step", t)
-        //     await scheduler.delay(wait.value)
-        //     console.log("step", t)
-        //     await blinker.run(color2)
-        //     console.log("step", t)
-        //     await scheduler.delay(wait.value)
-        // }
+
+        const t=Date.now()
+        while (1) {
+            await blinker.run(color1)
+            await scheduler.delay(wait.value)
+            await blinker.run(color2)
+            await scheduler.delay(wait.value)
+        }
 
     }
 

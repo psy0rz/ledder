@@ -23,7 +23,7 @@ const internetColorMap = {
     p: new Color(0x80, 0, 0x80,1, true),      //purple
 }
 
-//draw pixels via ascii art.
+//draw pixels via ascii art. x,y are top left coordinate
 // - whitespace is ignored
 // - empty space: .
 // - pixel      : any symbol from the specified color map. will use that color.
