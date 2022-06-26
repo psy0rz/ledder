@@ -12,7 +12,7 @@ export default class FxMovie extends Fx {
     constructor(scheduler: Scheduler, controlGroup: ControlGroup, interval: number) {
         super(scheduler, controlGroup)
 
-        this.intervalControl = controlGroup.value('Interval', interval, 1, 60, 1)
+        this.intervalControl = controlGroup.value('Movie interval', interval, 1, 60, 1)
     }
 
     run(source: PixelContainer, target: PixelContainer, repeat = 0) {

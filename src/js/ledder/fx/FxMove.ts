@@ -17,9 +17,9 @@ export default class FxMove extends Fx {
     constructor(scheduler: Scheduler, controlGroup: ControlGroup, xStep = -1, yStep = 0, interval = 2) {
         super(scheduler, controlGroup)
 
-        this.intervalControl = controlGroup.value('Interval', interval, 1, 60, 1)
-        this.xStepControl = controlGroup.value('X step', xStep, -5, 5, 1)
-        this.yStepControl = controlGroup.value('Y step', yStep, -5, 5, 1)
+        this.intervalControl = controlGroup.value('Move interval', interval, 1, 60, 1)
+        this.xStepControl = controlGroup.value('Move X step', xStep, -5, 5, 1)
+        this.yStepControl = controlGroup.value('Move Y step', yStep, -5, 5, 1)
     }
 
     //rotate pixels inside specified bbox if specified. (otherwise uses bbox() of pixelcontainer)

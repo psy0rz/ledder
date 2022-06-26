@@ -17,9 +17,9 @@ export default class FxRotate extends Fx {
     constructor(scheduler: Scheduler, controlGroup: ControlGroup, xStep=-1, yStep=0,interval=2) {
         super(scheduler, controlGroup)
 
-        this.intervalControl = controlGroup.value('Interval', interval, 1, 60, 1)
-        this.xStepControl = controlGroup.value('X step', xStep,-5,5,1)
-        this.yStepControl = controlGroup.value('Y step', yStep,-5,5,1)
+        this.intervalControl = controlGroup.value('Rotate interval', interval, 1, 60, 1)
+        this.xStepControl = controlGroup.value('Rotate X step', xStep,-5,5,1)
+        this.yStepControl = controlGroup.value('Rotate Y step', yStep,-5,5,1)
 
     }
 

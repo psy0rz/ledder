@@ -23,8 +23,8 @@ export class FxFadeOut extends Fx {
     constructor(scheduler: Scheduler, controlGroup:ControlGroup, fadeTime: number, randomizer: number=0) {
         super(scheduler, controlGroup);
 
-        this.fadeTimeControl = controlGroup.value('Fade time', fadeTime, 0, 240)
-        this.randomizerControl = controlGroup.value('Fade time randomizer', randomizer, 0, 240)
+        this.fadeTimeControl = controlGroup.value('Fade out time', fadeTime, 0, 240)
+        this.randomizerControl = controlGroup.value('Fade out time randomizer', randomizer, 0, 240)
 
     }
 

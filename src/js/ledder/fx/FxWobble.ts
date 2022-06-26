@@ -16,10 +16,10 @@ export default class FxWobble extends Fx {
     constructor(scheduler: Scheduler, controlGroup: ControlGroup, xAmount: number, yAmount: number, interval: number, offset = 0) {
         super(scheduler, controlGroup);
 
-        this.intervalControl = controlGroup.value("Interval", interval, 1, 60, 1);
-        this.offsetControl = controlGroup.value("Interval offset", offset, 0, 60, 1, true);
-        this.xControl = controlGroup.value("X wobble", xAmount, -10, 10, 1, true)
-        this.yControl = controlGroup.value("Y wobble", yAmount, -10, 10, 1, true)
+        this.intervalControl = controlGroup.value("Wobble interval", interval, 1, 60, 1);
+        this.offsetControl = controlGroup.value("Wobble interval offset", offset, 0, 60, 1, true);
+        this.xControl = controlGroup.value("Wobble X amount", xAmount, -10, 10, 1, true)
+        this.yControl = controlGroup.value("Wobble Y amount", yAmount, -10, 10, 1, true)
 
     }
 
