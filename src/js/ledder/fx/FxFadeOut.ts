@@ -1,5 +1,5 @@
 import {ColorInterface} from "../ColorInterface.js";
-import {random, randomFloat} from "../util.js";
+import {random} from "../util.js";
 import Fx from "../Fx.js";
 import {ControlGroup} from "../ControlGroup.js";
 import {ControlValue} from "../ControlValue.js";
