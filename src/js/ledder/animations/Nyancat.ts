@@ -83,7 +83,7 @@ export default class Nyancat extends Animation {
         })
 
         //draw rainbow or fire
-        let fadeFx = new FxFadeOut(scheduler, controls.group("Rainbow"), 30, 4)
+        let fadeFx = new FxFadeOut(scheduler, controls.group("Rainbow"), 40, 4)
         const fireControl = controls.group("Fire").switch("Use fire", false, false)
         let cycleFx = new FxColorCycle(scheduler, controls.group("Fire"), "reverse", 50, 4, 1)
 
@@ -122,11 +122,21 @@ export default class Nyancat extends Animation {
                     new Color(0xff, 0x00, 0x00),
                 ]
 
+                //adjust times to get a nice pointy tail
+                let fadeTimes=[
+                    -20,
+                    -10,
+                    -5,
+                    0,
+                    -10,
+                    -20
+                ]
+
                 for (let c = 0; c < 6; c++) {
 
                     const p = new Pixel(x, c + y + 1, colors[c])
                     matrix.add(p)
-                    fadeFx.run(colors[c])
+                    fadeFx.run(colors[c], fadeTimes[c])
                         .then(() => {
                             matrix.delete(p)
                         })

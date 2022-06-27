@@ -30,13 +30,14 @@ export class FxFadeOut extends Fx {
 
     /** Fade out specified color object
      *  @param color: color object to manipulate the alpha channel on
+     * @param modifyTime: modify the fadetime for this run only
      */
-    run(color: ColorInterface)
+    run(color: ColorInterface, modifyTime=0)
     {
         this.running=true
 
         let frameNr
-        frameNr = this.fadeTimeControl.value + random(0, this.randomizerControl.value);
+        frameNr = this.fadeTimeControl.value + random(0, this.randomizerControl.value) + modifyTime;
 
         let stepA = color.a / frameNr
 
