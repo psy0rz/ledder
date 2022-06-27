@@ -21,8 +21,12 @@ export class PixelContainer extends Set<Pixel | PixelContainer> {
             for (const p of this) {
                 if (p instanceof Pixel)
                     str = str + indent + `(${p.x}, ${p.y}) (r${p.color.r}, g${p.color.g}, b${p.color.b}, a${p.color.a})\n`
-                else {
+                else if (p instanceof PixelContainer){
                     str = str + p.dump(indent)
+                }
+                else
+                {
+                    str=str + indent + `Illegal object type: ${typeof(p)}`
                 }
             }
         }

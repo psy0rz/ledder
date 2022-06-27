@@ -61,9 +61,13 @@ export abstract class Matrix extends PixelContainer {
         if (p.color.a !== 0)
           this.setPixel(p.x, p.y, p.color);
       }
-      else
+      else if (p instanceof PixelContainer)
       {
         this.render(p)
+      }
+      else
+      {
+        console.error("Illegal object in pixel container", p)
       }
     }
   }

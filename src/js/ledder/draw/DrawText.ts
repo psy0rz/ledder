@@ -3,7 +3,7 @@ import {Pixel} from "../Pixel.js";
 import {Font} from "../Font.js";
 import Draw from "../Draw.js";
 
-//rendered font text. x,y are bottom left coordinates
+//rendered font text. x,y are left bottom coordinates
 export default class DrawText extends Draw {
 
     constructor(x: number, y: number, font: Font, text: string,  color: ColorInterface) {

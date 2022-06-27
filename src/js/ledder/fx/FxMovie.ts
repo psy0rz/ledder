@@ -14,7 +14,7 @@ export default class FxMovie extends Fx {
     constructor(scheduler: Scheduler, controlGroup: ControlGroup, interval: number, intervalRandomizer=0) {
         super(scheduler, controlGroup)
 
-        this.intervalControl = controlGroup.value('Movie interval', interval, 1, 60, 1)
+        this.intervalControl = controlGroup.value('Movie interval', interval, 1, 120, 1)
         this.intervalRandomizerControl = controlGroup.value('Movie interval randomizer', intervalRandomizer, 0, 60, 1, true)
 
     }
@@ -26,11 +26,10 @@ export default class FxMovie extends Fx {
         let frameI = source.values()
         let prevFrame
 
-        if (startFrame)
-        {
-            for(let i=0; i<startFrame;i++)
-                frameI.next()
-        }
+        //go to start frame and display immedeatly
+        for(let i=0; i<=startFrame;i++)
+            prevFrame=frameI.next()
+        target.add(prevFrame.value)
 
         const randomizer = random(0, this.intervalRandomizerControl.value)
 

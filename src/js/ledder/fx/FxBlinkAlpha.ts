@@ -5,7 +5,7 @@ import {Color} from "../Color.js";
 import {Scheduler} from "../Scheduler.js";
 
 //Blink colors via alpha channel. (always starts with on, ends with off)
-
+//Set skipLast to true to skip the last off-delay.
 export default class FxBlinkAlpha extends Fx {
 
     onDelay: ControlValue
