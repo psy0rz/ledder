@@ -1,0 +1,65 @@
+{
+ "title": "",
+ "description": "",
+ "values": {
+  "FPS": {
+   "value": 60
+  },
+  "Font": {
+   "selected": "MSX"
+  },
+  "Text1 color": {
+   "r": 255,
+   "g": 0,
+   "b": 0,
+   "a": 1
+  },
+  "Text1": {
+   "text": "STOP"
+  },
+  "Text2 color": {
+   "r": 255,
+   "g": 0,
+   "b": 0,
+   "a": 1
+  },
+  "Text2": {
+   "text": "POLITIE"
+  },
+  "Movie interval": {
+   "value": 60
+  },
+  "Movie interval randomizer": {
+   "value": 0
+  },
+  "Lights": {
+   "Width": {
+    "value": 16
+   },
+   "Left color": {
+    "r": 119,
+    "g": 143,
+    "b": 255,
+    "a": 1
+   },
+   "Right color": {
+    "r": 117,
+    "g": 117,
+    "b": 255,
+    "a": 1
+   },
+   "Wait": {
+    "value": 3
+   },
+   "Blink on delay": {
+    "value": 5
+   },
+   "Blink off delay": {
+    "value": 4
+   },
+   "Blink repeat": {
+    "value": 6
+   }
+  }
+ }
+}

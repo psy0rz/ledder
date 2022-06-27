@@ -13,12 +13,13 @@ import FxBlink from "../fx/FxBlink.js";
 import DrawBox from "../draw/DrawBox.js";
 import {width} from "dom7";
 import FxMovie from "../fx/FxMovie.js";
+import FxPattern from "../fx/FxPattern.js";
 
 export default class PoliceLights extends Animation {
 
     static title = "Police lights"
     static description = ""
-    static presetDir = "policelights"
+    static presetDir = "Policelights"
     static category = "Signal lights"
 
 
@@ -31,13 +32,15 @@ export default class PoliceLights extends Animation {
         const colorText1 = controls.color("Text1 color", 255, 0, 0, 1);
         const inputText1 = controls.input('Text1', 'STOP', true)
         textList.add(new DrawText(0,0, font, inputText1.text, colorText1).center(matrix))
+        textList.add(new PixelContainer()) //blank screen
 
         const colorText2 = controls.color("Text2 color", 255, 0, 0, 1);
         const inputText2 = controls.input('Text2', 'POLICE', true)
         textList.add(new DrawText(0, 0, font, inputText2.text, colorText2).center(matrix))
+        textList.add(new PixelContainer()) //blank screen
 
         //fxmovie will display the 2 text-containers that are in the textList container:
-        new FxMovie(scheduler, controls, 60).run(textList, matrix)
+        new FxPattern(scheduler, controls, 60).run(textList, matrix, [60,5,60,5])
 
 
         ///////////// the lamps
@@ -59,7 +62,7 @@ export default class PoliceLights extends Animation {
         matrix.add(lampsLayer)
 
         //call the blinker effect on the left and right lamps
-        const blinker = new FxBlink(scheduler, lightControls, 5, 4, 3,true)
+        const blinker = new FxBlink(scheduler, lightControls, 6, 2, 3,true)
         while (1) {
             await blinker.run(lampLeft, lampsLayer)
             await scheduler.delay(wait.value)

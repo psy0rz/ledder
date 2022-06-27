@@ -21,12 +21,6 @@
                 <MenuItem iconMd="material:file_copy" onClick={ onSaveAs } disabled={copyDisabled }/>
                 <MenuItem iconMd="material:upload" title="Activate animation" class={$svelteLive?'disabled':''}
                           onClick={ ()=> runnerBrowser.send()  }/>
-                <MenuItem iconMd="material:save" onClick={ ()=>{
-                    console.log("sdf")
-                    rpc.request("runner.runName", "PoliceLights", "");
-
-
-                 } }/>
             </Menu>
 
         </Subnavbar>
