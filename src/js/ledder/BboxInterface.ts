@@ -3,4 +3,6 @@ export default interface BboxInterface {
     yMin: number,
     xMax: number,
     yMax: number
+
+
 }

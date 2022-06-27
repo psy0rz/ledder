@@ -30,13 +30,11 @@ export default class PoliceLights extends Animation {
 
         const colorText1 = controls.color("Text1 color", 255, 0, 0, 1);
         const inputText1 = controls.input('Text1', 'STOP', true)
-        const offsetText1 = controls.value('Text1 offset', -12, -matrix.width, matrix.width, 1, true)
-        textList.add(new DrawText(matrix.width / 2 + offsetText1.value, 1, font, inputText1.text, colorText1))
+        textList.add(new DrawText(0,0, font, inputText1.text, colorText1).center(matrix))
 
         const colorText2 = controls.color("Text2 color", 255, 0, 0, 1);
         const inputText2 = controls.input('Text2', 'POLICE', true)
-        const offsetText2 = controls.value('Text2 offset', -18, -matrix.width, matrix.width, 1, true)
-        textList.add(new DrawText(matrix.width / 2 + offsetText2.value, 1, font, inputText2.text, colorText2))
+        textList.add(new DrawText(0, 0, font, inputText2.text, colorText2).center(matrix))
 
         //fxmovie will display the 2 text-containers that are in the textList container:
         new FxMovie(scheduler, controls, 60).run(textList, matrix)
