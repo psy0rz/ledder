@@ -8,6 +8,7 @@ import {fontSelect} from "../fonts.js";
 import {Color} from "../Color.js";
 import {PixelContainer} from "../PixelContainer.js";
 import DrawText from "../draw/DrawText.js";
+import {Col} from "framework7-svelte";
 
 export default class PoliceLights extends Animation {
 
@@ -19,7 +20,7 @@ export default class PoliceLights extends Animation {
 
     async run(matrix: Matrix, scheduler: Scheduler, controls: ControlGroup) {
 
-        const blinker = new FxBlinkAlpha(scheduler, controls.group("blinker"), 1, 1, 1)
+        const blinker = new FxBlinkAlpha(scheduler, controls.group("blinker"), 1, 1, 1,true)
 
         const color1 = controls.color("Color 1", 255, 0, 0, 0).copy();
 
@@ -69,19 +70,16 @@ export default class PoliceLights extends Animation {
         //     console.log("then withtout catch")
         // })
 
+        color1.a = 0
 
-        const t = Date.now()
+        // const t = Date.now()
         while (1) {
-            console.log("links")
             await blinker.run(color1)
-            if (wait.value)
-                await scheduler.delay(wait.value)
-
-            console.log("rechts")
+            await scheduler.delay(wait.value)
             await blinker.run(color2)
-            if (wait.value)
-                await scheduler.delay(wait.value)
+            await scheduler.delay(wait.value)
         }
+
 
     }
 

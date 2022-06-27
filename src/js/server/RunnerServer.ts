@@ -85,9 +85,12 @@ export class RunnerServer {
             setTimeout(() => this.renderFrame(), interval)
         }
 
-        this.matrix.frame(this.lastTime)
-        this.scheduler.step()
         this.matrix.render(this.matrix)
+        this.matrix.frame(this.lastTime)
+
+        //NOTE: we run the scheduler as last, sync this may in fact queue up all kinds of async events which need to be handled before calling matrix.render()
+        this.scheduler.step()
+
 
     }
 

@@ -5,24 +5,26 @@ import {Color} from "../Color.js";
 import {Scheduler} from "../Scheduler.js";
 
 //Blink colors via alpha channel. (always starts with on, ends with off)
+
 export default class FxBlinkAlpha extends Fx {
 
     onDelay: ControlValue
     offDelay: ControlValue
     repeat: ControlValue //0=infinite
+    skipLast:  boolean
 
-    constructor(scheduler: Scheduler, controls: ControlGroup, onDelay = 60, offDelay = 60, repeat = 0) {
+    constructor(scheduler: Scheduler, controls: ControlGroup, onDelay = 60, offDelay = 60, repeat = 0, skipLast=false) {
         super(scheduler, controls)
 
         this.onDelay = controls.value('Blink on delay', onDelay, 1, 120, 1)
         this.offDelay = controls.value('Blink off delay', offDelay, 1, 120, 1)
         this.repeat = controls.value('Blink repeat', repeat, 0, 120, 1)
+        this.skipLast=skipLast
     }
 
     run(...colors: Array<Color>) {
 
         this.running = true
-
 
         for (const c of colors) {
             if (!(c instanceof Color)) {
@@ -35,25 +37,28 @@ export default class FxBlinkAlpha extends Fx {
         let on = true
         let repeated = 0
 
-        console.log("starton")
         this.promise = this.scheduler.interval(this.onDelay.value, (frameNr) => {
             let nextDelay
 
+
             if (on) {
-                console.log("off")
                 //switch to off
                 for (const c of colors)
                     c.a = 0
-                repeated = repeated + 1
                 on = false
                 nextDelay = this.offDelay.value
+
+                repeated = repeated + 1
+                //stop early, skipping last off-cycle ?
+                if (this.skipLast && this.repeat.value && repeated >= this.repeat.value)
+                    return false
+
             } else {
-                //stop?
+                //stop? (completed a full cycle)
                 if (this.repeat.value && repeated >= this.repeat.value)
                     return false
-                console.log("on")
 
-                //switch to on
+                // switch to on
                 for (const c of colors)
                     c.a = 1
                 on = true
