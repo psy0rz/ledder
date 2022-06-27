@@ -42,8 +42,9 @@ export default class FxColorCycle extends Fx {
     }
 
 
-    //cycle the target color object through the list of colors
-    run(colors: Array<ColorInterface>, target: ColorInterface) {
+    //cycle the target color object through the list of colors.
+    //use skip to skip the first number of colors
+    run(colors: Array<ColorInterface>, target: ColorInterface, skip=0) {
 
         this.running = true
         let repeat = 0
@@ -54,9 +55,9 @@ export default class FxColorCycle extends Fx {
 
         if (this.mode.selected == "reverse") {
             step=-step
-            colorI = colors.length - 1
+            colorI = colors.length - 1 - skip
         } else {
-            colorI = 0
+            colorI = 0 + skip
         }
         Object.assign(target, colors[~~colorI])
 
