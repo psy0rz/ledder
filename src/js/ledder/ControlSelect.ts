@@ -2,7 +2,7 @@ import {Control, ControlMeta} from "./Control.js";
 
 export interface Choice
 {
-    id: string
+    id: string|number
     name: string
 }
 
