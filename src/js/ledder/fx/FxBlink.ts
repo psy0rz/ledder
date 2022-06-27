@@ -4,6 +4,7 @@ import {ControlGroup} from "../ControlGroup.js";
 import {Color} from "../Color.js";
 import {Scheduler} from "../Scheduler.js";
 import {PixelContainer} from "../PixelContainer.js";
+import {Pixel} from "../Pixel.js";
 
 //Blink pixelcontainers by adding/removing them from the target (always starts with on, ends with off)
 //Set skipLast to true to skip the last off-delay.
@@ -23,7 +24,7 @@ export default class FxBlink extends Fx {
         this.skipLast=skipLast
     }
 
-    run(source: PixelContainer, target: PixelContainer) {
+    run(source: Pixel|PixelContainer, target: PixelContainer) {
 
         this.running = true
 

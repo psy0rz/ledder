@@ -1,5 +1,4 @@
 import {Animation} from "../Animation.js";
-import {AnimationMove} from "../AnimationMove.js";
 import {Pixel} from "../Pixel.js";
 import {Color} from "../Color.js";
 
