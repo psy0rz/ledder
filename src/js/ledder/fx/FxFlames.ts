@@ -23,16 +23,16 @@ export default class FxFlames extends Fx {
     private intensityControl: ControlValue;
 
 
-    constructor(scheduler: Scheduler, controls: ControlGroup, xStep = -1, yStep = 0, interval = 2, intervalRandomizer = 0) {
+    constructor(scheduler: Scheduler, controls: ControlGroup, depth=2) {
         super(scheduler, controls)
 
         this.densityControl = controls.value("Fire density [%]", 10,0,100,1)
         this.intensityControl = controls.value("Fire intensity [%]", 100,0,100,1)
-        this.burnWidthControl = controls.value("Fire depth [pixels]", 2,1,10,1,true)
+        this.burnWidthControl = controls.value("Fire depth [pixels]", depth,1,100,1,true)
         this.windXControl = controls.value("Fire wind X", 0.1,-0.5,0.5,0.01)
         this.windYControl = controls.value("Fire wind Y" , 0.2,-0.5,0.5,0.01)
 
-        this.flameCycle = new FxColorCycle(scheduler, controls.group("Color cycle"), "reverse", 15, 15, 1)
+        this.flameCycle = new FxColorCycle(scheduler, controls.group("Fire cycle"), "reverse", 15, 15, 1)
 
     }
 
