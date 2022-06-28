@@ -33,11 +33,11 @@ export class PixelContainer extends Set<Pixel | PixelContainer> {
 
 
     //calls  callbackfn for each pixel in the pixeltree
-    forEachPixel(callbackfn: (pixel: Pixel) => void) {
+    forEachPixel(callbackfn: (pixel: Pixel, parent:PixelContainer) => void) {
         // this.recurseForEachPixel(callbackfn, this)
         for (const p of this) {
             if (p instanceof Pixel)
-                callbackfn(p)
+                callbackfn(p, this)
             else
                 p.forEachPixel(callbackfn)
         }

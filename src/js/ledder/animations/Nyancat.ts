@@ -8,16 +8,16 @@ import {ControlGroup} from "../ControlGroup.js";
 import FxWobble from "../fx/FxWobble.js";
 import FxRotate from "../fx/FxRotate.js";
 import {FxFadeOut} from "../fx/FxFadeOut.js";
-import {calculateFireColors} from "../util.js";
 import DrawAsciiArtColor from "../draw/DrawAsciiArtColor.js";
 import {PixelContainer} from "../PixelContainer.js";
 import MovingStars from "./MovingStars.js";
 import FxColorCycle from "../fx/FxColorCycle.js";
+import {fireColors} from "../ColorPatterns.js";
 
 //Nyancat, based on https://github.com/bertrik/nyancat/blob/master/nyancat.c
 
 
-const fireColors = calculateFireColors()
+
 
 export default class Nyancat extends Animation {
 
@@ -36,10 +36,9 @@ export default class Nyancat extends Animation {
         let stars = new MovingStars();
         stars.run(matrix, scheduler, controls.group("Stars"))
 
-
         //move the whole cat (will add pixels later)
         let cat = new PixelContainer()
-        new FxRotate(scheduler, controls.group('Move'), 1, 0, 2).run(cat, matrix.bbox())
+        new FxRotate(scheduler, controls.group('Move',true), 1, 0, 2).run(cat, matrix.bbox())
         matrix.add(cat)
 
         //the body and its wobblyness

@@ -1,7 +1,5 @@
 //led utils
 
-import {Color} from "./Color.js";
-
 /**
  * Integer number from min to max (inclusive)
  * @param min
@@ -22,21 +20,6 @@ export function randomFloat(min, max) {
 }
 
 
-
-//calculate converion table for fire-intensity (0-100) to Color()
-export function calculateFireColors() {
-
-    const colors = []
-    for (let i = 0; i <= 100; i++) {
-        const colorH = (i * 40 / 100)/360
-        const colorS = 1;
-        const colorL = i/100;
-        const c=new Color()
-        c.setHsl(colorH, colorS, colorL)
-        colors.push(c)
-    }
-    return (colors)
-}
 
 //check if its a number and in this range or throw error
 export function numberCheck(desc, number, min = undefined, max = undefined) {

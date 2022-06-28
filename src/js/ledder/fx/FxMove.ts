@@ -25,21 +25,17 @@ export default class FxMove extends Fx {
         this.yStepControl = controlGroup.value('Move Y step', yStep, -5, 5, 1)
     }
 
-    //rotate pixels inside specified bbox if specified. (otherwise uses bbox() of pixelcontainer)
+    //move all pixels in the pixelcontainer
     //stops after steps number of steps
-    run(container: PixelContainer, bbox?: BboxInterface, steps?: number) {
+    run(container: PixelContainer, steps?: number) {
         this.running = true
 
-        if (bbox === undefined)
-            bbox = container.bbox()
+
 
         const randomizer = random(0, this.intervalRandomizerControl.value)
 
         this.promise = this.scheduler.interval(this.intervalControl.value + randomizer, (frameNr) => {
-            container.forEachPixel((p) => {
-                p.x = p.x + this.xStepControl.value
-                p.y = p.y + this.yStepControl.value
-            })
+            container.move(this.xStepControl.value, this.yStepControl.value)
 
             if (steps) {
                 steps--

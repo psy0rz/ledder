@@ -39,7 +39,6 @@ export default class FxRotate extends Fx {
             container.forEachPixel((p) => {
                 p.x = p.x + this.xStepControl.value
                 p.y = p.y + this.yStepControl.value
-
                 p.wrap(bbox)
 
             })
