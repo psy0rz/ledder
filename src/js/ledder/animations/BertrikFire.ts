@@ -71,7 +71,6 @@ export default class BertrikFire extends Animation {
         field[y][x] = 0
       }
     }
-    console.log(pixels)
 
     const fireintervalControl = controls.value("Fire interval", 1, 1, 10, 0.1)
     const minIntensityControl = controls.value("Fire minimum intensity", 0, 0, colors.length-1, 1);
