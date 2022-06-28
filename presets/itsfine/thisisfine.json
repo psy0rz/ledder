@@ -13,7 +13,7 @@
     "value": 0
    },
    "Fire maximum intensity": {
-    "value": 0
+    "value": 300
    },
    "Fire wildness": {
     "value": 100
@@ -63,7 +63,7 @@
    }
   },
   "Text": {
-   "text": "its fine."
+   "text": "this is fine"
   }
  }
 }

@@ -23,8 +23,10 @@ export default class ItsFine extends Animation {
         new BertrikFire().run(matrix, scheduler, controls.group("Bottom fire"))
         controls.group("Bottom fire").value("Fire maximum intensity").value = 0
 
+        const inputControl=controls.input("Text", "its fine.", true)
+
         const colorControl = controls.color("Text color", 0, 255, 0)
-        const text = new DrawText(0, 0, fontSelect(controls), "ITS FINE.", colorControl).centerH(matrix)
+        const text = new DrawText(0, 0, fontSelect(controls), inputControl.text, colorControl).centerH(matrix)
         matrix.add(text)
 
         await scheduler.delay(60 * 2)

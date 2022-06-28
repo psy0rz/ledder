@@ -45,16 +45,16 @@
     "value": 10
    },
    "Fire intensity [%]": {
-    "value": 100
+    "value": 80
    },
    "Fire depth [pixels]": {
-    "value": 2
+    "value": 3
    },
    "Fire wind X": {
-    "value": 0
+    "value": -0.5
    },
    "Fire wind Y": {
-    "value": 0.14
+    "value": 0.24
    },
    "Fire cycle": {
     "Color cycle time": {
@@ -69,6 +69,38 @@
     "Color cycle mode": {
      "selected": "reverse"
     }
+   }
+  },
+  "Stars": {
+   "Enabled": {
+    "enabled": true
+   },
+   "Star color": {
+    "r": 53,
+    "g": 59,
+    "b": 34,
+    "a": 1
+   },
+   "Number of stars": {
+    "value": 22
+   },
+   "Movie interval": {
+    "value": 5
+   },
+   "Movie interval randomizer": {
+    "value": 0
+   },
+   "Rotate interval": {
+    "value": 2
+   },
+   "Rotate interval randomizer": {
+    "value": 2
+   },
+   "Rotate X step": {
+    "value": -1
+   },
+   "Rotate Y step": {
+    "value": 0
    }
   }
  }

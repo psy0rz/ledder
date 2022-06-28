@@ -7,6 +7,7 @@ import {fontSelect} from "../fonts.js";
 import DrawText from "../draw/DrawText.js";
 import FxFlames from "../fx/FxFlames.js";
 import {PixelContainer} from "../PixelContainer.js";
+import MovingStars from "./MovingStars.js";
 
 export default class Marquee extends Animation {
 
@@ -23,6 +24,13 @@ export default class Marquee extends Animation {
         const colorControl = control.color("Text color", 0x21,0xff,0, 1);
         const charPixels=new DrawText(0,0, font, input.text, colorControl )
         charPixels.centerV(matrix)
+
+        let starsGroup=control.group("Stars")
+        if (starsGroup.switch('Enabled', false).enabled) {
+            new MovingStars().run(matrix,scheduler, starsGroup)
+        }
+
+        //add on top of stars
         matrix.add(charPixels)
 
         let scrollGroup=control.group("Scrolling")
