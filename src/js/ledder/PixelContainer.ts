@@ -2,6 +2,8 @@ import {Pixel} from "./Pixel.js";
 import BboxInterface from "./BboxInterface.js";
 import {monitorEventLoopDelay} from "perf_hooks";
 import {random} from "./util.js";
+import {Color} from "./Color.js";
+import {ColorInterface} from "./ColorInterface.js";
 
 /**
  * A pixeltree. A container is just a simple Set() of Pixels, but can also contain sub PixelContainers.
@@ -11,7 +13,108 @@ import {random} from "./util.js";
  */
 export class PixelContainer extends Set<Pixel | PixelContainer> {
 
-    //dump pixeltree in string format, for debugging
+
+    /* Creates a traditional x/y raster, with seperate pixels that each get a copy of the color object.
+    * raster[x][y] corresponds to Pixel(x,y)
+    * @param YX swap array layout so raster[y][x] corresponds to Pixel(x,y)
+    * @param xFlip Flip x axis: 0,0 corresponds to Pixel(xMax,0)
+    * @param yFlip Flip y axis: 0,0 corresponds to Pixel(0,yMax)
+    */
+    raster(bbox: BboxInterface,
+           color: ColorInterface,
+           YX = false,
+           xFlip = false,
+           yFlip = false,
+           copyColor = true): Array<Array<Pixel>> {
+
+        //(probably more complicated than it needs to be?)
+
+        let ret: Array<Array<Pixel>>
+        ret = []
+
+
+        let aStart
+        let aEnd
+        let bStart
+        let bEnd
+
+        //YX
+        if (YX) {
+            aStart = bbox.yMin
+            aEnd = bbox.yMax
+            bStart = bbox.xMin
+            bEnd = bbox.xMax
+
+        }
+        //XY
+        else {
+            aStart = bbox.xMin
+            aEnd = bbox.xMax
+            bStart = bbox.yMin
+            bEnd = bbox.yMax
+
+        }
+
+        let width = bbox.xMax - bbox.xMin
+        let height = bbox.yMax - bbox.yMin
+
+        for (let a = aStart; a <= aEnd; a++) {
+            ret[a] = []
+            for (let b = bStart; b <= bEnd; b++) {
+                let c
+                if (copyColor)
+                    c = color.copy()
+                else
+                    c = color
+
+                let x
+                let y
+                if (YX) {
+                    y = a
+                    x = b
+                } else {
+                    x = a
+                    y = b
+                }
+
+                if (xFlip)
+                    x = width - x
+
+                if (yFlip)
+                    y = height - y
+
+                const p = new Pixel(x, y, color)
+                ret[a][b] = p
+                this.add(p)
+            }
+        }
+        return (ret)
+    }
+
+    //creates a traditional y/x raster, with seperate pixels that each get a copy of the color object
+    rasterYX(bbox: BboxInterface, color: ColorInterface, copyColor = true): Array<Array<Pixel>> {
+        //create clear field
+        let ret: Array<Array<Pixel>>
+        ret = []
+
+        for (let y = bbox.yMin; y <= bbox.yMax; y++) {
+
+            ret[y] = []
+            for (let x = bbox.xMin; x <= bbox.xMax; x++) {
+                let p
+                if (copyColor)
+                    p = new Pixel(x, y, color.copy())
+                else
+                    p = new Pixel(x, y, color)
+                ret[y][x] = p
+                this.add(p)
+            }
+        }
+        return (ret)
+    }
+
+
+//dump pixeltree in string format, for debugging
     dump(indent = "") {
         let str = ""
         str = str + indent + `pixeltree:\n`
@@ -34,7 +137,7 @@ export class PixelContainer extends Set<Pixel | PixelContainer> {
 
 
     //calls  callbackfn for each pixel in the pixeltree
-    forEachPixel(callbackfn: (pixel: Pixel, parent:PixelContainer) => void) {
+    forEachPixel(callbackfn: (pixel: Pixel, parent: PixelContainer) => void) {
         // this.recurseForEachPixel(callbackfn, this)
         for (const p of this) {
             if (p instanceof Pixel)
@@ -47,24 +150,22 @@ export class PixelContainer extends Set<Pixel | PixelContainer> {
     //get a "random" pixel from the tree.
     //note: because it chooses random containers as well, the pixel distribution might not be totally random
     //it also can return undefined if it ends up at and empty tree.
-    randomPixel():Pixel|undefined
-    {
-        if (this.size==0)
+    randomPixel(): Pixel | undefined {
+        if (this.size == 0)
             return undefined
 
-        let r=random(0,this.size-1)
-        const i=this.values()
+        let r = random(0, this.size - 1)
+        const i = this.values()
         let p
-        while (r>=0)
-        {
-            p=i.next()
+        while (r >= 0) {
+            p = i.next()
             r--
         }
 
         if (p.value instanceof Pixel)
             return p.value
         else
-            return(p.value.randomPixel())
+            return (p.value.randomPixel())
 
     }
 
@@ -126,8 +227,7 @@ export class PixelContainer extends Set<Pixel | PixelContainer> {
 
     }
 
-    //center our pixels inside specified bbox
-    center(bbox: BboxInterface) {
+    private getCenterOffsets(bbox: BboxInterface) {
         //our center
         const ourBbox = this.bbox()
         const ourX = (ourBbox.xMax + ourBbox.xMin) / 2
@@ -137,8 +237,35 @@ export class PixelContainer extends Set<Pixel | PixelContainer> {
         const x = (bbox.xMax + bbox.xMin) / 2
         const y = (bbox.yMax + bbox.yMin) / 2
 
-        this.move(Math.round(x - ourX), Math.round(y - ourY))
-        return(this)
+        return [Math.round(x - ourX), Math.round(y - ourY)]
 
     }
+
+    //center our pixels inside specified bbox
+    center(bbox: BboxInterface) {
+        let offsets = this.getCenterOffsets(bbox)
+
+        this.move(offsets[0], offsets[1])
+        return (this)
+
+    }
+
+    //vertical center our pixels indside specified box
+    centerV(bbox: BboxInterface) {
+        let offsets = this.getCenterOffsets(bbox)
+
+        this.move(0, offsets[1])
+        return (this)
+
+    }
+
+    //horizontal center our pixels indside specified box
+    centerH(bbox: BboxInterface) {
+        let offsets = this.getCenterOffsets(bbox)
+
+        this.move(offsets[0], 0)
+        return (this)
+
+    }
+
 }

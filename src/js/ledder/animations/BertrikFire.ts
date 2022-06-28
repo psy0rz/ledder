@@ -6,6 +6,7 @@ import {Matrix} from "../Matrix.js";
 import {Scheduler} from "../Scheduler.js";
 import {ControlGroup} from "../ControlGroup.js";
 import {fireColorsBertrik} from "../ColorPatterns.js";
+import {PixelContainer} from "../PixelContainer.js";
 
 export default class BertrikFire extends Animation {
   static category = "Fire"
@@ -59,21 +60,18 @@ export default class BertrikFire extends Animation {
 
   async run(matrix: Matrix, scheduler: Scheduler, controls: ControlGroup) {
 
-    let field = []
-    let pixels =[]
+    let pixels = matrix.raster(matrix,new Color(0,0,0), true,false, true)
+    let field =[]
     let colors = fireColorsBertrik
 
     //create clear field
     for (let y = 0; y < matrix.height; y++) {
       field[y] = []
-      pixels[y] = []
       for (let x = 0; x < matrix.width; x++) {
-        const p=new Pixel( x, matrix.height-y-1, new Color(0,0,0))
-        pixels[y][x]=p
         field[y][x] = 0
-        matrix.add(p)
       }
     }
+    console.log(pixels)
 
     const fireintervalControl = controls.value("Fire interval", 1, 1, 10, 0.1)
     const minIntensityControl = controls.value("Fire minimum intensity", 0, 0, colors.length-1, 1);

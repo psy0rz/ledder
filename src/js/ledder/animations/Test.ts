@@ -19,6 +19,7 @@ import FxFlames from "../fx/FxFlames.js";
 import PoliceLights from "./PoliceLights.js";
 import Nyancat from "./Nyancat.js";
 import {PresetStore} from "../../server/PresetStore.js";
+import BertrikFire from "./BertrikFire.js";
 
 
 
@@ -33,34 +34,17 @@ export default class Test extends Animation {
     async run(matrix: Matrix, scheduler: Scheduler, controls: ControlGroup) {
 
 
-        // const colorControl=controls.color("c",0,0,255)
-        // const text = new DrawText(0, 0, fontSelect(controls), "BTC $20.000", colorControl)
-        // matrix.add(text)
-        //
-        // const flames=new PixelContainer()
-        // matrix.add(flames)
-        // new FxFlames(scheduler,controls).run(text, flames)
-        // new FxRotate(scheduler, controls.group("marquee"),0,0,2).run(text, matrix)
+        const colorControl=controls.color("c",0,255,0)
+        const text = new DrawText(0, 0, fontSelect(controls), "ITS FINE.", colorControl).centerH(matrix)
+        matrix.add(text)
+        const flames=new PixelContainer()
+        matrix.add(flames)
+        new FxFlames(scheduler,controls.group("Top fire")).run(text, flames)
 
-        const c=new ControlGroup()
 
-        const store=new PresetStore()
+        new BertrikFire().run(matrix,scheduler, controls.group("Bottom fire"))
 
-        // while (1) {
-            const preset=await store.load(PoliceLights, "Dutch")
 
-            controls.group("Police").load(preset.values)
-            new PoliceLights().run(matrix, scheduler, controls)
-            // await scheduler.delay(120)
-            // scheduler.clear()
-            // await new FxFlameout(scheduler,c).run(matrix)
-            // matrix.clear()
-            //
-            // new Nyancat().run(matrix, scheduler, c)
-            // await scheduler.delay(60)
-            // scheduler.clear()
-            // matrix.clear()
-        }
 
 
     }
