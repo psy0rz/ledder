@@ -9,8 +9,8 @@ import {ControlGroup} from "./ControlGroup.js";
 
 export let fonts = {
     'Atari regular': new Font('Atari', 'fonts/EightBit Atari-Regular.ttf', 0, 8, 0),
-    'C64 mono': new Font('C64 monospaced', 'fonts/C64_Pro_Mono-STYLE.otf', 0, 8, 0),
-    'C64': new Font('C64', 'fonts/C64_Pro-STYLE.otf', 0, 8, 0),
+    'C64 mono': new Font('C64 monospaced', 'fonts/C64_Pro_Mono-STYLE.otf', 0, 8, 1),
+    'C64': new Font('C64', 'fonts/C64_Pro-STYLE.otf', 0, 8, 1),
     'IBM bios': new Font('IBM bios', 'fonts/PxPlus_IBM_BIOS.ttf', 0, 8, 0),
     'MSX': new Font('MSX', 'fonts/MSX-Screen0.ttf', 0, 8, 0),
     'ZX Sierra Quest': new Font('ZX Sierra Quest', 'fonts/ZX Sierra Quest.ttf', 0, 8, 1),

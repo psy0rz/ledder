@@ -39,6 +39,10 @@ export default class FxFlames extends Fx {
     //create flames for pixels from source into target
     //target should be empty and unused
     run(sourceContainer: PixelContainer, targetContainer: PixelContainer) {
+
+        if (targetContainer.size)
+            throw ("Please use an empty target container")
+
         this.running = true
 
         //collect the pixels we need

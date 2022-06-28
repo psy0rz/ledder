@@ -1,0 +1,75 @@
+{
+ "title": "",
+ "description": "",
+ "values": {
+  "FPS": {
+   "value": 60
+  },
+  "Font": {
+   "selected": "C64"
+  },
+  "Text": {
+   "text": "Open"
+  },
+  "Text color": {
+   "r": 0,
+   "g": 99,
+   "b": 255,
+   "a": 1
+  },
+  "Scrolling": {
+   "Enabled": {
+    "enabled": false
+   },
+   "Whitespace": {
+    "value": 22
+   },
+   "Rotate interval": {
+    "value": 2
+   },
+   "Rotate interval randomizer": {
+    "value": 0
+   },
+   "Rotate X step": {
+    "value": -1
+   },
+   "Rotate Y step": {
+    "value": 0
+   }
+  },
+  "Flames": {
+   "Enabled": {
+    "enabled": true
+   },
+   "Fire density [%]": {
+    "value": 10
+   },
+   "Fire intensity [%]": {
+    "value": 100
+   },
+   "Fire depth [pixels]": {
+    "value": 2
+   },
+   "Fire wind X": {
+    "value": 0
+   },
+   "Fire wind Y": {
+    "value": 0.14
+   },
+   "Fire cycle": {
+    "Color cycle time": {
+     "value": 14
+    },
+    "Color cycle time randomizer": {
+     "value": 15
+    },
+    "Color cycle repeat count": {
+     "value": 1
+    },
+    "Color cycle mode": {
+     "selected": "reverse"
+    }
+   }
+  }
+ }
+}
