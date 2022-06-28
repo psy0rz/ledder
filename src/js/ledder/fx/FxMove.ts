@@ -5,6 +5,7 @@ import {PixelContainer} from "../PixelContainer.js";
 import BboxInterface from "../BboxInterface.js";
 import {Scheduler} from "../Scheduler.js";
 import {random} from "../util.js";
+import {Pixel} from "../Pixel.js";
 
 
 //Move pixels. If they leave the box they will be removed from the container.
@@ -27,7 +28,7 @@ export default class FxMove extends Fx {
 
     //move all pixels in the pixelcontainer
     //stops after steps number of steps
-    run(container: PixelContainer, steps?: number) {
+    run(container: PixelContainer|Pixel, steps?: number) {
         this.running = true
 
 

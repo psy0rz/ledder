@@ -11,7 +11,7 @@ import {Color} from "../Color.js";
 import {fireColors} from "../ColorPatterns.js";
 
 
-//Make pixels disappear as a bunch of flames
+//Make pixels disappear as a bunch of flames, also removes them from container
 export default class FxFlameout extends Fx {
     private flameCycle: FxColorCycle;
     private mover: FxMove;
@@ -26,7 +26,7 @@ export default class FxFlameout extends Fx {
 
     }
 
-    //rotate pixels inside specified bbox if specified. (otherwise uses bbox() of pixelcontainer)
+    //flameout the pixels in the container, and also clears the container when done
     run(container: PixelContainer) {
         this.running = true
 

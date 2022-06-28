@@ -43,14 +43,15 @@ export default class FxColorCycle extends Fx {
 
 
     //cycle the target color object through the list of colors.
-    //use skip to skip the first number of colors
+    //use skip to skip the first number of colors.
+    //note: skipping makes the cycle-time shorter, since thats usually what you want.
     run(colors: Array<ColorInterface>, target: ColorInterface, skip=0) {
 
         this.running = true
         let repeat = 0
         let colorI = 0
 
-        //calculate step size
+        //calculate step size (does not take into account skip!)
         let step=colors.length/(this.cycleTimeControl.value +  random(0, this.randomizerControl.value))
 
         if (this.mode.selected == "reverse") {

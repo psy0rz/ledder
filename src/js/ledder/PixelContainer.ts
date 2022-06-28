@@ -1,6 +1,7 @@
 import {Pixel} from "./Pixel.js";
 import BboxInterface from "./BboxInterface.js";
 import {monitorEventLoopDelay} from "perf_hooks";
+import {random} from "./util.js";
 
 /**
  * A pixeltree. A container is just a simple Set() of Pixels, but can also contain sub PixelContainers.
@@ -41,6 +42,30 @@ export class PixelContainer extends Set<Pixel | PixelContainer> {
             else
                 p.forEachPixel(callbackfn)
         }
+    }
+
+    //get a "random" pixel from the tree.
+    //note: because it chooses random containers as well, the pixel distribution might not be totally random
+    //it also can return undefined if it ends up at and empty tree.
+    randomPixel():Pixel|undefined
+    {
+        if (this.size==0)
+            return undefined
+
+        let r=random(0,this.size-1)
+        const i=this.values()
+        let p
+        while (r>=0)
+        {
+            p=i.next()
+            r--
+        }
+
+        if (p.value instanceof Pixel)
+            return p.value
+        else
+            return(p.value.randomPixel())
+
     }
 
     //Returns a deep copy of the pixeltree.
