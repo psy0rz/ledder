@@ -23,7 +23,7 @@ export default class PoliceLights extends Animation {
     static category = "Signal lights"
 
 
-    async run(matrix: Matrix, scheduler: Scheduler, controls: ControlGroup) {
+    async run(matrix: Matrix, scheduler: Scheduler, controls: ControlGroup, overrideText1?:string, overrideText2?:string) {
 
         /////////////// text
         const font = fontSelect(controls)
@@ -31,12 +31,13 @@ export default class PoliceLights extends Animation {
 
         const colorText1 = controls.color("Text1 color", 255, 0, 0, 1);
         const inputText1 = controls.input('Text1', 'STOP', true)
-        textList.add(new DrawText(0,0, font, inputText1.text, colorText1).center(matrix))
+        textList.add(new DrawText(0,0, font, overrideText1?overrideText1:inputText1.text, colorText1).center(matrix))
         textList.add(new PixelContainer()) //blank screen
 
         const colorText2 = controls.color("Text2 color", 255, 0, 0, 1);
         const inputText2 = controls.input('Text2', 'POLICE', true)
-        textList.add(new DrawText(0, 0, font, inputText2.text, colorText2).center(matrix))
+
+        textList.add(new DrawText(0, 0, font, overrideText2?overrideText2:inputText2.text, colorText2).center(matrix))
         textList.add(new PixelContainer()) //blank screen
 
         //fxmovie will display the 2 text-containers that are in the textList container:

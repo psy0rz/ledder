@@ -2,7 +2,6 @@ import {Animation} from "../Animation.js";
 import {random} from "../util.js";
 import {Pixel} from "../Pixel.js";
 import {Color} from "../Color.js";
-import {calculateFireColors} from "../ColorPatterns.js";
 
 //glow firepixel intesity between min/max (inclusive), with specified "wildness"
 export function glow(current:number, min:number, max:number, wildness:number) {

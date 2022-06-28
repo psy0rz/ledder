@@ -1,0 +1,24 @@
+{
+ "title": "",
+ "description": "",
+ "values": {
+  "FPS": {
+   "value": 60
+  },
+  "Fire interval": {
+   "value": 3.1
+  },
+  "Fire minimum intensity": {
+   "value": 172
+  },
+  "Fire maximum intensity": {
+   "value": 416
+  },
+  "Fire wildness": {
+   "value": 105
+  },
+  "Fire decay": {
+   "value": 94
+  }
+ }
+}

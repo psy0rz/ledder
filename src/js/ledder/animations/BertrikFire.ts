@@ -2,54 +2,28 @@ import {Animation} from "../Animation.js";
 import {Pixel} from "../Pixel.js";
 import {Color} from "../Color.js";
 import { glow} from "./DoomFire.js";
+import {Matrix} from "../Matrix.js";
+import {Scheduler} from "../Scheduler.js";
+import {ControlGroup} from "../ControlGroup.js";
+import {fireColorsBertrik} from "../ColorPatterns.js";
 
 export default class BertrikFire extends Animation {
   static category = "Fire"
   static title = "Bertrik"
-  static description = "A more realistic fire, based on <a href='https://github.com/bertrik/nyancat/blob/master/fire.c'>this.</a>"
+  static description = "Fire, based on <a href='https://github.com/bertrik/nyancat/blob/master/fire.c'>this.</a>"
   static presetDir = "BertrikFire";
 
-  //note: i just kept it mostly the way it was without optimizing
 
-  create_palette(palet) {
-    let i;
-    let k = 0;
-    let r = 0, g = 0, b = 0;
-
-    // black to red
-    for (i = 0; i < 15; i++) {
-      palet[k++] = (r << 20) + (g << 12) + ((b / 4) << 4);
-      r++;
-    }
-
-    // red to yellow
-    for (i = 0; i < 15; i++) {
-      palet[k++] = (r << 20) + (g << 12) + (b << 4);
-      g++;
-    }
-
-    // yellow to white
-    for (i = 0; i < 15; i++) {
-      palet[k++] = (r << 20) + (g << 12) + (b << 4);
-      b++;
-    }
-    // just white
-    for (i = 0; i < 30; i++) {
-      palet[k++] = (r << 20) + (g << 12) + (b << 4);
-    }
-    return k;
-  }
-
-  move_fire(field, height, decay) {
+  move_fire(matrix, field, height, decay, maxFlame) {
     let x, y, flame;
 
     // move flames up
     for (y = 0; y < height - 1; y++) {
-      for (x = 0; x < this.matrix.width; x++) {
+      for (x = 0; x < matrix.width; x++) {
         // average
         if (x == 0) {
           flame = (field[y][x] + 2 * field[y + 1][x] + field[y + 1][x + 1]) / 4;
-        } else if (x == (this.matrix.width - 1)) {
+        } else if (x == (matrix.width - 1)) {
           flame = (field[y][x] + 2 * field[y + 1][x] + field[y + 1][x - 1]) / 4;
         } else {
           flame = (field[y][x] + field[y + 1][x - 1] + field[y + 1][x] + field[y + 1][x + 1]) / 4;
@@ -60,62 +34,61 @@ export default class BertrikFire extends Animation {
         } else {
           flame /= 2;
         }
+        if (flame<0)
+          flame=0
+
+        if (flame>maxFlame)
+          flame=maxFlame
         field[y][x] = flame;
       }
     }
   }
 
 
-  save_image(field, palet) {
+  save_image(matrix, field,  pixels:Array<Array<Pixel>>, colors) {
     let row, col;
-    let rgb;
-    let b;
 
-      for (row = 0; row < this.matrix.height; row++) {
-        for (col = 0; col < this.matrix.width; col++) {
-          rgb = palet[field[row][col]];
-
-          const pixelNr=col + (row*this.matrix.width)
-
-          this.pixels[pixelNr].color.r= (rgb >> 16) & 0xFF;
-          this.pixels[pixelNr].color.g= (rgb >> 8) & 0xFF;
-          this.pixels[pixelNr].color.b= (rgb >> 0) & 0xFF;
+      for (row = 0; row < matrix.height; row++) {
+        for (col = 0; col < matrix.width; col++) {
+          const intensity=field[row][col]
+          pixels[row][col].color=colors[~~intensity]
         }
       }
+
   }
 
-  constructor(matrix) {
-    super(matrix);
+  async run(matrix: Matrix, scheduler: Scheduler, controls: ControlGroup) {
 
     let field = []
-    let palet = []
-    let numcol = this.create_palette(palet)
+    let pixels =[]
+    let colors = fireColorsBertrik
 
     //create clear field
     for (let y = 0; y < matrix.height; y++) {
-      field[y] = new Uint8ClampedArray(matrix.width)
+      field[y] = []
+      pixels[y] = []
       for (let x = 0; x < matrix.width; x++) {
+        const p=new Pixel( x, matrix.height-y-1, new Color(0,0,0))
+        pixels[y][x]=p
         field[y][x] = 0
-        this.addPixel(new Pixel(matrix, x, matrix.height-y-1, new Color(0, 0, 0)))
+        matrix.add(p)
       }
     }
 
-    const fireintervalControl = matrix.control.value("Fire interval", 3, 1, 10, 0.1)
-    const minIntensityControl = matrix.control.value("Fire minimum intensity", 20, 0, palet.length-1, 1);
-    const maxIntensityControl = matrix.control.value("Fire maximum intensity", 74, 0, palet.length-1, 1);
-    const wildnessIntensityControl = matrix.control.value("Fire wildness", 10, 0, palet.length-1, 1);
-    const decayControl = matrix.control.value("Fire decay", 4, 1, 10, 1)
-
+    const fireintervalControl = controls.value("Fire interval", 1, 1, 10, 0.1)
+    const minIntensityControl = controls.value("Fire minimum intensity", 0, 0, colors.length-1, 1);
+    const maxIntensityControl = controls.value("Fire maximum intensity", colors.length-1, 0, colors.length-1, 1);
+    const wildnessIntensityControl = controls.value("Fire wildness", 100, 0, colors.length-1, 1);
+    const decayControl = controls.value("Fire decay", 100, 1, colors.length/2, 1)
 
     matrix.scheduler.intervalControlled(fireintervalControl, () => {
 
       //glow lower row
-      for (let x = 0; x < this.matrix.width; x++) {
+      for (let x = 0; x < matrix.width; x++) {
         field[matrix.height - 1][x]=glow(field[matrix.height - 1][x], minIntensityControl.value, maxIntensityControl.value, wildnessIntensityControl.value)
       }
-
-      this.move_fire(field, this.matrix.height, decayControl.value)
-      this.save_image(field, palet)
+      this.move_fire(matrix,field, matrix.height, decayControl.value, colors.length-1)
+      this.save_image( matrix, field, pixels, colors)
 
       return true
     })

@@ -2,7 +2,7 @@
  * Base class for all controls.
  */
 
-export type Values= Record< string , any>
+export type  Values= Record< string , any>
 
 
 
