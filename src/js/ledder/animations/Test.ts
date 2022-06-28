@@ -28,13 +28,15 @@ export default class Test extends Animation {
     async run(matrix: Matrix, scheduler: Scheduler, controls: ControlGroup) {
 
 
-        const text = new DrawText(0, 0, fontSelect(controls), "Qunix.nl", new Color(0, 0, 255))
+        const colorControl=controls.color("c",0,0,255)
+        const text = new DrawText(0, 0, fontSelect(controls), "Qunix.nl", colorControl)
         matrix.add(text)
-        new FxRotate(scheduler, controls,-1,0,2).run(text, matrix)
 
         const flames=new PixelContainer()
         matrix.add(flames)
         new FxFlames(scheduler,controls).run(text, flames)
+
+        new FxRotate(scheduler, controls.group("marquee"),0,0,2).run(text, matrix)
 
     }
 }

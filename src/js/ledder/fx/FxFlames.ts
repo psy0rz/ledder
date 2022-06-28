@@ -4,7 +4,7 @@ import {ControlGroup} from "../ControlGroup.js";
 import {PixelContainer} from "../PixelContainer.js";
 import BboxInterface from "../BboxInterface.js";
 import {Scheduler} from "../Scheduler.js";
-import {random} from "../util.js";
+import {random, randomFloat} from "../util.js";
 import FxColorCycle from "./FxColorCycle.js";
 import FxMove from "./FxMove.js";
 import {Color} from "../Color.js";
@@ -17,13 +17,24 @@ import {Pixel} from "../Pixel.js";
 export default class FxFlames extends Fx {
     private flameCycle: FxColorCycle;
     private mover: FxMove;
+    private densityControl: ControlValue;
+    private burnWidthControl: ControlValue;
+    private windXControl: any;
+    private windYControl: any;
+    private intensityControl: ControlValue;
 
 
     constructor(scheduler: Scheduler, controls: ControlGroup, xStep = -1, yStep = 0, interval = 2, intervalRandomizer = 0) {
         super(scheduler, controls)
 
-        this.flameCycle = new FxColorCycle(scheduler, controls, "reverse", 30, 15, 1)
-        //this.mover = new FxMove(scheduler, controls, 0.4, 1, 5, 3)
+        this.densityControl = controls.value("Fire density [%]", 10,0,100,1)
+        this.intensityControl = controls.value("Fire intensity [%]", 100,0,100,1)
+        this.burnWidthControl = controls.value("Fire depth [pixels]", 3,1,10,1,true)
+        this.windXControl = controls.value("Fire wind X", 0.1,-0.5,0.5,0.01)
+        this.windYControl = controls.value("Fire wind Y" , 0.2,-0.5,0.5,0.01)
+
+        this.flameCycle = new FxColorCycle(scheduler, controls.group("Color cycle"), "reverse", 15, 15, 1)
+        // this.mover = new FxMove(scheduler, controls.group("Movement"), 1, 2, 0.1, 0)
 
     }
 
@@ -37,48 +48,56 @@ export default class FxFlames extends Fx {
         const bbox = sourceContainer.bbox()
 
         sourceContainer.forEachPixel((p) => {
-            if (p.y > bbox.yMax - 3) {
+            if (p.y > bbox.yMax - this.burnWidthControl.value) {
                 burningPixels.add(p)
             }
         })
+
+        // this.mover.run(targetContainer)
 
 
         this.promise = this.scheduler.interval(1, () => {
 
             const heads=new PixelContainer()
 
-            for (let i = 0; i < 1; i++) {
-                const p = burningPixels.randomPixel()
 
-                let skip = ~~(((bbox.yMax - p.y) / (bbox.yMax - bbox.yMin)) * fireColors.length)
-                skip=0
+            for (const p of burningPixels) {
 
-                //start a new trail
-                const newTrail = new PixelContainer()
-                const head=new PixelContainer()
-                head.add(p)
-                head.add(newTrail)
-                heads.add(head)
+                if (random(0,100)>=this.densityControl.value)
+                    continue
 
-                targetContainer.add(newTrail)
-                const flameHead=p.copy(true)
+                if (!(p instanceof Pixel))
+                    continue
 
-                this.flameCycle.run(fireColors, flameHead.color, skip).then(() =>
-                {
-                    targetContainer.delete(newTrail)
-                    heads.delete(head)
+                let skip
+                // let skip = ~~(((bbox.yMax - p.y) / (bbox.yMax - bbox.yMin)) * fireColors.length)
+               // skip=random(0,100-this.intensityControl.value)
+                // skip = 0
+                skip=100-this.intensityControl.value
+
+                // //start a new trail
+                const flameHead = p.copy(true)
+                targetContainer.add(flameHead)
+
+                this.flameCycle.run(fireColors, flameHead.color, skip).then(() => {
+                    targetContainer.delete(flameHead)
+                    // heads.delete(head)
                 })
 
-                //extend all the trails
-                for (const trail of targetContainer) {
-                    if (trail instanceof PixelContainer) {
-                        const p = trail.values().next().value
-                        trail.add(p.copy())
-                        p.move(0.1, 0.2)
-
-                    }
-                }
+                // targetContainer.move(0,0.001)
             }
+            targetContainer.move( randomFloat(0,this.windXControl.value), randomFloat(0, this.windYControl.value))
+
+                //extend all the trails
+            //     for (const trail of targetContainer) {
+            //         if (trail instanceof PixelContainer) {
+            //             const p = trail.values().next().value
+            //             trail.add(p.copy())
+            //             p.move(0.1, 0.2)
+            //
+            //         }
+            //     }
+            // }
 
             return (this.running)
 
