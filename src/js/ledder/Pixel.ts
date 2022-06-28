@@ -42,6 +42,7 @@ export class Pixel implements PixelInterface {
     {
         this.x+=x
         this.y+=y
+        return (this)
     }
 
 

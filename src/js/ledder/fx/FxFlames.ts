@@ -19,52 +19,73 @@ export default class FxFlames extends Fx {
     private mover: FxMove;
 
 
-
-    constructor(scheduler: Scheduler, controls: ControlGroup, xStep = -1, yStep = 0, interval = 2, intervalRandomizer=0) {
+    constructor(scheduler: Scheduler, controls: ControlGroup, xStep = -1, yStep = 0, interval = 2, intervalRandomizer = 0) {
         super(scheduler, controls)
 
-        this.flameCycle=new FxColorCycle(scheduler, controls, "reverse",15,15,1)
-        this.mover = new FxMove(scheduler, controls, 0.4, 1, 5, 3)
+        this.flameCycle = new FxColorCycle(scheduler, controls, "reverse", 30, 15, 1)
+        //this.mover = new FxMove(scheduler, controls, 0.4, 1, 5, 3)
 
     }
 
     //create flames for pixels from source into target
-    //(they can be the same container if you dont use any other effects on the source)
-    run(sourceContainer: PixelContainer, targetContainer:PixelContainer) {
+    //target should be empty and unused
+    run(sourceContainer: PixelContainer, targetContainer: PixelContainer) {
         this.running = true
 
         //collect the pixels we need
-        const burningPixels=new PixelContainer()
-        const bbox=sourceContainer.bbox()
+        const burningPixels = new PixelContainer()
+        const bbox = sourceContainer.bbox()
 
-        sourceContainer.forEachPixel( (p)=>{
-            if (p.y> bbox.yMax-3)
-            {
+        sourceContainer.forEachPixel((p) => {
+            if (p.y > bbox.yMax - 3) {
                 burningPixels.add(p)
             }
         })
 
-        this.promise=this.scheduler.interval(1, () => {
+
+        this.promise = this.scheduler.interval(1, () => {
+
+            const heads=new PixelContainer()
+
             for (let i = 0; i < 1; i++) {
                 const p = burningPixels.randomPixel()
 
-                const newP = p.copy(true)
-                let skip = ~~(((bbox.yMax - newP.y) / (bbox.yMax - bbox.yMin)) * fireColors.length)
+                let skip = ~~(((bbox.yMax - p.y) / (bbox.yMax - bbox.yMin)) * fireColors.length)
+                skip=0
 
-                    targetContainer.add(newP)
+                //start a new trail
+                const newTrail = new PixelContainer()
+                const head=new PixelContainer()
+                head.add(p)
+                head.add(newTrail)
+                heads.add(head)
 
-                    this.flameCycle.run(fireColors, newP.color, skip).then(() => targetContainer.delete(newP))
-                    this.mover.run(newP, 20)
+                targetContainer.add(newTrail)
+                const flameHead=p.copy(true)
+
+                this.flameCycle.run(fireColors, flameHead.color, skip).then(() =>
+                {
+                    targetContainer.delete(newTrail)
+                    heads.delete(head)
+                })
+
+                //extend all the trails
+                for (const trail of targetContainer) {
+                    if (trail instanceof PixelContainer) {
+                        const p = trail.values().next().value
+                        trail.add(p.copy())
+                        p.move(0.1, 0.2)
+
+                    }
+                }
             }
 
             return (this.running)
 
-        }).then( ()=>
-        {
+        }).then(() => {
 
 
         })
-
 
 
         return (this.promise)

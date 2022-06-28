@@ -10,6 +10,7 @@ function calculateFireColors() {
         const colorL = i / 100;
         const c = new Color()
         c.setHsl(colorH, colorS, colorL)
+        c.a=i/100
         colors.push(c)
     }
     return (colors)
