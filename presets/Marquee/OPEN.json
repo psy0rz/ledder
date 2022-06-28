@@ -102,6 +102,35 @@
    "Rotate Y step": {
     "value": 0
    }
+  },
+  "Cursor": {
+   "Enabled": {
+    "enabled": true
+   },
+   "Color": {
+    "r": 128,
+    "g": 128,
+    "b": 128,
+    "a": 1
+   },
+   "X offset": {
+    "value": 2
+   },
+   "Y offset": {
+    "value": 1
+   },
+   "Height": {
+    "value": 2
+   },
+   "Width": {
+    "value": 6
+   },
+   "Fade out time": {
+    "value": 10
+   },
+   "Fade out time randomizer": {
+    "value": 0
+   }
   }
  }
 }

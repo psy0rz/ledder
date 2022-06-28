@@ -8,6 +8,9 @@ import DrawText from "../draw/DrawText.js";
 import FxFlames from "../fx/FxFlames.js";
 import {PixelContainer} from "../PixelContainer.js";
 import MovingStars from "./MovingStars.js";
+import DrawBox from "../draw/DrawBox.js";
+import {Color} from "../Color.js";
+import {FxFadeOut} from "../fx/FxFadeOut.js";
 
 export default class Marquee extends Animation {
 
@@ -25,7 +28,7 @@ export default class Marquee extends Animation {
         const charPixels=new DrawText(0,0, font, input.text, colorControl )
         charPixels.centerV(matrix)
 
-        let starsGroup=control.group("Stars")
+        let starsGroup=control.group("Stars", false, true)
         if (starsGroup.switch('Enabled', false).enabled) {
             new MovingStars().run(matrix,scheduler, starsGroup)
         }
@@ -50,14 +53,36 @@ export default class Marquee extends Animation {
             charPixels.centerH(matrix)
         }
 
-        let flameGroup=control.group("Flames")
+        let flameGroup=control.group("Flames", false, true)
         if (flameGroup.switch('Enabled', false).enabled) {
             const flames=new PixelContainer()
             matrix.add(flames)
             new FxFlames(scheduler,flameGroup).run(charPixels, flames)
         }
 
-    }
+        let cursorGroup=control.group("Cursor")
+        if (cursorGroup.switch('Enabled', true).enabled) {
+            const cursorColor=cursorGroup.color("Color", 128,128,128).copy()
+            const cursorX=cursorGroup.value("X offset",2, 0,100,1,true)
+            const cursorY=cursorGroup.value("Y offset",1,0,100,1,true)
+            const cursorH=cursorGroup.value("Height",6,0,100,1,true)
+            const cursorW=cursorGroup.value("Width",5,0,100,1,true)
+            const bbox=charPixels.bbox()
+            const cursor=new DrawBox(bbox.xMax+cursorX.value, bbox.yMin+cursorY.value , cursorW.value,cursorH.value, cursorColor)
+            const fader=new FxFadeOut(scheduler,cursorGroup,10)
+            charPixels.add(cursor)
+            while(1)
+            {
+                cursorColor.a=1
+                await scheduler.delay(62.5/2) //TODO: actual time calculator
+                fader.run(cursorColor)
+                await scheduler.delay(62.5/2)
+            }
+        }
+
+
+
+        }
 
 }
 
