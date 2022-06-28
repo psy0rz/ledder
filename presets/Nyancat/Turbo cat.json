@@ -1,0 +1,119 @@
+{
+ "title": "",
+ "description": "",
+ "values": {
+  "FPS": {
+   "value": 60
+  },
+  "Rainbow": {
+   "Fade out time": {
+    "value": 40
+   },
+   "Fade out time randomizer": {
+    "value": 4
+   }
+  },
+  "Fire": {
+   "Use fire": {
+    "enabled": true
+   },
+   "Color cycle time": {
+    "value": 22
+   },
+   "Color cycle time randomizer": {
+    "value": 4
+   },
+   "Color cycle repeat count": {
+    "value": 1
+   },
+   "Color cycle mode": {
+    "selected": "reverse"
+   }
+  },
+  "Stars": {
+   "Star color": {
+    "r": 255,
+    "g": 255,
+    "b": 255,
+    "a": 0.01
+   },
+   "Number of stars": {
+    "value": 10
+   },
+   "Movie interval": {
+    "value": 5
+   },
+   "Movie interval randomizer": {
+    "value": 0
+   },
+   "Rotate interval": {
+    "value": 4
+   },
+   "Rotate interval randomizer": {
+    "value": 2
+   },
+   "Rotate X step": {
+    "value": -1
+   },
+   "Rotate Y step": {
+    "value": 0
+   }
+  },
+  "Move": {
+   "Rotate interval": {
+    "value": 1
+   },
+   "Rotate interval randomizer": {
+    "value": 0
+   },
+   "Rotate X step": {
+    "value": 1
+   },
+   "Rotate Y step": {
+    "value": 0
+   }
+  },
+  "Wobble body": {
+   "Wobble interval": {
+    "value": 15
+   },
+   "Wobble interval offset": {
+    "value": 0
+   },
+   "Wobble X amount": {
+    "value": 0
+   },
+   "Wobble Y amount": {
+    "value": -1
+   }
+  },
+  "Wobble head x": {
+   "Wobble interval": {
+    "value": 15
+   },
+   "Wobble interval offset": {
+    "value": 10
+   },
+   "Wobble X amount": {
+    "value": 1
+   },
+   "Wobble Y amount": {
+    "value": 0
+   }
+  },
+  "Wobble head y": {
+   "Wobble interval": {
+    "value": 15
+   },
+   "Wobble interval offset": {
+    "value": 5
+   },
+   "Wobble X amount": {
+    "value": 0
+   },
+   "Wobble Y amount": {
+    "value": 1
+   }
+  }
+ }
+}
