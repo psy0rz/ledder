@@ -29,7 +29,7 @@ export default class Test extends Animation {
 
 
         const colorControl=controls.color("c",0,0,255)
-        const text = new DrawText(0, 0, fontSelect(controls), "Qunix.nl", colorControl)
+        const text = new DrawText(0, 0, fontSelect(controls), "BTC $20.000", colorControl)
         matrix.add(text)
 
         const flames=new PixelContainer()

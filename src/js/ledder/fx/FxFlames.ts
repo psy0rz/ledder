@@ -16,7 +16,6 @@ import {Pixel} from "../Pixel.js";
 //Add flames to the top pixels of a container
 export default class FxFlames extends Fx {
     private flameCycle: FxColorCycle;
-    private mover: FxMove;
     private densityControl: ControlValue;
     private burnWidthControl: ControlValue;
     private windXControl: any;
@@ -29,12 +28,11 @@ export default class FxFlames extends Fx {
 
         this.densityControl = controls.value("Fire density [%]", 10,0,100,1)
         this.intensityControl = controls.value("Fire intensity [%]", 100,0,100,1)
-        this.burnWidthControl = controls.value("Fire depth [pixels]", 3,1,10,1,true)
+        this.burnWidthControl = controls.value("Fire depth [pixels]", 2,1,10,1,true)
         this.windXControl = controls.value("Fire wind X", 0.1,-0.5,0.5,0.01)
         this.windYControl = controls.value("Fire wind Y" , 0.2,-0.5,0.5,0.01)
 
         this.flameCycle = new FxColorCycle(scheduler, controls.group("Color cycle"), "reverse", 15, 15, 1)
-        // this.mover = new FxMove(scheduler, controls.group("Movement"), 1, 2, 0.1, 0)
 
     }
 
@@ -52,9 +50,6 @@ export default class FxFlames extends Fx {
                 burningPixels.add(p)
             }
         })
-
-        // this.mover.run(targetContainer)
-
 
         this.promise = this.scheduler.interval(1, () => {
 

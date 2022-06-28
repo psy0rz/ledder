@@ -18,7 +18,7 @@ export default class FxColorCycle extends Fx {
     private cycleTimeControl: ControlValue;
     private randomizerControl: ControlValue;
 
-    constructor(scheduler: Scheduler, controls: ControlGroup, mode = "pingpong", cycleTime=60, randomizer=0, repeat = 0) {
+    constructor(scheduler: Scheduler, controls: ControlGroup, mode = "pingpong", cycleTime = 60, randomizer = 0, repeat = 0) {
         super(scheduler, controls)
 
         this.cycleTimeControl = controls.value('Color cycle time', cycleTime, 0, 240, 1, true)
@@ -45,22 +45,23 @@ export default class FxColorCycle extends Fx {
     //cycle the target color object through the list of colors.
     //use skip to skip the first number of colors.
     //note: skipping makes the cycle-time shorter, since thats usually what you want.
-    run(colors: Array<ColorInterface>, target: ColorInterface, skip=0) {
+    run(colors: Array<ColorInterface>, target: ColorInterface, skip = 0) {
 
         this.running = true
         let repeat = 0
         let colorI = 0
 
         //calculate step size (does not take into account skip!)
-        let step=colors.length/(this.cycleTimeControl.value +  random(0, this.randomizerControl.value))
+        let step = colors.length / (this.cycleTimeControl.value + random(0, this.randomizerControl.value))
 
         if (this.mode.selected == "reverse") {
-            step=-step
+            step = -step
             colorI = colors.length - 1 - skip
         } else {
             colorI = 0 + skip
         }
-        Object.assign(target, colors[~~colorI])
+        Object.assign(target,
+            colors[~~colorI])
 
         this.promise = this.scheduler.interval(1, (frameNr) => {
 
@@ -92,7 +93,7 @@ export default class FxColorCycle extends Fx {
                     if (this.mode.selected == "pingpong") {
                         //invert direction and move one step back
                         step = -step
-                        colorI = colorI + step +step
+                        colorI = colorI + step + step
 
                     }
                     //reverse
