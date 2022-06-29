@@ -1,6 +1,6 @@
 import freetype, {FontFace, Glyph} from "freetype2";
 
-//freetype2 wrapper, specially for low resolution matrix displays and pixelly fonts
+//freetype2 wrapper, specially for low resolution display displays and pixelly fonts
 //usually these fonts have one optimum height/width setting
 export class Font {
     name: string

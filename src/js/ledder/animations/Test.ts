@@ -8,8 +8,8 @@ import {PixelContainer} from "../PixelContainer.js";
 import {fireColorsDoom, fireColorsBertrik, fireColorsBrainsmoke, testFirecolors} from "../ColorPatterns.js";
 
 export default class Test extends Animation {
-    async run(matrix: Display, scheduler: Scheduler, controls: ControlGroup) {
+    async run(display: Display, scheduler: Scheduler, controls: ControlGroup) {
 
-        testFirecolors(matrix)
+        testFirecolors(display)
     }
 }

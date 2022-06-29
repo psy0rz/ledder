@@ -13,7 +13,7 @@ class RpcClient extends Rpc {
   openHandler: () => void;
   closeHandler: () => void;
   url: string
-  matrix: MatrixCanvas
+  display: MatrixCanvas
 
   constructor() {
     super();
@@ -67,8 +67,8 @@ class RpcClient extends Rpc {
       if (event.data[0]=="{")
         this.serverAndClient.receiveAndSend(JSON.parse(event.data.toString()));
       else{
-        if (this.matrix)
-          this.matrix.frame(await event.data.arrayBuffer())
+        if (this.display)
+          this.display.frame(await event.data.arrayBuffer())
 
       }
 

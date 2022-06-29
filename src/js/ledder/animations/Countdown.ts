@@ -16,8 +16,8 @@ export default class Countdown extends Animation {
     static category = "Marquees"
 
 
-    constructor(matrix: Display) {
-        super(matrix);
+    constructor(display: Display) {
+        super(display);
 
         const font = FontSimple8x8
 
@@ -25,14 +25,14 @@ export default class Countdown extends Animation {
 
         // let targetDate = new Date('2022-04-01T12:37:42');
 
-        const intervalControl = matrix.control.value("Marquee interval", 1, 1, 10, 1);
+        const intervalControl = display.control.value("Marquee interval", 1, 1, 10, 1);
         // const textColor=new Color()
-        const textColor = matrix.control.color("Text color", 255, 0, 0, 1);
+        const textColor = display.control.color("Text color", 255, 0, 0, 1);
 
 
         let blinkdir = 1 / 60
         let hue = 0;
-        matrix.scheduler.intervalControlled(intervalControl, () => {
+        display.scheduler.intervalControlled(intervalControl, () => {
 
                 //millesec
                 let diff = Number(targetDate) - Number(new Date())
@@ -79,23 +79,23 @@ export default class Countdown extends Animation {
                 // for (const p of this.pixels) {
                 //   p.x--
                 //   if (p.x<0) {
-                //     p.destroy(matrix)
+                //     p.destroy(display)
                 //     this.removePixel(p)
                 //   }
                 //
                 // }
 
                 //draw text
-                matrix.pixels = []
+                display.pixels = []
                 for (let char_nr = 0; char_nr < text.length; char_nr++) {
                     const c = text[char_nr];
                     const xStart = char_nr * (font.width - 1) + 2
-                    if (xStart + (font.width) > matrix.width)
+                    if (xStart + (font.width) > display.width)
                         break
                     for (let x = 0; x < font.width; x++) {
                         for (let y = 0; y < font.height; y++) {
                             if (font.data[c][x][y]) {
-                                new Pixel(matrix, xStart + x, y, textColor)
+                                new Pixel(display, xStart + x, y, textColor)
                             }
                         }
                     }

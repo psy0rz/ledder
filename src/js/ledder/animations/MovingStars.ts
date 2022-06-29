@@ -39,23 +39,23 @@ export default class MovingStars extends Animation {
         return (star)
     }
 
-    async run(matrix: Display, scheduler: Scheduler, controls: ControlGroup) {
+    async run(display: Display, scheduler: Scheduler, controls: ControlGroup) {
 
         const starColorControl = controls.color("Star color", 255, 255, 255, 0.01);
 
         const stars=new PixelContainer()
-        matrix.add(stars)
+        display.add(stars)
 
         const starsControl = controls.value("Number of stars", 10, 1, 100, 1, true)
         for (let i=0; i<starsControl.value; i++) {
 
-            const x = random(0, matrix.xMax)
-            const y = random(0, matrix.yMax)
+            const x = random(0, display.xMax)
+            const y = random(0, display.yMax)
 
             const star=this.createStar(x,y, starColorControl)
 
             new FxMovie(scheduler, controls, 5).run(star, stars, random(0,2))
-            new FxRotate(scheduler, controls, -1,0, 4,2).run(star, matrix)
+            new FxRotate(scheduler, controls, -1,0, 4,2).run(star, display)
 
         }
     }

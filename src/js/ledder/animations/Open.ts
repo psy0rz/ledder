@@ -13,8 +13,8 @@ export default class Open extends Animation {
   static category = "Marquees"
 
 
-  constructor(matrix:Display ) {
-    super(matrix);
+  constructor(display:Display ) {
+    super(display);
 
     const font=FontSimple8x8
     const text="Open! "
@@ -23,21 +23,21 @@ export default class Open extends Animation {
     let char_nr = 0;
     let x = 0;
 
-    const intervalControl = matrix.control.value("Marquee interval", 1, 1, 10, 1);
-    // const colorControl = matrix.control.color("Text color");
+    const intervalControl = display.control.value("Marquee interval", 1, 1, 10, 1);
+    // const colorControl = display.control.color("Text color");
     // let colorControl=new Color()
 
-    new AnimationTwinkle(matrix, this.pixels)
+    new AnimationTwinkle(display, this.pixels)
 
     let hue=0;
 
-    matrix.scheduler.intervalControlled(intervalControl, () => {
+    display.scheduler.intervalControlled(intervalControl, () => {
 
       //move everything to the left
       for (const p of this.pixels) {
         p.x--
         if (p.x<0) {
-          p.destroy(matrix)
+          p.destroy(display)
           this.removePixel(p)
         }
 
@@ -53,7 +53,7 @@ export default class Open extends Animation {
         {
           let color=new Color()
           color.setHsl(hue/360,1,0.5)
-          this.addPixel(new Pixel(matrix, matrix.width-1,y, color))
+          this.addPixel(new Pixel(display, display.width-1,y, color))
         }
 
       }

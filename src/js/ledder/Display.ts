@@ -6,7 +6,7 @@ import BboxInterface from "./BboxInterface.js";
 import {Pixel} from "./Pixel.js";
 
 /**
- * The matrix is the display and shows the list of pixels. The subclasses are actual implementations for different display types.
+ * The display is the display and shows the list of pixels. The subclasses are actual implementations for different display types.
  * Usually you only need to implement setPixel() to set a pixel and frame() to send the frame and clear the buffer.
  */
 export abstract class Display extends PixelContainer {
@@ -47,7 +47,7 @@ export abstract class Display extends PixelContainer {
 
   }
 
-  //set matrix fps (usually controlled externally by FPS control)
+  //set display fps (usually controlled externally by FPS control)
   setFps(fps:number)
   {
 
@@ -74,7 +74,7 @@ export abstract class Display extends PixelContainer {
     return (seconds*1000/this.frameMs)
   }
 
-  //bbox of a matrix is the whole screen
+  //bbox of a display is the whole screen
   bbox()
   {
     return {

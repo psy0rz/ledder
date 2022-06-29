@@ -1,5 +1,5 @@
 <App { ...f7params }>
-    <Matrix/>
+    <Display/>
 
     <View  name="categories" restoreScrollTopOnBack={true}>
         <Categories/>
@@ -24,7 +24,7 @@
     //important (otherwise weird startup errors in dev mode):
     import 'framework7/lite';
 
-    import Matrix from "../pages/matrix.svelte"
+    import Display from "../pages/display.svelte"
 
     import routes from '../js/web/routes.js';
     import Categories from '../pages/categories.svelte'

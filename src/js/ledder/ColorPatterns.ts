@@ -90,12 +90,12 @@ function calculateFireColorsBrainsmoke() {
 export const fireColorsBrainsmoke=calculateFireColorsBrainsmoke()
 
 //just to see the difference and orientation
-export function testFirecolors(matrix:Display)
+export function testFirecolors(display:Display)
 {
-    for (let x = 0; x < matrix.width; x++) {
-        matrix.add(new Pixel(x, 3, fireColorsBertrik[~~(x / matrix.width * fireColorsBertrik.length)]))
-        matrix.add(new Pixel(x, 2, fireColorsDoom[~~(x / matrix.width * fireColorsDoom.length)]))
-        matrix.add(new Pixel(x, 1, fireColorsBrainsmoke[~~(x / matrix.width * fireColorsBrainsmoke.length)]))
+    for (let x = 0; x < display.width; x++) {
+        display.add(new Pixel(x, 3, fireColorsBertrik[~~(x / display.width * fireColorsBertrik.length)]))
+        display.add(new Pixel(x, 2, fireColorsDoom[~~(x / display.width * fireColorsDoom.length)]))
+        display.add(new Pixel(x, 1, fireColorsBrainsmoke[~~(x / display.width * fireColorsBrainsmoke.length)]))
     }
 }
 

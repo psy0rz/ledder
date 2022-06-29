@@ -6,7 +6,7 @@ export class MatrixWebsocket extends Display {
     ws: WebSocket
 
 
-    //width and height are led-matrix-pixels, not canvas pixels.
+    //width and height are led-display-pixels, not canvas pixels.
     constructor(width, height, ws) {
         super( width, height);
 

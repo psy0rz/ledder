@@ -6,34 +6,34 @@ export default class PixelStar extends Pixel {
 
   step: number;
 
-  constructor(matrix, x, y, color: ColorInterface, delay: ControlValue, bg=false) {
-        super(matrix, x, y, color, bg);
+  constructor(display, x, y, color: ColorInterface, delay: ControlValue, bg=false) {
+        super(display, x, y, color, bg);
 
         this.step = 0;
-        matrix.scheduler.intervalControlled(delay, () => {
+        display.scheduler.intervalControlled(delay, () => {
             this.step = (this.step + 1) % 3;
             return(this.keep);
         })
 
     }
 
-    render(matrix) {
+    render(display) {
         switch (this.step) {
             case 0:
-                matrix.setPixel(this.x, this.y, this.color);
+                display.setPixel(this.x, this.y, this.color);
                 break;
             case 1:
-                matrix.setPixel(this.x, this.y, this.color);
-                matrix.setPixel(this.x - 1, this.y, this.color);
-                matrix.setPixel(this.x + 1, this.y, this.color);
-                matrix.setPixel(this.x, this.y - 1, this.color);
-                matrix.setPixel(this.x, this.y + 1, this.color);
+                display.setPixel(this.x, this.y, this.color);
+                display.setPixel(this.x - 1, this.y, this.color);
+                display.setPixel(this.x + 1, this.y, this.color);
+                display.setPixel(this.x, this.y - 1, this.color);
+                display.setPixel(this.x, this.y + 1, this.color);
                 break;
             case 2:
-                matrix.setPixel(this.x - 1, this.y, this.color);
-                matrix.setPixel(this.x + 1, this.y, this.color);
-                matrix.setPixel(this.x, this.y - 1, this.color);
-                matrix.setPixel(this.x, this.y + 1, this.color);
+                display.setPixel(this.x - 1, this.y, this.color);
+                display.setPixel(this.x + 1, this.y, this.color);
+                display.setPixel(this.x, this.y - 1, this.color);
+                display.setPixel(this.x, this.y + 1, this.color);
                 break;
             case 3:
                 break;

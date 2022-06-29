@@ -15,22 +15,22 @@ export default class Music extends Animation {
     static category = "Music"
 
 
-    async run(matrix: Display, scheduler: Scheduler, control: ControlGroup) {
+    async run(display: Display, scheduler: Scheduler, control: ControlGroup) {
 
-        const color1Control = matrix.control.color("Color 1", 255, 0, 0, 1);
+        const color1Control = display.control.color("Color 1", 255, 0, 0, 1);
 
-        for (let x = 0; x < matrix.width / 5; x++)
-            for (let y = 0; y < matrix.height; y++)
-                new Pixel(matrix, x, y, color1Control)
+        for (let x = 0; x < display.width / 5; x++)
+            for (let y = 0; y < display.height; y++)
+                new Pixel(display, x, y, color1Control)
 
-        const color2Control = matrix.control.color("Color 2", 0, 0, 255, 1);
+        const color2Control = display.control.color("Color 2", 0, 0, 255, 1);
 
-        for (let x = matrix.width - (matrix.width / 5); x < matrix.width; x++)
-            for (let y = 0; y < matrix.height; y++)
-                new Pixel(matrix, x, y, color2Control)
+        for (let x = display.width - (display.width / 5); x < display.width; x++)
+            for (let y = 0; y < display.height; y++)
+                new Pixel(display, x, y, color2Control)
 
 
-        const blinker = new FxBlinkAlpha(matrix, 'Flasher', 2, 4, 4)
+        const blinker = new FxBlinkAlpha(display, 'Flasher', 2, 4, 4)
 
         const wait = control.value('Wait', 0, 0, 120, 1)
 

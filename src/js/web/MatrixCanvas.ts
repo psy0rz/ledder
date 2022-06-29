@@ -1,4 +1,4 @@
-//Update canvas matrix with frames received via websocket from server
+//Update canvas display with frames received via websocket from server
 export class MatrixCanvas {
     canvas: HTMLCanvasElement;
     canvasContext: CanvasRenderingContext2D;
@@ -6,7 +6,7 @@ export class MatrixCanvas {
     imageBuf8: Uint8ClampedArray;
     imageBuf: ArrayBuffer;
 
-    //width and height are led-matrix-pixels, not canvas pixels.
+    //width and height are led-display-pixels, not canvas pixels.
     constructor(width, height, elementId) {
 
         this.canvas = document.querySelector(elementId);

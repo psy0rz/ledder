@@ -8,7 +8,7 @@ import {ControlGroup} from "../ledder/ControlGroup.js";
 //handles creation of previews
 export class PreviewStore {
 
-    matrix: MatrixApng
+    display: MatrixApng
     controlGroup: ControlGroup
     scheduler: Scheduler
 
@@ -16,14 +16,14 @@ export class PreviewStore {
 
         this.controlGroup = new ControlGroup('Root controls')
         this.scheduler = new Scheduler();
-        this.matrix = new MatrixApng(40, 8)
-        this.matrix.scheduler=this.scheduler
+        this.display = new MatrixApng(40, 8)
+        this.display.scheduler=this.scheduler
     }
 
     clear()
     {
         this.scheduler.clear()
-        this.matrix.clear()
+        this.display.clear()
         this.controlGroup.clear()
     }
 
@@ -39,10 +39,10 @@ export class PreviewStore {
             this.controlGroup.load(preset.values);
 
         const fpsControl = this.controlGroup.value("FPS", 60, 1, 120)
-        this.matrix.setFps(fpsControl.value)
+        this.display.setFps(fpsControl.value)
 
         let animation: Animation = new animationClass()
-        animation.run(this.matrix, this.scheduler, this.controlGroup).then(() => {
+        animation.run(this.display, this.scheduler, this.controlGroup).then(() => {
             console.log(`PreviewStore: ${filename} finished.`)
         }).catch((e) => {
             if (e != 'abort') {
@@ -53,8 +53,8 @@ export class PreviewStore {
         })
 
         //previews shouldnt have a higher than 60fps rate, so just divide more frames above 60fps
-        const divider = ~~((this.matrix.fps - 1) / 60) + animationClass.previewDivider
-        const fps = ~~(this.matrix.fps / divider )
+        const divider = ~~((this.display.fps - 1) / 60) + animationClass.previewDivider
+        const fps = ~~(this.display.fps / divider )
 
         //skip frames, just run scheduler
         for (let i = 0; i < animationClass.previewSkip; i++)
@@ -66,12 +66,12 @@ export class PreviewStore {
                 await this.scheduler.step()
             }
 
-            this.matrix.render(this.matrix)
-            this.matrix.frame()
+            this.display.render(this.display)
+            this.display.frame()
         }
 
         //generate and store APNG
-        let imageData = await this.matrix.get(fps)
+        let imageData = await this.display.get(fps)
         await writeFile(filename, Buffer.from(imageData))
 
         this.clear()

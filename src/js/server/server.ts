@@ -1,7 +1,7 @@
 import {RpcServer} from "./RpcServer.js";
 import {RunnerServer} from "./RunnerServer.js";
 import {PresetStore} from "./PresetStore.js";
-import {animationName, matrixList, mqttHost, mqttOpts, nodename, presetName} from "../../../matrixconf.js"
+import {animationName, displayList, mqttHost, mqttOpts, nodename, presetName} from "../../../displayconf.js"
 import mqtt from 'mqtt'
 import {ControlGroup} from "../ledder/ControlGroup.js";
 import {Scheduler} from "../ledder/Scheduler.js";
@@ -14,15 +14,15 @@ console.log("starting..")
 //init preset store
 const presetStore = new PresetStore()
 
-//create run all the matrixes
+//create run all the displayes
 let runners:Array<RunnerServer>=[]
 
-for (const m of matrixList) {
-    let matrix:Display
-    matrix=m
+for (const m of displayList) {
+    let display:Display
+    display=m
     let controlGroup = new ControlGroup('Root controls')
 
-    let runner = new RunnerServer(matrix, controlGroup, presetStore)
+    let runner = new RunnerServer(display, controlGroup, presetStore)
     runner.startRenderLoop()
     runner.runName(animationName, presetName)
     runners.push(runner)
@@ -95,7 +95,7 @@ rpc.addMethod("runner.runName", async (params, context) => {
     }
 })
 
-rpc.addMethod("matrix.control.updateValue", async (params, context) => {
+rpc.addMethod("display.control.updateValue", async (params, context) => {
 
     if (context.runner)
         if (context.runner.updateValue(params[0], params[1])) {

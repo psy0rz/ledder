@@ -30,30 +30,30 @@ export default class DoomFire extends Animation {
   static presetDir = "Doom";
 
 
-  constructor(matrix) {
-    super(matrix);
+  constructor(display) {
+    super(display);
 
 
-    const decayControl = matrix.control.value("Fire decay", 40, 1, 120, 1);
-    const windControl = matrix.control.value("Wind", 1.4, 0, 5, .1);
-    const intervalControl = matrix.control.value("Update interval", 1, 1, 6, .1);
-    const minIntensityControl = matrix.control.value("Fire minimum intensity", 20, 0, 100, 1);
-    const maxIntensityControl = matrix.control.value("Fire maximum intensity", 100, 0, 100, 1);
-    const wildnessIntensityControl = matrix.control.value("Fire wildness", 10, 0, 100, 1);
-    const smoothingControl = matrix.control.value("Smoothing", 0, 0, 1, 0.01);
+    const decayControl = display.control.value("Fire decay", 40, 1, 120, 1);
+    const windControl = display.control.value("Wind", 1.4, 0, 5, .1);
+    const intervalControl = display.control.value("Update interval", 1, 1, 6, .1);
+    const minIntensityControl = display.control.value("Fire minimum intensity", 20, 0, 100, 1);
+    const maxIntensityControl = display.control.value("Fire maximum intensity", 100, 0, 100, 1);
+    const wildnessIntensityControl = display.control.value("Fire wildness", 10, 0, 100, 1);
+    const smoothingControl = display.control.value("Smoothing", 0, 0, 1, 0.01);
 
     const fireColors = calculateFireColors();
 
     const firePixels = []
     const smoothedPixels = []
 
-    const numberOfPixels = matrix.width * matrix.height
+    const numberOfPixels = display.width * display.height
 
     //create initial fire pixels
     for (let i = 0; i < numberOfPixels; i++) {
       firePixels[i] = 0;
       smoothedPixels[i] = 0;
-      new Pixel(matrix, i % matrix.width, matrix.height - ~~(i / matrix.width) - 1, new Color(0, 0, 0))
+      new Pixel(display, i % display.width, display.height - ~~(i / display.width) - 1, new Color(0, 0, 0))
     }
 
     //set a firepixel to a specified intensity
@@ -65,9 +65,9 @@ export default class DoomFire extends Animation {
 
     //actual fire algorithm
     function updateFireIntensityPerPixel(currentPixelIndex) {
-      const belowPixelIndex = currentPixelIndex + matrix.width;
+      const belowPixelIndex = currentPixelIndex + display.width;
 
-      if (belowPixelIndex >= matrix.width * matrix.height)
+      if (belowPixelIndex >= display.width * display.height)
         return;
 
       const decay = Math.floor(Math.random() * decayControl.value);
@@ -84,17 +84,17 @@ export default class DoomFire extends Animation {
     }
 
     //fire update loop
-    matrix.scheduler.intervalControlled(intervalControl, () => {
+    display.scheduler.intervalControlled(intervalControl, () => {
 
         //let firesource glow
-        for (let col = 0; col < matrix.width; col++) {
-          const pixelIndex = numberOfPixels - matrix.width + col
+        for (let col = 0; col < display.width; col++) {
+          const pixelIndex = numberOfPixels - display.width + col
           setFirePixel(pixelIndex, glow(firePixels[pixelIndex], minIntensityControl.value, maxIntensityControl.value, wildnessIntensityControl.value))
         }
 
-        for (let col = 0; col < matrix.width; col++) {
-          for (let row = 0; row < matrix.height; row++) {
-            const pixelIndex = col + (matrix.width * row);
+        for (let col = 0; col < display.width; col++) {
+          for (let row = 0; row < display.height; row++) {
+            const pixelIndex = col + (display.width * row);
             updateFireIntensityPerPixel(pixelIndex);
           }
         }
@@ -104,10 +104,10 @@ export default class DoomFire extends Animation {
   )
 
     //output loop (smoothing)
-    matrix.scheduler.interval(1, () => {
+    display.scheduler.interval(1, () => {
       for (let i = 0; i < numberOfPixels; i++) {
         smoothedPixels          [i] = ~~(firePixels[i] * (1 - smoothingControl.value) + smoothedPixels[i] * smoothingControl.value)
-        matrix.pixels          [i].color = fireColors[smoothedPixels[i]]
+        display.pixels          [i].color = fireColors[smoothedPixels[i]]
       }
       return true
     })

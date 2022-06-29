@@ -15,7 +15,7 @@ import {Values} from "../ledder/Control.js";
  * Server side runner. This is the main thing that calls everything to run animations.
  */
 export class RunnerServer {
-    private matrix: Display
+    private display: Display
     private scheduler: Scheduler
     private controlGroup: ControlGroup
 
@@ -35,15 +35,15 @@ export class RunnerServer {
 
     private fpsControl: ControlValue
 
-    constructor(matrix: Display, controls: ControlGroup, presetStore: PresetStore) {
-        this.matrix = matrix
+    constructor(display: Display, controls: ControlGroup, presetStore: PresetStore) {
+        this.display = display
         this.scheduler = new Scheduler()
-        this.matrix.scheduler = this.scheduler
+        this.display.scheduler = this.scheduler
         this.controlGroup = controls
         this.presetStore = presetStore
         this.autoreload()
         this.resetControls()
-        console.log("Runner server for ", matrix)
+        console.log("Runner server for ", display)
 
     }
 
@@ -57,7 +57,7 @@ export class RunnerServer {
 
         const now = Date.now();
 
-        const frameMs = this.matrix.frameMs
+        const frameMs = this.display.frameMs
 
         if (!this.keepRendering)
             return
@@ -75,15 +75,15 @@ export class RunnerServer {
         }
 
         try {
-            this.matrix.render(this.matrix)
+            this.display.render(this.display)
         }
         catch(e)
         {
             console.error("Exception while rendering:" ,e )
         }
-        this.matrix.frame(this.lastTime)
+        this.display.frame(this.lastTime)
 
-        //NOTE: we run the scheduler as last, sync this may in fact queue up all kinds of async events which need to be handled before calling matrix.render()
+        //NOTE: we run the scheduler as last, sync this may in fact queue up all kinds of async events which need to be handled before calling display.render()
         this.scheduler.step()
 
 
@@ -117,7 +117,7 @@ export class RunnerServer {
         this.stopRenderLoop()
         this.scheduler.clear()
         this.watchAbort.abort()
-        this.matrix.clear()
+        this.display.clear()
     }
 
     //create class instance of currently selected animation and run it
@@ -125,7 +125,7 @@ export class RunnerServer {
         console.log(`RunnerServer: Starting ${this.animationName}`)
         try {
             this.animation = new this.animationClass()
-            this.animation.run(this.matrix, this.scheduler, this.controlGroup).then(() => {
+            this.animation.run(this.display, this.scheduler, this.controlGroup).then(() => {
                 console.log(`RunnerServer: Animation ${this.animationName} finished.`)
             }).catch((e) => {
                 if (e != 'abort') {
@@ -144,7 +144,7 @@ export class RunnerServer {
     resetControls() {
         this.controlGroup.clear()
         this.fpsControl = this.controlGroup.value("FPS", 60, 1, 120)
-        this.matrix.setFps(this.fpsControl.value)
+        this.display.setFps(this.fpsControl.value)
 
     }
 
@@ -157,13 +157,13 @@ export class RunnerServer {
 
         console.log("Runner: starting", animationName, presetName)
         this.scheduler.clear()
-        this.matrix.clear()
+        this.display.clear()
         this.resetControls()
 
         if (presetName) {
             this.presetValues = await this.presetStore.load(this.animationClass, presetName)
             this.controlGroup.load(this.presetValues.values)
-            this.matrix.setFps(this.fpsControl.value)
+            this.display.setFps(this.fpsControl.value)
         } else {
             this.presetValues = {
                 title: "",
@@ -192,7 +192,7 @@ export class RunnerServer {
         if (!keepPresets)
             this.resetControls()
         this.scheduler.clear()
-        this.matrix.clear()
+        this.display.clear()
 
         this.start()
     }
@@ -217,7 +217,7 @@ export class RunnerServer {
 
     updateValue(path: [string], values: Values): boolean {
         const ret = this.controlGroup.updateValue(path, values)
-        this.matrix.setFps(this.fpsControl.value)
+        this.display.setFps(this.fpsControl.value)
         return ret
     }
 }

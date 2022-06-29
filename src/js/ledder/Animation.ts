@@ -22,7 +22,7 @@ export class Animation {
 
 
     //will be overridden in animation subclass
-    async run(matrix: Display, scheduler: Scheduler, controls: ControlGroup) {
+    async run(display: Display, scheduler: Scheduler, controls: ControlGroup) {
         console.error("Error: This animation has no run() function?")
 
     }

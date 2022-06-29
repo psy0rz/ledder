@@ -27,19 +27,19 @@ export default class Nyancat extends Animation {
     static presetDir = "Nyancat";
 
 
-    async run(matrix: Display, scheduler: Scheduler, controls: ControlGroup) {
+    async run(display: Display, scheduler: Scheduler, controls: ControlGroup) {
 
         controls.group("Rainbow")
         controls.group("Fire")
 
         //start with the stars in the background
         let stars = new MovingStars();
-        stars.run(matrix, scheduler, controls.group("Stars"))
+        stars.run(display, scheduler, controls.group("Stars"))
 
         //move the whole cat (will add pixels later)
         let cat = new PixelContainer()
-        new FxRotate(scheduler, controls.group('Move',true), 1, 0, 2).run(cat, matrix.bbox())
-        matrix.add(cat)
+        new FxRotate(scheduler, controls.group('Move',true), 1, 0, 2).run(cat, display.bbox())
+        display.add(cat)
 
         //the body and its wobblyness
         const body = new DrawAsciiArtColor(6, 7, `
@@ -88,7 +88,7 @@ export default class Nyancat extends Animation {
 
         const xStepControl = controls.group('Move').value('Rotate X step')
         scheduler.intervalControlled(controls.group('Move').value('Rotate interval'), () => {
-            x = (x + xStepControl.value) % matrix.width;
+            x = (x + xStepControl.value) % display.width;
 
             if (fireControl.enabled) {
 
@@ -104,10 +104,10 @@ export default class Nyancat extends Animation {
                 for (let c = 0; c < 6; c++) {
 
                     const p = new Pixel(x, c + y + 1,  new Color())
-                    matrix.add(p)
+                    display.add(p)
                     cycleFx.run(fireColorsDoom, p.color, skips[c])
                         .then(() => {
-                            matrix.delete(p)
+                            display.delete(p)
                         })
                 }
 
@@ -134,10 +134,10 @@ export default class Nyancat extends Animation {
                 for (let c = 0; c < 6; c++) {
 
                     const p = new Pixel(x, c + y + 1, colors[c])
-                    matrix.add(p)
+                    display.add(p)
                     fadeFx.run(colors[c], fadeTimes[c])
                         .then(() => {
-                            matrix.delete(p)
+                            display.delete(p)
                         })
                 }
             }

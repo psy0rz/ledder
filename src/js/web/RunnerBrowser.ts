@@ -10,7 +10,7 @@ import {ControlGroup} from "../ledder/ControlGroup.js";
  * Browser side animation runner. Note that animation runs on the server side (WsContext.ts) and is actually streamed to browser via MatrixWebsocket
  */
 export class RunnerBrowser {
-    // matrix: Matrix
+    // display: Matrix
     animationName: string
     presetName: string
     animationClass: Animation
@@ -24,11 +24,11 @@ export class RunnerBrowser {
 
 
     async init() {
-        // this.matrix = matrix
+        // this.display = display
 
         let width = 40
         let height = 8
-        rpc.matrix = new MatrixCanvas(width, height, '#ledder-preview');
+        rpc.display = new MatrixCanvas(width, height, '#ledder-preview');
 
         this.presets={}
         sveltePresets.set(new ControlGroup())
@@ -66,7 +66,7 @@ export class RunnerBrowser {
      */
     async send() {
 
-        // await rpc.request("runner.run", this.animationName, this.matrix.control.save());
+        // await rpc.request("runner.run", this.animationName, this.display.control.save());
         await rpc.request("runner.runName", this.animationName, this.presetName);
         // this.restart()
     }
@@ -76,9 +76,9 @@ export class RunnerBrowser {
      * Restart the current animation, keeping the same preset values
      */
     restart() {
-        // this.matrix.reset(true);
+        // this.display.reset(true);
         // // @ts-ignore
-        // new this.animationClass(this.matrix)
+        // new this.animationClass(this.display)
 
     }
 

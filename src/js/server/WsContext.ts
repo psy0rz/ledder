@@ -45,8 +45,8 @@ export class WsContext {
         this.started=true
 
         let controls = new ControlGroup('Root controls')
-        let matrix = new MatrixWebsocket( width, height, this.ws)
-        this.runner = new RunnerServer(matrix,  controls, presetStore)
+        let display = new MatrixWebsocket( width, height, this.ws)
+        this.runner = new RunnerServer(display,  controls, presetStore)
         this.runner.startRenderLoop()
 
         controls.setCallbacks(
@@ -61,7 +61,7 @@ export class WsContext {
             // })
 
         this.statsInterval=setInterval( ()=>{
-           console.log(`Stats ${this.id}: ${matrix.size} pixels, ${this.runner.scheduler.intervals.size} intervals`)
+           console.log(`Stats ${this.id}: ${display.size} pixels, ${this.runner.scheduler.intervals.size} intervals`)
         }, 3000)
 
     }

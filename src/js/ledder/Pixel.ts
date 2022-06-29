@@ -16,7 +16,7 @@ export class Pixel implements PixelInterface {
 
     /**
      * Renders one pixel.
-     * @param matrix Display matrix
+     * @param display Display display
      * @param x X coord
      * @param y Y coord
      * @param color Color object

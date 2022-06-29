@@ -1,5 +1,5 @@
 /* Your app custom styles here */
-.ledder-matrix {
+.ledder-display {
     background: black;
     border-style: solid;
     border-color: gray;
@@ -43,7 +43,7 @@
     height: 24px;
 }
 
-.ledder-matrix-zoom
+.ledder-display-zoom
 {
     position: fixed;
     width: 100%;

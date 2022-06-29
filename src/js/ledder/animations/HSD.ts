@@ -19,20 +19,20 @@ export default class HSD extends Animation {
   static presetDir = "HSD"
   static category = "HSD"
 
-  async run(matrix: Display, scheduler: Scheduler, control: ControlGroup) {
+  async run(display: Display, scheduler: Scheduler, control: ControlGroup) {
 
 
 
-    new Nyan(matrix)
+    new Nyan(display)
 
     const font = fontSelect(control, 'Font')
-    const input = matrix.control.input('Text', "Atari 2600 ", true)
+    const input = display.control.input('Text', "Atari 2600 ", true)
     const colorControl = control.color("Text color", 100,0,0, 1);
-    const charPixels=new DrawText(matrix, font, input.text, 0, 8, colorControl)
+    const charPixels=new DrawText(display, font, input.text, 0, 8, colorControl)
 
-    new AnimationTwinkle(matrix, charPixels.pixels)
+    new AnimationTwinkle(display, charPixels.pixels)
     if (control.switch('Scroll', false, true).enabled) {
-      const rotator = new FxRotate(matrix, "Move")
+      const rotator = new FxRotate(display, "Move")
 
       await rotator.run(charPixels)
     }

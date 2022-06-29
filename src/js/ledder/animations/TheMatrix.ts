@@ -5,7 +5,7 @@ import {random} from "../util.js";
 import {AnimationFade} from "../AnimationFade.js";
 
 /**
- * "Rules" of the matrix rain code, by watching the original scene: https://www.youtube.com/watch?v=8ZdpA3p9ZMY :
+ * "Rules" of the display rain code, by watching the original scene: https://www.youtube.com/watch?v=8ZdpA3p9ZMY :
  *
  * - Every column has a rain trail at random moments
  * - Most trails have the same speed but around 10% as falling with about 50% speed
@@ -23,29 +23,29 @@ export default class TheMatrix extends Animation {
 
 
 
-  constructor(matrix) {
-    super(matrix);
+  constructor(display) {
+    super(display);
 
-    const startColor = matrix.control.color("Start color", 255, 255, 255);
-    const endColor = matrix.control.color("Tail color", 0, 128, 0);
-    const fadeStart = matrix.control.value("Start fade interval", 10, 1, 120, 1);
-    const fadeTail = matrix.control.value("Tail fade interval", 30, 1, 120, 1);
-    const speed = matrix.control.value("Fall interval", 5, 1, 30, 0.1);
-    const createinterval = matrix.control.value("Create interval", 1, 1, 40, 1);
+    const startColor = display.control.color("Start color", 255, 255, 255);
+    const endColor = display.control.color("Tail color", 0, 128, 0);
+    const fadeStart = display.control.value("Start fade interval", 10, 1, 120, 1);
+    const fadeTail = display.control.value("Tail fade interval", 30, 1, 120, 1);
+    const speed = display.control.value("Fall interval", 5, 1, 30, 0.1);
+    const createinterval = display.control.value("Create interval", 1, 1, 40, 1);
 
-    const slowprecentage = matrix.control.value("Slow trials (percent)", 10, 0, 100, 1);
-    const speedSlow = matrix.control.value("Slow fall interval", 10, 1, 100, 1);
+    const slowprecentage = display.control.value("Slow trials (percent)", 10, 0, 100, 1);
+    const speedSlow = display.control.value("Slow fall interval", 10, 1, 100, 1);
 
     const black = new Color(0, 0, 0)
 
 
     let trails = []
 
-    matrix.scheduler.intervalControlled(createinterval, () => {
+    display.scheduler.intervalControlled(createinterval, () => {
 
       //start new trail
-      let x = random(0, matrix.width - 1)
-      let y = matrix.height - 1;
+      let x = random(0, display.width - 1)
+      let y = display.height - 1;
 
       //1 trail-head per column max.
       if (trails[x])
@@ -59,19 +59,19 @@ export default class TheMatrix extends Animation {
       else
         thisSpeed=speed.value
 
-      matrix.scheduler.interval(thisSpeed, () => {
+      display.scheduler.interval(thisSpeed, () => {
 
         //add pixel to trail
         if (y >= 0) {
           let color = new Color(startColor.r, startColor.g, startColor.b);
-          const p = new Pixel(matrix, x, y, color);
+          const p = new Pixel(display, x, y, color);
 
           //first fade to end color
-          new AnimationFade(matrix, color, endColor, fadeStart).promise.then(() => {
+          new AnimationFade(display, color, endColor, fadeStart).promise.then(() => {
             //then fade to black
-            new AnimationFade(matrix, color, black, fadeTail).promise.then(() => {
+            new AnimationFade(display, color, black, fadeTail).promise.then(() => {
               //then destroy
-              matrix.removePixel(p)
+              display.removePixel(p)
             })
           })
         } else {

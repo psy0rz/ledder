@@ -18,20 +18,20 @@ export default class ItsFine extends Animation {
     static presetDir = "itsfine"
     static category = "memes"
 
-    async run(matrix: Display, scheduler: Scheduler, controls: ControlGroup) {
+    async run(display: Display, scheduler: Scheduler, controls: ControlGroup) {
 
-        new BertrikFire().run(matrix, scheduler, controls.group("Bottom fire"))
+        new BertrikFire().run(display, scheduler, controls.group("Bottom fire"))
         controls.group("Bottom fire").value("Fire maximum intensity").value = 0
 
         const inputControl=controls.input("Text", "its fine.", true)
 
         const colorControl = controls.color("Text color", 0, 255, 0)
-        const text = new DrawText(0, 0, fontSelect(controls), inputControl.text, colorControl).centerH(matrix)
-        matrix.add(text)
+        const text = new DrawText(0, 0, fontSelect(controls), inputControl.text, colorControl).centerH(display)
+        display.add(text)
 
         await scheduler.delay(60 * 2)
         const flames = new PixelContainer()
-        matrix.add(flames)
+        display.add(flames)
         new FxFlames(scheduler, controls.group("Top fire")).run(text, flames)
 
         await scheduler.delay(60 * 5)

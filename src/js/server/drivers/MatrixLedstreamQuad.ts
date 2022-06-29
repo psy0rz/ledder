@@ -32,8 +32,8 @@ export class MatrixLedstreamQuad extends Display {
      * Matrix driver for https://github.com/psy0rz/ledstream
      * We assume it has a Left/Right zigzag pattern, with multiple channels stacked vertically
      * @param channels Number of channels (zigzag ledstrips)
-     * @param width Physical width of matrix.
-     * @param height Physical height of matrix. (divded over multiple channels)
+     * @param width Physical width of display.
+     * @param height Physical height of display. (divded over multiple channels)
      * @param ip IP address
      * @param port UDP port
      */

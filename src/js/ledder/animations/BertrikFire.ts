@@ -14,16 +14,16 @@ export default class BertrikFire extends Animation {
     static presetDir = "BertrikFire";
 
 
-    move_fire(matrix, field, height, decay, maxFlame) {
+    move_fire(display, field, height, decay, maxFlame) {
         let x, y, flame;
 
         // move flames up
         for (y = 0; y < height - 1; y++) {
-            for (x = 0; x < matrix.width; x++) {
+            for (x = 0; x < display.width; x++) {
                 // average
                 if (x == 0) {
                     flame = (field[y][x] + 2 * field[y + 1][x] + field[y + 1][x + 1]) / 4;
-                } else if (x == (matrix.width - 1)) {
+                } else if (x == (display.width - 1)) {
                     flame = (field[y][x] + 2 * field[y + 1][x] + field[y + 1][x - 1]) / 4;
                 } else {
                     flame = (field[y][x] + field[y + 1][x - 1] + field[y + 1][x] + field[y + 1][x + 1]) / 4;
@@ -45,11 +45,11 @@ export default class BertrikFire extends Animation {
     }
 
 
-    save_image(matrix, field, pixels: Array<Array<Pixel>>, colors) {
+    save_image(display, field, pixels: Array<Array<Pixel>>, colors) {
         let row, col;
 
-        for (row = 0; row < matrix.height; row++) {
-            for (col = 0; col < matrix.width; col++) {
+        for (row = 0; row < display.height; row++) {
+            for (col = 0; col < display.width; col++) {
                 const intensity = field[row][col]
                 pixels[row][col].color = colors[~~intensity]
             }
@@ -57,16 +57,16 @@ export default class BertrikFire extends Animation {
 
     }
 
-    async run(matrix: Display, scheduler: Scheduler, controls: ControlGroup) {
+    async run(display: Display, scheduler: Scheduler, controls: ControlGroup) {
 
-        let pixels = matrix.raster(matrix, new Color(0, 0, 0), true, false, true)
+        let pixels = display.raster(display, new Color(0, 0, 0), true, false, true)
         let field = []
         let colors = patternSelect(controls, 'Fire colors', 'Bertrik fire')
 
         //create clear field
-        for (let y = 0; y < matrix.height; y++) {
+        for (let y = 0; y < display.height; y++) {
             field[y] = []
-            for (let x = 0; x < matrix.width; x++) {
+            for (let x = 0; x < display.width; x++) {
                 field[y][x] = 0
             }
         }
@@ -79,18 +79,18 @@ export default class BertrikFire extends Animation {
 
         const colorScale = (colors.length - 1) / 100
 
-        matrix.scheduler.intervalControlled(fireintervalControl, () => {
+        display.scheduler.intervalControlled(fireintervalControl, () => {
 
 
             //glow lower row
-            for (let x = 0; x < matrix.width; x++) {
-                field[matrix.height - 1][x] = glow(field[matrix.height - 1][x],
+            for (let x = 0; x < display.width; x++) {
+                field[display.height - 1][x] = glow(field[display.height - 1][x],
                     ~~minIntensityControl.value * colorScale,
                     ~~maxIntensityControl.value * colorScale,
                     ~~wildnessIntensityControl.value * colorScale, 3)
             }
-            this.move_fire(matrix, field, matrix.height, ~~decayControl.value * colorScale, colors.length - 1)
-            this.save_image(matrix, field, pixels, colors)
+            this.move_fire(display, field, display.height, ~~decayControl.value * colorScale, colors.length - 1)
+            this.save_image(display, field, pixels, colors)
 
             return true
         })

@@ -19,22 +19,22 @@ export default class Marquee extends Animation {
     static presetDir = "Marquee"
     static category = "Marquees"
 
-    async run(matrix: Display, scheduler: Scheduler, control: ControlGroup)
+    async run(display: Display, scheduler: Scheduler, control: ControlGroup)
     {
 
         const font = fontSelect(control, 'Font')
         const input = control.input('Text', "Marquee  ", true)
         const colorControl = control.color("Text color", 0x21,0xff,0, 1);
         const charPixels=new DrawText(0,0, font, input.text, colorControl )
-        charPixels.centerV(matrix)
+        charPixels.centerV(display)
 
         let starsGroup=control.group("Stars", false, false)
         if (starsGroup.switch('Enabled', false).enabled) {
-            new MovingStars().run(matrix,scheduler, starsGroup)
+            new MovingStars().run(display,scheduler, starsGroup)
         }
 
         //add on top of stars
-        matrix.add(charPixels)
+        display.add(charPixels)
 
         let scrollGroup=control.group("Scrolling")
         if (scrollGroup.switch('Enabled', true).enabled) {
@@ -43,20 +43,20 @@ export default class Marquee extends Animation {
 
             const bbox=charPixels.bbox()
             bbox.xMax=bbox.xMax+whitespace.value
-            if (bbox.xMax<matrix.width)
-                bbox.xMax=matrix.width
+            if (bbox.xMax<display.width)
+                bbox.xMax=display.width
 
             rotator.run(charPixels, bbox)
         }
         else
         {
-            charPixels.centerH(matrix)
+            charPixels.centerH(display)
         }
 
         let flameGroup=control.group("Flames", false, false)
         if (flameGroup.switch('Enabled', false).enabled) {
             const flames=new PixelContainer()
-            matrix.add(flames)
+            display.add(flames)
             new FxFlames(scheduler,flameGroup).run(charPixels, flames)
         }
 
@@ -74,9 +74,9 @@ export default class Marquee extends Animation {
             while(1)
             {
                 cursorColor.a=1
-                await scheduler.delay(matrix.seconds2frames(0.5))
+                await scheduler.delay(display.seconds2frames(0.5))
                 fader.run(cursorColor)
-                await scheduler.delay(matrix.seconds2frames(0.5))
+                await scheduler.delay(display.seconds2frames(0.5))
 
             }
         }
