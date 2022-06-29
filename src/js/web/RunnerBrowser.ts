@@ -2,7 +2,7 @@ import {Display} from "../ledder/Display.js";
 import {rpc} from "./RpcClient.js";
 import {svelteAnimations, sveltePresets, svelteSelectedAnimationName, svelteSelectedTitle} from "./svelteStore.js";
 import {confirmPromise, info, promptPromise} from "./util.js";
-import {MatrixCanvas} from "./MatrixCanvas.js";
+import {DisplayCanvas} from "./DisplayCanvas.js";
 import {tick} from "svelte";
 import {ControlGroup} from "../ledder/ControlGroup.js";
 
@@ -28,7 +28,7 @@ export class RunnerBrowser {
 
         let width = 40
         let height = 8
-        rpc.display = new MatrixCanvas(width, height, '#ledder-preview');
+        rpc.display = new DisplayCanvas(width, height, '#ledder-preview');
 
         this.presets={}
         sveltePresets.set(new ControlGroup())

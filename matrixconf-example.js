@@ -5,7 +5,7 @@ import {Scheduler} from "src/js/ledder/Scheduler.ts";
 
 let scheduler = new Scheduler();
 
-export let matrixList=[
+export let displayList=[
 
 
     //led cone ding

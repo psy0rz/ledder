@@ -4,7 +4,7 @@
 
           let values={...control}
           delete values.meta
-          rpc.notify("matrix.control.updateValue", path, values)
+          rpc.notify("display.control.updateValue", path, values)
        }}
 />
 

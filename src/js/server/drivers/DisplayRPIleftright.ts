@@ -1,7 +1,7 @@
 import {Display} from "../../ledder/Display.js"
 import leds from "rpi-ws281x-smi"
 
-import {gamma} from "./MatrixWLED.js";
+import {gamma} from "./DisplayWLED.js";
 
 
 /**

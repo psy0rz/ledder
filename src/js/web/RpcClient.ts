@@ -2,7 +2,7 @@ import {JSONRPCClient, JSONRPCServer, JSONRPCServerAndClient} from "json-rpc-2.0
 import {Rpc} from "../Rpc.js";
 import {RpcServer} from "../server/RpcServer.js";
 import {error, progressDone, progressStart} from "./util.js";
-import {MatrixCanvas} from "./MatrixCanvas.js";
+import {DisplayCanvas} from "./DisplayCanvas.js";
 
 /***
  * Browser-side rpc client that connect to server handles rpc calls to/from server.
@@ -13,7 +13,7 @@ class RpcClient extends Rpc {
   openHandler: () => void;
   closeHandler: () => void;
   url: string
-  display: MatrixCanvas
+  display: DisplayCanvas
 
   constructor() {
     super();

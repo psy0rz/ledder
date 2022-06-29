@@ -1,7 +1,7 @@
 <canvas class="ledder-display" id="ledder-preview"></canvas>
 <script>
     import {Scheduler} from "../js/ledder/Scheduler.js";
-    import {MatrixCanvas} from "../js/web/MatrixCanvas.js";
+    import {DisplayCanvas} from "../js/web/DisplayCanvas.ts";
     import {onMount} from 'svelte';
     import {runnerBrowser} from "../js/web/RunnerBrowser.js";
 

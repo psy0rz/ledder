@@ -1,5 +1,5 @@
 //Update canvas display with frames received via websocket from server
-export class MatrixCanvas {
+export class DisplayCanvas {
     canvas: HTMLCanvasElement;
     canvasContext: CanvasRenderingContext2D;
     imageData: ImageData;
