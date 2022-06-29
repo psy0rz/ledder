@@ -8,15 +8,16 @@ import {AbortController} from "node-abort-controller";
 import {Scheduler} from "../ledder/Scheduler.js";
 import {ControlGroup} from "../ledder/ControlGroup.js";
 import {ControlValue} from "../ledder/ControlValue.js";
+import {Values} from "../ledder/Control.js";
 
 
 /**
  * Server side runner. This is the main thing that calls everything to run animations.
  */
 export class RunnerServer {
-    matrix: Matrix
-    scheduler: Scheduler
-    controlGroup: ControlGroup
+    private matrix: Matrix
+    private scheduler: Scheduler
+    private controlGroup: ControlGroup
 
     private presetStore: PresetStore
     private animationClass: typeof Animation
@@ -32,7 +33,7 @@ export class RunnerServer {
     private lastTime: number
     private keepRendering: boolean
 
-    private fpsControl:ControlValue
+    private fpsControl: ControlValue
 
     constructor(matrix: Matrix, controls: ControlGroup, presetStore: PresetStore) {
         this.matrix = matrix
@@ -47,41 +48,29 @@ export class RunnerServer {
     }
 
     startRenderLoop() {
-        this.keepRendering=true
-        this.lastTime=0
+        this.keepRendering = true
+        this.lastTime = 0
         this.renderFrame()
     }
 
-    async renderFrame(){
+    async renderFrame() {
 
-        const now=Date.now();
+        const now = Date.now();
 
-        let fps=this.fpsControl.value
-        let frameDelay:number
-
-        if (fps>this.matrix.maxFps)
-            fps=this.matrix.maxFps
-
-        if (this.matrix.roundFrametime)
-            frameDelay=~~(1000/fps)
-        else
-            frameDelay=(1000/fps)
+        const frameTime = this.matrix.frameTime
 
         if (!this.keepRendering)
             return
 
         //increase time with exact framedelay instead of sending now, since setInterval is jittery
-        this.lastTime=this.lastTime+frameDelay;
+        this.lastTime = this.lastTime + frameTime;
         //too far off, reset
-        if (Math.abs(now-this.lastTime)>frameDelay)
-        {
+        if (Math.abs(now - this.lastTime) > frameTime) {
             console.warn("RunnerServer: resetting timing (too slow?)")
-            this.lastTime=now;
-            setTimeout(() => this.renderFrame(), frameDelay)
-        }
-        else
-        {
-            const interval=this.lastTime-now+frameDelay;
+            this.lastTime = now;
+            setTimeout(() => this.renderFrame(), frameTime)
+        } else {
+            const interval = this.lastTime - now + frameTime;
             setTimeout(() => this.renderFrame(), interval)
         }
 
@@ -95,7 +84,7 @@ export class RunnerServer {
     }
 
     stopRenderLoop() {
-        this.keepRendering=false
+        this.keepRendering = false
         // clearInterval(this.renderInterval)
     }
 
@@ -146,10 +135,10 @@ export class RunnerServer {
         }
     }
 
-    resetControls()
-    {
+    resetControls() {
         this.controlGroup.clear()
-        this.fpsControl=this.controlGroup.value("FPS",60,1,120)
+        this.fpsControl = this.controlGroup.value("FPS", 60, 1, 120)
+        this.matrix.setFps(this.fpsControl.value)
 
     }
 
@@ -168,13 +157,12 @@ export class RunnerServer {
         if (presetName) {
             this.presetValues = await this.presetStore.load(this.animationClass, presetName)
             this.controlGroup.load(this.presetValues.values)
-        }
-        else
-        {
-            this.presetValues= {
-                title:"",
-                description:"",
-                values:{}
+            this.matrix.setFps(this.fpsControl.value)
+        } else {
+            this.presetValues = {
+                title: "",
+                description: "",
+                values: {}
             }
 
         }
@@ -221,6 +209,11 @@ export class RunnerServer {
         }
     }
 
+    updateValue(path: [string], values: Values): boolean {
+        const ret = this.controlGroup.updateValue(path, values)
+        this.matrix.setFps(this.fpsControl.value)
+        return ret
+    }
 }
 
 

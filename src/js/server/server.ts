@@ -98,12 +98,12 @@ rpc.addMethod("runner.runName", async (params, context) => {
 rpc.addMethod("matrix.control.updateValue", async (params, context) => {
 
     if (context.runner)
-        if (context.runner.controlGroup.updateValue(params[0], params[1])) {
+        if (context.runner.updateValue(params[0], params[1])) {
             context.runner.restart(true)
         }
 
     for (const runner of runners) {
-        if (runner.controlGroup.updateValue(params[0], params[1]))
+        if (runner.updateValue(params[0], params[1]))
             runner.restart(true)
     }
 })

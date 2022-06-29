@@ -50,10 +50,6 @@ export default class BrainsmokeFire extends Animation {
 
         this.xypixels = matrix.raster(matrix, new Color(0, 0, 0), true, false, true)
 
-        // //colortab
-        // this.colortab = []
-        // for (let c = 0; c < 256; c++)
-        //     this.colortab.push(this.color(c / 256))
         this.black = new Color(0, 0, 0)
 
         this.fireColors = patternSelect(controls)
@@ -75,24 +71,6 @@ export default class BrainsmokeFire extends Animation {
         })
 
     }
-
-
-    //brainsmoke color pattern
-    // color(x) {
-    //     let [r, g, b] = [x ** 1 * 3, x ** 1.5 * 4., x ** 2]
-    //
-    //     if (r > 1.)
-    //         r = 1.
-    //     if (g > 1.)
-    //         g = 1.
-    //     if (b > 1.)
-    //         b = 1.
-    //
-    //     if (r == 1 && g == 1 && b == 1)
-    //         [r, g, b] = [1, 1, 1]
-    //
-    //     return new Color(~~(r * 255), ~~(g * 255), ~~(b * 255))
-    // }
 
     next() {
         let [w, h] = [this.w, this.h]

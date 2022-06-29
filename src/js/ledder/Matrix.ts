@@ -20,6 +20,11 @@ export abstract class Matrix extends PixelContainer {
   //should frametimes be whole numbers (usefull for ledstream)
   roundFrametime=false
 
+  //actual fps and framedelay (after maxing and rounding)
+  fps:number //current fps its running at
+  frameTime: number //time of each frame.
+
+
   width: number
   height: number
 
@@ -39,6 +44,27 @@ export abstract class Matrix extends PixelContainer {
     this.yMin=0
     this.xMax=width-1
     this.yMax=height-1
+
+  }
+
+  setFps(fps:number)
+  {
+
+    //limit
+    if (fps>this.maxFps)
+      fps=this.maxFps
+
+    if (this.roundFrametime) {
+      //make sure we have a rounded framedelay. (needed for LedStream)
+      this.frameTime = ~~(1000 / fps)
+      //readjust fps to account for the rounded framedelay.
+      this.fps=1000/this.frameTime
+    }
+    else {
+      //no rounding
+      this.frameTime = (1000 / fps)
+      this.fps=fps
+    }
 
   }
 
