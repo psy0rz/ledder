@@ -22,7 +22,7 @@ export abstract class Matrix extends PixelContainer {
 
   //actual fps and framedelay (after maxing and rounding)
   fps:number //current fps its running at
-  frameTime: number //time of each frame.
+  frameMs: number //time of each frame.
 
 
   width: number
@@ -47,6 +47,7 @@ export abstract class Matrix extends PixelContainer {
 
   }
 
+  //set matrix fps (usually controlled externally by FPS control)
   setFps(fps:number)
   {
 
@@ -56,16 +57,21 @@ export abstract class Matrix extends PixelContainer {
 
     if (this.roundFrametime) {
       //make sure we have a rounded framedelay. (needed for LedStream)
-      this.frameTime = ~~(1000 / fps)
+      this.frameMs = ~~(1000 / fps)
       //readjust fps to account for the rounded framedelay.
-      this.fps=1000/this.frameTime
+      this.fps=1000/this.frameMs
     }
     else {
       //no rounding
-      this.frameTime = (1000 / fps)
+      this.frameMs = (1000 / fps)
       this.fps=fps
     }
+  }
 
+  //calculate time to number of frames (can be a float!)
+  seconds2frames(seconds:number):number
+  {
+    return (seconds*1000/this.frameMs)
   }
 
   //bbox of a matrix is the whole screen
@@ -90,10 +96,6 @@ export abstract class Matrix extends PixelContainer {
       else if (p instanceof PixelContainer)
       {
         this.render(p)
-      }
-      else
-      {
-        console.error("Illegal object in pixel container", p)
       }
     }
   }

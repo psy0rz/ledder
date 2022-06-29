@@ -1,11 +1,19 @@
 import {Animation} from "../Animation.js";
-import {random} from "../util.js";
+import {random, randomGaussian} from "../util.js";
 import {Pixel} from "../Pixel.js";
 import {Color} from "../Color.js";
 
+
 //glow firepixel intesity between min/max (inclusive), with specified "wildness"
-export function glow(current:number, min:number, max:number, wildness:number) {
-  current = current + random(-wildness, wildness)
+export function glow(current:number, min:number, max:number, wildness:number, gausian=3) {
+
+  //pull the flame to the middle. (wildness gets less towards the limits)
+  // const factor=(current-min)/ (max-min)
+  // const upperWildness=~~((1-factor)*wildness)
+  // const lowerWildness=~~((-factor)*wildness)
+  // current = current + random(lowerWildness, upperWildness)
+
+    current = current + randomGaussian(-wildness, wildness, gausian)
 
   if (current > max)
     current = max

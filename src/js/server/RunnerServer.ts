@@ -57,24 +57,30 @@ export class RunnerServer {
 
         const now = Date.now();
 
-        const frameTime = this.matrix.frameTime
+        const frameMs = this.matrix.frameMs
 
         if (!this.keepRendering)
             return
 
         //increase time with exact framedelay instead of sending now, since setInterval is jittery
-        this.lastTime = this.lastTime + frameTime;
+        this.lastTime = this.lastTime + frameMs;
         //too far off, reset
-        if (Math.abs(now - this.lastTime) > frameTime) {
+        if (Math.abs(now - this.lastTime) > frameMs) {
             console.warn("RunnerServer: resetting timing (too slow?)")
             this.lastTime = now;
-            setTimeout(() => this.renderFrame(), frameTime)
+            setTimeout(() => this.renderFrame(), frameMs)
         } else {
-            const interval = this.lastTime - now + frameTime;
+            const interval = this.lastTime - now + frameMs;
             setTimeout(() => this.renderFrame(), interval)
         }
 
-        this.matrix.render(this.matrix)
+        try {
+            this.matrix.render(this.matrix)
+        }
+        catch(e)
+        {
+            console.error("Exception while rendering:" ,e )
+        }
         this.matrix.frame(this.lastTime)
 
         //NOTE: we run the scheduler as last, sync this may in fact queue up all kinds of async events which need to be handled before calling matrix.render()

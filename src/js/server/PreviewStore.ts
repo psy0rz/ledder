@@ -38,6 +38,9 @@ export class PreviewStore {
         if (preset)
             this.controlGroup.load(preset.values);
 
+        const fpsControl = this.controlGroup.value("FPS", 60, 1, 120)
+        this.matrix.setFps(fpsControl.value)
+
         let animation: Animation = new animationClass()
         animation.run(this.matrix, this.scheduler, this.controlGroup).then(() => {
             console.log(`PreviewStore: ${filename} finished.`)
@@ -49,11 +52,9 @@ export class PreviewStore {
             }
         })
 
-        //FIXME: fps control
-        let fpsControl={ value: 60}
         //previews shouldnt have a higher than 60fps rate, so just divide more frames above 60fps
-        const divider = ~~((fpsControl.value - 1) / 60) + animationClass.previewDivider
-        const fps = ~~(fpsControl.value / divider )
+        const divider = ~~((this.matrix.fps - 1) / 60) + animationClass.previewDivider
+        const fps = ~~(this.matrix.fps / divider )
 
         //skip frames, just run scheduler
         for (let i = 0; i < animationClass.previewSkip; i++)
@@ -65,7 +66,7 @@ export class PreviewStore {
                 await this.scheduler.step()
             }
 
-            this.matrix.render(this.matrix,0,0)
+            this.matrix.render(this.matrix)
             this.matrix.frame()
         }
 

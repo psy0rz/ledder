@@ -6,7 +6,7 @@ import {ControlValue} from "../ControlValue.js";
 import {Scheduler} from "../Scheduler.js";
 import {ControlGroup} from "../ControlGroup.js";
 import {Matrix} from "../Matrix.js";
-import {fireColorsBertrik, fireColorsBrainsmoke, fireColorsDoom, patternSelect} from "../ColorPatterns.js";
+import { patternSelect} from "../ColorPatterns.js";
 
 //best at 50fps according to brainsmoke
 export default class BrainsmokeFire extends Animation {
@@ -52,7 +52,7 @@ export default class BrainsmokeFire extends Animation {
 
         this.black = new Color(0, 0, 0)
 
-        this.fireColors = patternSelect(controls)
+        this.fireColors = patternSelect(controls, 'Fire colors', 'Brainsmoke fire')
 
         //decay mapping
         this.mapping = []

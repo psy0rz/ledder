@@ -74,9 +74,9 @@ export default class Marquee extends Animation {
             while(1)
             {
                 cursorColor.a=1
-                await scheduler.delay(62.5/2) //TODO: actual time calculator
+                await scheduler.delay(matrix.seconds2frames(0.5))
                 fader.run(cursorColor)
-                await scheduler.delay(62.5/2)
+                await scheduler.delay(matrix.seconds2frames(0.5))
 
             }
         }

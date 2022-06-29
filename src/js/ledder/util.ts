@@ -1,5 +1,25 @@
 //led utils
 
+
+/**
+ * Integer number wwith guassian bell curve distribution from min to max (inclusive)
+ * from https://stackoverflow.com/questions/25582882/javascript-math-random-normal-distribution-gaussian-bell-curve
+ * @param min
+ * @param max
+ * @param amount Slimness of the distirbution. 1 is uniform random()
+ **/
+export function randomGaussian(min, max, amount=3) {
+    var rand = 0;
+
+    for (var i = 0; i < amount; i += 1) {
+        rand += Math.random();
+    }
+
+    rand=rand / amount;
+    return ~~(rand * (max - min + 1) + min)
+}
+
+
 /**
  * Integer number from min to max (inclusive)
  * @param min
@@ -18,7 +38,6 @@ export function random(min, max) {
 export function randomFloat(min, max) {
     return (Math.random() * (max - min) + min)
 }
-
 
 
 //check if its a number and in this range or throw error
