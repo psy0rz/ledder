@@ -12,7 +12,7 @@ import DrawAsciiArtColor from "../draw/DrawAsciiArtColor.js";
 import {PixelContainer} from "../PixelContainer.js";
 import MovingStars from "./MovingStars.js";
 import FxColorCycle from "../fx/FxColorCycle.js";
-import {fireColors} from "../ColorPatterns.js";
+import {fireColorsDoom} from "../ColorPatterns.js";
 
 //Nyancat, based on https://github.com/bertrik/nyancat/blob/master/nyancat.c
 
@@ -105,7 +105,7 @@ export default class Nyancat extends Animation {
 
                     const p = new Pixel(x, c + y + 1,  new Color())
                     matrix.add(p)
-                    cycleFx.run(fireColors, p.color, skips[c])
+                    cycleFx.run(fireColorsDoom, p.color, skips[c])
                         .then(() => {
                             matrix.delete(p)
                         })

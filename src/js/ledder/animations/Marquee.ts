@@ -28,7 +28,7 @@ export default class Marquee extends Animation {
         const charPixels=new DrawText(0,0, font, input.text, colorControl )
         charPixels.centerV(matrix)
 
-        let starsGroup=control.group("Stars", false, true)
+        let starsGroup=control.group("Stars", false, false)
         if (starsGroup.switch('Enabled', false).enabled) {
             new MovingStars().run(matrix,scheduler, starsGroup)
         }
@@ -53,7 +53,7 @@ export default class Marquee extends Animation {
             charPixels.centerH(matrix)
         }
 
-        let flameGroup=control.group("Flames", false, true)
+        let flameGroup=control.group("Flames", false, false)
         if (flameGroup.switch('Enabled', false).enabled) {
             const flames=new PixelContainer()
             matrix.add(flames)
@@ -77,6 +77,7 @@ export default class Marquee extends Animation {
                 await scheduler.delay(62.5/2) //TODO: actual time calculator
                 fader.run(cursorColor)
                 await scheduler.delay(62.5/2)
+
             }
         }
 

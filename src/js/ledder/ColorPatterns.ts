@@ -1,7 +1,15 @@
 import {Color} from "./Color.js";
+import {Pixel} from "./Pixel.js";
+import {Matrix} from "./Matrix.js";
+import {ControlGroup} from "./ControlGroup.js";
+import {Font} from "./Font.js";
+import {fonts} from "./fonts.js";
 
-////////////////// calculate converion table for fire-intensity (0-100) to Color()
-function calculateFireColors() {
+//all color patterns are just an array of Color() objects of arbitrairy length.
+
+////////////////// doom fire colors
+// from https://github.com/filipedeschamps/doom-fire-algorithm/blob/master/playground/render-with-canvas-and-hsl-colors/fire.js
+function calculateFireColorsDoom() {
 
     const colors = []
     for (let i = 0; i <= 100; i++) {
@@ -17,11 +25,11 @@ function calculateFireColors() {
     return (colors)
 }
 
-export const fireColors=calculateFireColors()
+export const fireColorsDoom=calculateFireColorsDoom()
 
 
 
-//////////////////// bertrix fire colors
+//////////////////// bertrik fire colors
 function calculateFireColorsBertrik() {
     let i;
     let k = 0;
@@ -52,3 +60,61 @@ function calculateFireColorsBertrik() {
     return colors
 }
 export const fireColorsBertrik=calculateFireColorsBertrik()
+
+
+///////////////////////////brainsmoke fire colors
+//brainsmoke color pattern
+function calculateFireColorsBrainsmoke() {
+
+    let ret = []
+    for (let x = 0; x < 256; x++) {
+
+        const c=x/256
+
+        let [r, g, b] = [c ** 1 * 3, c ** 1.5 * 4., c ** 2]
+
+        if (r > 1.)
+            r = 1.
+        if (g > 1.)
+            g = 1.
+        if (b > 1.)
+            b = 1.
+
+        if (r == 1 && g == 1 && b == 1)
+            [r, g, b] = [1, 1, 1]
+
+        ret.push(new Color(~~(r * 255), ~~(g * 255), ~~(b * 255)))
+    }
+    return(ret)
+}
+export const fireColorsBrainsmoke=calculateFireColorsBrainsmoke()
+
+//just to see the difference and orientation
+export function testFirecolors(matrix:Matrix)
+{
+    for (let x = 0; x < matrix.width; x++) {
+        matrix.add(new Pixel(x, 3, fireColorsBertrik[~~(x / matrix.width * fireColorsBertrik.length)]))
+        matrix.add(new Pixel(x, 2, fireColorsDoom[~~(x / matrix.width * fireColorsDoom.length)]))
+        matrix.add(new Pixel(x, 1, fireColorsBrainsmoke[~~(x / matrix.width * fireColorsBrainsmoke.length)]))
+    }
+}
+
+
+const patterns={
+    'Doom fire': fireColorsDoom,
+    'Bertrik fire': fireColorsBertrik,
+    'Brainsmoke fire': fireColorsBrainsmoke
+}
+
+//helper to make it easier to let the user select a color pattern
+export function patternSelect(control:ControlGroup, name='Color pattern', selected='Bertrik fire' ):Array<Color>
+{
+    let choices = []
+    for (const [id, color] of Object.entries(patterns)) {
+        choices.push({id: id, name: id})
+    }
+
+    const patternControl = control.select(name, selected, choices, true)
+    const pattern = patterns[patternControl.selected]
+    return (pattern)
+}

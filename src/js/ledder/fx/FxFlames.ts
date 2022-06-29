@@ -8,7 +8,7 @@ import {random, randomFloat} from "../util.js";
 import FxColorCycle from "./FxColorCycle.js";
 import FxMove from "./FxMove.js";
 import {Color} from "../Color.js";
-import {fireColors} from "../ColorPatterns.js";
+import {fireColorsDoom} from "../ColorPatterns.js";
 import FxRotate from "./FxRotate.js";
 import {Pixel} from "../Pixel.js";
 
@@ -78,7 +78,7 @@ export default class FxFlames extends Fx {
                 const flameHead = p.copy(true)
                 targetContainer.add(flameHead)
 
-                this.flameCycle.run(fireColors, flameHead.color, skip).then(() => {
+                this.flameCycle.run(fireColorsDoom, flameHead.color, skip).then(() => {
                     targetContainer.delete(flameHead)
                     // heads.delete(head)
                 })

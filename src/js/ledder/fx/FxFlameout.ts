@@ -8,7 +8,7 @@ import {random} from "../util.js";
 import FxColorCycle from "./FxColorCycle.js";
 import FxMove from "./FxMove.js";
 import {Color} from "../Color.js";
-import {fireColors} from "../ColorPatterns.js";
+import {fireColorsDoom} from "../ColorPatterns.js";
 
 
 //Make pixels disappear as a bunch of flames, also removes them from container
@@ -42,7 +42,7 @@ export default class FxFlameout extends Fx {
             const c=new Color()
             p.color=c
             moverContainers[random(0,moverContainers.length-1)].add(p)
-            promises.push(this.flameCycle.run(fireColors, c).then(()=>{
+            promises.push(this.flameCycle.run(fireColorsDoom, c).then(()=>{
                 parent.delete(p)
             }))
 
