@@ -19,6 +19,21 @@
   },
   "Fire decay": {
    "value": 42
+  },
+  "Fire colors": {
+   "selected": "Bertrik fire"
+  },
+  "Fire minimum intensity %": {
+   "value": 0
+  },
+  "Fire maximum intensity %": {
+   "value": 100
+  },
+  "Fire wildness %": {
+   "value": 69
+  },
+  "Fire decay %": {
+   "value": 2
   }
  }
 }

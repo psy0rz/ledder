@@ -6,7 +6,7 @@
    "value": 60
   },
   "Fire interval": {
-   "value": 3.1
+   "value": 1
   },
   "Fire minimum intensity": {
    "value": 172
@@ -19,6 +19,21 @@
   },
   "Fire decay": {
    "value": 94
+  },
+  "Fire colors": {
+   "selected": "Bertrik fire"
+  },
+  "Fire minimum intensity %": {
+   "value": 0
+  },
+  "Fire maximum intensity %": {
+   "value": 60
+  },
+  "Fire wildness %": {
+   "value": 12
+  },
+  "Fire decay %": {
+   "value": 11
   }
  }
 }

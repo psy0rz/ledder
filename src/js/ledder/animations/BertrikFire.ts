@@ -75,7 +75,7 @@ export default class BertrikFire extends Animation {
         const minIntensityControl = controls.value("Fire minimum intensity %", 0, 0, 100, 1);
         const maxIntensityControl = controls.value("Fire maximum intensity %", 100, 0, 100, 1);
         const wildnessIntensityControl = controls.value("Fire wildness %", 10, 0, 100, 1);
-        const decayControl = controls.value("Fire decay %", 10, 0, 100, 1)
+        const decayControl = controls.value("Fire decay %", 10, 0, 40, 1)
 
         const colorScale = (colors.length - 1) / 100
 
