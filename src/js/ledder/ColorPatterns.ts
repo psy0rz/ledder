@@ -18,10 +18,16 @@ function calculateFireColorsDoom() {
         const colorL = i / 100;
         const c = new Color()
         c.setHsl(colorH, colorS, colorL)
-        Object.freeze(c)
+        c.freeze()
         //c.a=i/100
         colors.push(c)
     }
+
+    //make sure 0 is transparent
+    const c=new Color(0,0,0,0, true)
+    colors[0]=c
+
+
     return (colors)
 }
 
@@ -38,25 +44,31 @@ function calculateFireColorsBertrik() {
 
     // black to red
     for (i = 0; i < 255; i++) {
-        colors[k++]=new Color( r,g,b);
+        colors[k++]=new Color( r,g,b, 1, true);
         r++;
     }
 
     // red to yellow
     for (i = 0; i < 255; i++) {
-        colors[k++]=new Color( r,g,b);
+        colors[k++]=new Color( r,g,b,1 ,true);
         g++;
     }
 
     // yellow to white
     for (i = 0; i < 255; i++) {
-        colors[k++]=new Color( r,g,b);
+        colors[k++]=new Color( r,g,b,1 ,true);
         b++;
     }
     // // just white
     // for (i = 0; i < 30; i++) {
     //     colors[k++]=new Color( r,g,b);
     // }
+
+    //make sure 0 is transparent
+    const c=new Color(0,0,0,0, true)
+    colors[0]=c
+
+
     return colors
 }
 export const fireColorsBertrik=calculateFireColorsBertrik()
@@ -66,7 +78,7 @@ export const fireColorsBertrik=calculateFireColorsBertrik()
 //brainsmoke color pattern
 function calculateFireColorsBrainsmoke() {
 
-    let ret = []
+    let colors = []
     for (let x = 0; x < 256; x++) {
 
         const c=x/256
@@ -83,9 +95,13 @@ function calculateFireColorsBrainsmoke() {
         if (r == 1 && g == 1 && b == 1)
             [r, g, b] = [1, 1, 1]
 
-        ret.push(new Color(~~(r * 255), ~~(g * 255), ~~(b * 255)))
+        colors.push(new Color(~~(r * 255), ~~(g * 255), ~~(b * 255),1 ,true))
     }
-    return(ret)
+    //make sure 0 is transparent
+    const c=new Color(0,0,0,0, true)
+    colors[0]=c
+
+    return(colors)
 }
 export const fireColorsBrainsmoke=calculateFireColorsBrainsmoke()
 

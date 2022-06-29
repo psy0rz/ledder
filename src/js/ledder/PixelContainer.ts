@@ -15,6 +15,7 @@ export class PixelContainer extends Set<Pixel | PixelContainer> {
 
 
     /* Creates a traditional x/y raster, with seperate pixels that each get a copy of the color object.
+    * (Dont use this if you can do it on the more modern ledder-way where each pixel is an object in a container-list)
     * raster[x][y] corresponds to Pixel(x,y)
     * @param YX swap array layout so raster[y][x] corresponds to Pixel(x,y)
     * @param xFlip Flip x axis: 0,0 corresponds to Pixel(xMax,0)
@@ -91,30 +92,8 @@ export class PixelContainer extends Set<Pixel | PixelContainer> {
         return (ret)
     }
 
-    //creates a traditional y/x raster, with seperate pixels that each get a copy of the color object
-    rasterYX(bbox: BboxInterface, color: ColorInterface, copyColor = true): Array<Array<Pixel>> {
-        //create clear field
-        let ret: Array<Array<Pixel>>
-        ret = []
 
-        for (let y = bbox.yMin; y <= bbox.yMax; y++) {
-
-            ret[y] = []
-            for (let x = bbox.xMin; x <= bbox.xMax; x++) {
-                let p
-                if (copyColor)
-                    p = new Pixel(x, y, color.copy())
-                else
-                    p = new Pixel(x, y, color)
-                ret[y][x] = p
-                this.add(p)
-            }
-        }
-        return (ret)
-    }
-
-
-//dump pixeltree in string format, for debugging
+    //dump pixeltree in string format, for debugging
     dump(indent = "") {
         let str = ""
         str = str + indent + `pixeltree:\n`
@@ -269,3 +248,4 @@ export class PixelContainer extends Set<Pixel | PixelContainer> {
     }
 
 }
+

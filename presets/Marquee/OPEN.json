@@ -68,6 +68,9 @@
     },
     "Color cycle mode": {
      "selected": "reverse"
+    },
+    "Color cycle pattern": {
+     "selected": "Doom fire"
     }
    }
   },

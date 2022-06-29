@@ -42,7 +42,7 @@ export default class FxFlameout extends Fx {
             const c=new Color()
             p.color=c
             moverContainers[random(0,moverContainers.length-1)].add(p)
-            promises.push(this.flameCycle.run(fireColorsDoom, c).then(()=>{
+            promises.push(this.flameCycle.run( c).then(()=>{
                 parent.delete(p)
             }))
 

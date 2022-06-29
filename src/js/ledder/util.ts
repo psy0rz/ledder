@@ -39,6 +39,24 @@ export function randomFloat(min, max) {
     return (Math.random() * (max - min) + min)
 }
 
+/**
+ * Floating number from min to max (inclusive min, but never reaches max)
+ * with guassian bell curve distribution
+ * @param min
+ * @param max
+ * @param amount Slimness of the distirbution. 1 is uniform random()
+ */
+export function randomFloatGaussian(min, max, amount=3) {
+    var rand = 0;
+
+    for (var i = 0; i < amount; i += 1) {
+        rand += Math.random();
+    }
+
+    rand=rand / amount;
+    return (rand * (max - min) + min)
+}
+
 
 //check if its a number and in this range or throw error
 export function numberCheck(desc, number, min = undefined, max = undefined) {

@@ -9,6 +9,7 @@ import {PixelContainer} from "../PixelContainer.js";
 import FxFlames from "../fx/FxFlames.js";
 
 import BertrikFire from "./BertrikFire.js";
+import BrainsmokeFire from "./BrainsmokeFire.js";
 
 
 export default class ItsFine extends Animation {
@@ -20,7 +21,8 @@ export default class ItsFine extends Animation {
 
     async run(display: Display, scheduler: Scheduler, controls: ControlGroup) {
 
-        new BertrikFire().run(display, scheduler, controls.group("Bottom fire"))
+        // new BertrikFire().run(display, scheduler, controls.group("Bottom fire"))
+        new BrainsmokeFire().run(display, scheduler, controls.group("Bottom fire"))
         controls.group("Bottom fire").value("Fire maximum intensity").value = 0
 
         const inputControl=controls.input("Text", "its fine.", true)
@@ -35,10 +37,10 @@ export default class ItsFine extends Animation {
         new FxFlames(scheduler, controls.group("Top fire")).run(text, flames)
 
         await scheduler.delay(60 * 5)
-        controls.group("Bottom fire").value("Fire maximum intensity").value = 100
+        controls.group("Bottom fire").value("Fire maximum intensity").value = 380
 
         await scheduler.delay(60 * 5)
-        controls.group("Bottom fire").value("Fire maximum intensity").value = 300
+        controls.group("Bottom fire").value("Fire maximum intensity").value = 600
 
         await scheduler.delay(60 * 5)
         controls.group("Bottom fire").value("Fire maximum intensity").value = 700

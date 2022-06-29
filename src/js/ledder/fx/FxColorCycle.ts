@@ -7,7 +7,8 @@ import {PixelContainer} from "../PixelContainer.js";
 import {Pixel} from "../Pixel.js";
 import {ColorInterface} from "../ColorInterface.js";
 import {ControlSelect} from "../ControlSelect.js";
-import {random} from "../util.js";
+import {random, randomGaussian} from "../util.js";
+import {patternSelect} from "../ColorPatterns.js";
 
 //Smooth cycle through a list of color objects, with 60 fps. Calculating the optimum step size
 export default class FxColorCycle extends Fx {
@@ -17,8 +18,9 @@ export default class FxColorCycle extends Fx {
     private mode: ControlSelect;
     private cycleTimeControl: ControlValue;
     private randomizerControl: ControlValue;
+    private cyclePattern: Array<Color>;
 
-    constructor(scheduler: Scheduler, controls: ControlGroup, mode = "pingpong", cycleTime = 60, randomizer = 0, repeat = 0) {
+    constructor(scheduler: Scheduler, controls: ControlGroup, mode = "pingpong", cycleTime = 60, randomizer = 0, repeat = 0, colorPatternName:string='Bertrik fire') {
         super(scheduler, controls)
 
         this.cycleTimeControl = controls.value('Color cycle time', cycleTime, 0, 240, 1, true)
@@ -39,37 +41,45 @@ export default class FxColorCycle extends Fx {
                     "name": "Ping pong"
                 },
             ], true)
+        this.cyclePattern=patternSelect(controls, 'Color cycle pattern', colorPatternName)
     }
 
 
     //cycle the target color object through the list of colors.
-    //use skip to skip the first number of colors.
+    //use skip to skip the first percentage of colors
     //note: skipping makes the cycle-time shorter, since thats usually what you want.
-    run(colors: Array<ColorInterface>, target: ColorInterface, skip = 0) {
+    run(target: ColorInterface, skipPercentage = 0, overridePattern?: Array<ColorInterface>) {
 
         this.running = true
         let repeat = 0
         let colorI = 0
+        let colorPattern
+        if (overridePattern)
+            colorPattern=overridePattern
+        else
+            colorPattern=this.cyclePattern
+
+        const skip=~~(skipPercentage/100*colorPattern.length)
 
         //calculate step size (does not take into account skip!)
-        let step = colors.length / (this.cycleTimeControl.value + random(0, this.randomizerControl.value))
+        let step = colorPattern.length / (this.cycleTimeControl.value + randomGaussian(0, this.randomizerControl.value))
 
         if (this.mode.selected == "reverse") {
             step = -step
-            colorI = colors.length - 1 - skip
+            colorI = colorPattern.length - 1 - skip
         } else {
             colorI = 0 + skip
         }
         Object.assign(target,
-            colors[~~colorI])
+            colorPattern[~~colorI])
 
         this.promise = this.scheduler.interval(1, (frameNr) => {
 
-            Object.assign(target, colors[~~colorI])
+            Object.assign(target, colorPattern[~~colorI])
             colorI = colorI + step
 
             if (step > 0) {
-                if (colorI >= colors.length) {
+                if (colorI >= colorPattern.length) {
                     if (this.mode.selected == "pingpong") {
                         //invert direction and move one step back
                         step = -step
@@ -98,7 +108,7 @@ export default class FxColorCycle extends Fx {
                     }
                     //reverse
                     else {
-                        colorI = colors.length - 1
+                        colorI = colorPattern.length - 1
                     }
 
                 }

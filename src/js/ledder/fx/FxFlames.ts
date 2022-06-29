@@ -4,7 +4,7 @@ import {ControlGroup} from "../ControlGroup.js";
 import {PixelContainer} from "../PixelContainer.js";
 import BboxInterface from "../BboxInterface.js";
 import {Scheduler} from "../Scheduler.js";
-import {random, randomFloat} from "../util.js";
+import {random, randomFloat, randomFloatGaussian} from "../util.js";
 import FxColorCycle from "./FxColorCycle.js";
 import FxMove from "./FxMove.js";
 import {Color} from "../Color.js";
@@ -78,14 +78,14 @@ export default class FxFlames extends Fx {
                 const flameHead = p.copy(true)
                 targetContainer.add(flameHead)
 
-                this.flameCycle.run(fireColorsDoom, flameHead.color, skip).then(() => {
+                this.flameCycle.run( flameHead.color, skip).then(() => {
                     targetContainer.delete(flameHead)
                     // heads.delete(head)
                 })
 
                 // targetContainer.move(0,0.001)
             }
-            targetContainer.move( randomFloat(0,this.windXControl.value), randomFloat(0, this.windYControl.value))
+            targetContainer.move( randomFloatGaussian(0,this.windXControl.value), randomFloatGaussian(0, this.windYControl.value))
 
                 //extend all the trails
             //     for (const trail of targetContainer) {

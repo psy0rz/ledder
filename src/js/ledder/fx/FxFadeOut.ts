@@ -1,5 +1,5 @@
 import {ColorInterface} from "../ColorInterface.js";
-import {random} from "../util.js";
+import {random, randomGaussian} from "../util.js";
 import Fx from "../Fx.js";
 import {ControlGroup} from "../ControlGroup.js";
 import {ControlValue} from "../ControlValue.js";
@@ -37,7 +37,7 @@ export class FxFadeOut extends Fx {
         this.running=true
 
         let frameNr
-        frameNr = this.fadeTimeControl.value + random(0, this.randomizerControl.value) + modifyTime;
+        frameNr = this.fadeTimeControl.value + randomGaussian(0, this.randomizerControl.value) + modifyTime;
 
         let stepA = color.a / frameNr
 

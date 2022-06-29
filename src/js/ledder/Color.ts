@@ -15,6 +15,11 @@ export class Color implements ColorInterface {
             Object.freeze(this)
     }
 
+    freeze()
+    {
+        Object.freeze(this)
+    }
+
     //borrowed from color-convert npm
     //hsl are all in range 0-1
     setHsl( h,s,l)

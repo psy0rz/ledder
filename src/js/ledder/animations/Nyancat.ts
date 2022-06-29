@@ -105,7 +105,7 @@ export default class Nyancat extends Animation {
 
                     const p = new Pixel(x, c + y + 1,  new Color())
                     display.add(p)
-                    cycleFx.run(fireColorsDoom, p.color, skips[c])
+                    cycleFx.run( p.color, skips[c])
                         .then(() => {
                             display.delete(p)
                         })

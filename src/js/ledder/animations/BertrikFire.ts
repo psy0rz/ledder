@@ -59,7 +59,7 @@ export default class BertrikFire extends Animation {
 
     async run(display: Display, scheduler: Scheduler, controls: ControlGroup) {
 
-        let pixels = display.raster(display, new Color(0, 0, 0), true, false, true)
+        let pixels = display.raster(display, new Color(0, 0, 0,0), true, false, true)
         let field = []
         let colors = patternSelect(controls, 'Fire colors', 'Bertrik fire')
 
