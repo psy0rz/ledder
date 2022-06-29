@@ -1,7 +1,7 @@
 import {Animation} from "../Animation.js";
 import {Pixel} from "../Pixel.js";
 import {FontSimple8x8} from "../fonts/FontSimple8x8.js";
-import {Matrix} from "../Matrix.js";
+import {Display} from "../Display.js";
 
 function paddy(num, padlen, padchar = '0') {
     var pad = new Array(1 + padlen).join(padchar);
@@ -16,7 +16,7 @@ export default class Countdown extends Animation {
     static category = "Marquees"
 
 
-    constructor(matrix: Matrix) {
+    constructor(matrix: Display) {
         super(matrix);
 
         const font = FontSimple8x8

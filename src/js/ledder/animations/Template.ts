@@ -1,5 +1,5 @@
 import {Animation} from "../Animation.js";
-import {Matrix} from "../Matrix.js";
+import {Display} from "../Display.js";
 import {Scheduler} from "../Scheduler.js";
 import {ControlGroup} from "../ControlGroup.js";
 import {Pixel} from "../Pixel.js";
@@ -13,7 +13,7 @@ export default class Template extends  Animation
     static description = "blabla"
     static presetDir = "Test";
 
-    async run(matrix: Matrix, scheduler: Scheduler, controls: ControlGroup) {
+    async run(matrix: Display, scheduler: Scheduler, controls: ControlGroup) {
 
         const pixel=new Pixel(0,0, new Color(255,0,0))
         matrix.add(pixel)

@@ -1,4 +1,4 @@
-import {Matrix} from "../../ledder/Matrix.js"
+import {Display} from "../../ledder/Display.js"
 import leds from "rpi-ws281x-smi"
 
 import {gamma} from "./MatrixWLED.js";
@@ -10,7 +10,7 @@ import {gamma} from "./MatrixWLED.js";
  * Uses rpi-ws281x-smi to drive up to 8 displays in parallel.
  * All displays should be oriented from left to right, starting with channel 0.
  */
-export class MatrixRPIupdown extends Matrix {
+export class MatrixRPIupdown extends Display {
   private displayWidth: number;
 
   /*

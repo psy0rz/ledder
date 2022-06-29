@@ -1,5 +1,5 @@
 import {Animation} from "../Animation.js";
-import {Matrix} from "../Matrix.js";
+import {Display} from "../Display.js";
 import {Pixel} from "../Pixel.js";
 import {Scheduler} from "../Scheduler.js";
 import {ControlGroup} from "../ControlGroup.js";
@@ -23,7 +23,7 @@ export default class PoliceLights extends Animation {
     static category = "Signal lights"
 
 
-    async run(matrix: Matrix, scheduler: Scheduler, controls: ControlGroup, overrideText1?:string, overrideText2?:string) {
+    async run(matrix: Display, scheduler: Scheduler, controls: ControlGroup, overrideText1?:string, overrideText2?:string) {
 
         /////////////// text
         const font = fontSelect(controls)

@@ -1,4 +1,4 @@
-import {Matrix} from "./Matrix.js";
+import {Display} from "./Display.js";
 import {PixelContainer} from "./PixelContainer.js";
 import {Scheduler} from "./Scheduler.js";
 import {ControlGroup} from "./ControlGroup.js";
@@ -22,7 +22,7 @@ export class Animation {
 
 
     //will be overridden in animation subclass
-    async run(matrix: Matrix, scheduler: Scheduler, controls: ControlGroup) {
+    async run(matrix: Display, scheduler: Scheduler, controls: ControlGroup) {
         console.error("Error: This animation has no run() function?")
 
     }

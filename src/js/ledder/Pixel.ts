@@ -1,4 +1,4 @@
-import {Matrix} from "./Matrix.js";
+import {Display} from "./Display.js";
 import {PixelInterface} from "./PixelInterface.js";
 import {ColorInterface} from "./ColorInterface.js";
 import BboxInterface from "./BboxInterface.js";

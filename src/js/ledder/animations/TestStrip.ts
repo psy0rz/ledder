@@ -1,5 +1,5 @@
 import {Animation} from "../Animation.js";
-import {Matrix} from "../Matrix.js";
+import {Display} from "../Display.js";
 import {Pixel} from "../Pixel.js";
 
 import {Color} from "../Color.js";
@@ -15,7 +15,7 @@ export default class TestStrip extends Animation {
   static description="To verify functionality of a led strip."
   static presetDir="Strip test"
 
-  async run(matrix: Matrix, scheduler: Scheduler, controls: ControlGroup) {
+  async run(matrix: Display, scheduler: Scheduler, controls: ControlGroup) {
 
     //ends
     matrix.add(new Pixel(0, 0, new Color(255, 255, 0)));

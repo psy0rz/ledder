@@ -1,7 +1,7 @@
 import {Animation} from "../Animation.js";
 import {Pixel} from "../Pixel.js";
 import {FontSimple8x8} from "../fonts/FontSimple8x8.js";
-import {Matrix} from "../Matrix.js";
+import {Display} from "../Display.js";
 import {AnimationTwinkle} from "../AnimationTwinkle.js";
 import { Color } from "../Color.js";
 
@@ -13,7 +13,7 @@ export default class Open extends Animation {
   static category = "Marquees"
 
 
-  constructor(matrix:Matrix ) {
+  constructor(matrix:Display ) {
     super(matrix);
 
     const font=FontSimple8x8

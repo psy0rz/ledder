@@ -3,7 +3,7 @@ import {Pixel} from "../Pixel.js";
 import {Animation} from "../Animation.js";
 import {AnimationBlink} from "../AnimationBlink.js";
 import {AnimationMove} from "../AnimationMove.js";
-import {Matrix} from "../Matrix.js";
+import {Display} from "../Display.js";
 import {Color} from "../Color.js";
 
 export default class SyncTest extends Animation {
@@ -13,7 +13,7 @@ export default class SyncTest extends Animation {
   static description="Test smoothness and syncronisation of multiple matrixes"
 
 
-  constructor(matrix: Matrix) {
+  constructor(matrix: Display) {
         super(matrix);
 
       let moveX=new AnimationMove(matrix, {value: 1}, {value: 1}, {value: 0}, true );

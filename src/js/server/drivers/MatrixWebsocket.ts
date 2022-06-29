@@ -1,7 +1,7 @@
-import {Matrix} from "../../ledder/Matrix.js";
+import {Display} from "../../ledder/Display.js";
 import {Scheduler} from "../../ledder/Scheduler.js";
 
-export class MatrixWebsocket extends Matrix {
+export class MatrixWebsocket extends Display {
     imageBuf8: Uint8ClampedArray;
     ws: WebSocket
 

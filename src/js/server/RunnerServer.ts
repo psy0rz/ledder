@@ -1,4 +1,4 @@
-import {Matrix} from "../ledder/Matrix.js"
+import {Display} from "../ledder/Display.js"
 import {PresetStore} from "./PresetStore.js"
 import {PresetValues} from "../ledder/PresetValues.js"
 import {Animation} from "../ledder/Animation.js"
@@ -15,7 +15,7 @@ import {Values} from "../ledder/Control.js";
  * Server side runner. This is the main thing that calls everything to run animations.
  */
 export class RunnerServer {
-    private matrix: Matrix
+    private matrix: Display
     private scheduler: Scheduler
     private controlGroup: ControlGroup
 
@@ -35,7 +35,7 @@ export class RunnerServer {
 
     private fpsControl: ControlValue
 
-    constructor(matrix: Matrix, controls: ControlGroup, presetStore: PresetStore) {
+    constructor(matrix: Display, controls: ControlGroup, presetStore: PresetStore) {
         this.matrix = matrix
         this.scheduler = new Scheduler()
         this.matrix.scheduler = this.scheduler

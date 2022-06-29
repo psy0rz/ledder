@@ -1,4 +1,4 @@
-import {Matrix} from "../../ledder/Matrix.js";
+import {Display} from "../../ledder/Display.js";
 
 
 // @ts-ignore
@@ -9,7 +9,7 @@ import {MulticastSync} from "./MulticastSync.js";
 const headerLength = 8;
 
 
-export class MatrixLedstreamQuad extends Matrix {
+export class MatrixLedstreamQuad extends Display {
 
     packets: Uint8ClampedArray[];
     socket: dgram.Socket;

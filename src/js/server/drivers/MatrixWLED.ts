@@ -1,4 +1,4 @@
-import {Matrix} from "../../ledder/Matrix.js";
+import {Display} from "../../ledder/Display.js";
 
 // @ts-ignore
 import dgram from "dgram";
@@ -22,7 +22,7 @@ export let gamma = [
   215,218,220,223,225,228,231,233,236,239,241,244,247,249,252,255 ]
 
 //Matrix driver for WLED https://github.com/Aircoookie/WLED/wiki/UDP-Realtime-Control via DRGB
-export class MatrixWLED extends Matrix {
+export class MatrixWLED extends Display {
 
   buffer: Uint8ClampedArray;
   socket: any;

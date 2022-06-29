@@ -5,7 +5,7 @@ import {animationName, matrixList, mqttHost, mqttOpts, nodename, presetName} fro
 import mqtt from 'mqtt'
 import {ControlGroup} from "../ledder/ControlGroup.js";
 import {Scheduler} from "../ledder/Scheduler.js";
-import {Matrix} from "../ledder/Matrix.js";
+import {Display} from "../ledder/Display.js";
 
 console.log("starting..")
 
@@ -18,7 +18,7 @@ const presetStore = new PresetStore()
 let runners:Array<RunnerServer>=[]
 
 for (const m of matrixList) {
-    let matrix:Matrix
+    let matrix:Display
     matrix=m
     let controlGroup = new ControlGroup('Root controls')
 

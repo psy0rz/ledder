@@ -2,7 +2,7 @@ import {Animation} from "../Animation.js";
 import {Pixel} from "../Pixel.js";
 import {Color} from "../Color.js";
 
-import {Matrix} from "../Matrix.js";
+import {Display} from "../Display.js";
 import {Scheduler} from "../Scheduler.js";
 import {ControlGroup} from "../ControlGroup.js";
 import FxWobble from "../fx/FxWobble.js";
@@ -27,7 +27,7 @@ export default class Nyancat extends Animation {
     static presetDir = "Nyancat";
 
 
-    async run(matrix: Matrix, scheduler: Scheduler, controls: ControlGroup) {
+    async run(matrix: Display, scheduler: Scheduler, controls: ControlGroup) {
 
         controls.group("Rainbow")
         controls.group("Fire")

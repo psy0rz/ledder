@@ -1,9 +1,9 @@
-import {Matrix} from "../../ledder/Matrix.js";
+import {Display} from "../../ledder/Display.js";
 import {Color} from "../../ledder/Color.js";
 import * as dgram from "dgram";
 import {Socket} from "dgram";
 
-export class MatrixPixelflut extends Matrix {
+export class MatrixPixelflut extends Display {
   private displayWidth: number;
 
   /*

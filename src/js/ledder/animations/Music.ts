@@ -1,5 +1,5 @@
 import {Animation} from "../Animation.js";
-import {Matrix} from "../Matrix.js";
+import {Display} from "../Display.js";
 import {Pixel} from "../Pixel.js";
 import {Scheduler} from "../Scheduler.js";
 import {ControlGroup} from "../ControlGroup.js";
@@ -15,7 +15,7 @@ export default class Music extends Animation {
     static category = "Music"
 
 
-    async run(matrix: Matrix, scheduler: Scheduler, control: ControlGroup) {
+    async run(matrix: Display, scheduler: Scheduler, control: ControlGroup) {
 
         const color1Control = matrix.control.color("Color 1", 255, 0, 0, 1);
 

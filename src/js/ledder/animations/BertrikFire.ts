@@ -2,7 +2,7 @@ import {Animation} from "../Animation.js";
 import {Pixel} from "../Pixel.js";
 import {Color} from "../Color.js";
 import {glow} from "./DoomFire.js";
-import {Matrix} from "../Matrix.js";
+import {Display} from "../Display.js";
 import {Scheduler} from "../Scheduler.js";
 import {ControlGroup} from "../ControlGroup.js";
 import {fireColorsBertrik, patternSelect} from "../ColorPatterns.js";
@@ -57,7 +57,7 @@ export default class BertrikFire extends Animation {
 
     }
 
-    async run(matrix: Matrix, scheduler: Scheduler, controls: ControlGroup) {
+    async run(matrix: Display, scheduler: Scheduler, controls: ControlGroup) {
 
         let pixels = matrix.raster(matrix, new Color(0, 0, 0), true, false, true)
         let field = []

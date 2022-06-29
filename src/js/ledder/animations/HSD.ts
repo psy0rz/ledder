@@ -1,7 +1,7 @@
 import {Animation} from "../Animation.js";
 import {Pixel} from "../Pixel.js";
 import {FontSimple8x8} from "../fonts/FontSimple8x8.js";
-import {Matrix} from "../Matrix.js";
+import {Display} from "../Display.js";
 import {AnimationTwinkle} from "../AnimationTwinkle.js";
 import { Color } from "../Color.js";
 import {Scheduler} from "../Scheduler.js";
@@ -19,7 +19,7 @@ export default class HSD extends Animation {
   static presetDir = "HSD"
   static category = "HSD"
 
-  async run(matrix: Matrix, scheduler: Scheduler, control: ControlGroup) {
+  async run(matrix: Display, scheduler: Scheduler, control: ControlGroup) {
 
 
 

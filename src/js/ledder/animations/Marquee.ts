@@ -1,5 +1,5 @@
 import {Animation} from "../Animation.js";
-import {Matrix} from "../Matrix.js";
+import {Display} from "../Display.js";
 import {Scheduler} from "../Scheduler.js";
 import {ControlGroup} from "../ControlGroup.js";
 import FxRotate from "../fx/FxRotate.js";
@@ -19,7 +19,7 @@ export default class Marquee extends Animation {
     static presetDir = "Marquee"
     static category = "Marquees"
 
-    async run(matrix: Matrix, scheduler: Scheduler, control: ControlGroup)
+    async run(matrix: Display, scheduler: Scheduler, control: ControlGroup)
     {
 
         const font = fontSelect(control, 'Font')

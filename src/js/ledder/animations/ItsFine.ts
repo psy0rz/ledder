@@ -1,5 +1,5 @@
 import {Animation} from "../Animation.js";
-import {Matrix} from "../Matrix.js";
+import {Display} from "../Display.js";
 import {Scheduler} from "../Scheduler.js";
 import {ControlGroup} from "../ControlGroup.js";
 import DrawText from "../draw/DrawText.js";
@@ -18,7 +18,7 @@ export default class ItsFine extends Animation {
     static presetDir = "itsfine"
     static category = "memes"
 
-    async run(matrix: Matrix, scheduler: Scheduler, controls: ControlGroup) {
+    async run(matrix: Display, scheduler: Scheduler, controls: ControlGroup) {
 
         new BertrikFire().run(matrix, scheduler, controls.group("Bottom fire"))
         controls.group("Bottom fire").value("Fire maximum intensity").value = 0

@@ -1,5 +1,5 @@
 import {Animation} from "../Animation.js";
-import {Matrix} from "../Matrix.js";
+import {Display} from "../Display.js";
 import {Scheduler} from "../Scheduler.js";
 import {ControlGroup} from "../ControlGroup.js";
 import {random} from "../util.js";
@@ -39,7 +39,7 @@ export default class MovingStars extends Animation {
         return (star)
     }
 
-    async run(matrix: Matrix, scheduler: Scheduler, controls: ControlGroup) {
+    async run(matrix: Display, scheduler: Scheduler, controls: ControlGroup) {
 
         const starColorControl = controls.color("Star color", 255, 255, 255, 0.01);
 

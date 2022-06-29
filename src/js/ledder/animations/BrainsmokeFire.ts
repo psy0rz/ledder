@@ -5,7 +5,7 @@ import {Color} from "../Color.js";
 import {ControlValue} from "../ControlValue.js";
 import {Scheduler} from "../Scheduler.js";
 import {ControlGroup} from "../ControlGroup.js";
-import {Matrix} from "../Matrix.js";
+import {Display} from "../Display.js";
 import { patternSelect} from "../ColorPatterns.js";
 
 //best at 50fps according to brainsmoke
@@ -29,7 +29,7 @@ export default class BrainsmokeFire extends Animation {
     private wildnessIntensityControl: ControlValue;
     private fireColors: any[];
 
-    async run(matrix: Matrix, scheduler: Scheduler, controls: ControlGroup) {
+    async run(matrix: Display, scheduler: Scheduler, controls: ControlGroup) {
 
         this.old = []
         this.new = []

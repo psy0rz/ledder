@@ -1,6 +1,6 @@
 import {Pixel} from "../Pixel.js";
 import {Animation} from "../Animation.js";
-import {Matrix} from "../Matrix.js";
+import {Display} from "../Display.js";
 import {Color} from "../Color.js";
 import {Scheduler} from "../Scheduler.js";
 import {ControlGroup} from "../ControlGroup.js";
@@ -18,7 +18,7 @@ export default class TestMatrix extends Animation {
     /**
      * Test matrix orientation, border limit, colors and smoothness.
      */
-    async run(matrix: Matrix, scheduler: Scheduler, controls: ControlGroup) {
+    async run(matrix: Display, scheduler: Scheduler, controls: ControlGroup) {
 
         //color bar
         for (let x = 0; x < matrix.width; x++) {

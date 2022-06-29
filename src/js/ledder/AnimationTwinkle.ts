@@ -3,11 +3,11 @@ import {Animation} from "./Animation.js";
 import {AnimationFade} from "./AnimationFade.js";
 import {random} from "./util.js";
 import {Color} from "./Color.js";
-import {Matrix} from "./Matrix.js";
+import {Display} from "./Display.js";
 
 
 export class AnimationTwinkle extends Animation {
-  constructor(matrix: Matrix, pixels) {
+  constructor(matrix: Display, pixels) {
     super(matrix);
 
     const intervalControl = matrix.control.value("Twinkle speed", 2, 1, 10, 0.1);

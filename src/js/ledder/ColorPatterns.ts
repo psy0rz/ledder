@@ -1,6 +1,6 @@
 import {Color} from "./Color.js";
 import {Pixel} from "./Pixel.js";
-import {Matrix} from "./Matrix.js";
+import {Display} from "./Display.js";
 import {ControlGroup} from "./ControlGroup.js";
 import {Font} from "./Font.js";
 import {fonts} from "./fonts.js";
@@ -90,7 +90,7 @@ function calculateFireColorsBrainsmoke() {
 export const fireColorsBrainsmoke=calculateFireColorsBrainsmoke()
 
 //just to see the difference and orientation
-export function testFirecolors(matrix:Matrix)
+export function testFirecolors(matrix:Display)
 {
     for (let x = 0; x < matrix.width; x++) {
         matrix.add(new Pixel(x, 3, fireColorsBertrik[~~(x / matrix.width * fireColorsBertrik.length)]))

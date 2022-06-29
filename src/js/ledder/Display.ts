@@ -9,7 +9,7 @@ import {Pixel} from "./Pixel.js";
  * The matrix is the display and shows the list of pixels. The subclasses are actual implementations for different display types.
  * Usually you only need to implement setPixel() to set a pixel and frame() to send the frame and clear the buffer.
  */
-export abstract class Matrix extends PixelContainer {
+export abstract class Display extends PixelContainer {
 
   scheduler: Scheduler
   // runScheduler: boolean
