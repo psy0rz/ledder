@@ -3,7 +3,7 @@ import {Color} from "../../ledder/Color.js";
 import * as dgram from "dgram";
 import {Socket} from "dgram";
 
-export class MatrixPixelflut extends Display {
+export class DisplayPixelflut extends Display {
   private displayWidth: number;
 
   /*

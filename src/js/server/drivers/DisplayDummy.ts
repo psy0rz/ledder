@@ -1,7 +1,7 @@
 //dummy for testing
 import {Display} from "../../ledder/Display.js";
 
-export class MatrixDummy extends Display {
+export class DisplayDummy extends Display {
     constructor(width, height) {
         super(width, height);
     }

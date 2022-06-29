@@ -1,7 +1,7 @@
 //context of a websocket connection
 import {RunnerServer} from "./RunnerServer.js";
 import {Scheduler} from "../ledder/Scheduler.js";
-import {MatrixWebsocket} from "./drivers/MatrixWebsocket.js";
+import {DisplayWebsocket} from "./drivers/DisplayWebsocket.js";
 import {PresetStore} from "./PresetStore.js";
 import {RpcServer} from "./RpcServer.js";
 import {JSONRPCClient, JSONRPCServerAndClient} from "json-rpc-2.0";
@@ -45,7 +45,7 @@ export class WsContext {
         this.started=true
 
         let controls = new ControlGroup('Root controls')
-        let display = new MatrixWebsocket( width, height, this.ws)
+        let display = new DisplayWebsocket( width, height, this.ws)
         this.runner = new RunnerServer(display,  controls, presetStore)
         this.runner.startRenderLoop()
 

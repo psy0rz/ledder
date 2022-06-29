@@ -1,5 +1,5 @@
 import {writeFile} from "fs/promises";
-import {MatrixApng} from "./drivers/MatrixApng.js";
+import {DisplayApng} from "./drivers/DisplayApng.js";
 import {Scheduler} from "../ledder/Scheduler.js";
 import {Animation} from "../ledder/Animation.js";
 import {PresetValues} from "../ledder/PresetValues.js";
@@ -8,7 +8,7 @@ import {ControlGroup} from "../ledder/ControlGroup.js";
 //handles creation of previews
 export class PreviewStore {
 
-    display: MatrixApng
+    display: DisplayApng
     controlGroup: ControlGroup
     scheduler: Scheduler
 
@@ -16,7 +16,7 @@ export class PreviewStore {
 
         this.controlGroup = new ControlGroup('Root controls')
         this.scheduler = new Scheduler();
-        this.display = new MatrixApng(40, 8)
+        this.display = new DisplayApng(40, 8)
         this.display.scheduler=this.scheduler
     }
 

@@ -1,6 +1,6 @@
 // import {MatrixRPIupdown} from "./led/MatrixRPIupdown.js";
-import {MatrixWLED} from "src/js/server/drivers/MatrixWLED.ts";
-import {MatrixRPIleftright} from "src/js/server/drivers/MatrixRPIleftright.ts";
+import {DisplayWLED} from "src/js/server/drivers/MatrixWLED.ts";
+import {DisplayRPIleftright} from "src/js/server/drivers/MatrixRPIleftright.ts";
 import {Scheduler} from "src/js/ledder/Scheduler.ts";
 
 let scheduler = new Scheduler();
@@ -9,7 +9,7 @@ export let matrixList=[
 
 
     //led cone ding
-    new MatrixWLED(scheduler, 37, 8, false, false, '192.168.13.176')
+    new DisplayWLED(scheduler, 37, 8, false, false, '192.168.13.176')
 
     // 5 x  (8x32) matrix on raspberry
     // new MatrixRPIupdown(scheduler, 32, 5),

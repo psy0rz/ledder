@@ -9,7 +9,7 @@ import {MulticastSync} from "./MulticastSync.js";
 const headerLength = 8;
 
 
-export class MatrixLedstreamQuad extends Display {
+export class DisplayLedstreamQuad extends Display {
 
     packets: Uint8ClampedArray[];
     socket: dgram.Socket;

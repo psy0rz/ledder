@@ -22,7 +22,7 @@ export let gamma = [
   215,218,220,223,225,228,231,233,236,239,241,244,247,249,252,255 ]
 
 //Matrix driver for WLED https://github.com/Aircoookie/WLED/wiki/UDP-Realtime-Control via DRGB
-export class MatrixWLED extends Display {
+export class DisplayWLED extends Display {
 
   buffer: Uint8ClampedArray;
   socket: any;

@@ -1,7 +1,7 @@
 import {Pixel} from "../ledder/Pixel.js";
 import {PixelContainer} from "../ledder/PixelContainer.js";
 import {Color} from "../ledder/Color.js";
-import {MatrixDummy} from "./drivers/MatrixDummy.js";
+import {DisplayDummy} from "./drivers/DisplayDummy.js";
 
 function ops(fn, runForMs = 1000) {
 
@@ -29,7 +29,7 @@ function ops(fn, runForMs = 1000) {
 
 function containerTest() {
 
-    let m = new MatrixDummy(10, 10)
+    let m = new DisplayDummy(10, 10)
 
     let c = new PixelContainer()
     for (let i = 0; i < 1000; i++) {

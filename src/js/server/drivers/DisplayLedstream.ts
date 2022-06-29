@@ -3,12 +3,13 @@ import {Display} from "../../ledder/Display.js";
 
 // @ts-ignore
 import dgram from "dgram";
-import {gamma} from "./MatrixWLED.js";
+
+import {gamma} from "./DisplayWLED.js";
 
 const headerLength = 8;
 
 //NOTE: This needs a  MulticastSyncer as well.
-export class MatrixLedstream extends Display {
+export class DisplayLedstream extends Display {
 
     packets: Uint8ClampedArray[];
     socket: dgram.Socket;

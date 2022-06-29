@@ -6,7 +6,7 @@ import {Scheduler} from "../../ledder/Scheduler.js";
 const UPNG = pkg;
 
 //Matrix driver to render animations to a APNG file. (used for browser previewing)
-export class MatrixApng extends Display {
+export class DisplayApng extends Display {
 
     imageBuf8: Uint8ClampedArray
     filename: string
