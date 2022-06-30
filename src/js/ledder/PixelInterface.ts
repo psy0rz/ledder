@@ -4,4 +4,5 @@ export interface PixelInterface {
     x: number;
     y: number;
     color: ColorInterface;
+    data?: any //arbitrary datafield
 }

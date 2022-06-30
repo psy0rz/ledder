@@ -1,5 +1,4 @@
 import {Animation} from "../Animation.js";
-import {glow} from "./DoomFire.js";
 import {Pixel} from "../Pixel.js";
 import {Color} from "../Color.js";
 import {ControlValue} from "../ControlValue.js";
@@ -7,6 +6,7 @@ import {Scheduler} from "../Scheduler.js";
 import {ControlGroup} from "../ControlGroup.js";
 import {Display} from "../Display.js";
 import { patternSelect} from "../ColorPatterns.js";
+import {glow} from "../util.js";
 
 //best at 50fps according to brainsmoke
 export default class BrainsmokeFire extends Animation {

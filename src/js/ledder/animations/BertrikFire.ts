@@ -1,11 +1,11 @@
 import {Animation} from "../Animation.js";
 import {Pixel} from "../Pixel.js";
 import {Color} from "../Color.js";
-import {glow} from "./DoomFire.js";
 import {Display} from "../Display.js";
 import {Scheduler} from "../Scheduler.js";
 import {ControlGroup} from "../ControlGroup.js";
 import {fireColorsBertrik, patternSelect} from "../ColorPatterns.js";
+import {glow} from "../util.js";
 
 export default class BertrikFire extends Animation {
     static category = "Fire"

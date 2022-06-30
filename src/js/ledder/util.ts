@@ -67,3 +67,17 @@ export function numberCheck(desc, number, min = undefined, max = undefined) {
     if (max !== undefined && number > max)
         throw (`${desc}: is ${number} but should be at most ${max}`)
 }
+
+//glow firepixel intesity between min/max (inclusive), with specified "wildness"
+//return new value
+export function glow(current:number, min:number, max:number, wildness:number, gausian=3) {
+
+    current = current + randomGaussian(-wildness, wildness, gausian)
+
+    if (current > max)
+        current = max
+    else if (current < min)
+        current = min
+
+    return (current)
+}

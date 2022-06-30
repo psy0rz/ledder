@@ -11,6 +11,7 @@ export class Pixel implements PixelInterface {
     y: number;
 
     color: ColorInterface;
+    data?: any
 
     // keep: boolean;
 

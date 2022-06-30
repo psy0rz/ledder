@@ -20,13 +20,14 @@ export class PixelContainer extends Set<Pixel | PixelContainer> {
     * @param YX swap array layout so raster[y][x] corresponds to Pixel(x,y)
     * @param xFlip Flip x axis: 0,0 corresponds to Pixel(xMax,0)
     * @param yFlip Flip y axis: 0,0 corresponds to Pixel(0,yMax)
+    * @param data Set arbitrary datafield of new pixels to this
     */
     raster(bbox: BboxInterface,
            color: ColorInterface,
            YX = false,
            xFlip = false,
            yFlip = false,
-           copyColor = true): Array<Array<Pixel>> {
+           copyColor = true, data?:any): Array<Array<Pixel>> {
 
         //(probably more complicated than it needs to be?)
 
@@ -85,6 +86,7 @@ export class PixelContainer extends Set<Pixel | PixelContainer> {
                     y = height - y
 
                 const p = new Pixel(x, y, color)
+                p.data=data
                 ret[a][b] = p
                 this.add(p)
             }
