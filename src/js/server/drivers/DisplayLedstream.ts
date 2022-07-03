@@ -221,7 +221,7 @@ export class DisplayLedstream extends Display {
             }
         }
 
-        console.log(encoded)
+        // console.log(encoded)/
 
         //get ready for next frame
         for (let i = 0; i < this.width * this.height; i++) {
