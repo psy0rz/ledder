@@ -219,6 +219,8 @@ export class DisplayLedstream extends Display {
                 p++
 
             }
+            // @ts-ignore
+            this.packets[c]=new Uint8ClampedArray(headerLength + (this.width * this.chanHeight * 3)+1000)
         }
 
         // console.log(encoded)/
