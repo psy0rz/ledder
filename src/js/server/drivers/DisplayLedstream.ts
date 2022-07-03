@@ -80,8 +80,8 @@ export class DisplayLedstream extends Display {
 
 
         this.pixelCount = this.width * this.height
-        this.newFrame=[]
-        this.prevFrame=[]
+        this.newFrame = []
+        this.prevFrame = []
         this.clear()
 
     }
@@ -178,6 +178,12 @@ export class DisplayLedstream extends Display {
 
         const encoded: Array<number> = []
 
+        //time
+        encoded.push((displayTime >> 24) & 0xff)
+        encoded.push((displayTime >> 16) & 0xff)
+        encoded.push((displayTime >> 8) & 0xff)
+        encoded.push(displayTime & 0xff)
+
 
         let fullColorCount = 0
 
@@ -210,7 +216,7 @@ export class DisplayLedstream extends Display {
                     encoded.push(colorRefMask | ref)
                 } else {
                     //FIXME: update count in previous colorFullMask byte if we can
-                    encoded.push(colorFullMask)
+                    encoded.push(colorFullMask| 1)
                     encoded.push(this.newFrame[p] >> 16)
                     encoded.push(this.newFrame[p] >> 8 & 0xff)
                     encoded.push(this.newFrame[p] & 0xff)
@@ -219,11 +225,14 @@ export class DisplayLedstream extends Display {
                 p++
 
             }
-            // @ts-ignore
-            this.packets[c]=new Uint8ClampedArray(headerLength + (this.width * this.chanHeight * 3)+1000)
         }
 
         // console.log(encoded)/
+        try {
+            this.socket.send(Uint8Array.from(encoded));
+        } catch (e) {
+            console.error("MatrixLedstream: Send error: " + e)
+        }
 
         //get ready for next frame
         for (let i = 0; i < this.width * this.height; i++) {
