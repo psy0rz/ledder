@@ -5,6 +5,8 @@ import {Animation} from "../ledder/Animation.js";
 import {PresetValues} from "../ledder/PresetValues.js";
 import {ControlGroup} from "../ledder/ControlGroup.js";
 
+
+
 //handles creation of previews
 export class PreviewStore {
 
@@ -17,11 +19,10 @@ export class PreviewStore {
         this.controlGroup = new ControlGroup('Root controls')
         this.scheduler = new Scheduler();
         this.display = new DisplayApng(40, 8)
-        this.display.scheduler=this.scheduler
+        this.display.scheduler = this.scheduler
     }
 
-    clear()
-    {
+    clear() {
         this.scheduler.clear()
         this.display.clear()
         this.controlGroup.clear()
@@ -54,7 +55,7 @@ export class PreviewStore {
 
         //previews shouldnt have a higher than 60fps rate, so just divide more frames above 60fps
         const divider = ~~((this.display.fps - 1) / 60) + animationClass.previewDivider
-        const fps = ~~(this.display.fps / divider )
+        const fps = ~~(this.display.fps / divider)
 
         //skip frames, just run scheduler
         for (let i = 0; i < animationClass.previewSkip; i++)
