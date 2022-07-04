@@ -9,11 +9,11 @@ import {gamma} from "./DisplayWLED.js";
 const headerLength = 8;
 
 
-const numberMask = 0b00111111 //last bits are number-bits
+const numberMask =    0b00111111 //last bits are number-bits
 const colorFullMask = 0b00000000 //x full colors follow
-const skipMask = 0b01000000 //skip x pixels (same as previous frame)
-const repeatMask = 0b10000000 //repeat last pixel x times
-const colorRefMask = 0b11000000 //use same color as x pixels ago
+const skipMask =      0b01000000 //skip x pixels (same as previous frame)
+const repeatMask =    0b10000000 //repeat last pixel x times
+const colorRefMask =  0b11000000 //use same color as x pixels ago
 
 
 //NOTE: This needs a  MulticastSyncer as well.
@@ -144,7 +144,7 @@ export class DisplayLedstream extends Display {
         if (offset > 0) {
             while (repeatCount + offset < this.pixelCount && repeatCount < numberMask && this.newFrame[offset - 1] == this.newFrame[offset + repeatCount]) {
                 repeatCount++
-            }
+            }6
         }
         return (repeatCount)
     }
@@ -179,10 +179,10 @@ export class DisplayLedstream extends Display {
         const encoded: Array<number> = []
 
         //time
-        encoded.push((displayTime >> 24) & 0xff)
-        encoded.push((displayTime >> 16) & 0xff)
-        encoded.push((displayTime >> 8) & 0xff)
         encoded.push(displayTime & 0xff)
+        encoded.push((displayTime >> 8) & 0xff)
+        encoded.push((displayTime >> 16) & 0xff)
+        encoded.push((displayTime >> 24) & 0xff)
 
 
         let fullColorCount = 0

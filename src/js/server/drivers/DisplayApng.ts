@@ -60,9 +60,11 @@ export class DisplayApng extends Display {
     get(fps: number) {
 
         let delays = []
-        for (let i = 0; i < this.images.length; i++)
-            delays.push(1000 / fps)
-        let image = UPNG.encode(this.images, this.width, this.height, 0, delays)
+        // for (let i = 0; i < this.images.length; i++)
+        //     delays.push(1000 / fps)
+        // let image = UPNG.encode(this.images, this.width, this.height, 0, delays)
+        let i=[this.images[0]]
+        let image = UPNG.encode(i, this.width, this.height, 0)
         this.images = []
         return (image)
     }
