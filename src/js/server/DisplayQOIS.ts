@@ -136,7 +136,8 @@ export abstract class DisplayQOIS extends Display {
                         bytes.push( QOI_OP_LUMA     | (vg   + 32));
                         bytes.push( (vg_r + 8) << 4 | (vg_b +  8));
                     }
-                    else {
+                    else
+                    {
                         bytes.push( QOI_OP_RGB);
                         bytes.push(~~pixel.r)
                         bytes.push(~~pixel.g)
