@@ -80,7 +80,6 @@ export abstract class DisplayQOIS extends Display {
         let run = 0
         let pixelCount = 1
 
-        // let skips=0
 
         this.statsBytes-=bytes.length //substract header overhead
 
@@ -89,8 +88,6 @@ export abstract class DisplayQOIS extends Display {
 
             if (pixel===undefined)
                 pixel=colorBlack
-            // if (this.prevPixels[pixelCount-1]!==undefined && pixel.equal(this.prevPixels[pixelCount-1]))
-            //     skips++
 
             if (pixel.equal(prevPixel)) {
                 run++

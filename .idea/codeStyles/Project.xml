@@ -1,9 +1,13 @@
 <component name="ProjectCodeStyleConfiguration">
   <code_scheme name="Project" version="173">
     <JSCodeStyleSettings version="0">
+      <option name="USE_SEMICOLON_AFTER_STATEMENT" value="false" />
+      <option name="FORCE_SEMICOLON_STYLE" value="true" />
       <option name="USE_EXPLICIT_JS_EXTENSION" value="TRUE" />
     </JSCodeStyleSettings>
     <TypeScriptCodeStyleSettings version="0">
+      <option name="USE_SEMICOLON_AFTER_STATEMENT" value="false" />
+      <option name="FORCE_SEMICOLON_STYLE" value="true" />
       <option name="USE_EXPLICIT_JS_EXTENSION" value="TRUE" />
     </TypeScriptCodeStyleSettings>
   </code_scheme>

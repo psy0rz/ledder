@@ -1,28 +1,26 @@
-import {Display} from "../../ledder/Display.js";
+import {Display} from "../../ledder/Display.js"
 
 
 // @ts-ignore
-import dgram from "dgram";
+import dgram from "dgram"
 
-import {gamma} from "./DisplayWLED.js";
-import {DisplayQOIS} from "../DisplayQOIS.js";
-
-const headerLength = 8;
+import {DisplayQOIS} from "../DisplayQOIS.js"
 
 
-const numberMask =    0b00111111 //last bits are number-bits
-const colorFullMask = 0b00000000 //x full colors follow
-const skipMask =      0b01000000 //skip x pixels (same as previous frame)
-const repeatMask =    0b10000000 //repeat last pixel x times
-const colorRefMask =  0b11000000 //use same color as x pixels ago
-
+// const dataLength = 1472 - 4 //4 bytes overhead
+const dataLength = 1460 - 4 //4 bytes overhead
 
 //NOTE: This needs a  MulticastSyncer as well.
 export class DisplayLedstream extends DisplayQOIS {
 
-    socket: dgram.Socket;
-    ip: string;
-    port: number;
+    socket: dgram.Socket
+    ip: string
+    port: number
+    byteStream: Array<number>
+    syncOffset: number
+    nextSyncOffset: number
+
+    packetNr: number
 
     /**
      * Matrix driver for https://github.com/psy0rz/ledstream
@@ -34,40 +32,90 @@ export class DisplayLedstream extends DisplayQOIS {
      * @param port UDP port
      */
     constructor(channels, width, height, ip, port = 21324) {
-        super(width, height);
+        super(width, height)
+
 
         this.roundFrametime = true
 
-        this.ip = ip;
-        this.port = port;
+        this.ip = ip
+        this.port = port
+        this.byteStream = []
+        this.syncOffset = 0
+        this.nextSyncOffset = 0
+        this.packetNr=0;
 
-        this.socket = dgram.createSocket('udp4');
+
+        this.socket = dgram.createSocket('udp4')
         this.socket.on('error', (err) => {
-            console.log(`server error:\n${err.stack}`);
-        });
+            console.log(`server error:\n${err.stack}`)
+        })
 
         this.socket.connect(this.port, this.ip)
     }
 
 
+    //udp packet:
+    //  [syncoffset (2 bytes)][frame]
+    //
+    //frame:
+    // [framelength (2 bytes)][display time (4 bytes)][QOIS encoded bytes]
+
     frame(displayTime: number) {
-        let bytes=[]
+
+
+        const frameBytes = []
+
+
+        // //frame byte length
+        // frameBytes.push(0) //0
+        // frameBytes.push(0) //1
 
         //time
-        bytes.push(displayTime & 0xff)
-        bytes.push((displayTime >> 8) & 0xff)
-        bytes.push((displayTime >> 16) & 0xff)
-        bytes.push((displayTime >> 24) & 0xff)
+        //TODO: only use lower 16 bits
+        frameBytes.push(displayTime & 0xff)          //2
+        frameBytes.push((displayTime >> 8) & 0xff)   //3
+        frameBytes.push((displayTime >> 16) & 0xff)  //4
+        frameBytes.push((displayTime >> 24) & 0xff)  //5
+
 
         //encodes current frame via QIOS into bytes
-        this.encode(bytes)
-        // bytes=bytes.slice(0,1000)
+        this.encode(frameBytes)
 
-        try {
-            this.socket.send(Uint8Array.from(bytes));
-        } catch (e) {
-            console.error("MatrixLedstream: Send error: " + e)
+        // //update frame byte length
+        // frameBytes[0]=frameBytes.length & 0xff;
+        // frameBytes[1]=(frameBytes.length >>8) & 0xff;
+
+
+        //the syncoffset is needed so that a display can pickup a stream thats already running, or if it lost packets
+        this.nextSyncOffset = this.nextSyncOffset + frameBytes.length
+        this.byteStream = this.byteStream.concat(frameBytes)
+
+        while (this.byteStream.length >= dataLength) {
+
+            try {
+
+                const packet = []
+
+                //add packet nr
+                packet.push(this.packetNr&0xff);
+                this.packetNr++;
+
+                //reserved
+                packet.push(0);
+
+                //add current syncoffset
+                packet.push(this.syncOffset & 0xff)
+                packet.push((this.syncOffset >> 8) & 0xff)
+                this.nextSyncOffset = this.nextSyncOffset - dataLength
+                this.syncOffset = this.nextSyncOffset
+
+                this.socket.send(Uint8Array.from(packet.concat(this.byteStream.splice(0, dataLength))))
+
+            } catch (e) {
+                console.error("MatrixLedstream: Send error: " + e)
+            }
         }
+
 
     }
 }
