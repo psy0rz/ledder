@@ -106,7 +106,7 @@ export abstract class DisplayQOIS extends Display {
                 }
                 const index_pos = QOI_COLOR_HASH(pixel) % 64;
 
-                //its in index?
+                // //its in index?
                 if (this.index[index_pos].equal(pixel)) {
                     bytes.push(QOI_OP_INDEX | index_pos)
                 }

@@ -61,7 +61,7 @@ export class DisplayLedstream extends DisplayQOIS {
 
         //encodes current frame via QIOS into bytes
         this.encode(bytes)
-        bytes=bytes.slice(0,1000)
+        // bytes=bytes.slice(0,1000)
 
         try {
             this.socket.send(Uint8Array.from(bytes));
