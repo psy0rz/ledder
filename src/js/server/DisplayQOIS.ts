@@ -82,8 +82,9 @@ export abstract class DisplayQOIS extends Display {
 
 
         this.statsBytes-=bytes.length //substract header overhead
+        for (let i=0; i<this.pixelCount; i++) {
 
-        for (let pixel of this.pixels) {
+            let pixel=this.pixels[i]
 
 
             if (pixel===undefined)
@@ -154,6 +155,15 @@ export abstract class DisplayQOIS extends Display {
 
         this.statsBytes+=bytes.length
         // console.log(skips)
+
+        //FIXME: keep
+        this.index =[]
+        for (let i=0; i<64; i++)
+        {
+            this.index.push(colorBlack)
+        }
+
+
     }
 
 }

@@ -7,8 +7,7 @@ import dgram from "dgram"
 import {DisplayQOIS} from "../DisplayQOIS.js"
 
 
-// const dataLength = 1472 - 4 //4 bytes overhead
-const dataLength = 1460 - 4 //4 bytes overhead
+const qoisDataLength = 1460 - 4 //4 bytes overhead
 
 //NOTE: This needs a  MulticastSyncer as well.
 export class DisplayLedstream extends DisplayQOIS {
@@ -55,10 +54,10 @@ export class DisplayLedstream extends DisplayQOIS {
 
 
     //udp packet:
-    //  [syncoffset (2 bytes)][frame]
+    //  [packetNr][reserved][syncoffset (2 bytes)][QOIS FRAME]
     //
-    //frame:
-    // [framelength (2 bytes)][display time (4 bytes)][QOIS encoded bytes]
+    //qois frame:
+    // [display time (4 bytes)][QOIS encoded bytes]
 
     frame(displayTime: number) {
 
@@ -70,16 +69,19 @@ export class DisplayLedstream extends DisplayQOIS {
         // frameBytes.push(0) //0
         // frameBytes.push(0) //1
 
+        frameBytes.push(0xff)          //magic byte
+
         //time
         //TODO: only use lower 16 bits
-        frameBytes.push(displayTime & 0xff)          //2
-        frameBytes.push((displayTime >> 8) & 0xff)   //3
-        frameBytes.push((displayTime >> 16) & 0xff)  //4
-        frameBytes.push((displayTime >> 24) & 0xff)  //5
+        frameBytes.push(displayTime & 0xff)          //0
+        frameBytes.push((displayTime >> 8) & 0xff)   //1
+        frameBytes.push((displayTime >> 16) & 0xff)  //2
+        frameBytes.push((displayTime >> 24) & 0xff)  //3
 
 
         //encodes current frame via QIOS into bytes
         this.encode(frameBytes)
+
 
         // //update frame byte length
         // frameBytes[0]=frameBytes.length & 0xff;
@@ -90,7 +92,7 @@ export class DisplayLedstream extends DisplayQOIS {
         this.nextSyncOffset = this.nextSyncOffset + frameBytes.length
         this.byteStream = this.byteStream.concat(frameBytes)
 
-        while (this.byteStream.length >= dataLength) {
+        while (this.byteStream.length >= qoisDataLength) {
 
             try {
 
@@ -106,10 +108,10 @@ export class DisplayLedstream extends DisplayQOIS {
                 //add current syncoffset
                 packet.push(this.syncOffset & 0xff)
                 packet.push((this.syncOffset >> 8) & 0xff)
-                this.nextSyncOffset = this.nextSyncOffset - dataLength
+                this.nextSyncOffset = this.nextSyncOffset - qoisDataLength
                 this.syncOffset = this.nextSyncOffset
 
-                this.socket.send(Uint8Array.from(packet.concat(this.byteStream.splice(0, dataLength))))
+                this.socket.send(Uint8Array.from(packet.concat(this.byteStream.splice(0, qoisDataLength))))
 
             } catch (e) {
                 console.error("MatrixLedstream: Send error: " + e)
