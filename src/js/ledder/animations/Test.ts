@@ -17,7 +17,11 @@ export default class Test extends Animation {
         // display.add(new DrawBox(0,0,display.width, display.height, c))
        // display.add(new Pixel(display.width-1,display.height-1,new Color(255,255,255)))
         display.add(new Pixel(display.width-1,display.height-1,new Color(55,12,80)))
+
+        display.add(new Pixel(30,display.height-1,new Color(55,12,80)))
         // display.add(new Pixel(display.width-2,display.height-2,new Color(255,255,255)))
-        // display.add(new Pixel(0,0,new Color(255,255,255)))
+        // display.add(new Pixel(0,0,new Color(255,0,0)))
+        // display.add(new Pixel(0,0,new Color(55,12,80)))
+        // display.add(new Pixel(1,0,new Color(0,0,0)))
     }
 }

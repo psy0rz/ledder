@@ -69,19 +69,17 @@ export class DisplayLedstream extends DisplayQOIS {
         frameBytes.push(0) //0
         frameBytes.push(0) //1
 
-        // frameBytes.push(0xff)          //magic byte
 
         //time
         frameBytes.push(displayTime & 0xff)
         frameBytes.push((displayTime >> 8) & 0xff)
-        // frameBytes.push((displayTime >> 16) & 0xff)
-        // frameBytes.push((displayTime >> 24) & 0xff)
 
 
         //encodes current frame via QIOS into bytes
         this.encode(frameBytes)
-        // for (let i=0;i<11;i++)
-        //     frameBytes.push(i);
+        // for (let i=0;i<600
+        //     ;i++)
+        //     frameBytes.push(i&0xff);
 
 
 
@@ -92,7 +90,8 @@ export class DisplayLedstream extends DisplayQOIS {
 
         //the syncoffset is needed so that a display can pickup a stream thats already running, or if it lost packets
         this.nextSyncOffset = this.nextSyncOffset + frameBytes.length
-        this.byteStream = this.byteStream.concat(frameBytes)
+        // this.byteStream = this.byteStream.concat(frameBytes)
+        this.byteStream.push(...frameBytes)
 
         while (this.byteStream.length >= qoisDataLength) {
 
@@ -113,7 +112,9 @@ export class DisplayLedstream extends DisplayQOIS {
                 this.nextSyncOffset = this.nextSyncOffset - qoisDataLength
                 this.syncOffset = this.nextSyncOffset
 
-                this.socket.send(Uint8Array.from(packet.concat(this.byteStream.splice(0, qoisDataLength))))
+                packet.push(...this.byteStream.splice(0, qoisDataLength))
+
+                this.socket.send(Uint8Array.from(packet))
 
             } catch (e) {
                 console.error("MatrixLedstream: Send error: " + e)
