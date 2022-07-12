@@ -66,26 +66,28 @@ export class DisplayLedstream extends DisplayQOIS {
 
 
         // //frame byte length
-        // frameBytes.push(0) //0
-        // frameBytes.push(0) //1
+        frameBytes.push(0) //0
+        frameBytes.push(0) //1
 
-        frameBytes.push(0xff)          //magic byte
+        // frameBytes.push(0xff)          //magic byte
 
         //time
-        //TODO: only use lower 16 bits
-        frameBytes.push(displayTime & 0xff)          //0
-        frameBytes.push((displayTime >> 8) & 0xff)   //1
-        frameBytes.push((displayTime >> 16) & 0xff)  //2
-        frameBytes.push((displayTime >> 24) & 0xff)  //3
+        frameBytes.push(displayTime & 0xff)
+        frameBytes.push((displayTime >> 8) & 0xff)
+        // frameBytes.push((displayTime >> 16) & 0xff)
+        // frameBytes.push((displayTime >> 24) & 0xff)
 
 
         //encodes current frame via QIOS into bytes
         this.encode(frameBytes)
+        // for (let i=0;i<11;i++)
+        //     frameBytes.push(i);
+
 
 
         // //update frame byte length
-        // frameBytes[0]=frameBytes.length & 0xff;
-        // frameBytes[1]=(frameBytes.length >>8) & 0xff;
+        frameBytes[0] = frameBytes.length & 0xff
+        frameBytes[1] = (frameBytes.length >> 8) & 0xff
 
 
         //the syncoffset is needed so that a display can pickup a stream thats already running, or if it lost packets
