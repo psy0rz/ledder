@@ -61,8 +61,13 @@ export class DisplayLedstream extends DisplayQOIS {
 
         const frameBytes = []
 
-        const lag = 16 * 20 //30 frames lag
+        // const lag = 16 * 30 //30 frames lag
+        const lag =15*this.frameMs
         const laggedTime = displayTime + lag
+
+        //first frame to be pushed? determine sendTime
+        if (this.byteStream.length==0)
+            this.sendTime=displayTime + 1*this.frameMs;
 
         // //frame byte length
         frameBytes.push(0) //0
@@ -82,15 +87,11 @@ export class DisplayLedstream extends DisplayQOIS {
         //the syncoffset is needed so that a display can pickup a stream thats already running, or if it lost packets
         this.nextSyncOffset = this.nextSyncOffset + frameBytes.length
 
-        //first frame to be pushed? determine sendTime
-        if (this.byteStream.length==0)
-            this.sendTime=displayTime+(lag/2)
         this.byteStream.push(...frameBytes)
 
         //is it time to send?
 
         if (displayTime >= this.sendTime) {
-        // if(true){
             //break up into packets and send.
             while (this.byteStream.length>0) {
 

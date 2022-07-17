@@ -20,9 +20,10 @@ export abstract class Display extends PixelContainer {
   //should frametimes be whole numbers (usefull for ledstream)
   roundFrametime=false
 
-  //actual fps and framedelay (after maxing and rounding)
-  fps:number //current fps its running at
-  frameMs: number //time of each frame.
+  //current fps its running at (after maxing and rounding)
+  fps:number
+  //current frame delay (after maxing and rounding)
+  frameMs: number
 
 
   width: number
