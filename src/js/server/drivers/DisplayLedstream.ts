@@ -1,6 +1,3 @@
-import {Display} from "../../ledder/Display.js"
-
-
 // @ts-ignore
 import dgram from "dgram"
 
@@ -16,10 +13,11 @@ export class DisplayLedstream extends DisplayQOIS {
     ip: string
     port: number
     byteStream: Array<number>
-    syncOffset: number
+    // syncOffset: number
     nextSyncOffset: number
 
     packetNr: number
+    private sendTime: number
 
     /**
      * Matrix driver for https://github.com/psy0rz/ledstream
@@ -39,9 +37,8 @@ export class DisplayLedstream extends DisplayQOIS {
         this.ip = ip
         this.port = port
         this.byteStream = []
-        this.syncOffset = 0
         this.nextSyncOffset = 0
-        this.packetNr=0;
+        this.packetNr = 0
 
 
         this.socket = dgram.createSocket('udp4')
@@ -64,63 +61,70 @@ export class DisplayLedstream extends DisplayQOIS {
 
         const frameBytes = []
 
+        const lag = 16 * 20 //30 frames lag
+        const laggedTime = displayTime + lag
 
         // //frame byte length
         frameBytes.push(0) //0
         frameBytes.push(0) //1
 
-
         //time
-        frameBytes.push(displayTime & 0xff)
-        frameBytes.push((displayTime >> 8) & 0xff)
-
+        frameBytes.push(laggedTime & 0xff)
+        frameBytes.push((laggedTime >> 8) & 0xff)
 
         //encodes current frame via QIOS into bytes
         this.encode(frameBytes)
-        // for (let i=0;i<600
-        //     ;i++)
-        //     frameBytes.push(i&0xff);
-
-
 
         // //update frame byte length
         frameBytes[0] = frameBytes.length & 0xff
         frameBytes[1] = (frameBytes.length >> 8) & 0xff
 
-
         //the syncoffset is needed so that a display can pickup a stream thats already running, or if it lost packets
         this.nextSyncOffset = this.nextSyncOffset + frameBytes.length
-        // this.byteStream = this.byteStream.concat(frameBytes)
+
+        //first frame to be pushed? determine sendTime
+        if (this.byteStream.length==0)
+            this.sendTime=displayTime+(lag/2)
         this.byteStream.push(...frameBytes)
 
-        while (this.byteStream.length >= qoisDataLength) {
+        //is it time to send?
 
-            try {
+        if (displayTime >= this.sendTime) {
+        // if(true){
+            //break up into packets and send.
+            while (this.byteStream.length>0) {
 
-                const packet = []
+                try {
 
-                //add packet nr
-                packet.push(this.packetNr&0xff);
-                this.packetNr++;
+                    const packet = []
 
-                //reserved
-                packet.push(0);
+                    //add packet nr
+                    packet.push(this.packetNr & 0xff)
+                    this.packetNr++
 
-                //add current syncoffset
-                packet.push(this.syncOffset & 0xff)
-                packet.push((this.syncOffset >> 8) & 0xff)
-                this.nextSyncOffset = this.nextSyncOffset - qoisDataLength
-                this.syncOffset = this.nextSyncOffset
+                    //reserved
+                    packet.push(0)
 
-                packet.push(...this.byteStream.splice(0, qoisDataLength))
+                    //add current syncoffset
+                    packet.push(this.nextSyncOffset & 0xff)
+                    packet.push((this.nextSyncOffset >> 8) & 0xff)
+                    // this.syncOffset = this.nextSyncOffset
 
-                this.socket.send(Uint8Array.from(packet))
+                    const payload=this.byteStream.splice(0, qoisDataLength);
+                    packet.push(...payload)
+                    this.nextSyncOffset = this.nextSyncOffset - payload.length;
 
-            } catch (e) {
-                console.error("MatrixLedstream: Send error: " + e)
+                    this.socket.send(Uint8Array.from(packet))
+
+                } catch (e) {
+                    console.error("MatrixLedstream: Send error: " + e)
+                }
+            }
+            if (this.nextSyncOffset!=0)
+            {
+                this.nextSyncOffset=0;
+                console.error("bug: sync offset not 0??");
             }
         }
-
-
     }
 }
