@@ -62,7 +62,7 @@ export class DisplayLedstream extends DisplayQOIS {
         const frameBytes = []
 
         // const lag = 16 * 30 //30 frames lag
-        const lag =15*this.frameMs
+        const lag =10*this.frameMs
         const laggedTime = displayTime + lag
 
         //first frame to be pushed? determine sendTime
@@ -97,6 +97,8 @@ export class DisplayLedstream extends DisplayQOIS {
 
                 try {
 
+                    const time=Date.now();
+
                     const packet = []
 
                     //add packet nr
@@ -105,6 +107,10 @@ export class DisplayLedstream extends DisplayQOIS {
 
                     //reserved
                     packet.push(0)
+
+                    //time
+                    // packet.push(time & 0xff)
+                    // packet.push((time>>8) & 0xff)
 
                     //add current syncoffset
                     packet.push(this.nextSyncOffset & 0xff)
