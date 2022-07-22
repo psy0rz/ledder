@@ -2,7 +2,7 @@
 import dgram from "dgram"
 
 import {DisplayQOIS} from "../DisplayQOIS.js"
-
+import OffsetMapper from "./OffsetMapper.js"
 
 const qoisDataLength = 1460 - 4 //4 bytes overhead
 
@@ -28,8 +28,8 @@ export class DisplayLedstream extends DisplayQOIS {
      * @param ip IP address
      * @param port UDP port
      */
-    constructor(channels, width, height, ip, port = 21324) {
-        super(width, height)
+    constructor(channels, width, height, ip, port , mapper: OffsetMapper) {
+        super(width, height, mapper)
 
 
         this.roundFrametime = true
@@ -39,7 +39,6 @@ export class DisplayLedstream extends DisplayQOIS {
         this.byteStream = []
         this.nextSyncOffset = 0
         this.packetNr = 0
-
 
         this.socket = dgram.createSocket('udp4')
         this.socket.on('error', (err) => {
@@ -62,12 +61,12 @@ export class DisplayLedstream extends DisplayQOIS {
         const frameBytes = []
 
         // const lag = 16 * 30 //30 frames lag
-        const lag =10*this.frameMs
+        const lag = 10 * this.frameMs
         const laggedTime = displayTime + lag
 
         //first frame to be pushed? determine sendTime
-        if (this.byteStream.length==0)
-            this.sendTime=displayTime + 1*this.frameMs;
+        if (this.byteStream.length == 0)
+            this.sendTime = displayTime + 1 * this.frameMs
 
         // //frame byte length
         frameBytes.push(0) //0
@@ -93,11 +92,11 @@ export class DisplayLedstream extends DisplayQOIS {
 
         if (displayTime >= this.sendTime) {
             //break up into packets and send.
-            while (this.byteStream.length>0) {
+            while (this.byteStream.length > 0) {
 
                 try {
 
-                    const time=Date.now();
+                    const time = Date.now()
 
                     const packet = []
 
@@ -117,9 +116,9 @@ export class DisplayLedstream extends DisplayQOIS {
                     packet.push((this.nextSyncOffset >> 8) & 0xff)
                     // this.syncOffset = this.nextSyncOffset
 
-                    const payload=this.byteStream.splice(0, qoisDataLength);
+                    const payload = this.byteStream.splice(0, qoisDataLength)
                     packet.push(...payload)
-                    this.nextSyncOffset = this.nextSyncOffset - payload.length;
+                    this.nextSyncOffset = this.nextSyncOffset - payload.length
 
                     this.socket.send(Uint8Array.from(packet))
 
@@ -127,10 +126,9 @@ export class DisplayLedstream extends DisplayQOIS {
                     console.error("MatrixLedstream: Send error: " + e)
                 }
             }
-            if (this.nextSyncOffset!=0)
-            {
-                this.nextSyncOffset=0;
-                console.error("bug: sync offset not 0??");
+            if (this.nextSyncOffset != 0) {
+                this.nextSyncOffset = 0
+                console.error("bug: sync offset not 0??")
             }
         }
     }

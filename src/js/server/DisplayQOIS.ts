@@ -3,6 +3,7 @@ import {Color} from "../ledder/Color.js";
 import {colorBlack} from "../ledder/Colors.js";
 import {Col} from "framework7-svelte";
 import {prev} from "dom7";
+import OffsetMapper from "./drivers/OffsetMapper.js"
 
 
 const QOI_OP_INDEX = 0x00 /* 00xxxxxx */
@@ -29,12 +30,15 @@ export abstract class DisplayQOIS extends Display {
     private prevPixels: Array<Color>
     private index: Array<Color>;
     private statsBytes: number;
+    private mapper: OffsetMapper
 
-    constructor(width: number, height: number) {
+    constructor(width: number, height: number, mapper:OffsetMapper) {
         super(width, height)
 
         this.pixelCount = width * height
+        this.mapper=mapper
         this.clear()
+
 
 
         this.statsBytes=0
@@ -65,7 +69,9 @@ export abstract class DisplayQOIS extends Display {
         const floor_y = ~~y;
         const floor_x = ~~x;
 
-        const offset = floor_x + floor_y * this.width;
+        // const offset = floor_x + floor_y * this.width;
+        const offset=this.mapper[floor_x][floor_y]
+
 
         if (this.pixels[offset] === undefined)
             this.pixels[offset] = new Color(0, 0, 0, 1);
