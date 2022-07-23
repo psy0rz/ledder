@@ -6,13 +6,13 @@ export default class PixelStar extends Pixel {
 
   step: number;
 
-  constructor(display, x, y, color: ColorInterface, delay: ControlValue, bg=false) {
-        super(display, x, y, color, bg);
+  constructor(display, x, y, color: ColorInterface, delay: ControlValue) {
+        super( x, y, color)
 
         this.step = 0;
         display.scheduler.intervalControlled(delay, () => {
             this.step = (this.step + 1) % 3;
-            return(this.keep);
+            // return(this.keep);
         })
 
     }

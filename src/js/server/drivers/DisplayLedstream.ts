@@ -9,8 +9,8 @@ const qoisDataLength = 1460 - 4 //4 bytes overhead
 //NOTE: This needs a  MulticastSyncer as well.
 export class DisplayLedstream extends DisplayQOIS {
 
-    socket: dgram.Socket
-    ip: string
+    sockets: Array<dgram.Socket>
+    ips: string
     port: number
     byteStream: Array<number>
     // syncOffset: number
@@ -25,27 +25,34 @@ export class DisplayLedstream extends DisplayQOIS {
      * @param channels Number of channels (zigzag ledstrips)
      * @param width Physical width of display.
      * @param height Physical height of display. (divded over multiple channels)
-     * @param ip IP address
+     * @param ips IP address
      * @param port UDP port
      */
-    constructor(channels, width, height, ip, port , mapper: OffsetMapper) {
+    constructor(channels, width, height, ips, port, mapper: OffsetMapper) {
         super(width, height, mapper)
 
 
         this.roundFrametime = true
 
-        this.ip = ip
+        this.ips = ips
         this.port = port
         this.byteStream = []
         this.nextSyncOffset = 0
         this.packetNr = 0
 
-        this.socket = dgram.createSocket('udp4')
-        this.socket.on('error', (err) => {
-            console.log(`server error:\n${err.stack}`)
-        })
+        this.sockets = []
+        for (const ip of ips) {
 
-        this.socket.connect(this.port, this.ip)
+            const s = dgram.createSocket('udp4')
+            s.connect(this.port, ip)
+
+            this.sockets.push(s)
+            s.on('error', (err) => {
+                console.log(`server error:\n${err.stack}`)
+            })
+        }
+
+        // this.socket.connect(this.port, this.ips)
     }
 
 
@@ -66,7 +73,7 @@ export class DisplayLedstream extends DisplayQOIS {
 
         //first frame to be pushed? determine sendTime
         if (this.byteStream.length == 0)
-            this.sendTime = displayTime + 1 * this.frameMs
+            this.sendTime = displayTime + 0 * this.frameMs
 
         // //frame byte length
         frameBytes.push(0) //0
@@ -120,10 +127,16 @@ export class DisplayLedstream extends DisplayQOIS {
                     packet.push(...payload)
                     this.nextSyncOffset = this.nextSyncOffset - payload.length
 
-                    this.socket.send(Uint8Array.from(packet))
-
+                    const p = Uint8Array.from(packet)
+                    for (const s of this.sockets) {
+                        try {
+                            s.send(p)
+                        } catch (e) {
+                           console.error("MatrixLedstream: send error ",e)
+                        }
+                    }
                 } catch (e) {
-                    console.error("MatrixLedstream: Send error: " + e)
+                    console.error("MatrixLedstream: error: " + e)
                 }
             }
             if (this.nextSyncOffset != 0) {
