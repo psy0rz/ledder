@@ -1,0 +1,30 @@
+{
+ "title": "",
+ "description": "",
+ "values": {
+  "FPS": {
+   "value": 53
+  },
+  "Font": {
+   "selected": "ZX Sierra Quest"
+  },
+  "tekst": {
+   "r": 128,
+   "g": 128,
+   "b": 128,
+   "a": 1
+  },
+  "Rotate interval": {
+   "value": 2
+  },
+  "Rotate interval randomizer": {
+   "value": 0
+  },
+  "Rotate X step": {
+   "value": -1
+  },
+  "Rotate Y step": {
+   "value": 0
+  }
+ }
+}

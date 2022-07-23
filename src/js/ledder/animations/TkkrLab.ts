@@ -11,36 +11,59 @@ import {fonts, fontSelect} from "../fonts.js"
 import FxRotate from "../fx/FxRotate.js"
 
 
+// const logo=`
+// .......y...
+// ......yyy..
+// .....yy.yy
+// ....yy...yy
+// ...yy..y..yy
+// ..yy.......yy
+// .yyyyyyyyyyyyy
+// yyyyyyyyyyyyyyy
+//
+// `
+// const logo=`
+// .......y...
+// ......y.y..
+// .....y.wwy
+// ....yw.w..y
+// ...y..www..y
+// ..y...ww.w..y.
+// .y....w.w....y
+// yyyyyyyyyyyyyyy
+// `
 const logo=`
-  rr.rr.rr
-  rr.rr.rr
-  .rrrrrr.
-  .rrrrrr.
-  .rrrrrr.
-  .rr..rr.
-  .rr..rr.
-  rrr..rrr
+.......y...
+......y.y..
+.....yww.y
+....y.ww..y
+...y...wwwwy
+..y....www..y.
+.y.....w.w...y
+yyyyyyyyyyyyyyy
 `
+
+
 
 export default class Template extends Animation {
     static category = "Misc"
-    static title = "HSD"
+    static title = "TkkrLab"
     static description = ""
-    static presetDir = "HSD"
+    static presetDir = "TkkrLab"
 
 
     async run(display: Display, scheduler: Scheduler, controls: ControlGroup) {
 
         const font = fontSelect(controls)
-        const text = new DrawText(0, 1, font, "Hackerspace Drenthe", controls.color("tekst"))
+        const text = new DrawText(13, 0, font, "TkkrLab", controls.color("tekst"))
         display.add(text)
 
         const bbox = text.bbox()
         bbox.xMax += 20
-        new FxRotate(scheduler, controls).run(text, bbox)
+        // new FxRotate(scheduler, controls).run(text, bbox)
 
         display.add(new DrawAsciiArtColor(0, 8, logo))
-        display.add(new DrawAsciiArtColor(display.width-8, 8, logo))
+        display.add(new DrawAsciiArtColor(display.width-15, 8, logo))
 
     }
 }
