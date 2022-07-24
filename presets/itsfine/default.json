@@ -1,0 +1,72 @@
+{
+ "title": "",
+ "description": "",
+ "values": {
+  "FPS": {
+   "value": 60
+  },
+  "Bottom fire": {
+   "Fire colors": {
+    "selected": "Brainsmoke fire"
+   },
+   "Fire minimum intensity": {
+    "value": 0
+   },
+   "Fire maximum intensity": {
+    "value": 600
+   },
+   "Fire wildness": {
+    "value": 10000
+   },
+   "Fire interval": {
+    "value": 1
+   }
+  },
+  "Text": {
+   "text": "its fine."
+  },
+  "Text color": {
+   "r": 20,
+   "g": 0,
+   "b": 255,
+   "a": 1
+  },
+  "Font": {
+   "selected": "C64"
+  },
+  "Top fire": {
+   "Fire density [%]": {
+    "value": 10
+   },
+   "Fire intensity [%]": {
+    "value": 100
+   },
+   "Fire depth [pixels]": {
+    "value": 2
+   },
+   "Fire wind X": {
+    "value": 0.1
+   },
+   "Fire wind Y": {
+    "value": 0.2
+   },
+   "Fire cycle": {
+    "Color cycle time": {
+     "value": 15
+    },
+    "Color cycle time randomizer": {
+     "value": 15
+    },
+    "Color cycle repeat count": {
+     "value": 1
+    },
+    "Color cycle mode": {
+     "selected": "reverse"
+    },
+    "Color cycle pattern": {
+     "selected": "Bertrik fire"
+    }
+   }
+  }
+ }
+}

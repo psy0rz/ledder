@@ -36,13 +36,13 @@ export default class ItsFine extends Animation {
         display.add(flames)
         new FxFlames(scheduler, controls.group("Top fire")).run(text, flames)
 
-        await scheduler.delay(60 * 5)
+        await scheduler.delay(60 * 2)
         controls.group("Bottom fire").value("Fire maximum intensity").value = 380
 
-        await scheduler.delay(60 * 5)
+        await scheduler.delay(60 * 2)
         controls.group("Bottom fire").value("Fire maximum intensity").value = 600
 
-        await scheduler.delay(60 * 5)
+        await scheduler.delay(60 * 2)
         controls.group("Bottom fire").value("Fire maximum intensity").value = 700
 
 

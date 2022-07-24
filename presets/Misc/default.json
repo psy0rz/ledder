@@ -1,0 +1,21 @@
+{
+ "title": "",
+ "description": "",
+ "values": {
+  "FPS": {
+   "value": 60
+  },
+  "Font": {
+   "selected": "C64"
+  },
+  "tekst": {
+   "r": 255,
+   "g": 255,
+   "b": 0,
+   "a": 1
+  },
+  "interval": {
+   "value": 6
+  }
+ }
+}

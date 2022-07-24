@@ -24,8 +24,10 @@ export default class Template extends Animation {
             const subControls=controls.group(animationName)
             const animationClass=await presetStore.loadAnimation(animationName)
             const animation= new animationClass()
-            const presetValues = await presetStore.load(animationClass, presetName)
-            subControls.load(presetValues.values)
+            if (presetName!=="") {
+                const presetValues = await presetStore.load(animationClass, presetName)
+                subControls.load(presetValues.values)
+            }
             await animation.run(display, scheduler,subControls)
 
             await scheduler.delay(time/display.frameMs)
@@ -35,11 +37,29 @@ export default class Template extends Animation {
 
         const fxControls=controls.group("FX")
         while(1) {
-            await show("TDVENLO", "default", 4000)
+
+
+            await show("BrainsmokeFire", "", 6000)
             await new FxFlameout(scheduler, fxControls).run(display)
             scheduler.clear()
 
-            await show("TkkrLab", "default", 4000)
+            await show("MaakPlek", "default", 3000)
+            await new FxFlameout(scheduler, fxControls).run(display)
+            scheduler.clear()
+
+            show("PoliceLights", "hackers", 6000)
+            await new FxFlameout(scheduler, fxControls).run(display)
+            scheduler.clear()
+
+            await show("TDVENLO", "default", 3000)
+            await new FxFlameout(scheduler, fxControls).run(display)
+            scheduler.clear()
+
+            await show("Nyancat", "", 6000)
+            await new FxFlameout(scheduler, fxControls).run(display)
+            scheduler.clear()
+
+            await show("TkkrLab", "default", 3000)
             await new FxFlameout(scheduler, fxControls).run(display)
             scheduler.clear()
 
@@ -47,6 +67,13 @@ export default class Template extends Animation {
             await new FxFlameout(scheduler, fxControls).run(display)
             scheduler.clear()
 
+            await show("Cyber", "default", 2000)
+            await new FxFlameout(scheduler, fxControls).run(display)
+            scheduler.clear()
+
+            await show("ItsFine", "default", 0)
+            await new FxFlameout(scheduler, fxControls).run(display)
+            scheduler.clear()
 
         }
     }
