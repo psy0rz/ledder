@@ -47,7 +47,8 @@ export default class Template extends Animation {
             await new FxFlameout(scheduler, fxControls).run(display)
             scheduler.clear()
 
-            show("PoliceLights", "hackers", 6000)
+            show("PoliceLights", "hackers", 0)
+            await scheduler.delay(6000/display.frameMs)
             await new FxFlameout(scheduler, fxControls).run(display)
             scheduler.clear()
 
