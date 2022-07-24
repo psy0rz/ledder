@@ -47,5 +47,18 @@ export default class OffsetMapper extends Array {
         }
     }
 
+    snake()
+    {
+        this.length=0
+        for (let x = 0; x < this.width; x++) {
+            this.push([])
+            for (let y = 0; y < this.height; y++) {
+                // this[x].push(x + y * this.width)
+                this[x].push(x * this.height + y)
+            }
+        }
+
+    }
+
 
 }

@@ -132,7 +132,7 @@ export class DisplayLedstream extends DisplayQOIS {
                         try {
                             s.send(p)
                         } catch (e) {
-                           console.error("MatrixLedstream: send error ",e)
+                           // console.error("MatrixLedstream: send error ",e)
                         }
                     }
                 } catch (e) {

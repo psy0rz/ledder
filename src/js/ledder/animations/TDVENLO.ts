@@ -31,16 +31,25 @@ export default class Template extends Animation {
 
     async run(display: Display, scheduler: Scheduler, controls: ControlGroup) {
 
+        const c=new PixelContainer()
+        display.add(c)
+
         const font = fontSelect(controls)
-        const text = new DrawText(30, 1, font, "VENLO", controls.color("tekst")).center(display)
-        display.add(text)
+        const text = new DrawText(18, -1, font, "venlo", controls.color("tekst"))
 
         const bbox = text.bbox()
         bbox.xMax += 20
         // new FxRotate(scheduler, controls).run(text, bbox)
 
-        display.add(new DrawAsciiArtColor(0, 8, logo))
-        display.add(new DrawAsciiArtColor(display.width-17, 8, logo))
+        c.add(new DrawAsciiArtColor(0, 8, logo))
+        // display.add(new DrawAsciiArtColor(display.width-17, 8, logo))
+
+        // display.centerH(display.bbox())
+        c.add(text)
+
+        c.centerH(display)
+
+
 
     }
 }

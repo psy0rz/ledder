@@ -63,7 +63,7 @@ export default class Template extends Animation {
         // new FxRotate(scheduler, controls).run(text, bbox)
 
         display.add(new DrawAsciiArtColor(0, 8, logo))
-        display.add(new DrawAsciiArtColor(display.width-15, 8, logo))
+        // display.add(new DrawAsciiArtColor(display.width-15, 8, logo))
 
     }
 }
