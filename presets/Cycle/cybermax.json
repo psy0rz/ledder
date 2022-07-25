@@ -1,0 +1,390 @@
+{
+ "title": "",
+ "description": "",
+ "values": {
+  "FPS": {
+   "value": 60
+  },
+  "FX": {
+   "Color cycle time": {
+    "value": 15
+   },
+   "Color cycle time randomizer": {
+    "value": 15
+   },
+   "Color cycle repeat count": {
+    "value": 1
+   },
+   "Color cycle mode": {
+    "selected": "reverse"
+   },
+   "Color cycle pattern": {
+    "selected": "Bertrik fire"
+   },
+   "Move interval": {
+    "value": 3
+   },
+   "Move interval randomizer": {
+    "value": 3
+   },
+   "Move X step": {
+    "value": 0.4
+   },
+   "Move Y step": {
+    "value": 1
+   }
+  },
+  "BrainsmokeFire": {
+   "Fire colors": {
+    "selected": "Brainsmoke fire"
+   },
+   "Fire minimum intensity": {
+    "value": 0
+   },
+   "Fire maximum intensity": {
+    "value": 650
+   },
+   "Fire wildness": {
+    "value": 10000
+   },
+   "Fire interval": {
+    "value": 1
+   }
+  },
+  "MaakPlek": {
+   "FPS": {
+    "value": 60
+   },
+   "Font": {
+    "selected": "C64"
+   },
+   "Maak": {
+    "r": 66,
+    "g": 255,
+    "b": 57,
+    "a": 1
+   },
+   "Plek": {
+    "r": 255,
+    "g": 23,
+    "b": 25,
+    "a": 1
+   }
+  },
+  "PoliceLights": {
+   "FPS": {
+    "value": 60
+   },
+   "Font": {
+    "selected": "C64"
+   },
+   "Text1 color": {
+    "r": 255,
+    "g": 255,
+    "b": 255,
+    "a": 1
+   },
+   "Text1": {
+    "text": "CONTAINS"
+   },
+   "Text2 color": {
+    "r": 32,
+    "g": 255,
+    "b": 0,
+    "a": 1
+   },
+   "Text2": {
+    "text": "HACKERS"
+   },
+   "Movie interval": {
+    "value": 60
+   },
+   "Movie interval randomizer": {
+    "value": 0
+   },
+   "Lights": {
+    "Width": {
+     "value": 8
+    },
+    "Left color": {
+     "r": 255,
+     "g": 4,
+     "b": 0,
+     "a": 1
+    },
+    "Right color": {
+     "r": 117,
+     "g": 117,
+     "b": 255,
+     "a": 1
+    },
+    "Wait": {
+     "value": 0
+    },
+    "Blink on delay": {
+     "value": 6
+    },
+    "Blink off delay": {
+     "value": 2
+    },
+    "Blink repeat": {
+     "value": 3
+    }
+   }
+  },
+  "TDVENLO": {
+   "FPS": {
+    "value": 60
+   },
+   "Font": {
+    "selected": "C64"
+   },
+   "tekst": {
+    "r": 128,
+    "g": 128,
+    "b": 128,
+    "a": 1
+   }
+  },
+  "Nyancat": {
+   "Rainbow": {
+    "Fade out time": {
+     "value": 40
+    },
+    "Fade out time randomizer": {
+     "value": 4
+    }
+   },
+   "Fire": {
+    "Use fire": {
+     "enabled": false
+    },
+    "Color cycle time": {
+     "value": 50
+    },
+    "Color cycle time randomizer": {
+     "value": 4
+    },
+    "Color cycle repeat count": {
+     "value": 1
+    },
+    "Color cycle mode": {
+     "selected": "reverse"
+    },
+    "Color cycle pattern": {
+     "selected": "Bertrik fire"
+    }
+   },
+   "Stars": {
+    "Star color": {
+     "r": 255,
+     "g": 255,
+     "b": 255,
+     "a": 0.01
+    },
+    "Number of stars": {
+     "value": 10
+    },
+    "Movie interval": {
+     "value": 5
+    },
+    "Movie interval randomizer": {
+     "value": 0
+    },
+    "Rotate interval": {
+     "value": 4
+    },
+    "Rotate interval randomizer": {
+     "value": 2
+    },
+    "Rotate X step": {
+     "value": -1
+    },
+    "Rotate Y step": {
+     "value": 0
+    }
+   },
+   "Move": {
+    "Rotate interval": {
+     "value": 2
+    },
+    "Rotate interval randomizer": {
+     "value": 0
+    },
+    "Rotate X step": {
+     "value": 1
+    },
+    "Rotate Y step": {
+     "value": 0
+    }
+   },
+   "Wobble body": {
+    "Wobble interval": {
+     "value": 15
+    },
+    "Wobble interval offset": {
+     "value": 0
+    },
+    "Wobble X amount": {
+     "value": 0
+    },
+    "Wobble Y amount": {
+     "value": -1
+    }
+   },
+   "Wobble head x": {
+    "Wobble interval": {
+     "value": 15
+    },
+    "Wobble interval offset": {
+     "value": 10
+    },
+    "Wobble X amount": {
+     "value": 1
+    },
+    "Wobble Y amount": {
+     "value": 0
+    }
+   },
+   "Wobble head y": {
+    "Wobble interval": {
+     "value": 15
+    },
+    "Wobble interval offset": {
+     "value": 5
+    },
+    "Wobble X amount": {
+     "value": 0
+    },
+    "Wobble Y amount": {
+     "value": 1
+    }
+   }
+  },
+  "TkkrLab": {
+   "FPS": {
+    "value": 60
+   },
+   "Font": {
+    "selected": "C64"
+   },
+   "tekst": {
+    "r": 128,
+    "g": 128,
+    "b": 128,
+    "a": 1
+   }
+  },
+  "HSD": {
+   "FPS": {
+    "value": 60
+   },
+   "Font": {
+    "selected": "ZX Sierra Quest"
+   },
+   "tekst": {
+    "r": 255,
+    "g": 255,
+    "b": 255,
+    "a": 1
+   },
+   "Rotate interval": {
+    "value": 2
+   },
+   "Rotate interval randomizer": {
+    "value": 0
+   },
+   "Rotate X step": {
+    "value": -1
+   },
+   "Rotate Y step": {
+    "value": 0
+   }
+  },
+  "Cyber": {
+   "FPS": {
+    "value": 60
+   },
+   "Font": {
+    "selected": "C64"
+   },
+   "tekst": {
+    "r": 255,
+    "g": 255,
+    "b": 0,
+    "a": 1
+   },
+   "interval": {
+    "value": 6
+   }
+  },
+  "ItsFine": {
+   "FPS": {
+    "value": 60
+   },
+   "Bottom fire": {
+    "Fire colors": {
+     "selected": "Brainsmoke fire"
+    },
+    "Fire minimum intensity": {
+     "value": 0
+    },
+    "Fire maximum intensity": {
+     "value": 700
+    },
+    "Fire wildness": {
+     "value": 10000
+    },
+    "Fire interval": {
+     "value": 1
+    }
+   },
+   "Text": {
+    "text": "its fine."
+   },
+   "Text color": {
+    "r": 20,
+    "g": 0,
+    "b": 255,
+    "a": 1
+   },
+   "Font": {
+    "selected": "C64"
+   },
+   "Top fire": {
+    "Fire density [%]": {
+     "value": 10
+    },
+    "Fire intensity [%]": {
+     "value": 100
+    },
+    "Fire depth [pixels]": {
+     "value": 2
+    },
+    "Fire wind X": {
+     "value": 0.1
+    },
+    "Fire wind Y": {
+     "value": 0.2
+    },
+    "Fire cycle": {
+     "Color cycle time": {
+      "value": 15
+     },
+     "Color cycle time randomizer": {
+      "value": 15
+     },
+     "Color cycle repeat count": {
+      "value": 1
+     },
+     "Color cycle mode": {
+      "selected": "reverse"
+     },
+     "Color cycle pattern": {
+      "selected": "Bertrik fire"
+     }
+    }
+   }
+  }
+ }
+}

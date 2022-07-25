@@ -41,7 +41,9 @@ export default class PoliceLights extends Animation {
         textList.add(new PixelContainer()) //blank screen
 
         //fxmovie will display the 2 text-containers that are in the textList container:
-        new FxPattern(scheduler, controls, 60).run(textList, display, [60,5,60,5])
+        const textTarget=new PixelContainer()
+        display.add(textTarget)
+        new FxPattern(scheduler, controls, 60).run(textList, textTarget, [60,5,60,5])
 
 
         ///////////// the lamps

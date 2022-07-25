@@ -7,6 +7,7 @@ import {Color} from "../Color.js"
 import {PixelContainer} from "../PixelContainer.js"
 import {PresetStore} from "../../server/PresetStore.js"
 import FxFlameout from "../fx/FxFlameout.js"
+import FxPacman from "../fx/FxPacman.js"
 
 const presetStore = new PresetStore()
 
@@ -40,8 +41,9 @@ export default class Template extends Animation {
 
 
             await show("BrainsmokeFire", "", 6000)
-            await new FxFlameout(scheduler, fxControls).run(display)
+            await new FxPacman(scheduler, fxControls).run(display, 0, display.height )
             scheduler.clear()
+
 
             await show("MaakPlek", "default", 3000)
             await new FxFlameout(scheduler, fxControls).run(display)
@@ -49,7 +51,8 @@ export default class Template extends Animation {
 
             show("PoliceLights", "hackers", 0)
             await scheduler.delay(6000/display.frameMs)
-            await new FxFlameout(scheduler, fxControls).run(display)
+            await new FxPacman(scheduler, fxControls).run(display, 0, display.height )
+            // await new FxFlameout(scheduler, fxControls).run(display)
             scheduler.clear()
 
             await show("TDVENLO", "default", 3000)
@@ -57,7 +60,7 @@ export default class Template extends Animation {
             scheduler.clear()
 
             await show("Nyancat", "", 6000)
-            await new FxFlameout(scheduler, fxControls).run(display)
+            await new FxPacman(scheduler, fxControls).run(display, 0, display.height )
             scheduler.clear()
 
             await show("TkkrLab", "default", 3000)
@@ -65,7 +68,8 @@ export default class Template extends Animation {
             scheduler.clear()
 
             await show("HSD", "default", 4000)
-            await new FxFlameout(scheduler, fxControls).run(display)
+            await new FxPacman(scheduler, fxControls).run(display, 0, display.height )
+            // await new FxFlameout(scheduler, fxControls).run(display)
             scheduler.clear()
 
             await show("Cyber", "default", 2000)
