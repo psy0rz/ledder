@@ -8,6 +8,7 @@ import {PixelContainer} from "../PixelContainer.js"
 import {PresetStore} from "../../server/PresetStore.js"
 import FxFlameout from "../fx/FxFlameout.js"
 import FxPacman from "../fx/FxPacman.js"
+import FxFlames from "../fx/FxFlames.js"
 
 const presetStore = new PresetStore()
 
@@ -41,7 +42,10 @@ export default class Template extends Animation {
 
 
             await show("BrainsmokeFire", "", 6000)
+
             await new FxPacman(scheduler, fxControls).run(display, 0, display.height )
+            // await scheduler.delay(30)
+            // new FxFlames(scheduler, controls).run(p, display)
             scheduler.clear()
 
 
