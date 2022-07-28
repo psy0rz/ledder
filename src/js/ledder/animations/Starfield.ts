@@ -7,6 +7,7 @@ import {Color} from "../Color.js"
 import {PixelContainer} from "../PixelContainer.js"
 import {random, randomFloat} from "../util.js"
 import FxMove from "../fx/FxMove.js"
+import {Control} from "../Control.js"
 
 
 class Star {
@@ -24,18 +25,21 @@ class Star {
         this.yEnd = yEnd
         this.z = 0
         this.p = new Pixel(0, 0, new Color(255, 255, 255, 0))
-        this.update()
+        // this.update()
 
     }
 
-    update() {
+    update(controls:ControlGroup) {
         if (this.z == 1)
             return false
 
-        this.z = this.z + 0.01 + (this.z*0.02)
+        this.z = this.z +
+            controls.value("Base speed", 0.001, 0.00001,0.1,0.0001).value +
+            (this.z* controls.value("Accelration", 0.03, 0, 0.1, 0.0001).value)
         if (this.z > 1)
             this.z = 1
-        this.p.color.a = this.z - 0.1
+        this.p.color.a = this.z - (controls.value("Star offset", 0.1, 0,1,0.001).value)
+        // this.p.color.a = this.z
         if (this.p.color.a<0)
             this.p.color.a=0
 
@@ -70,7 +74,7 @@ export default class Template extends Animation {
         //move all
         scheduler.interval(1, () => {
             for (const star of stars) {
-                if (!star.update())
+                if (!star.update(controls))
                     stars.delete(star)
 
             }
@@ -79,30 +83,41 @@ export default class Template extends Animation {
         })
 
 
+        // const xStart = display.width / 2 + random(-2,2)
+        // const yStart = display.height / 2 + random(2,2)
         const xStart = display.width / 2
         const yStart = display.height / 2
+        // const xStart = random(0,display.width-1)
+        // const yStart = random(0,display.height-1)
 
-        scheduler.intervalControlled(controls.value("Creation interval", 10), () => {
-
+        scheduler.intervalControlled(controls.value("Creation interval", 5), () => {
             let xEnd
             let yEnd
             const side = random(0, 3)
 
+            let xOffset=0;
+            let yOffset=0
+
             if (side == 0) {
                 xEnd = -1
                 yEnd = random(0, display.height - 1)
+                // xOffset = random(-75/4,0)
             } else if (side == 1) {
                 xEnd = display.width + 1
                 yEnd = random(0, display.height - 1)
+                // xOffset = random(0,75/4)
             } else if (side == 2) {
                 xEnd = random(0, display.width - 1)
                 yEnd = -1
+                // yOffset=random(-2,0)
             } else if (side == 3) {
                 xEnd = random(0, display.width - 1)
                 yEnd = display.height + 1
+                // yOffset=random(0,2)
             }
 
-            const star = new Star(xStart, yStart, xEnd, yEnd)
+            const star = new Star(xStart + xOffset, yStart +yOffset, xEnd, yEnd)
+
             c.add(star.p)
 
             stars.add(star)
