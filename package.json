@@ -43,9 +43,6 @@
     "swiper": "^6.8.4",
     "upng-js": "^2.1.0"
   },
-  "optionalDependencies": {
-    "rpi-ws281x-smi": "../rpi-ws281x-smi"
-  },
   "devDependencies": {
     "@sveltejs/vite-plugin-svelte": "^1.0.0-next.39",
     "@tsconfig/svelte": "^3.0.0",
