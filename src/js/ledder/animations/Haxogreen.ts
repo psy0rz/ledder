@@ -10,10 +10,10 @@ import DrawText from "../draw/DrawText.js"
 import FxBlink from "../fx/FxBlink.js"
 
 export default class Template extends Animation {
-    static category = "Test"
-    static title = "Template for new animations"
+    static category = "Misc"
+    static title = "Haxogreen"
     static description = "blabla"
-    static presetDir = "Test"
+    static presetDir = "Misc"
 
     async run(display: Display, scheduler: Scheduler, controls: ControlGroup) {
 

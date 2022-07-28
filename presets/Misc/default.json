@@ -5,17 +5,32 @@
   "FPS": {
    "value": 60
   },
-  "Font": {
-   "selected": "C64"
+  "Blink on delay": {
+   "value": 5
   },
-  "tekst": {
+  "Blink off delay": {
+   "value": 5
+  },
+  "Blink repeat": {
+   "value": 5
+  },
+  "Font": {
+   "selected": "Skid Row"
+  },
+  "haxo": {
    "r": 255,
    "g": 255,
-   "b": 0,
-   "a": 0.28
+   "b": 255,
+   "a": 1
   },
-  "interval": {
-   "value": 6
+  "offset": {
+   "value": 35
+  },
+  "green": {
+   "r": 146,
+   "g": 255,
+   "b": 0,
+   "a": 1
   }
  }
 }

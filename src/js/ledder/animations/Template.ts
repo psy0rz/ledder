@@ -8,10 +8,10 @@ import {PixelContainer} from "../PixelContainer.js";
 
 export default class Template extends  Animation
 {
-    static category = "Test"
+    static category = "Misc"
     static title = "Template for new animations"
     static description = "blabla"
-    static presetDir = "Test";
+    static presetDir = "Misc";
 
     async run(display: Display, scheduler: Scheduler, controls: ControlGroup) {
 
