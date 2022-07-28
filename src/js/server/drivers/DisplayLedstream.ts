@@ -68,12 +68,12 @@ export class DisplayLedstream extends DisplayQOIS {
         const frameBytes = []
 
         // const lag = 16 * 30 //30 frames lag
-        const lag = 10 * this.frameMs
+        const lag = 20 * this.frameMs
         const laggedTime = displayTime + lag
 
         //first frame to be pushed? determine sendTime
         if (this.byteStream.length == 0)
-            this.sendTime = displayTime + 0 * this.frameMs
+            this.sendTime = displayTime + 0* this.frameMs
 
         // //frame byte length
         frameBytes.push(0) //0

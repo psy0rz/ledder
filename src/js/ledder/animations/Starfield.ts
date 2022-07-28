@@ -20,13 +20,25 @@ export default class Template extends  Animation
         const midX=display.width/2;
         const midY=display.height/2;
 
-        scheduler.intervalControlled(controls.value("Creation interval", 10), ()=>{
+        const c=new PixelContainer()
+        display.add(c)
 
-            const pixel=new Pixel(midX,midY, new Color(255,0,0, 0.3))
-            const c=new PixelContainer()
+        //move all
+        scheduler.interval(1, ()=>{
+            for (const p of c)
+            {
+
+            }
+
+        })
+
+
+        scheduler.intervalControlled(controls.value("Creation interval", 60), ()=>{
+
+
+            const pixel=new Pixel(random(0, display.width),-1, new Color(255,255,255, 0))
             c.add(pixel)
-            display.add(c)
-            new FxMove(scheduler, controls, randomFloat(-0.2,.2), randomFloat(-.2,.2)).run(c)
+
 
         })
 
