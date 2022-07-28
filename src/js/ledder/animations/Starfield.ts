@@ -54,7 +54,7 @@ class Star {
 
 }
 
-export default class Template extends Animation {
+export default class Starfield extends Animation {
     static category = "Misc"
     static title = "Starfield"
     static description = "blabla"

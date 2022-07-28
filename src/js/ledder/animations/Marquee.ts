@@ -11,6 +11,7 @@ import MovingStars from "./MovingStars.js";
 import DrawBox from "../draw/DrawBox.js";
 import {Color} from "../Color.js";
 import {FxFadeOut} from "../fx/FxFadeOut.js";
+import Starfield from "./Starfield.js"
 
 export default class Marquee extends Animation {
 
@@ -32,6 +33,12 @@ export default class Marquee extends Animation {
         if (starsGroup.switch('Enabled', false).enabled) {
             new MovingStars().run(display,scheduler, starsGroup)
         }
+
+        let starFieldGroup=control.group("Star field", false, false)
+        if (starFieldGroup.switch('Enabled', false).enabled) {
+            new Starfield().run(display,scheduler, starFieldGroup)
+        }
+
 
         //add on top of stars
         display.add(charPixels)

@@ -39,6 +39,11 @@ export default class Template extends Animation {
 
         const fxControls=controls.group("FX")
         while(1) {
+            show ("Starfield", "")
+            await show("Marquee", "idiopolisstatic", 10000)
+            await new FxFlameout(scheduler, fxControls).run(display)
+            scheduler.clear()
+
 
             await show("Syn2cat", "default", 3000)
             await new FxFlameout(scheduler, fxControls).run(display)
