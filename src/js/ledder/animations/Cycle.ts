@@ -40,6 +40,10 @@ export default class Template extends Animation {
         const fxControls=controls.group("FX")
         while(1) {
 
+            await show("Haxogreen", "default", 6000)
+            await new FxFlameout(scheduler, fxControls).run(display)
+            scheduler.clear()
+
 
             await show("Marquee", "idiopolis", 6000)
             // await new FxFlameout(scheduler, fxControls).run(display)
