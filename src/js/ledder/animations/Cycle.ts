@@ -30,7 +30,7 @@ export default class Template extends Animation {
                 const presetValues = await presetStore.load(animationClass, presetName)
                 subControls.load(presetValues.values)
             }
-            await animation.run(display, scheduler,subControls)
+            animation.run(display, scheduler,subControls)
 
             await scheduler.delay(time/display.frameMs)
 
@@ -41,17 +41,20 @@ export default class Template extends Animation {
         while(1) {
 
 
-            await show("BrainsmokeFire", "", 6000)
+            await show("Marquee", "idiopolis", 6000)
+            // await new FxFlameout(scheduler, fxControls).run(display)
+            // scheduler.clear()
 
+            await show("BrainsmokeFire", "", 6000)
             await new FxPacman(scheduler, fxControls).run(display, 0, display.height )
             // await scheduler.delay(30)
             // new FxFlames(scheduler, controls).run(p, display)
             scheduler.clear()
 
 
-            await show("MaakPlek", "default", 3000)
-            await new FxFlameout(scheduler, fxControls).run(display)
-            scheduler.clear()
+            // await show("MaakPlek", "default", 3000)
+            // await new FxFlameout(scheduler, fxControls).run(display)
+            // scheduler.clear()
 
             show("PoliceLights", "hackers", 0)
             await scheduler.delay(6000/display.frameMs)
@@ -59,24 +62,24 @@ export default class Template extends Animation {
             // await new FxFlameout(scheduler, fxControls).run(display)
             scheduler.clear()
 
-            await show("TDVENLO", "default", 3000)
-            await new FxFlameout(scheduler, fxControls).run(display)
-            scheduler.clear()
-
+            // await show("TDVENLO", "default", 3000)
+            // await new FxFlameout(scheduler, fxControls).run(display)
+            // scheduler.clear()
+            //
             await show("Nyancat", "", 6000)
             await new FxPacman(scheduler, fxControls).run(display, 0, display.height )
             scheduler.clear()
 
-            await show("TkkrLab", "default", 3000)
-            await new FxFlameout(scheduler, fxControls).run(display)
-            scheduler.clear()
+            // await show("TkkrLab", "default", 3000)
+            // await new FxFlameout(scheduler, fxControls).run(display)
+            // scheduler.clear()
 
             await show("HSD", "default", 4000)
             await new FxPacman(scheduler, fxControls).run(display, 0, display.height )
             // await new FxFlameout(scheduler, fxControls).run(display)
             scheduler.clear()
 
-            await show("ItsFine", "default", 0)
+            await show("ItsFine", "default", 8000)
             await new FxFlameout(scheduler, fxControls).run(display)
             scheduler.clear()
 
