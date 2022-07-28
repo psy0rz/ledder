@@ -76,13 +76,14 @@ export default class Template extends Animation {
             // await new FxFlameout(scheduler, fxControls).run(display)
             scheduler.clear()
 
+            await show("ItsFine", "default", 0)
+            await new FxFlameout(scheduler, fxControls).run(display)
+            scheduler.clear()
+
             await show("Cyber", "default", 2000)
             await new FxFlameout(scheduler, fxControls).run(display)
             scheduler.clear()
 
-            await show("ItsFine", "default", 0)
-            await new FxFlameout(scheduler, fxControls).run(display)
-            scheduler.clear()
 
         }
     }

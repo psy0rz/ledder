@@ -32,7 +32,7 @@ export default class Template extends Animation {
     async run(display: Display, scheduler: Scheduler, controls: ControlGroup) {
 
         const font = fontSelect(controls)
-        const text = new DrawText(0, 1, font, "Hackerspace Drenthe", controls.color("tekst"))
+        const text = new DrawText(8, 1, font, ".   Hackerspace Drenthe", controls.color("tekst"))
         display.add(text)
 
         const bbox = text.bbox()

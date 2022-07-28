@@ -75,6 +75,13 @@ export abstract class DisplayQOIS extends Display {
         // const offset =floor_x + floor_y * this.width;
         if (this.pixels[offset] === undefined)
             this.pixels[offset] = new Color(0, 0, 0, 1)
+
+        // //FIXME
+        // const c=color.copy()
+        // c.r=c.r/2;
+        // c.g=c.g/2;
+        // c.b=c.b/2;
+
         this.pixels[offset].blend(color)
 
 

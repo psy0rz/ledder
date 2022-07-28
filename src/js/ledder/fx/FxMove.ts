@@ -22,8 +22,8 @@ export default class FxMove extends Fx {
 
         this.intervalControl = controlGroup.value('Move interval', interval, 1, 60, 1)
         this.intervalRandomizerControl = controlGroup.value('Move interval randomizer', intervalRandomizer , 0, 60, 1, true)
-        this.xStepControl = controlGroup.value('Move X step', xStep, -5, 5, 1)
-        this.yStepControl = controlGroup.value('Move Y step', yStep, -5, 5, 1)
+        this.xStepControl = controlGroup.value('Move X step', xStep, -5, 5, 0.01)
+        this.yStepControl = controlGroup.value('Move Y step', yStep, -5, 5, 0.01)
     }
 
     //move all pixels in the pixelcontainer
