@@ -1,26 +1,36 @@
-import {Animation} from "../Animation.js";
-import {Display} from "../Display.js";
-import {Scheduler} from "../Scheduler.js";
-import {ControlGroup} from "../ControlGroup.js";
-import {Pixel} from "../Pixel.js";
-import {Color} from "../Color.js";
-import {PixelContainer} from "../PixelContainer.js";
+import {Animation} from "../Animation.js"
+import {Display} from "../Display.js"
+import {Scheduler} from "../Scheduler.js"
+import {ControlGroup} from "../ControlGroup.js"
+import {Pixel} from "../Pixel.js"
+import {Color} from "../Color.js"
+import {PixelContainer} from "../PixelContainer.js"
 import DrawCounter from "../draw/DrawCounter.js"
+import {request} from "https"
 
-export default class Template extends  Animation
-{
+export default class Template extends Animation {
     static category = "Misc"
     static title = "Template for new animations"
     static description = "blabla"
-    static presetDir = "Misc";
+    static presetDir = "Misc"
 
     async run(display: Display, scheduler: Scheduler, controls: ControlGroup) {
 
-        const counter=new DrawCounter()
+        const counter = new DrawCounter()
         display.add(counter)
-        counter.run(scheduler, controls, 0,5)
+        counter.run(scheduler, controls, 0, 5)
 
 
+        // const url = 'https://blockchain.info/ticker'
+        // request(url, {}, (res) => {
+        //     console.log(res)
+        //
+        // })
+
+        scheduler.interval(600, () => {
+
+
+        })
 
 
     }

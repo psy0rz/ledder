@@ -16,7 +16,7 @@ import Draw from "../Draw.js"
 export default class DrawCounter extends Draw {
     public targetValue: number
 
-    async run( scheduler: Scheduler, controls:ControlGroup, startValue=0, digitCount=5) {
+    async run(scheduler: Scheduler, controls: ControlGroup, startValue = 0, digitCount = 5) {
 
         const font = fontSelect(controls)
 
@@ -70,7 +70,7 @@ export default class DrawCounter extends Draw {
         this.targetValue = startValue
 
         for (let i = 0; i < digitCount; i++) {
-            const digitValue= ~~(currentValue / (Math.pow(10,i)))%10
+            const digitValue = ~~(currentValue / (Math.pow(10, i))) % 10
 
             text.unshift(wheel[digitValue])
         }
@@ -133,6 +133,8 @@ export default class DrawCounter extends Draw {
             let speed = Math.abs((currentValue - this.targetValue) / controls.value("Speedfactor", 100).value)
             if (speed < 0.1)
                 speed = 0.1
+            else if (speed > 8)
+                speed = 8
 
 
             if (currentValue < this.targetValue) {
@@ -142,8 +144,7 @@ export default class DrawCounter extends Draw {
                 currentValue = currentValue - 1
                 await count(text, text.length - 1, -1, speed)
             } else {
-                await scheduler.delay(1000)
-                this.targetValue = this.targetValue + random(-1000, 1000)
+                await scheduler.delay(1)
             }
 
         }
