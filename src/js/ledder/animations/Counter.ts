@@ -71,11 +71,13 @@ export default class Counter extends Animation {
         const wheel = '0123456789'
         let text = []
 
-        let currentValue = 0
-        let targetValue = 0
+        let currentValue = 1234
+        let targetValue = 1100
 
         for (let i = 0; i < controls.value("digits", 5).value; i++) {
-            text.push('0')
+            const digitValue= ~~(currentValue / (Math.pow(10,i)))%10
+
+            text.unshift(wheel[digitValue])
         }
 
 
@@ -128,30 +130,26 @@ export default class Counter extends Animation {
         }
 
 
-        targetValue=1000
-                // await count(text, text.length - 1, 1, 0.9)
+        targetValue = 1000
+        // await count(text, text.length - 1, 1, 0.9)
 
 
-        while(1) {
+        while (1) {
             // await scheduler.delay(1)
-            let speed=Math.abs((currentValue-targetValue)/ controls.value("Speedfactor", 1000).value )
-            if (speed<0.1)
-                speed=0.1
-            // const speed=0.9
+            let speed = Math.abs((currentValue - targetValue) / controls.value("Speedfactor", 100).value)
+            if (speed < 0.1)
+                speed = 0.1
 
 
-            if (currentValue<targetValue) {
-                currentValue=currentValue+1
+            if (currentValue < targetValue) {
+                currentValue = currentValue + 1
                 await count(text, text.length - 1, 1, speed)
-            }
-            else if (currentValue<targetValue) {
-                currentValue=currentValue-1
+            } else if (currentValue > targetValue) {
+                currentValue = currentValue - 1
                 await count(text, text.length - 1, -1, speed)
-            }
-            else
-            {
+            } else {
                 await scheduler.delay(1000)
-                   targetValue=targetValue+random(-1000,1000)
+                targetValue = targetValue + random(-1000, 1000)
             }
 
         }
