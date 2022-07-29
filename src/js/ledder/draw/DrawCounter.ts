@@ -5,23 +5,18 @@ import {ControlGroup} from "../ControlGroup.js"
 import {Pixel} from "../Pixel.js"
 import {Color} from "../Color.js"
 import {PixelContainer} from "../PixelContainer.js"
-import DrawText from "../draw/DrawText.js"
+import DrawText from "./DrawText.js"
 import {fontSelect} from "../fonts.js"
 import {colorRed} from "../Colors.js"
 import {webcrypto} from "crypto"
 import {element} from "svelte/internal"
 import {random} from "../util.js"
+import Draw from "../Draw.js"
 
-export default class Counter extends Animation {
-    static category = "Misc"
-    static title = "Mechanical counter"
-    static description = "blabla"
-    static presetDir = "Counter"
+export default class DrawCounter extends Draw {
+    public targetValue: number
 
-    //rotate a character, returns pixelcontainer
-
-
-    async run(display: Display, scheduler: Scheduler, controls: ControlGroup) {
+    async run( scheduler: Scheduler, controls:ControlGroup, startValue=0, digitCount=5) {
 
         const font = fontSelect(controls)
 
@@ -71,10 +66,10 @@ export default class Counter extends Animation {
         const wheel = '0123456789'
         let text = []
 
-        let currentValue = 1234
-        let targetValue = 1100
+        let currentValue = startValue
+        this.targetValue = startValue
 
-        for (let i = 0; i < controls.value("digits", 5).value; i++) {
+        for (let i = 0; i < digitCount; i++) {
             const digitValue= ~~(currentValue / (Math.pow(10,i)))%10
 
             text.unshift(wheel[digitValue])
@@ -123,33 +118,32 @@ export default class Counter extends Animation {
         let digits = []
         for (const char of text) {
             const c = new PixelContainer()
-            display.add(c)
+            this.add(c)
             digits.push(c)
             await rotate(spacing * i, 0, char, c, 2)
             i++
         }
 
 
-        targetValue = 1000
         // await count(text, text.length - 1, 1, 0.9)
 
 
         while (1) {
             // await scheduler.delay(1)
-            let speed = Math.abs((currentValue - targetValue) / controls.value("Speedfactor", 100).value)
+            let speed = Math.abs((currentValue - this.targetValue) / controls.value("Speedfactor", 100).value)
             if (speed < 0.1)
                 speed = 0.1
 
 
-            if (currentValue < targetValue) {
+            if (currentValue < this.targetValue) {
                 currentValue = currentValue + 1
                 await count(text, text.length - 1, 1, speed)
-            } else if (currentValue > targetValue) {
+            } else if (currentValue > this.targetValue) {
                 currentValue = currentValue - 1
                 await count(text, text.length - 1, -1, speed)
             } else {
                 await scheduler.delay(1000)
-                targetValue = targetValue + random(-1000, 1000)
+                this.targetValue = this.targetValue + random(-1000, 1000)
             }
 
         }
