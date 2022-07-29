@@ -48,16 +48,15 @@ export default class Counter extends Animation {
             }
 
             //now rotate in step direction
-            while (Math.abs(totalCharOffset)>Math.abs(step)) {
+            while (Math.abs(totalCharOffset) > Math.abs(step)) {
                 //move up one step
-                totalCharOffset=totalCharOffset+step
+                totalCharOffset = totalCharOffset + step
                 target.move(0, step)
                 await scheduler.delay(1)
             }
 
             //final move
-            console.log(totalCharOffset)
-            target.move(0, -totalCharOffset)
+            target.move(0, -totalCharOffset, true)
 
             //remove rest of the chars
             target.clear()
@@ -121,13 +120,14 @@ export default class Counter extends Animation {
         }
 
 
-
-        let speed = 5.1
-        for (let i = 0; i < 10000; i++) {
-            // speed = speed - 0.01
-            // console.log(text)
-            await count(text, text.length - 1, 1, speed)
-        }
+        // let speed = 8
+        // for (let i = 0; i < 10000; i++) {
+        //     speed = speed - 0.01
+        //     // console.log(text)
+        //     await count(text, text.length - 1, 1, speed)
+        // }
+        while (1)
+            await count(text, text.length - 1, 1, 1)
 
 
 //

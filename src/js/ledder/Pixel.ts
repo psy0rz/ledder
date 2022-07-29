@@ -1,16 +1,16 @@
-import {Display} from "./Display.js";
-import {PixelInterface} from "./PixelInterface.js";
-import {ColorInterface} from "./ColorInterface.js";
-import BboxInterface from "./BboxInterface.js";
-import {Color} from "./Color.js";
+import {Display} from "./Display.js"
+import {PixelInterface} from "./PixelInterface.js"
+import {ColorInterface} from "./ColorInterface.js"
+import BboxInterface from "./BboxInterface.js"
+import {Color} from "./Color.js"
 
 
 //basic pixel.
 export class Pixel implements PixelInterface {
-    x: number;
-    y: number;
+    x: number
+    y: number
 
-    color: ColorInterface;
+    color: ColorInterface
     data?: any
 
     // keep: boolean;
@@ -23,15 +23,14 @@ export class Pixel implements PixelInterface {
      * @param color Color object
      */
     constructor(x: number, y: number, color: ColorInterface) {
-        this.x = x;
-        this.y = y;
+        this.x = x
+        this.y = y
 
-        this.color = color;
+        this.color = color
 
     }
 
-    copy(copyColor=false)
-    {
+    copy(copyColor = false) {
         if (copyColor)
             return new Pixel(this.x, this.y, this.color.copy())
         else
@@ -39,10 +38,15 @@ export class Pixel implements PixelInterface {
     }
 
     //relatively move pixel by this amount
-    move(x: number ,y:number)
-    {
-        this.x+=x
-        this.y+=y
+    move(x: number, y: number, round = false) {
+        if (round) {
+            this.x = ~~(this.x + x)
+            this.y = ~~(this.y + y)
+        } else {
+            this.x += x
+            this.y += y
+
+        }
         return (this)
     }
 
@@ -63,14 +67,14 @@ export class Pixel implements PixelInterface {
     // //keep pixel inside this box by wrapping (inclusive)
     wrap(bbox: BboxInterface) {
         if (this.x < bbox.xMin)
-            this.x += (bbox.xMax - bbox.xMin+1)
+            this.x += (bbox.xMax - bbox.xMin + 1)
         else if (this.x > bbox.xMax)
-            this.x -= (bbox.xMax - bbox.xMin+1)
+            this.x -= (bbox.xMax - bbox.xMin + 1)
 
         if (this.y < bbox.yMin)
-            this.y += (bbox.yMax - bbox.yMin+1)
+            this.y += (bbox.yMax - bbox.yMin + 1)
         else if (this.y > bbox.yMax)
-            this.y -= (bbox.yMax - bbox.yMin+1)
+            this.y -= (bbox.yMax - bbox.yMin + 1)
 
     }
 

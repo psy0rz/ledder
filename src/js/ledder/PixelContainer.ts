@@ -164,9 +164,9 @@ export class PixelContainer extends Set<Pixel | PixelContainer> {
     }
 
     //relatively move all pixels in this tree by this amount
-    move(x: number, y: number) {
+    move(x: number, y: number, round=false) {
         for (const p of this)
-            p.move(x, y)
+            p.move(x, y, round)
     }
 
     // //get bounding box (override if needed)
