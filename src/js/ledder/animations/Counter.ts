@@ -10,12 +10,13 @@ import {fontSelect} from "../fonts.js"
 import {colorRed} from "../Colors.js"
 import {webcrypto} from "crypto"
 import {element} from "svelte/internal"
+import {random} from "../util.js"
 
 export default class Counter extends Animation {
     static category = "Misc"
     static title = "Mechanical counter"
     static description = "blabla"
-    static presetDir = "Misc"
+    static presetDir = "Counter"
 
     //rotate a character, returns pixelcontainer
 
@@ -48,7 +49,7 @@ export default class Counter extends Animation {
             }
 
             //now rotate in step direction
-            while (Math.abs(totalCharOffset) > Math.abs(step)) {
+            while (Math.abs(totalCharOffset) >= Math.abs(step)) {
                 //move up one step
                 totalCharOffset = totalCharOffset + step
                 target.move(0, step)
@@ -58,6 +59,7 @@ export default class Counter extends Animation {
             //final move
             target.move(0, -totalCharOffset, true)
 
+
             //remove rest of the chars
             target.clear()
             target.add(lastChar)
@@ -65,10 +67,16 @@ export default class Counter extends Animation {
         }
 
 
-        // let digits = []
         const spacing = 8
         const wheel = '0123456789'
-        let text = ['0', '0', '1', '0', '0']
+        let text = []
+
+        let currentValue = 0
+        let targetValue = 0
+
+        for (let i = 0; i < controls.value("digits", 5).value; i++) {
+            text.push('0')
+        }
 
 
         async function count(text, index, direction, speed) {
@@ -120,15 +128,33 @@ export default class Counter extends Animation {
         }
 
 
-        // let speed = 8
-        // for (let i = 0; i < 10000; i++) {
-        //     speed = speed - 0.01
-        //     // console.log(text)
-        //     await count(text, text.length - 1, 1, speed)
-        // }
-        while (1)
-            await count(text, text.length - 1, 1, 1)
+        targetValue=1000
+                // await count(text, text.length - 1, 1, 0.9)
 
+
+        while(1) {
+            // await scheduler.delay(1)
+            let speed=Math.abs((currentValue-targetValue)/ controls.value("Speedfactor", 1000).value )
+            if (speed<0.1)
+                speed=0.1
+            // const speed=0.9
+
+
+            if (currentValue<targetValue) {
+                currentValue=currentValue+1
+                await count(text, text.length - 1, 1, speed)
+            }
+            else if (currentValue<targetValue) {
+                currentValue=currentValue-1
+                await count(text, text.length - 1, -1, speed)
+            }
+            else
+            {
+                await scheduler.delay(1000)
+                   targetValue=targetValue+random(-1000,1000)
+            }
+
+        }
 
 //
 

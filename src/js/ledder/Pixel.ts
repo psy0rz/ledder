@@ -40,8 +40,8 @@ export class Pixel implements PixelInterface {
     //relatively move pixel by this amount
     move(x: number, y: number, round = false) {
         if (round) {
-            this.x = ~~(this.x + x)
-            this.y = ~~(this.y + y)
+            this.x = Math.round(this.x + x)
+            this.y = Math.round(this.y + y)
         } else {
             this.x += x
             this.y += y
