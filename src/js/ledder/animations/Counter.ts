@@ -8,6 +8,8 @@ import {PixelContainer} from "../PixelContainer.js"
 import DrawText from "../draw/DrawText.js"
 import {fontSelect} from "../fonts.js"
 import {colorRed} from "../Colors.js"
+import {webcrypto} from "crypto"
+import {element} from "svelte/internal"
 
 export default class Counter extends Animation {
     static category = "Misc"
@@ -23,30 +25,39 @@ export default class Counter extends Animation {
         const font = fontSelect(controls)
 
         //rotate through a bunch of chars (target may already have a char in it which also will be rotated)
-        async function rotateUp(x, y, chars: string, target: PixelContainer, step = 1) {
+        async function rotate(x, y, chars: string, target: PixelContainer, step = 1) {
 
-            //add new chars below
-            const charHeight = font.height + 1
-            const totalHeight = charHeight * chars.length
-            // let texts=new PixelContainer()
-            // display.add(texts)
+            let charStep
+            let totalCharOffset
 
+            if (step > 0)
+                charStep = -font.height - 1
+            else
+                charStep = font.height + 1
+
+            totalCharOffset = charStep * chars.length
+
+
+            //add new chars above or below
             let offset = 0
             let lastChar
             for (const char of chars) {
-                offset = offset - charHeight
+                offset = offset + charStep
                 lastChar = new DrawText(x, y + offset, font, char, colorRed)
                 target.add(lastChar)
             }
-            //now rotate up
-            for (offset = 0; offset < totalHeight - step; offset = offset + step) {
+
+            //now rotate in step direction
+            while (Math.abs(totalCharOffset)>Math.abs(step)) {
                 //move up one step
+                totalCharOffset=totalCharOffset+step
                 target.move(0, step)
                 await scheduler.delay(1)
             }
 
             //final move
-            target.move(0, totalHeight - offset)
+            console.log(totalCharOffset)
+            target.move(0, -totalCharOffset)
 
             //remove rest of the chars
             target.clear()
@@ -58,31 +69,42 @@ export default class Counter extends Animation {
         // let digits = []
         const spacing = 8
         const wheel = '0123456789'
-        let text = ['0', '0', '0' ,'0', '0']
+        let text = ['0', '0', '1', '0', '0']
 
 
-
-
-        async function countUp(text, index, speed)
-        {
+        async function count(text, index, direction, speed) {
             let d = text[index]
             let wheelIndex = wheel.indexOf(d)
-            //at the end of wheel?
-            if (wheelIndex==wheel.length-1)
-            {
-                //reset wheel and carry to next wheel
-                text[index]=wheel[0];
-                if (index!=0) {
-                    rotateUp(spacing * index, 0, text[index], digits[index], speed)
+            wheelIndex = wheelIndex + direction
 
-                    await countUp(text, index - 1, speed)
+            if (wheelIndex >= wheel.length) {
+                //at the end of wheel?
+
+                //reset wheel and carry to next wheel
+                text[index] = wheel[0]
+                if (index != 0) {
+                    rotate(spacing * index, 0, text[index], digits[index], speed)
+
+                    await count(text, index - 1, direction, speed)
                 }
-            }
-            else
-            {
+            } else if (wheelIndex < 0) {
+                //beginning of wheel
+
+                //reset wheel and carry to next wheel
+                text[index] = wheel[wheel.length - 1]
+                if (index != 0) {
+                    rotate(spacing * index, 0, text[index], digits[index], -speed)
+
+                    await count(text, index - 1, direction, speed)
+                }
+
+            } else {
                 //next on wheel
-                text[index]=wheel[wheelIndex+1]
-                await rotateUp(spacing * index, 0, text[index], digits[index], speed)
+                text[index] = wheel[wheelIndex]
+                if (direction > 0)
+                    await rotate(spacing * index, 0, text[index], digits[index], speed)
+                else
+                    await rotate(spacing * index, 0, text[index], digits[index], -speed)
             }
         }
 
@@ -94,17 +116,17 @@ export default class Counter extends Animation {
             const c = new PixelContainer()
             display.add(c)
             digits.push(c)
-            await rotateUp(spacing * i, 0, char, c, 8)
+            await rotate(spacing * i, 0, char, c, 2)
             i++
         }
 
 
-        let speed=8
-        for (let i=0;i<10000; i++)
-        {
-            speed=speed-0.1
+
+        let speed = 5.1
+        for (let i = 0; i < 10000; i++) {
+            // speed = speed - 0.01
             // console.log(text)
-            await countUp(text, text.length - 1,speed)
+            await count(text, text.length - 1, 1, speed)
         }
 
 
