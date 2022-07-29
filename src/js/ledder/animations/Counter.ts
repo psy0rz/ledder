@@ -46,54 +46,69 @@ export default class Counter extends Animation {
             }
 
             //final move
-            target.move(0, totalHeight-offset)
+            target.move(0, totalHeight - offset)
 
             //remove rest of the chars
             target.clear()
             target.add(lastChar)
 
- //           target.clear()
-
-
-            // remove old char and add final char
-            // display.delete(oldChar)
-            // const newChar=new DrawText(x, y - offset, font, char, colorRed)
-            // return (newChar)
-
         }
 
 
         // let digits = []
-        const spacing=8
-        // for (let i = 0; i < 4; i++) {
-        //     const t = new DrawText(spacing * i, 0, font, '0', colorRed)
-        //     console.log(font.width)
-        //     digits.push(t)
-        //     display.add(t)
-        // }
-
-        // let old
-        // for (let i = 0; i < 9; i++) {
-        //     old = await rotateUp(0, 0, `${i}`, old,5)
-        //     // await scheduler.delay(0)
-        // }
-
-        const wheel='01234567890'
-        let text='31337'
+        const spacing = 8
+        const wheel = '0123456789'
+        let text = ['0', '0', '0' ,'0', '0']
 
 
 
-        let i=0
-        let digits=[]
-        for (const char of text)
+
+        async function countUp(text, index, speed)
         {
+            let d = text[index]
+            let wheelIndex = wheel.indexOf(d)
+            //at the end of wheel?
+            if (wheelIndex==wheel.length-1)
+            {
+                //reset wheel and carry to next wheel
+                text[index]=wheel[0];
+                if (index!=0) {
+                    rotateUp(spacing * index, 0, text[index], digits[index], speed)
+
+                    await countUp(text, index - 1, speed)
+                }
+            }
+            else
+            {
+                //next on wheel
+                text[index]=wheel[wheelIndex+1]
+                await rotateUp(spacing * index, 0, text[index], digits[index], speed)
+            }
+        }
+
+
+        //start text
+        let i = 0
+        let digits = []
+        for (const char of text) {
             const c = new PixelContainer()
             display.add(c)
             digits.push(c)
-            await rotateUp(spacing*i, 0, char, c, 1)
+            await rotateUp(spacing * i, 0, char, c, 8)
             i++
         }
 
-        // await rotateUp(0, 0, '0123456', c, 1)
+
+        let speed=8
+        for (let i=0;i<10000; i++)
+        {
+            speed=speed-0.1
+            // console.log(text)
+            await countUp(text, text.length - 1,speed)
+        }
+
+
+//
+
     }
 }
