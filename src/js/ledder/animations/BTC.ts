@@ -30,7 +30,7 @@ export default class Template extends Animation {
         const flameContainer=new PixelContainer()
         display.add(flameContainer)
 
-
+        let first=true
         function update() {
             try {
                 const url = 'https://blockchain.info/ticker'
@@ -44,6 +44,12 @@ export default class Template extends Animation {
                     res.on('end', async () => {
                         try {
                             const json = JSON.parse(data)
+                            if (first) {
+                                // await counter.update(scheduler, controls, 36, 0, ~~json.USD.last - 100, 5)
+                                await counter.update(scheduler, controls, 36, 0, 0, 5)
+                                first=false
+                            }
+
                             await counter.update(scheduler, controls, 36,0,~~json.USD.last, 5)
 
 

@@ -43,9 +43,16 @@ export default class Template extends Animation {
         });
 
 
+        let first=true
         client.on('message', async  (topic, message) =>{
             let str=message.toString()
             console.log("MQTT received: ",str)
+            if (first)
+            {
+                counter.update(scheduler, controls, 0,0, Number(str)-10, 4)
+                first=false
+            }
+
             counter.update(scheduler, controls, 0,0, Number(str), 4)
 
         })

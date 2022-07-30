@@ -81,7 +81,7 @@ export default class DrawCounter extends Draw {
         const wheel = '0123456789'
         let text = []
 
-        let currentValue = startValue-10
+        let currentValue = startValue
         this.targetValue = startValue
 
         for (let i = 0; i < digitCount; i++) {
@@ -113,7 +113,7 @@ export default class DrawCounter extends Draw {
                 if (index != 0) {
                     rotate(x + (spacing * index), y, text[index], digits[index], -speed)
 
-                    await count(text, index - 1, direction, speed)
+                    count(text, index - 1, direction, speed)
                 }
 
             } else {
