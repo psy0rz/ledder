@@ -7,6 +7,9 @@ import * as https from "https"
 import DrawText from "../draw/DrawText.js"
 import {fontSelect} from "../fonts.js"
 import {Color} from "../Color.js"
+import FxFlames from "../fx/FxFlames.js"
+import {PixelContainer} from "../PixelContainer.js"
+import Starfield from "./Starfield.js"
 
 export default class Template extends Animation {
     static category = "Misc"
@@ -16,10 +19,16 @@ export default class Template extends Animation {
 
     async run(display: Display, scheduler: Scheduler, controls: ControlGroup) {
 
+        if (controls.group("stars").switch("enabled", false).enabled)
+            new Starfield().run(display, scheduler, controls.group("stars"))
+
         const counter = new DrawCounter()
         display.add(counter)
 
-        display.add(new DrawText(0,0, fontSelect(controls), "BTC $", new Color()))
+        const label=new DrawText(0,0, fontSelect(controls), "BTC $", new Color(55,55,55,1))
+        display.add(label)
+        const flameContainer=new PixelContainer()
+        display.add(flameContainer)
 
 
         function update() {
@@ -32,10 +41,12 @@ export default class Template extends Animation {
                         data += d.toString()
                     })
 
-                    res.on('end', () => {
+                    res.on('end', async () => {
                         try {
                             const json = JSON.parse(data)
-                            counter.update(scheduler, controls, 36,0,~~json.USD.last, 5)
+                            await counter.update(scheduler, controls, 36,0,~~json.USD.last, 5)
+
+
 
                         } catch (e) {
                             console.error(e)
@@ -50,6 +61,9 @@ export default class Template extends Animation {
         update()
 
         scheduler.interval(15000 / display.frameMs, () => update())
+
+
+        new FxFlames(scheduler, controls.group("Flames")).run(label, flameContainer)
 
 
     }

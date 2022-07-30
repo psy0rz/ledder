@@ -12,6 +12,7 @@ import {webcrypto} from "crypto"
 import {element} from "svelte/internal"
 import {random} from "../util.js"
 import Draw from "../Draw.js"
+import FxFlames from "../fx/FxFlames.js"
 
 export default class DrawCounter extends Draw {
     private targetValue: number
@@ -54,6 +55,7 @@ export default class DrawCounter extends Draw {
                 offset = offset + charStep
                 lastChar = new DrawText(x, y + offset, font, char, colorRed)
                 target.add(lastChar)
+
             }
 
             //now rotate in step direction
@@ -79,7 +81,7 @@ export default class DrawCounter extends Draw {
         const wheel = '0123456789'
         let text = []
 
-        let currentValue = startValue
+        let currentValue = startValue-100
         this.targetValue = startValue
 
         for (let i = 0; i < digitCount; i++) {
