@@ -41,6 +41,9 @@ export default class Nyancat extends Animation {
         new FxRotate(scheduler, controls.group('Move',true), 1, 0, 2).run(cat, display.bbox())
         display.add(cat)
 
+        const rainbowContainer=new PixelContainer()
+        display.add(rainbowContainer)
+
         //the body and its wobblyness
         const body = new DrawAsciiArtColor(6, 7, `
           .00000000.
@@ -104,10 +107,10 @@ export default class Nyancat extends Animation {
                 for (let c = 0; c < 6; c++) {
 
                     const p = new Pixel(x, c + y + 1,  new Color())
-                    display.add(p)
+                    rainbowContainer.add(p)
                     cycleFx.run( p.color, skips[c])
                         .then(() => {
-                            display.delete(p)
+                            rainbowContainer.delete(p)
                         })
                 }
 
@@ -134,10 +137,10 @@ export default class Nyancat extends Animation {
                 for (let c = 0; c < 6; c++) {
 
                     const p = new Pixel(x, c + y + 1, colors[c])
-                    display.add(p)
+                    rainbowContainer.add(p)
                     fadeFx.run(colors[c], fadeTimes[c])
                         .then(() => {
-                            display.delete(p)
+                            rainbowContainer.delete(p)
                         })
                 }
             }
