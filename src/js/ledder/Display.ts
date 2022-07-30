@@ -34,7 +34,7 @@ export abstract class Display extends PixelContainer {
   xMax:number
   yMin:number
   yMax:number
-  private colors: Set<ColorInterface>;
+  // private colors: Set<ColorInterface>;
 
   protected constructor(  width, height) {
     super();
@@ -47,7 +47,7 @@ export abstract class Display extends PixelContainer {
     this.xMax=width-1
     this.yMax=height-1
 
-    this.colors=new Set()
+    // this.colors=new Set()
   }
 
   //set display fps (usually controlled externally by FPS control)
@@ -95,7 +95,7 @@ export abstract class Display extends PixelContainer {
       if (p instanceof Pixel) {
         if (p.color.a !== 0) {
           this.setPixel(p.x, p.y, p.color);
-          this.colors.add(p.color)
+          // this.colors.add(p.color)
         }
       }
       else if (p instanceof PixelContainer)

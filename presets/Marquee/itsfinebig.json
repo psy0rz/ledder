@@ -1,0 +1,144 @@
+{
+ "title": "",
+ "description": "",
+ "values": {
+  "FPS": {
+   "value": 60
+  },
+  "Font": {
+   "selected": "C64"
+  },
+  "Text": {
+   "text": "Its fine. This is fine."
+  },
+  "Text color": {
+   "r": 0,
+   "g": 99,
+   "b": 255,
+   "a": 1
+  },
+  "Scrolling": {
+   "Enabled": {
+    "enabled": true
+   },
+   "Whitespace": {
+    "value": 22
+   },
+   "Rotate interval": {
+    "value": 2
+   },
+   "Rotate interval randomizer": {
+    "value": 0
+   },
+   "Rotate X step": {
+    "value": -1
+   },
+   "Rotate Y step": {
+    "value": 0
+   }
+  },
+  "Flames": {
+   "Enabled": {
+    "enabled": true
+   },
+   "Fire density [%]": {
+    "value": 9
+   },
+   "Fire intensity [%]": {
+    "value": 57
+   },
+   "Fire depth [pixels]": {
+    "value": 2
+   },
+   "Fire wind X": {
+    "value": 0
+   },
+   "Fire wind Y": {
+    "value": 0.28
+   },
+   "Fire cycle": {
+    "Color cycle time": {
+     "value": 85
+    },
+    "Color cycle time randomizer": {
+     "value": 15
+    },
+    "Color cycle repeat count": {
+     "value": 1
+    },
+    "Color cycle mode": {
+     "selected": "reverse"
+    },
+    "Color cycle pattern": {
+     "selected": "Doom fire"
+    }
+   }
+  },
+  "Stars": {
+   "Enabled": {
+    "enabled": false
+   },
+   "Star color": {
+    "r": 255,
+    "g": 255,
+    "b": 255,
+    "a": 0.01
+   },
+   "Number of stars": {
+    "value": 82
+   },
+   "Movie interval": {
+    "value": 5
+   },
+   "Movie interval randomizer": {
+    "value": 0
+   },
+   "Rotate interval": {
+    "value": 4
+   },
+   "Rotate interval randomizer": {
+    "value": 2
+   },
+   "Rotate X step": {
+    "value": -1
+   },
+   "Rotate Y step": {
+    "value": 0
+   }
+  },
+  "Cursor": {
+   "Enabled": {
+    "enabled": false
+   },
+   "Color": {
+    "r": 128,
+    "g": 128,
+    "b": 128,
+    "a": 1
+   },
+   "X offset": {
+    "value": 2
+   },
+   "Y offset": {
+    "value": 1
+   },
+   "Height": {
+    "value": 6
+   },
+   "Width": {
+    "value": 5
+   },
+   "Fade out time": {
+    "value": 10
+   },
+   "Fade out time randomizer": {
+    "value": 0
+   }
+  },
+  "Star field": {
+   "Enabled": {
+    "enabled": false
+   }
+  }
+ }
+}

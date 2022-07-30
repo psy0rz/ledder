@@ -62,7 +62,6 @@ export abstract class DisplayQOIS extends Display {
     }
 
     setPixel(x, y, color) {
-
         const floor_y = ~~y
         const floor_x = ~~x
 

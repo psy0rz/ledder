@@ -6,6 +6,7 @@ import OffsetMapper from "./OffsetMapper.js"
 
 const qoisDataLength = 1460 - 4 //4 bytes overhead
 
+
 //NOTE: This needs a  MulticastSyncer as well.
 export class DisplayLedstream extends DisplayQOIS {
 
@@ -40,6 +41,8 @@ export class DisplayLedstream extends DisplayQOIS {
         this.nextSyncOffset = 0
         this.packetNr = 0
 
+        this.sendTime=0
+
         this.sockets = []
         for (const ip of ips) {
 
@@ -64,16 +67,14 @@ export class DisplayLedstream extends DisplayQOIS {
 
     frame(displayTime: number) {
 
-
         const frameBytes = []
 
         // const lag = 16 * 30 //30 frames lag
         const lag = 20 * this.frameMs
         const laggedTime = displayTime + lag
-
         //first frame to be pushed? determine sendTime
         if (this.byteStream.length == 0)
-            this.sendTime = displayTime + 2* this.frameMs
+            this.sendTime = displayTime + 0 * this.frameMs
 
         // //frame byte length
         frameBytes.push(0) //0
@@ -132,7 +133,7 @@ export class DisplayLedstream extends DisplayQOIS {
                         try {
                             s.send(p)
                         } catch (e) {
-                           // console.error("MatrixLedstream: send error ",e)
+                            // console.error("MatrixLedstream: send error ",e)
                         }
                     }
                 } catch (e) {
