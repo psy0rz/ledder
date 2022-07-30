@@ -73,7 +73,7 @@ export class DisplayLedstream extends DisplayQOIS {
 
         //first frame to be pushed? determine sendTime
         if (this.byteStream.length == 0)
-            this.sendTime = displayTime + 0* this.frameMs
+            this.sendTime = displayTime + 2* this.frameMs
 
         // //frame byte length
         frameBytes.push(0) //0
