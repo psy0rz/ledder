@@ -40,33 +40,33 @@ export default class Template extends Animation {
         const fxControls=controls.group("FX")
         while(1) {
             await show("BTC", "default", 30000)
-            await new FxFlameout(scheduler, fxControls).run(display)
             scheduler.clear()
+            await new FxFlameout(scheduler, fxControls).run(display)
 
             await show("MQTTcounter", "default", 30000)
-            await new FxFlameout(scheduler, fxControls).run(display)
             scheduler.clear()
+            await new FxFlameout(scheduler, fxControls).run(display)
 
 
 
             await show("ItsFine", "default", 8000)
-            await new FxFlameout(scheduler, fxControls).run(display)
             scheduler.clear()
+            await new FxFlameout(scheduler, fxControls).run(display)
 
 
             show ("Starfield", "",0)
             await show("Marquee", "idiopolisstatic", 3000)
-            await new FxFlameout(scheduler, fxControls).run(display)
             scheduler.clear()
+            await new FxFlameout(scheduler, fxControls).run(display)
 
 
             await show("Syn2cat", "default", 3000)
-            await new FxFlameout(scheduler, fxControls).run(display)
             scheduler.clear()
+            await new FxFlameout(scheduler, fxControls).run(display)
 
             await show("Haxogreen", "default", 3000)
-            await new FxFlameout(scheduler, fxControls).run(display)
             scheduler.clear()
+            await new FxFlameout(scheduler, fxControls).run(display)
 
 
             // await show("Marquee", "idiopolis", 6000)

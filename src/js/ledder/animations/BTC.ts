@@ -45,8 +45,7 @@ export default class Template extends Animation {
                         try {
                             const json = JSON.parse(data)
                             if (first) {
-                                // await counter.update(scheduler, controls, 36, 0, ~~json.USD.last - 100, 5)
-                                await counter.update(scheduler, controls, 36, 0, 99999, 5)
+                                await counter.update(scheduler, controls, 36, 0, ~~json.USD.last - 100, 5)
                                 first=false
                             }
 
