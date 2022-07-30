@@ -39,8 +39,23 @@ export default class Template extends Animation {
 
         const fxControls=controls.group("FX")
         while(1) {
-            show ("Starfield", "")
-            await show("Marquee", "idiopolisstatic", 10000)
+
+            await show("MQTTcounter", "default", 30000)
+            await new FxFlameout(scheduler, fxControls).run(display)
+            scheduler.clear()
+
+
+            await show("BTC", "default", 30000)
+            await new FxFlameout(scheduler, fxControls).run(display)
+            scheduler.clear()
+
+            await show("ItsFine", "default", 8000)
+            await new FxFlameout(scheduler, fxControls).run(display)
+            scheduler.clear()
+
+
+            show ("Starfield", "",0)
+            await show("Marquee", "idiopolisstatic", 3000)
             await new FxFlameout(scheduler, fxControls).run(display)
             scheduler.clear()
 
@@ -49,37 +64,35 @@ export default class Template extends Animation {
             await new FxFlameout(scheduler, fxControls).run(display)
             scheduler.clear()
 
-            await show("Haxogreen", "default", 6000)
+            await show("Haxogreen", "default", 3000)
             await new FxFlameout(scheduler, fxControls).run(display)
             scheduler.clear()
 
 
-            await show("Marquee", "idiopolis", 6000)
+            // await show("Marquee", "idiopolis", 6000)
             // await new FxFlameout(scheduler, fxControls).run(display)
             // scheduler.clear()
 
-            await show("BrainsmokeFire", "", 6000)
-            await new FxPacman(scheduler, fxControls).run(display, 0, display.height )
-            // await scheduler.delay(30)
-            // new FxFlames(scheduler, controls).run(p, display)
-            scheduler.clear()
+            // await show("BrainsmokeFire", "", 6000)
+            // await new FxPacman(scheduler, fxControls).run(display, 0, display.height )
+            // scheduler.clear()
 
 
             // await show("MaakPlek", "default", 3000)
             // await new FxFlameout(scheduler, fxControls).run(display)
             // scheduler.clear()
 
-            show("PoliceLights", "hackers", 0)
-            await scheduler.delay(6000/display.frameMs)
-            await new FxPacman(scheduler, fxControls).run(display, 0, display.height )
-            // await new FxFlameout(scheduler, fxControls).run(display)
-            scheduler.clear()
+            // show("PoliceLights", "hackers", 0)
+            // await scheduler.delay(6000/display.frameMs)
+            // await new FxPacman(scheduler, fxControls).run(display, 0, display.height )
+            // // await new FxFlameout(scheduler, fxControls).run(display)
+            // scheduler.clear()
 
             // await show("TDVENLO", "default", 3000)
             // await new FxFlameout(scheduler, fxControls).run(display)
             // scheduler.clear()
             //
-            await show("Nyancat", "", 6000)
+            await show("Nyancat", "", 3000)
             await new FxPacman(scheduler, fxControls).run(display, 0, display.height )
             scheduler.clear()
 
@@ -92,13 +105,10 @@ export default class Template extends Animation {
             // await new FxFlameout(scheduler, fxControls).run(display)
             scheduler.clear()
 
-            await show("ItsFine", "default", 8000)
-            await new FxFlameout(scheduler, fxControls).run(display)
-            scheduler.clear()
 
-            await show("Cyber", "default", 2000)
-            await new FxFlameout(scheduler, fxControls).run(display)
-            scheduler.clear()
+            // await show("Cyber", "default", 2000)
+            // await new FxFlameout(scheduler, fxControls).run(display)
+            // scheduler.clear()
 
 
         }

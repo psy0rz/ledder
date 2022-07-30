@@ -1,0 +1,29 @@
+{
+ "title": "",
+ "description": "",
+ "values": {
+  "FPS": {
+   "value": 60
+  },
+  "stars": {
+   "Creation interval": {
+    "value": 5
+   },
+   "Base speed": {
+    "value": 0.001
+   },
+   "Accelration": {
+    "value": 0.03
+   },
+   "Star offset": {
+    "value": 0.1
+   }
+  },
+  "Font": {
+   "selected": "C64"
+  },
+  "Speedfactor": {
+   "value": 100
+  }
+ }
+}

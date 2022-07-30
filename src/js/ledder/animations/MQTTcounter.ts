@@ -26,7 +26,6 @@ export default class Template extends Animation {
 
         const counter = new DrawCounter()
         display.add(counter)
-        counter.run(scheduler, controls, 300, 4)
 
         let mqttHost='mqtt://151.216.0.196'
         let mqttOpts={port:1025}
@@ -47,7 +46,8 @@ export default class Template extends Animation {
         client.on('message', async  (topic, message) =>{
             let str=message.toString()
             console.log("MQTT received: ",str)
-            counter.targetValue=Number(str)
+            counter.update(scheduler, controls, 0,0, Number(str), 4)
+
         })
 
 

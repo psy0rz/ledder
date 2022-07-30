@@ -81,7 +81,7 @@ export default class DrawCounter extends Draw {
         const wheel = '0123456789'
         let text = []
 
-        let currentValue = startValue-100
+        let currentValue = startValue-10
         this.targetValue = startValue
 
         for (let i = 0; i < digitCount; i++) {
@@ -145,8 +145,8 @@ export default class DrawCounter extends Draw {
         while (1) {
             // await scheduler.delay(1)
             let speed = Math.abs((currentValue - this.targetValue) / controls.value("Speedfactor", 100).value)
-            if (speed < 0.1)
-                speed = 0.1
+            if (speed < 0.2)
+                speed = 0.2
             else if (speed > 8)
                 speed = 8
 
