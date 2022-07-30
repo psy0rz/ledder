@@ -57,6 +57,7 @@ export default class Template extends Animation {
 
         })
 
+        display.add(new DrawText(0, 10, fontSelect(controls.group("upperfont")), "Idiopolis power usage", new Color(0,255,255,0.1)).centerH(display))
 
         display.add(new DrawText(40, 0, fontSelect(controls), "WATT", new Color(255,255,255,0.1)))
 

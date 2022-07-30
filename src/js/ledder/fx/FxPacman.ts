@@ -92,7 +92,7 @@ export default class FxPacman extends Fx {
         new FxMovie(this.scheduler, this.controls, 4,0).run(frames,container)
 
         this.promise=this.scheduler.interval(1, ()=>{
-            blinder.add(new DrawBox(x+cleanOffset,y-8,1,8, colorBlack))
+            blinder.add(new DrawBox(x+cleanOffset,y-8,1,16, colorBlack))
             x++
             frames.move(1,0)
             steps--;
