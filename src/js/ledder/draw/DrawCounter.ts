@@ -13,6 +13,8 @@ import {element} from "svelte/internal"
 import {random} from "../util.js"
 import Draw from "../Draw.js"
 import FxFlames from "../fx/FxFlames.js"
+import {FxFadeOut} from "../fx/FxFadeOut.js"
+import FxFlameout from "../fx/FxFlameout.js"
 
 export default class DrawCounter extends Draw {
     private targetValue: number
@@ -47,6 +49,8 @@ export default class DrawCounter extends Draw {
 
             totalCharOffset = charStep * chars.length
 
+            //flame old pixels
+            new FxFlameout(scheduler, controls, -1,0,1).run(target, false)
 
             //add new chars above or below
             let offset = 0
@@ -71,7 +75,8 @@ export default class DrawCounter extends Draw {
 
 
             //remove rest of the chars
-            target.clear()
+            // target.clear()
+
             target.add(lastChar)
 
         }

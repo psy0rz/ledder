@@ -13,7 +13,10 @@
    "value": 1
   },
   "FPS": {
-   "value": 50
+   "value": 61
+  },
+  "Fire colors": {
+   "selected": "Brainsmoke fire"
   }
  },
  "title": "",

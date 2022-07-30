@@ -26,16 +26,20 @@ export default class Template extends Animation {
         const haxo = new DrawText(0, 0, font, "Haxo", controls.color("haxo"))
         const green = new DrawText(controls.value("offset", 28, 0, 100, 1, true).value, 0, font, "Green", controls.color("green"))
 
-
-
-        while (1) {
-            await blinker.run(haxo, c)
             c.add(haxo)
-
-            await blinker.run(green, c)
+await scheduler.delay(30)
             c.add(green)
 
-        }
+
+
+        // while (1) {
+        //     await blinker.run(haxo, c)
+        //     c.add(haxo)
+        //
+        //     await blinker.run(green, c)
+        //     c.add(green)
+        //
+        // }
 
     }
 }

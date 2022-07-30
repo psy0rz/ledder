@@ -13,8 +13,8 @@
   },
   "Text color": {
    "r": 255,
-   "g": 255,
-   "b": 255,
+   "g": 110,
+   "b": 0,
    "a": 1
   },
   "Stars": {
@@ -30,16 +30,16 @@
     "value": 10
    },
    "Rotate interval": {
-    "value": 2
+    "value": 3
    },
    "Rotate interval randomizer": {
     "value": 0
    },
    "Rotate X step": {
-    "value": -1
+    "value": 1
    },
    "Rotate Y step": {
-    "value": 0
+    "value": 1
    }
   },
   "Flames": {
@@ -74,6 +74,23 @@
    },
    "Fade out time randomizer": {
     "value": 0
+   }
+  },
+  "Star field": {
+   "Enabled": {
+    "enabled": true
+   },
+   "Creation interval": {
+    "value": 5
+   },
+   "Base speed": {
+    "value": 0.001
+   },
+   "Accelration": {
+    "value": 0.03
+   },
+   "Star offset": {
+    "value": 0.1
    }
   }
  }

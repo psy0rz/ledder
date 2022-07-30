@@ -6,17 +6,8 @@
    "value": 60
   },
   "stars": {
-   "Creation interval": {
-    "value": 5
-   },
-   "Base speed": {
-    "value": 0.001
-   },
-   "Accelration": {
-    "value": 0.03
-   },
-   "Star offset": {
-    "value": 0.1
+   "enabled": {
+    "enabled": false
    }
   },
   "Font": {
@@ -24,23 +15,23 @@
   },
   "Flames": {
    "Fire density [%]": {
-    "value": 29
+    "value": 10
    },
    "Fire intensity [%]": {
-    "value": 63
+    "value": 81
    },
    "Fire depth [pixels]": {
-    "value": 5
+    "value": 2
    },
    "Fire wind X": {
-    "value": -0.33
+    "value": 0.1
    },
    "Fire wind Y": {
     "value": 0.2
    },
    "Fire cycle": {
     "Color cycle time": {
-     "value": 20
+     "value": 15
     },
     "Color cycle time randomizer": {
      "value": 15
@@ -55,6 +46,33 @@
      "selected": "Bertrik fire"
     }
    }
+  },
+  "Color cycle time": {
+   "value": 15
+  },
+  "Color cycle time randomizer": {
+   "value": 15
+  },
+  "Color cycle repeat count": {
+   "value": 1
+  },
+  "Color cycle mode": {
+   "selected": "reverse"
+  },
+  "Color cycle pattern": {
+   "selected": "Bertrik fire"
+  },
+  "Move interval": {
+   "value": 3
+  },
+  "Move interval randomizer": {
+   "value": 3
+  },
+  "Move X step": {
+   "value": 0.4
+  },
+  "Move Y step": {
+   "value": 1
   },
   "Speedfactor": {
    "value": 100
