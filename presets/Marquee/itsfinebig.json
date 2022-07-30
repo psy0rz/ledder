@@ -54,11 +54,11 @@
     "value": 0
    },
    "Fire wind Y": {
-    "value": 0.28
+    "value": 0.26
    },
    "Fire cycle": {
     "Color cycle time": {
-     "value": 85
+     "value": 42
     },
     "Color cycle time randomizer": {
      "value": 15
@@ -70,7 +70,7 @@
      "selected": "reverse"
     },
     "Color cycle pattern": {
-     "selected": "Doom fire"
+     "selected": "Brainsmoke fire"
     }
    }
   },
