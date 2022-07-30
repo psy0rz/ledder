@@ -44,7 +44,7 @@ export default class Template extends Animation {
 
         update()
 
-        scheduler.interval(30000 / display.frameMs, () => update())
+        scheduler.interval(15000 / display.frameMs, () => update())
 
 
     }
