@@ -14,7 +14,20 @@ import {random} from "../util.js"
 import Draw from "../Draw.js"
 
 export default class DrawCounter extends Draw {
-    public targetValue: number
+    private targetValue: number
+    private running: boolean
+
+
+    public async update(scheduler: Scheduler, controls: ControlGroup, updateValue = 0, digitCount = 5) {
+        if (this.running === undefined) {
+            this.run(scheduler, controls, updateValue, digitCount)
+            this.running = true
+        } else {
+            this.targetValue = updateValue
+        }
+    }
+
+    private
 
     async run(scheduler: Scheduler, controls: ControlGroup, startValue = 0, digitCount = 5) {
 

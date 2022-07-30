@@ -43,7 +43,7 @@ export class RunnerServer {
         this.presetStore = presetStore
         this.autoreload()
         this.resetControls()
-        console.log("Runner server for ", display)
+        // console.log("Runner server for ", display)
 
     }
 

@@ -9,6 +9,10 @@ import DrawCounter from "../draw/DrawCounter.js"
 import {request} from "https"
 import mqtt from "mqtt"
 import {mqttHost, mqttOpts, nodename} from "../../../../displayconf.js"
+import DrawText from "../draw/DrawText.js"
+import {fontSelect} from "../fonts.js"
+import {colorGreen} from "../Colors.js"
+import Starfield from "./Starfield.js"
 
 export default class Template extends Animation {
     static category = "Misc"
@@ -18,9 +22,11 @@ export default class Template extends Animation {
 
     async run(display: Display, scheduler: Scheduler, controls: ControlGroup) {
 
+        new Starfield().run(display,scheduler, controls.group("stars"))
+
         const counter = new DrawCounter()
         display.add(counter)
-        counter.run(scheduler, controls, 0, 5)
+        counter.run(scheduler, controls, 300, 4)
 
         let mqttHost='mqtt://151.216.0.196'
         let mqttOpts={port:1025}
@@ -45,7 +51,7 @@ export default class Template extends Animation {
         })
 
 
-
+        display.add(new DrawText(40, 0, fontSelect(controls), "WATT", new Color(255,255,255,0.1)))
 
     }
 }

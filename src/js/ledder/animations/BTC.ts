@@ -2,11 +2,8 @@ import {Animation} from "../Animation.js"
 import {Display} from "../Display.js"
 import {Scheduler} from "../Scheduler.js"
 import {ControlGroup} from "../ControlGroup.js"
-import {Pixel} from "../Pixel.js"
-import {Color} from "../Color.js"
-import {PixelContainer} from "../PixelContainer.js"
 import DrawCounter from "../draw/DrawCounter.js"
-import {request} from "https"
+import * as https from "https"
 
 export default class Template extends Animation {
     static category = "Misc"
@@ -18,19 +15,36 @@ export default class Template extends Animation {
 
         const counter = new DrawCounter()
         display.add(counter)
-        counter.run(scheduler, controls, 0, 5)
 
 
-        // const url = 'https://blockchain.info/ticker'
-        // request(url, {}, (res) => {
-        //     console.log(res)
-        //
-        // })
+        function update() {
+            try {
+                const url = 'https://blockchain.info/ticker'
+                https.get(url, (res) => {
+                    // console.log(res)
+                    let data = ""
+                    res.on('data', (d) => {
+                        data += d.toString()
+                    })
 
-        scheduler.interval(600, () => {
+                    res.on('end', () => {
+                        try {
+                            const json = JSON.parse(data)
+                            counter.update(scheduler, controls, ~~json.USD.last, 5)
 
+                        } catch (e) {
+                            console.error(e)
+                        }
+                    })
+                })
+            } catch (e) {
+                console.error(e)
+            }
+        }
 
-        })
+        update()
+
+        scheduler.interval(30000 / display.frameMs, () => update())
 
 
     }
