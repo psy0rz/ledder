@@ -98,8 +98,10 @@ export default class DrawCounter extends Draw {
             if (wheelIndex >= wheel.length) {
                 //at the end of wheel?
 
+                wheelIndex = wheelIndex - wheel.length
+
                 //reset wheel and carry to next wheel
-                text[index] = wheel[0]
+                text[index] = wheel[wheelIndex]
                 if (index != 0) {
                     rotate(x + spacing * index, y, text[index], digits[index], speed)
 
@@ -107,13 +109,14 @@ export default class DrawCounter extends Draw {
                 }
             } else if (wheelIndex < 0) {
                 //beginning of wheel
+                wheelIndex = wheelIndex + wheel.length
 
                 //reset wheel and carry to next wheel
-                text[index] = wheel[wheel.length - 1]
+                text[index] = wheel[wheelIndex]
                 if (index != 0) {
                     rotate(x + (spacing * index), y, text[index], digits[index], -speed)
 
-                    count(text, index - 1, direction, speed)
+                    await count(text, index - 1, direction, speed)
                 }
 
             } else {
@@ -126,7 +129,6 @@ export default class DrawCounter extends Draw {
             }
         }
 
-
         //start text
         let i = 0
         let digits = []
@@ -134,36 +136,54 @@ export default class DrawCounter extends Draw {
             const c = new PixelContainer()
             this.add(c)
             digits.push(c)
-            await rotate(x+ spacing * i, y, char, c, 2)
+            await rotate(x + spacing * i, y, char, c, 2)
             i++
         }
 
-
-        // await count(text, text.length - 1, 1, 0.9)
-
-
+        let turbo=0
         while (1) {
             // await scheduler.delay(1)
-            let speed = Math.abs((currentValue - this.targetValue) / controls.value("Speedfactor", 100).value)
+            let diff=Math.abs((currentValue - this.targetValue))
+
+            let speed = diff / controls.value("Speedfactor", 100).value
+            let magnitude=0
             if (speed < 0.2)
                 speed = 0.2
-            else if (speed > 8)
+            else if (speed > 8) {
                 speed = 8
+            }
 
+            magnitude=0
+            while (diff>100)
+            {
+                diff=diff/10
+                magnitude++
+
+            }
 
             if (currentValue < this.targetValue) {
-                currentValue = currentValue + 1
-                await count(text, text.length - 1, 1, speed)
+
+                turbo=(turbo+1)%wheel.length
+                for (let i=0;i<magnitude; i++) {
+                    const digitNr=digits.length-1-i
+                    rotate(x + (spacing * digitNr), y, wheel[turbo], digits[digitNr], speed)
+                }
+
+                currentValue = currentValue + (Math.pow(10,magnitude))
+
+                await count(text, text.length - 1 - magnitude, 1, speed)
             } else if (currentValue > this.targetValue) {
-                currentValue = currentValue - 1
-                await count(text, text.length - 1, -1, speed)
+                turbo=(turbo+1)%wheel.length
+                for (let i=0;i<magnitude; i++) {
+                    const digitNr=digits.length-1-i
+                    rotate(x + (spacing * digitNr), y, wheel[turbo], digits[digitNr], -speed)
+                }
+                currentValue = currentValue - (Math.pow(10,magnitude))
+                await count(text, text.length - 1 -magnitude, -1, speed)
             } else {
                 await scheduler.delay(1)
             }
 
         }
-
-//
-
     }
 }

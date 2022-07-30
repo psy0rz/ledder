@@ -39,15 +39,15 @@ export default class Template extends Animation {
 
         const fxControls=controls.group("FX")
         while(1) {
+            await show("BTC", "default", 30000)
+            await new FxFlameout(scheduler, fxControls).run(display)
+            scheduler.clear()
 
             await show("MQTTcounter", "default", 30000)
             await new FxFlameout(scheduler, fxControls).run(display)
             scheduler.clear()
 
 
-            await show("BTC", "default", 30000)
-            await new FxFlameout(scheduler, fxControls).run(display)
-            scheduler.clear()
 
             await show("ItsFine", "default", 8000)
             await new FxFlameout(scheduler, fxControls).run(display)
