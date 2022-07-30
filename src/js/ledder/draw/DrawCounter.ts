@@ -18,9 +18,9 @@ export default class DrawCounter extends Draw {
     private running: boolean
 
 
-    public async update(scheduler: Scheduler, controls: ControlGroup, updateValue = 0, digitCount = 5) {
+    public async update(scheduler: Scheduler, controls: ControlGroup, x, y, updateValue = 0, digitCount = 5) {
         if (this.running === undefined) {
-            this.run(scheduler, controls, updateValue, digitCount)
+            this.run(scheduler, controls, x, y, updateValue, digitCount)
             this.running = true
         } else {
             this.targetValue = updateValue
@@ -29,7 +29,7 @@ export default class DrawCounter extends Draw {
 
     private
 
-    async run(scheduler: Scheduler, controls: ControlGroup, startValue = 0, digitCount = 5) {
+    async run(scheduler: Scheduler, controls: ControlGroup, x, y, startValue = 0, digitCount = 5) {
 
         const font = fontSelect(controls)
 
@@ -84,7 +84,6 @@ export default class DrawCounter extends Draw {
 
         for (let i = 0; i < digitCount; i++) {
             const digitValue = ~~(currentValue / (Math.pow(10, i))) % 10
-
             text.unshift(wheel[digitValue])
         }
 
@@ -100,7 +99,7 @@ export default class DrawCounter extends Draw {
                 //reset wheel and carry to next wheel
                 text[index] = wheel[0]
                 if (index != 0) {
-                    rotate(spacing * index, 0, text[index], digits[index], speed)
+                    rotate(x + spacing * index, y, text[index], digits[index], speed)
 
                     await count(text, index - 1, direction, speed)
                 }
@@ -110,7 +109,7 @@ export default class DrawCounter extends Draw {
                 //reset wheel and carry to next wheel
                 text[index] = wheel[wheel.length - 1]
                 if (index != 0) {
-                    rotate(spacing * index, 0, text[index], digits[index], -speed)
+                    rotate(x + (spacing * index), y, text[index], digits[index], -speed)
 
                     await count(text, index - 1, direction, speed)
                 }
@@ -119,9 +118,9 @@ export default class DrawCounter extends Draw {
                 //next on wheel
                 text[index] = wheel[wheelIndex]
                 if (direction > 0)
-                    await rotate(spacing * index, 0, text[index], digits[index], speed)
+                    await rotate(x + (spacing * index), y, text[index], digits[index], speed)
                 else
-                    await rotate(spacing * index, 0, text[index], digits[index], -speed)
+                    await rotate(x + (spacing * index), y, text[index], digits[index], -speed)
             }
         }
 
@@ -133,7 +132,7 @@ export default class DrawCounter extends Draw {
             const c = new PixelContainer()
             this.add(c)
             digits.push(c)
-            await rotate(spacing * i, 0, char, c, 2)
+            await rotate(x+ spacing * i, y, char, c, 2)
             i++
         }
 
