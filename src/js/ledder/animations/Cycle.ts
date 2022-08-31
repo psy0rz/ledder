@@ -43,9 +43,9 @@ export default class Template extends Animation {
             scheduler.clear()
             await new FxFlameout(scheduler, fxControls).run(display)
 
-            await show("MQTTcounter", "default", 30000)
-            scheduler.clear()
-            await new FxFlameout(scheduler, fxControls).run(display)
+            // await show("MQTTcounter", "default", 30000)
+            // scheduler.clear()
+            // await new FxFlameout(scheduler, fxControls).run(display)
 
 
 

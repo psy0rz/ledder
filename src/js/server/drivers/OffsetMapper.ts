@@ -17,10 +17,20 @@ export default class OffsetMapper extends Array {
         }
     }
 
+    //normal X flip
     flipX() {
         this.reverse()
     }
 
+    //normal Y flip
+    flipY() {
+        for (let x = 0; x < this.width; x++) {
+            this[x].reverse()
+        }
+    }
+
+
+    //
     zigZagX() {
         for (let y = 0; y < this.height; y = y + 2) {
             const old = []
@@ -35,11 +45,6 @@ export default class OffsetMapper extends Array {
     }
 
 
-    flipY() {
-        for (let x = 0; x < this.width; x++) {
-            this[x].reverse()
-        }
-    }
 
     zigZagY() {
         for (let x = 0; x < this.width; x = x + 2) {
