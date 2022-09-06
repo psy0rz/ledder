@@ -115,8 +115,9 @@ export default class BertrikFire extends Animation {
         const minIntensityControl = controls.value("Fire minimum intensity %", 0, 0, 100, 1);
         const maxIntensityControl = controls.value("Fire maximum intensity %", 100, 0, 100, 1);
         const wildnessIntensityControl = controls.value("Fire wildness %", 10, 0, 100, 1);
-        const decayControl = controls.value("Fire decay %", 10, 0, 40, 1)
+        const decayControl = controls.value("Fire decay %", 10, 0, 40, 0.1)
         const fireMoveFactorControl = controls.value("Fire sintel factor", 0, 0, 2, 0.01)
+        const fireSpeedControl = controls.value("Fire speed", 1, 1, 10, 1)
 
         const colorScale = (colors.length - 1) / 100
 
@@ -130,7 +131,9 @@ export default class BertrikFire extends Animation {
                     ~~maxIntensityControl.value * colorScale,
                     ~~wildnessIntensityControl.value * colorScale, 3)
             }
-            this.move_fire(display, field, display.height, ~~decayControl.value * colorScale, colors.length - 1, glower, fireMoveFactorControl.value)
+            for (let y = 0; y < fireSpeedControl.value; y++)
+
+                this.move_fire(display, field, display.height, decayControl.value * colorScale, colors.length - 1, glower, fireMoveFactorControl.value)
             this.save_image(display, field, pixels, colors)
 
             return true
