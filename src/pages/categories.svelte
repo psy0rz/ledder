@@ -4,8 +4,8 @@
     >
         <Subnavbar inner={false}>
             <Menu class="color-theme-white">
-                <MenuItem iconMd="material:settings"
-                          href="/settings"
+                <MenuItem iconMd="material:tune"
+                          href="/controls"
                           title="Controls"/>
                 <MenuItem class={$svelteLive?'disabled':''}
                           iconMd="material:upload"

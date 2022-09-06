@@ -1,4 +1,4 @@
-<Page name="settings"
+<Page name="controls"
       on:pageMounted={ ()=> {
 
       }

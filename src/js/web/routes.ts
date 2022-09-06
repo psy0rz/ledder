@@ -4,7 +4,7 @@ import AboutPage from '../../pages/about.svelte';
 import FormPage from '../../pages/form.svelte';
 import CategoriesPage from '../../pages/categories.svelte';
 import ProductPage from '../../pages/product.svelte';
-import SettingsPage from '../../pages/settings.svelte';
+import ControlsPage from '../../pages/controls.svelte';
 
 import DynamicRoutePage from '../../pages/dynamic-route.svelte';
 import RequestAndLoad from '../../pages/request-and-load.svelte';
@@ -14,8 +14,8 @@ import AnimationRunner from '../../pages/animationrunner.svelte'
 
 var routes = [
   {
-    path: '/settings',
-    component: SettingsPage,
+    path: '/controls',
+    component: ControlsPage,
     // keepAlive: true
   },
   {
