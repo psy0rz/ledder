@@ -3,37 +3,40 @@
  "description": "",
  "values": {
   "FPS": {
-   "value": 1
+   "value": 60
   },
   "Fire interval": {
    "value": 1
   },
   "Fire minimum intensity": {
-   "value": 40
+   "value": 117
   },
   "Fire maximum intensity": {
-   "value": 269
+   "value": 634
   },
   "Fire wildness": {
-   "value": 19
+   "value": 100
   },
   "Fire decay": {
    "value": 1
   },
   "Fire colors": {
-   "selected": "Bertrik fire"
+   "selected": "Brainsmoke fire"
   },
   "Fire minimum intensity %": {
    "value": 0
   },
   "Fire maximum intensity %": {
-   "value": 44
+   "value": 100
   },
   "Fire wildness %": {
-   "value": 9
+   "value": 100
   },
   "Fire decay %": {
-   "value": 0
+   "value": 21
+  },
+  "Fire sintel factor": {
+   "value": 1.22
   }
  }
 }

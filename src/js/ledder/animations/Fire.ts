@@ -22,7 +22,7 @@ export default class Fire extends Animation {
         // let colors = patternSelect(controls, 'Fire colors', 'Bertrik fire')
         const minIntensityControl = controls.value("Fire minimum intensity %", 0, 0, 100, 1);
         const maxIntensityControl = controls.value("Fire maximum intensity %", 100, 0, 100, 1);
-        const wildnessIntensityControl = controls.value("Fire wildness %", 10, 0, 100, 1);
+        const wildnessIntensityControl = controls.value("Fire wildness %", 25, 0, 100, 1);
         // const decayControl = controls.value("Fire decay %", 10, 0, 40, 1)
         // const colorScale = (colors.length - 1) / 100
         const fireintervalControl = controls.value("Fire interval", 1, 1, 10, 0.1)
@@ -34,12 +34,13 @@ export default class Fire extends Animation {
             glower.push(50)
         }
 
-        let cycler = new FxColorCycle(scheduler, controls.group("Color cycle"), "reverse", 16, 0, 1)
+        let cycler = new FxColorCycle(scheduler, controls.group("Color cycle"), "reverse", 16, 16, 1)
 
 
+        const speed=3
         display.scheduler.intervalControlled(fireintervalControl, () => {
 
-            display.move(0, 1)
+            display.move(0, speed)
             //glower
 
             // glower[0] = glow((glower[0]+glower[display.width-1])/2,
@@ -69,11 +70,15 @@ export default class Fire extends Animation {
 
                 // const color = colors[glower[x]].copy()
                 const color = new Color()
-                const pixel = new Pixel(x, 0, color)
-                display.add(pixel)
+                const cont = new PixelContainer()
+                display.add(cont)
+                for (let y = 0; y < speed; y++) {
+                    const pixel = new Pixel(x, y, color)
+                    cont.add(pixel)
+                }
 
                 cycler.run(color, 100 - glower[x]).then(() => {
-                    display.delete(pixel)
+                    display.delete(cont)
 
                 })
 

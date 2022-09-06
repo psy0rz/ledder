@@ -5,7 +5,7 @@ import {Display} from "../Display.js";
 import {Scheduler} from "../Scheduler.js";
 import {ControlGroup} from "../ControlGroup.js";
 import {fireColorsBertrik, patternSelect} from "../ColorPatterns.js";
-import {glow} from "../util.js";
+import {glow, random, randomFloatGaussian, randomGaussian} from "../util.js";
 import { DisplayMulti } from "../../server/drivers/DisplayMulti.js";
 
 export default class BertrikFire extends Animation {
@@ -15,7 +15,7 @@ export default class BertrikFire extends Animation {
     static presetDir = "BertrikFire";
 
 
-    move_fire(display, field, height, decay, maxFlame, glower) {
+    move_fire(display, field, height, decay, maxFlame, glower, moveFactor) {
         let x, y, flame;
 
         // move flames up
@@ -50,7 +50,7 @@ export default class BertrikFire extends Animation {
                         right = middle;
                 }
 
-                flame = (self + left + middle + right) / 4
+                flame = (self + left + middle + right) / (4-  randomFloatGaussian(moveFactor/2, moveFactor))
                 // // average
                 // if (x == 0) {
                 //     flame = (field[y][x] + 2 * field[y + 1][x] + field[y + 1][x + 1]) / 4;
@@ -116,10 +116,11 @@ export default class BertrikFire extends Animation {
         const maxIntensityControl = controls.value("Fire maximum intensity %", 100, 0, 100, 1);
         const wildnessIntensityControl = controls.value("Fire wildness %", 10, 0, 100, 1);
         const decayControl = controls.value("Fire decay %", 10, 0, 40, 1)
+        const fireMoveFactorControl = controls.value("Fire sintel factor", 0, 0, 2, 0.01)
 
         const colorScale = (colors.length - 1) / 100
 
-        display.scheduler.intervalControlled(fireintervalControl, () => {
+        display.scheduler.intervalControlled(fireintervalControl, (frameNr) => {
 
 
             //glower
@@ -129,7 +130,7 @@ export default class BertrikFire extends Animation {
                     ~~maxIntensityControl.value * colorScale,
                     ~~wildnessIntensityControl.value * colorScale, 3)
             }
-            this.move_fire(display, field, display.height, ~~decayControl.value * colorScale, colors.length - 1, glower)
+            this.move_fire(display, field, display.height, ~~decayControl.value * colorScale, colors.length - 1, glower, fireMoveFactorControl.value)
             this.save_image(display, field, pixels, colors)
 
             return true
