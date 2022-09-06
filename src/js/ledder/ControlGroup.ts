@@ -4,7 +4,6 @@ import {ControlColor} from "./ControlColor.js"
 import {ControlInput} from "./ControlInput.js"
 import {ControlSwitch} from "./ControlSwitch.js";
 import {Choices, ControlSelect} from "./ControlSelect.js";
-import { change } from "dom7";
 
 
 type ControlMap = Map<string, Control>
@@ -17,7 +16,7 @@ interface ControlsMeta extends ControlMeta {
 
 /**
  * Manages a collection of preset controls, saves and loads values to Preset.
- * NOTE: This structure is recursive, a Controls() can contain other sub Controls()
+ * NOTE: This structure is recursive, a ControlGroup() can contain a sub ControlGroup()
  */
 export class ControlGroup extends Control {
     meta: ControlsMeta

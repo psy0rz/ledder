@@ -24,8 +24,8 @@
     } from "../js/web/svelteStore.js";
     import { runnerBrowser } from "../js/web/RunnerBrowser.js";
     import ControlGroup from "../components/ControlGroup.svelte";
+    import {rpc} from "../js/web/RpcClient.js";
 
-    let geert = true;
 
     // let presets = []
     let button;
@@ -82,7 +82,12 @@
     </Navbar>
     <Block strong>
         <Treeview>
-            <ControlGroup controlGroup={$sveltePresets} />
+            <ControlGroup
+                controlGroup={$sveltePresets}
+                onChanged={(path, values) => {
+                    rpc.notify("display.control.updateValue", path, values);
+                }}
+            />
         </Treeview>
     </Block>
 </Page>

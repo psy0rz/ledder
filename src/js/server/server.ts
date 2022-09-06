@@ -11,9 +11,9 @@ import GammaMapper from "./drivers/GammaMapper.js";
 console.log("starting..")
 
 
-const settings = new ControlGroup('Global settings')
+const settingsControl = new ControlGroup('Global settings')
 
-const gammaMapper=new GammaMapper(settings.group("Display settings"))
+const gammaMapper=new GammaMapper(settingsControl.group("Display settings"))
 
 //init preset store
 const presetStore = new PresetStore()
@@ -115,3 +115,13 @@ rpc.addMethod("display.control.updateValue", async (params, context) => {
 
 
 
+rpc.addMethod("settings.get", async (params, context) => {
+    return settingsControl
+
+})
+
+
+rpc.addMethod("settings.updateValue", async (params, context) => {
+
+    settingsControl.updateValue(params[0], params[1])
+})

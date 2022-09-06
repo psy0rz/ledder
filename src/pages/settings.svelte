@@ -16,27 +16,12 @@
         Checkbox,
     } from "framework7-svelte";
 
-    import {
-        sveltePresets,
-        svelteSelectedAnimationName,
-        svelteSelectedTitle,
-        svelteLive,
-    } from "../js/web/svelteStore.js";
-    import { runnerBrowser } from "../js/web/RunnerBrowser.js";
     import ControlGroup from "../components/ControlGroup.svelte";
+    import { ControlGroup as ControlGroupLedder } from "../js/ledder/ControlGroup";
+    import { rpc } from "../js/web/RpcClient.js";
 
-    let geert = true;
-
-    // let presets = []
-    let button;
     let saveDisabled, copyDisabled, deleteDisabled;
-
-    export let f7router;
-
-    // svelteSelectedAnimationName.subscribe(() => {
-    //     // make sure to clear the list on animation change to net get confused
-    //     presets = []
-    // })
+    export let settings = new ControlGroupLedder();
 
     async function onSave() {
         await runnerBrowser.presetSave();
@@ -52,8 +37,13 @@
     }
 </script>
 
-<Page name="controls" on:pageMounted={() => {}}>
-    <Navbar title="Controls" subtitle={$svelteSelectedTitle} backLink="Back">
+<Page
+    name="settings"
+    on:pageAfterIn={async () => {
+        settings = await rpc.request("settings.get");
+    }}
+>
+    <Navbar title="Settings" backLink="Back">
         <Subnavbar>
             <Menu class="color-theme-red">
                 <MenuItem
@@ -62,27 +52,21 @@
                     disabled={saveDisabled}
                 />
                 <MenuItem
-                    iconMd="material:delete"
+                    iconMd="material:undo"
                     onClick={onDelete}
                     disabled={deleteDisabled}
-                />
-                <MenuItem
-                    iconMd="material:file_copy"
-                    onClick={onSaveAs}
-                    disabled={copyDisabled}
-                />
-                <MenuItem
-                    iconMd="material:upload"
-                    title="Activate animation"
-                    class={$svelteLive ? "disabled" : ""}
-                    onClick={() => runnerBrowser.send()}
                 />
             </Menu>
         </Subnavbar>
     </Navbar>
     <Block strong>
         <Treeview>
-            <ControlGroup controlGroup={$sveltePresets} />
+            <ControlGroup
+                controlGroup={settings}
+                onChanged={(path, values) => {
+                    rpc.notify("settings.updateValue", path, values);
+                }}
+            />
         </Treeview>
     </Block>
 </Page>
