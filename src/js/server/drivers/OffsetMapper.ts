@@ -1,18 +1,38 @@
+/*
+ Tips: 
+  - Start out with figuring out of its horizontal or vertical. If you mess this up you'll get garbage, so try the other one. :)
+  - After that it should be easy to determine if you need a zigzag or flip as well.
+
+*/
+
+
 //map x,y to offset number
 export default class OffsetMapper extends Array {
     private height: any
     private width: any
 
-    constructor(width, height) {
+    constructor(width, height, horizontal = true) {
 
         super()
         this.width = width
         this.height = height
 
-        for (let x = 0; x < width; x++) {
-            this.push([])
-            for (let y = 0; y < height; y++) {
-                this[x].push(x + y * width)
+        //horizontal ledstrips
+        if (horizontal) {
+            for (let x = 0; x < width; x++) {
+                this.push([])
+                for (let y = 0; y < height; y++) {
+                    this[x].push(x + y * width)
+                }
+            }
+        }
+        //vertical ledstrips
+        else {
+            for (let x = 0; x < this.width; x++) {
+                this.push([])
+                for (let y = 0; y < this.height; y++) {
+                    this[x].push(x * this.height + y)
+                }
             }
         }
     }
@@ -52,18 +72,17 @@ export default class OffsetMapper extends Array {
         }
     }
 
-    snake()
-    {
-        this.length=0
-        for (let x = 0; x < this.width; x++) {
-            this.push([])
-            for (let y = 0; y < this.height; y++) {
-                // this[x].push(x + y * this.width)
-                this[x].push(x * this.height + y)
-            }
-        }
+    // snake() {
+    //     this.length = 0
+    //     for (let x = 0; x < this.width; x++) {
+    //         this.push([])
+    //         for (let y = 0; y < this.height; y++) {
+    //             // this[x].push(x + y * this.width)
+    //             this[x].push(x * this.height + y)
+    //         }
+    //     }
 
-    }
+    // }
 
 
 }
