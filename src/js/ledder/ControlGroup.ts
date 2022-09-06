@@ -4,6 +4,7 @@ import {ControlColor} from "./ControlColor.js"
 import {ControlInput} from "./ControlInput.js"
 import {ControlSwitch} from "./ControlSwitch.js";
 import {Choices, ControlSelect} from "./ControlSelect.js";
+import { change } from "dom7";
 
 
 type ControlMap = Map<string, Control>
@@ -28,6 +29,9 @@ export class ControlGroup extends Control {
 
     //remove all controls and reset
     resetCallback: () => void
+
+    //changed callback. called when a control is changed that has restartOnChange set.
+    changedCallback:  () => void
 
     constructor(name: string = 'root', restartOnChange: boolean = false, collapsed=false) {
         super(name, 'controls', restartOnChange)
@@ -129,7 +133,7 @@ export class ControlGroup extends Control {
                 () => {
                     if (this.addControlCallback)
                         this.addControlCallback(this)
-                }
+                }                
             )
         }
 
@@ -141,7 +145,16 @@ export class ControlGroup extends Control {
     setCallbacks(reset, addControl) {
         this.resetCallback = reset
         this.addControlCallback = addControl
-        // this.updateValuesCallback=updateValues
+    }
+
+    setChangedCallback(callback?: ()=>void)
+    {
+        this.changedCallback = callback
+        
+        //always call it the first time:
+        if (this.changedCallback!==undefined)
+            this.changedCallback()
+        
     }
 
     /**
@@ -170,11 +183,19 @@ export class ControlGroup extends Control {
     }
 
     updateValue(path: [string], values: Values): boolean {
+        let changed=false
+
         if (this.meta.controls[path[0]] !== undefined) {
 
-            return (this.meta.controls[path[0]].updateValue(path.slice(1), values) || this.meta.restartOnChange)
+            changed=(this.meta.controls[path[0]].updateValue(path.slice(1), values) || this.meta.restartOnChange)
         }
-        return false
+
+        if (changed && this.changedCallback !== undefined)
+        {
+            this.changedCallback()
+        }
+
+        return changed
 
     }
 

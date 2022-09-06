@@ -4,10 +4,13 @@
     >
         <Subnavbar inner={false}>
             <Menu class="color-theme-white">
+                <MenuItem iconMd="material:settings"
+                          href="/settings"
+                          title="Settings"/>
                 <MenuItem iconMd="material:tune"
                           href="/controls"
                           title="Controls"/>
-                <MenuItem class={$svelteLive?'disabled':''}
+                <MenuItem 
                           iconMd="material:upload"
                           title="Activate animation"
                           onClick={ ()=> runnerBrowser.send()  } />

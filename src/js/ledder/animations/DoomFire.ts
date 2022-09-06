@@ -85,7 +85,7 @@ export default class DoomFire extends Animation {
                 raster[x][0].color = colors[intensity]
 
             }
-            console.log(raster[0][0].data)
+            // console.log(raster[0][0].data)
 
             // // //actual algorithm
             // for (let x = 0; x < display.width; x++) {

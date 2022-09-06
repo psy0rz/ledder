@@ -63,6 +63,7 @@ export class WsContext {
         this.statsInterval=setInterval( ()=>{
            console.log(`Stats ${this.id}: ${display.size} pixels, ${this.runner.scheduler.intervals.size} intervals`)
         }, 3000)
+        
 
     }
 

@@ -31,7 +31,7 @@ export class DisplayLedstream extends DisplayQOIS {
      * @param port UDP port
      */
     constructor(channels, width, height, ips, port, mapper: OffsetMapper, gamma:GammaMapper) {
-        super(width, height, mapper, gamma)
+        super(width, height, mapper)
 
 
         this.roundFrametime = true

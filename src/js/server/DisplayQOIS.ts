@@ -2,7 +2,6 @@ import {Display} from "../ledder/Display.js"
 import {Color} from "../ledder/Color.js"
 import {colorBlack} from "../ledder/Colors.js"
 import OffsetMapper from "./drivers/OffsetMapper"
-import GammaMapper from "./drivers/GammaMapper"
 
 
 const QOI_OP_INDEX = 0x00 /* 00xxxxxx */
@@ -30,14 +29,12 @@ export abstract class DisplayQOIS extends Display {
     private index: Array<Color>
     private statsBytes: number
     private mapper: OffsetMapper
-    private gamma: GammaMapper
 
-    constructor(width: number, height: number, mapper: OffsetMapper, gamma: GammaMapper) {
+    constructor(width: number, height: number, mapper: OffsetMapper) {
         super(width, height)
 
         this.pixelCount = width * height
         this.mapper = mapper
-        this.gamma=gamma
         this.clear()
 
 
@@ -95,9 +92,9 @@ export abstract class DisplayQOIS extends Display {
             const c = this.pixels[i]
             let pixel = new Color(0,0,0,1)
             if (c !== undefined) {
-                pixel.r = this.gamma[Math.round(c.r)]
-                pixel.g = this.gamma[Math.round(c.g)]
-                pixel.b = this.gamma[Math.round(c.b)]
+                pixel.r = this.gammaMapper[Math.round(c.r)]
+                pixel.g = this.gammaMapper[Math.round(c.g)]
+                pixel.b = this.gammaMapper[Math.round(c.b)]
                 pixel.a=c.a
             }
             

@@ -17,10 +17,10 @@
 
 <script lang="ts">
     import {rpc} from "../js/web/RpcClient.js";
-    import {ControlValue} from "../js/ledder/ControlValue.js";
+    import {ControlSelect} from "../js/ledder/ControlSelect.js";
     import {Input} from "framework7-svelte";
 
-    export let control: ControlValue;
+    export let control: ControlSelect;
     export let path: [];
 
 </script>

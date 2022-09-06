@@ -1,18 +1,15 @@
 
-import HomePage from '../../pages/home.svelte';
-import AboutPage from '../../pages/about.svelte';
-import FormPage from '../../pages/form.svelte';
-import CategoriesPage from '../../pages/categories.svelte';
-import ProductPage from '../../pages/product.svelte';
 import ControlsPage from '../../pages/controls.svelte';
+import SettingsPage from '../../pages/settings.svelte';
 
-import DynamicRoutePage from '../../pages/dynamic-route.svelte';
-import RequestAndLoad from '../../pages/request-and-load.svelte';
-import NotFoundPage from '../../pages/404.svelte';
-import Display from '../../pages/display.svelte'
 import AnimationRunner from '../../pages/animationrunner.svelte'
 
 var routes = [
+  {
+    path: '/settings',
+    component: SettingsPage,
+    // keepAlive: true
+  },
   {
     path: '/controls',
     component: ControlsPage,

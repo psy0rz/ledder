@@ -6,10 +6,14 @@ import mqtt from 'mqtt'
 import {ControlGroup} from "../ledder/ControlGroup.js";
 import {Scheduler} from "../ledder/Scheduler.js";
 import {Display} from "../ledder/Display.js";
+import GammaMapper from "./drivers/GammaMapper.js";
 
 console.log("starting..")
 
 
+const settings = new ControlGroup('Global settings')
+
+const gammaMapper=new GammaMapper(settings.group("Display settings"))
 
 //init preset store
 const presetStore = new PresetStore()
@@ -19,8 +23,9 @@ let runners:Array<RunnerServer>=[]
 
 for (const m of displayList) {
     let display:Display
-    display=m
-    let controlGroup = new ControlGroup('Root controls')
+    display = m
+    display.gammaMapper=gammaMapper
+    let controlGroup = new ControlGroup('Animation controls')
 
     let runner = new RunnerServer(display, controlGroup, presetStore)
     runner.startRenderLoop()

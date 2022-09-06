@@ -2,6 +2,7 @@ import {PixelContainer} from "./PixelContainer.js";
 import {Scheduler} from "./Scheduler.js";
 import {ColorInterface} from "./ColorInterface.js";
 import {Pixel} from "./Pixel.js";
+import GammaMapper from "../server/drivers/GammaMapper.js";
 
 /**
  * The display is the display and shows the list of pixels. The subclasses are actual implementations for different display types.
@@ -33,6 +34,9 @@ export abstract class Display extends PixelContainer {
   yMin:number
   yMax:number
   // private colors: Set<ColorInterface>;
+
+  //set in server.ts
+  gammaMapper: GammaMapper
 
   protected constructor(  width, height) {
     super();

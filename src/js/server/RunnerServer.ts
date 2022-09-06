@@ -16,7 +16,7 @@ import {Values} from "../ledder/Control.js";
  */
 export class RunnerServer {
     private display: Display
-    private scheduler: Scheduler
+    public scheduler: Scheduler
     private controlGroup: ControlGroup
 
     private presetStore: PresetStore
