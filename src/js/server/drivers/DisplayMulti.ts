@@ -1,5 +1,4 @@
 import {Display} from "../../ledder/Display.js"
-import OffsetMapper from "./OffsetMapper.js"
 import {ColorInterface} from "../../ledder/ColorInterface.js"
 
 //driver for an array of displays that have the same width/height

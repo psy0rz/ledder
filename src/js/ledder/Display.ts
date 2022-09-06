@@ -1,8 +1,6 @@
 import {PixelContainer} from "./PixelContainer.js";
 import {Scheduler} from "./Scheduler.js";
 import {ColorInterface} from "./ColorInterface.js";
-import {ControlValue} from "./ControlValue.js";
-import BboxInterface from "./BboxInterface.js";
 import {Pixel} from "./Pixel.js";
 
 /**

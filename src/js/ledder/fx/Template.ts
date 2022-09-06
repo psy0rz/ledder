@@ -22,7 +22,7 @@ export default class FxTemplate extends Fx {
     run(container: PixelContainer) {
         this.running = true
 
-        this.promise=...
+        //this.promise=...
 
         return (this.promise)
     }

@@ -3,14 +3,11 @@
 
  The mapping table is precalculated, so the performance impact is minimal.
 
- Tips: 
+ Tips:
   - Start out with figuring out of its horizontal or vertical. If you mess this up you'll get garbage, so try the other one. :)
   - After that it should be easy to determine if you need a zigzag or flip as well.
 
 */
-
-
-
 export default class OffsetMapper extends Array {
     private height: any
     private width: any

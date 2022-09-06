@@ -1,9 +1,8 @@
 import {Display} from "../ledder/Display.js"
 import {Color} from "../ledder/Color.js"
 import {colorBlack} from "../ledder/Colors.js"
-import {Col} from "framework7-svelte"
-import {prev} from "dom7"
-import OffsetMapper from "./drivers/OffsetMapper.js"
+import OffsetMapper from "./drivers/OffsetMapper"
+import GammaMapper from "./drivers/GammaMapper"
 
 
 const QOI_OP_INDEX = 0x00 /* 00xxxxxx */
@@ -16,7 +15,7 @@ const QOI_OP_RGBA = 0xff /* 11111111 */
 const QOI_MASK_2 = 0xc0 /* 11000000 */
 
 function QOI_COLOR_HASH(C: Color) {
-    return (~~C.r * 3 + ~~C.g * 5 + ~~C.b * 7)
+    return (C.r * 3 + C.g * 5 + C.b * 7)
 }
 
 
@@ -31,12 +30,14 @@ export abstract class DisplayQOIS extends Display {
     private index: Array<Color>
     private statsBytes: number
     private mapper: OffsetMapper
+    private gamma: GammaMapper
 
-    constructor(width: number, height: number, mapper: OffsetMapper) {
+    constructor(width: number, height: number, mapper: OffsetMapper, gamma: GammaMapper) {
         super(width, height)
 
         this.pixelCount = width * height
         this.mapper = mapper
+        this.gamma=gamma
         this.clear()
 
 
@@ -75,12 +76,6 @@ export abstract class DisplayQOIS extends Display {
         if (this.pixels[offset] === undefined)
             this.pixels[offset] = new Color(0, 0, 0, 1)
 
-        // //FIXME
-        // const c=color.copy()
-        // c.r=c.r/2;
-        // c.g=c.g/2;
-        // c.b=c.b/2;
-
         this.pixels[offset].blend(color)
 
 
@@ -96,12 +91,16 @@ export abstract class DisplayQOIS extends Display {
         this.statsBytes -= bytes.length //substract header overhead
         for (let i = 0; i < this.pixelCount; i++) {
 
-            let pixel = this.pixels[i]
-
-
-            if (pixel === undefined)
-                pixel = colorBlack
-
+            //gamma/brightness mapping
+            const c = this.pixels[i]
+            let pixel = new Color(0,0,0,1)
+            if (c !== undefined) {
+                pixel.r = this.gamma[Math.round(c.r)]
+                pixel.g = this.gamma[Math.round(c.g)]
+                pixel.b = this.gamma[Math.round(c.b)]
+                pixel.a=c.a
+            }
+            
             if (pixel.equal(prevPixel)) {
                 run++
                 if (run == 62 || pixelCount == this.pixelCount) {
@@ -124,9 +123,9 @@ export abstract class DisplayQOIS extends Display {
                 } else {
                     this.index[index_pos] = pixel
 
-                    const vr = ~~pixel.r - ~~prevPixel.r
-                    const vg = ~~pixel.g - ~~prevPixel.g
-                    const vb = ~~pixel.b - ~~prevPixel.b
+                    const vr = pixel.r - prevPixel.r
+                    const vg = pixel.g - prevPixel.g
+                    const vb = pixel.b - prevPixel.b
 
                     const vg_r = vr - vg
                     const vg_b = vb - vg
@@ -146,9 +145,9 @@ export abstract class DisplayQOIS extends Display {
                         bytes.push((vg_r + 8) << 4 | (vg_b + 8))
                     } else {
                         bytes.push(QOI_OP_RGB)
-                        bytes.push(~~pixel.r)
-                        bytes.push(~~pixel.g)
-                        bytes.push(~~pixel.b)
+                        bytes.push(pixel.r)
+                        bytes.push(pixel.g)
+                        bytes.push(pixel.b)
                     }
                 }
             }
