@@ -1,12 +1,8 @@
 <canvas class="ledder-display" id="ledder-preview"></canvas>
 <script>
-    import {Scheduler} from "../js/ledder/Scheduler.js";
-    import {DisplayCanvas} from "../js/web/DisplayCanvas.ts";
     import {onMount} from 'svelte';
     import {runnerBrowser} from "../js/web/RunnerBrowser.js";
 
-    import {svelteLive, sveltePresets, svelteSelectedTitle} from "../js/web/svelteStore.js"
-    import {rpc} from "../js/web/RpcClient.js";
     import {f7ready} from "framework7-svelte";
 
 

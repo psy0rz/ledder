@@ -6,6 +6,7 @@ import {Scheduler} from "../Scheduler.js";
 import {ControlGroup} from "../ControlGroup.js";
 import {fireColorsBertrik, patternSelect} from "../ColorPatterns.js";
 import {glow} from "../util.js";
+import { DisplayMulti } from "../../server/drivers/DisplayMulti.js";
 
 export default class BertrikFire extends Animation {
     static category = "Fire"
@@ -14,20 +15,50 @@ export default class BertrikFire extends Animation {
     static presetDir = "BertrikFire";
 
 
-    move_fire(display, field, height, decay, maxFlame) {
+    move_fire(display, field, height, decay, maxFlame, glower) {
         let x, y, flame;
 
         // move flames up
-        for (y = 0; y < height - 1; y++) {
+        for (y = 0; y < height ; y++) {
             for (x = 0; x < display.width; x++) {
-                // average
-                if (x == 0) {
-                    flame = (field[y][x] + 2 * field[y + 1][x] + field[y + 1][x + 1]) / 4;
-                } else if (x == (display.width - 1)) {
-                    flame = (field[y][x] + 2 * field[y + 1][x] + field[y + 1][x - 1]) / 4;
-                } else {
-                    flame = (field[y][x] + field[y + 1][x - 1] + field[y + 1][x] + field[y + 1][x + 1]) / 4;
+                let self, left, middle, right;
+
+                self = field[y][x];
+                if (y < height-1) {
+                    middle = field[y + 1][x];
+                    if (x > 0)
+                        left = field[y + 1][x - 1];
+                    else
+                        left = middle;
+                    
+                    if (x < display.width - 1)
+                        right = field[y + 1][x + 1];
+                    else
+                        right = middle;
                 }
+                else
+                {
+                    middle = glower[x];
+                    if (x > 0)
+                        left = glower[x - 1];
+                    else
+                        left = middle;
+
+                    if (x < display.width - 1)
+                        right = glower[x + 1];
+                    else
+                        right = middle;
+                }
+
+                flame = (self + left + middle + right) / 4
+                // // average
+                // if (x == 0) {
+                //     flame = (field[y][x] + 2 * field[y + 1][x] + field[y + 1][x + 1]) / 4;
+                // } else if (x == (display.width - 1)) {
+                //     flame = (field[y][x] + 2 * field[y + 1][x] + field[y + 1][x - 1]) / 4;
+                // } else {
+                //     flame = (field[y][x] + field[y + 1][x - 1] + field[y + 1][x] + field[y + 1][x + 1]) / 4;
+                // }
                 // decay
                 if (flame > decay) {
                     flame -= decay;
@@ -59,9 +90,18 @@ export default class BertrikFire extends Animation {
 
     async run(display: Display, scheduler: Scheduler, controls: ControlGroup) {
 
+
         let pixels = display.raster(display, new Color(0, 0, 0,0), true, false, true)
         let field = []
         let colors = patternSelect(controls, 'Fire colors', 'Bertrik fire')
+
+
+        //glower
+        let glower = []
+        for (let x = 0; x < display.width; x++) {
+            glower.push(0)
+        }
+
 
         //create clear field
         for (let y = 0; y < display.height; y++) {
@@ -82,14 +122,14 @@ export default class BertrikFire extends Animation {
         display.scheduler.intervalControlled(fireintervalControl, () => {
 
 
-            //glow lower row
+            //glower
             for (let x = 0; x < display.width; x++) {
-                field[display.height - 1][x] = glow(field[display.height - 1][x],
+                glower[x] = glow(glower[x],
                     ~~minIntensityControl.value * colorScale,
                     ~~maxIntensityControl.value * colorScale,
                     ~~wildnessIntensityControl.value * colorScale, 3)
             }
-            this.move_fire(display, field, display.height, ~~decayControl.value * colorScale, colors.length - 1)
+            this.move_fire(display, field, display.height, ~~decayControl.value * colorScale, colors.length - 1, glower)
             this.save_image(display, field, pixels, colors)
 
             return true

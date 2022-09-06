@@ -47,7 +47,6 @@
 
     import {sveltePresets, svelteSelectedAnimationName, svelteSelectedTitle, svelteLive} from "../js/web/svelteStore.js"
     import {runnerBrowser} from "../js/web/RunnerBrowser.js";
-    import {rpc} from "../js/web/RpcClient.js";
     import ControlGroup from "../components/ControlGroup.svelte";
 
     let geert = true
