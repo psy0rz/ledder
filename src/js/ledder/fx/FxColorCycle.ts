@@ -73,6 +73,7 @@ export default class FxColorCycle extends Fx {
         Object.assign(target,
             colorPattern[~~colorI])
 
+        Object.assign(target, colorPattern[~~colorI])
         this.promise = this.scheduler.interval(1, (frameNr) => {
 
             Object.assign(target, colorPattern[~~colorI])
