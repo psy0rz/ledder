@@ -29,12 +29,12 @@ export default class BertrikFire extends Animation {
                     if (x > 0)
                         left = field[y + 1][x - 1];
                     else
-                        left = middle;
+                        left = field[y + 1][display.width - 1];
                     
                     if (x < display.width - 1)
                         right = field[y + 1][x + 1];
                     else
-                        right = middle;
+                        right = left;
                 }
                 else
                 {
@@ -42,12 +42,12 @@ export default class BertrikFire extends Animation {
                     if (x > 0)
                         left = glower[x - 1];
                     else
-                        left = middle;
+                        left = glower[display.width-1];
 
                     if (x < display.width - 1)
                         right = glower[x + 1];
                     else
-                        right = middle;
+                        right = left;
                 }
 
                 flame = (self + left + middle + right) / (4-  randomFloatGaussian(moveFactor/2, moveFactor))
