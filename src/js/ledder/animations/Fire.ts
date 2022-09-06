@@ -26,7 +26,7 @@ export default class Fire extends Animation {
         // const decayControl = controls.value("Fire decay %", 10, 0, 40, 1)
         // const colorScale = (colors.length - 1) / 100
         const fireintervalControl = controls.value("Fire interval", 1, 1, 10, 0.1)
-        const colorScale=1
+        const colorScale = 1
 
         //glower
         let glower = []
@@ -34,7 +34,7 @@ export default class Fire extends Animation {
             glower.push(50)
         }
 
-        let cycler=new FxColorCycle(scheduler, controls.group("Color cycle"), "reverse", 16, 0,1 )
+        let cycler = new FxColorCycle(scheduler, controls.group("Color cycle"), "reverse", 16, 0, 1)
 
 
         display.scheduler.intervalControlled(fireintervalControl, () => {
@@ -42,28 +42,40 @@ export default class Fire extends Animation {
             display.move(0, 1)
             //glower
 
-            glower[0] = glow((glower[0]+glower[display.width-1])/2,
-                ~~minIntensityControl.value * colorScale,
-                ~~maxIntensityControl.value * colorScale,
-                ~~wildnessIntensityControl.value * colorScale, 3)
+            // glower[0] = glow((glower[0]+glower[display.width-1])/2,
+            //     ~~minIntensityControl.value * colorScale,
+            //     ~~maxIntensityControl.value * colorScale,
+            //     ~~wildnessIntensityControl.value * colorScale, 3)
 
-            for (let x = 1; x < display.width-1; x++) {
-                glower[x] = glow((glower[x]+glower[x-1]+glower[x+1])/3,
+            for (let x = 0; x < display.width; x++) {
+                let l, r
+                let m = glower[x]
+                if (x > 0)
+                    l = glower[x - 1]
+                else
+                    l = glower[display.width - 1]
+
+                if (x < display.width - 1)
+                    r = glower[x + 1]
+                else
+                    r = glower[0]
+
+                glower[x] = glow((l + m + r) / 3,
                     ~~minIntensityControl.value * colorScale,
                     ~~maxIntensityControl.value * colorScale,
                     ~~wildnessIntensityControl.value * colorScale, 3)
-                
+
                 // glower[x]=100
 
                 // const color = colors[glower[x]].copy()
-                const color=new Color()
+                const color = new Color()
                 const pixel = new Pixel(x, 0, color)
                 display.add(pixel)
 
-                cycler.run(color, 100-glower[x]).then(() => {
+                cycler.run(color, 100 - glower[x]).then(() => {
                     display.delete(pixel)
-                     
-                 })
+
+                })
 
 
             }
