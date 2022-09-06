@@ -1,4 +1,8 @@
 /*
+ Maps an x,y coordinate to an offset number. Usefull for display and led-strip orientations.
+
+ The mapping table is precalculated, so the performance impact is minimal.
+
  Tips: 
   - Start out with figuring out of its horizontal or vertical. If you mess this up you'll get garbage, so try the other one. :)
   - After that it should be easy to determine if you need a zigzag or flip as well.
@@ -6,7 +10,7 @@
 */
 
 
-//map x,y to offset number
+
 export default class OffsetMapper extends Array {
     private height: any
     private width: any
@@ -49,8 +53,7 @@ export default class OffsetMapper extends Array {
         }
     }
 
-
-    //
+    //flip every even X line (for zigzagged ledstrips )
     zigZagX() {
         for (let y = 0; y < this.height; y = y + 2) {
             const old = []
@@ -65,24 +68,11 @@ export default class OffsetMapper extends Array {
     }
 
 
-
+    //flip every odd Y line (for zigzagged ledstrips)
     zigZagY() {
         for (let x = 0; x < this.width; x = x + 2) {
             this[x].reverse()
         }
     }
-
-    // snake() {
-    //     this.length = 0
-    //     for (let x = 0; x < this.width; x++) {
-    //         this.push([])
-    //         for (let y = 0; y < this.height; y++) {
-    //             // this[x].push(x + y * this.width)
-    //             this[x].push(x * this.height + y)
-    //         }
-    //     }
-
-    // }
-
 
 }
