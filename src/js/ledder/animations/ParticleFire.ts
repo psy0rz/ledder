@@ -9,6 +9,7 @@ import FxColorCycle from "../fx/FxColorCycle.js";
 import FxMove from "../fx/FxMove.js";
 import FxRandomMove from "../fx/FxRandomMove.js";
 import { PixelContainer } from "../PixelContainer.js";
+import { arrayBuffer } from "stream/consumers";
 
 export default class ParticleFire extends Animation {
     static category = "Fire"
@@ -27,12 +28,12 @@ export default class ParticleFire extends Animation {
         const wildnessIntensityControl = fireGroup.value("Wildness %", 30, 0, 100, 1);
         const fireintervalControl = fireGroup.value("Interval", 1, 1, 10, 0.1)
         // const firespeedControl = controls.value("Fire speed", 1, 1, 10, 1)
-        let cycler = new FxColorCycle(scheduler, fireGroup.group("Flame cycle"), "reverse", 8, 8, 1)
+        let cycler = new FxColorCycle(scheduler, fireGroup.group("Flame cycle"), "reverse", 4, 4, 1)
 
         const sparksGroup = controls.group("Sparks")
         const firesparksControl = sparksGroup.value("Amount %", 25, 0, 100, 1)
 
-        let sparksCycler = new FxColorCycle(scheduler, sparksGroup.group("Spark cycle"), "reverse", 24, 35, 1)
+        let sparksCycler = new FxColorCycle(scheduler, sparksGroup.group("Spark cycle"), "reverse", 8, 8, 1)
         let sparksMover = new FxRandomMove(scheduler, sparksGroup.group("Movement"), -1, 1, -0.1, 0.1, 1, 0, true)
 
         wind.run(display)
@@ -48,9 +49,12 @@ export default class ParticleFire extends Animation {
         let glower = []
         for (let x = 0; x < display.width; x++) {
             glower.push(50)
+            
         }
 
         display.scheduler.intervalControlled(fireintervalControl, () => {
+
+            let glowerTmp = []
 
             for (let x = 0; x < display.width; x++) {
                 //average pixel with neighbours and apply glowing
@@ -66,7 +70,8 @@ export default class ParticleFire extends Animation {
                 else
                     r = glower[0]
 
-                glower[x] = glow((l + m + r) / 3,
+
+                glower[x] = glow((l +  r) / 2.01,
                     ~~minIntensityControl.value,
                     ~~maxIntensityControl.value,
                     ~~wildnessIntensityControl.value, 3)
@@ -82,6 +87,9 @@ export default class ParticleFire extends Animation {
 
 
             }
+            // glower = glowerTmp
+
+            
 
             //add spark
             if (randomGaussian(0, 100) < firesparksControl.value) {
