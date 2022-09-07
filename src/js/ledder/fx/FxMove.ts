@@ -8,7 +8,7 @@ import {random} from "../util.js";
 import {Pixel} from "../Pixel.js";
 
 
-//Move pixels. If they leave the box they will be removed from the container.
+//Move pixels in a fixed direction/speed.
 export default class FxMove extends Fx {
 
     intervalControl: ControlValue
@@ -17,7 +17,7 @@ export default class FxMove extends Fx {
     yStepControl: ControlValue
 
 
-    constructor(scheduler: Scheduler, controlGroup: ControlGroup, xStep = -1, yStep = 0, interval = 2, intervalRandomizer = 0) {
+    constructor(scheduler: Scheduler, controlGroup: ControlGroup, xStep = -1, yStep = 0, interval = 1, intervalRandomizer = 0) {
         super(scheduler, controlGroup)
 
         this.intervalControl = controlGroup.value('Move interval', interval, 1, 60, 1)

@@ -4,8 +4,11 @@ import { Scheduler } from "../Scheduler.js";
 import { ControlGroup } from "../ControlGroup.js";
 import { Pixel } from "../Pixel.js";
 import { Color } from "../Color.js";
-import { glow, randomGaussian } from "../util.js";
+import { glow, randomFloatGaussian, randomGaussian } from "../util.js";
 import FxColorCycle from "../fx/FxColorCycle.js";
+import FxMove from "../fx/FxMove.js";
+import FxRandomMove from "../fx/FxRandomMove.js";
+import { PixelContainer } from "../PixelContainer.js";
 
 export default class ParticleFire extends Animation {
     static category = "Fire"
@@ -15,14 +18,31 @@ export default class ParticleFire extends Animation {
 
     async run(display: Display, scheduler: Scheduler, controls: ControlGroup) {
 
+        let wind = new FxRandomMove(scheduler, controls.group("Wind"), -0.1, 0.1, 0.9, 1, 1, 0, false)
 
-        const minIntensityControl = controls.value("Fire minimum intensity %", 0, 0, 100, 1);
-        const maxIntensityControl = controls.value("Fire maximum intensity %", 100, 0, 100, 1);
-        const wildnessIntensityControl = controls.value("Fire wildness %", 30, 0, 100, 1);
-        const fireintervalControl = controls.value("Fire interval", 1, 1, 10, 0.1)
-        const firespeedControl = controls.value("Fire speed", 1, 1, 10, 1)
-        const firesparksControl = controls.value("Fire sparks %", 25, 0, 100, 1)
-        const colorScale = 1
+        const fireGroup = controls.group("Fire")
+
+        const minIntensityControl = fireGroup.value("Minimum intensity %", 0, 0, 100, 1);
+        const maxIntensityControl = fireGroup.value("Maximum intensity %", 100, 0, 100, 1);
+        const wildnessIntensityControl = fireGroup.value("Wildness %", 30, 0, 100, 1);
+        const fireintervalControl = fireGroup.value("Interval", 1, 1, 10, 0.1)
+        // const firespeedControl = controls.value("Fire speed", 1, 1, 10, 1)
+        let cycler = new FxColorCycle(scheduler, fireGroup.group("Flame cycle"), "reverse", 8, 8, 1)
+
+        const sparksGroup = controls.group("Sparks")
+        const firesparksControl = sparksGroup.value("Amount %", 25, 0, 100, 1)
+
+        let sparksCycler = new FxColorCycle(scheduler, sparksGroup.group("Spark cycle"), "reverse", 24, 35, 1)
+        let sparksMover = new FxRandomMove(scheduler, sparksGroup.group("Movement"), -1, 1, -0.1, 0.1, 1, 0, true)
+
+        wind.run(display)
+
+        let fireContainer = new PixelContainer()
+        display.add(fireContainer)
+
+        let sparksContainer = new PixelContainer()
+        display.add(sparksContainer)
+        sparksMover.run(sparksContainer)
 
         //glower
         let glower = []
@@ -30,56 +50,52 @@ export default class ParticleFire extends Animation {
             glower.push(50)
         }
 
-        let cycler = new FxColorCycle(scheduler, controls.group("Color cycle fire"), "reverse", 8, 8, 1)
-        let sparksCycler = new FxColorCycle(scheduler, controls.group("Color cycle sparks"), "reverse", 24, 35, 1)
-
-
         display.scheduler.intervalControlled(fireintervalControl, () => {
-            for (let y = 0; y < firespeedControl.value; y++) {
 
-                display.move(0, 1)
+            for (let x = 0; x < display.width; x++) {
+                //average pixel with neighbours and apply glowing
+                let l, r
+                let m = glower[x]
+                if (x > 0)
+                    l = glower[x - 1]
+                else
+                    l = glower[display.width - 1]
 
-                for (let x = 0; x < display.width; x++) {
-                    //average pixel with neighbours and apply glowing
-                    let l, r
-                    let m = glower[x]
-                    if (x > 0)
-                        l = glower[x - 1]
-                    else
-                        l = glower[display.width - 1]
+                if (x < display.width - 1)
+                    r = glower[x + 1]
+                else
+                    r = glower[0]
 
-                    if (x < display.width - 1)
-                        r = glower[x + 1]
-                    else
-                        r = glower[0]
+                glower[x] = glow((l + m + r) / 3,
+                    ~~minIntensityControl.value,
+                    ~~maxIntensityControl.value,
+                    ~~wildnessIntensityControl.value, 3)
 
-                    glower[x] = glow((l + m + r) / 3,
-                        ~~minIntensityControl.value * colorScale,
-                        ~~maxIntensityControl.value * colorScale,
-                        ~~wildnessIntensityControl.value * colorScale, 3)
+                //create pixel and apply color cycle
+                const color = new Color()
+                const pixel = new Pixel(x, 0, color)
+                fireContainer.add(pixel)
+                cycler.run(color, 99 - ~~glower[x]).then(() => {
+                    fireContainer.delete(pixel)
 
-                    //create pixel and apply color cycle
-                    const color = new Color()
-                    const pixel = new Pixel(x, 0, color)
-                    display.add(pixel)
-                    cycler.run(color, 99 - ~~glower[x]).then(() => {
-                        display.delete(pixel)
+                })
 
-                    })
 
-                }
-
-                //add spark
-                if (randomGaussian(0, 100) < firesparksControl.value) {
-
-                    const color = new Color()
-                    const pixel = new Pixel(randomGaussian(0,display.width-1), 0, color)
-                    display.add(pixel)
-                    sparksCycler.run(color,0 ).then(() => {
-                        display.delete(pixel)
-                    })
-                }
             }
+
+            //add spark
+            if (randomGaussian(0, 100) < firesparksControl.value) {
+
+                const color = new Color()
+                const pixel = new Pixel(randomGaussian(0, display.width - 1), 0, color)
+                sparksContainer.add(pixel)
+                sparksCycler.run(color, 0).then(() => {
+                    sparksContainer.delete(pixel)
+                })
+
+
+            }
+            // }
 
         })
 
