@@ -4,7 +4,7 @@ import { ControlGroup } from "../ControlGroup.js";
 import { PixelContainer } from "../PixelContainer.js";
 import BboxInterface from "../BboxInterface.js";
 import { Scheduler } from "../Scheduler.js";
-import { random, randomGaussian } from "../util.js";
+import { random, randomFloatGaussian, randomGaussian } from "../util.js";
 import { Pixel } from "../Pixel.js";
 import { ControlSwitch } from "../ControlSwitch.js";
 
@@ -49,8 +49,8 @@ export default class FxRandomMove extends Fx {
                 container.forEachPixel((pixel) =>
                 {
                     pixel.move(
-                        randomGaussian(this.xStepMinControl.value, this.xStepMaxControl.value),
-                        randomGaussian(this.yStepMinControl.value, this.yStepMaxControl.value)
+                        randomFloatGaussian(this.xStepMinControl.value, this.xStepMaxControl.value),
+                        randomFloatGaussian(this.yStepMinControl.value, this.yStepMaxControl.value)
                     )
 
                 })
@@ -58,8 +58,8 @@ export default class FxRandomMove extends Fx {
             }
             else {
                 container.move(
-                    randomGaussian(this.xStepMinControl.value, this.xStepMaxControl.value),
-                    randomGaussian(this.yStepMinControl.value, this.yStepMaxControl.value)
+                    randomFloatGaussian(this.xStepMinControl.value, this.xStepMaxControl.value),
+                    randomFloatGaussian(this.yStepMinControl.value, this.yStepMaxControl.value)
                 )
 
             }

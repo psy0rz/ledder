@@ -19,7 +19,7 @@ export default class ParticleFire extends Animation {
 
     async run(display: Display, scheduler: Scheduler, controls: ControlGroup) {
 
-        let wind = new FxRandomMove(scheduler, controls.group("Wind"), -0.1, 0.1, 0.9, 1, 1, 0, false)
+        let wind = new FxRandomMove(scheduler, controls.group("Wind"), -0.3, 0.3, 0.9, 1, 1, 0, false)
 
         const fireGroup = controls.group("Fire")
 
@@ -28,7 +28,7 @@ export default class ParticleFire extends Animation {
         const wildnessIntensityControl = fireGroup.value("Wildness %", 30, 0, 100, 1);
         const fireintervalControl = fireGroup.value("Interval", 1, 1, 10, 0.1)
         // const firespeedControl = controls.value("Fire speed", 1, 1, 10, 1)
-        let cycler = new FxColorCycle(scheduler, fireGroup.group("Flame cycle"), "reverse", 4, 4, 1)
+        let cycler = new FxColorCycle(scheduler, fireGroup.group("Flame cycle"), "reverse", 8, 4, 1)
 
         const sparksGroup = controls.group("Sparks")
         const firesparksControl = sparksGroup.value("Amount %", 25, 0, 100, 1)
