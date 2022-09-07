@@ -4,9 +4,8 @@ import {Color} from "../Color.js";
 import {Display} from "../Display.js";
 import {Scheduler} from "../Scheduler.js";
 import {ControlGroup} from "../ControlGroup.js";
-import {fireColorsBertrik, patternSelect} from "../ColorPatterns.js";
+import { patternSelect} from "../ColorPatterns.js";
 import {glow, random, randomFloatGaussian, randomGaussian} from "../util.js";
-import { DisplayMulti } from "../../server/drivers/DisplayMulti.js";
 
 export default class BertrikFire extends Animation {
     static category = "Fire"
