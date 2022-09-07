@@ -4,28 +4,24 @@ import { Scheduler } from "../Scheduler.js";
 import { ControlGroup } from "../ControlGroup.js";
 import { Pixel } from "../Pixel.js";
 import { Color } from "../Color.js";
-import { PixelContainer } from "../PixelContainer.js";
 import { glow, randomGaussian } from "../util.js";
-import { patternSelect } from "../ColorPatterns.js";
 import FxColorCycle from "../fx/FxColorCycle.js";
-import { Col } from "framework7-svelte";
 
-export default class Fire extends Animation {
-    static category = "Misc"
-    static title = "Fire"
-    static description = "blabla"
+export default class ParticleFire extends Animation {
+    static category = "Fire"
+    static title = "Particle fire"
+    static description = "Individual pixel objects with color cycle effects on them. (more of a ledder way of doing it)"
     static presetDir = "Misc";
 
     async run(display: Display, scheduler: Scheduler, controls: ControlGroup) {
 
 
-        // let colors = patternSelect(controls, 'Fire colors', 'Bertrik fire')
         const minIntensityControl = controls.value("Fire minimum intensity %", 0, 0, 100, 1);
         const maxIntensityControl = controls.value("Fire maximum intensity %", 100, 0, 100, 1);
-        const wildnessIntensityControl = controls.value("Fire wildness %", 25, 0, 100, 1);
-        // const decayControl = controls.value("Fire decay %", 10, 0, 40, 1)
-        // const colorScale = (colors.length - 1) / 100
+        const wildnessIntensityControl = controls.value("Fire wildness %", 30, 0, 100, 1);
         const fireintervalControl = controls.value("Fire interval", 1, 1, 10, 0.1)
+        const firespeedControl = controls.value("Fire speed", 1, 1, 10, 1)
+        const firesparksControl = controls.value("Fire sparks %", 25, 0, 100, 1)
         const colorScale = 1
 
         //glower
@@ -34,22 +30,17 @@ export default class Fire extends Animation {
             glower.push(50)
         }
 
-        let cycler = new FxColorCycle(scheduler, controls.group("Color cycle"), "reverse", 16, 16, 1)
+        let cycler = new FxColorCycle(scheduler, controls.group("Color cycle fire"), "reverse", 8, 8, 1)
+        let sparksCycler = new FxColorCycle(scheduler, controls.group("Color cycle sparks"), "reverse", 24, 35, 1)
 
 
-        const speed = 3
         display.scheduler.intervalControlled(fireintervalControl, () => {
-            for (let y = 0; y < speed; y++) {
+            for (let y = 0; y < firespeedControl.value; y++) {
 
                 display.move(0, 1)
-                //glower
-
-                // glower[0] = glow((glower[0]+glower[display.width-1])/2,
-                //     ~~minIntensityControl.value * colorScale,
-                //     ~~maxIntensityControl.value * colorScale,
-                //     ~~wildnessIntensityControl.value * colorScale, 3)
 
                 for (let x = 0; x < display.width; x++) {
+                    //average pixel with neighbours and apply glowing
                     let l, r
                     let m = glower[x]
                     if (x > 0)
@@ -67,27 +58,28 @@ export default class Fire extends Animation {
                         ~~maxIntensityControl.value * colorScale,
                         ~~wildnessIntensityControl.value * colorScale, 3)
 
-                    // glower[x]=100
-
-                    // const color = colors[glower[x]].copy()
+                    //create pixel and apply color cycle
                     const color = new Color()
                     const pixel = new Pixel(x, 0, color)
                     display.add(pixel)
-
-
-
-                    cycler.run(color, 100 - glower[x]).then(() => {
+                    cycler.run(color, 99 - ~~glower[x]).then(() => {
                         display.delete(pixel)
 
                     })
 
                 }
-            }
 
-            // const x=randomGaussian(0, display.width)
-            // const color = colors[glower[x]].copy()
-            // const pixel = new Pixel(x, 0, color)
-            // display.add(pixel)
+                //add spark
+                if (randomGaussian(0, 100) < firesparksControl.value) {
+
+                    const color = new Color()
+                    const pixel = new Pixel(randomGaussian(0,display.width-1), 0, color)
+                    display.add(pixel)
+                    sparksCycler.run(color,0 ).then(() => {
+                        display.delete(pixel)
+                    })
+                }
+            }
 
         })
 
