@@ -92,7 +92,8 @@ export default class Template extends  Animation
 
          new FxMovie(scheduler, controls, 4,0).run(frames,display)
 
-        new FxRotate(scheduler,controls, 1).run(frames, display)
+        new FxRotate(scheduler, controls, 1).run(frames, display)
+        
 
     }
 }

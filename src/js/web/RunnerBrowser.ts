@@ -26,8 +26,8 @@ export class RunnerBrowser {
     async init() {
         // this.display = display
 
-        let width = 40
-        let height = 8
+        let width = 80
+        let height = 16
         rpc.display = new DisplayCanvas(width, height, '#ledder-preview');
 
         this.presets={}
