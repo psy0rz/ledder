@@ -69,10 +69,10 @@ export class WsContext {
 
     stopPreview() {
         //should stop because of gc
-        if (this.runner)
+        if (this.runner) {
             this.runner.stop()
-        clearInterval(this.statsInterval)
-
+            clearInterval(this.statsInterval)
+        }
     }
 
     //websocket closed

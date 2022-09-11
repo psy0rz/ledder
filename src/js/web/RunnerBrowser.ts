@@ -23,12 +23,6 @@ export class RunnerBrowser {
 
 
     async init() {
-        // this.display = display
-
-        let width = 75
-        let height = 8
-        rpc.display = new DisplayCanvas(width, height, '#ledder-display', '.ledder-display-box');
-
         this.presets={}
         sveltePresets.set(new ControlGroup())
 
@@ -44,19 +38,20 @@ export class RunnerBrowser {
 
             console.log("Add control", params[0])
 
-            // this.presets[params[0].meta.name]=params[0]
 
             sveltePresets.set(params[0])
-            // sveltePresets.update(p => {
-            //     console.log("Updating", p)
-            //     p.push(params[0])
-            //     return p
-            // })
         })
 
 
-        await rpc.request('context.startPreview', width, height)
 
+    }
+
+    async setSize(width, height, zoom)
+    {
+        
+        // await rpc.request('context.stopPreview')
+        rpc.display = new DisplayCanvas(width, height, zoom, '#ledder-display', '.ledder-display-box');
+        await rpc.request('context.startPreview', width, height)
 
     }
 
@@ -71,15 +66,6 @@ export class RunnerBrowser {
     }
 
 
-    /**
-     * Restart the current animation, keeping the same preset values
-     */
-    restart() {
-        // this.display.reset(true);
-        // // @ts-ignore
-        // new this.animationClass(this.display)
-
-    }
 
 
     /**
