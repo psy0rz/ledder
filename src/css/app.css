@@ -3,7 +3,7 @@
     background: black;
     border-style: solid;
     border-color: gray;
-    border-width: 1px;
+    border-width: 0px;
     image-rendering:-moz-crisp-edges;          /* Firefox        */
     image-rendering:-o-crisp-edges;            /* Opera          */
     image-rendering:-webkit-optimize-contrast; /* Safari         */
@@ -12,6 +12,7 @@
     image-rendering:pixelated;                 /* CSS4 Proposed  */
     -ms-interpolation-mode:nearest-neighbor;   /* IE8+           */
     cursor: pointer;
+
 }
 
 .ledder-display-box
@@ -19,10 +20,14 @@
     position: absolute;
     right: 0;
     top: 0;
-    height: 128px;
-    width: 640px;
 
-    z-index:10000;
+    /* set in DisplayCanvas.ts */
+    /* height: 128px;
+    width: 640px; */
+
+        z-index:10000;
+
+    padding: 0;
 }
 
 .ledder-preview-image

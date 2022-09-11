@@ -25,9 +25,9 @@ export class RunnerBrowser {
     async init() {
         // this.display = display
 
-        let width = 80
-        let height = 16
-        rpc.display = new DisplayCanvas(width, height, '#ledder-display');
+        let width = 75
+        let height = 8
+        rpc.display = new DisplayCanvas(width, height, '#ledder-display', '.ledder-display-box');
 
         this.presets={}
         sveltePresets.set(new ControlGroup())

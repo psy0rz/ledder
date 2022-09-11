@@ -7,9 +7,14 @@ export class DisplayCanvas {
     imageBuf: ArrayBuffer;
 
     //width and height are led-display-pixels, not canvas pixels.
-    constructor(width, height, elementId) {
+    constructor(width, height, displayId, boxClass) {
 
-        this.canvas = document.querySelector(elementId);
+        this.canvas = document.querySelector(displayId);
+
+        for (const box of document.querySelectorAll(boxClass)) {
+            box.style.width = width*8+'px';
+            box.style.height = height*8+'px';
+        }
 
         //scaling
         this.canvas.width = width
