@@ -250,15 +250,15 @@ export class PixelContainer extends Set<Pixel | PixelContainer> {
     }
 
     //flip pixel positions around X axis
-    flipX(bbox: BboxInterface)
-    {
-           |    .|
+    // flipX(bbox: BboxInterface)
+    // {
+        
 
-        this.forEachPixel((p) => {
+    //     this.forEachPixel((p) => {
             
-        })
+    //     })
 
-    }
+    // }
 
 }
 

@@ -9,7 +9,6 @@ import FxColorCycle from "../fx/FxColorCycle.js";
 import FxMove from "../fx/FxMove.js";
 import FxRandomMove from "../fx/FxRandomMove.js";
 import { PixelContainer } from "../PixelContainer.js";
-import { arrayBuffer } from "stream/consumers";
 
 export default class ParticleFire extends Animation {
     static category = "Fire"

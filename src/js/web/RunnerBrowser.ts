@@ -1,4 +1,3 @@
-import {Display} from "../ledder/Display.js";
 import {rpc} from "./RpcClient.js";
 import {svelteAnimations, sveltePresets, svelteSelectedAnimationName, svelteSelectedTitle} from "./svelteStore.js";
 import {confirmPromise, info, promptPromise} from "./util.js";

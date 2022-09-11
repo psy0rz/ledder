@@ -14,7 +14,7 @@
     cursor: pointer;
 }
 
-#ledder-preview
+.ledder-preview-box
 {
     position: absolute;
     right: 0;
@@ -25,23 +25,6 @@
     z-index:10000;
 }
 
-.ledder-preview-image
-{
-    background: black !important;
-    border-style: solid;
-    border-color: gray;
-    border-width: 1px;
-    image-rendering:-moz-crisp-edges;          /* Firefox        */
-    image-rendering:-o-crisp-edges;            /* Opera          */
-    image-rendering:-webkit-optimize-contrast; /* Safari         */
-    image-rendering:optimize-contrast;         /* CSS3 Proposed  */
-    image-rendering:crisp-edges;               /* CSS4 Proposed  */
-    image-rendering:pixelated;                 /* CSS4 Proposed  */
-    -ms-interpolation-mode:nearest-neighbor;   /* IE8+           */
-
-    /*height: 20px;*/
-    height: 24px;
-}
 
 .ledder-display-zoom
 {
