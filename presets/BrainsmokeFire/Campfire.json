@@ -11,6 +11,12 @@
   },
   "Fire interval": {
    "value": 1.2
+  },
+  "FPS": {
+   "value": 60
+  },
+  "Fire colors": {
+   "selected": "Brainsmoke fire"
   }
  },
  "title": "",

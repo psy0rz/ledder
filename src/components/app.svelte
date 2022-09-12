@@ -24,7 +24,7 @@
     //important (otherwise weird startup errors in dev mode):
     import 'framework7/lite';
 
-    import Display from "../pages/display.svelte"
+    import Display from "./Display.svelte"
 
     import routes from '../js/web/routes.js';
     import Categories from '../pages/categories.svelte'

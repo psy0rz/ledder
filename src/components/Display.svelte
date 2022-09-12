@@ -63,7 +63,7 @@ Link,        Page,
     <rect width="100%" height="100%" fill="url(#ledder-grid-pattern)" />
 </svg>
 
-<div class="ledder-display-box" style="color: white; text-align:right">
+<div class="ledder-display-box" style="color: white; text-align:right" onclick="console.log('moi');">
     {width} x {height}
 </div>
 
