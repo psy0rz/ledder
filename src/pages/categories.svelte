@@ -50,26 +50,26 @@
                     href="/controls"
                     title="Controls"
                 />
-                <MenuItem
+                <MenuItem link
                     iconMd="material:upload"
                     title="Activate animation"
                     onClick={() => runnerBrowser.send()}
                 />
-                <MenuItem
+                <MenuItem link
                     iconMd="material:radio_button_checked"
-                    class={$svelteLive ? "bg-color-red" : ""}
+                    class={$svelteLive ? "color-yellow" : ""}
                     title="Update live"
                     onClick={() => {
                         $svelteLive = !$svelteLive;
                         if ($svelteLive) runnerBrowser.send();
                     }}
                 />
-                <MenuItem dropdown
+                <MenuItem dropdown link
                   iconMd="material:view_comfy"
                 >
                     <MenuDropdown>
                     <MenuDropdownItem href="#" text="75x8" />
-                    <MenuDropdownItem  text="72x18" />
+                    <MenuDropdownItem link text="72x18" />
                     <MenuDropdownItem  text="75x16" />
                     <MenuDropdownItem divider />
                     <MenuDropdownItem text="Disable preview" />
