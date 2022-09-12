@@ -65,14 +65,15 @@
                     }}
                 />
                 <MenuItem dropdown link
+                tite="Preview size"
                   iconMd="material:view_comfy"
                 >
                     <MenuDropdown>
-                    <MenuDropdownItem href="#" text="75x8" />
+                    <MenuDropdownItem link text="75x8" />
                     <MenuDropdownItem link text="72x18" />
-                    <MenuDropdownItem  text="75x16" />
+                    <MenuDropdownItem link text="75x16" />
                     <MenuDropdownItem divider />
-                    <MenuDropdownItem text="Disable preview" />
+                    <MenuDropdownItem link text="Disable preview" />
                     </MenuDropdown>
                 </MenuItem>
             </Menu>

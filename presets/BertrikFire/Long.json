@@ -37,6 +37,9 @@
   },
   "Fire sintel factor": {
    "value": 0
+  },
+  "Fire speed": {
+   "value": 1
   }
  }
 }
