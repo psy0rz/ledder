@@ -10,7 +10,6 @@
   "cssPreProcessor": false,
   "theming": {
     "customColor": false,
-    "color": "#007aff",
     "darkTheme": false,
     "iconFonts": true,
     "fillBars": false

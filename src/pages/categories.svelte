@@ -39,7 +39,7 @@
 <Page name="categories">
     <Navbar title="Animations" subtitle={$svelteSelectedTitle}>
         <Subnavbar inner={false}>
-            <Menu class="color-theme-white">
+            <Menu >
                 <MenuItem
                     iconMd="material:settings"
                     href="/settings"
