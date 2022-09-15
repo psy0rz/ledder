@@ -1,14 +1,13 @@
 import {RpcServer} from "./RpcServer.js";
 import {RunnerServer} from "./RunnerServer.js";
 import {PresetStore} from "./PresetStore.js";
-import {animationName, displayList, mqttHost, mqttOpts, nodename, presetName} from "../../../displayconf.js"
 import mqtt from 'mqtt'
 import {ControlGroup} from "../ledder/ControlGroup.js";
 import {Scheduler} from "../ledder/Scheduler.js";
 import {Display} from "../ledder/Display.js";
 import GammaMapper from "./drivers/GammaMapper.js";
+import {config} from "./config.js"
 
-console.log("starting..")
 
 
 const settingsControl = new ControlGroup('Global settings')

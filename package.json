@@ -12,7 +12,7 @@
     "perftest": "node src/js/server/perftest.js",
     "build": "tsc -p src/js;NODE_ENV=production vite build",
     "buildpreviews": "node src/js/server/buildpreviews.js",
-    "production": "NODE_ENV=production node src/js/server/build.js;NODE_ENV=production node src/js/server/server.js"
+    "production": "NODE_ENV=production node src/js/server/buildpreviews.js;NODE_ENV=production node src/js/server/server.js"
 
   },
   "browserslist": [

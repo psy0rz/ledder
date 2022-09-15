@@ -14,6 +14,7 @@ RUN NODE_ENV=development npm install
 COPY . .
 
 RUN npm run build
+RUN npm run buildpreviews
 
 CMD [ "npm", "run", "production" ]
 
