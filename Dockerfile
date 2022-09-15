@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:1
 
 #FROM node:latest
-FROM node:current-alpine
+FROM node:current-alpine AS builder
 
 #build tools for alpine
 RUN apk --no-cache add python3
@@ -25,7 +25,17 @@ COPY . .
 RUN npm run build
 RUN npm run buildpreviews
 
+
+
+# final stage
+FROM node:current-alpine AS final
+ENV NODE_ENV=production
+
+WORKDIR /app
+COPY --from=builder /app /app
+
+#RUN npm prune --production
+#RUN npm cache clean --force
+
+
 CMD [ "npm", "run", "production" ]
-
-
-

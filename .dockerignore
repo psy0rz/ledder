@@ -1,1 +1,54 @@
-.gitignore
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Dependency directories
+node_modules/
+
+# Optional npm cache directory
+.npm
+
+# Optional eslint cache
+.eslintcache
+
+# Optional REPL history
+.node_repl_history
+
+# Yarn Integrity file
+.yarn-integrity
+
+# dotenv environment variables file
+.env
+
+# Misc
+.DS_Store
+Thumbs.db
+
+
+
+
+
+# Production build
+www/
+
+yarn.lock
+
+displayconf.js
+/src/js/build.js
+/src/js/build.js.map
+
+## extra voor dockerignore:
+docker-compose.yml
+Dockerfile
+.git
+.dockerignore
