@@ -1,8 +1,8 @@
 {
-  "name": "my-app",
+  "name": "ledder",
   "private": true,
-  "version": "1.0.0",
-  "description": "My App",
+  "version": "2.0.0-alpha",
+  "description": "Ledder",
   "type": "module",
   "repository": "",
   "license": "UNLICENSED",
@@ -10,10 +10,10 @@
     "start": "npm run dev",
     "dev": "node src/js/server/build.js;NODE_ENV=development node src/js/server/server.js",
     "perftest": "node src/js/server/perftest.js",
-    "build": "tsc -p src/js;node src/js/server/build.js;NODE_ENV=production vite build",
+    "build": "tsc -p src/js;NODE_ENV=production vite build",
     "buildstore": "node src/js/server/build.js",
-    "production": "NODE_ENV=production node src/js/server/build.js;NODE_ENV=production node src/js/server/server.js",
-    "postinstall": "cpy ./node_modules/framework7-icons/fonts/*.* ./src/fonts/ && cpy ./node_modules/material-icons/iconfont/*.* ./src/fonts/ --flat"
+    "production": "NODE_ENV=production node src/js/server/build.js;NODE_ENV=production node src/js/server/server.js"
+    
   },
   "browserslist": [
     "Android >= 7",
@@ -44,13 +44,13 @@
     "upng-js": "^2.1.0"
   },
   "devDependencies": {
-    "@sveltejs/vite-plugin-svelte": "^1.0.0-next.39",
+    "@sveltejs/vite-plugin-svelte": "^1.0.5",
     "@tsconfig/svelte": "^3.0.0",
     "cpy-cli": "^4.1.0",
     "postcss-preset-env": "^6.7.1",
     "svelte-check": "^2.7.1",
     "svelte-preprocess": "^4.10.6",
     "typescript": "^4.7.2",
-    "vite": "^2.8.6"
+    "vite": "^3.0.0"
   }
 }
