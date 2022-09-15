@@ -58,7 +58,7 @@ export class PresetStore {
     async loadAnimation(animationName: string): Promise<typeof Animation> {
         //hack: this path is relative to the current file instead of current working dir.
         let filename = "../ledder/animations/" + animationName + ".js"
-        console.log("Loading javascript ", filename)
+        console.log("Loading ", filename)
         let module = await import(filename+"?"+Date.now()) //prevent caching
 
         if (!(module.default.prototype instanceof Animation))
@@ -178,7 +178,7 @@ export class PresetStore {
 
                 await this.updatePresetPreviews(animationClass, animationMtime, force)
             } catch (e) {
-                console.log(`Ignored ${animationName}: ${e}`)
+                console.error(`${animationName}: ${e}`)
                 // throw(e)
             }
 
@@ -241,7 +241,7 @@ export class PresetStore {
 
                 })
             } catch (e) {
-                console.log(`Ignored ${animationName}: ${e}`)
+                console.error(`${animationName}: ${e}`)
             }
 
         }
