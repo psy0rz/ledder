@@ -3,7 +3,6 @@ import {RunnerServer} from "./RunnerServer.js";
 import {PresetStore} from "./PresetStore.js";
 import mqtt from 'mqtt'
 import {ControlGroup} from "../ledder/ControlGroup.js";
-import {Scheduler} from "../ledder/Scheduler.js";
 import {Display} from "../ledder/Display.js";
 import GammaMapper from "./drivers/GammaMapper.js";
 import {config} from "./config.js"
@@ -20,7 +19,7 @@ const presetStore = new PresetStore()
 //create run all the displayes
 let runners:Array<RunnerServer>=[]
 
-for (const m of displayList) {
+for (const m of config.displayList) {
     let display:Display
     display = m
     display.gammaMapper=gammaMapper
@@ -28,18 +27,18 @@ for (const m of displayList) {
 
     let runner = new RunnerServer(display, controlGroup, presetStore)
     runner.startRenderLoop()
-    runner.runName(animationName, presetName)
+    runner.runName(config.animationName, config.presetName)
     runners.push(runner)
 }
 
 
 /////////////////////////mqtt stuff
-//TODO: move
-const client  = mqtt.connect(mqttHost,mqttOpts)
+//TODO: move/fix
+const client  = mqtt.connect(config.mqttHost,config.mqttOpts)
 
 client.on('connect', ()=> {
-    console.log("Connected to ", mqttHost)
-    client.subscribe(`/HACKERSPACE/${nodename}/run`, function (err) {
+    console.log("Connected to ", config.mqttHost)
+    client.subscribe(`/HACKERSPACE/${config.nodename}/run`, function (err) {
     })
 })
 

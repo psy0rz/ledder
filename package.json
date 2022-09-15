@@ -13,7 +13,6 @@
     "build": "tsc -p src/js;NODE_ENV=production vite build",
     "buildpreviews": "node src/js/server/buildpreviews.js",
     "production": "NODE_ENV=production node src/js/server/buildpreviews.js;NODE_ENV=production node src/js/server/server.js"
-
   },
   "browserslist": [
     "Android >= 7",
