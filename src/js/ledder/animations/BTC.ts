@@ -11,6 +11,7 @@ import FxFlames from "../fx/FxFlames.js"
 import {PixelContainer} from "../PixelContainer.js"
 import Starfield from "./Starfield.js"
 import {random} from "../util.js"
+// curl -H "X-CMC_PRO_API_KEY: ..." -H "Accept: application/json" -d "" -G https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest?symbol=BTC,ETH
 
 export default class Template extends Animation {
     static category = "Misc"

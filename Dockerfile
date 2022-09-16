@@ -25,6 +25,7 @@ COPY . .
 RUN npm run build
 RUN npm run buildpreviews
 
+RUN npm prune --production
 
 
 # final stage
@@ -34,8 +35,6 @@ ENV NODE_ENV=production
 WORKDIR /app
 COPY --from=builder /app /app
 
-#RUN npm prune --production
-#RUN npm cache clean --force
 
 
 CMD [ "npm", "run", "production" ]
