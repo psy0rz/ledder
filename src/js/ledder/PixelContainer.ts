@@ -1,8 +1,6 @@
 import {Pixel} from "./Pixel.js";
 import BboxInterface from "./BboxInterface.js";
-import {monitorEventLoopDelay} from "perf_hooks";
 import {random} from "./util.js";
-import {Color} from "./Color.js";
 import {ColorInterface} from "./ColorInterface.js";
 
 /**
@@ -252,10 +250,10 @@ export class PixelContainer extends Set<Pixel | PixelContainer> {
     //flip pixel positions around X axis
     // flipX(bbox: BboxInterface)
     // {
-        
+
 
     //     this.forEachPixel((p) => {
-            
+
     //     })
 
     // }

@@ -4,9 +4,8 @@ import { Scheduler } from "../Scheduler.js";
 import { ControlGroup } from "../ControlGroup.js";
 import { Pixel } from "../Pixel.js";
 import { Color } from "../Color.js";
-import { glow, randomFloatGaussian, randomGaussian } from "../util.js";
+import { glow, randomGaussian } from "../util.js";
 import FxColorCycle from "../fx/FxColorCycle.js";
-import FxMove from "../fx/FxMove.js";
 import FxRandomMove from "../fx/FxRandomMove.js";
 import { PixelContainer } from "../PixelContainer.js";
 
@@ -48,7 +47,7 @@ export default class ParticleFire extends Animation {
         let glower = []
         for (let x = 0; x < display.width; x++) {
             glower.push(50)
-            
+
         }
 
         display.scheduler.intervalControlled(fireintervalControl, () => {
@@ -88,7 +87,7 @@ export default class ParticleFire extends Animation {
             }
             // glower = glowerTmp
 
-            
+
 
             //add spark
             if (randomGaussian(0, 100) < firesparksControl.value) {

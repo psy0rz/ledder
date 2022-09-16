@@ -1,18 +1,12 @@
 import {Animation} from "../Animation.js";
 import {Display} from "../Display.js";
-import {Pixel} from "../Pixel.js";
 import {Scheduler} from "../Scheduler.js";
 import {ControlGroup} from "../ControlGroup.js";
-import FxBlinkAlpha from "../fx/FxBlinkAlpha.js";
 import {fontSelect} from "../fonts.js";
-import {Color} from "../Color.js";
 import {PixelContainer} from "../PixelContainer.js";
 import DrawText from "../draw/DrawText.js";
-import {Col} from "framework7-svelte";
 import FxBlink from "../fx/FxBlink.js";
 import DrawBox from "../draw/DrawBox.js";
-import {width} from "dom7";
-import FxMovie from "../fx/FxMovie.js";
 import FxPattern from "../fx/FxPattern.js";
 
 export default class PoliceLights extends Animation {

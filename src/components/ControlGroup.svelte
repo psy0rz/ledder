@@ -5,7 +5,7 @@
     export let path: Array<string> = [];
     export let onChanged: (path: Array<string>, values: {}) => void;
 
-    import { BlockHeader, BlockTitle, TreeviewItem } from "framework7-svelte";
+    import { BlockHeader, TreeviewItem } from "framework7-svelte";
     import { ControlGroup } from "../js/ledder/ControlGroup.js";
     import ControlColor from "./ControlColor.svelte";
     import ControlInput from "./ControlInput.svelte";

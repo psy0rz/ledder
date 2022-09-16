@@ -1,5 +1,4 @@
 import {Display} from "./Display.js";
-import {PixelContainer} from "./PixelContainer.js";
 import {Scheduler} from "./Scheduler.js";
 import {ControlGroup} from "./ControlGroup.js";
 

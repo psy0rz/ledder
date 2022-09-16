@@ -2,11 +2,9 @@ import {Animation} from "../Animation.js";
 import {Display} from "../Display.js";
 import {Scheduler} from "../Scheduler.js";
 import {ControlGroup} from "../ControlGroup.js";
-import {Pixel} from "../Pixel.js";
 import {Color} from "../Color.js";
 import {PixelContainer} from "../PixelContainer.js";
 import DrawAsciiArt from "../draw/DrawAsciiArt.js"
-import {colorGreen} from "../Colors.js"
 import FxMovie from "../fx/FxMovie.js"
 import FxRotate from "../fx/FxRotate.js"
 
@@ -93,7 +91,7 @@ export default class Template extends  Animation
          new FxMovie(scheduler, controls, 4,0).run(frames,display)
 
         new FxRotate(scheduler, controls, 1).run(frames, display)
-        
+
 
     }
 }

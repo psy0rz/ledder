@@ -2,13 +2,9 @@ import {Animation} from "../Animation.js"
 import {Display} from "../Display.js"
 import {Scheduler} from "../Scheduler.js"
 import {ControlGroup} from "../ControlGroup.js"
-import {Pixel} from "../Pixel.js"
-import {Color} from "../Color.js"
-import {PixelContainer} from "../PixelContainer.js"
 import {PresetStore} from "../../server/PresetStore.js"
 import FxFlameout from "../fx/FxFlameout.js"
 import FxPacman from "../fx/FxPacman.js"
-import FxFlames from "../fx/FxFlames.js"
 
 const presetStore = new PresetStore()
 

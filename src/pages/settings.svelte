@@ -2,18 +2,13 @@
     import {
         Page,
         Navbar,
-        BlockTitle,
         Treeview,
-        TreeviewItem,
-        Range,
         Block,
-        Input,
-        Stepper,
         Menu,
         MenuItem,
         Subnavbar,
-        Toggle,
-        Checkbox,
+
+
     } from "framework7-svelte";
 
     import ControlGroup from "../components/ControlGroup.svelte";

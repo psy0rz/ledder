@@ -7,7 +7,6 @@ import DrawAsciiArt from "../draw/DrawAsciiArt.js";
 import {PixelContainer} from "../PixelContainer.js";
 import FxMovie from "../fx/FxMovie.js";
 import FxRotate from "../fx/FxRotate.js";
-import {Pixel} from "../Pixel.js";
 
 
 let starAscii=[`

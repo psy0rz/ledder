@@ -1,10 +1,8 @@
 //context of a websocket connection
 import {RunnerServer} from "./RunnerServer.js";
-import {Scheduler} from "../ledder/Scheduler.js";
 import {DisplayWebsocket} from "./drivers/DisplayWebsocket.js";
 import {PresetStore} from "./PresetStore.js";
-import {RpcServer} from "./RpcServer.js";
-import {JSONRPCClient, JSONRPCServerAndClient} from "json-rpc-2.0";
+import {JSONRPCServerAndClient} from "json-rpc-2.0";
 import {ControlGroup} from "../ledder/ControlGroup.js";
 
 
@@ -63,7 +61,7 @@ export class WsContext {
         this.statsInterval=setInterval( ()=>{
            console.log(`Stats ${this.id}: ${display.size} pixels, ${this.runner.scheduler.intervals.size} intervals`)
         }, 3000)
-        
+
 
     }
 

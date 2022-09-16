@@ -1,5 +1,4 @@
 import {Animation} from "../Animation.js";
-import {Pixel} from "../Pixel.js";
 import {Color} from "../Color.js";
 import {ControlValue} from "../ControlValue.js";
 import {Scheduler} from "../Scheduler.js";

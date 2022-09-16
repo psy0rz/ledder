@@ -2,13 +2,9 @@ import {Animation} from "../Animation.js"
 import {Display} from "../Display.js"
 import {Scheduler} from "../Scheduler.js"
 import {ControlGroup} from "../ControlGroup.js"
-import {Pixel} from "../Pixel.js"
-import {Color} from "../Color.js"
-import {PixelContainer} from "../PixelContainer.js"
 import DrawAsciiArtColor from "../draw/DrawAsciiArtColor.js"
 import DrawText from "../draw/DrawText.js"
-import {fonts, fontSelect} from "../fonts.js"
-import FxRotate from "../fx/FxRotate.js"
+import {fontSelect} from "../fonts.js"
 
 
 // const logo=`

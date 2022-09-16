@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { Icon, Input } from "framework7-svelte";
+    import { Input } from "framework7-svelte";
     import { ControlColor } from "../js/ledder/ControlColor.js";
 
     export let control: ControlColor;

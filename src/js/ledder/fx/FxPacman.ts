@@ -1,18 +1,13 @@
 import Fx from "../Fx.js";
-import {ControlValue} from "../ControlValue.js";
 import {ControlGroup} from "../ControlGroup.js";
 import {PixelContainer} from "../PixelContainer.js";
-import BboxInterface from "../BboxInterface.js";
 import {Scheduler} from "../Scheduler.js";
-import {random} from "../util.js";
-import FxColorCycle from "./FxColorCycle.js";
-import FxMove from "./FxMove.js";
 import {Color} from "../Color.js";
 import DrawAsciiArt from "../draw/DrawAsciiArt.js"
 import {ControlColor} from "../ControlColor.js"
 import FxMovie from "./FxMovie.js"
 import DrawBox from "../draw/DrawBox.js"
-import {colorBlack, colorRed} from "../Colors.js"
+import {colorBlack} from "../Colors.js"
 
 
 export default class FxPacman extends Fx {

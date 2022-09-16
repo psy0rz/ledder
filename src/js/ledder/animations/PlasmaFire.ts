@@ -1,12 +1,10 @@
 import { Animation } from "../Animation.js";
 import { Pixel } from "../Pixel.js";
-import { Color } from "../Color.js";
 import { Display } from "../Display.js";
 import { Scheduler } from "../Scheduler.js";
 import { ControlGroup } from "../ControlGroup.js";
-import { fireColorsBertrik, patternSelect } from "../ColorPatterns.js";
-import { glow, random, randomFloatGaussian, randomGaussian } from "../util.js";
-import { DisplayMulti } from "../../server/drivers/DisplayMulti.js";
+import { patternSelect } from "../ColorPatterns.js";
+import { glow, randomGaussian } from "../util.js";
 import { colorBlack } from "../Colors.js";
 
 
@@ -63,7 +61,7 @@ export default class BertrikFire extends Animation {
 
                 // if (cool && this.newValue >= 10) {
                 //     this.newValue=this.newValue-10
-                // } 
+                // }
                 if (randomGaussian(0, 100) < decayDensity.value) {
                     if (this.newValue >= decayControl.value)
                         this.newValue = this.newValue - decayControl.value

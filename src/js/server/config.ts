@@ -1,4 +1,4 @@
-import {copyFile, readFile} from "fs/promises"
+import {copyFile} from "fs/promises"
 import {access} from "fs/promises"
 
 const conf_file = 'displayconf.js'

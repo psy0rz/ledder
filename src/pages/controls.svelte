@@ -2,23 +2,17 @@
     import {
         Page,
         Navbar,
-        BlockTitle,
         Treeview,
-        TreeviewItem,
-        Range,
         Block,
-        Input,
-        Stepper,
         Menu,
         MenuItem,
         Subnavbar,
-        Toggle,
-        Checkbox,
+
+
     } from "framework7-svelte";
 
     import {
         sveltePresets,
-        svelteSelectedAnimationName,
         svelteSelectedTitle,
         svelteLive,
     } from "../js/web/svelteStore.js";

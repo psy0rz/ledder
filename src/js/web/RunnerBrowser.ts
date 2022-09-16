@@ -1,5 +1,5 @@
 import {rpc} from "./RpcClient.js";
-import {svelteAnimations, sveltePresets, svelteSelectedAnimationName, svelteSelectedTitle} from "./svelteStore.js";
+import {svelteAnimations, sveltePresets} from "./svelteStore.js";
 import {confirmPromise, info, promptPromise} from "./util.js";
 import {DisplayCanvas} from "./DisplayCanvas.js";
 import {tick} from "svelte";
@@ -48,7 +48,7 @@ export class RunnerBrowser {
 
     async setSize(width, height, zoom)
     {
-        
+
         // await rpc.request('context.stopPreview')
         rpc.display = new DisplayCanvas(width, height, zoom, '#ledder-display', '.ledder-display-box');
         await rpc.request('context.startPreview', width, height)

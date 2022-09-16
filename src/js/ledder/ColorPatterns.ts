@@ -2,8 +2,6 @@ import {Color} from "./Color.js";
 import {Pixel} from "./Pixel.js";
 import {Display} from "./Display.js";
 import {ControlGroup} from "./ControlGroup.js";
-import {Font} from "./Font.js";
-import {fonts} from "./fonts.js";
 
 //all color patterns are just an array of Color() objects of arbitrairy length.
 

@@ -4,12 +4,8 @@ import {ControlGroup} from "../ControlGroup.js"
 import {PixelContainer} from "../PixelContainer.js"
 import BboxInterface from "../BboxInterface.js"
 import {Scheduler} from "../Scheduler.js"
-import {random, randomFloat, randomFloatGaussian} from "../util.js"
+import {random, randomFloatGaussian} from "../util.js"
 import FxColorCycle from "./FxColorCycle.js"
-import FxMove from "./FxMove.js"
-import {Color} from "../Color.js"
-import {fireColorsDoom} from "../ColorPatterns.js"
-import FxRotate from "./FxRotate.js"
 import {Pixel} from "../Pixel.js"
 
 

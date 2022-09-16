@@ -12,7 +12,6 @@ import DrawAsciiArtColor from "../draw/DrawAsciiArtColor.js";
 import {PixelContainer} from "../PixelContainer.js";
 import MovingStars from "./MovingStars.js";
 import FxColorCycle from "../fx/FxColorCycle.js";
-import {fireColorsDoom} from "../ColorPatterns.js";
 
 //Nyancat, based on https://github.com/bertrik/nyancat/blob/master/nyancat.c
 

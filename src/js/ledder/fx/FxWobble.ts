@@ -3,7 +3,6 @@ import {ControlValue} from "../ControlValue.js";
 import {ControlGroup} from "../ControlGroup.js";
 import {PixelContainer} from "../PixelContainer.js";
 import {Scheduler} from "../Scheduler.js";
-import {Pixel} from "../Pixel.js";
 
 export default class FxWobble extends Fx {
 

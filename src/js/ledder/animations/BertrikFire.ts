@@ -5,7 +5,7 @@ import {Display} from "../Display.js";
 import {Scheduler} from "../Scheduler.js";
 import {ControlGroup} from "../ControlGroup.js";
 import { patternSelect} from "../ColorPatterns.js";
-import {glow, random, randomFloatGaussian, randomGaussian} from "../util.js";
+import {glow, randomFloatGaussian} from "../util.js";
 
 export default class BertrikFire extends Animation {
     static category = "Fire"
@@ -29,7 +29,7 @@ export default class BertrikFire extends Animation {
                         left = field[y + 1][x - 1];
                     else
                         left = field[y + 1][display.width - 1];
-                    
+
                     if (x < display.width - 1)
                         right = field[y + 1][x + 1];
                     else

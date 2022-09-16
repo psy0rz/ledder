@@ -8,7 +8,6 @@ import {fontSelect} from "../fonts.js";
 import {PixelContainer} from "../PixelContainer.js";
 import FxFlames from "../fx/FxFlames.js";
 
-import BertrikFire from "./BertrikFire.js";
 import BrainsmokeFire from "./BrainsmokeFire.js";
 
 

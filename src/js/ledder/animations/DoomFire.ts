@@ -1,6 +1,5 @@
 import {Animation} from "../Animation.js";
-import {glow, random, randomGaussian} from "../util.js";
-import {Pixel} from "../Pixel.js";
+import {glow} from "../util.js";
 import {Color} from "../Color.js";
 import {Display} from "../Display.js";
 import {Scheduler} from "../Scheduler.js";

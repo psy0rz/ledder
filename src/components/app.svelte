@@ -11,15 +11,10 @@
 
 </App>
 <script>
-    import {onMount} from 'svelte';
 
     import {
-        App, Badge,
-        f7,
-        View,
+        App, View,
     } from 'framework7-svelte';
-
-    import {sveltePresets} from "../js/web/svelteStore.js";
 
     //important (otherwise weird startup errors in dev mode):
     import 'framework7/lite';

@@ -4,17 +4,8 @@ import {Scheduler} from "../Scheduler.js"
 import {ControlGroup} from "../ControlGroup.js"
 import {Pixel} from "../Pixel.js"
 import {Color} from "../Color.js"
-import {PixelContainer} from "../PixelContainer.js"
-import {fireColorsDoom, fireColorsBertrik, fireColorsBrainsmoke, testFirecolors} from "../ColorPatterns.js"
-import Draw from "../Draw.js"
-import DrawBox from "../draw/DrawBox.js"
-import {colorBlack, colorRed} from "../Colors.js"
 import FxRotate from "../fx/FxRotate.js"
-import MovingStars from "./MovingStars.js"
-import PixelStar from "./PixelStar.js"
-import DrawAsciiArt from "../draw/DrawAsciiArt.js"
 import {random} from "../util.js"
-import Fx from "../Fx.js"
 
 export default class Test extends Animation {
     async run(display: Display, scheduler: Scheduler, controls: ControlGroup) {

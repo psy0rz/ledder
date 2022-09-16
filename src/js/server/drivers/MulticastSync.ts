@@ -1,5 +1,4 @@
 import dgram from "dgram";
-import { hrtime } from 'process';
 
 export class MulticastSync {
     socket: dgram.Socket;

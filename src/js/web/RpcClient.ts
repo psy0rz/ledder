@@ -1,6 +1,5 @@
 import {JSONRPCClient, JSONRPCServer, JSONRPCServerAndClient} from "json-rpc-2.0";
 import {Rpc} from "../Rpc.js";
-import {RpcServer} from "../server/RpcServer.js";
 import {error, progressDone, progressStart} from "./util.js";
 import {DisplayCanvas} from "./DisplayCanvas.js";
 

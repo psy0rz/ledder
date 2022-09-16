@@ -1,27 +1,6 @@
 <script>
     import { onMount } from "svelte";
     import { runnerBrowser } from "../js/web/RunnerBrowser.js";
-    import {
-
-Link,        Page,
-        Navbar,
-        Button,
-        BlockTitle,
-        Treeview,
-        List,
-        Popover,
-        TreeviewItem,
-        Range,
-        ListItem,
-        Block,
-        Input,
-        Stepper,
-        Menu,
-        MenuItem,
-        Subnavbar,
-        Toggle,
-        Checkbox,
-    } from "framework7-svelte";
 
     import { f7ready } from "framework7-svelte";
 

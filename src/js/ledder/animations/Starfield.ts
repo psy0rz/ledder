@@ -5,9 +5,7 @@ import {ControlGroup} from "../ControlGroup.js"
 import {Pixel} from "../Pixel.js"
 import {Color} from "../Color.js"
 import {PixelContainer} from "../PixelContainer.js"
-import {random, randomFloat} from "../util.js"
-import FxMove from "../fx/FxMove.js"
-import {Control} from "../Control.js"
+import {random} from "../util.js"
 
 
 class Star {

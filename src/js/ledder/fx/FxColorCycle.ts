@@ -3,11 +3,9 @@ import {ControlValue} from "../ControlValue.js";
 import {ControlGroup} from "../ControlGroup.js";
 import {Color} from "../Color.js";
 import {Scheduler} from "../Scheduler.js";
-import {PixelContainer} from "../PixelContainer.js";
-import {Pixel} from "../Pixel.js";
 import {ColorInterface} from "../ColorInterface.js";
 import {ControlSelect} from "../ControlSelect.js";
-import {random, randomGaussian} from "../util.js";
+import {randomGaussian} from "../util.js";
 import {patternSelect} from "../ColorPatterns.js";
 
 //Smooth cycle through a list of color objects, with 60 fps. Calculating the optimum step size

@@ -1,10 +1,6 @@
 <script>
     import {
-        Block,
-        BlockHeader,
-        Button,
         f7ready,
-        Icon,
         List,
         ListGroup,
         ListItem,
@@ -18,8 +14,8 @@
         Preloader,
         Searchbar,
         Subnavbar,
-        Toggle,
-        View,
+
+
     } from "framework7-svelte";
     import { svelteSelectedTitle, svelteLive } from "../js/web/svelteStore.js";
     import { svelteAnimations } from "../js/web/svelteStore.js";
