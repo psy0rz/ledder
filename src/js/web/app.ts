@@ -5,7 +5,7 @@
 import Framework7Svelte from 'framework7-svelte';
 
 // Import Framework7 Styles
-import 'framework7/framework7-bundle.css';
+import 'framework7/css';
 
 // Import Icons and App Custom Styles
 import '../../css/icons.css';
