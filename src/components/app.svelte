@@ -14,15 +14,16 @@
 
     import {
         App, View,
-    } from 'framework7-svelte';
+    } from 'framework7-svelte'
 
     //important (otherwise weird startup errors in dev mode):
-    import 'framework7/lite';
+   // import 'framework7/lite';
 
     import Display from "./Display.svelte"
 
     import routes from '../js/web/routes.js';
     import Categories from '../pages/categories.svelte'
+    import {onMount} from "svelte"
     // import Test from '../pages/test.svelte'
     // import store from '../js/store';
 

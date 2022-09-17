@@ -1,5 +1,6 @@
 <script>
     import {
+
         f7ready,
         List,
         ListGroup,
@@ -11,18 +12,18 @@
         Message,
         Navbar,
         Page,
-        Preloader,
-        Searchbar,
+        Preloader, Searchbar,
         Subnavbar,
 
 
-    } from "framework7-svelte";
+    } from "framework7-svelte"
+
+
     import { svelteSelectedTitle, svelteLive } from "../js/web/svelteStore.js";
     import { svelteAnimations } from "../js/web/svelteStore.js";
     import { runnerBrowser } from "../js/web/RunnerBrowser.js";
     import { onMount } from "svelte";
     import { rpc } from "../js/web/RpcClient.js";
-
     let search = "";
 
     onMount(() => {
@@ -30,6 +31,8 @@
             runnerBrowser.refreshAnimationList();
         });
     });
+
+
 </script>
 
 <Page name="categories">
