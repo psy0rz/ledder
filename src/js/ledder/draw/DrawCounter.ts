@@ -18,168 +18,133 @@ export default class DrawCounter extends Draw {
             this.running = true
         } else {
             this.targetValue = updateValue
+
         }
     }
 
-    private
 
-    async run(scheduler: Scheduler, controls: ControlGroup, x, y, startValue = 0, digitCount = 5) {
+    private async run(scheduler: Scheduler, controls: ControlGroup, x, y, startValue = 0, digitCount = 5) {
 
         const font = fontSelect(controls)
 
-        //rotate through a bunch of chars (target may already have a char in it which also will be rotated)
-        async function rotate(x, y, chars: string, target: PixelContainer, step = 1) {
+        // const charHeight = font.height + 1
+        const charHeight = 10
 
-            let charStep
-            let totalCharOffset
-
-            if (step > 0)
-                charStep = -font.height - 1
-            else
-                charStep = font.height + 1
-
-            totalCharOffset = charStep * chars.length
-
-            //flame old pixels
-            new FxFlameout(scheduler, controls, -1,0,1).run(target, false)
-
-            //add new chars above or below
-            let offset = 0
-            let lastChar
-            for (const char of chars) {
-                offset = offset + charStep
-                lastChar = new DrawText(x, y + offset, font, char, colorRed)
-                target.add(lastChar)
-
-            }
-
-            //now rotate in step direction
-            while (Math.abs(totalCharOffset) >= Math.abs(step)) {
-                //move up one step
-                totalCharOffset = totalCharOffset + step
-                target.move(0, step)
-                await scheduler.delay(1)
-            }
-
-            //final move
-            target.move(0, -totalCharOffset, true)
-
-
-            //remove rest of the chars
-            // target.clear()
-
-            target.add(lastChar)
-
-        }
-
-
-        const spacing = 8
         const wheel = '0123456789'
+        const wheelHeight = wheel.length * charHeight
+        const pushStart = wheelHeight - charHeight // start pushing next wheel from this position
         let text = []
 
-        let currentValue = startValue
+        let currentValue = 0
         this.targetValue = startValue
 
+        const wheelOffsets = []
+
+        //create digits
         for (let i = 0; i < digitCount; i++) {
-            const digitValue = ~~(currentValue / (Math.pow(10, i))) % 10
-            text.unshift(wheel[digitValue])
+            wheelOffsets.push(0)
         }
 
+        function step(digitNr, stepSize) {
+            if (digitNr < 0)
+                return
 
-        async function count(text, index, direction, speed) {
-            let d = text[index]
-            let wheelIndex = wheel.indexOf(d)
-            wheelIndex = wheelIndex + direction
+            //how much does it step in?
+            let stepin = (wheelOffsets[digitNr] + stepSize) - pushStart
 
-            if (wheelIndex >= wheel.length) {
-                //at the end of wheel?
+            //push next wheel (starts pushing when at last character of current wheel)
+            if (stepin > 0) {
+                // let stepnext = (stepin%stepSize)+1
+                let stepNext=(wheelOffsets[digitNr]+stepSize)%(charHeight)
 
-                wheelIndex = wheelIndex - wheel.length
-
-                //reset wheel and carry to next wheel
-                text[index] = wheel[wheelIndex]
-                if (index != 0) {
-                    rotate(x + spacing * index, y, text[index], digits[index], speed)
-
-                    await count(text, index - 1, direction, speed)
-                }
-            } else if (wheelIndex < 0) {
-                //beginning of wheel
-                wheelIndex = wheelIndex + wheel.length
-
-                //reset wheel and carry to next wheel
-                text[index] = wheel[wheelIndex]
-                if (index != 0) {
-                    rotate(x + (spacing * index), y, text[index], digits[index], -speed)
-
-                    await count(text, index - 1, direction, speed)
-                }
-
-            } else {
-                //next on wheel
-                text[index] = wheel[wheelIndex]
-                if (direction > 0)
-                    await rotate(x + (spacing * index), y, text[index], digits[index], speed)
-                else
-                    await rotate(x + (spacing * index), y, text[index], digits[index], -speed)
+                //carry to next digit
+                step(digitNr - 1, stepNext%(stepSize+1))
             }
+
+            wheelOffsets[digitNr] = (wheelOffsets[digitNr] + stepSize) % wheelHeight
+
         }
 
-        //start text
-        let i = 0
-        let digits = []
-        for (const char of text) {
-            const c = new PixelContainer()
-            this.add(c)
-            digits.push(c)
-            await rotate(x + spacing * i, y, char, c, 2)
-            i++
-        }
-
-        let turbo=0
         while (1) {
-            // await scheduler.delay(1)
-            let diff=Math.abs((currentValue - this.targetValue))
+            this.targetValue = 100 //xxx
+            let diff = this.targetValue - currentValue
 
-            let speed = diff / controls.value("Speedfactor", 100).value
-            let magnitude=0
-            if (speed < 0.2)
-                speed = 0.2
-            else if (speed > 8) {
-                speed = 8
+
+            if (diff != 0) {
+                let stepSize = 3
+                currentValue = currentValue + 1
+
+                step(digitCount - 1, stepSize)
+                console.log(wheelOffsets)
             }
 
-            magnitude=0
-            while (diff>100)
-            {
-                diff=diff/10
-                magnitude++
-
-            }
-
-            if (currentValue < this.targetValue) {
-
-                turbo=(turbo+1)%wheel.length
-                for (let i=0;i<magnitude; i++) {
-                    const digitNr=digits.length-1-i
-                    rotate(x + (spacing * digitNr), y, wheel[turbo], digits[digitNr], speed)
-                }
-
-                currentValue = currentValue + (Math.pow(10,magnitude))
-
-                await count(text, text.length - 1 - magnitude, 1, speed)
-            } else if (currentValue > this.targetValue) {
-                turbo=(turbo+1)%wheel.length
-                for (let i=0;i<magnitude; i++) {
-                    const digitNr=digits.length-1-i
-                    rotate(x + (spacing * digitNr), y, wheel[turbo], digits[digitNr], -speed)
-                }
-                currentValue = currentValue - (Math.pow(10,magnitude))
-                await count(text, text.length - 1 -magnitude, -1, speed)
-            } else {
-                await scheduler.delay(1)
-            }
+            await scheduler.delay(1)
 
         }
+
+        //
+        // for (let i = 0; i < digitCount; i++) {
+        //     const digitValue = ~~(currentValue / (Math.pow(10, i))) % 10
+        //     text.unshift(wheel[digitValue])
+        // }
+        //
+
+
+        // //start text
+        // let i = 0
+        // let digits = []
+        // for (const char of text) {
+        //     const c = new PixelContainer()
+        //     this.add(c)
+        //     digits.push(c)
+        //     await rotate(x + spacing * i, y, char, c, 2)
+        //     i++
+        // }
+
+        // let turbo=0
+        // while (1) {
+        //     // await scheduler.delay(1)
+        //     let diff=Math.abs((currentValue - this.targetValue))
+        //
+        //     let speed = diff / controls.value("Speedfactor", 100).value
+        //     let magnitude=0
+        //     if (speed < 0.2)
+        //         speed = 0.2
+        //     else if (speed > 8) {
+        //         speed = 8
+        //     }
+        //
+        //     magnitude=0
+        //     while (diff>100)
+        //     {
+        //         diff=diff/10
+        //         magnitude++
+        //
+        //     }
+        //
+        //     if (currentValue < this.targetValue) {
+        //
+        //         turbo=(turbo+1)%wheel.length
+        //         for (let i=0;i<magnitude; i++) {
+        //             const digitNr=digits.length-1-i
+        //             rotate(x + (spacing * digitNr), y, wheel[turbo], digits[digitNr], speed)
+        //         }
+        //
+        //         currentValue = currentValue + (Math.pow(10,magnitude))
+        //
+        //         await count(text, text.length - 1 - magnitude, 1, speed)
+        //     } else if (currentValue > this.targetValue) {
+        //         turbo=(turbo+1)%wheel.length
+        //         for (let i=0;i<magnitude; i++) {
+        //             const digitNr=digits.length-1-i
+        //             rotate(x + (spacing * digitNr), y, wheel[turbo], digits[digitNr], -speed)
+        //         }
+        //         currentValue = currentValue - (Math.pow(10,magnitude))
+        //         await count(text, text.length - 1 -magnitude, -1, speed)
+        //     } else {
+        //         await scheduler.delay(1)
+        //     }
+        //
+        // }
     }
 }

@@ -20,7 +20,6 @@ export default class Template extends Animation {
     static presetDir = "BTC"
 
     async run(display: Display, scheduler: Scheduler, controls: ControlGroup) {
-
         if (controls.group("stars").switch("enabled", false).enabled)
             new Starfield().run(display, scheduler, controls.group("stars"))
 
