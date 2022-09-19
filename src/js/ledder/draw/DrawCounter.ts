@@ -45,6 +45,7 @@ export default class DrawCounter extends Draw {
         let digitOffset=0
 
 
+        //step counter with a certain stepsize and direction. to increase by a whole value use charHeight as stepSize.
         function step(stepSize) {
             const oldOffset=digitOffset
             digitOffset=(digitOffset+stepSize)%charHeight
