@@ -33,115 +33,67 @@ export default class DrawCounter extends Draw {
 
         const wheel = '0123456789'
         const wheelHeight = wheel.length * charHeight
-        const pushStart = wheelHeight - charHeight // start pushing next wheel from this position
+        // const pushStart = wheelHeight - charHeight // start pushing next wheel from this position
         let text = []
 
         let currentValue = 0
         this.targetValue = startValue
 
-        const wheelOffsets = []
+        // const digits = []
 
-        //create digits
-        for (let i = 0; i < digitCount; i++) {
-            wheelOffsets.push(0)
-        }
-
-        function step(digitNr, stepSize) {
-            if (digitNr < 0 || stepSize == 0)
-                return
+        //offset of last wheel (rotate effect)
+        let digitOffset=0
 
 
-            let oldOffset = wheelOffsets[digitNr]
+        function step(stepSize) {
+            const oldOffset=digitOffset
+            digitOffset=(digitOffset+stepSize)%charHeight
 
-            //make our step
-            wheelOffsets[digitNr] = (wheelOffsets[digitNr] + stepSize) % wheelHeight
+            //number of full digit steps
+            currentValue=currentValue+~~(stepSize/charHeight)
 
-            let newOffset = wheelOffsets[digitNr]
-
-
-
-
-            // let oldOffset = wheelOffsets[digitNr]
-            //
-            // //make our step
-            // wheelOffsets[digitNr] = (wheelOffsets[digitNr] + stepSize) % wheelHeight
-            //
-            // let newOffset = wheelOffsets[digitNr]
-            //
-            // //each whole wheel revolution means one characterHeight step for the next wheel:
-            // let nextStep = ~~(stepSize / wheelHeight) * charHeight
-            //
-            // //we where outside pushstart
-            // if (oldOffset <= pushStart) {
-            //     //we've stepped inside
-            //     if (newOffset > pushStart) {
-            //         console.log("inside", digitNr)
-            //         nextStep = nextStep + (newOffset - pushStart)
-            //     }
-            // }
-            // //we where already inside pushstart
-            // else {
-            //     //stepped out
-            //     if (newOffset < pushStart) {
-            //         //push it to the end
-            //         console.log("to the end", digitNr)
-            //         nextStep = nextStep + (wheelHeight - oldOffset)
-            //     } else {
-            //         if (newOffset > oldOffset) {
-            //             //stayed inside, just move it along
-            //             console.log("move along",digitNr)
-            //             nextStep = nextStep + (newOffset - oldOffset)
-            //         } else if (newOffset < oldOffset) {
-            //             //stepped "back" (was an almost full wheel revolution step)
-            //             //add enough to end up in same offset, but one char later
-            //             console.log("step back", digitNr)
-            //             nextStep = nextStep + (charHeight-(oldOffset-newOffset))
-            //         }
-            //     }
-            // }
-
-
-            // //we where outside pushstart
-            // if (oldOffset < pushStart) {
-            //     //we've stepped inside
-            //     if (newOffset >= pushStart) {
-            //         nextStep = nextStep + (newOffset - pushStart)
-            //     }
-            //
-            // }
-            // //we where already inside pushstart
-            // else {
-            //     //stepped out
-            //     if (newOffset < pushStart) {
-            //         //push it to the end
-            //         nextStep = nextStep + (wheelHeight - oldOffset)
-            //     } else {
-            //         if (newOffset > oldOffset) {
-            //             //stayed inside, just move it along
-            //             nextStep = nextStep + (newOffset - oldOffset)
-            //         } else if (newOffset < oldOffset) {
-            //             //stepped "back" (was a full wheel revolution step)
-            //             //calculate from pushstart
-            //             nextStep = nextStep + (newOffset - pushStart)
-            //         }
-            //     }
-            // }
-
-            step(digitNr - 1, nextStep)
+            //did we loop and filled a partial digit?
+            if (stepSize>0 && digitOffset<oldOffset)
+                currentValue=currentValue+1
+            else if (stepSize<0 && digitOffset>oldOffset)
+                currentValue=currentValue-1
 
         }
 
         while (1) {
-            this.targetValue = ~~(100 ) //xxx
-            let diff = this.targetValue - currentValue
+            this.targetValue = ~~(10 ) //xxx
+            // let diff = this.targetValue - currentValue
 
 
-            if (diff != 0) {
-                let stepSize = 101
-                currentValue = currentValue + 1
+            if (currentValue<this.targetValue) {
+                let stepSize = 1
 
-                step(digitCount - 1, stepSize)
-                console.log(wheelOffsets)
+                step(stepSize)
+                // console.log(currentValue, digitOffset)
+
+                //print digits
+                let div=1;
+                let str=`  (${currentValue} @${digitOffset})  `
+                let carry=true
+                for(let digitNr=0; digitNr<digitCount; digitNr++)
+                {
+                    const divided=~~(currentValue/div)
+                    const digitValue=divided%10
+
+                    let offset=0;
+                    if (carry) {
+                        offset = digitOffset
+                        if (digitValue!=9)
+                            carry=false
+                    }
+
+
+                    str=`.${digitValue}@${offset}`+str
+
+                    div=div*10;
+               }
+               console.log(str)
+
             }
 
             await scheduler.delay(1)
