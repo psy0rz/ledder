@@ -6,6 +6,7 @@ import {fontSelect} from "../fonts.js"
 import {colorRed} from "../Colors.js"
 import Draw from "../Draw.js"
 import FxFlameout from "../fx/FxFlameout.js"
+import {next} from "dom7"
 
 export default class DrawCounter extends Draw {
     private targetValue: number
@@ -46,32 +47,97 @@ export default class DrawCounter extends Draw {
         }
 
         function step(digitNr, stepSize) {
-            if (digitNr < 0)
+            if (digitNr < 0 || stepSize == 0)
                 return
 
-            //how much does it step in?
-            let stepin = (wheelOffsets[digitNr] + stepSize) - pushStart
 
-            //push next wheel (starts pushing when at last character of current wheel)
-            if (stepin > 0) {
-                // let stepnext = (stepin%stepSize)+1
-                let stepNext=(wheelOffsets[digitNr]+stepSize)%(charHeight)
+            let oldOffset = wheelOffsets[digitNr]
 
-                //carry to next digit
-                step(digitNr - 1, stepNext%(stepSize+1))
-            }
-
+            //make our step
             wheelOffsets[digitNr] = (wheelOffsets[digitNr] + stepSize) % wheelHeight
+
+            let newOffset = wheelOffsets[digitNr]
+
+
+
+
+            // let oldOffset = wheelOffsets[digitNr]
+            //
+            // //make our step
+            // wheelOffsets[digitNr] = (wheelOffsets[digitNr] + stepSize) % wheelHeight
+            //
+            // let newOffset = wheelOffsets[digitNr]
+            //
+            // //each whole wheel revolution means one characterHeight step for the next wheel:
+            // let nextStep = ~~(stepSize / wheelHeight) * charHeight
+            //
+            // //we where outside pushstart
+            // if (oldOffset <= pushStart) {
+            //     //we've stepped inside
+            //     if (newOffset > pushStart) {
+            //         console.log("inside", digitNr)
+            //         nextStep = nextStep + (newOffset - pushStart)
+            //     }
+            // }
+            // //we where already inside pushstart
+            // else {
+            //     //stepped out
+            //     if (newOffset < pushStart) {
+            //         //push it to the end
+            //         console.log("to the end", digitNr)
+            //         nextStep = nextStep + (wheelHeight - oldOffset)
+            //     } else {
+            //         if (newOffset > oldOffset) {
+            //             //stayed inside, just move it along
+            //             console.log("move along",digitNr)
+            //             nextStep = nextStep + (newOffset - oldOffset)
+            //         } else if (newOffset < oldOffset) {
+            //             //stepped "back" (was an almost full wheel revolution step)
+            //             //add enough to end up in same offset, but one char later
+            //             console.log("step back", digitNr)
+            //             nextStep = nextStep + (charHeight-(oldOffset-newOffset))
+            //         }
+            //     }
+            // }
+
+
+            // //we where outside pushstart
+            // if (oldOffset < pushStart) {
+            //     //we've stepped inside
+            //     if (newOffset >= pushStart) {
+            //         nextStep = nextStep + (newOffset - pushStart)
+            //     }
+            //
+            // }
+            // //we where already inside pushstart
+            // else {
+            //     //stepped out
+            //     if (newOffset < pushStart) {
+            //         //push it to the end
+            //         nextStep = nextStep + (wheelHeight - oldOffset)
+            //     } else {
+            //         if (newOffset > oldOffset) {
+            //             //stayed inside, just move it along
+            //             nextStep = nextStep + (newOffset - oldOffset)
+            //         } else if (newOffset < oldOffset) {
+            //             //stepped "back" (was a full wheel revolution step)
+            //             //calculate from pushstart
+            //             nextStep = nextStep + (newOffset - pushStart)
+            //         }
+            //     }
+            // }
+
+            step(digitNr - 1, nextStep)
 
         }
 
         while (1) {
-            this.targetValue = 100 //xxx
+            this.targetValue = ~~(100 ) //xxx
             let diff = this.targetValue - currentValue
 
 
             if (diff != 0) {
-                let stepSize = 3
+                let stepSize = 101
                 currentValue = currentValue + 1
 
                 step(digitCount - 1, stepSize)
