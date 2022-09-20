@@ -8,14 +8,15 @@ import Draw from "../Draw.js"
 import {easeInOutCubic} from "../util.js"
 import DrawBox from "./DrawBox.js"
 import DrawGlowMask from "./DrawGlowMask.js"
+import {ControlValue} from "../ControlValue.js"
 
 export default class DrawCounter extends Draw {
     private targetValue: number
     private running: boolean
     private startValue: number
 
-    private speedPercentage: number
     private completedPercentage: number
+    private speedPercentageControl: ControlValue
 
 
     public async update(scheduler: Scheduler, controls: ControlGroup, x, y, updateValue = 0, speedPercentage = 0.001, digitCount = 5) {
@@ -30,7 +31,7 @@ export default class DrawCounter extends Draw {
         // this.targetValue = 100.5
         // this.startValue = 0
 
-        this.speedPercentage = speedPercentage
+        this.speedPercentageControl = controls.value("Rotate speed", speedPercentage, 0, 0.025 , 0.0001)
         this.completedPercentage = 0
 
         if (this.running === undefined) {
@@ -110,7 +111,7 @@ export default class DrawCounter extends Draw {
             if (this.completedPercentage != 1) {
 
                 //make sure we end on exactly 100%
-                this.completedPercentage = this.completedPercentage + this.speedPercentage
+                this.completedPercentage = this.completedPercentage + this.speedPercentageControl.value
 
                 if (this
 

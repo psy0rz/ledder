@@ -68,7 +68,6 @@
                 <MenuItem
                     iconMd="material:upload"
                     title="Activate animation"
-                    class={$svelteLive ? "disabled" : ""}
                     onClick={() => runnerBrowser.send()}
                 />
             </Menu>
