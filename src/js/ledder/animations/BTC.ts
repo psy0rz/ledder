@@ -26,10 +26,10 @@ export default class Template extends Animation {
         const counter = new DrawCounter()
         display.add(counter)
 
-        const label=new DrawText(0,0, fontSelect(controls), "BTC$", new Color(55,55,55,1))
-        display.add(label)
-        const flameContainer=new PixelContainer()
-        display.add(flameContainer)
+        // const label=new DrawText(0,0, fontSelect(controls), "BTC$", new Color(55,55,55,1))
+        // display.add(label)
+        // const flameContainer=new PixelContainer()
+        // display.add(flameContainer)
 
         let first=true
         function update() {
@@ -46,11 +46,11 @@ export default class Template extends Animation {
                         try {
                             const json = JSON.parse(data)
                             if (first) {
-                                await counter.update(scheduler, controls, 33, 0, ~~json.USD.last - random(-100,100))
+                                await counter.update(scheduler, controls, 33, 4, ~~json.USD.last - random(-100,100))
                                 first=false
                             }
 
-                            await counter.update(scheduler, controls, 33,0,~~json.USD.last)
+                            await counter.update(scheduler, controls, 33,4,~~json.USD.last)
                             console.log(json.USD.last)
 
 

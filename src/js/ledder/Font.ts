@@ -24,6 +24,7 @@ export class Font {
         if (!this.fontFace) {
             this.fontFace = freetype.NewFace(this.filename);
             this.fontFace.setPixelSizes(this.width, this.height);
+
         }
     }
 

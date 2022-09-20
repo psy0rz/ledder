@@ -10,5 +10,8 @@
       <option name="FORCE_SEMICOLON_STYLE" value="true" />
       <option name="USE_EXPLICIT_JS_EXTENSION" value="TRUE" />
     </TypeScriptCodeStyleSettings>
+    <codeStyleSettings language="TypeScript">
+      <option name="KEEP_LINE_BREAKS" value="false" />
+    </codeStyleSettings>
   </code_scheme>
 </component>

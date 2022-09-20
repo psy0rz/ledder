@@ -6,7 +6,7 @@
 
     let zoom = 8;
     let width = 75;
-    let height = 8;
+    let height = 16;
 
     onMount(async () => {
         f7ready(async () => {
