@@ -247,6 +247,15 @@ export class PixelContainer extends Set<Pixel | PixelContainer> {
 
     }
 
+    //remove pixels that are outside bounding box
+    crop(bbox: BboxInterface)
+    {
+        this.forEachPixel((p, parent) => {
+            if (p.isOutside(bbox))
+                parent.delete(p)
+        })
+    }
+
     //flip pixel positions around X axis
     // flipX(bbox: BboxInterface)
     // {

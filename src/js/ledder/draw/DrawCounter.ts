@@ -3,9 +3,10 @@ import {ControlGroup} from "../ControlGroup.js"
 import {PixelContainer} from "../PixelContainer.js"
 import DrawText from "./DrawText.js"
 import {fontSelect} from "../fonts.js"
-import {colorRed} from "../Colors.js"
+import {colorRed, colorWhite} from "../Colors.js"
 import Draw from "../Draw.js"
 import {easeInOutCubic} from "../util.js"
+import DrawBox from "./DrawBox.js"
 
 export default class DrawCounter extends Draw {
     private targetValue: number
@@ -16,7 +17,7 @@ export default class DrawCounter extends Draw {
     private completedPercentage: number
 
 
-    public async update(scheduler: Scheduler, controls: ControlGroup, x, y, updateValue = 0, speedPercentage = 0.002, digitCount = 5) {
+    public async update(scheduler: Scheduler, controls: ControlGroup, x, y, updateValue = 0, speedPercentage = 0.001, digitCount = 5) {
 
         if (this.targetValue === undefined) this.targetValue = 0
 
@@ -25,7 +26,7 @@ export default class DrawCounter extends Draw {
         this.targetValue = updateValue
 
         //XXX TEST
-        this.targetValue = 10
+        this.targetValue = 100
         this.startValue = 0
 
         this.speedPercentage = speedPercentage
@@ -56,15 +57,22 @@ export default class DrawCounter extends Draw {
                 const charY = y + (offset % charHeight)
                 const digitValue = ~~(offset / charHeight)
 
-                let aboveDigitValue=(digitValue+10-1)%10
-                let belowDigitValue=(digitValue+1)%10
+                let aboveDigitValue = (digitValue + 10 - 1) % 10
+                let belowDigitValue = (digitValue + 1) % 10
+
 
                 //character above
-                container.add(new DrawText(charX, charY+charHeight, font, aboveDigitValue.toString(), colorRed))
+                container.add(new DrawText(charX, charY + charHeight, font, aboveDigitValue.toString(), colorRed))
+                container.add(new DrawBox(charX, charY + charHeight, charWidth, 1, colorWhite))
                 //character
                 container.add(new DrawText(charX, charY, font, digitValue.toString(), colorRed))
+                container.add(new DrawBox(charX, charY, charWidth, 1, colorWhite))
                 //character below
-                container.add(new DrawText(charX, charY-charHeight, font, belowDigitValue.toString(), colorRed))
+                container.add(new DrawText(charX, charY - charHeight, font, belowDigitValue.toString(), colorRed))
+                container.add(new DrawBox(charX, charY - charHeight, charWidth, 1, colorWhite))
+
+                //crop stuff thats oudside
+                // container.crop({ xMin: x, yMin: y, xMax: x+digitCount*charWidth, yMax: y+font.height})
             }
         }
 
