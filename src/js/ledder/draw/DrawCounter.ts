@@ -11,20 +11,36 @@ import {next} from "dom7"
 export default class DrawCounter extends Draw {
     private targetValue: number
     private running: boolean
+    private startValue: number
+
+    private speedPercentage: number
+    private completedPercentage: number
 
 
-    public async update(scheduler: Scheduler, controls: ControlGroup, x, y, updateValue = 0, digitCount = 5) {
+    public async update(scheduler: Scheduler, controls: ControlGroup, x, y, updateValue = 0, speedPercentage = 0.01, digitCount = 5) {
+
+        if (this.targetValue === undefined)
+            this.targetValue = 0
+
+
+        this.startValue = this.targetValue
+        this.targetValue = updateValue
+
+        //XXX TEST
+        this.targetValue=10
+        this.startValue=0
+
+        this.speedPercentage = speedPercentage
+        this.completedPercentage = 0
+
         if (this.running === undefined) {
-            this.run(scheduler, controls, x, y, updateValue, digitCount)
+            this.run(scheduler, controls, x, y, digitCount)
             this.running = true
-        } else {
-            this.targetValue = updateValue
-
         }
     }
 
 
-    private async run(scheduler: Scheduler, controls: ControlGroup, x, y, startValue = 0, digitCount = 5) {
+    private async run(scheduler: Scheduler, controls: ControlGroup, x, y, digitCount = 5) {
 
         const font = fontSelect(controls)
 
@@ -33,137 +49,68 @@ export default class DrawCounter extends Draw {
 
         const wheel = '0123456789'
         const wheelHeight = wheel.length * charHeight
-        // const pushStart = wheelHeight - charHeight // start pushing next wheel from this position
         let text = []
 
-        let currentValue = 0
-        this.targetValue = startValue
+        //always start at zero
+        let counterValue = 0
 
-        // const digits = []
-
-        //offset of last wheel (rotate effect)
-        let digitOffset=0
+        //offset of last wheel, for the all important rotating counter effect
+        let digitOffset = 0
 
 
         //step counter with a certain stepsize and direction. to increase by a whole value use charHeight as stepSize.
         function step(stepSize) {
-            const oldOffset=digitOffset
-            digitOffset=(digitOffset+stepSize)%charHeight
+            const oldOffset = digitOffset
+            digitOffset = (digitOffset + stepSize) % charHeight
 
             //number of full digit steps
-            currentValue=currentValue+~~(stepSize/charHeight)
+            counterValue = counterValue + ~~(stepSize / charHeight)
 
             //did we loop and filled a partial digit?
-            if (stepSize>0 && digitOffset<oldOffset)
-                currentValue=currentValue+1
-            else if (stepSize<0 && digitOffset>oldOffset)
-                currentValue=currentValue-1
+            if (stepSize > 0 && digitOffset < oldOffset)
+                counterValue = counterValue + 1
+            else if (stepSize < 0 && digitOffset > oldOffset)
+                counterValue = counterValue - 1
 
         }
 
         while (1) {
-            this.targetValue = ~~(10 ) //xxx
-            // let diff = this.targetValue - currentValue
 
+            this.completedPercentage = this.completedPercentage + this.speedPercentage
 
-            if (currentValue<this.targetValue) {
-                let stepSize = 1
+            if (this.completedPercentage < 1) {
 
-                step(stepSize)
+                //current value we're at according to our easing function:
+                let currentValue = this.startValue + ((this.targetValue - this.startValue) * this.completedPercentage)
+                console.log(currentValue)
+
+                //which step size is needed to get there?
+                step(~~((currentValue - counterValue) * charHeight))
                 // console.log(currentValue, digitOffset)
 
                 //print digits
-                let div=1;
-                let str=`  (${currentValue} @${digitOffset})  `
-                let carry=true
-                for(let digitNr=0; digitNr<digitCount; digitNr++)
-                {
-                    const divided=~~(currentValue/div)
-                    const digitValue=divided%10
+                let div = 1
+                let str = `  (${counterValue} @${digitOffset})  `
+                let carry = true
+                for (let digitNr = 0; digitNr < digitCount; digitNr++) {
+                    const divided = ~~(counterValue / div)
+                    const digitValue = divided % 10
 
-                    let offset=0;
+                    let offset = 0
                     if (carry) {
                         offset = digitOffset
-                        if (digitValue!=9)
-                            carry=false
+                        if (digitValue != 9)
+                            carry = false
                     }
 
+                    str = `.${digitValue}@${offset}` + str
 
-                    str=`.${digitValue}@${offset}`+str
-
-                    div=div*10;
-               }
-               console.log(str)
-
+                    div = div * 10
+                }
+                console.log(str)
             }
-
             await scheduler.delay(1)
-
         }
 
-        //
-        // for (let i = 0; i < digitCount; i++) {
-        //     const digitValue = ~~(currentValue / (Math.pow(10, i))) % 10
-        //     text.unshift(wheel[digitValue])
-        // }
-        //
-
-
-        // //start text
-        // let i = 0
-        // let digits = []
-        // for (const char of text) {
-        //     const c = new PixelContainer()
-        //     this.add(c)
-        //     digits.push(c)
-        //     await rotate(x + spacing * i, y, char, c, 2)
-        //     i++
-        // }
-
-        // let turbo=0
-        // while (1) {
-        //     // await scheduler.delay(1)
-        //     let diff=Math.abs((currentValue - this.targetValue))
-        //
-        //     let speed = diff / controls.value("Speedfactor", 100).value
-        //     let magnitude=0
-        //     if (speed < 0.2)
-        //         speed = 0.2
-        //     else if (speed > 8) {
-        //         speed = 8
-        //     }
-        //
-        //     magnitude=0
-        //     while (diff>100)
-        //     {
-        //         diff=diff/10
-        //         magnitude++
-        //
-        //     }
-        //
-        //     if (currentValue < this.targetValue) {
-        //
-        //         turbo=(turbo+1)%wheel.length
-        //         for (let i=0;i<magnitude; i++) {
-        //             const digitNr=digits.length-1-i
-        //             rotate(x + (spacing * digitNr), y, wheel[turbo], digits[digitNr], speed)
-        //         }
-        //
-        //         currentValue = currentValue + (Math.pow(10,magnitude))
-        //
-        //         await count(text, text.length - 1 - magnitude, 1, speed)
-        //     } else if (currentValue > this.targetValue) {
-        //         turbo=(turbo+1)%wheel.length
-        //         for (let i=0;i<magnitude; i++) {
-        //             const digitNr=digits.length-1-i
-        //             rotate(x + (spacing * digitNr), y, wheel[turbo], digits[digitNr], -speed)
-        //         }
-        //         currentValue = currentValue - (Math.pow(10,magnitude))
-        //         await count(text, text.length - 1 -magnitude, -1, speed)
-        //     } else {
-        //         await scheduler.delay(1)
-        //     }
-        //
-        // }
     }
 }
