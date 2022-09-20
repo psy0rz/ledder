@@ -7,6 +7,7 @@ import {colorRed, colorWhite} from "../Colors.js"
 import Draw from "../Draw.js"
 import {easeInOutCubic} from "../util.js"
 import DrawBox from "./DrawBox.js"
+import DrawGlowMask from "./DrawGlowMask.js"
 
 export default class DrawCounter extends Draw {
     private targetValue: number
@@ -25,9 +26,9 @@ export default class DrawCounter extends Draw {
         this.startValue = this.targetValue
         this.targetValue = updateValue
 
-        //XXX TEST
-        this.targetValue = 100
-        this.startValue = 0
+        // //XXX TEST
+        // this.targetValue = 100.5
+        // this.startValue = 0
 
         this.speedPercentage = speedPercentage
         this.completedPercentage = 0
@@ -40,7 +41,7 @@ export default class DrawCounter extends Draw {
 
 
     //over every digit of the counter we pre-generate all possible offsets (for the rotate effect)
-    private prepareDigits(x, y, charWidth, charHeight, digitCount, font) {
+    private prepareDigits(x, y, charWidth, charHeight, digitCount, font, colorCounter, colorDivider) {
         const wheelHeight = 10 * charHeight
 
         //prepare the digits
@@ -62,17 +63,23 @@ export default class DrawCounter extends Draw {
 
 
                 //character above
-                container.add(new DrawText(charX, charY + charHeight, font, aboveDigitValue.toString(), colorRed))
-                container.add(new DrawBox(charX, charY + charHeight, charWidth, 1, colorWhite))
-                //character
-                container.add(new DrawText(charX, charY, font, digitValue.toString(), colorRed))
-                container.add(new DrawBox(charX, charY, charWidth, 1, colorWhite))
-                //character below
-                container.add(new DrawText(charX, charY - charHeight, font, belowDigitValue.toString(), colorRed))
-                container.add(new DrawBox(charX, charY - charHeight, charWidth, 1, colorWhite))
+                container.add(new DrawText(charX, charY + charHeight, font, aboveDigitValue.toString(), colorCounter))
+                container.add(new DrawBox(charX, charY + charHeight, charWidth, 1, colorDivider))
 
-                //crop stuff thats oudside
-                // container.crop({ xMin: x, yMin: y, xMax: x+digitCount*charWidth, yMax: y+font.height})
+                //character
+                container.add(new DrawText(charX, charY, font, digitValue.toString(), colorCounter))
+                container.add(new DrawBox(charX, charY, charWidth, 1, colorDivider))
+
+                //character below
+                container.add(new DrawText(charX, charY - charHeight, font, belowDigitValue.toString(), colorCounter))
+                container.add(new DrawBox(charX, charY - charHeight, charWidth, 1, colorDivider))
+
+                //draw divider between digits
+                container.add(new DrawBox(charX-1, charY - charHeight, 1, charHeight*3, colorDivider))
+
+                //crop stuff thats outside
+                container.crop({ xMin: x, yMin: y, xMax: x+digitCount*charWidth, yMax: y+font.height})
+
             }
         }
 
@@ -84,10 +91,19 @@ export default class DrawCounter extends Draw {
 
         const font = fontSelect(controls)
 
-        const charHeight = font.height + 1
-        const charWidth = 8
+        const charHeight = font.height
+        const charWidth = 7
 
-        const digitPixels = this.prepareDigits(x, y, charWidth, charHeight, digitCount, font)
+        const controlDigitColor=controls.color("Digit color", 255,0x90,0)
+        const controlDividerColor=controls.color("Divider color", 0x80,0x80,0x80)
+
+        const digitPixels = this.prepareDigits(x, y, charWidth, charHeight, digitCount, font, controlDigitColor, controlDividerColor)
+
+        const digitContainer = new PixelContainer()
+        this.add(digitContainer)
+
+        //make digits look round by fading them
+        this.add(new DrawGlowMask(x, y - ~~(charHeight / 2) + 2, charWidth * digitCount, charHeight + ~~(charHeight / 2)))
 
         while (1) {
 
@@ -112,7 +128,7 @@ export default class DrawCounter extends Draw {
                 let str = `  (${counterValue} @${counterOffset})  `
                 let carry = true
 
-                this.clear()
+                digitContainer.clear()
                 for (let digitNr = digitCount - 1; digitNr >= 0; digitNr--) {
                     const divided = ~~(counterValue / div)
                     const digitValue = divided % 10
@@ -126,7 +142,7 @@ export default class DrawCounter extends Draw {
 
                     str = `.${digitValue}@${offset}` + str
 
-                    this.add(digitPixels[digitNr][(digitValue * charHeight) + offset])
+                    digitContainer.add(digitPixels[digitNr][(digitValue * charHeight) + offset])
 
                     div = div * 10
                 }
