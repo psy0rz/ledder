@@ -38,6 +38,40 @@ export default class DrawCounter extends Draw {
     }
 
 
+    //over every digit of the counter we pre-generate all possible offsets (for the rotate effect)
+    private prepareDigits(x, y, charWidth, charHeight, digitCount, font) {
+        const wheelHeight = 10 * charHeight
+
+        //prepare the digits
+        const digitPixels: Array<Array<PixelContainer>> = []
+
+        for (let digitNr = 0; digitNr < digitCount; digitNr++) {
+            digitPixels[digitNr] = []
+            const charX = x + (digitNr * charWidth)
+            for (let offset = 0; offset < wheelHeight; offset++) {
+                const container = new PixelContainer()
+
+                digitPixels[digitNr][offset] = container
+
+                const charY = y + (offset % charHeight)
+                const digitValue = ~~(offset / charHeight)
+
+                let aboveDigitValue=(digitValue+10-1)%10
+                let belowDigitValue=(digitValue+1)%10
+
+                //character above
+                container.add(new DrawText(charX, charY+charHeight, font, aboveDigitValue.toString(), colorRed))
+                //character
+                container.add(new DrawText(charX, charY, font, digitValue.toString(), colorRed))
+                //character below
+                container.add(new DrawText(charX, charY-charHeight, font, belowDigitValue.toString(), colorRed))
+            }
+        }
+
+        return (digitPixels)
+
+    }
+
     private async run(scheduler: Scheduler, controls: ControlGroup, x, y, digitCount = 5) {
 
         const font = fontSelect(controls)
@@ -45,24 +79,7 @@ export default class DrawCounter extends Draw {
         const charHeight = font.height + 1
         const charWidth = 8
 
-        // const wheel = '0123456789'
-        const wheelHeight = 10 * charHeight
-        // let text = []
-
-        //prepare the digits
-        const digitPixels: Array<Array<PixelContainer>> = []
-        for (let digitNr = 0; digitNr < digitCount; digitNr++) {
-            digitPixels[digitNr] = []
-            const charX = x+(digitNr * charWidth)
-            for (let offset = 0; offset < wheelHeight; offset++) {
-                const container = new PixelContainer()
-                digitPixels[digitNr][offset] = container
-                const charY = y+(offset % charHeight)
-                const digitValue = ~~(offset / charHeight)
-                container.add(new DrawText(charX, charY, font, digitValue.toString(), colorRed))
-            }
-        }
-
+        const digitPixels = this.prepareDigits(x, y, charWidth, charHeight, digitCount, font)
 
         while (1) {
 
@@ -88,7 +105,7 @@ export default class DrawCounter extends Draw {
                 let carry = true
 
                 this.clear()
-                for (let digitNr = digitCount-1; digitNr >=0; digitNr--) {
+                for (let digitNr = digitCount - 1; digitNr >= 0; digitNr--) {
                     const divided = ~~(counterValue / div)
                     const digitValue = divided % 10
 
@@ -101,11 +118,11 @@ export default class DrawCounter extends Draw {
 
                     str = `.${digitValue}@${offset}` + str
 
-                    this.add(digitPixels[digitNr][(digitValue*charHeight)+offset])
+                    this.add(digitPixels[digitNr][(digitValue * charHeight) + offset])
 
                     div = div * 10
                 }
-                console.log(str)
+                // console.log(str)
             }
             await scheduler.delay(1)
         }
