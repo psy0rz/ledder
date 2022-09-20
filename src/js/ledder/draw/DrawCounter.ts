@@ -31,7 +31,7 @@ export default class DrawCounter extends Draw {
         // this.targetValue = 100.5
         // this.startValue = 0
 
-        this.speedPercentageControl = controls.value("Rotate speed", speedPercentage, 0, 0.025 , 0.0001)
+        this.speedPercentageControl = controls.value("Rotate speed", speedPercentage, 0, 0.025, 0.0001)
         this.completedPercentage = 0
 
         if (this.running === undefined) {
@@ -45,7 +45,6 @@ export default class DrawCounter extends Draw {
     private prepareDigits(x, y, charWidth, charHeight, digitCount, font, colorCounter, colorDivider) {
         const wheelHeight = 10 * charHeight
 
-        //prepare the digits
         const digitPixels: Array<Array<PixelContainer>> = []
 
         for (let digitNr = 0; digitNr < digitCount; digitNr++) {
@@ -54,14 +53,11 @@ export default class DrawCounter extends Draw {
             for (let offset = 0; offset < wheelHeight; offset++) {
                 const container = new PixelContainer()
 
-                digitPixels[digitNr][offset] = container
-
                 const charY = y + (offset % charHeight)
                 const digitValue = ~~(offset / charHeight)
 
                 let aboveDigitValue = (digitValue + 10 - 1) % 10
                 let belowDigitValue = (digitValue + 1) % 10
-
 
                 //character above
                 container.add(new DrawText(charX, charY + charHeight, font, aboveDigitValue.toString(), colorCounter))
@@ -76,10 +72,12 @@ export default class DrawCounter extends Draw {
                 container.add(new DrawBox(charX, charY - charHeight, charWidth, 1, colorDivider))
 
                 //draw divider between digits
-                container.add(new DrawBox(charX-1, charY - charHeight, 1, charHeight*3, colorDivider))
+                container.add(new DrawBox(charX - 1, charY - charHeight, 1, charHeight * 3, colorDivider))
 
                 //crop stuff thats outside
-                container.crop({ xMin: x, yMin: y, xMax: x+digitCount*charWidth, yMax: y+font.height})
+                container.crop({xMin: x, yMin: y, xMax: x + digitCount * charWidth, yMax: y + font.height})
+
+                digitPixels[digitNr][offset] = container
 
             }
         }
@@ -95,8 +93,8 @@ export default class DrawCounter extends Draw {
         const charHeight = font.height
         const charWidth = 7
 
-        const controlDigitColor=controls.color("Digit color", 255,0x90,0)
-        const controlDividerColor=controls.color("Divider color", 0x80,0x80,0x80)
+        const controlDigitColor = controls.color("Digit color", 255, 0x90, 0)
+        const controlDividerColor = controls.color("Divider color", 0x80, 0x80, 0x80)
 
         const digitPixels = this.prepareDigits(x, y, charWidth, charHeight, digitCount, font, controlDigitColor, controlDividerColor)
 
@@ -104,7 +102,12 @@ export default class DrawCounter extends Draw {
         this.add(digitContainer)
 
         //make digits look round by fading them
-        this.add(new DrawGlowMask(x, y - ~~(charHeight / 2) + 2, charWidth * digitCount, charHeight + ~~(charHeight / 2)))
+        const startAlphaControl = controls.value("Counter dim %", 80, 0, 100, 1, true)
+        const middleAlphaControl = controls.value("Counter dim middle %", 50, 0, 100, 1, true)
+
+
+        if (startAlphaControl.value != 0)
+            this.add(new DrawGlowMask(x, y, charWidth * digitCount, charHeight + 1, startAlphaControl.value / 100, middleAlphaControl.value / 100))
 
         while (1) {
 
