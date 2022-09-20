@@ -7,6 +7,7 @@ import {colorRed} from "../Colors.js"
 import Draw from "../Draw.js"
 import FxFlameout from "../fx/FxFlameout.js"
 import {next} from "dom7"
+import {easeInOutCubic} from "../util.js"
 
 export default class DrawCounter extends Draw {
     private targetValue: number
@@ -17,7 +18,7 @@ export default class DrawCounter extends Draw {
     private completedPercentage: number
 
 
-    public async update(scheduler: Scheduler, controls: ControlGroup, x, y, updateValue = 0, speedPercentage = 0.01, digitCount = 5) {
+    public async update(scheduler: Scheduler, controls: ControlGroup, x, y, updateValue = 0, speedPercentage = 0.001, digitCount = 5) {
 
         if (this.targetValue === undefined)
             this.targetValue = 0
@@ -27,8 +28,8 @@ export default class DrawCounter extends Draw {
         this.targetValue = updateValue
 
         //XXX TEST
-        this.targetValue = 10
-        this.startValue = 0
+        // this.targetValue = 10
+        // this.startValue = 0
 
         this.speedPercentage = speedPercentage
         this.completedPercentage = 0
@@ -54,13 +55,15 @@ export default class DrawCounter extends Draw {
 
         while (1) {
 
-            this.completedPercentage = this.completedPercentage + this.speedPercentage
+            if (this.completedPercentage != 1) {
 
-            if (this.completedPercentage <= 1) {
+                //make sure we end on exactly 100%
+                this.completedPercentage = this.completedPercentage + this.speedPercentage
+                if (this.completedPercentage>1)
+                    this.completedPercentage=1
 
                 //current value we're at according to our easing function:
-                let currentValue = this.startValue + ((this.targetValue - this.startValue) * this.completedPercentage)
-                console.log(currentValue)
+                let currentValue = this.startValue + ((this.targetValue - this.startValue) * easeInOutCubic( this.completedPercentage))
 
                 //split up the float currentValue into a integer counterValue and counterOffset
                 let counterValue = ~~currentValue
