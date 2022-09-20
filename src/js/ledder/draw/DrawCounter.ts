@@ -27,8 +27,8 @@ export default class DrawCounter extends Draw {
         this.targetValue = updateValue
 
         //XXX TEST
-        this.targetValue=10
-        this.startValue=0
+        this.targetValue = 10
+        this.startValue = 0
 
         this.speedPercentage = speedPercentage
         this.completedPercentage = 0
@@ -51,54 +51,33 @@ export default class DrawCounter extends Draw {
         const wheelHeight = wheel.length * charHeight
         let text = []
 
-        //always start at zero
-        let counterValue = 0
-
-        //offset of last wheel, for the all important rotating counter effect
-        let digitOffset = 0
-
-
-        //step counter with a certain stepsize and direction. to increase by a whole value use charHeight as stepSize.
-        function step(stepSize) {
-            const oldOffset = digitOffset
-            digitOffset = (digitOffset + stepSize) % charHeight
-
-            //number of full digit steps
-            counterValue = counterValue + ~~(stepSize / charHeight)
-
-            //did we loop and filled a partial digit?
-            if (stepSize > 0 && digitOffset < oldOffset)
-                counterValue = counterValue + 1
-            else if (stepSize < 0 && digitOffset > oldOffset)
-                counterValue = counterValue - 1
-
-        }
 
         while (1) {
 
             this.completedPercentage = this.completedPercentage + this.speedPercentage
 
-            if (this.completedPercentage < 1) {
+            if (this.completedPercentage <= 1) {
 
                 //current value we're at according to our easing function:
                 let currentValue = this.startValue + ((this.targetValue - this.startValue) * this.completedPercentage)
                 console.log(currentValue)
 
-                //which step size is needed to get there?
-                step(~~((currentValue - counterValue) * charHeight))
-                // console.log(currentValue, digitOffset)
+                //split up the float currentValue into a integer counterValue and counterOffset
+                let counterValue = ~~currentValue
+                let counterOffset = ~~((currentValue % 1) * charHeight)
 
                 //print digits
                 let div = 1
-                let str = `  (${counterValue} @${digitOffset})  `
+                let str = `  (${counterValue} @${counterOffset})  `
                 let carry = true
-                for (let digitNr = 0; digitNr < digitCount; digitNr++) {
+                for (let digitNr = 0; digitNr < digitCount; digitNr++)
+                 {
                     const divided = ~~(counterValue / div)
                     const digitValue = divided % 10
 
                     let offset = 0
                     if (carry) {
-                        offset = digitOffset
+                        offset = counterOffset
                         if (digitValue != 9)
                             carry = false
                     }
