@@ -46,12 +46,12 @@ export default class Template extends Animation {
                         try {
                             const json = JSON.parse(data)
                             if (first) {
-                                await counter.update(scheduler, controls, 33, 0, ~~json.USD.last - random(-100,100))
+                                await counter.update(scheduler, controls, 33, 0, ~~json.USD.last - random(-100,100), 0.0005)
                                 first=false
                             }
 
                             // await counter.update(scheduler, controls, 33,4,~~json.USD.last)
-                            await counter.update(scheduler, controls, 33, 0, ~~json.USD.last - random(-100,100))
+                            await counter.update(scheduler, controls, 33, 0, ~~json.USD.last, 0.0005 )
                             console.log(json.USD.last)
 
 
@@ -68,7 +68,7 @@ export default class Template extends Animation {
 
         update()
 
-        scheduler.interval(20000 / display.frameMs, () => update())
+        scheduler.interval(30000 / display.frameMs, () => update())
 
 
   //      new FxFlames(scheduler, controls.group("Flames")).run(label, flameContainer)
