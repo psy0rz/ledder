@@ -2,7 +2,7 @@ import {Scheduler} from "../Scheduler.js"
 import {ControlGroup} from "../ControlGroup.js"
 import {PixelContainer} from "../PixelContainer.js"
 import DrawText from "./DrawText.js"
-import {fontSelect} from "../fonts.js"
+import {fonts, fontSelect} from "../fonts.js"
 import {colorRed, colorWhite} from "../Colors.js"
 import Draw from "../Draw.js"
 import {easeInOutCubic} from "../util.js"
@@ -17,28 +17,6 @@ export default class DrawCounter extends Draw {
 
     private completedPercentage: number
     private speedPercentageControl: ControlValue
-
-
-    public async update(scheduler: Scheduler, controls: ControlGroup, x, y, updateValue = 0, speedPercentage = 0.001, digitCount = 5) {
-
-        if (this.targetValue === undefined) this.targetValue = 0
-
-
-        this.startValue = this.targetValue
-        this.targetValue = updateValue
-
-        // //XXX TEST
-        // this.targetValue = 100.5
-        // this.startValue = 0
-
-        this.speedPercentageControl = controls.value("Rotate speed", speedPercentage, 0, 0.025, 0.0001)
-        this.completedPercentage = 0
-
-        if (this.running === undefined) {
-            this.run(scheduler, controls, x, y, digitCount)
-            this.running = true
-        }
-    }
 
 
     //over every digit of the counter we pre-generate all possible offsets (for the rotate effect)
@@ -86,15 +64,17 @@ export default class DrawCounter extends Draw {
 
     }
 
-    private async run(scheduler: Scheduler, controls: ControlGroup, x, y, digitCount = 5) {
+    public async run(scheduler: Scheduler, controls: ControlGroup, x, y, digitCount = 5, speedPercentage=0.002) {
 
-        const font = fontSelect(controls)
+        const font = fonts.C64
+        font.load()
 
         const charHeight = font.height
         const charWidth = 7
 
         const controlDigitColor = controls.color("Digit color", 255, 0x90, 0)
         const controlDividerColor = controls.color("Divider color", 0x80, 0x80, 0x80)
+        const controlSpeedPercentage = controls.value("Rotate speed", speedPercentage, 0, 0.025, 0.0001)
 
         const digitPixels = this.prepareDigits(x, y, charWidth, charHeight, digitCount, font, controlDigitColor, controlDividerColor)
 
@@ -105,16 +85,17 @@ export default class DrawCounter extends Draw {
         const startAlphaControl = controls.value("Counter dim %", 80, 0, 100, 1, true)
         const middleAlphaControl = controls.value("Counter dim middle %", 50, 0, 100, 1, true)
 
-
         if (startAlphaControl.value != 0)
             this.add(new DrawGlowMask(x, y, charWidth * digitCount, charHeight + 1, startAlphaControl.value / 100, middleAlphaControl.value / 100))
 
-        while (1) {
+        this.update(0)
 
+        //main loop
+        while (1) {
             if (this.completedPercentage != 1) {
 
                 //make sure we end on exactly 100%
-                this.completedPercentage = this.completedPercentage + this.speedPercentageControl.value
+                this.completedPercentage = this.completedPercentage + controlSpeedPercentage.value
 
                 if (this
 
@@ -151,9 +132,30 @@ export default class DrawCounter extends Draw {
                     div = div * 10
                 }
                 // console.log(str)
+                await scheduler.delay(1)
             }
-            await scheduler.delay(1)
+            else
+            {
+                await scheduler.delay(10)
+            }
         }
+    }
+
+
+    public update(updateValue) {
+
+        if (this.targetValue === undefined)
+            this.targetValue = 0
+
+        this.startValue = this.targetValue
+        this.targetValue = updateValue
+
+        // //XXX TEST
+        // this.targetValue = 100.5
+        // this.startValue = 0
+
+        this.completedPercentage = 0
 
     }
+
 }

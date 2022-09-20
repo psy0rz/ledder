@@ -27,6 +27,9 @@ export default class Template extends Animation {
         const counter = new DrawCounter()
         display.add(counter)
 
+        counter.run(scheduler, controls, 0,0,5, 0.001)
+
+
         // const label=new DrawText(0,0, fontSelect(controls), "BTC$", new Color(55,55,55,1))
         // display.add(label)
         // const flameContainer=new PixelContainer()
@@ -34,28 +37,22 @@ export default class Template extends Animation {
 
         let first = true
 
-         function update() {
+        function update() {
 
             cryptoFirstLast('BTCUSDT', async (symbol, first, last) => {
 
                 if (first) {
-                    await counter.update(scheduler, controls, 3, 3, ~~first, 0.002)
+                    counter.update(~~first)
                     first = false
                 }
 
-                await counter.update(scheduler, controls, 3, 3, ~~last, 0.002)
+                counter.update(~~last)
             })
-
-
         }
 
         update()
 
-        scheduler.interval(30000 / display.frameMs, () =>  update())
-
-
-        //      new FxFlames(scheduler, controls.group("Flames")).run(label, flameContainer)
-
+        scheduler.interval(30000 / display.frameMs, () => update())
 
     }
 }
