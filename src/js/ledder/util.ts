@@ -1,4 +1,5 @@
 //led utils
+import * as https from "https"
 
 
 /**
@@ -8,14 +9,14 @@
  * @param max
  * @param amount Slimness of the distirbution. 1 is uniform random()
  **/
-export function randomGaussian(min, max, amount=3) {
-    var rand = 0;
+export function randomGaussian(min, max, amount = 3) {
+    var rand = 0
 
     for (var i = 0; i < amount; i += 1) {
-        rand += Math.random();
+        rand += Math.random()
     }
 
-    rand=rand / amount;
+    rand = rand / amount
     return ~~(rand * (max - min + 1) + min)
 }
 
@@ -46,14 +47,14 @@ export function randomFloat(min, max) {
  * @param max
  * @param amount Slimness of the distirbution. 1 is uniform random()
  */
-export function randomFloatGaussian(min, max, amount=3) {
-    var rand = 0;
+export function randomFloatGaussian(min, max, amount = 3) {
+    var rand = 0
 
     for (var i = 0; i < amount; i += 1) {
-        rand += Math.random();
+        rand += Math.random()
     }
 
-    rand=rand / amount;
+    rand = rand / amount
     return (rand * (max - min) + min)
 }
 
@@ -70,7 +71,7 @@ export function numberCheck(desc, number, min = undefined, max = undefined) {
 
 //glow firepixel intesity between min/max (inclusive), with specified "wildness"
 //return new value
-export function glow(current:number, min:number, max:number, wildness:number, gausian=3) {
+export function glow(current: number, min: number, max: number, wildness: number, gausian = 3) {
 
     current = current + randomGaussian(-wildness, wildness, gausian)
 
@@ -84,5 +85,32 @@ export function glow(current:number, min:number, max:number, wildness:number, ga
 
 //https://easings.net/#easeInOutCubic
 export function easeInOutCubic(x: number): number {
-    return x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
+    return x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2
+}
+
+//currently gets it from binance (free open api)
+export  function cryptoFirstLast(symbol = 'BTCUSDT', callback) {
+
+    try {
+        const url = `https://api2.binance.com/api/v3/ticker/24hr?symbol=${symbol}&type=mini`
+        https.get(url, (res) => {
+            // console.log(res)
+            let data = ""
+            res.on('data', (d) => {
+                data += d.toString()
+            })
+
+            res.on('end', () => {
+                try {
+                    const json = JSON.parse(data)
+                    console.log(json)
+                    callback(symbol, parseFloat(json.openPrice), parseFloat(json.lastPrice))
+                } catch (e) {
+                    console.error(e)
+                }
+            })
+        })
+    } catch (e) {
+        console.error(e)
+    }
 }

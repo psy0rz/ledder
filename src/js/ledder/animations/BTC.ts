@@ -3,15 +3,16 @@ import {Display} from "../Display.js"
 import {Scheduler} from "../Scheduler.js"
 import {ControlGroup} from "../ControlGroup.js"
 import DrawCounter from "../draw/DrawCounter.js"
-import * as https from "https"
 import DrawText from "../draw/DrawText.js"
 import {fontSelect} from "../fonts.js"
 import {Color} from "../Color.js"
 import FxFlames from "../fx/FxFlames.js"
 import {PixelContainer} from "../PixelContainer.js"
 import Starfield from "./Starfield.js"
-import {random} from "../util.js"
+import {cryptoFirstLast, random} from "../util.js"
 // curl -H "X-CMC_PRO_API_KEY: ..." -H "Accept: application/json" -d "" -G https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest?symbol=BTC,ETH
+//https://cryptingup.com/api/markets
+//https://api2.binance.com/api/v3/ticker/24hr
 
 export default class Template extends Animation {
     static category = "Misc"
@@ -31,47 +32,29 @@ export default class Template extends Animation {
         // const flameContainer=new PixelContainer()
         // display.add(flameContainer)
 
-        let first=true
-        function update() {
-            try {
-                const url = 'https://blockchain.info/ticker'
-                https.get(url, (res) => {
-                    // console.log(res)
-                    let data = ""
-                    res.on('data', (d) => {
-                        data += d.toString()
-                    })
+        let first = true
 
-                    res.on('end', async () => {
-                        try {
-                            const json = JSON.parse(data)
-                            if (first) {
-                                await counter.update(scheduler, controls, 3, 3, ~~json.USD.last - random(-100,100), 0.002)
-                                first=false
-                            }
+         function update() {
 
-                            // await counter.update(scheduler, controls, 33,4,~~json.USD.last)
-                            await counter.update(scheduler, controls, 3, 3, ~~json.USD.last, 0.002 )
-                            console.log(json.USD.last)
+            cryptoFirstLast('BTCUSDT', async (symbol, first, last) => {
+
+                if (first) {
+                    await counter.update(scheduler, controls, 3, 3, ~~first, 0.002)
+                    first = false
+                }
+
+                await counter.update(scheduler, controls, 3, 3, ~~last, 0.002)
+            })
 
 
-
-                        } catch (e) {
-                            console.error(e)
-                        }
-                    })
-                })
-            } catch (e) {
-                console.error(e)
-            }
         }
 
         update()
 
-        scheduler.interval(30000 / display.frameMs, () => update())
+        scheduler.interval(30000 / display.frameMs, () =>  update())
 
 
-  //      new FxFlames(scheduler, controls.group("Flames")).run(label, flameContainer)
+        //      new FxFlames(scheduler, controls.group("Flames")).run(label, flameContainer)
 
 
     }
