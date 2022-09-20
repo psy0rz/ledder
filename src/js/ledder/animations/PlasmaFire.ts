@@ -8,7 +8,7 @@ import { glow, randomGaussian } from "../util.js";
 import { colorBlack } from "../Colors.js";
 
 
-export default class BertrikFire extends Animation {
+export default class PlasmaFire extends Animation {
     static category = "Fire"
     static title = "Plasma Fire"
     static description = "Based on Fire, based on <a href='https://github.com/bertrik/nyancat/blob/master/fire.c'>this.</a>"

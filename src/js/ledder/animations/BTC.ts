@@ -10,6 +10,7 @@ import FxFlames from "../fx/FxFlames.js"
 import {PixelContainer} from "../PixelContainer.js"
 import Starfield from "./Starfield.js"
 import {cryptoFirstLast, random} from "../util.js"
+import BertrikFire from "./BertrikFire.js"
 // curl -H "X-CMC_PRO_API_KEY: ..." -H "Accept: application/json" -d "" -G https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest?symbol=BTC,ETH
 //https://cryptingup.com/api/markets
 //https://api2.binance.com/api/v3/ticker/24hr
@@ -21,22 +22,27 @@ export default class Template extends Animation {
     static presetDir = "BTC"
 
     async run(display: Display, scheduler: Scheduler, controls: ControlGroup) {
-        if (controls.group("stars").switch("enabled", false).enabled)
-            new Starfield().run(display, scheduler, controls.group("stars"))
+        // if (controls.group("stars").switch("enabled", false).enabled)
+
+        const flames=new BertrikFire()
+        flames.run(display, scheduler,controls)
+
+        const stars=new Starfield()
+        stars.run(display, scheduler, controls.group("stars"))
 
         const counter = new DrawCounter()
         display.add(counter)
 
-        counter.run(scheduler, controls, 0,0,5, 0.001)
+        counter.run(scheduler, controls, 40,0,5, 0.001)
 
 
-        // const label=new DrawText(0,0, fontSelect(controls), "BTC$", new Color(55,55,55,1))
-        // display.add(label)
-        // const flameContainer=new PixelContainer()
-        // display.add(flameContainer)
+        const label=new DrawText(0,0, fontSelect(controls), "BTC$", controls.color('Text color'))
+        display.add(label)
+
+
+
 
         let first = true
-
         function update() {
 
             cryptoFirstLast('BTCUSDT', async (symbol, first, last) => {

@@ -27,22 +27,22 @@ class Star {
 
     }
 
-    update(controls:ControlGroup) {
+    update(baseSpeed, acceleration, starOffset) {
         if (this.z == 1)
             return false
 
         this.z = this.z +
-            controls.value("Base speed", 0.001, 0.00001,0.1,0.0001).value +
-            (this.z* controls.value("Accelration", 0.03, 0, 0.1, 0.0001).value)
+            baseSpeed +
+            (this.z * acceleration)
         if (this.z > 1)
             this.z = 1
-        this.p.color.a = this.z - (controls.value("Star offset", 0.1, 0,1,0.001).value)
+        this.p.color.a = this.z - (starOffset)
         // this.p.color.a = this.z
-        if (this.p.color.a<0)
-            this.p.color.a=0
+        if (this.p.color.a < 0)
+            this.p.color.a = 0
 
-        this.p.color.r=255*this.z
-        this.p.color.g=255*this.z
+        this.p.color.r = 255 * this.z
+        this.p.color.g = 255 * this.z
 
         this.p.x = this.xStart + (this.xEnd - this.xStart) * this.z
         this.p.y = this.yStart + (this.yEnd - this.yStart) * this.z
@@ -69,10 +69,15 @@ export default class Starfield extends Animation {
 
         let stars = new Set<Star>()
 
+
+        const baseSpeedControl = controls.value("Base speed", 0.001, 0.00001, 0.1, 0.0001)
+        const accelerationControl = controls.value("Acceleration", 0.03, 0, 0.1, 0.0001)
+        const starOffsetControl=controls.value("Star offset", 0.1, 0, 1, 0.001)
+
         //move all
         scheduler.interval(1, () => {
             for (const star of stars) {
-                if (!star.update(controls))
+                if (!star.update(baseSpeedControl.value, accelerationControl.value, starOffsetControl.value))
                     stars.delete(star)
 
             }
@@ -93,8 +98,8 @@ export default class Starfield extends Animation {
             let yEnd
             const side = random(0, 3)
 
-            let xOffset=0;
-            let yOffset=0
+            let xOffset = 0
+            let yOffset = 0
 
             if (side == 0) {
                 xEnd = -1
@@ -114,7 +119,7 @@ export default class Starfield extends Animation {
                 // yOffset=random(0,2)
             }
 
-            const star = new Star(xStart + xOffset, yStart +yOffset, xEnd, yEnd)
+            const star = new Star(xStart + xOffset, yStart + yOffset, xEnd, yEnd)
 
             c.add(star.p)
 

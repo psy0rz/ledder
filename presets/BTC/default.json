@@ -8,6 +8,18 @@
   "stars": {
    "enabled": {
     "enabled": false
+   },
+   "Creation interval": {
+    "value": 5
+   },
+   "Base speed": {
+    "value": 0.001
+   },
+   "Accelration": {
+    "value": 0.03
+   },
+   "Star offset": {
+    "value": 0.1
    }
   },
   "Font": {
@@ -76,6 +88,33 @@
   },
   "Speedfactor": {
    "value": 100
+  },
+  "Digit color": {
+   "r": 255,
+   "g": 144,
+   "b": 0,
+   "a": 1
+  },
+  "Divider color": {
+   "r": 128,
+   "g": 128,
+   "b": 128,
+   "a": 1
+  },
+  "Rotate speed": {
+   "value": 0.001
+  },
+  "Counter dim %": {
+   "value": 80
+  },
+  "Counter dim middle %": {
+   "value": 50
+  },
+  "Text color": {
+   "r": 128,
+   "g": 128,
+   "b": 128,
+   "a": 1
   }
  }
 }
