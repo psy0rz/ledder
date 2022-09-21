@@ -11,7 +11,7 @@ export default class Template extends Animation {
     static category = "Misc"
     static title = "Haxogreen"
     static description = "blabla"
-    static presetDir = "Misc"
+    static presetDir = "Haxogreen"
 
     async run(display: Display, scheduler: Scheduler, controls: ControlGroup) {
 

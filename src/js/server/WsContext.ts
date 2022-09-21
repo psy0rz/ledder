@@ -71,6 +71,7 @@ export class WsContext {
         if (this.runner) {
             this.started=false
             this.runner.stop()
+            this.runner=undefined
             clearInterval(this.statsInterval)
         }
     }

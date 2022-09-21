@@ -33,10 +33,12 @@ export default class Template extends Animation {
         const counter = new DrawCounter()
         display.add(counter)
 
-        counter.run(scheduler, controls, 40,0,5, 0.001)
+        const y=~~(display.height/2)-4
+        const digitCount=6
+        counter.run(scheduler, controls, display.width-(digitCount*7),y,digitCount, 0.001)
 
 
-        const label=new DrawText(0,0, fontSelect(controls), "BTC$", controls.color('Text color'))
+        const label=new DrawText(0,y, fontSelect(controls), "BTC$", controls.color('Text color'))
         display.add(label)
 
 

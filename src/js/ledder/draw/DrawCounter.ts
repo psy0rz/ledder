@@ -121,12 +121,18 @@ export default class DrawCounter extends Draw {
                     const divided = ~~(counterValue / div)
                     const digitValue = divided % 10
 
+
                     let offset = 0
 
                     if (carry) {
                         offset = counterOffset
                         if (digitValue != 9) carry = false
                     }
+
+                    //prevent leading zeros
+                    if (offset==0 && divided==0 && digitNr< digitCount-1)
+                        break
+
 
                     str = `.${digitValue}@${offset}` + str
 
