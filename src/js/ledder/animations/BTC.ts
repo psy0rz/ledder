@@ -24,8 +24,8 @@ export default class Template extends Animation {
     async run(display: Display, scheduler: Scheduler, controls: ControlGroup) {
         // if (controls.group("stars").switch("enabled", false).enabled)
 
-        const flames=new BertrikFire()
-        flames.run(display, scheduler,controls)
+        // const flames=new BertrikFire()
+        // flames.run(display, scheduler,controls)
 
         const stars=new Starfield()
         stars.run(display, scheduler, controls.group("stars"))
@@ -42,14 +42,14 @@ export default class Template extends Animation {
 
 
 
-        let first = true
+        let init = true
         function update() {
 
             cryptoFirstLast('BTCUSDT', async (symbol, first, last) => {
 
-                if (first) {
+                if (init) {
                     counter.update(~~first)
-                    first = false
+                    init = false
                 }
 
                 counter.update(~~last)

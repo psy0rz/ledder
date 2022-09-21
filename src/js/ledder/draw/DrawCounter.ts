@@ -5,7 +5,7 @@ import DrawText from "./DrawText.js"
 import {fonts, fontSelect} from "../fonts.js"
 import {colorRed, colorWhite} from "../Colors.js"
 import Draw from "../Draw.js"
-import {easeInOutCubic} from "../util.js"
+import {easeInOutCubic, easeInOutQuad, easeInOutQuart, easeInOutSine} from "../util.js"
 import DrawBox from "./DrawBox.js"
 import DrawGlowMask from "./DrawGlowMask.js"
 import {ControlValue} from "../ControlValue.js"
@@ -102,7 +102,10 @@ export default class DrawCounter extends Draw {
                     .completedPercentage > 1) this.completedPercentage = 1
 
                 //current value we're at according to our easing function:
-                let currentValue = this.startValue + ((this.targetValue - this.startValue) * easeInOutCubic(this.completedPercentage))
+                // let currentValue = this.startValue + ((this.targetValue - this.startValue) * easeInOutCubic(this.completedPercentage))
+                let currentValue = this.startValue + ((this.targetValue - this.startValue) * easeInOutSine(this.completedPercentage))
+                // let currentValue = this.startValue + ((this.targetValue - this.startValue) * easeInOutQuad(this.completedPercentage))
+                // let currentValue = this.startValue + ((this.targetValue - this.startValue) * easeInOutQuart(this.completedPercentage))
 
                 //split up the float currentValue into a integer counterValue and counterOffset
                 let counterValue = ~~currentValue
