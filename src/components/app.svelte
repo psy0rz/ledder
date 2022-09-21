@@ -1,5 +1,5 @@
 <App { ...f7params }>
-    <Display/>
+    <Display />
 
     <View  name="categories" restoreScrollTopOnBack={true}>
         <Categories/>
@@ -20,6 +20,7 @@
    // import 'framework7/lite';
 
     import Display from "./Display.svelte"
+
 
     import routes from '../js/web/routes.js';
     import Categories from '../pages/categories.svelte'

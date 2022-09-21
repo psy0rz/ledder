@@ -39,7 +39,8 @@ export class WsContext {
 
     startPreview(presetStore: PresetStore, width, height) {
         if (this.started)
-            return
+            this.stopPreview()
+
         this.started=true
 
         let controls = new ControlGroup('Root controls')
@@ -68,6 +69,7 @@ export class WsContext {
     stopPreview() {
         //should stop because of gc
         if (this.runner) {
+            this.started=false
             this.runner.stop()
             clearInterval(this.statsInterval)
         }

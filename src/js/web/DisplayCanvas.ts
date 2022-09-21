@@ -27,6 +27,8 @@ export class DisplayCanvas {
             box.style.height = this.canvas.height * zoom + 'px';
         }
 
+
+
     }
 
 

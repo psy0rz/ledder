@@ -1,6 +1,5 @@
 <script>
     import {
-
         f7ready,
         List,
         ListGroup,
@@ -12,25 +11,24 @@
         Message,
         Navbar,
         Page,
-        Preloader, Searchbar,
+        Preloader,
+        Searchbar,
         Subnavbar,
-
-
     } from "framework7-svelte"
 
 
-    import { svelteSelectedTitle, svelteLive } from "../js/web/svelteStore.js";
-    import { svelteAnimations } from "../js/web/svelteStore.js";
-    import { runnerBrowser } from "../js/web/RunnerBrowser.js";
-    import { onMount } from "svelte";
-    import { rpc } from "../js/web/RpcClient.js";
-    let search = "";
+    import {svelteAnimations, svelteLive, svelteSelectedTitle} from "../js/web/svelteStore.js"
+    import {runnerBrowser} from "../js/web/RunnerBrowser.js"
+    import {onMount} from "svelte"
+    import {rpc} from "../js/web/RpcClient.js"
+
+    let search = ""
 
     onMount(() => {
         f7ready(() => {
-            runnerBrowser.refreshAnimationList();
-        });
-    });
+            runnerBrowser.refreshAnimationList()
+        })
+    })
 
 
 </script>
@@ -38,54 +36,54 @@
 <Page name="categories">
     <Navbar title="Animations" subtitle={$svelteSelectedTitle}>
         <Subnavbar inner={false}>
-            <Menu >
+            <Menu>
                 <MenuItem
-                    iconMd="material:settings"
-                    href="/settings"
-                    title="Settings"
+                        iconMd="material:settings"
+                        href="/settings"
+                        title="Settings"
                 />
                 <MenuItem
-                    iconMd="material:tune"
-                    href="/controls"
-                    title="Controls"
+                        iconMd="material:tune"
+                        href="/controls"
+                        title="Controls"
                 />
                 <MenuItem link
-                    iconMd="material:upload"
-                    title="Activate animation"
-                    onClick={() => runnerBrowser.send()}
+                          iconMd="material:upload"
+                          title="Activate animation"
+                          onClick={() => runnerBrowser.send()}
                 />
                 <MenuItem link
-                    iconMd="material:radio_button_checked"
-                    class={$svelteLive ? "color-yellow" : ""}
-                    title="Update live"
-                    onClick={() => {
+                          iconMd="material:radio_button_checked"
+                          class={$svelteLive ? "color-yellow" : ""}
+                          title="Update live"
+                          onClick={() => {
                         $svelteLive = !$svelteLive;
                         if ($svelteLive) runnerBrowser.send();
                     }}
                 />
                 <MenuItem dropdown link
-                tite="Preview size"
-                  iconMd="material:view_comfy"
+                          tite="Preview size"
+                          iconMd="material:view_comfy"
                 >
                     <MenuDropdown>
-                    <MenuDropdownItem link text="75x8" />
-                    <MenuDropdownItem link text="72x18" />
-                    <MenuDropdownItem link text="75x16" />
-                    <MenuDropdownItem divider />
-                    <MenuDropdownItem link text="Disable preview" />
+                        <MenuDropdownItem link text="75x8" on:click={ ()=>runnerBrowser.setSize(75, 8, 8)}/>
+                        <MenuDropdownItem link text="72x18" on:click={ ()=>runnerBrowser.setSize(72, 18, 8)}/>
+                        <MenuDropdownItem link text="75x16" on:click={ ()=>runnerBrowser.setSize(75, 16, 8)}/>
+                        <MenuDropdownItem divider/>
+                        <MenuDropdownItem link text="Disable preview" on:click={ ()=>runnerBrowser.stopPreview()}/>
                     </MenuDropdown>
                 </MenuItem>
             </Menu>
             <Searchbar
-                bind:value={search}
-                searchContainer=".search-list"
-                searchIn=".item-title"
+                    bind:value={search}
+                    searchContainer=".search-list"
+                    searchIn=".item-title"
             />
         </Subnavbar>
     </Navbar>
 
     {#if $svelteAnimations.length === 0}
-        <Preloader />
+        <Preloader/>
         <Message>Loading list...</Message>
     {:else}
         <List mediaList ul={false}>
@@ -93,34 +91,34 @@
                 <ListGroup>
                     <ListItem title={animation.title} groupTitle>
                         <img
-                            src="{rpc.url}/{animation.previewFile}"
-                            slot="media"
-                            class="ledder-preview-image"
+                                src="{rpc.url}/{animation.previewFile}"
+                                slot="media"
+                                class="ledder-preview-image"
                         />
                     </ListItem>
 
                     <ListItem
-                        title={animation.title}
-                        text="{animation.description} ({animation.name})"
-                        href="/{animation.name}"
+                            title={animation.title}
+                            text="{animation.description} ({animation.name})"
+                            href="/{animation.name}"
                     >
                         <img
-                            src="{rpc.url}/{animation.previewFile}"
-                            slot="media"
-                            class="ledder-preview-image"
+                                src="{rpc.url}/{animation.previewFile}"
+                                slot="media"
+                                class="ledder-preview-image"
                         />
                     </ListItem>
                     {#each animation.presets as preset}
                         <ListItem
-                            title={preset.name}
-                            subtitle={preset.title}
-                            text={preset.description}
-                            href="/{animation.name}/{preset.name}"
+                                title={preset.name}
+                                subtitle={preset.title}
+                                text={preset.description}
+                                href="/{animation.name}/{preset.name}"
                         >
                             <img
-                                src="{rpc.url}/{preset.previewFile}"
-                                slot="media"
-                                class="ledder-preview-image"
+                                    src="{rpc.url}/{preset.previewFile}"
+                                    slot="media"
+                                    class="ledder-preview-image"
                             />
                         </ListItem>
                     {/each}

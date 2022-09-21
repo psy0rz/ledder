@@ -4,7 +4,7 @@
 
     import { f7ready } from "framework7-svelte";
 
-    let zoom = 8;
+    export let zoom = 8;
     let width = 75;
     let height = 16;
 

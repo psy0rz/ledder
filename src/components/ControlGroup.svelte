@@ -11,6 +11,8 @@
     import ControlInput from "./ControlInput.svelte";
     import ControlSwitch from "./ControlSwitch.svelte";
     import ControlSelect from "./ControlSelect.svelte";
+
+    //TODO: like this? https://svelte.dev/tutorial/svelte-component
 </script>
 
 {#each Object.values(controlGroup.meta.controls) as control, i (control.meta.name)}
