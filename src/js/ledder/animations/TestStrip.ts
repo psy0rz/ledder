@@ -13,7 +13,6 @@ export default class TestStrip extends Animation {
 
   static title="Strip test"
   static description="To verify functionality of a led strip."
-  static presetDir="Strip test"
 
   async run(display: Display, scheduler: Scheduler, controls: ControlGroup) {
 

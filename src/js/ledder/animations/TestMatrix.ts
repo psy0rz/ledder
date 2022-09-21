@@ -11,7 +11,6 @@ import {PixelContainer} from "../PixelContainer.js";
 export default class TestMatrix extends Animation {
 
     static title = "Matrix test screen"
-    static presetDir = "Matrix test"
     static description = "To verify correct orientation and color configuration of a display"
 
 

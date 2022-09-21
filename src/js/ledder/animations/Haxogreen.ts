@@ -7,11 +7,10 @@ import {fontSelect} from "../fonts.js"
 import DrawText from "../draw/DrawText.js"
 import FxBlink from "../fx/FxBlink.js"
 
-export default class Template extends Animation {
+export default class Haxogreen extends Animation {
     static category = "Misc"
     static title = "Haxogreen"
     static description = "blabla"
-    static presetDir = "Haxogreen"
 
     async run(display: Display, scheduler: Scheduler, controls: ControlGroup) {
 

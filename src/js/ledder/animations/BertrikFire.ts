@@ -11,7 +11,6 @@ export default class BertrikFire extends Animation {
     static category = "Fire"
     static title = "Bertrik"
     static description = "Fire, based on <a href='https://github.com/bertrik/nyancat/blob/master/fire.c'>this.</a>"
-    static presetDir = "BertrikFire";
 
 
     move_fire(display, field, height, decay, maxFlame, glower, moveFactor) {

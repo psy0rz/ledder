@@ -86,12 +86,13 @@ export class PresetStore {
 
      */
     async load(animationClass: typeof Animation, presetName: string):Promise<PresetValues> {
-        return JSON.parse(await readFile(this.presetFilename(animationClass.presetDir, presetName), 'utf8'))
+
+        return JSON.parse(await readFile(this.presetFilename(animationClass.name, presetName), 'utf8'))
     }
 
     async delete(animationClass: typeof Animation, presetName: string) {
-        await rm(this.presetFilename(animationClass.presetDir, presetName))
-        await rm(this.previewFilename(animationClass.presetDir, presetName))
+        await rm(this.presetFilename(animationClass.name, presetName))
+        await rm(this.previewFilename(animationClass.name, presetName))
 
     }
 
@@ -101,7 +102,7 @@ export class PresetStore {
      */
     async save(animationClass: typeof Animation, presetName: string, preset: PresetValues) {
 
-        const presetFileName = this.presetFilename(animationClass.presetDir, presetName)
+        const presetFileName = this.presetFilename(animationClass.name, presetName)
         await createParentDir(presetFileName);
         await writeFile(
             presetFileName,
@@ -117,7 +118,7 @@ export class PresetStore {
         let previewStore = new PreviewStore()
 
 
-        const previewFilename = this.previewFilename(animationClass.presetDir, presetName)
+        const previewFilename = this.previewFilename(animationClass.name, presetName)
         await createParentDir(previewFilename)
         await previewStore.render(previewFilename, animationClass, preset)
     }
@@ -132,10 +133,10 @@ export class PresetStore {
      */
     async updatePresetPreviews(animationClass: typeof Animation, animationMtime: number, force: boolean) {
 
-        const presetNames = await this.scanPresetNames(animationClass.presetDir)
+        const presetNames = await this.scanPresetNames(animationClass.name)
         for (const presetName of presetNames) {
-            const previewFilename = this.previewFilename(animationClass.presetDir, presetName)
-            const presetFilename = this.presetFilename(animationClass.presetDir, presetName)
+            const previewFilename = this.previewFilename(animationClass.name, presetName)
+            const presetFilename = this.presetFilename(animationClass.name, presetName)
             const previewMtime = await getMtime(previewFilename)
             if (force || animationMtime == 0 || previewMtime < animationMtime || previewMtime < await getMtime(presetFilename)) {
                 const preset = await this.load(animationClass, presetName);
@@ -161,7 +162,7 @@ export class PresetStore {
             try {
 
                 let animationClass = await this.loadAnimation(animationName)
-                const previewFilename = this.previewFilename(animationClass.presetDir, "")
+                const previewFilename = this.previewFilename(animationClass.name, "")
                 const animationFilename = path.join("src", "js", "ledder", "animations", animationName + ".js")
                 const animationMtime = await getMtime(animationFilename)
                 if (animationMtime == 0)
@@ -200,10 +201,10 @@ export class PresetStore {
     // Gets stripped list of all presets for animation, and adds previewUrl
     async scanPresetList(animationClass: typeof Animation) {
         let ret = []
-        const presetNames = await this.scanPresetNames(animationClass.presetDir)
+        const presetNames = await this.scanPresetNames(animationClass.name)
         for (const presetName of presetNames) {
             const preset = await this.load(animationClass, presetName);
-            const previewFilename = this.previewFilename(animationClass.presetDir, presetName)
+            const previewFilename = this.previewFilename(animationClass.name, presetName)
 
             let strippedPreset = {
                 title: preset.title,
@@ -228,7 +229,7 @@ export class PresetStore {
                 animationClass = await this.loadAnimation(animationName)
 
 
-                const previewFilename = this.previewFilename(animationClass.presetDir, "");
+                const previewFilename = this.previewFilename(animationClass.name, "");
 
                 let presets = await this.scanPresetList(animationClass)
                 ret.push({

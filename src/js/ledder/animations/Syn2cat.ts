@@ -4,12 +4,11 @@ import {Scheduler} from "../Scheduler.js";
 import {ControlGroup} from "../ControlGroup.js";
 import DrawAsciiArtColor from "../draw/DrawAsciiArtColor.js"
 
-export default class Template extends  Animation
+export default class Syn2Cat extends  Animation
 {
     static category = "Misc"
     static title = "Syn2cat"
     static description = "blabla"
-    static presetDir = "Syn2cat";
 
     async run(display: Display, scheduler: Scheduler, controls: ControlGroup) {
 

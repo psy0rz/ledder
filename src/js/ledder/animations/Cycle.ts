@@ -12,7 +12,6 @@ export default class Template extends Animation {
     static category = "Misc"
     static title = "Cycle stuff"
     static description = ""
-    static presetDir = "Cycle"
 
 
 

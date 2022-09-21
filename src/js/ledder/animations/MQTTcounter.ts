@@ -11,11 +11,10 @@ import {fontSelect} from "../fonts.js"
 import Starfield from "./Starfield.js"
 
 
-export default class Template extends Animation {
+export default class MQTTcounter extends Animation {
     static category = "Misc"
     static title = "mqtt counter"
     static description = "blabla"
-    static presetDir = "mqttcounter"
 
     async run(display: Display, scheduler: Scheduler, controls: ControlGroup) {
 

@@ -15,11 +15,10 @@ import BertrikFire from "./BertrikFire.js"
 //https://cryptingup.com/api/markets
 //https://api2.binance.com/api/v3/ticker/24hr
 
-export default class Template extends Animation {
+export default class BTC extends Animation {
     static category = "Misc"
     static title = "BTC"
     static description = "blabla"
-    static presetDir = "BTC"
 
     async run(display: Display, scheduler: Scheduler, controls: ControlGroup) {
         // if (controls.group("stars").switch("enabled", false).enabled)

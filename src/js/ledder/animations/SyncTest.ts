@@ -9,7 +9,6 @@
 // export default class SyncTest extends Animation {
 
 //   static title="Matrix test sync"
-//   static presetDir="Sync test"
 //   static description="Test smoothness and syncronisation of multiple displayes"
 
 

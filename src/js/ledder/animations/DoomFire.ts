@@ -12,7 +12,6 @@ export default class DoomFire extends Animation {
     static category = "Fire"
     static title = "Doom"
     static description = "Pixel art from the game, based on <a href='https://github.com/filipedeschamps/doom-fire-algorithm/blob/master/playground/render-with-canvas-and-hsl-colors/fire.js'>this.</a>"
-    static presetDir = "Doom";
 
 
     async run(display: Display, scheduler: Scheduler, controls: ControlGroup): Promise<void> {

@@ -56,7 +56,6 @@ export default class Starfield extends Animation {
     static category = "Misc"
     static title = "Starfield"
     static description = "blabla"
-    static presetDir = "Test"
 
 
     async run(display: Display, scheduler: Scheduler, controls: ControlGroup) {

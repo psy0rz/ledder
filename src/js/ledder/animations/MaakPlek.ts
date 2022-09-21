@@ -6,12 +6,11 @@ import {PixelContainer} from "../PixelContainer.js";
 import DrawText from "../draw/DrawText.js"
 import {fontSelect} from "../fonts.js"
 
-export default class Template extends  Animation
+export default class MaakPlek extends  Animation
 {
     static category = "Misc"
     static title = "Maakplek"
     static description = "blabla"
-    static presetDir = "Maakplek";
 
     async run(display: Display, scheduler: Scheduler, controls: ControlGroup) {
 

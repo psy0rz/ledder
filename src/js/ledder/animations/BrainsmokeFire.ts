@@ -13,7 +13,6 @@ export default class BrainsmokeFire extends Animation {
     static category = "Fire"
     static title = "Brainsmoke"
     static description = "Fire based on <a href='https://github.com/techinc/lewd/blob/master/animations/fire.py'>this.</a><br>Has an interesting decay method."
-    static presetDir = "BrainsmokeFire";
 
 
     old: any;

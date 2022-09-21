@@ -15,7 +15,6 @@ export default class ItsFine extends Animation {
 
     static title = "Its fine"
     static description = ""
-    static presetDir = "itsfine"
     static category = "memes"
 
     async run(display: Display, scheduler: Scheduler, controls: ControlGroup) {

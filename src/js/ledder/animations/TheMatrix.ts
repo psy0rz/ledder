@@ -19,7 +19,6 @@
 //   static category = "Movie FX"
 //   static title = "The Matrix"
 //   static description = "Rain code from The Matrix. "
-//   static presetDir = "The Matrix";
 
 
 

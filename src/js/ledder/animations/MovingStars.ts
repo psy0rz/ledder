@@ -28,7 +28,6 @@ export default class MovingStars extends Animation {
     static category = "Basic"
     static title = "Moving stars left"
     static description = "Used in nyancat :)"
-    static presetDir = "Moving stars"
 
     createStar(x,y, c)
     {

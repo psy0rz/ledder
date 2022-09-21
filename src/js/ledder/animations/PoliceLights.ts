@@ -13,7 +13,6 @@ export default class PoliceLights extends Animation {
 
     static title = "Police lights"
     static description = ""
-    static presetDir = "Policelights"
     static category = "Signal lights"
 
 

@@ -17,7 +17,6 @@ export default class Marquee extends Animation {
 
     static title = "Marquee"
     static description = ""
-    static presetDir = "Marquee"
     static category = "Marquees"
 
     async run(display: Display, scheduler: Scheduler, control: ControlGroup)

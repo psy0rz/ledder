@@ -19,11 +19,10 @@ const logo=`
   rrr..rrr
 `
 
-export default class Template extends Animation {
+export default class HSD extends Animation {
     static category = "Misc"
     static title = "HSD"
     static description = ""
-    static presetDir = "HSD"
 
 
     async run(display: Display, scheduler: Scheduler, controls: ControlGroup) {

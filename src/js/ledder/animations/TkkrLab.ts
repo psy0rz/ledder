@@ -41,11 +41,10 @@ yyyyyyyyyyyyyyy
 
 
 
-export default class Template extends Animation {
+export default class TkkrLab extends Animation {
     static category = "Misc"
     static title = "TkkrLab"
     static description = ""
-    static presetDir = "TkkrLab"
 
 
     async run(display: Display, scheduler: Scheduler, controls: ControlGroup) {

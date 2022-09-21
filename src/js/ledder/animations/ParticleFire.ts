@@ -13,7 +13,6 @@ export default class ParticleFire extends Animation {
     static category = "Fire"
     static title = "Particle fire"
     static description = "Individual pixel objects with color cycle effects on them. (more of a ledder way of doing it)"
-    static presetDir = "Misc";
 
     async run(display: Display, scheduler: Scheduler, controls: ControlGroup) {
 

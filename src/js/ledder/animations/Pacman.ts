@@ -11,12 +11,11 @@ import FxRotate from "../fx/FxRotate.js"
 
 
 
-export default class Template extends  Animation
+export default class Pacman extends  Animation
 {
     static category = "Misc"
     static title = "Pacman"
     static description = "blabla"
-    static presetDir = "Pacman";
 
     async run(display: Display, scheduler: Scheduler, controls: ControlGroup) {
 

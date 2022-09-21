@@ -19,11 +19,10 @@ y...bb...wwbbbb.y..
 ....ww...wbbbb.....
 `
 
-export default class Template extends Animation {
+export default class TDVenlo extends Animation {
     static category = "Misc"
     static title = "TDvenlo"
     static description = ""
-    static presetDir = "TDvenlo"
 
 
     async run(display: Display, scheduler: Scheduler, controls: ControlGroup) {

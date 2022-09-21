@@ -23,7 +23,6 @@ export default class Nyancat extends Animation {
     static category = "Memes"
     static title = "Nyancat"
     static description = "Based on <a href='https://github.com/bertrik/nyancat/blob/master/nyancat.c'>this</a>"
-    static presetDir = "Nyancat";
 
 
     async run(display: Display, scheduler: Scheduler, controls: ControlGroup) {
