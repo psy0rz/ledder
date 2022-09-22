@@ -2,7 +2,7 @@ import Fx from "../Fx.js";
 import ControlValue from "../ControlValue.js";
 import ControlGroup from "../ControlGroup.js";
 import PixelContainer from "../PixelContainer.js";
-import BboxInterface from "../BboxInterface.js";
+import BoxInterface from "../BoxInterface.js";
 import Scheduler from "../Scheduler.js";
 import {random} from "../util.js";
 
@@ -27,7 +27,7 @@ export default class FxRotate extends Fx {
     }
 
     //rotate pixels inside specified bbox if specified. (otherwise uses bbox() of pixelcontainer)
-    run(container: PixelContainer, bbox?: BboxInterface) {
+    run(container: PixelContainer, bbox?: BoxInterface) {
         this.running = true
 
         if (bbox === undefined)

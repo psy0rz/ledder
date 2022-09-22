@@ -9,6 +9,8 @@ import Scheduler from "../Scheduler.js";
 import ControlGroup from "../ControlGroup.js";
 import ControlValue from "../ControlValue.js";
 import {Values} from "../Control.js";
+import Pixel from "../Pixel.js"
+import PixelBox from "../PixelBox.js"
 
 
 /**
@@ -34,10 +36,12 @@ export class RunnerServer {
     private keepRendering: boolean
 
     private fpsControl: ControlValue
+    private box: PixelBox
 
     constructor(display: Display, controls: ControlGroup, presetStore: PresetStore) {
         this.display = display
         this.scheduler = new Scheduler()
+        this.box=new PixelBox(display)
         this.display.scheduler = this.scheduler
         this.controlGroup = controls
         this.presetStore = presetStore
@@ -75,7 +79,7 @@ export class RunnerServer {
         }
 
         try {
-            this.display.render(this.display)
+            this.display.render(this.box)
         }
         catch(e)
         {
@@ -117,7 +121,7 @@ export class RunnerServer {
         this.stopRenderLoop()
         this.scheduler.clear()
         this.watchAbort.abort()
-        this.display.clear()
+
     }
 
     //create class instance of currently selected animation and run it
@@ -125,7 +129,7 @@ export class RunnerServer {
         console.log(`RunnerServer: Starting ${this.animationName}`)
         try {
             this.animation = new this.animationClass()
-            this.animation.run(this.display, this.scheduler, this.controlGroup).then(() => {
+            this.animation.run(this.box, this.scheduler, this.controlGroup).then(() => {
                 console.log(`RunnerServer: Animation ${this.animationName} finished.`)
             }).catch((e) => {
                 if (e != 'abort') {
@@ -157,7 +161,7 @@ export class RunnerServer {
 
         console.log("Runner: starting", animationName, presetName)
         this.scheduler.clear()
-        this.display.clear()
+        this.box=new PixelBox(this.display)
         this.resetControls()
 
         if (presetName) {
@@ -192,7 +196,7 @@ export class RunnerServer {
         if (!keepPresets)
             this.resetControls()
         this.scheduler.clear()
-        this.display.clear()
+        this.box=new PixelBox(this.display)
 
         this.start()
     }

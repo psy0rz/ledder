@@ -1,6 +1,7 @@
 import Display from "./Display.js"
 import Scheduler from "./Scheduler.js"
 import ControlGroup from "./ControlGroup.js"
+import PixelBox from "./PixelBox.js"
 
 
 /**
@@ -12,7 +13,6 @@ export default class Animation {
     static category = "Misc"
     static title = "Untitled"
     static description = ""
-    static presetDir = "Unspecified"
 
     //preview settings, fiddle with this to optimize your preview image (usually no need to change)
     static previewSkip = 120 //number of input-frames to skip
@@ -21,7 +21,7 @@ export default class Animation {
 
 
     //will be overridden in animation subclass
-    async run(display: Display, scheduler: Scheduler, controls: ControlGroup) {
+    async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) {
         console.error("Error: This animation has no run() function?")
 
     }

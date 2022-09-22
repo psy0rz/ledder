@@ -35,7 +35,14 @@ export abstract class DisplayQOIS extends Display {
 
         this.pixelCount = width * height
         this.mapper = mapper
-        this.clear()
+
+        this.pixels = []
+        this.prevPixels = []
+        this.index = []
+
+        for (let i = 0; i < 64; i++) {
+            this.index.push(colorBlack)
+        }
 
 
         this.statsBytes = 0
@@ -46,17 +53,6 @@ export abstract class DisplayQOIS extends Display {
             this.statsBytes = 0
         }, 1000)
 
-    }
-
-    clear() {
-        super.clear()
-        this.pixels = []
-        this.prevPixels = []
-        this.index = []
-
-        for (let i = 0; i < 64; i++) {
-            this.index.push(colorBlack)
-        }
     }
 
     setPixel(x, y, color) {

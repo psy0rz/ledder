@@ -12,6 +12,7 @@ import DrawBox from "../draw/DrawBox.js";
 import Color from "../Color.js";
 import {FxFadeOut} from "../fx/FxFadeOut.js";
 import Starfield from "./Starfield.js"
+import PixelBox from "../PixelBox.js"
 
 export default class Marquee extends Animation {
 
@@ -19,28 +20,28 @@ export default class Marquee extends Animation {
     static description = ""
     static category = "Marquees"
 
-    async run(display: Display, scheduler: Scheduler, control: ControlGroup)
+    async run(box: PixelBox, scheduler: Scheduler, control: ControlGroup)
     {
 
         const font = fontSelect(control, 'Font')
         const input = control.input('Text', "Marquee  ", true)
         const colorControl = control.color("Text color", 0x21,0xff,0, 1);
-        const charPixels=new DrawText(0,0, font, input.text, colorControl )
-        charPixels.centerV(display)
+        const charPixels=new DrawText(box.xMin,box.yMin, font, input.text, colorControl )
+        charPixels.centerV(box)
 
         let starsGroup=control.group("Stars", false, false)
         if (starsGroup.switch('Enabled', false).enabled) {
-            new MovingStars().run(display,scheduler, starsGroup)
+            // new MovingStars().run(box,scheduler, starsGroup)
         }
 
         let starFieldGroup=control.group("Star field", false, false)
         if (starFieldGroup.switch('Enabled', false).enabled) {
-            new Starfield().run(display,scheduler, starFieldGroup)
+            // new Starfield().run(box,scheduler, starFieldGroup)
         }
 
 
         //add on top of stars
-        display.add(charPixels)
+        box.add(charPixels)
 
         let scrollGroup=control.group("Scrolling")
         if (scrollGroup.switch('Enabled', true).enabled) {
@@ -49,20 +50,20 @@ export default class Marquee extends Animation {
 
             const bbox=charPixels.bbox()
             bbox.xMax=bbox.xMax+whitespace.value
-            if (bbox.xMax<display.width)
-                bbox.xMax=display.width
+            if (bbox.xMax<box.xMax)
+                bbox.xMax=box.xMax
 
             rotator.run(charPixels, bbox)
         }
         else
         {
-            charPixels.centerH(display)
+            charPixels.centerH(box)
         }
 
         let flameGroup=control.group("Flames", false, false)
         if (flameGroup.switch('Enabled', false).enabled) {
             const flames=new PixelContainer()
-            display.add(flames)
+            box.add(flames)
             new FxFlames(scheduler,flameGroup).run(charPixels, flames)
         }
 
@@ -80,9 +81,9 @@ export default class Marquee extends Animation {
             while(1)
             {
                 cursorColor.a=1
-                await scheduler.delay(display.seconds2frames(0.5))
+                await scheduler.delay(30)
                 fader.run(cursorColor)
-                await scheduler.delay(display.seconds2frames(0.5))
+                await scheduler.delay(30)
 
             }
         }

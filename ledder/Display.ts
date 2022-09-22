@@ -5,10 +5,11 @@ import Pixel from "./Pixel.js";
 import GammaMapper from "./drivers/GammaMapper.js";
 
 /**
- * The display is the display and shows the list of pixels. The subclasses are actual implementations for different display types.
+ * The display renders a pixelcontainer to an actual display.
+ * The subclasses are actual implementations for different display types.
  * Usually you only need to implement setPixel() to set a pixel and frame() to send the frame and clear the buffer.
  */
-export  default abstract class Display extends PixelContainer {
+export  default abstract class Display  {
 
   scheduler: Scheduler
   // runScheduler: boolean
@@ -28,7 +29,7 @@ export  default abstract class Display extends PixelContainer {
   width: number
   height: number
 
-  //to make it compatioble with bboxinterface
+  //to make it compatioble with Boxinterface
   xMin:number
   xMax:number
   yMin:number
@@ -39,7 +40,6 @@ export  default abstract class Display extends PixelContainer {
   gammaMapper: GammaMapper
 
   protected constructor(  width, height) {
-    super();
 
     this.width = width;
     this.height = height;
@@ -112,7 +112,7 @@ export  default abstract class Display extends PixelContainer {
   }
 
   status() {
-    console.log("Matrix pixels: ", this.size);
+    // console.log("Matrix pixels: ", this.size);
   }
 
   /**

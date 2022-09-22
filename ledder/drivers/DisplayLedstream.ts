@@ -2,7 +2,6 @@
 import dgram from "dgram"
 
 import {DisplayQOIS} from "../server/DisplayQOIS.js"
-import GammaMapper from "./GammaMapper.js"
 import OffsetMapper from "./OffsetMapper.js"
 
 const qoisDataLength = 1460 - 4 //4 bytes overhead
@@ -30,7 +29,7 @@ export class DisplayLedstream extends DisplayQOIS {
      * @param ips IP address
      * @param port UDP port
      */
-    constructor(channels, width, height, ips, port, mapper: OffsetMapper, gamma:GammaMapper) {
+    constructor(channels, width, height, ips, port, mapper: OffsetMapper) {
         super(width, height, mapper)
 
 

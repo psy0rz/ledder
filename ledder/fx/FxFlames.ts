@@ -2,7 +2,7 @@ import Fx from "../Fx.js"
 import ControlValue from "../ControlValue.js"
 import ControlGroup from "../ControlGroup.js"
 import PixelContainer from "../PixelContainer.js"
-import BboxInterface from "../BboxInterface.js"
+import BoxInterface from "../BoxInterface.js"
 import Scheduler from "../Scheduler.js"
 import {random, randomFloatGaussian} from "../util.js"
 import FxColorCycle from "./FxColorCycle.js"
@@ -34,7 +34,7 @@ export default class FxFlames extends Fx {
 
     //create flames for pixels from source into target
     //target should be empty and unused
-    run(sourceContainer: PixelContainer, targetContainer: PixelContainer, bbox?: BboxInterface) {
+    run(sourceContainer: PixelContainer, targetContainer: PixelContainer, bbox?: BoxInterface) {
 
         if (targetContainer.size)
             throw ("Please use an empty target container")

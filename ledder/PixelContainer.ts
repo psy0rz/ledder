@@ -1,5 +1,5 @@
 import Pixel from "./Pixel.js";
-import BboxInterface from "./BboxInterface.js";
+import BoxInterface from "./BoxInterface.js";
 import {random} from "./util.js";
 import ColorInterface from "./ColorInterface.js";
 
@@ -12,6 +12,7 @@ import ColorInterface from "./ColorInterface.js";
 export default class PixelContainer extends Set<Pixel | PixelContainer> {
 
 
+
     /* Creates a traditional x/y raster, with seperate pixels that each get a copy of the color object.
     * (Dont use this if you can do it on the more modern ledder-way where each pixel is an object in a container-list)
     * raster[x][y] corresponds to Pixel(x,y)
@@ -20,7 +21,7 @@ export default class PixelContainer extends Set<Pixel | PixelContainer> {
     * @param yFlip Flip y axis: 0,0 corresponds to Pixel(0,yMax)
     * @param data Set arbitrary datafield of new pixels to this
     */
-    raster(bbox: BboxInterface,
+    raster(bbox: BoxInterface,
            color: ColorInterface,
            YX = false,
            xFlip = false,
@@ -168,7 +169,7 @@ export default class PixelContainer extends Set<Pixel | PixelContainer> {
     }
 
     // //get bounding box (override if needed)
-    bbox(): BboxInterface {
+    bbox(): BoxInterface {
 
         let ret = undefined
 
@@ -206,7 +207,7 @@ export default class PixelContainer extends Set<Pixel | PixelContainer> {
 
     }
 
-    private getCenterOffsets(bbox: BboxInterface) {
+    private getCenterOffsets(bbox: BoxInterface) {
         //our center
         const ourBbox = this.bbox()
         const ourX = (ourBbox.xMax + ourBbox.xMin) / 2
@@ -221,7 +222,7 @@ export default class PixelContainer extends Set<Pixel | PixelContainer> {
     }
 
     //center our pixels inside specified bbox
-    center(bbox: BboxInterface) {
+    center(bbox: BoxInterface) {
         let offsets = this.getCenterOffsets(bbox)
 
         this.move(offsets[0], offsets[1])
@@ -230,7 +231,7 @@ export default class PixelContainer extends Set<Pixel | PixelContainer> {
     }
 
     //vertical center our pixels indside specified box
-    centerV(bbox: BboxInterface) {
+    centerV(bbox: BoxInterface) {
         let offsets = this.getCenterOffsets(bbox)
 
         this.move(0, offsets[1])
@@ -239,7 +240,7 @@ export default class PixelContainer extends Set<Pixel | PixelContainer> {
     }
 
     //horizontal center our pixels indside specified box
-    centerH(bbox: BboxInterface) {
+    centerH(bbox: BoxInterface) {
         let offsets = this.getCenterOffsets(bbox)
 
         this.move(offsets[0], 0)
@@ -248,7 +249,7 @@ export default class PixelContainer extends Set<Pixel | PixelContainer> {
     }
 
     //remove pixels that are outside bounding box
-    crop(bbox: BboxInterface)
+    crop(bbox: BoxInterface)
     {
         this.forEachPixel((p, parent) => {
             if (p.isOutside(bbox))

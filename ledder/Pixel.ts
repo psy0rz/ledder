@@ -1,6 +1,6 @@
 import PixelInterface from "./PixelInterface.js"
 import ColorInterface from "./ColorInterface.js"
-import BboxInterface from "./BboxInterface.js"
+import BoxInterface from "./BoxInterface.js"
 
 
 //basic pixel.
@@ -50,7 +50,7 @@ export default class Pixel implements PixelInterface {
 
 
     //limit pixel location to this box (inclusive)
-    limit(bbox: BboxInterface) {
+    limit(bbox: BoxInterface) {
         if (this.x < bbox.xMin)
             this.x = bbox.xMin
         else if (this.x > bbox.xMax)
@@ -63,7 +63,7 @@ export default class Pixel implements PixelInterface {
     }
 
     // //keep pixel inside this box by wrapping (inclusive)
-    wrap(bbox: BboxInterface) {
+    wrap(bbox: BoxInterface) {
         if (this.x < bbox.xMin)
             this.x += (bbox.xMax - bbox.xMin + 1)
         else if (this.x > bbox.xMax)
@@ -77,7 +77,7 @@ export default class Pixel implements PixelInterface {
     }
 
     //pixel outside this box? (inclusive)
-    isOutside(bbox: BboxInterface) {
+    isOutside(bbox: BoxInterface) {
         return ((this.x < bbox.xMin) || (this.x > bbox.xMax) || (this.y < bbox.yMin) || (this.y > bbox.yMax))
 
     }

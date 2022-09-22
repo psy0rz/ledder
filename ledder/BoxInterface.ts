@@ -1,4 +1,4 @@
-export default interface BboxInterface {
+export default interface BoxInterface {
     xMin: number,
     yMin: number,
     xMax: number,

@@ -118,7 +118,7 @@ export default class BertrikFire extends Animation {
 
         const colorScale = (colors.length - 1) / 100
 
-        display.scheduler.intervalControlled(fireintervalControl, (frameNr) => {
+        scheduler.intervalControlled(fireintervalControl, (frameNr) => {
 
 
             //glower
