@@ -1,5 +1,5 @@
 <script lang="ts">
-    import ControlValue from "./ControlValue.svelte";
+    import ControlValue from "./ControlValueUI.svelte";
 
     export let controlGroup: ControlGroup;
     export let path: Array<string> = [];
@@ -7,10 +7,10 @@
 
     import { BlockHeader, TreeviewItem } from "framework7-svelte";
     import { ControlGroup } from "../js/ledder/ControlGroup.js";
-    import ControlColor from "./ControlColor.svelte";
-    import ControlInput from "./ControlInput.svelte";
-    import ControlSwitch from "./ControlSwitch.svelte";
-    import ControlSelect from "./ControlSelect.svelte";
+    import ControlColorUI from "./ControlColorUI.svelte";
+    import ControlInputUI from "./ControlInputUI.svelte";
+    import ControlSwitchUI from "./ControlSwitchUI.svelte";
+    import ControlSelectUI from "./ControlSelectUI.svelte";
 
     //TODO: like this? https://svelte.dev/tutorial/svelte-component
 </script>
@@ -41,25 +41,25 @@
                         onChanged={onChanged}
                     />
                 {:else if control.meta.type === "color"}
-                    <ControlColor
+                    <ControlColorUI
                         control={control}
                         path={[...path, control.meta.name]}
                         onChanged={onChanged}
                     />
                 {:else if control.meta.type === "input"}
-                    <ControlInput
+                    <ControlInputUI
                         control={control}
                         path={[...path, control.meta.name]}
                         onChanged={onChanged}
                     />
                 {:else if control.meta.type === "switch"}
-                    <ControlSwitch
+                    <ControlSwitchUI
                         control={control}
                         path={[...path, control.meta.name]}
                         onChanged={onChanged}
                     />
                 {:else if control.meta.type === "select"}
-                    <ControlSelect
+                    <ControlSelectUI
                         control={control}
                         path={[...path, control.meta.name]}
                         onChanged={onChanged}

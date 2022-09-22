@@ -11,12 +11,12 @@
 
     } from "framework7-svelte";
 
-    import ControlGroup from "../components/ControlGroup.svelte";
-    import { ControlGroup as ControlGroupLedder } from "../js/ledder/ControlGroup";
+    import { ControlGroup  } from "../js/ledder/ControlGroup";
     import { rpc } from "../js/web/RpcClient.js";
+    import ControlGroupUI from "../components/ControlGroupUI.svelte"
 
     let saveDisabled, copyDisabled, deleteDisabled;
-    export let settings = new ControlGroupLedder();
+    export let settings = new ControlGroup();
 
     async function onSave() {
         // await runnerBrowser.presetSave();
@@ -56,7 +56,7 @@
     </Navbar>
     <Block strong>
         <Treeview>
-            <ControlGroup
+            <ControlGroupUI
                 controlGroup={settings}
                 onChanged={(path, values) => {
                     rpc.notify("settings.updateValue", path, values);

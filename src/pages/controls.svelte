@@ -16,7 +16,7 @@
         svelteSelectedTitle,
     } from "../js/web/svelteStore.js";
     import { runnerBrowser } from "../js/web/RunnerBrowser.js";
-    import ControlGroup from "../components/ControlGroup.svelte";
+    import ControlGroup from "../components/ControlGroupUI.svelte";
     import {rpc} from "../js/web/RpcClient.js";
 
 
