@@ -1,6 +1,6 @@
-import {ValueInterface} from "./ValueInterface.js";
+import ValueInterface from "./ValueInterface.js";
 
-export class Value implements ValueInterface {
+export  default class Value implements ValueInterface {
     value: number
 
     constructor(value: number) {

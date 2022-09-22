@@ -1,12 +1,12 @@
-import {Display} from "./Display.js";
-import {Scheduler} from "./Scheduler.js";
-import {ControlGroup} from "./ControlGroup.js";
+import Display from "./Display.js"
+import Scheduler from "./Scheduler.js"
+import ControlGroup from "./ControlGroup.js"
 
 
 /**
  * An animation is a pixelcontainer and animates the properties of those pixels via the scheduler.
  */
-export class Animation {
+export default class Animation {
 
     // keep: boolean;
     static category = "Misc"

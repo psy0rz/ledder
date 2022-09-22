@@ -1,7 +1,7 @@
-// import {Animation} from "../Animation.js";
-// import {Pixel} from "../Pixel.js";
+// import Animation from "../Animation.js";
+// import Pixel from "../Pixel.js";
 // import {FontSimple8x8} from "../fonts/FontSimple8x8.js";
-// import {Display} from "../Display.js";
+// import Display from "../Display.js";
 
 // function paddy(num, padlen, padchar = '0') {
 //     var pad = new Array(1 + padlen).join(padchar);

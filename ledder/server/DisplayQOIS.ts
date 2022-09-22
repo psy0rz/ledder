@@ -1,5 +1,5 @@
-import {Display} from "../Display.js"
-import {Color} from "../Color.js"
+import Display from "../Display.js"
+import Color from "../Color.js"
 import {colorBlack} from "../Colors.js"
 import OffsetMapper from "../drivers/OffsetMapper.js"
 

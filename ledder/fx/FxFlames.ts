@@ -1,12 +1,12 @@
 import Fx from "../Fx.js"
-import {ControlValue} from "../ControlValue.js"
-import {ControlGroup} from "../ControlGroup.js"
-import {PixelContainer} from "../PixelContainer.js"
+import ControlValue from "../ControlValue.js"
+import ControlGroup from "../ControlGroup.js"
+import PixelContainer from "../PixelContainer.js"
 import BboxInterface from "../BboxInterface.js"
-import {Scheduler} from "../Scheduler.js"
+import Scheduler from "../Scheduler.js"
 import {random, randomFloatGaussian} from "../util.js"
 import FxColorCycle from "./FxColorCycle.js"
-import {Pixel} from "../Pixel.js"
+import Pixel from "../Pixel.js"
 
 
 //Add flames to the top pixels of a container

@@ -1,6 +1,6 @@
-import {Interval} from "./Interval.js";
+import Interval from "./Interval.js";
 
-export class IntervalStatic extends Interval {
+export default class IntervalStatic extends Interval {
     interval: number;
     nextTime: number;
     callback: (frameNr: number) => number | undefined | boolean;

@@ -1,6 +1,6 @@
 import Draw from "../Draw.js"
-import {Pixel} from "../Pixel.js"
-import {Color} from "../Color.js"
+import Pixel from "../Pixel.js"
+import Color from "../Color.js"
 
 //draw an alpha mask that creates a "glowing" effect (used in counter)
 //(middel is full birghtness, and fades out to top and bottom)

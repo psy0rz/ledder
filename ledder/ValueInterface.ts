@@ -1,4 +1,4 @@
-export interface ValueInterface {
+export  default interface ValueInterface {
     value: number
 }
 

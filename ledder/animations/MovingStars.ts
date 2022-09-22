@@ -1,10 +1,10 @@
-import {Animation} from "../Animation.js";
-import {Display} from "../Display.js";
-import {Scheduler} from "../Scheduler.js";
-import {ControlGroup} from "../ControlGroup.js";
+import Animation from "../Animation.js";
+import Display from "../Display.js";
+import Scheduler from "../Scheduler.js";
+import ControlGroup from "../ControlGroup.js";
 import {random} from "../util.js";
 import DrawAsciiArt from "../draw/DrawAsciiArt.js";
-import {PixelContainer} from "../PixelContainer.js";
+import PixelContainer from "../PixelContainer.js";
 import FxMovie from "../fx/FxMovie.js";
 import FxRotate from "../fx/FxRotate.js";
 

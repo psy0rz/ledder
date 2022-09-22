@@ -1,6 +1,6 @@
 import Draw from "../Draw.js";
-import {Color} from "../Color.js";
-import {Pixel} from "../Pixel.js";
+import Color from "../Color.js";
+import Pixel from "../Pixel.js";
 
 //based on official basic webcolors, but modified for better contast on leds
 //https://en.wikipedia.org/wiki/Web_colors

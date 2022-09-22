@@ -1,9 +1,9 @@
 import {Control} from "./Control.js";
-import {ColorInterface} from "./ColorInterface.js";
-import {Color} from "./Color.js";
+import ColorInterface from "./ColorInterface.js";
+import Color from "./Color.js";
 
 
-export class ControlColor extends Control implements ColorInterface {
+export default class ControlColor extends Control implements ColorInterface {
   r: number;
   g: number;
   b: number;

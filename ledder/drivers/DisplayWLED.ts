@@ -1,4 +1,4 @@
-// import {Display} from "../../ledder/Display.js";
+// import Display from "../../ledder/Display.js";
 
 // // @ts-ignore
 // import dgram from "dgram";

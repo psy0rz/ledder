@@ -1,13 +1,13 @@
-import { Animation } from "../Animation.js";
-import { Display } from "../Display.js";
-import { Scheduler } from "../Scheduler.js";
-import { ControlGroup } from "../ControlGroup.js";
-import { Pixel } from "../Pixel.js";
-import { Color } from "../Color.js";
+import Animation from "../Animation.js";
+import Display from "../Display.js";
+import Scheduler from "../Scheduler.js";
+import ControlGroup from "../ControlGroup.js";
+import Pixel from "../Pixel.js";
+import Color from "../Color.js";
 import { glow, randomGaussian } from "../util.js";
 import FxColorCycle from "../fx/FxColorCycle.js";
 import FxRandomMove from "../fx/FxRandomMove.js";
-import { PixelContainer } from "../PixelContainer.js";
+import PixelContainer from "../PixelContainer.js";
 
 export default class ParticleFire extends Animation {
     static category = "Fire"

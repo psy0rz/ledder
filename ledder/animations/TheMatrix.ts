@@ -1,6 +1,6 @@
-// import {Animation} from "../Animation.js";
-// import {Color} from "../Color.js";
-// import {Pixel} from "../Pixel.js";
+// import Animation from "../Animation.js";
+// import Color from "../Color.js";
+// import Pixel from "../Pixel.js";
 // import {random} from "../util.js";
 // import {AnimationFade} from "../AnimationFade.js";
 

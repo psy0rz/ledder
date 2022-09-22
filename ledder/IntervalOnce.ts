@@ -1,6 +1,6 @@
-import {Interval} from "./Interval.js";
+import Interval from "./Interval.js";
 
-export class IntervalOnce extends Interval {
+export default class IntervalOnce extends Interval {
     endTime: number;
 
     constructor(frames:number, time: number) {

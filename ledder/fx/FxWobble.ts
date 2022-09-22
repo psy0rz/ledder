@@ -1,8 +1,8 @@
 import Fx from "../Fx.js";
-import {ControlValue} from "../ControlValue.js";
-import {ControlGroup} from "../ControlGroup.js";
-import {PixelContainer} from "../PixelContainer.js";
-import {Scheduler} from "../Scheduler.js";
+import ControlValue from "../ControlValue.js";
+import ControlGroup from "../ControlGroup.js";
+import PixelContainer from "../PixelContainer.js";
+import Scheduler from "../Scheduler.js";
 
 export default class FxWobble extends Fx {
 

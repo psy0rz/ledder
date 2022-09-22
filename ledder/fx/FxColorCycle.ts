@@ -1,12 +1,13 @@
 import Fx from "../Fx.js";
-import {ControlValue} from "../ControlValue.js";
-import {ControlGroup} from "../ControlGroup.js";
-import {Color} from "../Color.js";
-import {Scheduler} from "../Scheduler.js";
-import {ColorInterface} from "../ColorInterface.js";
-import {ControlSelect} from "../ControlSelect.js";
+import ControlValue from "../ControlValue.js";
+import ControlGroup from "../ControlGroup.js";
+import Color from "../Color.js";
+import Scheduler from "../Scheduler.js";
+import ColorInterface from "../ColorInterface.js";
+
 import {randomGaussian} from "../util.js";
 import {patternSelect} from "../ColorPatterns.js";
+import ControlSelect from "../ControlSelect.js"
 
 //Smooth cycle through a list of color objects, with 60 fps. Calculating the optimum step size
 export default class FxColorCycle extends Fx {

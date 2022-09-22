@@ -1,11 +1,11 @@
 import Fx from "../Fx.js"
-import {ControlGroup} from "../ControlGroup.js"
-import {PixelContainer} from "../PixelContainer.js"
-import {Scheduler} from "../Scheduler.js"
+import ControlGroup from "../ControlGroup.js"
+import PixelContainer from "../PixelContainer.js"
+import Scheduler from "../Scheduler.js"
 import {random} from "../util.js"
 import FxColorCycle from "./FxColorCycle.js"
 import FxMove from "./FxMove.js"
-import {Color} from "../Color.js"
+import Color from "../Color.js"
 
 
 //Make pixels disappear as a bunch of flames, also removes them from container

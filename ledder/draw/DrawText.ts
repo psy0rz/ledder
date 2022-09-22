@@ -1,6 +1,6 @@
-import {ColorInterface} from "../ColorInterface.js";
-import {Pixel} from "../Pixel.js";
-import {Font} from "../Font.js";
+import ColorInterface from "../ColorInterface.js";
+import Pixel from "../Pixel.js";
+import Font from "../Font.js";
 import Draw from "../Draw.js";
 
 //rendered font text. x,y are left bottom coordinates

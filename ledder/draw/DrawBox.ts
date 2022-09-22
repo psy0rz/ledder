@@ -1,6 +1,6 @@
 import Draw from "../Draw.js";
-import {Pixel} from "../Pixel.js";
-import {ColorInterface} from "../ColorInterface.js";
+import Pixel from "../Pixel.js";
+import ColorInterface from "../ColorInterface.js";
 
 //draw a simple filled box. x,y are left bottom coordinates
 export default class DrawBox extends Draw {

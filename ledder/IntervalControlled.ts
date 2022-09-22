@@ -1,10 +1,10 @@
-import {Interval} from "./Interval.js";
-import {ValueInterface} from "./ValueInterface.js";
+import Interval from "./Interval.js";
+import ValueInterface from "./ValueInterface.js";
 
 /**
  * Interval that can be modified by a controller
  */
-export class IntervalControlled extends  Interval {
+export default class IntervalControlled extends  Interval {
     intervalControl: ValueInterface;
     nextTime: number;
     callback: (frameNr: number) => number | undefined | boolean;

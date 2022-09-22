@@ -1,9 +1,9 @@
 import {Control, ControlMeta, Values} from "./Control.js"
-import {ControlValue} from "./ControlValue.js"
-import {ControlColor} from "./ControlColor.js"
-import {ControlInput} from "./ControlInput.js"
-import {ControlSwitch} from "./ControlSwitch.js";
-import {Choices, ControlSelect} from "./ControlSelect.js";
+import ControlValue from "./ControlValue.js"
+import ControlColor from "./ControlColor.js"
+import ControlInput from "./ControlInput.js"
+import ControlSwitch from "./ControlSwitch.js";
+import ControlSelect, {Choices} from "./ControlSelect.js";
 
 
 type ControlMap = Map<string, Control>
@@ -18,7 +18,7 @@ interface ControlsMeta extends ControlMeta {
  * Manages a collection of preset controls, saves and loads values to Preset.
  * NOTE: This structure is recursive, a ControlGroup() can contain a sub ControlGroup()
  */
-export class ControlGroup extends Control {
+export default class ControlGroup extends Control {
     meta: ControlsMeta
     loadedValues: Values
 
@@ -132,7 +132,7 @@ export class ControlGroup extends Control {
                 () => {
                     if (this.addControlCallback)
                         this.addControlCallback(this)
-                }                
+                }
             )
         }
 
@@ -149,11 +149,11 @@ export class ControlGroup extends Control {
     setChangedCallback(callback?: ()=>void)
     {
         this.changedCallback = callback
-        
+
         //always call it the first time:
         if (this.changedCallback!==undefined)
             this.changedCallback()
-        
+
     }
 
     /**

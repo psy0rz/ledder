@@ -1,8 +1,8 @@
 import Fx from "../Fx.js";
-import {ControlValue} from "../ControlValue.js";
-import {ControlGroup} from "../ControlGroup.js";
-import {Scheduler} from "../Scheduler.js";
-import {PixelContainer} from "../PixelContainer.js";
+import ControlValue from "../ControlValue.js";
+import ControlGroup from "../ControlGroup.js";
+import Scheduler from "../Scheduler.js";
+import PixelContainer from "../PixelContainer.js";
 import {random} from "../util.js";
 
 //"plays" a collection of pixelcontainers at a certain framerate, by adding/removing them to the specified target container.

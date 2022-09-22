@@ -1,9 +1,9 @@
 import Fx from "../Fx.js";
-import {ControlValue} from "../ControlValue.js";
-import {ControlGroup} from "../ControlGroup.js";
-import {Scheduler} from "../Scheduler.js";
-import {PixelContainer} from "../PixelContainer.js";
-import {Pixel} from "../Pixel.js";
+import ControlValue from "../ControlValue.js";
+import ControlGroup from "../ControlGroup.js";
+import Scheduler from "../Scheduler.js";
+import PixelContainer from "../PixelContainer.js";
+import Pixel from "../Pixel.js";
 
 //Blink pixelcontainers by adding/removing them from the target (always starts with on, ends with off)
 //Set skipLast to true to skip the last off-delay.

@@ -1,6 +1,6 @@
-// import {Pixel} from "../ledder/Pixel.js";
-// import {PixelContainer} from "../ledder/PixelContainer.js";
-// import {Color} from "../ledder/Color.js";
+// import Pixel from "../ledder/Pixel.js";
+// import PixelContainer from "../ledder/PixelContainer.js";
+// import Color from "../ledder/Color.js";
 // import {DisplayDummy} from "./drivers/DisplayDummy.js";
 
 // function ops(fn, runForMs = 1000) {

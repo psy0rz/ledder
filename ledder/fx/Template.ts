@@ -1,7 +1,7 @@
 import Fx from "../Fx.js";
-import {ControlGroup} from "../ControlGroup.js";
-import {PixelContainer} from "../PixelContainer.js";
-import {Scheduler} from "../Scheduler.js";
+import ControlGroup from "../ControlGroup.js";
+import PixelContainer from "../PixelContainer.js";
+import Scheduler from "../Scheduler.js";
 
 
 export default class FxTemplate extends Fx {

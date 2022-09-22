@@ -11,7 +11,7 @@ interface ControlValueMeta extends ControlMeta
   step: number
 }
 
-export class ControlValue extends Control {
+export default class ControlValue extends Control {
   meta: ControlValueMeta
 
   value: number;

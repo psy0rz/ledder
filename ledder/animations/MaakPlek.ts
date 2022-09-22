@@ -1,8 +1,8 @@
-import {Animation} from "../Animation.js";
-import {Display} from "../Display.js";
-import {Scheduler} from "../Scheduler.js";
-import {ControlGroup} from "../ControlGroup.js";
-import {PixelContainer} from "../PixelContainer.js";
+import Animation from "../Animation.js";
+import Display from "../Display.js";
+import Scheduler from "../Scheduler.js";
+import ControlGroup from "../ControlGroup.js";
+import PixelContainer from "../PixelContainer.js";
 import DrawText from "../draw/DrawText.js"
 import {fontSelect} from "../fonts.js"
 

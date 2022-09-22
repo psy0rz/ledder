@@ -1,10 +1,10 @@
-import {PixelInterface} from "./PixelInterface.js"
-import {ColorInterface} from "./ColorInterface.js"
+import PixelInterface from "./PixelInterface.js"
+import ColorInterface from "./ColorInterface.js"
 import BboxInterface from "./BboxInterface.js"
 
 
 //basic pixel.
-export class Pixel implements PixelInterface {
+export default class Pixel implements PixelInterface {
     x: number
     y: number
 

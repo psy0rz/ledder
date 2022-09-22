@@ -1,11 +1,11 @@
-import {Animation} from "../Animation.js";
-import {Display} from "../Display.js";
-import {Scheduler} from "../Scheduler.js";
-import {ControlGroup} from "../ControlGroup.js";
+import Animation from "../Animation.js";
+import Display from "../Display.js";
+import Scheduler from "../Scheduler.js";
+import ControlGroup from "../ControlGroup.js";
 import DrawText from "../draw/DrawText.js";
 import {fontSelect} from "../fonts.js";
 
-import {PixelContainer} from "../PixelContainer.js";
+import PixelContainer from "../PixelContainer.js";
 import FxFlames from "../fx/FxFlames.js";
 
 import BrainsmokeFire from "./BrainsmokeFire.js";

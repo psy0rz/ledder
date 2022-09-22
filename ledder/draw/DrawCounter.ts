@@ -1,6 +1,6 @@
-import {Scheduler} from "../Scheduler.js"
-import {ControlGroup} from "../ControlGroup.js"
-import {PixelContainer} from "../PixelContainer.js"
+import Scheduler from "../Scheduler.js"
+import ControlGroup from "../ControlGroup.js"
+import PixelContainer from "../PixelContainer.js"
 import DrawText from "./DrawText.js"
 import {fonts, fontSelect} from "../fonts.js"
 import {colorRed, colorWhite} from "../Colors.js"
@@ -8,7 +8,7 @@ import Draw from "../Draw.js"
 import {easeInOutCubic, easeInOutQuad, easeInOutQuart, easeInOutSine} from "../util.js"
 import DrawBox from "./DrawBox.js"
 import DrawGlowMask from "./DrawGlowMask.js"
-import {ControlValue} from "../ControlValue.js"
+import ControlValue from "../ControlValue.js"
 
 export default class DrawCounter extends Draw {
     private targetValue: number

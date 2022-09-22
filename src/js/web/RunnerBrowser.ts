@@ -3,7 +3,7 @@ import {svelteAnimations, sveltePresets} from "./svelteStore.js";
 import {confirmPromise, info, promptPromise} from "./util.js";
 import {DisplayCanvas} from "./DisplayCanvas.js";
 import {tick} from "svelte";
-import {ControlGroup} from "../../../ledder/ControlGroup.js";
+import ControlGroup from "../../../ledder/ControlGroup.js";
 
 /**
  * Browser side animation runner. Note that animation runs on the server side (WsContext.ts) and is actually streamed to browser via MatrixWebsocket

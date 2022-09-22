@@ -7,7 +7,7 @@ import {mkdir, readFile, rm, stat, writeFile} from "fs/promises";
 import glob from "glob-promise";
 import {PresetValues} from "../PresetValues.js";
 import {PreviewStore} from "./PreviewStore.js";
-import {Animation} from "../Animation.js";
+import Animation from "../Animation.js";
 
 
 /***
@@ -58,10 +58,10 @@ export class PresetStore {
     async loadAnimation(animationName: string): Promise<typeof Animation> {
         //hack: this path is relative to the current file instead of current working dir.
         let filename = "../animations/" + animationName + ".js"
-        console.log("Loading ", filename)
+        // console.log("Loading ", filename)
         let module = await import(filename+"?"+Date.now()) //prevent caching
 
-        if (!(module.default.prototype instanceof Animation))
+        if (module.default===undefined || !(module.default.prototype instanceof Animation))
 
             throw ("Not a valid Animation")
 
@@ -143,7 +143,7 @@ export class PresetStore {
                 try {
                     await this.createPreview(animationClass, presetName, preset)
                 } catch (e) {
-                    console.error(`Error while rendering preset preview for ${animationClass.title} / ${presetName}: `, e)
+                    console.error(` ${animationClass.name} / ${presetName}: `, e)
                 }
             }
         }
@@ -163,7 +163,7 @@ export class PresetStore {
 
                 let animationClass = await this.loadAnimation(animationName)
                 const previewFilename = this.previewFilename(animationClass.name, "")
-                const animationFilename = path.join("src", "js", "ledder", "animations", animationName + ".js")
+                const animationFilename = path.join("ledder", "animations", animationName + ".js")
                 const animationMtime = await getMtime(animationFilename)
                 if (animationMtime == 0)
                     console.warn("Cant find " + animationFilename + ", always re-creating all previews. (check if filename matches classname)")
@@ -172,19 +172,19 @@ export class PresetStore {
                     try {
                         await this.createPreview(animationClass, "", undefined)
                     } catch (e) {
-                        console.error(`"Error while rendering animation preview for ${animationName}: `, e)
+                        console.error(` ${animationName}: `, e)
                         // throw(e)
                     }
                 }
 
                 await this.updatePresetPreviews(animationClass, animationMtime, force)
             } catch (e) {
-                console.error(`${animationName}: ${e}`)
+                console.error(` ${animationName}: ${e}`)
                 // throw(e)
             }
 
         }
-        console.log("Preview rendering complete")
+        // console.log("Preview rendering complete")
     }
 
 
@@ -242,7 +242,7 @@ export class PresetStore {
 
                 })
             } catch (e) {
-                console.error(`${animationName}: ${e}`)
+                console.error(` ${animationName}: `, e)
             }
 
         }
@@ -261,7 +261,7 @@ export class PresetStore {
             path.join(this.presetPath, 'index.json'),
             JSON.stringify(await this.scanAnimationPresetList(), undefined, ' '), 'utf8'
         )
-        console.log("done")
+        // console.log("done")
     }
 
     private presetFilename(presetDir: string, presetName: string) {

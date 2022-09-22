@@ -1,13 +1,13 @@
-import {Display} from "../Display.js"
+import Display from "../Display.js"
 import {PresetStore} from "./PresetStore.js"
 import {PresetValues} from "../PresetValues.js"
-import {Animation} from "../Animation.js"
+import Animation from "../Animation.js"
 // import * as fs from "fs";
 import {watch} from "fs/promises"
 import {AbortController} from "node-abort-controller";
-import {Scheduler} from "../Scheduler.js";
-import {ControlGroup} from "../ControlGroup.js";
-import {ControlValue} from "../ControlValue.js";
+import Scheduler from "../Scheduler.js";
+import ControlGroup from "../ControlGroup.js";
+import ControlValue from "../ControlValue.js";
 import {Values} from "../Control.js";
 
 

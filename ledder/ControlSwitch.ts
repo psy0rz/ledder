@@ -1,7 +1,7 @@
 import {Control} from "./Control.js";
 
 
-export class ControlSwitch extends Control {
+export default class ControlSwitch extends Control {
     enabled: boolean;
 
     /**

@@ -1,9 +1,9 @@
 import {writeFile} from "fs/promises";
 import {DisplayApng} from "../drivers/DisplayApng.js";
-import {Scheduler} from "../Scheduler.js";
-import {Animation} from "../Animation.js";
+import Scheduler from "../Scheduler.js";
+import Animation from "../Animation.js";
 import {PresetValues} from "../PresetValues.js";
-import {ControlGroup} from "../ControlGroup.js";
+import ControlGroup from "../ControlGroup.js";
 
 
 
@@ -32,7 +32,7 @@ export class PreviewStore {
      * Renders preview to APNG file
      */
     async render(filename: string, animationClass: typeof Animation, preset: PresetValues) {
-        console.log("Rendering preview " + filename);
+        console.log("> " + filename);
 
         this.clear()
 
@@ -44,7 +44,7 @@ export class PreviewStore {
 
         let animation: Animation = new animationClass()
         animation.run(this.display, this.scheduler, this.controlGroup).then(() => {
-            console.log(`PreviewStore: ${filename} finished.`)
+            // console.log(`PreviewStore: ${filename} finished.`)
         }).catch((e) => {
             if (e != 'abort') {
                 console.error(`PreviewStore: ${filename} error`, e)

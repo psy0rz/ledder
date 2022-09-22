@@ -1,9 +1,9 @@
-// import {Animation} from "../Animation.js";
+// import Animation from "../Animation.js";
 // import {random} from "../util.js";
 // import {AnimationMove} from "../AnimationMove.js";
-// import {Pixel} from "../Pixel.js";
+// import Pixel from "../Pixel.js";
 // import {AnimationFade} from "../AnimationFade.js";
-// import {Color} from "../Color.js";
+// import Color from "../Color.js";
 
 // export default class Rain extends Animation {
 

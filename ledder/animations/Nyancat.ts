@@ -1,15 +1,15 @@
-import {Animation} from "../Animation.js";
-import {Pixel} from "../Pixel.js";
-import {Color} from "../Color.js";
+import Animation from "../Animation.js";
+import Pixel from "../Pixel.js";
+import Color from "../Color.js";
 
-import {Display} from "../Display.js";
-import {Scheduler} from "../Scheduler.js";
-import {ControlGroup} from "../ControlGroup.js";
+import Display from "../Display.js";
+import Scheduler from "../Scheduler.js";
+import ControlGroup from "../ControlGroup.js";
 import FxWobble from "../fx/FxWobble.js";
 import FxRotate from "../fx/FxRotate.js";
 import {FxFadeOut} from "../fx/FxFadeOut.js";
 import DrawAsciiArtColor from "../draw/DrawAsciiArtColor.js";
-import {PixelContainer} from "../PixelContainer.js";
+import PixelContainer from "../PixelContainer.js";
 import MovingStars from "./MovingStars.js";
 import FxColorCycle from "../fx/FxColorCycle.js";
 

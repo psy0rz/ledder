@@ -1,7 +1,7 @@
-import {Animation} from "../Animation.js";
-import {Display} from "../Display.js";
-import {Scheduler} from "../Scheduler.js";
-import {ControlGroup} from "../ControlGroup.js";
+import Animation from "../Animation.js";
+import Display from "../Display.js";
+import Scheduler from "../Scheduler.js";
+import ControlGroup from "../ControlGroup.js";
 import DrawAsciiArtColor from "../draw/DrawAsciiArtColor.js"
 
 export default class Syn2Cat extends  Animation

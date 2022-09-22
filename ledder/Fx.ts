@@ -1,5 +1,5 @@
-import {ControlGroup} from "./ControlGroup.js";
-import {Scheduler} from "./Scheduler.js";
+import ControlGroup from "./ControlGroup.js";
+import Scheduler from "./Scheduler.js";
 
 
 

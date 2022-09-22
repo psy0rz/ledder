@@ -13,7 +13,7 @@ interface ControlSelectMeta extends ControlMeta
     choices: Choices
 }
 
-export class ControlSelect extends Control {
+export default class ControlSelect extends Control {
     selected: string
     meta: ControlSelectMeta
 

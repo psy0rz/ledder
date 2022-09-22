@@ -1,12 +1,12 @@
 //schedules updates for animations, based on frame-updates from the display.
-import {IntervalControlled} from "./IntervalControlled.js";
-import {IntervalStatic} from "./IntervalStatic.js";
-import {Interval} from "./Interval.js";
-import {ValueInterface} from "./ValueInterface.js";
-import {IntervalOnce} from "./IntervalOnce.js";
+import IntervalControlled from "./IntervalControlled.js";
+import IntervalStatic from "./IntervalStatic.js";
+import Interval from "./Interval.js";
+import ValueInterface from "./ValueInterface.js";
+import IntervalOnce from "./IntervalOnce.js";
 
 
-export class Scheduler {
+export default class Scheduler {
 
     frameNr: number;
     intervals: Set<Interval>

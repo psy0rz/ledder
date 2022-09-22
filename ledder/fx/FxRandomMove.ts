@@ -1,10 +1,10 @@
 import Fx from "../Fx.js";
-import { ControlValue } from "../ControlValue.js";
-import { ControlGroup } from "../ControlGroup.js";
-import { PixelContainer } from "../PixelContainer.js";
-import { Scheduler } from "../Scheduler.js";
+import ControlValue from "../ControlValue.js";
+import ControlGroup from "../ControlGroup.js";
+import PixelContainer from "../PixelContainer.js";
+import Scheduler from "../Scheduler.js";
 import { random, randomFloatGaussian} from "../util.js";
-import { ControlSwitch } from "../ControlSwitch.js";
+import ControlSwitch from "../ControlSwitch.js";
 
 
 //Move pixels in a random direction/speed.

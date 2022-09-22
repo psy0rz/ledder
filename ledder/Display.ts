@@ -1,14 +1,14 @@
-import {PixelContainer} from "./PixelContainer.js";
-import {Scheduler} from "./Scheduler.js";
-import {ColorInterface} from "./ColorInterface.js";
-import {Pixel} from "./Pixel.js";
+import PixelContainer from "./PixelContainer.js";
+import Scheduler from "./Scheduler.js";
+import ColorInterface from "./ColorInterface.js";
+import Pixel from "./Pixel.js";
 import GammaMapper from "./drivers/GammaMapper.js";
 
 /**
  * The display is the display and shows the list of pixels. The subclasses are actual implementations for different display types.
  * Usually you only need to implement setPixel() to set a pixel and frame() to send the frame and clear the buffer.
  */
-export abstract class Display extends PixelContainer {
+export  default abstract class Display extends PixelContainer {
 
   scheduler: Scheduler
   // runScheduler: boolean

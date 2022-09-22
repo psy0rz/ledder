@@ -1,9 +1,10 @@
-import {Animation} from "../Animation.js";
-import {Pixel} from "../Pixel.js";
-import {Color} from "../Color.js";
-import {Display} from "../Display.js";
-import {Scheduler} from "../Scheduler.js";
-import {ControlGroup} from "../ControlGroup.js";
+
+import Animation  from "../Animation.js";
+import Pixel from "../Pixel.js";
+import Color from "../Color.js";
+import Display from "../Display.js";
+import Scheduler from "../Scheduler.js";
+import ControlGroup from "../ControlGroup.js";
 import { patternSelect} from "../ColorPatterns.js";
 import {glow, randomFloatGaussian} from "../util.js";
 

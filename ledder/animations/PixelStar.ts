@@ -1,6 +1,6 @@
-import {ControlValue} from "../ControlValue.js";
-import {Pixel} from "../Pixel.js";
-import {ColorInterface} from "../ColorInterface.js";
+import ControlValue from "../ControlValue.js";
+import Pixel from "../Pixel.js";
+import ColorInterface from "../ColorInterface.js";
 
 export default class PixelStar extends Pixel {
 

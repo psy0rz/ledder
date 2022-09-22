@@ -1,7 +1,7 @@
 import Fx from "../Fx.js";
-import {ControlGroup} from "../ControlGroup.js";
-import {Scheduler} from "../Scheduler.js";
-import {PixelContainer} from "../PixelContainer.js";
+import ControlGroup from "../ControlGroup.js";
+import Scheduler from "../Scheduler.js";
+import PixelContainer from "../PixelContainer.js";
 
 //"plays" a collection of pixelcontainers with a specfied timing pattern, by adding/removing them to the specified target container.
 export default class FxPattern extends Fx {

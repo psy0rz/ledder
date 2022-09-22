@@ -1,5 +1,5 @@
-import {Font} from "./Font.js";
-import {ControlGroup} from "./ControlGroup.js";
+import Font from "./Font.js";
+import ControlGroup from "./ControlGroup.js";
 
 //good places for more fonts:
 // https://damieng.com/typography/zx-origins/#All/All

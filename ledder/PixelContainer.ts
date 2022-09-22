@@ -1,7 +1,7 @@
-import {Pixel} from "./Pixel.js";
+import Pixel from "./Pixel.js";
 import BboxInterface from "./BboxInterface.js";
 import {random} from "./util.js";
-import {ColorInterface} from "./ColorInterface.js";
+import ColorInterface from "./ColorInterface.js";
 
 /**
  * A pixeltree. A container is just a simple Set() of Pixels, but can also contain sub PixelContainers.
@@ -9,7 +9,7 @@ import {ColorInterface} from "./ColorInterface.js";
  * This allows us to quickly add or remove a bunch of pixels to a display for example.
  * A single Pixel object can be referenced by multiple pixel containers.
  */
-export class PixelContainer extends Set<Pixel | PixelContainer> {
+export default class PixelContainer extends Set<Pixel | PixelContainer> {
 
 
     /* Creates a traditional x/y raster, with seperate pixels that each get a copy of the color object.

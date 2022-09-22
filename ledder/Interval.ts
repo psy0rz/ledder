@@ -1,5 +1,5 @@
 
-export class Interval
+export default class Interval
 {
 
   resolve: (value: boolean) => void

@@ -1,9 +1,9 @@
 // //twinkle random pixels in specified list by applying AnimationFade to them.
-// import {Animation} from "./Animation.js";
+// import Animation from "./Animation.js";
 // import {AnimationFade} from "./AnimationFade.js";
 // import {random} from "./util.js";
-// import {Color} from "./Color.js";
-// import {Display} from "./Display.js";
+// import Color from "./Color.js";
+// import Display from "./Display.js";
 
 
 // export class AnimationTwinkle extends Animation {

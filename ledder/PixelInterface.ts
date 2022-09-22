@@ -1,6 +1,6 @@
-import {ColorInterface} from "./ColorInterface.js";
+import ColorInterface from "./ColorInterface.js";
 
-export interface PixelInterface {
+export default interface PixelInterface {
     x: number;
     y: number;
     color: ColorInterface;

@@ -1,9 +1,9 @@
-import {ColorInterface} from "../ColorInterface.js";
+import ColorInterface from "../ColorInterface.js";
 import {randomGaussian} from "../util.js";
 import Fx from "../Fx.js";
-import {ControlGroup} from "../ControlGroup.js";
-import {ControlValue} from "../ControlValue.js";
-import {Scheduler} from "../Scheduler.js";
+import ControlGroup from "../ControlGroup.js";
+import ControlValue from "../ControlValue.js";
+import Scheduler from "../Scheduler.js";
 
 
 //Fade out by using the alpha channel. This makes pixels more and more transparant during fade.

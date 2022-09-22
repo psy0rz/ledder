@@ -1,6 +1,6 @@
-import {ColorInterface} from "./ColorInterface.js";
+import ColorInterface from "./ColorInterface.js";
 
-export class Color implements ColorInterface {
+export default class Color implements ColorInterface {
     r: number
     g: number
     b: number

@@ -1,7 +1,7 @@
 import {Control} from "./Control.js";
 
 
-export class ControlInput extends Control {
+export default class ControlInput extends Control {
   text: string;
 
   /**

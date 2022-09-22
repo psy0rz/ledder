@@ -1,4 +1,4 @@
-import {Display} from "../Display.js";
+import Display from "../Display.js";
 
 export class DisplayWebsocket extends Display {
     imageBuf8: Uint8ClampedArray;

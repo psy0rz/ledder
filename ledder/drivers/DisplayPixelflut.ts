@@ -1,5 +1,5 @@
-// import {Display} from "../../ledder/Display.js";
-// import {Color} from "../../ledder/Color.js";
+// import Display from "../../ledder/Display.js";
+// import Color from "../../ledder/Color.js";
 // import * as dgram from "dgram";
 // import {Socket} from "dgram";
 

@@ -1,6 +1,6 @@
 // import Draw from "../Draw.js";
-// import {Pixel} from "../Pixel.js";
-// import {ColorInterface} from "../ColorInterface.js";
+// import Pixel from "../Pixel.js";
+// import ColorInterface from "../ColorInterface.js";
 
 //draw a simple line.
 // export default class DrawLine extends Draw {

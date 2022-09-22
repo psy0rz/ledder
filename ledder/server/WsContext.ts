@@ -3,7 +3,7 @@ import {RunnerServer} from "./RunnerServer.js";
 import {DisplayWebsocket} from "../drivers/DisplayWebsocket.js";
 import {PresetStore} from "./PresetStore.js";
 import {JSONRPCServerAndClient} from "json-rpc-2.0";
-import {ControlGroup} from "../ControlGroup.js";
+import ControlGroup from "../ControlGroup.js";
 
 
 //Per websocket context, used to generate the preview animation that is shown in the browser.

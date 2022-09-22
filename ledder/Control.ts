@@ -14,7 +14,7 @@ export interface ControlMeta  {
 
 //meta contains all the meta data, all other properties are values that can be accessed/changed by the user and program.
 
-export class Control {
+export  class Control {
     meta: ControlMeta
 
     // changedCallback: (controlName, values) => void
