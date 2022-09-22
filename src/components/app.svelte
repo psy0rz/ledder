@@ -24,7 +24,6 @@
 
     import routes from '../js/web/routes.js';
     import Categories from '../pages/categories.svelte'
-    import {onMount} from "svelte"
     // import Test from '../pages/test.svelte'
     // import store from '../js/store';
 

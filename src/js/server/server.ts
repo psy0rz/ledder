@@ -27,7 +27,7 @@ for (const m of config.displayList) {
 
     let runner = new RunnerServer(display, controlGroup, presetStore)
     runner.startRenderLoop()
-    runner.runName(config.animationName, config.presetName)
+    await runner.runName(config.animationName, config.presetName)
     runners.push(runner)
 }
 

@@ -52,7 +52,7 @@ export class RunnerBrowser {
        // await rpc.request('context.stopPreview')
         rpc.display = new DisplayCanvas(width, height, zoom, '#ledder-display', '.ledder-display-box');
         await rpc.request('context.startPreview', width, height)
-        this.send()
+        await this.send()
 
     }
 

@@ -50,10 +50,10 @@ export class WsContext {
 
         controls.setCallbacks(
             () => {
-                this.request("control.reset")
+                this.request("control.reset").then()
             },
             (control) => {
-                this.request("control.add", control)
+                this.request("control.add", control).then()
             })
             // (controlName, controlValues) => {
             //     this.request("control.update", controlName, controlValues)

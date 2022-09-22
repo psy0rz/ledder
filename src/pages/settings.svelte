@@ -19,16 +19,16 @@
     export let settings = new ControlGroupLedder();
 
     async function onSave() {
-        await runnerBrowser.presetSave();
+        // await runnerBrowser.presetSave();
     }
 
     async function onDelete() {
-        await runnerBrowser.presetDelete();
-        f7router.back();
+        // await runnerBrowser.presetDelete();
+        // f7router.back();
     }
 
     async function onSaveAs() {
-        await runnerBrowser.presetSave(true);
+        // await runnerBrowser.presetSave(true);
     }
 </script>
 

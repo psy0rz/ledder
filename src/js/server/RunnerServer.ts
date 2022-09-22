@@ -41,7 +41,7 @@ export class RunnerServer {
         this.display.scheduler = this.scheduler
         this.controlGroup = controls
         this.presetStore = presetStore
-        this.autoreload()
+        this.autoreload().then()
         this.resetControls()
         // console.log("Runner server for ", display)
 
@@ -53,7 +53,7 @@ export class RunnerServer {
         this.renderFrame()
     }
 
-    async renderFrame() {
+    renderFrame() {
 
         const now = Date.now();
 
@@ -188,7 +188,7 @@ export class RunnerServer {
     }
 
     //restart animation but optionally keep preset values.
-    async restart(keepPresets: boolean = false) {
+    restart(keepPresets: boolean = false) {
         if (!keepPresets)
             this.resetControls()
         this.scheduler.clear()

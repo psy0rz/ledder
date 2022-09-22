@@ -14,7 +14,6 @@
     import {
         sveltePresets,
         svelteSelectedTitle,
-        svelteLive,
     } from "../js/web/svelteStore.js";
     import { runnerBrowser } from "../js/web/RunnerBrowser.js";
     import ControlGroup from "../components/ControlGroup.svelte";

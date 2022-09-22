@@ -5,12 +5,8 @@ import {ControlGroup} from "../ControlGroup.js"
 import DrawCounter from "../draw/DrawCounter.js"
 import DrawText from "../draw/DrawText.js"
 import {fontSelect} from "../fonts.js"
-import {Color} from "../Color.js"
-import FxFlames from "../fx/FxFlames.js"
-import {PixelContainer} from "../PixelContainer.js"
 import Starfield from "./Starfield.js"
 import {cryptoFirstLast, random} from "../util.js"
-import BertrikFire from "./BertrikFire.js"
 // curl -H "X-CMC_PRO_API_KEY: ..." -H "Accept: application/json" -d "" -G https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest?symbol=BTC,ETH
 //https://cryptingup.com/api/markets
 //https://api2.binance.com/api/v3/ticker/24hr
