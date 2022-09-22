@@ -1,6 +1,6 @@
 <script lang="ts">
     import { Input } from "framework7-svelte";
-    import { ControlInput } from "../../ledder/ControlInput.js";
+    import ControlInput from "../../ledder/ControlInput.js";
 
     export let control: ControlInput;
     export let path: Array<string> = [];

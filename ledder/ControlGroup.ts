@@ -2,8 +2,9 @@ import {Control, ControlMeta, Values} from "./Control.js"
 import ControlValue from "./ControlValue.js"
 import ControlColor from "./ControlColor.js"
 import ControlInput from "./ControlInput.js"
-import ControlSwitch from "./ControlSwitch.js";
-import ControlSelect, {Choices} from "./ControlSelect.js";
+import ControlSwitch from "./ControlSwitch.js"
+import ControlSelect, {Choices} from "./ControlSelect.js"
+import ControlRange from "./ControlRange.js"
 
 
 type ControlMap = Map<string, Control>
@@ -77,12 +78,29 @@ export default class ControlGroup extends Control {
      */
     value(name: string, value = 0, min = 0, max = 100, step: number = 1, restartOnChange: boolean = false): ControlValue {
         if (!(name in this.meta.controls)) {
-            this.add(new ControlValue(name, value, min, max, step, restartOnChange));
+            this.add(new ControlValue(name, value, min, max, step, restartOnChange))
         }
-
-
-        return this.meta.controls[name];
+        return this.meta.controls[name]
     }
+
+
+    /**
+     * Get or create range-control with specified name
+     * @param name Name of the control
+     * @param from Initial from value
+     * @param to Initial to value
+     * @param min Minimum value (inclusive)
+     * @param max Maximum value (inclusive)
+     * @param step Step size
+     * @param restartOnChange Reset animation when value has changed
+     */
+    range(name: string, from = 0, to = 100,  min = 0, max = 100, step: number = 1, restartOnChange: boolean = false): ControlRange {
+        if (!(name in this.meta.controls)) {
+            this.add(new ControlRange(name, from, to, min, max, step, restartOnChange))
+        }
+        return this.meta.controls[name]
+    }
+
 
     /**
      * Get or create color-control with specified name

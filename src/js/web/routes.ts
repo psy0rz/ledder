@@ -2,7 +2,7 @@
 import ControlsPage from '../../pages/controls.svelte';
 import SettingsPage from '../../pages/settings.svelte';
 
-import Animation Runner from '../../pages/animationrunner.svelte'
+import AnimationRunner from '../../pages/animationrunner.svelte'
 
 var routes = [
   {

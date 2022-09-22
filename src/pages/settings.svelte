@@ -11,7 +11,7 @@
 
     } from "framework7-svelte";
 
-    import { ControlGroup  } from "../../ledder/ControlGroup";
+    import ControlGroup from "../../ledder/ControlGroup";
     import { rpc } from "../js/web/RpcClient.js";
     import ControlGroupUI from "../components/ControlGroupUI.svelte"
 

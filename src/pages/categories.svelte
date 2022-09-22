@@ -90,11 +90,6 @@
             {#each $svelteAnimations as animation}
                 <ListGroup>
                     <ListItem title={animation.title} groupTitle>
-                        <img
-                                src="{rpc.url}/{animation.previewFile}"
-                                slot="media"
-                                class="ledder-preview-image"
-                        />
                     </ListItem>
 
                     <ListItem
@@ -106,6 +101,7 @@
                                 src="{rpc.url}/{animation.previewFile}"
                                 slot="media"
                                 class="ledder-preview-image"
+                                alt="{animation.title} preview"
                         />
                     </ListItem>
                     {#each animation.presets as preset}
@@ -119,6 +115,7 @@
                                     src="{rpc.url}/{preset.previewFile}"
                                     slot="media"
                                     class="ledder-preview-image"
+                                    alt="{animation.title} ({preset.name}) preview"
                             />
                         </ListItem>
                     {/each}

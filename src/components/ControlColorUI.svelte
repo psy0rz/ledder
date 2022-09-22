@@ -1,6 +1,6 @@
 <script lang="ts">
     import { Input } from "framework7-svelte";
-    import { ControlColor } from "../../ledder/ControlColor.js";
+    import ControlColor from "../../ledder/ControlColor.js";
 
     export let control: ControlColor;
     export let path: Array<string> = [];

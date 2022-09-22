@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { ControlSelect } from "../../ledder/ControlSelect.js";
+    import ControlSelect from "../../ledder/ControlSelect.js";
     import { Input } from "framework7-svelte";
 
     export let control: ControlSelect;

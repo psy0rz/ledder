@@ -1,6 +1,6 @@
 <script lang="ts">
     import { Toggle } from "framework7-svelte";
-    import { ControlSwitch } from "../../ledder/ControlSwitch.js";
+    import ControlSwitch from "../../ledder/ControlSwitch.js";
 
     export let control: ControlSwitch;
     export let path: Array<string> = [];
