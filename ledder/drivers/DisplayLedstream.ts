@@ -1,9 +1,9 @@
 // @ts-ignore
 import dgram from "dgram"
 
-import {DisplayQOIS} from "../DisplayQOIS.js"
-import GammaMapper from "./GammaMapper"
-import OffsetMapper from "./OffsetMapper"
+import {DisplayQOIS} from "../server/DisplayQOIS.js"
+import GammaMapper from "./GammaMapper.js"
+import OffsetMapper from "./OffsetMapper.js"
 
 const qoisDataLength = 1460 - 4 //4 bytes overhead
 

@@ -1,6 +1,6 @@
 <script lang="ts">
     import { Range, Stepper } from "framework7-svelte";
-    import { ControlValue } from "../js/ledder/ControlValue.js";
+    import { ControlValue } from "../../ledder/ControlValue.js";
 
     export let control: ControlValue;
     export let path: Array<string> = [];

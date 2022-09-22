@@ -1,5 +1,5 @@
 //dummy for testing
-import {Display} from "../../ledder/Display.js";
+import {Display} from "../Display.js";
 
 export class DisplayDummy extends Display {
     constructor(width, height) {

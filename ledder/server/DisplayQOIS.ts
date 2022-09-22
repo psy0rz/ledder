@@ -1,7 +1,7 @@
-import {Display} from "../ledder/Display.js"
-import {Color} from "../ledder/Color.js"
-import {colorBlack} from "../ledder/Colors.js"
-import OffsetMapper from "./drivers/OffsetMapper"
+import {Display} from "../Display.js"
+import {Color} from "../Color.js"
+import {colorBlack} from "../Colors.js"
+import OffsetMapper from "../drivers/OffsetMapper.js"
 
 
 const QOI_OP_INDEX = 0x00 /* 00xxxxxx */
@@ -97,7 +97,7 @@ export abstract class DisplayQOIS extends Display {
                 pixel.b = this.gammaMapper[Math.round(c.b)]
                 pixel.a=c.a
             }
-            
+
             if (pixel.equal(prevPixel)) {
                 run++
                 if (run == 62 || pixelCount == this.pixelCount) {

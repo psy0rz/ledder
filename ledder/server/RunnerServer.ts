@@ -1,14 +1,14 @@
-import {Display} from "../ledder/Display.js"
+import {Display} from "../Display.js"
 import {PresetStore} from "./PresetStore.js"
-import {PresetValues} from "../ledder/PresetValues.js"
-import {Animation} from "../ledder/Animation.js"
+import {PresetValues} from "../PresetValues.js"
+import {Animation} from "../Animation.js"
 // import * as fs from "fs";
 import {watch} from "fs/promises"
 import {AbortController} from "node-abort-controller";
-import {Scheduler} from "../ledder/Scheduler.js";
-import {ControlGroup} from "../ledder/ControlGroup.js";
-import {ControlValue} from "../ledder/ControlValue.js";
-import {Values} from "../ledder/Control.js";
+import {Scheduler} from "../Scheduler.js";
+import {ControlGroup} from "../ControlGroup.js";
+import {ControlValue} from "../ControlValue.js";
+import {Values} from "../Control.js";
 
 
 /**

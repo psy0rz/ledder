@@ -6,7 +6,7 @@
     export let onChanged: (path: Array<string>, values: {}) => void;
 
     import { BlockHeader, TreeviewItem } from "framework7-svelte";
-    import { ControlGroup } from "../js/ledder/ControlGroup.js";
+    import { ControlGroup } from "../../ledder/ControlGroup.js";
     import ControlColorUI from "./ControlColorUI.svelte";
     import ControlInputUI from "./ControlInputUI.svelte";
     import ControlSwitchUI from "./ControlSwitchUI.svelte";

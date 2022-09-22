@@ -11,7 +11,7 @@ async function load() {
         await copyFile(conf_file_example, conf_file)
     })
 
-    return (import("../../../"+conf_file))
+    return (import("../../"+conf_file))
 }
 
 export const config = await load()

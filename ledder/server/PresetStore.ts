@@ -5,9 +5,9 @@
 import * as path from "path";
 import {mkdir, readFile, rm, stat, writeFile} from "fs/promises";
 import glob from "glob-promise";
-import {PresetValues} from "../ledder/PresetValues.js";
+import {PresetValues} from "../PresetValues.js";
 import {PreviewStore} from "./PreviewStore.js";
-import {Animation} from "../ledder/Animation.js";
+import {Animation} from "../Animation.js";
 
 
 /***
@@ -37,7 +37,7 @@ export class PresetStore {
     presetPath: string;
     animationPath: string;
 
-    constructor(animationPath: string = "src/js/ledder/animations", presetPath: string = "presets") {
+    constructor(animationPath: string = "ledder/animations", presetPath: string = "presets") {
         this.presetPath = presetPath;
         this.animationPath = animationPath
 
@@ -57,7 +57,7 @@ export class PresetStore {
     //dynamicly loads an animation class from disk and returns the Class
     async loadAnimation(animationName: string): Promise<typeof Animation> {
         //hack: this path is relative to the current file instead of current working dir.
-        let filename = "../ledder/animations/" + animationName + ".js"
+        let filename = "../animations/" + animationName + ".js"
         console.log("Loading ", filename)
         let module = await import(filename+"?"+Date.now()) //prevent caching
 

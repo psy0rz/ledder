@@ -2,8 +2,8 @@
 //gamma brightness and max brightness correction
 //maps from 0-255
 
-import { ControlGroup } from "../../ledder/ControlGroup"
-import { ControlValue } from "../../ledder/ControlValue"
+import { ControlGroup } from "../ControlGroup.js"
+import { ControlValue } from "../ControlValue.js"
 
 
 export default class GammaMapper extends Array {
@@ -13,7 +13,7 @@ export default class GammaMapper extends Array {
   constructor(controlGroup:ControlGroup)
   {
     super()
-    
+
     this.gammaControl = controlGroup.value("Gamma", 2.8, 0, 5, 0.1, true)
     this.brightnessControl = controlGroup.value("Brightness", 255, 0, 255, 1, true)
 

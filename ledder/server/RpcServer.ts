@@ -1,7 +1,7 @@
 import express from "express";
 import expressWs from "express-ws";
 import {JSONRPCClient, JSONRPCServer, JSONRPCServerAndClient} from "json-rpc-2.0";
-import {Rpc} from "../Rpc.js";
+import {Rpc} from "../../src/js/Rpc.js";
 import {WsContext} from "./WsContext.js";
 
 let vite

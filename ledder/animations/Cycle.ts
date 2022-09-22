@@ -2,7 +2,7 @@ import {Animation} from "../Animation.js"
 import {Display} from "../Display.js"
 import {Scheduler} from "../Scheduler.js"
 import {ControlGroup} from "../ControlGroup.js"
-import {PresetStore} from "../../server/PresetStore.js"
+import {PresetStore} from "../server/PresetStore.js"
 import FxFlameout from "../fx/FxFlameout.js"
 import FxPacman from "../fx/FxPacman.js"
 

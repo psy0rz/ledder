@@ -1,6 +1,6 @@
 //svelte variable store
 import { writable } from 'svelte/store';
-import {ControlGroup} from "../ledder/ControlGroup.js";
+import {ControlGroup} from "../../../ledder/ControlGroup.js";
 
 export const sveltePresets = writable<ControlGroup>( )
 

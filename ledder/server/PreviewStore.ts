@@ -1,9 +1,9 @@
 import {writeFile} from "fs/promises";
-import {DisplayApng} from "./drivers/DisplayApng.js";
-import {Scheduler} from "../ledder/Scheduler.js";
-import {Animation} from "../ledder/Animation.js";
-import {PresetValues} from "../ledder/PresetValues.js";
-import {ControlGroup} from "../ledder/ControlGroup.js";
+import {DisplayApng} from "../drivers/DisplayApng.js";
+import {Scheduler} from "../Scheduler.js";
+import {Animation} from "../Animation.js";
+import {PresetValues} from "../PresetValues.js";
+import {ControlGroup} from "../ControlGroup.js";
 
 
 

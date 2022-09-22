@@ -8,11 +8,11 @@
   "license": "UNLICENSED",
   "scripts": {
     "start": "npm run dev",
-    "dev": "node src/js/server/buildpreviews.js;NODE_ENV=development node src/js/server/server.js",
-    "perftest": "node src/js/server/perftest.js",
-    "build": "tsc -p src/js;NODE_ENV=production vite build",
-    "buildpreviews": "node src/js/server/buildpreviews.js",
-    "production": "NODE_ENV=production node src/js/server/buildpreviews.js;NODE_ENV=production node src/js/server/server.js"
+    "dev": "node ledder/server/buildpreviews.js;NODE_ENV=development node ledder/server/server.js",
+    "perftest": "node ledder/server/perftest.js",
+    "build": "tsc -p src/js; tsc -p ledder; NODE_ENV=production vite build",
+    "buildpreviews": "node ledder/server/buildpreviews.js",
+    "production": "NODE_ENV=production node ledder/server/buildpreviews.js;NODE_ENV=production node ledder/server/server.js"
   },
   "browserslist": [
     "Android >= 7",
