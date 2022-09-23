@@ -91,6 +91,7 @@ export default class PlasmaFire extends Animation {
             }
         }
 
+
         //determine neighbours
         for (let x = 1; x < display.width - 1; x++) {
 

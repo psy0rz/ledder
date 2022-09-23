@@ -126,3 +126,9 @@ export  function cryptoFirstLast(symbol = 'BTCUSDT', callback) {
         console.error(e)
     }
 }
+
+//determine current position between min and max in percents
+export function positionPercentage(min, max, position)
+{
+    return(position-min)/(max-min)*100
+}
