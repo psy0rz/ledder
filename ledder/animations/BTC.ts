@@ -20,7 +20,7 @@ export default class BTC extends Animation {
         let init = true
         let counter
 
-        const percentageRange=controls.range("Burn/Moon percentages", -1,1,-20,20,0.1)
+        const percentageRange=controls.range("Burn/Moon percentages", -1,1,-5,5,0.1, true)
 
         fonts.C64.load()
 
@@ -36,7 +36,11 @@ export default class BTC extends Animation {
                     if (percentage<=percentageRange.from)
                     {
                         const flames=new BertrikFire()
-                        flames.run(box, scheduler,controls)
+                        const firebox=new PixelBox(box)
+                        firebox.xMin=5
+                        firebox.xMax=20
+                        box.add(firebox)
+                        flames.run(firebox, scheduler,controls)
                     }
 
                     if (percentage>=percentageRange.to) {

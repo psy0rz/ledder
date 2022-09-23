@@ -42,7 +42,6 @@ export function cryptoFirstLast(symbol = 'BTCUSDT', callback: (symbol, first, la
     }
 
     function doCallbacks(d: CacheInterface) {
-        console.log(d)
         for (const callback of d.callbacks)
             callback(symbol, parseFloat(d.result.openPrice), parseFloat(d.result.lastPrice))
 
