@@ -75,6 +75,12 @@
    "Creation interval": {
     "value": 0
    }
+  },
+  "Symbol": {
+   "selected": "BTCUSDT"
+  },
+  "Font": {
+   "selected": "Picopixel"
   }
  }
 }

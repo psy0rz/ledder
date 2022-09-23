@@ -3,7 +3,7 @@ import Scheduler from "../Scheduler.js"
 import ControlGroup from "../ControlGroup.js"
 import DrawCounter from "../draw/DrawCounter.js"
 import DrawText from "../draw/DrawText.js"
-import {fonts} from "../fonts.js"
+import {fonts, fontSelect} from "../fonts.js"
 import Starfield from "./Starfield.js"
 import {random} from "../util.js"
 import BertrikFire from "./BertrikFire.js"
@@ -19,6 +19,19 @@ export default class BTC extends Animation {
 
         let init = true
         let counter
+
+        const choices=[
+            {
+                id: "BTCUSDT",
+                name: "BTC$"
+            },
+            {
+                id: "ETHUSDT",
+                name: "ETH$"
+            },
+        ]
+        const symbolSelect=controls.select("Symbol", "BTCUSDT", choices, true )
+
 
         const percentageRange=controls.range("Burn/Moon percentages", -1,1,-5,5,0.1, true)
 
@@ -40,13 +53,14 @@ export default class BTC extends Animation {
         counter.run(scheduler, controls, box.xMax-(digitCount*7),y,digitCount, 0.001)
 
 
-        const label=new DrawText(0,y, fonts.C64, "BTC$", controls.color('Text color'))
+        const label=new DrawText(1,y+1, fontSelect(controls), symbolSelect.selected, controls.color('Text color'))
         box.add(label)
+
 
 
         function update() {
 
-            cryptoFirstLast('BTCUSDT',  (symbol, first, last) => {
+            cryptoFirstLast(symbolSelect.selected,  (symbol, first, last) => {
 
                 if (init) {
 
