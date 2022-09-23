@@ -13,7 +13,7 @@ import { cryptoFirstLast} from "../crypto.js"
 export default class BTC extends Animation {
     static category = "Misc"
     static title = "BTC"
-    static description = "blabla"
+    static description = "Rotating bitcoin counter."
 
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) {
 
@@ -23,6 +23,26 @@ export default class BTC extends Animation {
         const percentageRange=controls.range("Burn/Moon percentages", -1,1,-5,5,0.1, true)
 
         fonts.C64.load()
+
+        const firebox=new PixelBox(box)
+        firebox.xMin=5
+        firebox.xMax=20
+        box.add(firebox)
+
+        const starBox=new PixelBox(box)
+        box.add(starBox)
+
+        counter = new DrawCounter()
+        box.add(counter)
+
+        const y=~~box.middleY()-3
+        const digitCount=6
+        counter.run(scheduler, controls, box.xMax-(digitCount*7),y,digitCount, 0.001)
+
+
+        const label=new DrawText(0,y, fonts.C64, "BTC$", controls.color('Text color'))
+        box.add(label)
+
 
         function update() {
 
@@ -36,28 +56,14 @@ export default class BTC extends Animation {
                     if (percentage<=percentageRange.from)
                     {
                         const flames=new BertrikFire()
-                        const firebox=new PixelBox(box)
-                        firebox.xMin=5
-                        firebox.xMax=20
-                        box.add(firebox)
                         flames.run(firebox, scheduler,controls)
                     }
 
                     if (percentage>=percentageRange.to) {
                         const stars = new Starfield()
-                        stars.run(box, scheduler, controls.group("stars"))
+                        stars.run(starBox, scheduler, controls.group("stars"))
                     }
 
-                    counter = new DrawCounter()
-                    box.add(counter)
-
-                    const y=~~box.middleY()-3
-                    const digitCount=6
-                    counter.run(scheduler, controls, box.xMax-(digitCount*7),y,digitCount, 0.001)
-
-
-                    const label=new DrawText(0,y, fonts.C64, "BTC$", controls.color('Text color'))
-                    box.add(label)
                     counter.update(~~first)
                     init = false
                 }
