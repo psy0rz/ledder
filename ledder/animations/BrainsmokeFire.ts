@@ -5,7 +5,8 @@ import Scheduler from "../Scheduler.js";
 import ControlGroup from "../ControlGroup.js";
 import Display from "../Display.js";
 import { patternSelect} from "../ColorPatterns.js";
-import {glow} from "../util.js";
+import { glow} from "../util.js"
+import PixelBox from "../PixelBox.js"
 
 //best at 50fps according to brainsmoke
 export default class BrainsmokeFire extends Animation {
@@ -26,15 +27,18 @@ export default class BrainsmokeFire extends Animation {
     private maxIntensityControl: ControlValue;
     private wildnessIntensityControl: ControlValue;
     private fireColors: any[];
+    private box: PixelBox
 
-    async run(display: Display, scheduler: Scheduler, controls: ControlGroup) {
 
+    async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) {
+
+        this.box=box
         this.old = []
         this.new = []
 
         // oversampling x2 !
-        this.w = display.width * 2
-        this.h = display.height * 2
+        this.w = box.width() * 2
+        this.h = box.height() * 2
 
         //create fire-pixel maps
         for (let h = 0; h < this.h + 2; h++) {
@@ -46,7 +50,8 @@ export default class BrainsmokeFire extends Animation {
             }
         }
 
-        this.xypixels = display.raster(display, new Color(0, 0, 0), true, false, true)
+
+        this.xypixels = box.raster(box, new Color(0, 0, 0), true, false, false)
 
         this.black = new Color(0, 0, 0)
 
@@ -63,7 +68,7 @@ export default class BrainsmokeFire extends Animation {
         this.wildnessIntensityControl = controls.value("Fire wildness", 10000, 0, 20000, 20);
 
         const fireintervalControl = controls.value("Fire interval", 1, 1, 10, 0.1)
-        display.scheduler.intervalControlled(fireintervalControl, () => {
+        scheduler.intervalControlled(fireintervalControl, () => {
             this.next()
             return true
         })
@@ -114,9 +119,9 @@ export default class BrainsmokeFire extends Animation {
                 //scale to color map and round (brainsmokes original used 256 colors)
                 avg=~~(avg/256*this.fireColors.length)
                 if (avg >= this.fireColors.length) {
-                    this.xypixels[y / 2][x / 2].color = this.black
+                    this.xypixels[this.box.yMax - y / 2][this.box.xMin + x / 2].color = this.black
                 } else {
-                    this.xypixels[y / 2][x / 2].color = this.fireColors[avg]
+                    this.xypixels[this.box.yMax - y / 2][this.box.xMin + x / 2].color = this.fireColors[avg]
                 }
             }
         }

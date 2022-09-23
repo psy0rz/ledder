@@ -4,7 +4,7 @@ import Color from "../Color.js"
 import Scheduler from "../Scheduler.js"
 import ControlGroup from "../ControlGroup.js"
 import {patternSelect} from "../ColorPatterns.js"
-import {glow, positionPercentage, randomFloatGaussian} from "../util.js"
+import { glow, randomFloatGaussian} from "../util.js"
 import PixelBox from "../PixelBox.js"
 
 export default class BertrikFire extends Animation {
@@ -120,8 +120,8 @@ export default class BertrikFire extends Animation {
             //glower
             for (let x = box.xMin; x < box.xMax; x++) {
 
-                const xPercentage = positionPercentage(box.xMin, box.xMax, x)
-                if (xPercentage >= fireXrange.from && xPercentage <= fireXrange.to)
+                const percentageX = box.percentageX( x)
+                if (percentageX >= fireXrange.from && percentageX <= fireXrange.to)
                     glower[x] = glow(glower[x],
                         ~~intensityControl.from * colorScale,
                         ~~intensityControl.to * colorScale,

@@ -1,5 +1,7 @@
 //led utils
 import * as https from "https"
+import PixelBox from "./PixelBox.js"
+import BoxInterface from "./BoxInterface.js"
 
 
 /**
@@ -89,19 +91,19 @@ export function easeInOutCubic(x: number): number {
 }
 
 export function easeInOutSine(x: number): number {
-    return -(Math.cos(Math.PI * x) - 1) / 2;
+    return -(Math.cos(Math.PI * x) - 1) / 2
 }
 
 export function easeInOutQuad(x: number): number {
-    return x < 0.5 ? 2 * x * x : 1 - Math.pow(-2 * x + 2, 2) / 2;
+    return x < 0.5 ? 2 * x * x : 1 - Math.pow(-2 * x + 2, 2) / 2
 }
 
 export function easeInOutQuart(x: number): number {
-    return x < 0.5 ? 8 * x * x * x * x : 1 - Math.pow(-2 * x + 2, 4) / 2;
+    return x < 0.5 ? 8 * x * x * x * x : 1 - Math.pow(-2 * x + 2, 4) / 2
 }
 
 //currently gets it from binance (free open api)
-export  function cryptoFirstLast(symbol = 'BTCUSDT', callback) {
+export function cryptoFirstLast(symbol = 'BTCUSDT', callback) {
 
     try {
         const url = `https://api2.binance.com/api/v3/ticker/24hr?symbol=${symbol}&type=mini`
@@ -127,8 +129,3 @@ export  function cryptoFirstLast(symbol = 'BTCUSDT', callback) {
     }
 }
 
-//determine current position between min and max in percents
-export function positionPercentage(min, max, position)
-{
-    return(position-min)/(max-min)*100
-}
