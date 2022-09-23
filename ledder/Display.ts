@@ -11,7 +11,6 @@ import GammaMapper from "./drivers/GammaMapper.js";
  */
 export  default abstract class Display  {
 
-  scheduler: Scheduler
   // runScheduler: boolean
   // fpsControl: ControlValue
 

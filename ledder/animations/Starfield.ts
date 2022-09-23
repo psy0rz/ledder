@@ -1,11 +1,11 @@
 import Animation from "../Animation.js"
-import Display from "../Display.js"
 import Scheduler from "../Scheduler.js"
 import ControlGroup from "../ControlGroup.js"
 import Pixel from "../Pixel.js"
 import Color from "../Color.js"
 import PixelContainer from "../PixelContainer.js"
 import {random} from "../util.js"
+import PixelBox from "../PixelBox.js"
 
 
 class Star {
@@ -58,13 +58,11 @@ export default class Starfield extends Animation {
     static description = "blabla"
 
 
-    async run(display: Display, scheduler: Scheduler, controls: ControlGroup) {
+    async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) {
 
-        const midX = display.width / 2
-        const midY = display.height / 2
 
         const c = new PixelContainer()
-        display.add(c)
+        box.add(c)
 
         let stars = new Set<Star>()
 
@@ -87,8 +85,8 @@ export default class Starfield extends Animation {
 
         // const xStart = display.width / 2 + random(-2,2)
         // const yStart = display.height / 2 + random(2,2)
-        const xStart = display.width / 2
-        const yStart = display.height / 2
+        const xStart = box.middleX()
+        const yStart = box.middleY()
         // const xStart = random(0,display.width-1)
         // const yStart = random(0,display.height-1)
 
@@ -100,22 +98,23 @@ export default class Starfield extends Animation {
             let xOffset = 0
             let yOffset = 0
 
+
             if (side == 0) {
-                xEnd = -1
-                yEnd = random(0, display.height - 1)
-                // xOffset = random(-75/4,0)
+                //left
+                xEnd = box.xMin-1
+                yEnd = random(box.yMin, box.yMax)
             } else if (side == 1) {
-                xEnd = display.width + 1
-                yEnd = random(0, display.height - 1)
-                // xOffset = random(0,75/4)
+                //right
+                xEnd = box.xMax+1
+                yEnd = random(box.yMin, box.yMax)
             } else if (side == 2) {
-                xEnd = random(0, display.width - 1)
-                yEnd = -1
-                // yOffset=random(-2,0)
+                //bottom
+                xEnd = random(box.xMin, box.xMax)
+                yEnd = box.yMin-1
             } else if (side == 3) {
-                xEnd = random(0, display.width - 1)
-                yEnd = display.height + 1
-                // yOffset=random(0,2)
+                //top
+                xEnd = random(box.xMin, box.xMax)
+                yEnd = box.yMax+1
             }
 
             const star = new Star(xStart + xOffset, yStart + yOffset, xEnd, yEnd)

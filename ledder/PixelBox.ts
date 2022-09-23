@@ -34,4 +34,15 @@ export default class PixelBox extends PixelContainer {
         return this.yMax - this.yMin + 1
     }
 
+    middleX()
+    {
+        return (this.xMax+this.xMin)/2
+    }
+
+    middleY()
+    {
+        return (this.yMax+this.yMin)/2
+
+    }
+
 }

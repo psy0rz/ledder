@@ -1,7 +1,4 @@
 //led utils
-import * as https from "https"
-import PixelBox from "./PixelBox.js"
-import BoxInterface from "./BoxInterface.js"
 
 
 /**
@@ -102,30 +99,5 @@ export function easeInOutQuart(x: number): number {
     return x < 0.5 ? 8 * x * x * x * x : 1 - Math.pow(-2 * x + 2, 4) / 2
 }
 
-//currently gets it from binance (free open api)
-export function cryptoFirstLast(symbol = 'BTCUSDT', callback) {
 
-    try {
-        const url = `https://api2.binance.com/api/v3/ticker/24hr?symbol=${symbol}&type=mini`
-        https.get(url, (res) => {
-            // console.log(res)
-            let data = ""
-            res.on('data', (d) => {
-                data += d.toString()
-            })
-
-            res.on('end', () => {
-                try {
-                    const json = JSON.parse(data)
-                    console.log(json)
-                    callback(symbol, parseFloat(json.openPrice), parseFloat(json.lastPrice))
-                } catch (e) {
-                    console.error(e)
-                }
-            })
-        })
-    } catch (e) {
-        console.error(e)
-    }
-}
 

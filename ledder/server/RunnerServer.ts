@@ -40,15 +40,21 @@ export class RunnerServer {
 
     constructor(display: Display, controls: ControlGroup, presetStore: PresetStore) {
         this.display = display
-        this.scheduler = new Scheduler()
-        this.box=new PixelBox(display)
-        this.display.scheduler = this.scheduler
+
         this.controlGroup = controls
         this.presetStore = presetStore
         this.autoreload().then()
         this.resetControls()
+        this.resetAnimation()
         // console.log("Runner server for ", display)
 
+    }
+
+    //reset animation, by creating new objects. This ensures that animation that still have some async call running cannot interfere with the next one.
+    resetAnimation()
+    {
+        this.box=new PixelBox(this.display)
+        this.scheduler = new Scheduler()
     }
 
 
@@ -118,10 +124,11 @@ export class RunnerServer {
         }
     }
 
+
     //stop everything because of cleanup/close
     stop() {
         this.stopRenderLoop()
-        this.scheduler.clear()
+        this.resetAnimation()
         this.watchAbort.abort()
 
     }
@@ -131,6 +138,7 @@ export class RunnerServer {
         console.log(`RunnerServer: Starting ${this.animationName}`)
         try {
             this.animation = new this.animationClass()
+            this.resetAnimation()
             this.animation.run(this.box, this.scheduler, this.controlGroup).then(() => {
                 console.log(`RunnerServer: Animation ${this.animationName} finished.`)
             }).catch((e) => {
@@ -162,8 +170,6 @@ export class RunnerServer {
         this.animationClass = await this.presetStore.loadAnimation(animationName)
 
         console.log("Runner: starting", animationName, presetName)
-        this.scheduler.clear()
-        this.box=new PixelBox(this.display)
         this.resetControls()
 
         if (presetName) {
@@ -197,8 +203,6 @@ export class RunnerServer {
     restart(keepPresets: boolean = false) {
         if (!keepPresets)
             this.resetControls()
-        this.scheduler.clear()
-        this.box=new PixelBox(this.display)
 
         this.start()
     }

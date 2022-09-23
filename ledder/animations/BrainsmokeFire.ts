@@ -3,7 +3,6 @@ import Color from "../Color.js";
 import ControlValue from "../ControlValue.js";
 import Scheduler from "../Scheduler.js";
 import ControlGroup from "../ControlGroup.js";
-import Display from "../Display.js";
 import { patternSelect} from "../ColorPatterns.js";
 import { glow} from "../util.js"
 import PixelBox from "../PixelBox.js"
