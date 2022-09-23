@@ -6,8 +6,34 @@
    "value": 60
   },
   "Burn/Moon percentages": {
-   "from": -0.4,
-   "to": 1.8
+   "from": -5,
+   "to": 5
+  },
+  "Fire colors": {
+   "selected": "Bertrik fire"
+  },
+  "Fire interval": {
+   "value": 1
+  },
+  "Fire intensity %": {
+   "from": 0,
+   "to": 100
+  },
+  "Fire wildness %": {
+   "value": 29
+  },
+  "Fire decay %": {
+   "value": 16
+  },
+  "Fire sintel factor": {
+   "value": 0.97
+  },
+  "Fire speed": {
+   "value": 1
+  },
+  "Fire X range %": {
+   "from": 0,
+   "to": 100
   },
   "Digit color": {
    "r": 255,
@@ -36,35 +62,9 @@
    "b": 128,
    "a": 1
   },
-  "Fire colors": {
-   "selected": "Bertrik fire"
-  },
-  "Fire interval": {
-   "value": 1
-  },
-  "Fire intensity %": {
-   "from": 0,
-   "to": 100
-  },
-  "Fire wildness %": {
-   "value": 22
-  },
-  "Fire decay %": {
-   "value": 10
-  },
-  "Fire sintel factor": {
-   "value": 0.42
-  },
-  "Fire speed": {
-   "value": 1
-  },
-  "Fire X range %": {
-   "from": 0,
-   "to": 100
-  },
   "stars": {
    "Base speed": {
-    "value": 0.00001
+    "value": 0.001
    },
    "Acceleration": {
     "value": 0.03

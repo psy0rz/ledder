@@ -30,10 +30,24 @@
    "value": 100
   },
   "Fire wildness %": {
-   "value": 10
+   "value": 25
   },
   "Fire decay %": {
-   "value": 4
+   "value": 6
+  },
+  "Fire intensity %": {
+   "from": 33,
+   "to": 100
+  },
+  "Fire sintel factor": {
+   "value": 0
+  },
+  "Fire speed": {
+   "value": 3
+  },
+  "Fire X range %": {
+   "from": 0,
+   "to": 100
   }
  }
 }

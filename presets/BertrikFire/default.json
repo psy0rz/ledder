@@ -1,0 +1,35 @@
+{
+ "title": "",
+ "description": "",
+ "values": {
+  "FPS": {
+   "value": 60
+  },
+  "Fire colors": {
+   "selected": "Bertrik fire"
+  },
+  "Fire interval": {
+   "value": 1
+  },
+  "Fire intensity %": {
+   "from": 0,
+   "to": 100
+  },
+  "Fire wildness %": {
+   "value": 22
+  },
+  "Fire decay %": {
+   "value": 7
+  },
+  "Fire sintel factor": {
+   "value": 0
+  },
+  "Fire speed": {
+   "value": 1
+  },
+  "Fire X range %": {
+   "from": 0,
+   "to": 100
+  }
+ }
+}

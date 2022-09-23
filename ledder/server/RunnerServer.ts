@@ -163,7 +163,7 @@ export class RunnerServer {
     }
 
     //load presetName and run
-    async runName(animationName: string, presetName: string) {
+    async runName(animationName: string, presetName: string="default") {
 
         this.presetName = presetName
         this.animationName = animationName
@@ -172,18 +172,30 @@ export class RunnerServer {
         console.log("Runner: starting", animationName, presetName)
         this.resetControls()
 
-        if (presetName) {
-            this.presetValues = await this.presetStore.load(this.animationClass, presetName)
-            this.controlGroup.load(this.presetValues.values)
-            this.display.setFps(this.fpsControl.value)
-        } else {
-            this.presetValues = {
-                title: "",
-                description: "",
-                values: {}
-            }
-
+        this.presetValues = {
+            title: "",
+            description: "",
+            values: {}
         }
+
+        if (presetName==="")
+        {
+            presetName="default"
+        }
+
+        try
+        {
+            this.presetValues = await this.presetStore.load(this.animationClass, presetName)
+        }
+        catch(e)
+        {
+            //default doesnt have to exist
+            if (presetName!=="default")
+                throw(e)
+        }
+
+        this.controlGroup.load(this.presetValues.values)
+        this.display.setFps(this.fpsControl.value)
 
         this.start()
 

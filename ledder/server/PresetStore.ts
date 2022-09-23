@@ -76,7 +76,10 @@ export class PresetStore {
         const pattern = path.join(this.presetPath, presetDir, "*.json");
         let names = [];
         for (const file of await glob(pattern)) {
-            names.push(path.basename(file, ".json"))
+            //ignore default, since that one is explicit
+            const name=path.basename(file, ".json")
+            if (name!=="default")
+                names.push(name)
         }
         return names
     }

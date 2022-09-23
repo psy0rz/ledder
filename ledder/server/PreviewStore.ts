@@ -4,6 +4,7 @@ import Scheduler from "../Scheduler.js";
 import Animation from "../Animation.js";
 import {PresetValues} from "../PresetValues.js";
 import ControlGroup from "../ControlGroup.js";
+import PixelBox from "../PixelBox.js"
 
 
 
@@ -13,18 +14,20 @@ export class PreviewStore {
     display: DisplayApng
     controlGroup: ControlGroup
     scheduler: Scheduler
+    private box: PixelBox
 
     constructor() {
 
         this.controlGroup = new ControlGroup('Root controls')
-        this.scheduler = new Scheduler();
         this.display = new DisplayApng(40, 8)
-        this.display.scheduler = this.scheduler
+        this.resetAnimation()
     }
 
-    clear() {
-        this.scheduler.clear()
-        this.display.clear()
+    //reset animation, by creating new objects. This ensures that animation that still have some async call running cannot interfere with the next one.
+    resetAnimation() {
+        this.scheduler = new Scheduler();
+        this.box=new PixelBox(this.display)
+        this.scheduler = new Scheduler()
         this.controlGroup.clear()
     }
 
@@ -34,7 +37,7 @@ export class PreviewStore {
     async render(filename: string, animationClass: typeof Animation, preset: PresetValues) {
         console.log("> " + filename);
 
-        this.clear()
+        this.resetAnimation()
 
         if (preset)
             this.controlGroup.load(preset.values);
@@ -43,7 +46,7 @@ export class PreviewStore {
         this.display.setFps(fpsControl.value)
 
         let animation: Animation = new animationClass()
-        animation.run(this.display, this.scheduler, this.controlGroup).then(() => {
+        animation.run(this.box, this.scheduler, this.controlGroup).then(() => {
             // console.log(`PreviewStore: ${filename} finished.`)
         }).catch((e) => {
             if (e != 'abort') {
@@ -67,7 +70,7 @@ export class PreviewStore {
                 await this.scheduler.step()
             }
 
-            this.display.render(this.display)
+            this.display.render(this.box)
             this.display.frame()
         }
 
@@ -75,6 +78,6 @@ export class PreviewStore {
         let imageData = await this.display.get(fps)
         await writeFile(filename, Buffer.from(imageData))
 
-        this.clear()
+        this.resetAnimation()
     }
 }

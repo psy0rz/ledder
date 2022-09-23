@@ -95,7 +95,7 @@
                     <ListItem
                             title={animation.title}
                             text="{animation.description} ({animation.name})"
-                            href="/{animation.name}"
+                            href="/{animation.name}/default"
                     >
                         <img
                                 src="{rpc.url}/{animation.previewFile}"
