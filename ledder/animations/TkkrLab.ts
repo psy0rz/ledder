@@ -5,6 +5,7 @@ import ControlGroup from "../ControlGroup.js"
 import DrawAsciiArtColor from "../draw/DrawAsciiArtColor.js"
 import DrawText from "../draw/DrawText.js"
 import {fontSelect} from "../fonts.js"
+import PixelBox from "../PixelBox.js"
 
 
 // const logo=`
@@ -42,23 +43,25 @@ yyyyyyyyyyyyyyy
 
 
 export default class TkkrLab extends Animation {
-    static category = "Misc"
+    static category = "Logos"
     static title = "TkkrLab"
     static description = ""
 
 
-    async run(display: Display, scheduler: Scheduler, controls: ControlGroup) {
+    async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) {
 
         const font = fontSelect(controls)
         const text = new DrawText(13, 0, font, "TkkrLab", controls.color("tekst"))
-        display.add(text)
+        box.add(text)
 
         const bbox = text.bbox()
         bbox.xMax += 20
         // new FxRotate(scheduler, controls).run(text, bbox)
 
-        display.add(new DrawAsciiArtColor(0, 8, logo))
+        box.add(new DrawAsciiArtColor(0, 8, logo))
         // display.add(new DrawAsciiArtColor(display.width-15, 8, logo))
+
+        box.center(box)
 
     }
 }

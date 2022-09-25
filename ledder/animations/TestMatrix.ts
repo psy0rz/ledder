@@ -1,12 +1,12 @@
 import Pixel from "../Pixel.js";
 import Animation from "../Animation.js";
-import Display from "../Display.js";
 import Color from "../Color.js";
 import Scheduler from "../Scheduler.js";
 import ControlGroup from "../ControlGroup.js";
 import FxBlink from "../fx/FxBlink.js";
 import FxRotate from "../fx/FxRotate.js";
 import PixelSet from "../PixelSet.js";
+import PixelBox from "../PixelBox.js"
 
 export default class TestMatrix extends Animation {
 
@@ -17,40 +17,40 @@ export default class TestMatrix extends Animation {
     /**
      * Test display orientation, border limit, colors and smoothness.
      */
-    async run(display: Display, scheduler: Scheduler, controls: ControlGroup) {
+    async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) {
 
         //color bar
-        for (let x = 0; x < display.width; x++) {
-            const c = 255 / display.width * (x + 1);
-            display.add(new Pixel(x, 4, new Color(c, 0, 0)));
-            display.add(new Pixel(x, 3, new Color(0, c, 0)));
-            display.add(new Pixel(x, 2, new Color(0, 0, c)));
-            display.add(new Pixel(x, 1, new Color(c, c, c)));
+        for (let x = 0; x < box.width(); x++) {
+            const c = 255 / box.width() * (x + 1);
+            box.add(new Pixel(x, 4, new Color(c, 0, 0)));
+            box.add(new Pixel(x, 3, new Color(0, c, 0)));
+            box.add(new Pixel(x, 2, new Color(0, 0, c)));
+            box.add(new Pixel(x, 1, new Color(c, c, c)));
         }
 
         //corners
-        display.add(new Pixel(0, 0, new Color(255, 255, 0)));
-        display.add(new Pixel(display.width - 1, display.height - 1, new Color(255, 0, 255)));
-        display.add(new Pixel(0, display.height - 1, new Color(255, 0, 255)));
-        display.add(new Pixel(display.width - 1, 0, new Color(255, 0, 255)));
+        box.add(new Pixel(0, 0, new Color(255, 255, 0)));
+        box.add(new Pixel(box.width() - 1, box.height() - 1, new Color(255, 0, 255)));
+        box.add(new Pixel(0, box.height() - 1, new Color(255, 0, 255)));
+        box.add(new Pixel(box.width() - 1, 0, new Color(255, 0, 255)));
 
         //blinkers to test update rate (the first one should almost look static and half brightness)
         for (let x = 1; x < 4; x++) {
             const p = new Pixel(x - 1, 5, new Color(100, 100, 0))
-            new FxBlink(scheduler, controls.group("blinker" + x), x, x).run(p, display);
+            new FxBlink(scheduler, controls.group("blinker" + x), x, x).run(p, box);
         }
 
         //rounding test. pixel on float coordinates, should be 3 white pixels on xy 5 6 7
-        display.add(new Pixel(5.1, 5.1, new Color(0, 100, 100)));
-        display.add(new Pixel(6.5, 6.5, new Color(0, 100, 100)));
-        display.add(new Pixel(7.9, 7.9, new Color(0, 100, 100)));
+        box.add(new Pixel(5.1, 5.1, new Color(0, 100, 100)));
+        box.add(new Pixel(6.5, 6.5, new Color(0, 100, 100)));
+        box.add(new Pixel(7.9, 7.9, new Color(0, 100, 100)));
 
 
         //mover to test smoothness
         const moveContainer=new PixelSet()
-        display.add(moveContainer)
+        box.add(moveContainer)
         moveContainer.add( new Pixel(0, 6, new Color(255, 255, 255)));
-        new FxRotate(scheduler, controls, 1, 0, 1).run(moveContainer, display)
+        new FxRotate(scheduler, controls, 1, 0, 1).run(moveContainer, box)
     }
 
 }
