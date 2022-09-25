@@ -1,6 +1,11 @@
 //led utils
 
 
+import PixelBox from "./PixelBox.js"
+import Scheduler from "./Scheduler.js"
+import ControlGroup from "./ControlGroup.js"
+import {PresetStore} from "./server/PresetStore.js"
+
 /**
  * Integer number wwith guassian bell curve distribution from min to max (inclusive)
  * from https://stackoverflow.com/questions/25582882/javascript-math-random-normal-distribution-gaussian-bell-curve
@@ -100,4 +105,15 @@ export function easeInOutQuart(x: number): number {
 }
 
 
+//run an animation from within another animation.
+export async function runAnimation(box: PixelBox, scheduler: Scheduler, controls: ControlGroup, animationName, presetName?:string) {
+    const presetStore = new PresetStore()
+    const animationClass=await presetStore.loadAnimation(animationName)
+    const animation= new animationClass()
+    if (presetName) {
+        const presetValues = await presetStore.load(animationClass, presetName)
+        controls.load(presetValues.values)
+    }
+    animation.run(box, scheduler,controls)
 
+}

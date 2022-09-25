@@ -1,5 +1,4 @@
 import Animation from "../Animation.js";
-import Display from "../Display.js";
 import Scheduler from "../Scheduler.js";
 import ControlGroup from "../ControlGroup.js";
 import FxRotate from "../fx/FxRotate.js";
@@ -31,12 +30,12 @@ export default class Marquee extends Animation {
 
         let starsGroup=control.group("Stars", false, false)
         if (starsGroup.switch('Enabled', false).enabled) {
-            // new MovingStars().run(box,scheduler, starsGroup)
+            new MovingStars().run(box,scheduler, starsGroup)
         }
 
         let starFieldGroup=control.group("Star field", false, false)
         if (starFieldGroup.switch('Enabled', false).enabled) {
-            // new Starfield().run(box,scheduler, starFieldGroup)
+            new Starfield().run(box,scheduler, starFieldGroup)
         }
 
 

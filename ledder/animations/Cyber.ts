@@ -12,7 +12,7 @@ export default class Cyber extends  Animation
 {
     static category = "Misc"
     static title = "Cyber"
-    static description = "blabla"
+    static description = "Cyber, the Meme(tm)"
 
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) {
 
