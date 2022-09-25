@@ -1,0 +1,36 @@
+{
+ "title": "",
+ "description": "",
+ "values": {
+  "FPS": {
+   "value": 60
+  },
+  "Blink on delay": {
+   "value": 5
+  },
+  "Blink off delay": {
+   "value": 5
+  },
+  "Blink repeat": {
+   "value": 5
+  },
+  "Font": {
+   "selected": "C64"
+  },
+  "haxo": {
+   "r": 26,
+   "g": 201,
+   "b": 202,
+   "a": 1
+  },
+  "offset": {
+   "value": 28
+  },
+  "green": {
+   "r": 26,
+   "g": 203,
+   "b": 118,
+   "a": 1
+  }
+ }
+}
