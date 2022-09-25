@@ -1,11 +1,11 @@
 import Animation from "../Animation.js"
-import Display from "../Display.js"
 import Scheduler from "../Scheduler.js"
 import ControlGroup from "../ControlGroup.js"
 import PixelSet from "../PixelSet.js"
 import DrawAsciiArtColor from "../draw/DrawAsciiArtColor.js"
 import DrawText from "../draw/DrawText.js"
 import {fontSelect} from "../fonts.js"
+import PixelBox from "../PixelBox.js"
 
 
 const logo=`
@@ -20,15 +20,15 @@ y...bb...wwbbbb.y..
 `
 
 export default class TDVenlo extends Animation {
-    static category = "Misc"
+    static category = "Logos"
     static title = "TDvenlo"
     static description = ""
 
 
-    async run(display: Display, scheduler: Scheduler, controls: ControlGroup) {
+    async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) {
 
         const c=new PixelSet()
-        display.add(c)
+        box.add(c)
 
         const font = fontSelect(controls)
         const text = new DrawText(18, -1, font, "venlo", controls.color("tekst"))
@@ -43,7 +43,7 @@ export default class TDVenlo extends Animation {
         // display.centerH(display.bbox())
         c.add(text)
 
-        c.centerH(display)
+        c.center(box)
 
 
 

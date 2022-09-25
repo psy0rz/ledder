@@ -1,18 +1,18 @@
 import Animation from "../Animation.js";
-import Display from "../Display.js";
 import Scheduler from "../Scheduler.js";
 import ControlGroup from "../ControlGroup.js";
 import DrawAsciiArtColor from "../draw/DrawAsciiArtColor.js"
+import PixelBox from "../PixelBox.js"
 
 export default class Syn2Cat extends  Animation
 {
-    static category = "Misc"
+    static category = "Logos"
     static title = "Syn2cat"
-    static description = "blabla"
+    static description = "syn2cat.lu"
 
-    async run(display: Display, scheduler: Scheduler, controls: ControlGroup) {
+    async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) {
 
-        const t=new DrawAsciiArtColor(1,display.height-1, `
+        const t=new DrawAsciiArtColor(1,box.height()-1, `
         .www.w..w.www........www.www..w..........
         w....w..a.w..w......w.......w.www........
         .ww...www.w..w.aww..w.....aww.w............
@@ -23,8 +23,8 @@ export default class Syn2Cat extends  Animation
 
         `)
 
-        t.center(display)
-        display.add(t)
+        t.center(box)
+        box.add(t)
 
     }
 }
