@@ -1,23 +1,19 @@
 import Animation from "../Animation.js";
 import Pixel from "../Pixel.js";
-import Display from "../Display.js";
 import Scheduler from "../Scheduler.js";
 import ControlGroup from "../ControlGroup.js";
 import { patternSelect } from "../ColorPatterns.js";
 import { glow, randomGaussian } from "../util.js";
 import { colorBlack } from "../Colors.js";
+import PixelBox from "../PixelBox.js"
 
 
 export default class PlasmaFire extends Animation {
     static category = "Fire"
     static title = "Plasma Fire"
-    static description = "Based on Fire, based on <a href='https://github.com/bertrik/nyancat/blob/master/fire.c'>this.</a>"
+    static description = "Base on the 1993 Firedemo"
 
-
-
-
-
-    async run(display: Display, scheduler: Scheduler, controls: ControlGroup) {
+    async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) {
 
 
         const fireintervalControl = controls.value("Fire interval", 1, 1, 10, 0.1)
@@ -55,7 +51,7 @@ export default class PlasmaFire extends Animation {
                     this.newValue = this.newValue + flamePixel.value
                 }
 
-                const cool = ~~this.newValue & 3
+//                const cool = ~~this.newValue & 3
                 this.newValue = this.newValue / (this.neighbours.length)
 
                 // if (cool && this.newValue >= 10) {
@@ -82,20 +78,20 @@ export default class PlasmaFire extends Animation {
         let pixels: Array<Array<FlamePixel>> = []
 
         //create flame pixels
-        for (let x = 0; x < display.width; x++) {
+        for (let x = 0; x < box.width(); x++) {
             pixels[x] = []
 
-            for (let y = 0; y < display.height + 2; y++) {
+            for (let y = 0; y < box.height() + 2; y++) {
                 pixels[x][y] = new FlamePixel(x, y - 2)
-                display.add(pixels[x][y])
+                box.add(pixels[x][y])
             }
         }
 
 
         //determine neighbours
-        for (let x = 1; x < display.width - 1; x++) {
+        for (let x = 1; x < box.width() - 1; x++) {
 
-            for (let y = 1; y < display.height - 1 + 2; y++) {
+            for (let y = 1; y < box.height() - 1 + 2; y++) {
                 const p = pixels[x][y]
 
                 //lower
@@ -118,34 +114,32 @@ export default class PlasmaFire extends Animation {
 
         const colorScale = (colors.length - 1) / 100
 
-        display.scheduler.intervalControlled(fireintervalControl, (frameNr) => {
+        scheduler.intervalControlled(fireintervalControl, (frameNr) => {
 
-            for (let x = 0; x < display.width; x++) {
-                for (let y = 1; y < display.height + 2; y++) {
+            //calculate new values
+            for (let x = 0; x < box.width(); x++) {
+                for (let y = 1; y < box.height() + 2; y++) {
                     pixels[x][y].calculate()
 
                 }
             }
 
-            for (let x = 0; x < display.width; x++) {
-                for (let y = 1; y < display.height + 2; y++) {
+            //apply calculated values
+            for (let x = 0; x < box.width(); x++) {
+                for (let y = 1; y < box.height() + 2; y++) {
                     pixels[x][y].apply(pixels[x][y - 1].newValue)
                 }
             }
 
-            for (let x = 0; x < display.width; x++) {
+            //glow
+            for (let x = 0; x < box.width(); x++) {
                 // if (pixels[x][0].value<=1)
                 pixels[x][0].value = pixels[x][0].newValue =
                     glow(pixels[x][0].value,
                         ~~minIntensityControl.value * colorScale,
                         ~~maxIntensityControl.value * colorScale,
                         ~~wildnessIntensityControl.value * colorScale, 3)
-
-
             }
-
-
         })
-
     }
 }

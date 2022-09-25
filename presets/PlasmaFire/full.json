@@ -1,0 +1,30 @@
+{
+ "title": "",
+ "description": "",
+ "values": {
+  "FPS": {
+   "value": 60
+  },
+  "Fire interval": {
+   "value": 1
+  },
+  "Fire minimum intensity %": {
+   "value": 42
+  },
+  "Fire maximum intensity %": {
+   "value": 100
+  },
+  "Fire wildness %": {
+   "value": 73
+  },
+  "Fire decay ": {
+   "value": 25
+  },
+  "Fire decay density % ": {
+   "value": 100
+  },
+  "Fire colors": {
+   "selected": "Bertrik fire"
+  }
+ }
+}
