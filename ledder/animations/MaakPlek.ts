@@ -1,21 +1,21 @@
 import Animation from "../Animation.js";
-import Display from "../Display.js";
 import Scheduler from "../Scheduler.js";
 import ControlGroup from "../ControlGroup.js";
 import PixelSet from "../PixelSet.js";
 import DrawText from "../draw/DrawText.js"
 import {fontSelect} from "../fonts.js"
+import PixelBox from "../PixelBox.js"
 
 export default class MaakPlek extends  Animation
 {
-    static category = "Misc"
+    static category = "Logos"
     static title = "Maakplek"
-    static description = "blabla"
+    static description = "http://maakplek.nl"
 
-    async run(display: Display, scheduler: Scheduler, controls: ControlGroup) {
+    async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) {
 
         const c=new PixelSet()
-        display.add(c)
+        box.add(c)
 
 
         const font = fontSelect(controls)
@@ -25,7 +25,7 @@ export default class MaakPlek extends  Animation
 
         c.add(maak)
         c.add(plek)
-        c.center(display)
+        c.center(box)
 
     }
 }

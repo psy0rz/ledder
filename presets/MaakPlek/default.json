@@ -1,0 +1,24 @@
+{
+ "title": "",
+ "description": "",
+ "values": {
+  "FPS": {
+   "value": 60
+  },
+  "Font": {
+   "selected": "ZX Sierra Quest"
+  },
+  "Maak": {
+   "r": 0,
+   "g": 254,
+   "b": 169,
+   "a": 1
+  },
+  "Plek": {
+   "r": 255,
+   "g": 88,
+   "b": 122,
+   "a": 1
+  }
+ }
+}
