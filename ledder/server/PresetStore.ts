@@ -90,7 +90,24 @@ export class PresetStore {
      */
     async load(animationClass: typeof Animation, presetName: string):Promise<PresetValues> {
 
-        return JSON.parse(await readFile(this.presetFilename(animationClass.name, presetName), 'utf8'))
+        try
+        {
+            return JSON.parse(await readFile(this.presetFilename(animationClass.name, presetName), 'utf8'))
+        }
+        catch(e)
+        {
+            //default doesnt have to exist
+            if (presetName!=="default")
+                throw(e)
+
+            return  {
+                title: "",
+                description: "",
+                values: {}
+            }
+
+        }
+
     }
 
     async delete(animationClass: typeof Animation, presetName: string) {
@@ -137,6 +154,9 @@ export class PresetStore {
     async updatePresetPreviews(animationClass: typeof Animation, animationMtime: number, force: boolean) {
 
         const presetNames = await this.scanPresetNames(animationClass.name)
+
+        presetNames.push("default")
+
         for (const presetName of presetNames) {
             const previewFilename = this.previewFilename(animationClass.name, presetName)
             const presetFilename = this.presetFilename(animationClass.name, presetName)
@@ -171,14 +191,15 @@ export class PresetStore {
                 if (animationMtime == 0)
                     console.warn("Cant find " + animationFilename + ", always re-creating all previews. (check if filename matches classname)")
 
-                if (force || animationMtime == 0 || await getMtime(previewFilename) <= animationMtime) {
-                    try {
-                        await this.createPreview(animationClass, "", undefined)
-                    } catch (e) {
-                        console.error(` ${animationName}: `, e)
-                        // throw(e)
-                    }
-                }
+
+                // if (force || animationMtime == 0 || await getMtime(previewFilename) <= animationMtime) {
+                //     try {
+                //         await this.createPreview(animationClass, "default", undefined)
+                //     } catch (e) {
+                //         console.error(` ${animationName}: `, e)
+                //         // throw(e)
+                //     }
+                // }
 
                 await this.updatePresetPreviews(animationClass, animationMtime, force)
             } catch (e) {
@@ -232,7 +253,7 @@ export class PresetStore {
                 animationClass = await this.loadAnimation(animationName)
 
 
-                const previewFilename = this.previewFilename(animationClass.name, "");
+                const previewFilename = this.previewFilename(animationClass.name, "default");
 
                 let presets = await this.scanPresetList(animationClass)
                 ret.push({
@@ -272,6 +293,6 @@ export class PresetStore {
     }
 
     private previewFilename(presetDir: string, presetName: string) {
-        return (path.join(this.presetPath, presetDir, presetName + "_.png"));
+        return (path.join(this.presetPath, presetDir, presetName + ".png"));
     }
 }

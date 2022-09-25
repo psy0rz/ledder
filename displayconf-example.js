@@ -32,4 +32,4 @@ export let mqttOpts={
 
 //default animation and preset
 export let animationName="TestMatrix"
-export let presetName=""
+export let presetName="default"

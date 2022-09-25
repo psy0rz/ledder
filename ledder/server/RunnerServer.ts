@@ -4,11 +4,11 @@ import {PresetValues} from "../PresetValues.js"
 import Animation from "../Animation.js"
 // import * as fs from "fs";
 import {watch} from "fs/promises"
-import {AbortController} from "node-abort-controller";
-import Scheduler from "../Scheduler.js";
-import ControlGroup from "../ControlGroup.js";
-import ControlValue from "../ControlValue.js";
-import {Values} from "../Control.js";
+import {AbortController} from "node-abort-controller"
+import Scheduler from "../Scheduler.js"
+import ControlGroup from "../ControlGroup.js"
+import ControlValue from "../ControlValue.js"
+import {Values} from "../Control.js"
 import Pixel from "../Pixel.js"
 import PixelBox from "../PixelBox.js"
 
@@ -51,12 +51,10 @@ export class RunnerServer {
     }
 
     //reset animation, by creating new objects. This ensures that animation that still have some async call running cannot interfere with the next one.
-    resetAnimation()
-    {
-        this.box=new PixelBox(this.display)
+    resetAnimation() {
+        this.box = new PixelBox(this.display)
         this.scheduler = new Scheduler()
     }
-
 
 
     startRenderLoop() {
@@ -67,7 +65,7 @@ export class RunnerServer {
 
     renderFrame() {
 
-        const now = Date.now();
+        const now = Date.now()
 
         const frameMs = this.display.frameMs
 
@@ -75,23 +73,21 @@ export class RunnerServer {
             return
 
         //increase time with exact framedelay instead of sending now, since setInterval is jittery
-        this.lastTime = this.lastTime + frameMs;
+        this.lastTime = this.lastTime + frameMs
         //too far off, reset
         if (Math.abs(now - this.lastTime) > frameMs) {
             console.warn("RunnerServer: resetting timing (too slow?)")
-            this.lastTime = now;
+            this.lastTime = now
             setTimeout(() => this.renderFrame(), frameMs)
         } else {
-            const interval = this.lastTime - now + frameMs;
+            const interval = this.lastTime - now + frameMs
             setTimeout(() => this.renderFrame(), interval)
         }
 
         try {
             this.display.render(this.box)
-        }
-        catch(e)
-        {
-            console.error("Exception while rendering:" ,e )
+        } catch (e) {
+            console.error("Exception while rendering:", e)
         }
         this.display.frame(this.lastTime)
 
@@ -113,7 +109,7 @@ export class RunnerServer {
 
         try {
             for await (const event of watcher) {
-                console.log("Detected animation file change:", event);
+                console.log("Detected animation file change:", event)
                 if (this.restartTimeout !== undefined)
                     clearTimeout(this.restartTimeout)
                 this.restartTimeout = setTimeout(() => this.reload(), 100)
@@ -163,7 +159,8 @@ export class RunnerServer {
     }
 
     //load presetName and run
-    async runName(animationName: string, presetName: string="default") {
+    async runName(animationName: string, presetName: string = "default") {
+
 
         this.presetName = presetName
         this.animationName = animationName
@@ -172,27 +169,7 @@ export class RunnerServer {
         console.log("Runner: starting", animationName, presetName)
         this.resetControls()
 
-        this.presetValues = {
-            title: "",
-            description: "",
-            values: {}
-        }
-
-        if (presetName==="")
-        {
-            presetName="default"
-        }
-
-        try
-        {
-            this.presetValues = await this.presetStore.load(this.animationClass, presetName)
-        }
-        catch(e)
-        {
-            //default doesnt have to exist
-            if (presetName!=="default")
-                throw(e)
-        }
+        this.presetValues = await this.presetStore.load(this.animationClass, presetName)
 
         this.controlGroup.load(this.presetValues.values)
         this.display.setFps(this.fpsControl.value)
