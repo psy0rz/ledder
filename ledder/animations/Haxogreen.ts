@@ -1,4 +1,4 @@
-import Animation  from "../Animation.js"
+import Animation from "../Animation.js"
 import Scheduler from "../Scheduler.js"
 import ControlGroup from "../ControlGroup.js"
 import PixelSet from "../PixelSet.js"
@@ -14,7 +14,7 @@ export default class Haxogreen extends Animation {
 
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) {
 
-        const c=new PixelSet()
+        const c = new PixelSet()
         box.add(c)
 
         const blinker = new FxBlink(scheduler, controls, 5, 5, 5)
@@ -23,10 +23,22 @@ export default class Haxogreen extends Animation {
         const haxo = new DrawText(0, 0, font, "Haxo", controls.color("haxo"))
         const green = new DrawText(controls.value("offset", 28, 0, 100, 1, true).value, 0, font, "Green", controls.color("green"))
 
-            c.add(haxo)
-await scheduler.delay(30)
-            c.add(green)
+        c.add(haxo)
+        c.add(green)
+        c.center(box)
+        c.clear()
 
+
+        while(1) {
+            c.add(haxo)
+            await scheduler.delay(30)
+            c.add(green)
+            await scheduler.delay(60)
+            c.delete(haxo)
+            c.delete(green)
+            await scheduler.delay(30)
+
+        }
 
 
         // while (1) {
