@@ -28,14 +28,17 @@
    },
    "Color cycle mode": {
     "selected": "reverse"
+   },
+   "Color cycle pattern": {
+    "selected": "Bertrik fire"
    }
   },
   "Stars": {
    "Star color": {
-    "r": 255,
-    "g": 255,
-    "b": 255,
-    "a": 0.01
+    "r": 0,
+    "g": 131,
+    "b": 244,
+    "a": 0.75
    },
    "Number of stars": {
     "value": 10

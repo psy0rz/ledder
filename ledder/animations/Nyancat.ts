@@ -2,7 +2,6 @@ import Animation from "../Animation.js";
 import Pixel from "../Pixel.js";
 import Color from "../Color.js";
 
-import Display from "../Display.js";
 import Scheduler from "../Scheduler.js";
 import ControlGroup from "../ControlGroup.js";
 import FxWobble from "../fx/FxWobble.js";
@@ -12,6 +11,7 @@ import DrawAsciiArtColor from "../draw/DrawAsciiArtColor.js";
 import PixelSet from "../PixelSet.js";
 import MovingStars from "./MovingStars.js";
 import FxColorCycle from "../fx/FxColorCycle.js";
+import PixelBox from "../PixelBox.js"
 
 //Nyancat, based on https://github.com/bertrik/nyancat/blob/master/nyancat.c
 
@@ -25,22 +25,22 @@ export default class Nyancat extends Animation {
     static description = "Based on <a href='https://github.com/bertrik/nyancat/blob/master/nyancat.c'>this</a>"
 
 
-    async run(display: Display, scheduler: Scheduler, controls: ControlGroup) {
+    async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) {
 
         controls.group("Rainbow")
         controls.group("Fire")
 
         //start with the stars in the background
         let stars = new MovingStars();
-        stars.run(display, scheduler, controls.group("Stars"))
+        stars.run(box, scheduler, controls.group("Stars"))
 
         //move the whole cat (will add pixels later)
         let cat = new PixelSet()
-        new FxRotate(scheduler, controls.group('Move',true), 1, 0, 2).run(cat, display.bbox())
-        display.add(cat)
+        new FxRotate(scheduler, controls.group('Move',true), 1, 0, 2).run(cat, box)
+        box.add(cat)
 
         const rainbowContainer=new PixelSet()
-        display.add(rainbowContainer)
+        box.add(rainbowContainer)
 
         //the body and its wobblyness
         const body = new DrawAsciiArtColor(6, 7, `
@@ -89,7 +89,7 @@ export default class Nyancat extends Animation {
 
         const xStepControl = controls.group('Move').value('Rotate X step')
         scheduler.intervalControlled(controls.group('Move').value('Rotate interval'), () => {
-            x = (x + xStepControl.value) % display.width;
+            x = (x + xStepControl.value) % box.width();
 
             if (fireControl.enabled) {
 

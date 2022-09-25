@@ -39,7 +39,7 @@ export default class MovingStars extends Animation {
 
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) {
 
-        const starColorControl = controls.color("Star color", 255, 255, 255, 0.01);
+        const starColorControl = controls.color("Star color", 255, 255, 255, 0.2);
 
         const stars=new PixelSet()
         box.add(stars)
