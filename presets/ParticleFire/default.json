@@ -1,0 +1,108 @@
+{
+ "title": "",
+ "description": "",
+ "values": {
+  "FPS": {
+   "value": 60
+  },
+  "Wind": {
+   "Move interval": {
+    "value": 1
+   },
+   "Move interval randomizer": {
+    "value": 0
+   },
+   "Move X step min": {
+    "value": -0.3
+   },
+   "Move X step max": {
+    "value": 0.3
+   },
+   "Move Y step min": {
+    "value": 0.9
+   },
+   "Move Y step max": {
+    "value": 1
+   },
+   "Move independently": {
+    "enabled": false
+   }
+  },
+  "Fire": {
+   "Minimum intensity %": {
+    "value": 0
+   },
+   "Maximum intensity %": {
+    "value": 100
+   },
+   "Wildness %": {
+    "value": 12
+   },
+   "Interval": {
+    "value": 1
+   },
+   "Flame cycle": {
+    "Color cycle time": {
+     "value": 11
+    },
+    "Color cycle time randomizer": {
+     "value": 4
+    },
+    "Color cycle repeat count": {
+     "value": 1
+    },
+    "Color cycle mode": {
+     "selected": "reverse"
+    },
+    "Color cycle pattern": {
+     "selected": "Bertrik fire"
+    }
+   }
+  },
+  "Sparks": {
+   "Amount %": {
+    "value": 25
+   },
+   "Spark cycle": {
+    "Color cycle time": {
+     "value": 8
+    },
+    "Color cycle time randomizer": {
+     "value": 8
+    },
+    "Color cycle repeat count": {
+     "value": 1
+    },
+    "Color cycle mode": {
+     "selected": "reverse"
+    },
+    "Color cycle pattern": {
+     "selected": "Bertrik fire"
+    }
+   },
+   "Movement": {
+    "Move interval": {
+     "value": 1
+    },
+    "Move interval randomizer": {
+     "value": 0
+    },
+    "Move X step min": {
+     "value": -1
+    },
+    "Move X step max": {
+     "value": 1
+    },
+    "Move Y step min": {
+     "value": -0.1
+    },
+    "Move Y step max": {
+     "value": 0.1
+    },
+    "Move independently": {
+     "enabled": true
+    }
+   }
+  }
+ }
+}

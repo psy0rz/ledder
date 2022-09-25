@@ -1,5 +1,4 @@
 import Animation from "../Animation.js";
-import Display from "../Display.js";
 import Scheduler from "../Scheduler.js";
 import ControlGroup from "../ControlGroup.js";
 import Pixel from "../Pixel.js";
@@ -8,13 +7,14 @@ import { glow, randomGaussian } from "../util.js";
 import FxColorCycle from "../fx/FxColorCycle.js";
 import FxRandomMove from "../fx/FxRandomMove.js";
 import PixelSet from "../PixelSet.js";
+import PixelBox from "../PixelBox.js"
 
 export default class ParticleFire extends Animation {
     static category = "Fire"
     static title = "Particle fire"
     static description = "Individual pixel objects with color cycle effects on them. (more of a ledder way of doing it)"
 
-    async run(display: Display, scheduler: Scheduler, controls: ControlGroup) {
+    async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) {
 
         let wind = new FxRandomMove(scheduler, controls.group("Wind"), -0.3, 0.3, 0.9, 1, 1, 0, false)
 
@@ -33,36 +33,36 @@ export default class ParticleFire extends Animation {
         let sparksCycler = new FxColorCycle(scheduler, sparksGroup.group("Spark cycle"), "reverse", 8, 8, 1)
         let sparksMover = new FxRandomMove(scheduler, sparksGroup.group("Movement"), -1, 1, -0.1, 0.1, 1, 0, true)
 
-        wind.run(display)
+        wind.run(box)
 
         let fireContainer = new PixelSet()
-        display.add(fireContainer)
+        box.add(fireContainer)
 
         let sparksContainer = new PixelSet()
-        display.add(sparksContainer)
+        box.add(sparksContainer)
         sparksMover.run(sparksContainer)
 
         //glower
         let glower = []
-        for (let x = 0; x < display.width; x++) {
+        for (let x = 0; x < box.width(); x++) {
             glower.push(50)
 
         }
 
-        display.scheduler.intervalControlled(fireintervalControl, () => {
+        scheduler.intervalControlled(fireintervalControl, () => {
 
             let glowerTmp = []
 
-            for (let x = 0; x < display.width; x++) {
+            for (let x = 0; x < box.width(); x++) {
                 //average pixel with neighbours and apply glowing
                 let l, r
                 let m = glower[x]
                 if (x > 0)
                     l = glower[x - 1]
                 else
-                    l = glower[display.width - 1]
+                    l = glower[box.width() - 1]
 
-                if (x < display.width - 1)
+                if (x < box.width() - 1)
                     r = glower[x + 1]
                 else
                     r = glower[0]
@@ -92,7 +92,7 @@ export default class ParticleFire extends Animation {
             if (randomGaussian(0, 100) < firesparksControl.value) {
 
                 const color = new Color()
-                const pixel = new Pixel(randomGaussian(0, display.width - 1), 0, color)
+                const pixel = new Pixel(randomGaussian(0, box.width() - 1), 0, color)
                 sparksContainer.add(pixel)
                 sparksCycler.run(color, 0).then(() => {
                     sparksContainer.delete(pixel)
