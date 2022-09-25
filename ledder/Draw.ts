@@ -1,5 +1,5 @@
-import PixelContainer from "./PixelContainer.js";
+import PixelSet from "./PixelSet.js";
 
-export default class Draw extends PixelContainer {
+export default class Draw extends PixelSet {
 
 }

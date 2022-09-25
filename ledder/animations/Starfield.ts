@@ -3,7 +3,7 @@ import Scheduler from "../Scheduler.js"
 import ControlGroup from "../ControlGroup.js"
 import Pixel from "../Pixel.js"
 import Color from "../Color.js"
-import PixelContainer from "../PixelContainer.js"
+import PixelSet from "../PixelSet.js"
 import {random} from "../util.js"
 import PixelBox from "../PixelBox.js"
 
@@ -61,7 +61,7 @@ export default class Starfield extends Animation {
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) {
 
 
-        const c = new PixelContainer()
+        const c = new PixelSet()
         box.add(c)
 
         let stars = new Set<Star>()

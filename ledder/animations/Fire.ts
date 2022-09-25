@@ -7,10 +7,10 @@ import {patternSelect} from "../ColorPatterns.js"
 import { glow, randomFloatGaussian} from "../util.js"
 import PixelBox from "../PixelBox.js"
 
-export default class BertrikFire extends Animation {
+export default class Fire extends Animation {
     static category = "Fire"
-    static title = "Bertrik"
-    static description = "Fire, based on <a href='https://github.com/bertrik/nyancat/blob/master/fire.c'>this.</a>"
+    static title = "Fire "
+    static description = "Standard fire algorithm, based on https://github.com/bertrik/nyancat/blob/master/fire.c'>"
 
 
     move_fire(box: PixelBox, field, decay, maxFlame, glower, moveFactor) {

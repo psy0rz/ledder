@@ -7,7 +7,7 @@ import Color from "../Color.js";
 import { glow, randomGaussian } from "../util.js";
 import FxColorCycle from "../fx/FxColorCycle.js";
 import FxRandomMove from "../fx/FxRandomMove.js";
-import PixelContainer from "../PixelContainer.js";
+import PixelSet from "../PixelSet.js";
 
 export default class ParticleFire extends Animation {
     static category = "Fire"
@@ -35,10 +35,10 @@ export default class ParticleFire extends Animation {
 
         wind.run(display)
 
-        let fireContainer = new PixelContainer()
+        let fireContainer = new PixelSet()
         display.add(fireContainer)
 
-        let sparksContainer = new PixelContainer()
+        let sparksContainer = new PixelSet()
         display.add(sparksContainer)
         sparksMover.run(sparksContainer)
 

@@ -1,6 +1,6 @@
 import Scheduler from "../Scheduler.js"
 import ControlGroup from "../ControlGroup.js"
-import PixelContainer from "../PixelContainer.js"
+import PixelSet from "../PixelSet.js"
 import DrawText from "./DrawText.js"
 import {fonts, fontSelect} from "../fonts.js"
 import {colorRed, colorWhite} from "../Colors.js"
@@ -23,13 +23,13 @@ export default class DrawCounter extends Draw {
     private prepareDigits(x, y, charWidth, charHeight, digitCount, font, colorCounter, colorDivider) {
         const wheelHeight = 10 * charHeight
 
-        const digitPixels: Array<Array<PixelContainer>> = []
+        const digitPixels: Array<Array<PixelSet>> = []
 
         for (let digitNr = 0; digitNr < digitCount; digitNr++) {
             digitPixels[digitNr] = []
             const charX = x + (digitNr * charWidth)
             for (let offset = 0; offset < wheelHeight; offset++) {
-                const container = new PixelContainer()
+                const container = new PixelSet()
 
                 const charY = y + (offset % charHeight)
                 const digitValue = ~~(offset / charHeight)
@@ -78,7 +78,7 @@ export default class DrawCounter extends Draw {
 
         const digitPixels = this.prepareDigits(x, y, charWidth, charHeight, digitCount, font, controlDigitColor, controlDividerColor)
 
-        const digitContainer = new PixelContainer()
+        const digitContainer = new PixelSet()
         this.add(digitContainer)
 
         //make digits look round by fading them

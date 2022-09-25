@@ -5,7 +5,7 @@ import Display from "../Display.js";
 import Scheduler from "../Scheduler.js";
 import ControlGroup from "../ControlGroup.js";
 import {patternSelect} from "../ColorPatterns.js";
-import PixelContainer from "../PixelContainer.js";
+import PixelSet from "../PixelSet.js";
 
 
 export default class DoomFire extends Animation {
@@ -41,7 +41,7 @@ export default class DoomFire extends Animation {
         //   new Pixel(display, i % display.width, display.height - ~~(i / display.width) - 1, new Color(0, 0, 0))
         // }
 
-        const container = new PixelContainer()
+        const container = new PixelSet()
         display.add(container)
         const raster = container.raster(display, new Color(0, 0, 150), false, false, false, false, 0)
 

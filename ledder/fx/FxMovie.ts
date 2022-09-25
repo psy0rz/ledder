@@ -2,7 +2,7 @@ import Fx from "../Fx.js";
 import ControlValue from "../ControlValue.js";
 import ControlGroup from "../ControlGroup.js";
 import Scheduler from "../Scheduler.js";
-import PixelContainer from "../PixelContainer.js";
+import PixelSet from "../PixelSet.js";
 import {random} from "../util.js";
 
 //"plays" a collection of pixelcontainers at a certain framerate, by adding/removing them to the specified target container.
@@ -19,7 +19,7 @@ export default class FxMovie extends Fx {
 
     }
 
-    run(source: PixelContainer, target: PixelContainer, startFrame=0, repeat = 0) {
+    run(source: PixelSet, target: PixelSet, startFrame=0, repeat = 0) {
 
         this.running = true
 

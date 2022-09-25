@@ -1,6 +1,6 @@
 import Fx from "../Fx.js";
 import ControlGroup from "../ControlGroup.js";
-import PixelContainer from "../PixelContainer.js";
+import PixelSet from "../PixelSet.js";
 import Scheduler from "../Scheduler.js";
 import Color from "../Color.js";
 import DrawAsciiArt from "../draw/DrawAsciiArt.js"
@@ -21,14 +21,14 @@ export default class FxPacman extends Fx {
 
     }
 
-    run(container: PixelContainer, x,y) {
+    run(container: PixelSet, x, y) {
         this.running = true
 
         const cleanOffset=5
         x=x-cleanOffset
 
-        const frames=new PixelContainer()
-        const blinder=new PixelContainer()
+        const frames=new PixelSet()
+        const blinder=new PixelSet()
         container.add(blinder)
         frames.add(new DrawAsciiArt(x, y, this.color,`
         ..####..

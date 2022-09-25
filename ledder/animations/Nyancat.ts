@@ -9,7 +9,7 @@ import FxWobble from "../fx/FxWobble.js";
 import FxRotate from "../fx/FxRotate.js";
 import {FxFadeOut} from "../fx/FxFadeOut.js";
 import DrawAsciiArtColor from "../draw/DrawAsciiArtColor.js";
-import PixelContainer from "../PixelContainer.js";
+import PixelSet from "../PixelSet.js";
 import MovingStars from "./MovingStars.js";
 import FxColorCycle from "../fx/FxColorCycle.js";
 
@@ -35,11 +35,11 @@ export default class Nyancat extends Animation {
         stars.run(display, scheduler, controls.group("Stars"))
 
         //move the whole cat (will add pixels later)
-        let cat = new PixelContainer()
+        let cat = new PixelSet()
         new FxRotate(scheduler, controls.group('Move',true), 1, 0, 2).run(cat, display.bbox())
         display.add(cat)
 
-        const rainbowContainer=new PixelContainer()
+        const rainbowContainer=new PixelSet()
         display.add(rainbowContainer)
 
         //the body and its wobblyness

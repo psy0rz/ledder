@@ -1,7 +1,7 @@
 import Fx from "../Fx.js";
 import ControlValue from "../ControlValue.js";
 import ControlGroup from "../ControlGroup.js";
-import PixelContainer from "../PixelContainer.js";
+import PixelSet from "../PixelSet.js";
 import Scheduler from "../Scheduler.js";
 import {random} from "../util.js";
 import Pixel from "../Pixel.js";
@@ -27,7 +27,7 @@ export default class FxMove extends Fx {
 
     //move all pixels in the pixelcontainer
     //stops after steps number of steps
-    run(container: PixelContainer|Pixel, steps?: number) {
+    run(container: PixelSet|Pixel, steps?: number) {
         this.running = true
 
 

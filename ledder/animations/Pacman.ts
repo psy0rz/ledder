@@ -3,7 +3,7 @@ import Display from "../Display.js";
 import Scheduler from "../Scheduler.js";
 import ControlGroup from "../ControlGroup.js";
 import Color from "../Color.js";
-import PixelContainer from "../PixelContainer.js";
+import PixelSet from "../PixelSet.js";
 import DrawAsciiArt from "../draw/DrawAsciiArt.js"
 import FxMovie from "../fx/FxMovie.js"
 import FxRotate from "../fx/FxRotate.js"
@@ -19,7 +19,7 @@ export default class Pacman extends  Animation
 
     async run(display: Display, scheduler: Scheduler, controls: ControlGroup) {
 
-        const frames=new PixelContainer()
+        const frames=new PixelSet()
         const color= controls.color("Color", 255,255,0)
         frames.add(new DrawAsciiArt(3,display.height, color,`
         ..####..

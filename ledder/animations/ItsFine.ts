@@ -5,7 +5,7 @@ import ControlGroup from "../ControlGroup.js";
 import DrawText from "../draw/DrawText.js";
 import {fontSelect} from "../fonts.js";
 
-import PixelContainer from "../PixelContainer.js";
+import PixelSet from "../PixelSet.js";
 import FxFlames from "../fx/FxFlames.js";
 
 import BrainsmokeFire from "./BrainsmokeFire.js";
@@ -30,7 +30,7 @@ export default class ItsFine extends Animation {
         display.add(text)
 
         await scheduler.delay(60 * 2)
-        const flames = new PixelContainer()
+        const flames = new PixelSet()
         display.add(flames)
         new FxFlames(scheduler, controls.group("Top fire")).run(text, flames)
 

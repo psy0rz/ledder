@@ -9,7 +9,7 @@ import ColorInterface from "./ColorInterface.js";
  * This allows us to quickly add or remove a bunch of pixels to a display for example.
  * A single Pixel object can be referenced by multiple pixel containers.
  */
-export default class PixelContainer extends Set<Pixel | PixelContainer> {
+export default class PixelSet extends Set<Pixel | PixelSet> {
 
 
 
@@ -105,7 +105,7 @@ export default class PixelContainer extends Set<Pixel | PixelContainer> {
             for (const p of this) {
                 if (p instanceof Pixel)
                     str = str + indent + `(${p.x}, ${p.y}) (r${p.color.r}, g${p.color.g}, b${p.color.b}, a${p.color.a})\n`
-                else if (p instanceof PixelContainer) {
+                else if (p instanceof PixelSet) {
                     str = str + p.dump(indent)
                 } else {
                     str = str + indent + `Illegal object type: ${typeof (p)}`
@@ -117,7 +117,7 @@ export default class PixelContainer extends Set<Pixel | PixelContainer> {
 
 
     //calls  callbackfn for each pixel in the pixeltree
-    forEachPixel(callbackfn: (pixel: Pixel, parent: PixelContainer) => void) {
+    forEachPixel(callbackfn: (pixel: Pixel, parent: PixelSet) => void) {
         // this.recurseForEachPixel(callbackfn, this)
         for (const p of this) {
             if (p instanceof Pixel)
@@ -153,7 +153,7 @@ export default class PixelContainer extends Set<Pixel | PixelContainer> {
     //Use copyColor=true to also create copies of the color objects in each pixel
     //NOTE: you should only use copy() if needed, in all other cases just use references
     copy(copyColor = false) {
-        let c = new PixelContainer()
+        let c = new PixelSet()
         for (const p of this) {
             //NOTE: both Pixel and PixelContainer have the .copy() function, so no if-statement needed here
             c.add(p.copy(copyColor))

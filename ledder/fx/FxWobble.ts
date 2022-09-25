@@ -1,7 +1,7 @@
 import Fx from "../Fx.js";
 import ControlValue from "../ControlValue.js";
 import ControlGroup from "../ControlGroup.js";
-import PixelContainer from "../PixelContainer.js";
+import PixelSet from "../PixelSet.js";
 import Scheduler from "../Scheduler.js";
 
 export default class FxWobble extends Fx {
@@ -22,7 +22,7 @@ export default class FxWobble extends Fx {
 
     }
 
-    run(container: PixelContainer) {
+    run(container: PixelSet) {
 
         this.running = true
 

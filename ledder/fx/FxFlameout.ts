@@ -1,6 +1,6 @@
 import Fx from "../Fx.js"
 import ControlGroup from "../ControlGroup.js"
-import PixelContainer from "../PixelContainer.js"
+import PixelSet from "../PixelSet.js"
 import Scheduler from "../Scheduler.js"
 import {random} from "../util.js"
 import FxColorCycle from "./FxColorCycle.js"
@@ -23,15 +23,15 @@ export default class FxFlameout extends Fx {
     }
 
     //flameout the pixels in the container, and also clears the container when done
-    run(container: PixelContainer, clear = true) {
+    run(container: PixelSet, clear = true) {
         this.running = true
 
         let promises = []
 
         let moverContainers = [
-            new PixelContainer(),
-            new PixelContainer(),
-            new PixelContainer(),
+            new PixelSet(),
+            new PixelSet(),
+            new PixelSet(),
         ]
 
         container.forEachPixel((p, parent) => {

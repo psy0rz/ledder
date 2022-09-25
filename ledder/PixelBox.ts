@@ -1,8 +1,8 @@
-import PixelContainer from "./PixelContainer.js"
+import PixelSet from "./PixelSet.js"
 import BoxInterface from "./BoxInterface.js"
 
 //a pixel box is just a pixelcontainer with a size (like a display)
-export default class PixelBox extends PixelContainer {
+export default class PixelBox extends PixelSet {
     xMin: number
     xMax: number
     yMin: number

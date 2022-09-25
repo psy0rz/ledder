@@ -1,4 +1,4 @@
-import PixelContainer from "./PixelContainer.js";
+import PixelSet from "./PixelSet.js";
 import Scheduler from "./Scheduler.js";
 import ColorInterface from "./ColorInterface.js";
 import Pixel from "./Pixel.js";
@@ -90,7 +90,7 @@ export  default abstract class Display  {
   }
 
   //recursively renders all pixels in this pixeltree
-  render(container:PixelContainer) {
+  render(container:PixelSet) {
     for (const p of container)
     {
       if (p instanceof Pixel) {
@@ -99,7 +99,7 @@ export  default abstract class Display  {
           // this.colors.add(p.color)
         }
       }
-      else if (p instanceof PixelContainer)
+      else if (p instanceof PixelSet)
       {
         this.render(p)
       }

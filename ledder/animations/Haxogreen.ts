@@ -1,21 +1,21 @@
 import Animation  from "../Animation.js"
-import Display from "../Display.js"
 import Scheduler from "../Scheduler.js"
 import ControlGroup from "../ControlGroup.js"
-import PixelContainer from "../PixelContainer.js"
+import PixelSet from "../PixelSet.js"
 import {fontSelect} from "../fonts.js"
 import DrawText from "../draw/DrawText.js"
 import FxBlink from "../fx/FxBlink.js"
+import PixelBox from "../PixelBox.js"
 
 export default class Haxogreen extends Animation {
     static category = "Misc"
     static title = "Haxogreen"
     static description = "blabla"
 
-    async run(display: Display, scheduler: Scheduler, controls: ControlGroup) {
+    async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) {
 
-        const c=new PixelContainer()
-        display.add(c)
+        const c=new PixelSet()
+        box.add(c)
 
         const blinker = new FxBlink(scheduler, controls, 5, 5, 5)
 

@@ -6,7 +6,7 @@ import DrawText from "../draw/DrawText.js"
 import {fonts, fontSelect} from "../fonts.js"
 import Starfield from "./Starfield.js"
 import {random} from "../util.js"
-import BertrikFire from "./BertrikFire.js"
+import Fire from "./Fire.js"
 import PixelBox from "../PixelBox.js"
 import { cryptoFirstLast} from "../crypto.js"
 
@@ -69,7 +69,7 @@ export default class BTC extends Animation {
 
                     if (percentage<=percentageRange.from)
                     {
-                        const flames=new BertrikFire()
+                        const flames=new Fire()
                         flames.run(firebox, scheduler,controls)
                     }
 

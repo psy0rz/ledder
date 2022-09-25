@@ -3,7 +3,7 @@ import Display from "../Display.js";
 import Scheduler from "../Scheduler.js";
 import ControlGroup from "../ControlGroup.js";
 import {fontSelect} from "../fonts.js";
-import PixelContainer from "../PixelContainer.js";
+import PixelSet from "../PixelSet.js";
 import DrawText from "../draw/DrawText.js";
 import FxBlink from "../fx/FxBlink.js";
 import DrawBox from "../draw/DrawBox.js";
@@ -20,21 +20,21 @@ export default class PoliceLights extends Animation {
 
         /////////////// text
         const font = fontSelect(controls)
-        const textList=new PixelContainer()
+        const textList=new PixelSet()
 
         const colorText1 = controls.color("Text1 color", 255, 0, 0, 1);
         const inputText1 = controls.input('Text1', 'STOP', true)
         textList.add(new DrawText(0,0, font, overrideText1?overrideText1:inputText1.text, colorText1).center(display))
-        textList.add(new PixelContainer()) //blank screen
+        textList.add(new PixelSet()) //blank screen
 
         const colorText2 = controls.color("Text2 color", 255, 0, 0, 1);
         const inputText2 = controls.input('Text2', 'POLICE', true)
 
         textList.add(new DrawText(0, 0, font, overrideText2?overrideText2:inputText2.text, colorText2).center(display))
-        textList.add(new PixelContainer()) //blank screen
+        textList.add(new PixelSet()) //blank screen
 
         //fxmovie will display the 2 text-containers that are in the textList container:
-        const textTarget=new PixelContainer()
+        const textTarget=new PixelSet()
         display.add(textTarget)
         new FxPattern(scheduler, controls, 60).run(textList, textTarget, [60,5,60,5])
 
@@ -54,7 +54,7 @@ export default class PoliceLights extends Animation {
 
         //lamps on the background, so use a sepate container as a layer.
         //the texts above will be added to the display directly by FxMovie while running, so they will end up on top.
-        let lampsLayer=new PixelContainer()
+        let lampsLayer=new PixelSet()
         display.add(lampsLayer)
 
         //call the blinker effect on the left and right lamps

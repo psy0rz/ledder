@@ -2,7 +2,7 @@ import Animation from "../Animation.js"
 import Display from "../Display.js"
 import Scheduler from "../Scheduler.js"
 import ControlGroup from "../ControlGroup.js"
-import PixelContainer from "../PixelContainer.js"
+import PixelSet from "../PixelSet.js"
 import DrawAsciiArtColor from "../draw/DrawAsciiArtColor.js"
 import DrawText from "../draw/DrawText.js"
 import {fontSelect} from "../fonts.js"
@@ -27,7 +27,7 @@ export default class TDVenlo extends Animation {
 
     async run(display: Display, scheduler: Scheduler, controls: ControlGroup) {
 
-        const c=new PixelContainer()
+        const c=new PixelSet()
         display.add(c)
 
         const font = fontSelect(controls)

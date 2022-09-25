@@ -4,7 +4,7 @@ import Scheduler from "../Scheduler.js";
 import ControlGroup from "../ControlGroup.js";
 import {random} from "../util.js";
 import DrawAsciiArt from "../draw/DrawAsciiArt.js";
-import PixelContainer from "../PixelContainer.js";
+import PixelSet from "../PixelSet.js";
 import FxMovie from "../fx/FxMovie.js";
 import FxRotate from "../fx/FxRotate.js";
 
@@ -31,7 +31,7 @@ export default class MovingStars extends Animation {
 
     createStar(x,y, c)
     {
-        let star = new PixelContainer()
+        let star = new PixelSet()
         for (const ascii of starAscii)
             star.add(new DrawAsciiArt(x, y, c,ascii))
         return (star)
@@ -41,7 +41,7 @@ export default class MovingStars extends Animation {
 
         const starColorControl = controls.color("Star color", 255, 255, 255, 0.01);
 
-        const stars=new PixelContainer()
+        const stars=new PixelSet()
         display.add(stars)
 
         const starsControl = controls.value("Number of stars", 10, 1, 100, 1, true)

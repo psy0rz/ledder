@@ -1,6 +1,6 @@
 import Fx from "../Fx.js";
 import ControlGroup from "../ControlGroup.js";
-import PixelContainer from "../PixelContainer.js";
+import PixelSet from "../PixelSet.js";
 import Scheduler from "../Scheduler.js";
 
 
@@ -13,7 +13,7 @@ export default class FxTemplate extends Fx {
 
     }
 
-    run(container: PixelContainer) {
+    run(container: PixelSet) {
         this.running = true
 
         //this.promise=...

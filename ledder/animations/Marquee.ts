@@ -6,7 +6,7 @@ import FxRotate from "../fx/FxRotate.js";
 import {fontSelect} from "../fonts.js";
 import DrawText from "../draw/DrawText.js";
 import FxFlames from "../fx/FxFlames.js";
-import PixelContainer from "../PixelContainer.js";
+import PixelSet from "../PixelSet.js";
 import MovingStars from "./MovingStars.js";
 import DrawBox from "../draw/DrawBox.js";
 import Color from "../Color.js";
@@ -62,7 +62,7 @@ export default class Marquee extends Animation {
 
         let flameGroup=control.group("Flames", false, false)
         if (flameGroup.switch('Enabled', false).enabled) {
-            const flames=new PixelContainer()
+            const flames=new PixelSet()
             box.add(flames)
             new FxFlames(scheduler,flameGroup).run(charPixels, flames)
         }

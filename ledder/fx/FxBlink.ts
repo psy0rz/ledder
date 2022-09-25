@@ -2,7 +2,7 @@ import Fx from "../Fx.js";
 import ControlValue from "../ControlValue.js";
 import ControlGroup from "../ControlGroup.js";
 import Scheduler from "../Scheduler.js";
-import PixelContainer from "../PixelContainer.js";
+import PixelSet from "../PixelSet.js";
 import Pixel from "../Pixel.js";
 
 //Blink pixelcontainers by adding/removing them from the target (always starts with on, ends with off)
@@ -23,7 +23,7 @@ export default class FxBlink extends Fx {
         this.skipLast=skipLast
     }
 
-    run(source: Pixel|PixelContainer, target: PixelContainer) {
+    run(source: Pixel|PixelSet, target: PixelSet) {
 
         this.running = true
 

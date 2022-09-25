@@ -6,7 +6,7 @@ import Scheduler from "../Scheduler.js";
 import ControlGroup from "../ControlGroup.js";
 import FxBlink from "../fx/FxBlink.js";
 import FxRotate from "../fx/FxRotate.js";
-import PixelContainer from "../PixelContainer.js";
+import PixelSet from "../PixelSet.js";
 
 export default class TestMatrix extends Animation {
 
@@ -47,7 +47,7 @@ export default class TestMatrix extends Animation {
 
 
         //mover to test smoothness
-        const moveContainer=new PixelContainer()
+        const moveContainer=new PixelSet()
         display.add(moveContainer)
         moveContainer.add( new Pixel(0, 6, new Color(255, 255, 255)));
         new FxRotate(scheduler, controls, 1, 0, 1).run(moveContainer, display)
