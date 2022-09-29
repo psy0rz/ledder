@@ -53,6 +53,12 @@ export class DisplayLedstream extends DisplayQOIS {
             s.on('error', (err) => {
                 console.log(`server error:\n${err.stack}`)
             })
+
+            s.on('connect', (e)=>{
+
+                s.setSendBufferSize(1)
+
+            })
         }
 
         // this.socket.connect(this.port, this.ips)
@@ -69,12 +75,15 @@ export class DisplayLedstream extends DisplayQOIS {
 
         const frameBytes = []
 
+        const maxFramesLag=20
+        const maxTimeLag=500
+
         //buffer this many frames
-        const lag = 20 * this.frameMs
+        const lag = Math.min(maxTimeLag, maxFramesLag * this.frameMs)
 
         //try to full up packets, but dont wait longer than this time:
         // const maxWait= (lag/2)  * this.frameMs
-const maxWait= ~~(lag/2)
+        const maxWait= ~~(lag/4)
         // const maxWait=0
 
         const laggedTime = displayTime + lag

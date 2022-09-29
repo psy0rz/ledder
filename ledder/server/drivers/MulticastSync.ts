@@ -18,6 +18,7 @@ export class MulticastSync {
         this.packet = new Uint8Array(4);
 
         this.socket.on('connect', () => {
+            this.socket.setSendBufferSize(1)
             setInterval(() => this.pulse(), this.interval)
             // this.startTime=Date.now();
             // this.ourTime=Date.now();
