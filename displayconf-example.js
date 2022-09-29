@@ -3,14 +3,19 @@ import OffsetMapper from "./ledder/server/drivers/OffsetMapper.js"
 import {DisplayLedstream} from "./ledder/server/drivers/DisplayLedstream.js"
 export let displayList=[];
 
-// /////////// normal landscape 75 x 8, left zigzagged ledstream:
-// new MulticastSync('239.137.111.1', 65001, 1000)
-// let mapper = new OffsetMapper(75, 8, true)
-// mapper.zigZagX()
-// displayList=[
-//     new DisplayLedstream( 2, 75, 8, ["esp32-240ac4973068.local"], 65000, mapper), //smokeplastic board
-//     new DisplayLedstream( 2, 75, 8, ["esp32-f008d161492c.local"], 65000, mapper), //painted board
-// ]
+
+new MulticastSync('239.137.111.1', 65001, 1000)
+
+/////////// normal landscape 75 x 8, left zigzagged ledstream:
+let mapper = new OffsetMapper(75, 8, true)
+mapper.zigZagX()
+
+//painted board
+//displayList.push(new DisplayLedstream( 2, 75, 8, ["esp32-f008d161492c.local"], 65000, mapper))
+
+//smokeyboard
+//displayList.push(new DisplayLedstream( 2, 75, 8, ["esp32-240ac4973068.local"], 65000, mapper))
+
 
 // /////////// vertical landscape mode 75 x 8, left zigzagged ledstream.
 // //For ledder the display now has width 8 and height 75.
