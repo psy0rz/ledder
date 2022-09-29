@@ -2,7 +2,7 @@ import PixelSet from "./PixelSet.js";
 import Scheduler from "./Scheduler.js";
 import ColorInterface from "./ColorInterface.js";
 import Pixel from "./Pixel.js";
-import GammaMapper from "./drivers/GammaMapper.js";
+import GammaMapper from "./server/drivers/GammaMapper.js";
 
 /**
  * The display renders a pixelcontainer to an actual display.

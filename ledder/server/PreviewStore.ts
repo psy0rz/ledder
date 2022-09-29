@@ -1,5 +1,5 @@
 import {writeFile} from "fs/promises";
-import {DisplayApng} from "../drivers/DisplayApng.js";
+import {DisplayApng} from "./drivers/DisplayApng.js";
 import Scheduler from "../Scheduler.js";
 import Animation from "../Animation.js";
 import {PresetValues} from "../PresetValues.js";

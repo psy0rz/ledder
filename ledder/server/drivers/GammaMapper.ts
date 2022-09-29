@@ -2,8 +2,8 @@
 //gamma brightness and max brightness correction
 //maps from 0-255
 
-import ControlGroup from "../ControlGroup.js"
-import ControlValue from "../ControlValue.js"
+import ControlGroup from "../../ControlGroup.js"
+import ControlValue from "../../ControlValue.js"
 
 
 export default class GammaMapper extends Array {

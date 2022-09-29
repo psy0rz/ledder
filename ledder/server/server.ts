@@ -4,7 +4,7 @@ import {PresetStore} from "./PresetStore.js";
 import mqtt from 'mqtt'
 import ControlGroup from "../ControlGroup.js";
 import Display from "../Display.js";
-import GammaMapper from "../drivers/GammaMapper.js";
+import GammaMapper from "./drivers/GammaMapper.js";
 import {config} from "./config.js"
 
 

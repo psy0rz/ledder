@@ -1,6 +1,6 @@
-import {MulticastSync} from "./ledder/drivers/MulticastSync.js"
-import OffsetMapper from "./ledder/drivers/OffsetMapper.js"
-import {DisplayLedstream} from "./ledder/drivers/DisplayLedstream.js"
+import {MulticastSync} from "./ledder/server/drivers/MulticastSync.js"
+import OffsetMapper from "./ledder/server/drivers/OffsetMapper.js"
+import {DisplayLedstream} from "./ledder/server/drivers/DisplayLedstream.js"
 export let displayList=[];
 
 // /////////// normal landscape 75 x 8, left zigzagged ledstream:

@@ -1,6 +1,6 @@
 //context of a websocket connection
 import {RunnerServer} from "./RunnerServer.js";
-import {DisplayWebsocket} from "../drivers/DisplayWebsocket.js";
+import {DisplayWebsocket} from "./drivers/DisplayWebsocket.js";
 import {PresetStore} from "./PresetStore.js";
 import {JSONRPCServerAndClient} from "json-rpc-2.0";
 import ControlGroup from "../ControlGroup.js";

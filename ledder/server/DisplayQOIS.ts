@@ -1,7 +1,7 @@
 import Display from "../Display.js"
 import Color from "../Color.js"
 import {colorBlack} from "../Colors.js"
-import OffsetMapper from "../drivers/OffsetMapper.js"
+import OffsetMapper from "./drivers/OffsetMapper.js"
 
 
 const QOI_OP_INDEX = 0x00 /* 00xxxxxx */
