@@ -18,7 +18,7 @@ export class DisplayLedstream extends DisplayQOIS {
     nextSyncOffset: number
 
     packetNr: number
-    private sendTime: number
+    private bufferEmptyTime: number
 
     /**
      * Matrix driver for https://github.com/psy0rz/ledstream
@@ -41,7 +41,7 @@ export class DisplayLedstream extends DisplayQOIS {
         this.nextSyncOffset = 0
         this.packetNr = 0
 
-        this.sendTime=0
+        this.bufferEmptyTime = 0
 
         this.sockets = []
         for (const ip of ips) {
@@ -59,22 +59,25 @@ export class DisplayLedstream extends DisplayQOIS {
     }
 
 
-    //udp packet:
+    //UDP PACKET:
     //  [packetNr][reserved][syncoffset (2 bytes)][QOIS FRAME]
     //
-    //qois frame:
-    // [display time (4 bytes)][QOIS encoded bytes]
+    //QOIS FRAME:
+    // [display time (2 bytes)][QOIS encoded bytes]
 
     frame(displayTime: number) {
 
         const frameBytes = []
 
-        // const lag = 16 * 30 //30 frames lag
+        //buffer this many frames
         const lag = 20 * this.frameMs
+
+        //try to full up packets, but dont wait longer than this time:
+        // const maxWait= (lag/2)  * this.frameMs
+const maxWait= ~~(lag/2)
+        // const maxWait=0
+
         const laggedTime = displayTime + lag
-        //first frame to be pushed? determine sendTime
-        if (this.byteStream.length == 0)
-            this.sendTime = displayTime + 0 * this.frameMs
 
         // //frame byte length
         frameBytes.push(0) //0
@@ -96,54 +99,58 @@ export class DisplayLedstream extends DisplayQOIS {
 
         this.byteStream.push(...frameBytes)
 
-        //is it time to send?
+        //is it time to send, or packet is full?
 
-        if (displayTime >= this.sendTime) {
-            //break up into packets and send.
-            while (this.byteStream.length > 0) {
+        while (((displayTime-this.bufferEmptyTime)>=maxWait && this.byteStream.length > 0) || this.byteStream.length >= qoisDataLength) {
+            // if ( this.byteStream.length ) {
 
-                try {
 
-                    const time = Date.now()
+            //send next packet
+            try {
 
-                    const packet = []
+                const time = Date.now()
 
-                    //add packet nr
-                    packet.push(this.packetNr & 0xff)
-                    this.packetNr++
+                const packet = []
 
-                    //reserved
-                    packet.push(0)
+                //add packet nr
+                packet.push(this.packetNr & 0xff)
+                this.packetNr++
 
-                    //time
-                    // packet.push(time & 0xff)
-                    // packet.push((time>>8) & 0xff)
+                //reserved
+                packet.push(0)
 
-                    //add current syncoffset
-                    packet.push(this.nextSyncOffset & 0xff)
-                    packet.push((this.nextSyncOffset >> 8) & 0xff)
-                    // this.syncOffset = this.nextSyncOffset
+                //time
+                // packet.push(time & 0xff)
+                // packet.push((time>>8) & 0xff)
 
-                    const payload = this.byteStream.splice(0, qoisDataLength)
-                    packet.push(...payload)
-                    this.nextSyncOffset = this.nextSyncOffset - payload.length
+                //add current syncoffset
+                packet.push(this.nextSyncOffset & 0xff)
+                packet.push((this.nextSyncOffset >> 8) & 0xff)
+                // this.syncOffset = this.nextSyncOffset
 
-                    const p = Uint8Array.from(packet)
-                    for (const s of this.sockets) {
-                        try {
-                            s.send(p)
-                        } catch (e) {
-                            // console.error("MatrixLedstream: send error ",e)
-                        }
+                const payload = this.byteStream.splice(0, qoisDataLength)
+                packet.push(...payload)
+                this.nextSyncOffset = this.nextSyncOffset - payload.length
+
+                const p = Uint8Array.from(packet)
+                for (const s of this.sockets) {
+                    try {
+                        s.send(p)
+                    } catch (e) {
+                        // console.error("MatrixLedstream: send error ",e)
                     }
-                } catch (e) {
-                    console.error("MatrixLedstream: error: " + e)
                 }
+            } catch (e) {
+                console.error("MatrixLedstream: error: " + e)
             }
-            if (this.nextSyncOffset != 0) {
-                this.nextSyncOffset = 0
-                console.error("bug: sync offset not 0??")
-            }
+            if (this.byteStream.length==0)
+               this.bufferEmptyTime=displayTime
+
+
+            // if (this.nextSyncOffset != 0) {
+            //     this.nextSyncOffset = 0
+            //     console.error("bug: sync offset not 0??")
+            // }
         }
     }
 }
