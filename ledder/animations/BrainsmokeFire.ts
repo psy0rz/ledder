@@ -4,7 +4,7 @@ import ControlValue from "../ControlValue.js";
 import Scheduler from "../Scheduler.js";
 import ControlGroup from "../ControlGroup.js";
 import { patternSelect} from "../ColorPatterns.js";
-import { glow} from "../util.js"
+import { glow} from "../utils.js"
 import PixelBox from "../PixelBox.js"
 
 //best at 50fps according to brainsmoke

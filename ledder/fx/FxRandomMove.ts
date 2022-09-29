@@ -3,7 +3,7 @@ import ControlValue from "../ControlValue.js";
 import ControlGroup from "../ControlGroup.js";
 import PixelSet from "../PixelSet.js";
 import Scheduler from "../Scheduler.js";
-import { random, randomFloatGaussian} from "../util.js";
+import { random, randomFloatGaussian} from "../utils.js";
 import ControlSwitch from "../ControlSwitch.js";
 
 

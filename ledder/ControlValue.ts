@@ -1,5 +1,5 @@
 import {Control, ControlMeta} from "./Control.js";
-import {numberCheck} from "./util.js";
+import {numberCheck} from "./utils.js";
 
 
 

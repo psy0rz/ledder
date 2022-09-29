@@ -3,7 +3,7 @@ import ControlValue from "../ControlValue.js";
 import ControlGroup from "../ControlGroup.js";
 import PixelSet from "../PixelSet.js";
 import Scheduler from "../Scheduler.js";
-import {random} from "../util.js";
+import {random} from "../utils.js";
 import Pixel from "../Pixel.js";
 
 

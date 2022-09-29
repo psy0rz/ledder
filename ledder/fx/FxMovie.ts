@@ -3,7 +3,7 @@ import ControlValue from "../ControlValue.js";
 import ControlGroup from "../ControlGroup.js";
 import Scheduler from "../Scheduler.js";
 import PixelSet from "../PixelSet.js";
-import {random} from "../util.js";
+import {random} from "../utils.js";
 
 //"plays" a collection of pixelcontainers at a certain framerate, by adding/removing them to the specified target container.
 export default class FxMovie extends Fx {

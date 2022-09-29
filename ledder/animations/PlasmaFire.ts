@@ -3,7 +3,7 @@ import Pixel from "../Pixel.js";
 import Scheduler from "../Scheduler.js";
 import ControlGroup from "../ControlGroup.js";
 import { patternSelect } from "../ColorPatterns.js";
-import { glow, randomGaussian } from "../util.js";
+import { glow, randomGaussian } from "../utils.js";
 import { colorBlack } from "../Colors.js";
 import PixelBox from "../PixelBox.js"
 

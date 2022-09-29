@@ -4,7 +4,7 @@ import ControlGroup from "../ControlGroup.js"
 import PixelSet from "../PixelSet.js"
 import BoxInterface from "../BoxInterface.js"
 import Scheduler from "../Scheduler.js"
-import {random, randomFloatGaussian} from "../util.js"
+import {random, randomFloatGaussian} from "../utils.js"
 import FxColorCycle from "./FxColorCycle.js"
 import Pixel from "../Pixel.js"
 

@@ -1,5 +1,5 @@
 import Animation  from "../Animation.js";
-import {glow} from "../util.js";
+import {glow} from "../utils.js";
 import Color from "../Color.js";
 import Display from "../Display.js";
 import Scheduler from "../Scheduler.js";

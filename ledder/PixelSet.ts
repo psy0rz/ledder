@@ -1,6 +1,6 @@
 import Pixel from "./Pixel.js";
 import BoxInterface from "./BoxInterface.js";
-import {random} from "./util.js";
+import {random} from "./utils.js";
 import ColorInterface from "./ColorInterface.js";
 
 /**

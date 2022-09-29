@@ -1,3 +1,4 @@
+//NOTE: controls are used by browser side as well, so dont import server-only stuff!
 import {Control, ControlMeta, Values} from "./Control.js"
 import ControlValue from "./ControlValue.js"
 import ControlColor from "./ControlColor.js"

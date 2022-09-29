@@ -5,7 +5,7 @@ import ControlGroup from "../ControlGroup.js"
 import Pixel from "../Pixel.js"
 import Color from "../Color.js"
 import FxRotate from "../fx/FxRotate.js"
-import {random} from "../util.js"
+import {random} from "../utils.js"
 import PixelBox from "../PixelBox.js"
 
 export default class Test extends Animation {

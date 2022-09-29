@@ -4,7 +4,7 @@ import ControlGroup from "../ControlGroup.js";
 import PixelSet from "../PixelSet.js";
 import BoxInterface from "../BoxInterface.js";
 import Scheduler from "../Scheduler.js";
-import {random} from "../util.js";
+import {random} from "../utils.js";
 
 
 //Rotate pixels inside a box

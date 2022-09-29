@@ -4,7 +4,7 @@ import ControlGroup from "../ControlGroup.js"
 import Pixel from "../Pixel.js"
 import Color from "../Color.js"
 import PixelSet from "../PixelSet.js"
-import {random} from "../util.js"
+import {random} from "../utils.js"
 import PixelBox from "../PixelBox.js"
 
 

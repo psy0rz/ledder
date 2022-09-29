@@ -1,5 +1,6 @@
+//NOTE: controls are used by browser side as well, so dont import server-only stuff!
 import {Control, ControlMeta} from "./Control.js";
-import {numberCheck} from "./util.js";
+import {numberCheck} from "./utils.js";
 
 
 

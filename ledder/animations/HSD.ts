@@ -6,7 +6,7 @@ import DrawText from "../draw/DrawText.js"
 import {fontSelect} from "../fonts.js"
 import FxRotate from "../fx/FxRotate.js"
 import PixelBox from "../PixelBox.js"
-import {runAnimation} from "../util.js"
+import {utils} from "../server/utils.js"
 
 
 const logo=`
@@ -40,7 +40,7 @@ export default class HSD extends Animation {
 
 
 
-        await runAnimation(marquee, scheduler, controls, "Marquee")
+        await utils(marquee, scheduler, controls, "Marquee")
 
 
     }

@@ -3,7 +3,7 @@ import Scheduler from "../Scheduler.js";
 import ControlGroup from "../ControlGroup.js";
 import Pixel from "../Pixel.js";
 import Color from "../Color.js";
-import { glow, randomGaussian } from "../util.js";
+import { glow, randomGaussian } from "../utils.js";
 import FxColorCycle from "../fx/FxColorCycle.js";
 import FxRandomMove from "../fx/FxRandomMove.js";
 import PixelSet from "../PixelSet.js";

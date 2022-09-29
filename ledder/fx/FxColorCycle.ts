@@ -5,7 +5,7 @@ import Color from "../Color.js";
 import Scheduler from "../Scheduler.js";
 import ColorInterface from "../ColorInterface.js";
 
-import {randomGaussian} from "../util.js";
+import {randomGaussian} from "../utils.js";
 import {patternSelect} from "../ColorPatterns.js";
 import ControlSelect from "../ControlSelect.js"
 
