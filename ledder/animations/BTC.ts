@@ -6,7 +6,7 @@ import DrawText from "../draw/DrawText.js"
 import {fonts, fontSelect} from "../fonts.js"
 import Starfield from "./Starfield.js"
 import {random} from "../utils.js"
-import Fire from "./Fire.js"
+import Fire from "./Fires/Fire.js"
 import PixelBox from "../PixelBox.js"
 import { cryptoFirstLast} from "../crypto.js"
 

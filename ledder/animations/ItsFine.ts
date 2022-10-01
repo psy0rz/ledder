@@ -8,7 +8,7 @@ import PixelSet from "../PixelSet.js";
 import FxFlames from "../fx/FxFlames.js";
 
 import PixelBox from "../PixelBox.js"
-import Fire from "./Fire.js"
+import Fire from "./Fires/Fire.js"
 
 
 export default class ItsFine extends Animation {

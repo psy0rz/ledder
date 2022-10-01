@@ -169,7 +169,7 @@ export class RunnerServer {
         console.log("Runner: starting", animationName, presetName)
         this.resetControls()
 
-        this.presetValues = await this.presetStore.load(this.animationClass, presetName)
+        this.presetValues = await this.presetStore.load(animationName, presetName)
 
         this.controlGroup.load(this.presetValues.values)
         this.display.setFps(this.fpsControl.value)
@@ -200,15 +200,15 @@ export class RunnerServer {
     async save(presetName: string) {
         this.presetName = presetName
         this.presetValues.values = this.controlGroup.save()
-        await this.presetStore.save(this.animationClass, presetName, this.presetValues)
-        await this.presetStore.createPreview(this.animationClass, presetName, this.presetValues)
+        await this.presetStore.save(this.animationName, presetName, this.presetValues)
+        await this.presetStore.createPreview(this.animationName, presetName, this.presetValues)
         await this.presetStore.updateAnimationPresetList()
     }
 
     //delete current running animation preset
     async delete() {
         if (this.presetName !== undefined) {
-            await this.presetStore.delete(this.animationClass, this.presetName)
+            await this.presetStore.delete(this.animationName, this.presetName)
             await this.presetStore.updateAnimationPresetList()
             this.presetName = undefined
         }

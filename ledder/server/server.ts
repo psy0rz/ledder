@@ -16,6 +16,8 @@ const gammaMapper=new GammaMapper(settingsControl.group("Display settings"))
 //init preset store
 const presetStore = new PresetStore()
 
+console.log(await presetStore.scanAnimationDir())
+
 //create run all the displayes
 let runners:Array<RunnerServer>=[]
 
