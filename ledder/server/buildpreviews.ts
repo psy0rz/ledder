@@ -3,12 +3,16 @@
 import {PresetStore} from "./PresetStore.js";
 
 const presetStore = new PresetStore()
-await presetStore.updateAnimationPresetList()
-await presetStore.updateAnimationPreviews(process.argv[2]=='--force')
-//creating previews changes some metadata (timestamp)
-await presetStore.updateAnimationPresetList()
+// await presetStore.updateAnimationPresetList()
+// await presetStore.updateAnimationPreviews(process.argv[2]=='--force')
+// //creating previews changes some metadata (timestamp)
+// await presetStore.updateAnimationPresetList()
 
-console.log("Preview building completed.")
+console.log("Creating animation preset list...")
+
+await presetStore.storeAnimationPresetList()
+
+console.log("Build complete")
 
 //force exit, in case of async hanging stuff
 process.exit(0)

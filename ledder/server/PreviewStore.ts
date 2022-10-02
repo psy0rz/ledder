@@ -35,7 +35,6 @@ export class PreviewStore {
      * Renders preview to APNG file
      */
     async render(filename: string, animationClass: typeof Animation, preset: PresetValues) {
-        console.log("> " + filename);
 
         this.resetAnimation()
 
