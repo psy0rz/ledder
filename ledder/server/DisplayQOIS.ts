@@ -14,7 +14,7 @@ const QOI_OP_RGBA = 0xff /* 11111111 */
 const QOI_MASK_2 = 0xc0 /* 11000000 */
 
 function QOI_COLOR_HASH(C: Color) {
-    return (C.r * 3 + C.g * 5 + C.b * 7)
+    return (C.r * 3 + C.g * 5 + C.b * 7 + (255 * 11)) //NOTE: we dont use alpha this way, so make it always 255
 }
 
 
@@ -91,7 +91,6 @@ export abstract class DisplayQOIS extends Display {
                 pixel.r = this.gammaMapper[Math.round(c.r)]
                 pixel.g = this.gammaMapper[Math.round(c.g)]
                 pixel.b = this.gammaMapper[Math.round(c.b)]
-                pixel.a=c.a
             }
 
             if (pixel.equal(prevPixel)) {
@@ -109,8 +108,8 @@ export abstract class DisplayQOIS extends Display {
                 const index_pos = QOI_COLOR_HASH(pixel) % 64
 
                 // //its in index?
-                // if (this.index[index_pos].equal(pixel)) {
-                if(false) {
+                if (this.index[index_pos].equal(pixel)) {
+                // if(false) {
                     bytes.push(QOI_OP_INDEX | index_pos)
 
                 } else {

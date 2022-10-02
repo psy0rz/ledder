@@ -4,10 +4,10 @@ import dgram from "dgram"
 import {DisplayQOIS} from "../DisplayQOIS.js"
 import OffsetMapper from "./OffsetMapper.js"
 
-const qoisDataLength = 1460 - 4 //4 bytes overhead
+const qoisDataLength = 1460 - 6 //6 bytes package-frame overhead
 
 
-//NOTE: This needs a  MulticastSyncer as well.
+
 export class DisplayLedstream extends DisplayQOIS {
 
     sockets: Array<dgram.Socket>
@@ -66,7 +66,7 @@ export class DisplayLedstream extends DisplayQOIS {
 
 
     //UDP PACKET:
-    //  [packetNr][reserved][syncoffset (2 bytes)][QOIS FRAME]
+    //  [packetNr][reserved][current time (2 bytes)][syncoffset (2 bytes)][QOIS FRAME]
     //
     //QOIS FRAME:
     // [display time (2 bytes)][QOIS encoded bytes]
@@ -75,7 +75,7 @@ export class DisplayLedstream extends DisplayQOIS {
 
         const frameBytes = []
 
-        const maxFramesLag=20
+        const maxFramesLag=30
         const maxTimeLag=500
 
         //buffer this many frames
@@ -83,7 +83,7 @@ export class DisplayLedstream extends DisplayQOIS {
 
         //try to full up packets, but dont wait longer than this time:
         // const maxWait= (lag/2)  * this.frameMs
-        const maxWait= ~~(lag/4)
+        const maxWait= ~~(lag/2)
         // const maxWait=0
 
         const laggedTime = displayTime + lag
@@ -92,7 +92,7 @@ export class DisplayLedstream extends DisplayQOIS {
         frameBytes.push(0) //0
         frameBytes.push(0) //1
 
-        //time
+        //time when to display frame
         frameBytes.push(laggedTime & 0xff)
         frameBytes.push((laggedTime >> 8) & 0xff)
 
@@ -121,23 +121,28 @@ export class DisplayLedstream extends DisplayQOIS {
 
                 const packet = []
 
+                //packet byte 0
                 //add packet nr
                 packet.push(this.packetNr & 0xff)
                 this.packetNr++
 
+                //packet byte 1
                 //reserved
                 packet.push(0)
 
-                //time
-                // packet.push(time & 0xff)
-                // packet.push((time>>8) & 0xff)
+                //packet byte 2-3
+                //current time
+                packet.push(time & 0xff)
+                packet.push((time>>8) & 0xff)
 
+                //packet byte 4-5
                 //add current syncoffset
                 packet.push(this.nextSyncOffset & 0xff)
                 packet.push((this.nextSyncOffset >> 8) & 0xff)
                 // this.syncOffset = this.nextSyncOffset
 
                 const payload = this.byteStream.splice(0, qoisDataLength)
+                //packet byte 6-...
                 packet.push(...payload)
                 this.nextSyncOffset = this.nextSyncOffset - payload.length
 

@@ -7,9 +7,10 @@ import {fontSelect} from "../fonts.js"
 import FxRotate from "../fx/FxRotate.js"
 import PixelBox from "../PixelBox.js"
 import {utils} from "../server/utils.js"
+import Pacman from "./Pacman.js"
 
 
-const logo=`
+const logo = `
   rr0rr0rr
   rr0rr0rr
   0rrrrrr0
@@ -30,14 +31,18 @@ export default class HSD extends Animation {
 
 
         //rotate
-        const marquee=new PixelBox(box)
+        const marquee = new PixelBox(box)
         box.add(marquee)
 
-        box.add(new DrawAsciiArtColor(0, 8, logo))
-        box.add(new DrawAsciiArtColor(box.width()-8, 8, logo))
 
-        box.center(box)
+        const pacmanGroup = controls.group("Pacman")
+        if (pacmanGroup.switch("Enabled", true).enabled)
+            new Pacman().run(box, scheduler, pacmanGroup)
+        else
+            box.add(new DrawAsciiArtColor(0, 7, logo))
 
+        box.add(new DrawAsciiArtColor(box.width() - 8, 7, logo))
+        //box.center(box)
 
 
         await utils(marquee, scheduler, controls, "Marquee")

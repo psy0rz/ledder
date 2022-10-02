@@ -76,7 +76,8 @@ export default class Color implements ColorInterface {
         return new Color(this.r, this.g, this.b, this.a)
     }
 
-    //alphablend the color with the other color object
+    //alphablend the color with the other color object.
+    //This ignores our alpha value and uses the alpha of the specified color object.
     blend(color: ColorInterface) {
         if (color.a == 0)
             return
@@ -95,6 +96,6 @@ export default class Color implements ColorInterface {
     }
 
     equal(color: ColorInterface) {
-        return this.r == color.r && this.g == color.g && this.b == color.b
+        return this.r == color.r && this.g == color.g && this.b == color.b && this.a == color.a
     }
 }

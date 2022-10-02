@@ -3,8 +3,8 @@ import OffsetMapper from "./ledder/server/drivers/OffsetMapper.js"
 import {DisplayLedstream} from "./ledder/server/drivers/DisplayLedstream.js"
 export let displayList=[];
 
-
-new MulticastSync('239.137.111.1', 65001, 1000)
+//currently not neccesary/used
+//new MulticastSync('239.137.111.1', 65001, 1000)
 
 /////////// normal landscape 75 x 8, left zigzagged ledstream:
 let mapper = new OffsetMapper(75, 8, true)

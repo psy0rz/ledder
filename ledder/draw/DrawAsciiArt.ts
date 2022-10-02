@@ -13,6 +13,9 @@ export default class DrawAsciiArt extends Draw {
         let currX = x;
         let currY = y;
 
+        ascii=ascii.replace(/^\s*/, "")
+
+
         for (const c of ascii) {
             // a . is a empty space
             if (c == '.')

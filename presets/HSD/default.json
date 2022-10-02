@@ -124,6 +124,35 @@
    "Fade out time randomizer": {
     "value": 0
    }
+  },
+  "Pacman": {
+   "Enabled": {
+    "enabled": true
+   },
+   "Color": {
+    "r": 255,
+    "g": 255,
+    "b": 0,
+    "a": 1
+   },
+   "Movie interval": {
+    "value": 4
+   },
+   "Movie interval randomizer": {
+    "value": 0
+   },
+   "Rotate interval": {
+    "value": 2
+   },
+   "Rotate interval randomizer": {
+    "value": 0
+   },
+   "Rotate X step": {
+    "value": 0
+   },
+   "Rotate Y step": {
+    "value": 0
+   }
   }
  }
 }
