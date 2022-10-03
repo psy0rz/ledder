@@ -1,23 +1,25 @@
+export type PresetListItem =
+    {
+        name: string,
+        title: string,
+        description: string,
+        previewFile: string
+    }
 
-//list with presets
-export type PresetList= Array<{
-    name: string,
-    title: string,
-    description: string,
-    previewFile: string
-}>
+export type PresetList = Array<PresetListItem>
 
-
-//list with animations, recursive
-export type AnimationList = Array<{
+export type AnimationListItem = {
     name: string,
     title: string,
     description: string,
     presets: PresetList,
-} | AnimationDir>
+}
+
+//list with animations, recursive
+export type AnimationList = Array<AnimationListItem | AnimationListDir>
 
 //subdirectory with animations
-export type AnimationDir =
+export type AnimationListDir =
     {
         name: string,
         entries: AnimationList
