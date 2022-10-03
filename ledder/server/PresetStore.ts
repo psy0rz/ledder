@@ -282,7 +282,7 @@ export class PresetStore {
 
 
     // scans and loads all animations and returns the grand preset list
-    async buildAnimationPresetList(dir: string = ""): Promise<AnimationList> {
+    async buildAnimationPresetList(dir: string = "", updatePreview:boolean, forcePreview:boolean): Promise<AnimationList> {
         let ret: AnimationList = []
 
 
@@ -293,7 +293,7 @@ export class PresetStore {
                 //recurse
                 ret.push({
                     name: entry.name,
-                    entries: await this.buildAnimationPresetList(entry.name)
+                    entries: await this.buildAnimationPresetList(entry.name, updatePreview, forcePreview)
                 })
             else {
                 //actual animation?
@@ -308,7 +308,7 @@ export class PresetStore {
                             name: animationName,
                             title: animationClass.title,
                             description: animationClass.description,
-                            presets: await this.buildPresetList(animationClass, animationName, true ,false)
+                            presets: await this.buildPresetList(animationClass, animationName, updatePreview ,forcePreview)
                         })
                     } catch (e) {
                         console.error(`${animationName}: `, e)
@@ -353,10 +353,10 @@ export class PresetStore {
     }
 
     //update stored animation preset list
-    async storeAnimationPresetList() {
+    async storeAnimationPresetList(updatePreview:boolean, forcePreview:boolean) {
         await writeFile(
             path.join(this.presetPath, 'index.json'),
-            JSON.stringify(await this.buildAnimationPresetList(), undefined, ' '), 'utf8'
+            JSON.stringify(await this.buildAnimationPresetList("", updatePreview, forcePreview), undefined, ' '), 'utf8'
         )
     }
 

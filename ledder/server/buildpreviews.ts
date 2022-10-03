@@ -10,7 +10,7 @@ const presetStore = new PresetStore()
 
 console.log("Creating animation preset list...")
 
-await presetStore.storeAnimationPresetList()
+await presetStore.storeAnimationPresetList(true, process.argv[2]=='--force')
 
 console.log("Build complete")
 
