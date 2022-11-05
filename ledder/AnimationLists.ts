@@ -22,6 +22,6 @@ export type AnimationList = Array<AnimationListItem | AnimationListDir>
 export type AnimationListDir =
     {
         name: string,
-        entries: AnimationList
+        animationList: AnimationList
     }
 

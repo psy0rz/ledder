@@ -293,7 +293,7 @@ export class PresetStore {
                 //recurse
                 ret.push({
                     name: entry.name,
-                    entries: await this.buildAnimationPresetList(entry.name, updatePreview, forcePreview)
+                    animationList: await this.buildAnimationPresetList(entry.name, updatePreview, forcePreview)
                 })
             else {
                 //actual animation?

@@ -21,6 +21,7 @@
     import {runnerBrowser} from "../js/web/RunnerBrowser.js"
     import {onMount} from "svelte"
     import {rpc} from "../js/web/RpcClient.js"
+    import AnimationListUI from "@/components/AnimationListUI.svelte"
 
     let search = ""
 
@@ -82,45 +83,11 @@
         </Subnavbar>
     </Navbar>
 
+
     {#if $svelteAnimations.length === 0}
         <Preloader/>
         <Message>Loading list...</Message>
     {:else}
-        <List mediaList ul={false}>
-            {#each $svelteAnimations as animation}
-                <ListGroup>
-                    <ListItem title={animation.title} groupTitle>
-                    </ListItem>
-
-                    <ListItem
-                            title={animation.title}
-                            text="{animation.description} ({animation.name})"
-                            href="/{animation.name}/default"
-                    >
-                        <img
-                                src="{rpc.url}/{animation.previewFile}"
-                                slot="media"
-                                class="ledder-preview-image"
-                                alt="{animation.title} preview"
-                        />
-                    </ListItem>
-                    {#each animation.presets as preset}
-                        <ListItem
-                                title={preset.name}
-                                subtitle={preset.title}
-                                text={preset.description}
-                                href="/{animation.name}/{preset.name}"
-                        >
-                            <img
-                                    src="{rpc.url}/{preset.previewFile}"
-                                    slot="media"
-                                    class="ledder-preview-image"
-                                    alt="{animation.title} ({preset.name}) preview"
-                            />
-                        </ListItem>
-                    {/each}
-                </ListGroup>
-            {/each}
-        </List>
+        <AnimationListUI animationList={$svelteAnimations}></AnimationListUI>
     {/if}
 </Page>
