@@ -1,13 +1,10 @@
-import Animation from "../Animation.js"
-import Scheduler from "../Scheduler.js"
-import ControlGroup from "../ControlGroup.js"
-import DrawAsciiArtColor from "../draw/DrawAsciiArtColor.js"
-import DrawText from "../draw/DrawText.js"
-import {fontSelect} from "../fonts.js"
-import FxRotate from "../fx/FxRotate.js"
-import PixelBox from "../PixelBox.js"
-import {utils} from "../server/utils.js"
-import Pacman from "./Pacman.js"
+import Animation from "Animation.js"
+import Scheduler from "Scheduler.js"
+import ControlGroup from "ControlGroup.js"
+import DrawAsciiArtColor from "draw/DrawAsciiArtColor.js"
+import PixelBox from "PixelBox.js"
+import {animationRun} from "server/utils.js"
+import Pacman from "animations/Components/Pacman.js"
 
 
 const logo = `
@@ -45,7 +42,7 @@ export default class HSD extends Animation {
         //box.center(box)
 
 
-        await utils(marquee, scheduler, controls, "Marquee")
+        await animationRun(marquee, scheduler, controls, "Marquee")
 
 
     }

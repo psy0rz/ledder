@@ -1,12 +1,12 @@
-import Animation  from "../Animation.js";
-import Scheduler from "../Scheduler.js";
-import ControlGroup from "../ControlGroup.js";
-import PixelSet from "../PixelSet.js";
-import {fontSelect} from "../fonts.js"
-import DrawText from "../draw/DrawText.js"
-import {colorBlack} from "../Colors.js"
-import DrawBox from "../draw/DrawBox.js"
-import PixelBox from "../PixelBox.js"
+import Animation  from "Animation.js";
+import Scheduler from "Scheduler.js";
+import ControlGroup from "ControlGroup.js";
+import PixelSet from "PixelSet.js";
+import {fontSelect} from "fonts.js"
+import DrawText from "draw/DrawText.js"
+import {colorBlack} from "Colors.js"
+import DrawBox from "draw/DrawBox.js"
+import PixelBox from "PixelBox.js"
 
 export default class Cyber extends  Animation
 {

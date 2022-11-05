@@ -1,13 +1,13 @@
-import Animation from "../Animation.js";
-import Pixel from "../Pixel.js";
+import Animation from "Animation.js";
+import Pixel from "Pixel.js";
 
-import Color from "../Color.js";
-import Scheduler from "../Scheduler.js";
-import ControlGroup from "../ControlGroup.js";
-import FxBlink from "../fx/FxBlink.js";
-import PixelSet from "../PixelSet.js";
-import FxRotate from "../fx/FxRotate.js";
-import PixelBox from "../PixelBox.js"
+import Color from "Color.js";
+import Scheduler from "Scheduler.js";
+import ControlGroup from "ControlGroup.js";
+import FxBlink from "fx/FxBlink.js";
+import PixelSet from "PixelSet.js";
+import FxRotate from "fx/FxRotate.js";
+import PixelBox from "PixelBox.js"
 
 export default class TestStrip extends Animation {
 

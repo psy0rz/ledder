@@ -1,12 +1,12 @@
-import Animation from "../Animation.js";
-import Scheduler from "../Scheduler.js";
-import ControlGroup from "../ControlGroup.js";
-import {random} from "../utils.js";
-import DrawAsciiArt from "../draw/DrawAsciiArt.js";
-import PixelSet from "../PixelSet.js";
-import FxMovie from "../fx/FxMovie.js";
-import FxRotate from "../fx/FxRotate.js";
-import PixelBox from "../PixelBox.js"
+import Animation from "Animation.js";
+import Scheduler from "Scheduler.js";
+import ControlGroup from "ControlGroup.js";
+import {random} from "utils.js";
+import DrawAsciiArt from "draw/DrawAsciiArt.js";
+import PixelSet from "PixelSet.js";
+import FxMovie from "fx/FxMovie.js";
+import FxRotate from "fx/FxRotate.js";
+import PixelBox from "PixelBox.js"
 
 
 let starAscii=[`

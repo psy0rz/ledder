@@ -1,10 +1,9 @@
-import Animation  from "../Animation.js"
-import Display from "../Display.js"
-import Scheduler from "../Scheduler.js"
-import ControlGroup from "../ControlGroup.js"
-import {PresetStore} from "../server/PresetStore.js"
-import FxFlameout from "../fx/FxFlameout.js"
-import FxPacman from "../fx/FxPacman.js"
+import Animation  from "Animation.js"
+import Scheduler from "Scheduler.js"
+import ControlGroup from "ControlGroup.js"
+import {PresetStore} from "server/PresetStore.js"
+import FxFlameout from "fx/FxFlameout.js"
+import FxPacman from "fx/FxPacman.js"
 
 const presetStore = new PresetStore()
 
@@ -15,7 +14,7 @@ export default class Template extends Animation {
 
 
 
-    async run(display: Display, scheduler: Scheduler, controls: ControlGroup) {
+    async run(box, scheduler: Scheduler, controls: ControlGroup) {
 
         async function show(animationName, presetName, time) {
             const subControls=controls.group(animationName)
@@ -25,9 +24,9 @@ export default class Template extends Animation {
                 const presetValues = await presetStore.load(animationClass, presetName)
                 subControls.load(presetValues.values)
             }
-            animation.run(display, scheduler,subControls)
+            animation.run(box, scheduler,subControls)
 
-            await scheduler.delay(time/display.frameMs)
+            await scheduler.delay(time/16.6)
 
             // scheduler.clear()
         }

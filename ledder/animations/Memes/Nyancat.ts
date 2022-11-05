@@ -1,17 +1,17 @@
-import Animation from "../Animation.js";
-import Pixel from "../Pixel.js";
-import Color from "../Color.js";
+import Animation from "Animation.js";
+import Pixel from "Pixel.js";
+import Color from "Color.js";
 
-import Scheduler from "../Scheduler.js";
-import ControlGroup from "../ControlGroup.js";
-import FxWobble from "../fx/FxWobble.js";
-import FxRotate from "../fx/FxRotate.js";
-import {FxFadeOut} from "../fx/FxFadeOut.js";
-import DrawAsciiArtColor from "../draw/DrawAsciiArtColor.js";
-import PixelSet from "../PixelSet.js";
-import MovingStars from "./MovingStars.js";
-import FxColorCycle from "../fx/FxColorCycle.js";
-import PixelBox from "../PixelBox.js"
+import Scheduler from "Scheduler.js";
+import ControlGroup from "ControlGroup.js";
+import FxWobble from "fx/FxWobble.js";
+import FxRotate from "fx/FxRotate.js";
+import {FxFadeOut} from "fx/FxFadeOut.js";
+import DrawAsciiArtColor from "draw/DrawAsciiArtColor.js";
+import PixelSet from "PixelSet.js";
+import FxColorCycle from "fx/FxColorCycle.js";
+import PixelBox from "PixelBox.js"
+import MovingStars from "animations/Components/MovingStars.js"
 
 //Nyancat, based on https://github.com/bertrik/nyancat/blob/master/nyancat.c
 

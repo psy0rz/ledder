@@ -1,11 +1,11 @@
-import Animation  from "../Animation.js";
-import {glow} from "../utils.js";
-import Color from "../Color.js";
-import Display from "../Display.js";
-import Scheduler from "../Scheduler.js";
-import ControlGroup from "../ControlGroup.js";
-import {patternSelect} from "../ColorPatterns.js";
-import PixelSet from "../PixelSet.js";
+import Animation  from "Animation.js";
+import {glow} from "utils.js";
+import Color from "Color.js";
+import Display from "Display.js";
+import Scheduler from "Scheduler.js";
+import ControlGroup from "ControlGroup.js";
+import {patternSelect} from "ColorPatterns.js";
+import PixelSet from "PixelSet.js";
 
 
 export default class DoomFire extends Animation {

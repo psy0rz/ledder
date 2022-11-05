@@ -1,11 +1,10 @@
-import Animation from "../Animation.js"
-import Display from "../Display.js"
-import Scheduler from "../Scheduler.js"
-import ControlGroup from "../ControlGroup.js"
-import DrawAsciiArtColor from "../draw/DrawAsciiArtColor.js"
-import DrawText from "../draw/DrawText.js"
-import {fontSelect} from "../fonts.js"
-import PixelBox from "../PixelBox.js"
+import Animation from "Animation.js"
+import Scheduler from "Scheduler.js"
+import ControlGroup from "ControlGroup.js"
+import DrawAsciiArtColor from "draw/DrawAsciiArtColor.js"
+import DrawText from "draw/DrawText.js"
+import {fontSelect} from "fonts.js"
+import PixelBox from "PixelBox.js"
 
 
 // const logo=`

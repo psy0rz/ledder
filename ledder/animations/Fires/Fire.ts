@@ -3,8 +3,8 @@ import Pixel from "../../Pixel.js"
 import Color from "../../Color.js"
 import Scheduler from "../../Scheduler.js"
 import ControlGroup from "../../ControlGroup.js"
-import {patternSelect} from "../../ColorPatterns.js"
-import { glow, randomFloatGaussian} from "../../utils.js"
+import {patternSelect} from "ColorPatterns.js"
+import { glow, randomFloatGaussian} from "utils.js"
 import PixelBox from "../../PixelBox.js"
 
 export default class Fire extends Animation {

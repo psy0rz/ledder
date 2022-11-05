@@ -1,10 +1,10 @@
-import Animation from "../Animation.js";
-import Scheduler from "../Scheduler.js";
-import ControlGroup from "../ControlGroup.js";
-import PixelSet from "../PixelSet.js";
-import DrawText from "../draw/DrawText.js"
-import {fontSelect} from "../fonts.js"
-import PixelBox from "../PixelBox.js"
+import Animation from "Animation.js";
+import Scheduler from "Scheduler.js";
+import ControlGroup from "ControlGroup.js";
+import PixelSet from "PixelSet.js";
+import DrawText from "draw/DrawText.js"
+import {fontSelect} from "fonts.js"
+import PixelBox from "PixelBox.js"
 
 export default class MaakPlek extends  Animation
 {
