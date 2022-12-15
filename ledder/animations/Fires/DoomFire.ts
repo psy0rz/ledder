@@ -6,6 +6,8 @@ import Scheduler from "Scheduler.js";
 import ControlGroup from "ControlGroup.js";
 import {patternSelect} from "ColorPatterns.js";
 import PixelSet from "PixelSet.js";
+import Pixel from "Pixel.js"
+import PixelBox from "PixelBox.js"
 
 
 export default class DoomFire extends Animation {
@@ -14,7 +16,7 @@ export default class DoomFire extends Animation {
     static description = "Pixel art from the game, based on <a href='https://github.com/filipedeschamps/doom-fire-algorithm/blob/master/playground/render-with-canvas-and-hsl-colors/fire.js'>this.</a>"
 
 
-    async run(display: Display, scheduler: Scheduler, controls: ControlGroup): Promise<void> {
+    async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup): Promise<void> {
 
 
         const decayControl = controls.value("Fire decay", 40, 1, 120, 1);
@@ -42,8 +44,8 @@ export default class DoomFire extends Animation {
         // }
 
         const container = new PixelSet()
-        display.add(container)
-        const raster = container.raster(display, new Color(0, 0, 150), false, false, false, false, 0)
+        box.add(container)
+        const raster = container.raster(box, new Color(0, 0, 150), false, false, false, false, 0)
 
         // //set a firepixel to a specified intensity
         // function setFirePixel(pixelIndex, intensity: number) {
@@ -73,10 +75,10 @@ export default class DoomFire extends Animation {
         // }
 
         //fire update loop
-        display.scheduler.intervalControlled(intervalControl, () => {
+        scheduler.intervalControlled(intervalControl, () => {
 
             //let firesource glow
-            for (let x = 0; x < display.width; x++) {
+            for (let x = box.xMin; x < box.xMax; x++) {
 
                 const intensity = glow(raster[x][0].data, ~~minIntensityControl.value*colorScale, ~~maxIntensityControl.value*colorScale, ~~wildnessIntensityControl.value*colorScale, 3)
                 raster[x][0].data=intensity

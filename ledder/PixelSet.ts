@@ -4,9 +4,10 @@ import {random} from "./utils.js";
 import ColorInterface from "./ColorInterface.js";
 
 /**
- * A pixeltree. A container is just a simple Set() of Pixels, but can also contain sub PixelContainers.
- * So it cann actually be a tree.
+ * A pixeltree. A PixelSet is just a simple Set() of Pixels, but can also contain other PixelSets.
+ * So it can actually be a tree of PixelSets.
  * This allows us to quickly add or remove a bunch of pixels to a display for example.
+ * Also layering is done with this: The render engine renders the PixelSets the order you've added them.
  * A single Pixel object can be referenced by multiple pixel containers.
  */
 export default class PixelSet extends Set<Pixel | PixelSet> {

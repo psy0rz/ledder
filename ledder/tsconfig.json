@@ -5,7 +5,7 @@
     "sourceMap": true,
     "moduleResolution": "Node",
     "allowSyntheticDefaultImports": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
     "baseUrl": "."
   },
 

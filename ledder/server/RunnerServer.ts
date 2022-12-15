@@ -201,15 +201,15 @@ export class RunnerServer {
         this.presetName = presetName
         this.presetValues.values = this.controlGroup.save()
         await this.presetStore.save(this.animationName, presetName, this.presetValues)
-        await this.presetStore.createPreview(this.animationName, presetName, this.presetValues)
-        await this.presetStore.storeAnimationPresetList()
+        // await this.presetStore.createPreview(this.animationClass, this.animationName, presetName, this.presetValues)
+        await this.presetStore.storeAnimationPresetList(false,false)
     }
 
     //delete current running animation preset
     async delete() {
         if (this.presetName !== undefined) {
             await this.presetStore.delete(this.animationName, this.presetName)
-            await this.presetStore.storeAnimationPresetList()
+            await this.presetStore.storeAnimationPresetList(false,false)
             this.presetName = undefined
         }
     }

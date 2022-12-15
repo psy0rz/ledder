@@ -21,7 +21,7 @@ export default class Template extends Animation {
             const animationClass=await presetStore.loadAnimation(animationName)
             const animation= new animationClass()
             if (presetName!=="") {
-                const presetValues = await presetStore.load(animationClass, presetName)
+                const presetValues = await presetStore.load(animationName, presetName)
                 subControls.load(presetValues.values)
             }
             animation.run(box, scheduler,subControls)
@@ -35,7 +35,7 @@ export default class Template extends Animation {
         while(1) {
             await show("BTC", "default", 30000)
             scheduler.clear()
-            await new FxFlameout(scheduler, fxControls).run(display)
+            await new FxFlameout(scheduler, fxControls).run(box)
 
             // await show("MQTTcounter", "default", 30000)
             // scheduler.clear()
@@ -45,22 +45,22 @@ export default class Template extends Animation {
 
             await show("ItsFine", "default", 8000)
             scheduler.clear()
-            await new FxFlameout(scheduler, fxControls).run(display)
+            await new FxFlameout(scheduler, fxControls).run(box)
 
 
             show ("Starfield", "",0)
             await show("Marquee", "idiopolisstatic", 3000)
             scheduler.clear()
-            await new FxFlameout(scheduler, fxControls).run(display)
+            await new FxFlameout(scheduler, fxControls).run(box)
 
 
             await show("Syn2cat", "default", 3000)
             scheduler.clear()
-            await new FxFlameout(scheduler, fxControls).run(display)
+            await new FxFlameout(scheduler, fxControls).run(box)
 
             await show("Haxogreen", "default", 3000)
             scheduler.clear()
-            await new FxFlameout(scheduler, fxControls).run(display)
+            await new FxFlameout(scheduler, fxControls).run(box)
 
 
             // await show("Marquee", "idiopolis", 6000)
@@ -87,7 +87,7 @@ export default class Template extends Animation {
             // scheduler.clear()
             //
             await show("Nyancat", "", 3000)
-            await new FxPacman(scheduler, fxControls).run(display, 0, display.height )
+            await new FxPacman(scheduler, fxControls).run(box, 0, box.height )
             scheduler.clear()
 
             // await show("TkkrLab", "default", 3000)
@@ -95,7 +95,7 @@ export default class Template extends Animation {
             // scheduler.clear()
 
             await show("HSD", "default", 4000)
-            await new FxPacman(scheduler, fxControls).run(display, 0, display.height )
+            await new FxPacman(scheduler, fxControls).run(box, 0, box.height )
             // await new FxFlameout(scheduler, fxControls).run(display)
             scheduler.clear()
 
