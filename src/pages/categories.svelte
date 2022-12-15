@@ -14,6 +14,7 @@
         Preloader,
         Searchbar,
         Subnavbar,
+        Treeview
     } from "framework7-svelte"
 
 
@@ -88,6 +89,8 @@
         <Preloader/>
         <Message>Loading list...</Message>
     {:else}
-        <AnimationListUI animationList={$svelteAnimations}></AnimationListUI>
+        <Treeview>
+            <AnimationListUI animationList={$svelteAnimations}></AnimationListUI>
+        </Treeview>
     {/if}
 </Page>

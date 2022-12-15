@@ -1,5 +1,5 @@
 <script lang="ts">
-    import {BlockHeader, TreeviewItem} from "framework7-svelte"
+    import {Block, BlockHeader, TreeviewItem} from "framework7-svelte"
     import {AnimationList} from "../../ledder/AnimationLists.js"
 
     export let animationList: AnimationList
@@ -15,17 +15,19 @@
                 opened={true}
                 toggle={true}
                 itemToggle
-                iconMaterial="folder"
         >
-            <span slot="content" class="padding-bottom">
-            <BlockHeader class="">{animationListItem.name}:</BlockHeader>
-            </span>
             <svelte:self
                     animationList={animationListItem.animationList}
             />
         </TreeviewItem>
     {:else}
-        <TreeviewItem opened toggle={false} label={animationListItem.name}>
+        <TreeviewItem
+                opened
+                toggle={false}
+        >
+            <span slot="content" class="padding-bottom">
+                <Block>block</Block>
+            </span>
 
         </TreeviewItem>
     {/if}
