@@ -1,11 +1,13 @@
-import Animation from "Animation.js"
-import Scheduler from "Scheduler.js"
-import ControlGroup from "ControlGroup.js"
-import PixelSet from "PixelSet.js"
-import {fontSelect} from "fonts.js"
-import DrawText from "draw/DrawText.js"
-import FxBlink from "fx/FxBlink.js"
-import PixelBox from "PixelBox.js"
+import PixelBox from "../../PixelBox.js"
+import PixelSet from "../../PixelSet.js"
+import FxBlink from "../../fx/FxBlink.js"
+import DrawText from "../../draw/DrawText.js"
+import Scheduler from "../../Scheduler.js"
+import ControlGroup from "../../ControlGroup.js"
+import {fontSelect} from "../../fonts.js"
+import Animation from "../../Animation.js"
+
+
 
 export default class Haxogreen extends Animation {
     static category = "Misc"

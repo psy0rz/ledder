@@ -14,7 +14,7 @@ interface ControlRangeMeta extends ControlMeta
 }
 
 export default class ControlRange extends Control {
-  meta: ControlRangeMeta
+  declare meta: ControlRangeMeta
 
   from: number;
   to: number;

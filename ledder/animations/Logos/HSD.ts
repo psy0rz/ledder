@@ -1,10 +1,11 @@
-import Animation from "Animation.js"
-import Scheduler from "Scheduler.js"
-import ControlGroup from "ControlGroup.js"
-import DrawAsciiArtColor from "draw/DrawAsciiArtColor.js"
-import PixelBox from "PixelBox.js"
-import {animationRun} from "server/utils.js"
-import Pacman from "animations/Components/Pacman.js"
+import PixelBox from "../../PixelBox.js"
+import Pacman from "../Components/Pacman.js"
+import DrawAsciiArtColor from "../../draw/DrawAsciiArtColor.js"
+import Scheduler from "../../Scheduler.js"
+import ControlGroup from "../../ControlGroup.js"
+import {animationRun} from "../../server/utils.js"
+import Animation from "../../Animation.js"
+
 
 
 const logo = `

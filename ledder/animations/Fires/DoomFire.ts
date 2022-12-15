@@ -1,13 +1,12 @@
-import Animation  from "Animation.js";
-import {glow} from "utils.js";
-import Color from "Color.js";
-import Display from "Display.js";
-import Scheduler from "Scheduler.js";
-import ControlGroup from "ControlGroup.js";
-import {patternSelect} from "ColorPatterns.js";
-import PixelSet from "PixelSet.js";
-import Pixel from "Pixel.js"
-import PixelBox from "PixelBox.js"
+import PixelBox from "../../PixelBox.js"
+import {patternSelect} from "../../ColorPatterns.js"
+import PixelSet from "../../PixelSet.js"
+import {glow} from "../../utils.js"
+import Scheduler from "../../Scheduler.js"
+import ControlGroup from "../../ControlGroup.js"
+import Color from "../../Color.js"
+import Animation from "../../Animation.js"
+
 
 
 export default class DoomFire extends Animation {
@@ -45,6 +44,7 @@ export default class DoomFire extends Animation {
 
         const container = new PixelSet()
         box.add(container)
+
         const raster = container.raster(box, new Color(0, 0, 150), false, false, false, false, 0)
 
         // //set a firepixel to a specified intensity

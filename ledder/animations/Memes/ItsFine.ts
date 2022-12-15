@@ -1,14 +1,13 @@
-import Animation from "Animation.js";
-import Scheduler from "Scheduler.js";
-import ControlGroup from "ControlGroup.js";
-import DrawText from "draw/DrawText.js";
-import {fontSelect} from "fonts.js";
+import PixelBox from "../../PixelBox.js"
+import Fire from "../Fires/Fire.js"
+import DrawText from "../../draw/DrawText.js"
+import PixelSet from "../../PixelSet.js"
+import Scheduler from "../../Scheduler.js"
+import ControlGroup from "../../ControlGroup.js"
+import {fontSelect} from "../../fonts.js"
+import FxFlames from "../../fx/FxFlames.js"
+import Animation from "../../Animation.js"
 
-import PixelSet from "PixelSet.js";
-import FxFlames from "fx/FxFlames.js";
-
-import PixelBox from "PixelBox.js"
-import Fire from "animations/Fires/Fire.js"
 
 
 export default class ItsFine extends Animation {

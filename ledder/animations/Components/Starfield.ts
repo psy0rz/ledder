@@ -1,11 +1,11 @@
-import Animation from "Animation.js"
-import Scheduler from "Scheduler.js"
-import ControlGroup from "ControlGroup.js"
-import Pixel from "Pixel.js"
-import Color from "Color.js"
-import PixelSet from "PixelSet.js"
-import {random} from "utils.js"
-import PixelBox from "PixelBox.js"
+import PixelBox from "../../PixelBox.js"
+import Scheduler from "../../Scheduler.js"
+import ControlGroup from "../../ControlGroup.js"
+import Pixel from "../../Pixel.js"
+import Color from "../../Color.js"
+import {random} from "../../utils.js"
+import PixelSet from "../../PixelSet.js"
+import Animation from "../../Animation.js"
 
 
 class Star {

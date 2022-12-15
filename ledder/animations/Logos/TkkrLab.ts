@@ -1,10 +1,4 @@
-import Animation from "Animation.js"
-import Scheduler from "Scheduler.js"
-import ControlGroup from "ControlGroup.js"
-import DrawAsciiArtColor from "draw/DrawAsciiArtColor.js"
-import DrawText from "draw/DrawText.js"
-import {fontSelect} from "fonts.js"
-import PixelBox from "PixelBox.js"
+
 
 
 // const logo=`
@@ -28,6 +22,14 @@ import PixelBox from "PixelBox.js"
 // .y....w.w....y
 // yyyyyyyyyyyyyyy
 // `
+import PixelBox from "../../PixelBox.js"
+import DrawText from "../../draw/DrawText.js"
+import DrawAsciiArtColor from "../../draw/DrawAsciiArtColor.js"
+import Scheduler from "../../Scheduler.js"
+import ControlGroup from "../../ControlGroup.js"
+import {fontSelect} from "../../fonts.js"
+import Animation from "../../Animation.js"
+
 const logo=`
 .......y...
 ......y.y..

@@ -1,9 +1,10 @@
-import Animation from "Animation.js";
-import Scheduler from "Scheduler.js";
-import ControlGroup from "ControlGroup.js";
-import Pixel from "Pixel.js";
-import Color from "Color.js";
-import PixelBox from "PixelBox.js"
+import PixelBox from "../PixelBox.js"
+import Pixel from "../Pixel.js"
+import Scheduler from "../Scheduler.js"
+import Color from "../Color.js"
+import ControlGroup from "../ControlGroup.js"
+import Animation from "../Animation.js"
+
 
 export default class Template extends  Animation
 {

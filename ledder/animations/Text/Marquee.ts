@@ -1,17 +1,17 @@
-import Animation from "Animation.js";
-import Scheduler from "Scheduler.js";
-import ControlGroup from "ControlGroup.js";
-import FxRotate from "fx/FxRotate.js";
-import {fontSelect} from "fonts.js";
-import DrawText from "draw/DrawText.js";
-import FxFlames from "fx/FxFlames.js";
-import PixelSet from "PixelSet.js";
-import DrawBox from "draw/DrawBox.js";
-import Color from "Color.js";
-import {FxFadeOut} from "fx/FxFadeOut.js";
-import PixelBox from "PixelBox.js"
-import MovingStars from "animations/Components/MovingStars";
-import Starfield from "animations/Components/Starfield";
+import PixelBox from "../../PixelBox.js"
+import DrawText from "../../draw/DrawText.js"
+import MovingStars from "../Components/MovingStars.js"
+import Starfield from "../Components/Starfield.js"
+import FxRotate from "../../fx/FxRotate.js"
+import PixelSet from "../../PixelSet.js"
+import DrawBox from "../../draw/DrawBox.js"
+import {FxFadeOut} from "../../fx/FxFadeOut.js"
+import Scheduler from "../../Scheduler.js"
+import ControlGroup from "../../ControlGroup.js"
+import {fontSelect} from "../../fonts.js"
+import FxFlames from "../../fx/FxFlames.js"
+import Animation from "../../Animation.js"
+
 
 export default class Marquee extends Animation {
 

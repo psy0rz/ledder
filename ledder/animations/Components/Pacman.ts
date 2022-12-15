@@ -1,14 +1,12 @@
+
+import PixelBox from "../../PixelBox.js"
+import Scheduler from "../../Scheduler.js"
+import ControlGroup from "../../ControlGroup.js"
+import PixelSet from "../../PixelSet.js"
+import DrawAsciiArt from "../../draw/DrawAsciiArt.js"
+import FxMovie from "../../fx/FxMovie.js"
+import FxRotate from "../../fx/FxRotate.js"
 import Animation from "../../Animation.js"
-import Scheduler from "Scheduler.js"
-import Color from "Color.js";
-import PixelSet from "PixelSet.js";
-import DrawAsciiArt from "draw/DrawAsciiArt.js"
-import FxMovie from "fx/FxMovie.js"
-import FxRotate from "fx/FxRotate.js"
-import PixelBox from "PixelBox.js"
-import ControlGroup from "ControlGroup.js"
-
-
 
 
 export default class Pacman extends  Animation

@@ -1,13 +1,15 @@
-import Animation from "Animation.js";
-import Scheduler from "Scheduler.js";
-import ControlGroup from "ControlGroup.js";
-import {fontSelect} from "fonts.js";
-import PixelSet from "PixelSet.js";
-import DrawText from "draw/DrawText.js";
-import FxBlink from "fx/FxBlink.js";
-import DrawBox from "draw/DrawBox.js";
-import FxPattern from "fx/FxPattern.js";
-import PixelBox from "PixelBox.js"
+import PixelBox from "../../PixelBox.js"
+import PixelSet from "../../PixelSet.js"
+import DrawText from "../../draw/DrawText.js"
+import FxPattern from "../../fx/FxPattern.js"
+import DrawBox from "../../draw/DrawBox.js"
+import FxBlink from "../../fx/FxBlink.js"
+import Scheduler from "../../Scheduler.js"
+import ControlGroup from "../../ControlGroup.js"
+import {fontSelect} from "../../fonts.js"
+import Animation from "../../Animation.js"
+
+
 
 export default class PoliceLights extends Animation {
 

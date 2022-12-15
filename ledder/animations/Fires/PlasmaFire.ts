@@ -1,12 +1,12 @@
-import Animation from "Animation.js";
-import Pixel from "Pixel.js";
-import Scheduler from "Scheduler.js";
-import ControlGroup from "ControlGroup.js";
-import { patternSelect } from "ColorPatterns.js";
-import { glow, randomGaussian } from "utils.js";
-import { colorBlack } from "Colors.js";
-import PixelBox from "PixelBox.js"
+import PixelBox from "../../PixelBox.js"
+import {colorBlack} from "../../Colors.js"
+import {glow, randomGaussian} from "../../utils.js"
+import Scheduler from "../../Scheduler.js"
+import {patternSelect} from "../../ColorPatterns.js"
+import ControlGroup from "../../ControlGroup.js"
+import Pixel from "../../Pixel.js"
 
+import Animation from "../../Animation.js"
 
 export default class PlasmaFire extends Animation {
     static category = "Fire"

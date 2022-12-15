@@ -1,12 +1,13 @@
-import Pixel from "Pixel.js";
-import Animation from "Animation.js";
-import Color from "Color.js";
-import Scheduler from "Scheduler.js";
-import ControlGroup from "ControlGroup.js";
-import FxBlink from "fx/FxBlink.js";
-import FxRotate from "fx/FxRotate.js";
-import PixelSet from "PixelSet.js";
-import PixelBox from "PixelBox.js"
+import PixelBox from "../../PixelBox.js"
+import Pixel from "../../Pixel.js"
+import FxBlink from "../../fx/FxBlink.js"
+import PixelSet from "../../PixelSet.js"
+import FxRotate from "../../fx/FxRotate.js"
+import Scheduler from "../../Scheduler.js"
+import Color from "../../Color.js"
+import ControlGroup from "../../ControlGroup.js"
+import Animation from "../../Animation.js"
+
 
 export default class TestMatrix extends Animation {
 

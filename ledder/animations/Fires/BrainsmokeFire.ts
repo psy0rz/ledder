@@ -1,13 +1,14 @@
-import Animation  from "Animation.js";
-import Color from "Color.js";
-import ControlValue from "ControlValue.js";
-import Scheduler from "Scheduler.js";
-import ControlGroup from "ControlGroup.js";
-import { patternSelect} from "ColorPatterns.js";
-import { glow} from "utils.js"
-import PixelBox from "PixelBox.js"
 
 //best at 50fps according to brainsmoke
+import Color from "../../Color.js"
+import ControlValue from "../../ControlValue.js"
+import PixelBox from "../../PixelBox.js"
+import {patternSelect} from "../../ColorPatterns.js"
+import {glow} from "../../utils.js"
+import Scheduler from "../../Scheduler.js"
+import ControlGroup from "../../ControlGroup.js"
+import Animation from "../../Animation.js"
+
 export default class BrainsmokeFire extends Animation {
 
     static category = "Fire"

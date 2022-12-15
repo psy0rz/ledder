@@ -16,7 +16,7 @@ interface ControlSelectMeta extends ControlMeta
 
 export default class ControlSelect extends Control {
     selected: string
-    meta: ControlSelectMeta
+    declare meta: ControlSelectMeta
 
     /**
      * Boolean on/off switch

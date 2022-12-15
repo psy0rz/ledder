@@ -1,8 +1,9 @@
-import Animation from "Animation.js";
-import Scheduler from "Scheduler.js";
-import ControlGroup from "ControlGroup.js";
-import DrawAsciiArtColor from "draw/DrawAsciiArtColor.js"
-import PixelBox from "PixelBox.js"
+import PixelBox from "../../PixelBox.js"
+import DrawAsciiArtColor from "../../draw/DrawAsciiArtColor.js"
+import Scheduler from "../../Scheduler.js"
+import ControlGroup from "../../ControlGroup.js"
+import Animation from "../../Animation.js"
+
 
 export default class Syn2Cat extends  Animation
 {

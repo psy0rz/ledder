@@ -21,7 +21,7 @@ interface ControlsMeta extends ControlMeta {
  * NOTE: This structure is recursive, a ControlGroup() can contain a sub ControlGroup()
  */
 export default class ControlGroup extends Control {
-    meta: ControlsMeta
+    declare meta: ControlsMeta
     loadedValues: Values
 
     //Added controls are send to the webinterface via the addControlCallback.

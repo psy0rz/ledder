@@ -12,7 +12,7 @@ interface ControlValueMeta extends ControlMeta
 }
 
 export default class ControlValue extends Control {
-  meta: ControlValueMeta
+  declare meta: ControlValueMeta
 
   value: number;
 

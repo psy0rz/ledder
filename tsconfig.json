@@ -1,15 +1,11 @@
 {
   "compilerOptions": {
-    "module": "esnext",
-    "target": "es2020",
+    "module": "es2022",
+    "target": "es2022",
     "sourceMap": true,
     "moduleResolution": "Node",
     "allowSyntheticDefaultImports": true,
     "skipLibCheck": true,
-//    "baseUrl": ".",
-//    "paths": {
-//      "*": ["ledder/*"]
-//    }
   },
 
 

@@ -1,13 +1,14 @@
-import Animation from "Animation.js";
-import Scheduler from "Scheduler.js";
-import ControlGroup from "ControlGroup.js";
-import Pixel from "Pixel.js";
-import Color from "Color.js";
-import { glow, randomGaussian } from "utils.js";
-import FxColorCycle from "fx/FxColorCycle.js";
-import FxRandomMove from "fx/FxRandomMove.js";
-import PixelSet from "PixelSet.js";
-import PixelBox from "PixelBox.js"
+import PixelBox from "../../PixelBox.js"
+import FxRandomMove from "../../fx/FxRandomMove.js"
+import FxColorCycle from "../../fx/FxColorCycle.js"
+import PixelSet from "../../PixelSet.js"
+import {glow, randomGaussian} from "../../utils.js"
+import Color from "../../Color.js"
+import Pixel from "../../Pixel.js"
+import Scheduler from "../../Scheduler.js"
+import ControlGroup from "../../ControlGroup.js"
+import Animation from "../../Animation.js"
+
 
 export default class ParticleFire extends Animation {
     static category = "Fire"
