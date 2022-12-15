@@ -26,7 +26,7 @@ export async function getMtime(fileName: string) {
 
 export async function createParentDir(fileName: string) {
     try {
-        await mkdir(path.dirname(fileName))
+        await mkdir(path.dirname(fileName), {recursive: true})
     } catch (e) {
         //exists
     }
@@ -85,9 +85,9 @@ export class PresetStore {
     //dynamicly loads an animation class from disk and returns the Class
     async loadAnimation(animationName: string): Promise<typeof Animation> {
         //note: this path is relative to this javascript module instead of current working dir.
-        const importFilename=path.join("..","..",this.animationFilename(animationName))
+        const importFilename = path.join("..", "..", this.animationFilename(animationName))
 
-        let module = await import(importFilename+ "?" + Date.now()) //prevent caching
+        let module = await import(importFilename + "?" + Date.now()) //prevent caching
 
         if (module.default === undefined || !(module.default.prototype instanceof Animation))
 
@@ -102,7 +102,7 @@ export class PresetStore {
      */
     async scanPresetNames(animationName: string) {
         const pattern = path.join(this.presetPath, animationName, "*.json")
-        let names = []
+        let names = ["default"]
         for (const file of await glob(pattern)) {
             //ignore default, since that one is explicit
             const name = path.basename(file, ".json")
@@ -159,7 +159,7 @@ export class PresetStore {
     /**
      * Render preview of a preset and save it to disk
      */
-    async createPreview(animationClass: typeof  Animation, animationName: string, presetName: string, preset: PresetValues) {
+    async createPreview(animationClass: typeof Animation, animationName: string, presetName: string, preset: PresetValues) {
 
 
         const previewFilename = this.previewFilename(animationName, presetName)
@@ -264,7 +264,12 @@ export class PresetStore {
                         console.log(` - Rendering ${presetName} ...`)
                         await this.createPreview(animationClass, animationName, presetName, preset)
                     } catch (e) {
-                        console.error(` ${animationName} -> ${presetName}: `, e)
+                        if (process.env.NODE_ENV === 'development') {
+                            throw(e)
+                        } else {
+                            console.error(`Exception while creating preview: `, e)
+                        }
+
                     }
                 }
             }
@@ -282,7 +287,7 @@ export class PresetStore {
 
 
     // scans and loads all animations and returns the grand preset list
-    async buildAnimationPresetList(dir: string = "", updatePreview:boolean, forcePreview:boolean): Promise<AnimationList> {
+    async buildAnimationPresetList(dir: string = "", updatePreview: boolean, forcePreview: boolean): Promise<AnimationList> {
         let ret: AnimationList = []
 
 
@@ -308,10 +313,14 @@ export class PresetStore {
                             name: animationName,
                             title: animationClass.title,
                             description: animationClass.description,
-                            presets: await this.buildPresetList(animationClass, animationName, updatePreview ,forcePreview)
+                            presets: await this.buildPresetList(animationClass, animationName, updatePreview, forcePreview)
                         })
                     } catch (e) {
-                        console.error(`${animationName}: `, e)
+                        if (process.env.NODE_ENV === 'development') {
+                            throw(e)
+                        }
+                        else
+                            console.error(`${animationName}: `, e)
                     }
                 }
             }
@@ -353,7 +362,7 @@ export class PresetStore {
     }
 
     //update stored animation preset list
-    async storeAnimationPresetList(updatePreview:boolean, forcePreview:boolean) {
+    async storeAnimationPresetList(updatePreview: boolean, forcePreview: boolean) {
         await writeFile(
             path.join(this.presetPath, 'index.json'),
             JSON.stringify(await this.buildAnimationPresetList("", updatePreview, forcePreview), undefined, ' '), 'utf8'

@@ -5,6 +5,7 @@ import Animation from "../Animation.js";
 import {PresetValues} from "../PresetValues.js";
 import ControlGroup from "../ControlGroup.js";
 import PixelBox from "../PixelBox.js"
+import {createParentDir} from "./PresetStore.js"
 
 
 
@@ -49,9 +50,7 @@ export class PreviewStore {
             // console.log(`PreviewStore: ${filename} finished.`)
         }).catch((e) => {
             if (e != 'abort') {
-                console.error(`PreviewStore: ${filename} error`, e)
-                if (process.env.NODE_ENV === 'development')
-                    throw(e)
+                console.error(e)
             }
         })
 
@@ -75,6 +74,8 @@ export class PreviewStore {
 
         //generate and store APNG
         let imageData = await this.display.get(fps)
+        await createParentDir(filename)
+
         await writeFile(filename, Buffer.from(imageData))
 
         this.resetAnimation()
