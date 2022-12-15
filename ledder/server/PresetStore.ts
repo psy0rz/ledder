@@ -305,7 +305,7 @@ export class PresetStore {
                 if (path.extname(entry.name) == '.js') {
 
                     const animationName = path.join(dir, path.basename(entry.name, ".js"))
-                    console.log(`Loading ${animationName}:`)
+                    console.log(`\nLoading ${animationName}:`)
                     try {
                         const animationClass = await this.loadAnimation(animationName)
 

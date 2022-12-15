@@ -34,7 +34,7 @@ export default class Template extends Animation {
 
         const fxControls=controls.group("FX")
         while(1) {
-            await show("BTC", "default", 30000)
+            await show("Text/BTC", "default", 30000)
             scheduler.clear()
             await new FxFlameout(scheduler, fxControls).run(box)
 
