@@ -16,17 +16,17 @@ var routes = [
     // keepAlive: true
   },
   {
-    path: '/:animationName/:presetName',
+    path: '/:nameAndPreset*',
     component: AnimationRunner,
     viewName: 'animation-runner',
     browserHistory: true
   },
-  {
-    path: '/:animationName',
-    component: AnimationRunner,
-    viewName: 'animation-runner',
-    browserHistory: true
-  },
+  // {
+  //   path: '/:animationName',
+  //   component: AnimationRunner,
+  //   viewName: 'animation-runner',
+  //   browserHistory: true
+  // },
 
   // {
   //   path: '/',

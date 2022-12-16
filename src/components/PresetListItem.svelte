@@ -22,8 +22,8 @@
         label={label}
         opened={true}
         toggle={false}
-        itemToggle
         iconMaterial={icon}
+        link="/{parentName}/{presetListItem.name}"
 
 
 >
