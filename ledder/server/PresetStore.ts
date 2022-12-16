@@ -264,11 +264,11 @@ export class PresetStore {
                         console.log(` - Rendering ${presetName} ...`)
                         await this.createPreview(animationClass, animationName, presetName, preset)
                     } catch (e) {
-                        if (process.env.NODE_ENV === 'development') {
-                            throw(e)
-                        } else {
+                        // if (process.env.NODE_ENV === 'development') {
+                        //     throw(e)
+                        // } else {
                             console.error(`Exception while creating preview: `, e)
-                        }
+                        // }
 
                     }
                 }
@@ -316,10 +316,10 @@ export class PresetStore {
                             presets: await this.buildPresetList(animationClass, animationName, updatePreview, forcePreview)
                         })
                     } catch (e) {
-                        if (process.env.NODE_ENV === 'development') {
-                            throw(e)
-                        }
-                        else
+                        // if (process.env.NODE_ENV === 'development') {
+                        //     throw(e)
+                        // }
+                        // else
                             console.error(`${animationName}: `, e)
                     }
                 }

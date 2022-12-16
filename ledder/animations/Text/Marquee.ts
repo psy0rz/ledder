@@ -73,6 +73,8 @@ export default class Marquee extends Animation {
             const cursorY=cursorGroup.value("Y offset",1,0,100,1,true)
             const cursorH=cursorGroup.value("Height",6,0,100,1,true)
             const cursorW=cursorGroup.value("Width",5,0,100,1,true)
+            const cursorOn=cursorGroup.value("On time",30,0,60,1,false)
+            const cursorOff=cursorGroup.value("Off time",30,0,60,1,false)
             const bbox=charPixels.bbox()
             const cursor=new DrawBox(bbox.xMax+cursorX.value, bbox.yMin+cursorY.value , cursorW.value,cursorH.value, cursorColor)
             const fader=new FxFadeOut(scheduler,cursorGroup,10)
@@ -80,9 +82,9 @@ export default class Marquee extends Animation {
             while(1)
             {
                 cursorColor.a=1
-                await scheduler.delay(30)
+                await scheduler.delay( cursorOn.value)
                 fader.run(cursorColor)
-                await scheduler.delay(30)
+                await scheduler.delay(cursorOff.value)
 
             }
         }
