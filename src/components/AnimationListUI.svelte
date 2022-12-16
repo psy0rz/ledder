@@ -1,11 +1,12 @@
 <script lang="ts">
-    import {Block, BlockHeader, TreeviewItem} from "framework7-svelte"
+    import {TreeviewItem} from "framework7-svelte"
     import {AnimationList} from "../../ledder/AnimationLists.js"
+    import PresetListItem from "@/components/PresetListItem.svelte"
 
     export let animationList: AnimationList
 
-
 </script>
+
 
 {#each animationList as animationListItem}
     <!-- recurse-->
@@ -20,14 +21,19 @@
                     animationList={animationListItem.animationList}
             />
         </TreeviewItem>
+        <!--animationlist leaf-->
     {:else}
+
         <TreeviewItem
-                opened
-                toggle={false}
+                label="{animationListItem.name}"
+                opened={true}
+                toggle={true}
+                itemToggle
+
         >
-            <span slot="content" class="padding-bottom">
-                <Block>block</Block>
-            </span>
+            {#each animationListItem.presets as presetListItem}
+                <PresetListItem presetListItem={presetListItem}></PresetListItem>
+            {/each}
 
         </TreeviewItem>
     {/if}
