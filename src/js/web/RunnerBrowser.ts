@@ -94,7 +94,6 @@ export class RunnerBrowser {
 
     async refreshAnimationList() {
         const list=await rpc.request("presetStore.loadAnimationPresetList")
-        console.log(list)
         svelteAnimations.set(list)
     }
 

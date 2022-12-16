@@ -1,9 +1,6 @@
 <script>
     import {
         f7ready,
-        List,
-        ListGroup,
-        ListItem,
         Menu,
         MenuDropdown,
         MenuDropdownItem,
@@ -21,7 +18,6 @@
     import {svelteAnimations, svelteLive, svelteSelectedTitle} from "../js/web/svelteStore.js"
     import {runnerBrowser} from "../js/web/RunnerBrowser.js"
     import {onMount} from "svelte"
-    import {rpc} from "../js/web/RpcClient.js"
     import AnimationListUI from "@/components/AnimationListUI.svelte"
 
     let search = ""
