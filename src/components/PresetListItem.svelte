@@ -13,8 +13,10 @@
         opened={true}
         toggle={false}
         itemToggle
+        iconMaterial="turned_in"
+
 >
 
-      <img class="ledder-preview-image" alt="{presetListItem.name}" slot="media" src="{presetListItem.previewFile}" />
+    <img class="ledder-preview-image" alt="{presetListItem.name}" slot="media" src="{presetListItem.previewFile}"/>
 
 </TreeviewItem>

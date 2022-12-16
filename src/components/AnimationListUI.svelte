@@ -16,6 +16,7 @@
                 opened={true}
                 toggle={true}
                 itemToggle
+                iconMaterial="folder"
         >
             <svelte:self
                     animationList={animationListItem.animationList}
@@ -29,6 +30,7 @@
                 opened={true}
                 toggle={true}
                 itemToggle
+                iconMaterial="source"
 
         >
             {#each animationListItem.presets as presetListItem}
