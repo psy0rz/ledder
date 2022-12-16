@@ -5,7 +5,7 @@
     export let presetListItem: PresetListItem
     export let parentName: string
 
-    let label=""
+    let label=parentName.replace(RegExp(".*/"),"")
     let icon="image"
 
     if (presetListItem.name!=='default') {

@@ -66,10 +66,12 @@ export class RunnerBrowser {
      *
      */
     async send() {
+        if (this.animationName) {
 
-        // await rpc.request("runner.run", this.animationName, this.display.control.save());
-        await rpc.request("runner.runName", this.animationName, this.presetName);
-        // this.restart()
+            // await rpc.request("runner.run", this.animationName, this.display.control.save());
+            await rpc.request("runner.runName", this.animationName, this.presetName);
+            // this.restart()
+        }
     }
 
 
