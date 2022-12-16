@@ -25,18 +25,23 @@
         <!--animationlist leaf-->
     {:else}
 
-        <TreeviewItem
-                label="{animationListItem.name}"
-                opened={true}
-                toggle={true}
-                itemToggle
-                iconMaterial="source"
+        {#if animationListItem.presets.length === 1}
+                    <PresetListItem parentName={animationListItem.name} presetListItem={animationListItem.presets[0]}></PresetListItem>
+        {:else}
+            <TreeviewItem
+                    label="{animationListItem.name}"
+                    opened={true}
+                    toggle={true}
+                    itemToggle
+                    iconMaterial="collections"
 
-        >
-            {#each animationListItem.presets as presetListItem}
-                <PresetListItem presetListItem={presetListItem}></PresetListItem>
-            {/each}
+            >
+                {#each animationListItem.presets as presetListItem}
+                    <PresetListItem parentName={animationListItem.name} presetListItem={presetListItem}></PresetListItem>
+                {/each}
 
-        </TreeviewItem>
+            </TreeviewItem>
+        {/if}
+
     {/if}
 {/each}
