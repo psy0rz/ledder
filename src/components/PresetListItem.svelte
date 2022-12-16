@@ -5,11 +5,12 @@
     export let presetListItem: PresetListItem
     export let parentName: string
 
-    let label=parentName
+    let label=""
     let icon="image"
 
     if (presetListItem.name!=='default') {
-        label = label + ": " + presetListItem.name
+        // label = label + ": " + presetListItem.name
+        label =  presetListItem.name
         icon="photo_album"
     }
 
