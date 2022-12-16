@@ -23,6 +23,8 @@ export default class ParticleFire extends Animation {
 
         const minIntensityControl = fireGroup.value("Minimum intensity %", 0, 0, 100, 1);
         const maxIntensityControl = fireGroup.value("Maximum intensity %", 100, 0, 100, 1);
+        const densityControl = fireGroup.value("Fire density %", 100, 0, 100, 1);
+
         const wildnessIntensityControl = fireGroup.value("Wildness %", 30, 0, 100, 1);
         const fireintervalControl = fireGroup.value("Interval", 1, 1, 10, 0.1)
         // const firespeedControl = controls.value("Fire speed", 1, 1, 10, 1)
@@ -75,13 +77,15 @@ export default class ParticleFire extends Animation {
                     ~~wildnessIntensityControl.value, 3)
 
                 //create pixel and apply color cycle
-                const color = new Color()
-                const pixel = new Pixel(x, 0, color)
-                fireContainer.add(pixel)
-                cycler.run(color, 99 - ~~glower[x]).then(() => {
-                    fireContainer.delete(pixel)
+                if (densityControl.value>randomGaussian(0,100)) {
+                    const color = new Color()
+                    const pixel = new Pixel(x, 0, color)
+                    fireContainer.add(pixel)
+                    cycler.run(color, 99 - ~~glower[x]).then(() => {
+                        fireContainer.delete(pixel)
 
-                })
+                    })
+                }
 
 
             }
