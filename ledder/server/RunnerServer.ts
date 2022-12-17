@@ -201,7 +201,7 @@ export class RunnerServer {
         this.presetName = presetName
         this.presetValues.values = this.controlGroup.save()
         await this.presetStore.save(this.animationName, presetName, this.presetValues)
-        // await this.presetStore.createPreview(this.animationClass, this.animationName, presetName, this.presetValues)
+        await this.presetStore.createPreview(this.animationClass, this.animationName, presetName, this.presetValues)
         await this.presetStore.storeAnimationPresetList(false,false)
     }
 

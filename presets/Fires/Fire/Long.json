@@ -40,6 +40,14 @@
   },
   "Fire speed": {
    "value": 1
+  },
+  "Fire intensity %": {
+   "from": 0,
+   "to": 100
+  },
+  "Fire X range %": {
+   "from": 0,
+   "to": 100
   }
  }
 }

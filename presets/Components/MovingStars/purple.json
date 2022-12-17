@@ -1,0 +1,36 @@
+{
+ "title": "",
+ "description": "",
+ "values": {
+  "FPS": {
+   "value": 60
+  },
+  "Star color": {
+   "r": 220,
+   "g": 0,
+   "b": 255,
+   "a": 0.8
+  },
+  "Number of stars": {
+   "value": 14
+  },
+  "Movie interval": {
+   "value": 16
+  },
+  "Movie interval randomizer": {
+   "value": 0
+  },
+  "Rotate interval": {
+   "value": 4
+  },
+  "Rotate interval randomizer": {
+   "value": 2
+  },
+  "Rotate X step": {
+   "value": -1
+  },
+  "Rotate Y step": {
+   "value": 0
+  }
+ }
+}
