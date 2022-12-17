@@ -60,7 +60,11 @@ export class WsContext {
             // })
 
         this.statsInterval=setInterval( ()=>{
-           // console.log(`Stats ${this.id}: ${display.size} pixels, ${this.runner.scheduler.intervals.size} intervals`)
+            let count=0
+            this.runner.box.forEachPixel( ()=>{
+                count++
+            })
+           console.log(`Stats ${this.id}: ${count} pixels, ${this.runner.scheduler.intervals.size} intervals`)
         }, 3000)
 
 

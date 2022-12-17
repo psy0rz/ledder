@@ -36,7 +36,7 @@ export class RunnerServer {
     private keepRendering: boolean
 
     private fpsControl: ControlValue
-    private box: PixelBox
+    public box: PixelBox
 
     constructor(display: Display, controls: ControlGroup, presetStore: PresetStore) {
         this.display = display

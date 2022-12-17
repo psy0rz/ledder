@@ -36,10 +36,10 @@ export default class ControlColor extends Control implements ColorInterface {
     this.a = values.a;
   }
 
-  //returns a copy thats an actual Color() object, and sets restartOnChange to true
+  //returns a copy thats an actual Color() object
   copy():ColorInterface
   {
-    this.meta.restartOnChange=true
+
     return (new Color(this.r, this.g, this.b, this.a))
   }
 }

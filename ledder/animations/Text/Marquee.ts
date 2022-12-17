@@ -11,6 +11,8 @@ import ControlGroup from "../../ControlGroup.js"
 import {fontSelect} from "../../fonts.js"
 import FxFlames from "../../fx/FxFlames.js"
 import Animation from "../../Animation.js"
+import FxTemplate from "../../fx/Template.js"
+import FxTwinkle from "../../fx/FxTwinkle.js"
 
 
 export default class Marquee extends Animation {
@@ -19,70 +21,73 @@ export default class Marquee extends Animation {
     static description = ""
     static category = "Marquees"
 
-    async run(box: PixelBox, scheduler: Scheduler, control: ControlGroup)
-    {
+    async run(box: PixelBox, scheduler: Scheduler, control: ControlGroup) {
 
         const font = fontSelect(control, 'Font')
         const input = control.input('Text', "Marquee  ", true)
-        const colorControl = control.color("Text color", 0x21,0xff,0, 1);
-        const charPixels=new DrawText(box.xMin,box.yMin, font, input.text, colorControl )
+        const colorControl = control.color("Text color", 0x21, 0xff, 0, 1)
+        const charPixels = new DrawText(box.xMin, box.yMin, font, input.text, colorControl)
         charPixels.centerV(box)
 
-        let starsGroup=control.group("Stars", false, false)
+        let starsGroup = control.group("Stars", false, false)
         if (starsGroup.switch('Enabled', false).enabled) {
-            new MovingStars().run(box,scheduler, starsGroup)
+            new MovingStars().run(box, scheduler, starsGroup)
         }
 
-        let starFieldGroup=control.group("Star field", false, false)
+        let starFieldGroup = control.group("Star field", false, false)
         if (starFieldGroup.switch('Enabled', false).enabled) {
-            new Starfield().run(box,scheduler, starFieldGroup)
+            new Starfield().run(box, scheduler, starFieldGroup)
         }
 
 
         //add on top of stars
         box.add(charPixels)
 
-        let scrollGroup=control.group("Scrolling")
+        let scrollGroup = control.group("Scrolling")
         if (scrollGroup.switch('Enabled', true).enabled) {
-            const whitespace=scrollGroup.value("Whitespace", 10,0,100,1,true)
+            const whitespace = scrollGroup.value("Whitespace", 10, 0, 100, 1, true)
             const rotator = new FxRotate(scheduler, scrollGroup)
 
-            const bbox=charPixels.bbox()
-            bbox.xMax=bbox.xMax+whitespace.value
-            if (bbox.xMax<box.xMax)
-                bbox.xMax=box.xMax
+            const bbox = charPixels.bbox()
+            bbox.xMax = bbox.xMax + whitespace.value
+            if (bbox.xMax < box.xMax)
+                bbox.xMax = box.xMax
 
             rotator.run(charPixels, bbox)
-        }
-        else
-        {
+        } else {
             charPixels.centerH(box)
         }
 
-        let flameGroup=control.group("Flames", false, false)
+        let flameGroup = control.group("Flames", false, false)
         if (flameGroup.switch('Enabled', false).enabled) {
-            const flames=new PixelSet()
+            const flames = new PixelSet()
             box.add(flames)
-            new FxFlames(scheduler,flameGroup).run(charPixels, flames)
+            new FxFlames(scheduler, flameGroup).run(charPixels, flames)
         }
 
-        let cursorGroup=control.group("Cursor")
-        if (cursorGroup.switch('Enabled', true).enabled) {
-            const cursorColor=cursorGroup.color("Color", 128,128,128).copy()
-            const cursorX=cursorGroup.value("X offset",2, 0,100,1,true)
-            const cursorY=cursorGroup.value("Y offset",1,0,100,1,true)
-            const cursorH=cursorGroup.value("Height",6,0,100,1,true)
-            const cursorW=cursorGroup.value("Width",5,0,100,1,true)
-            const cursorOn=cursorGroup.value("On time",30,0,60,1,false)
-            const cursorOff=cursorGroup.value("Off time",30,0,60,1,false)
-            const bbox=charPixels.bbox()
-            const cursor=new DrawBox(bbox.xMax+cursorX.value, bbox.yMin+cursorY.value , cursorW.value,cursorH.value, cursorColor)
-            const fader=new FxFadeOut(scheduler,cursorGroup,10)
+        let twinkleGroup = control.group("Twinkle")
+        if (twinkleGroup.switch('Enabled', false).enabled) {
+            const twinkleContainer=new PixelSet()
+            box.add(twinkleContainer)
+            new FxTwinkle(scheduler, twinkleGroup).run(charPixels,  charPixels)
+        }
+
+        let cursorGroup = control.group("Cursor")
+        if (cursorGroup.switch('Enabled', false).enabled) {
+            const cursorColor = cursorGroup.color("Color", 128, 128, 128).copy()
+            const cursorX = cursorGroup.value("X offset", 2, 0, 100, 1, true)
+            const cursorY = cursorGroup.value("Y offset", 1, 0, 100, 1, true)
+            const cursorH = cursorGroup.value("Height", 6, 0, 100, 1, true)
+            const cursorW = cursorGroup.value("Width", 5, 0, 100, 1, true)
+            const cursorOn = cursorGroup.value("On time", 30, 0, 60, 1, false)
+            const cursorOff = cursorGroup.value("Off time", 30, 0, 60, 1, false)
+            const bbox = charPixels.bbox()
+            const cursor = new DrawBox(bbox.xMax + cursorX.value, bbox.yMin + cursorY.value, cursorW.value, cursorH.value, cursorColor)
+            const fader = new FxFadeOut(scheduler, cursorGroup, 10)
             charPixels.add(cursor)
-            while(1)
-            {
-                cursorColor.a=1
-                await scheduler.delay( cursorOn.value)
+            while (1) {
+                cursorColor.a = 1
+                await scheduler.delay(cursorOn.value)
                 fader.run(cursorColor)
                 await scheduler.delay(cursorOff.value)
 
@@ -90,8 +95,7 @@ export default class Marquee extends Animation {
         }
 
 
-
-        }
+    }
 
 }
 

@@ -216,6 +216,4 @@ export default class ControlGroup extends Control {
         return changed
 
     }
-
-
 }
