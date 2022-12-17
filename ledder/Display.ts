@@ -104,34 +104,12 @@ export  default abstract class Display  {
         this.render(p)
       }
     }
-    // if (container===this)
-    // {
-    //   console.log("Total colors: ", this.colors.size)
-    // }
   }
 
   status() {
     // console.log("Matrix pixels: ", this.size);
   }
 
-  /**
-   * Clear all pixels
-   */
-  // reset(keepPresets: boolean = false) {
-  //   if (this.runScheduler)
-  //     this.scheduler.clear();
-  //
-  //   if (!keepPresets) {
-  //     this.scheduler.control.clear();
-  //     this.fpsControl = this.scheduler.control.value("FPS", 60, 1, 120, 1)
-  //   }
-  //   super.reset();
-  //
-  //
-  // }
-
-
-  // abstract run();
 
   //implemed in driver subclass:
 
