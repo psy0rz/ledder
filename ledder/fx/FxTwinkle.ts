@@ -16,6 +16,7 @@ export default class FxTwinkle extends Fx {
     colorControl: ControlColor
     private densityControl: ControlValue
     createRandomizer: ControlValue
+    randomColors: import("/home/psy/WebstormProjects/ledder/ledder/ControlSwitch").default
 
     constructor(scheduler: Scheduler, controls: ControlGroup) {
         super(scheduler, controls)
@@ -23,6 +24,7 @@ export default class FxTwinkle extends Fx {
         this.colorControl = controls.color("Color", 255, 255, 255)
         this.densityControl = controls.value("Twinkle density", 5, 0, 100)
         this.createRandomizer = controls.value("Create randomizer %", 100, 50, 100)
+        this.randomColors=controls.switch("Random colors", false)
 
     }
 
@@ -35,6 +37,14 @@ export default class FxTwinkle extends Fx {
                 if (this.createRandomizer.value > randomGaussian(0, 100)) {
                     const p = sourceContainer.randomPixel()
                     const c = this.colorControl.copy()
+
+                    if (this.randomColors.enabled)
+                    {
+                        c.r=random(0,c.r)
+                        c.g=random(0,c.g)
+                        c.b=random(0,c.b)
+                    }
+
                     const twinkle = new Pixel(p.x, p.y, c)
                     targetContainer.add(twinkle)
                     fader.run(c).then( ()=>{
