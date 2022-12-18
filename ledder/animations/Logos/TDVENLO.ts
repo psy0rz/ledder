@@ -31,13 +31,13 @@ export default class TDVenlo extends Animation {
         box.add(c)
 
         const font = fontSelect(controls)
-        const text = new DrawText(18, -1, font, "venlo", controls.color("tekst"))
+        const text = new DrawText(18, 1, font, "venlo", controls.color("tekst"))
 
         const bbox = text.bbox()
         bbox.xMax += 20
         // new FxRotate(scheduler, controls).run(text, bbox)
 
-        c.add(new DrawAsciiArtColor(0, 8, logo))
+        c.add(new DrawAsciiArtColor(0, 0, logo))
         // display.add(new DrawAsciiArtColor(display.width-17, 8, logo))
 
         // display.centerH(display.bbox())

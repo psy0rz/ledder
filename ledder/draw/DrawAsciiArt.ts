@@ -23,7 +23,7 @@ export default class DrawAsciiArt extends Draw {
             // next line
             else if (c == '\n') {
                 currX = x;
-                currY--;
+                currY++;
             //everything NON-whitespace:
             } else if (/\S/.test(c)) {
                 if (copyColor)

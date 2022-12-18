@@ -47,7 +47,7 @@ export default class DrawAsciiArtColor extends  Draw {
             // next line
             else if (c == '\n') {
                 currX = x;
-                currY--;
+                currY++;
             } else {
                 //add actual pixel with requested color
                 if (colorMap[c] !== undefined) {

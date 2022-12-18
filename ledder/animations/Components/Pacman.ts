@@ -19,7 +19,7 @@ export default class Pacman extends  Animation
 
         const frames=new PixelSet()
         const color= controls.color("Color", 255,255,0)
-        frames.add(new DrawAsciiArt(0,7, color,`
+        frames.add(new DrawAsciiArt(0,0, color,`
         ..####..
         .######.
         ########
@@ -29,7 +29,7 @@ export default class Pacman extends  Animation
         .######.
         ..####..
         `))
-        frames.add(new DrawAsciiArt(0,7, color,`
+        frames.add(new DrawAsciiArt(0,0, color,`
         ..####..
         .######.
         ########
@@ -39,7 +39,7 @@ export default class Pacman extends  Animation
         .######.
         ..####..
         `))
-        frames.add(new DrawAsciiArt(0,7, color,`
+        frames.add(new DrawAsciiArt(0,0, color,`
         ..####..
         .######.
         #####...
@@ -49,7 +49,7 @@ export default class Pacman extends  Animation
         .####...
         ..####..
         `))
-        frames.add(new DrawAsciiArt(0,7, color,`
+        frames.add(new DrawAsciiArt(0,0, color,`
         ..####..
         .######.
         #####...
@@ -59,7 +59,7 @@ export default class Pacman extends  Animation
         .####...
         ..####..
         `))
-        frames.add(new DrawAsciiArt(0,7, color,`
+        frames.add(new DrawAsciiArt(0,0, color,`
         ..####..
         .######.
         ########
