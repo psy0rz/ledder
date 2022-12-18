@@ -75,10 +75,9 @@ export default class Fire extends Animation {
         for (row = box.yMin; row <= box.yMax; row++) {
             for (col = box.xMin; col <= box.xMax; col++) {
                 const intensity = field[row][col]
-                pixels[row][col].color = colors[~~intensity]
+                pixels[box.height()-row-1][col].color = colors[~~intensity]
             }
         }
-
     }
 
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) {

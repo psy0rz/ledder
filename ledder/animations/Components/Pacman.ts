@@ -7,6 +7,7 @@ import DrawAsciiArt from "../../draw/DrawAsciiArt.js"
 import FxMovie from "../../fx/FxMovie.js"
 import FxRotate from "../../fx/FxRotate.js"
 import Animation from "../../Animation.js"
+import DrawAsciiArtColor from "../../draw/DrawAsciiArtColor.js"
 
 
 export default class Pacman extends  Animation
@@ -15,76 +16,76 @@ export default class Pacman extends  Animation
     static title = "Pacman"
     static description = "blabla"
 
-    async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) {
+    async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup, x=0, y=0) {
 
         const frames=new PixelSet()
-        const color= controls.color("Color", 255,255,0)
-        frames.add(new DrawAsciiArt(0,0, color,`
-        ..####..
-        .######.
-        ########
-        ########
-        ########
-        ########
-        .######.
-        ..####..
+        frames.add(new DrawAsciiArtColor(x,y, `
+        00yyyy0.
+        0yyyyyy.
+        yyyyyyyy
+        yyyyyyyy
+        yyyyyyyy
+        yyyyyyyy
+        0yyyyyy.
+        00yyyy0.
         `))
-        frames.add(new DrawAsciiArt(0,0, color,`
-        ..####..
-        .######.
-        ########
-        ####....
-        ###.....
-        ####....
-        .######.
-        ..####..
+        frames.add(new DrawAsciiArtColor(x,y, `
+        00yyyy00
+        0yyyyyy.
+        yyyyyyyy
+        yyyy....
+        yyy.....
+        yyyy....
+        0yyyyyy.
+        00yyyy0.
         `))
-        frames.add(new DrawAsciiArt(0,0, color,`
-        ..####..
-        .######.
-        #####...
-        ####....
-        ###.....
-        ####....
-        .####...
-        ..####..
+        frames.add(new DrawAsciiArtColor(x,y, `
+        00yyyy0.
+        0yyyyyy.
+        yyyyy...
+        yyyy....
+        yyy.....
+        yyyy....
+        0yyyy...
+        00yyyy..
         `))
-        frames.add(new DrawAsciiArt(0,0, color,`
-        ..####..
-        .######.
-        #####...
-        ####....
-        ###.....
-        ####....
-        .####...
-        ..####..
+        frames.add(new DrawAsciiArtColor(x,y, `
+        00yyyy0.
+        0yyyyyy.
+        yyyyy...
+        yyyy....
+        yyy.....
+        yyyy....
+        0yyyy...
+        00yyyy..
         `))
-        frames.add(new DrawAsciiArt(0,0, color,`
-        ..####..
-        .######.
-        ########
-        ####....
-        ###.....
-        ####....
-        .######.
-        ..####..
+        frames.add(new DrawAsciiArtColor(x,y, `
+        00yyyy0.
+        0yyyyyy.
+        yyyyyyyy
+        yyyy....
+        yyy.....
+        yyyy....
+        0yyyyyy.
+        00yyyy0.
         `))
         // frames.add(new DrawAsciiArt(3,display.height, colorGreen,`
-        // ...##...
-        // .######.
-        // .######.
-        // ####....
-        // #####...
-        // .######.
-        // .######.
-        // ...##...
+        // ...yy...
+        // .yyyyyy.
+        // .yyyyyy.
+        // yyyy....
+        // yyyyy...
+        // .yyyyyy.
+        // .yyyyyy.
+        // ...yy...
         // `))
         //
         // frames.add(new DrawAsciiArt(3,display.height-1, colorGreen,`
-        // ..#.###..
-        // .##.####
+        // ..y.yyy..
+        // .yy.yyyy
         // `))
 
+        frames.centerV(box)
          new FxMovie(scheduler, controls, 4,0).run(frames,box)
 
         new FxRotate(scheduler, controls, 1).run(frames, box)

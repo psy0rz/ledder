@@ -5,6 +5,8 @@ import Scheduler from "../../Scheduler.js"
 import ControlGroup from "../../ControlGroup.js"
 import {animationRun} from "../../server/utils.js"
 import Animation from "../../Animation.js"
+import DrawBox from "../../draw/DrawBox.js"
+import Color from "../../Color.js"
 
 
 
@@ -27,23 +29,22 @@ export default class HSD extends Animation {
 
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) {
 
+        const marqueeBox = new PixelBox(box)
+        box.add(marqueeBox)
 
-        //rotate
-        const marquee = new PixelBox(box)
-        box.add(marquee)
+        // box.add(new DrawBox(0,0,4,8, new Color(0,0,0,)))
+        // box.centerV(box)
 
-
-        const pacmanGroup = controls.group("Pacman")
-        if (pacmanGroup.switch("Enabled", true).enabled)
-            new Pacman().run(box, scheduler, pacmanGroup)
-        else
-            box.add(new DrawAsciiArtColor(0, 7, logo))
-
-        box.add(new DrawAsciiArtColor(box.width() - 8, 7, logo))
-        //box.center(box)
+        new Pacman().run(box, scheduler, controls)
 
 
-        await animationRun(marquee, scheduler, controls, "Text/Marquee")
+
+        const logoBox=new DrawAsciiArtColor(box.width() - 8, 0, logo).centerV(box)
+        box.add(logoBox)
+
+        // box.centerV(box)
+
+       await animationRun(marqueeBox, scheduler, controls, "Text/Marquee")
 
 
     }

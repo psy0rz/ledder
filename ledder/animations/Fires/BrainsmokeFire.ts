@@ -51,7 +51,7 @@ export default class BrainsmokeFire extends Animation {
         }
 
 
-        this.xypixels = box.raster(box, new Color(0, 0, 0), true, false, false)
+        this.xypixels = box.raster(box, new Color(0, 0, 0), true, false, true)
 
         this.black = new Color(0, 0, 0)
 
