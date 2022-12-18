@@ -17,7 +17,8 @@ export default class ParticleFire extends Animation {
 
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) {
 
-        let wind = new FxRandomMove(scheduler, controls.group("Wind"), -0.3, 0.3, 0.9, 1, 1, 0, false)
+        //main fx that moves fire up and does wind
+        let wind = new FxRandomMove(scheduler, controls.group("Wind"), -0.3, 0.3, -1, -0.9, 1, 0, false)
 
         const fireGroup = controls.group("Fire")
 
@@ -79,7 +80,7 @@ export default class ParticleFire extends Animation {
                 //create pixel and apply color cycle
                 if (densityControl.value>randomGaussian(0,100)) {
                     const color = new Color()
-                    const pixel = new Pixel(x, 0, color)
+                    const pixel = new Pixel(x, box.yMax, color)
                     fireContainer.add(pixel)
                     cycler.run(color, 99 - ~~glower[x]).then(() => {
                         fireContainer.delete(pixel)
@@ -97,7 +98,7 @@ export default class ParticleFire extends Animation {
             if (randomGaussian(0, 100) < firesparksControl.value) {
 
                 const color = new Color()
-                const pixel = new Pixel(randomGaussian(0, box.width() - 1), 0, color)
+                const pixel = new Pixel(randomGaussian(0, box.width() - 1), box.yMax, color)
                 sparksContainer.add(pixel)
                 sparksCycler.run(color, 0).then(() => {
                     sparksContainer.delete(pixel)
