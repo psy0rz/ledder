@@ -1,12 +1,12 @@
-import ColorInterface from "../ColorInterface.js";
-import Pixel from "../Pixel.js";
-import Font from "../Font.js";
-import Draw from "../Draw.js";
+import ColorInterface from "../ColorInterface.js"
+import Pixel from "../Pixel.js"
+import Font from "../Font.js"
+import Draw from "../Draw.js"
 
-//rendered font text. x,y are left bottom coordinates
+//rendered font text.
 export default class DrawText extends Draw {
 
-    constructor(x: number, y: number, font: Font, text: string,  color: ColorInterface) {
+    constructor(x: number, y: number, font: Font, text: string, color: ColorInterface) {
         super()
 
         for (let charNr = 0; charNr < text.length; charNr++) {
@@ -19,11 +19,12 @@ export default class DrawText extends Draw {
                     const bits = glyph.bitmap.buffer.readUInt8(offset)
                     for (let col = 0; col < glyph.bitmap.width; col++) {
 
-                        const thisX =  x + col + glyph.bitmapLeft
-                        const thisY =  y + glyph.bitmapTop - row-1 + font.baseOffset
+                        const thisX = x + col + glyph.bitmapLeft
+//                        const thisY =  y + glyph.bitmapTop - row-1 + font.baseOffset
+                        const thisY = y - glyph.bitmapTop + row + font.height-1 + font.baseOffset
 
-                        if (bits & (1 << (7-col) ))
-                            this.add(new Pixel( thisX, thisY, color))
+                        if (bits & (1 << (7 - col)))
+                            this.add(new Pixel(thisX, thisY, color))
                     }
                 }
             }
@@ -32,7 +33,4 @@ export default class DrawText extends Draw {
 
         }
     }
-
-
-
 }

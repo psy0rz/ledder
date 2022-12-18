@@ -20,7 +20,7 @@ export class DisplayWebsocket extends Display {
     setPixel(x, y, color) {
         if (x >= 0 && x < this.width && y >= 0 && y < this.height) {
 
-            const offset = ~~x * 4 + (this.height - ~~y - 1) * 4 * this.width;
+            const offset = ~~x * 4 + ( ~~y ) * 4 * this.width;
             const old_a = 1 - color.a;
 
             this.imageBuf8[offset] = (this.imageBuf8[offset] * old_a + color.r * color.a);
