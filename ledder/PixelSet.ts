@@ -169,6 +169,25 @@ export default class PixelSet extends Set<Pixel | PixelSet> {
             p.move(x, y, round)
     }
 
+    //keep pixels inside these x coordinates of box by wrapping (inclusive)
+    wrapX(bbox: BoxInterface) {
+        for (const p of this)
+            p.wrapX(bbox)
+    }
+
+    //keep pixels inside these y coordinates of box by wrapping (inclusive)
+    wrapY(bbox: BoxInterface) {
+        for (const p of this)
+            p.wrapY(bbox)
+    }
+
+    // keep pixels inside this box by wrapping (inclusive)
+    wrap(bbox: BoxInterface) {
+        for (const p of this)
+            p.wrap(bbox)
+    }
+
+
     // //get bounding box (override if needed)
     bbox(): BoxInterface {
 

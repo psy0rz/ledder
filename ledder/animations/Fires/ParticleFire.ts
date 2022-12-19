@@ -16,7 +16,6 @@ export default class ParticleFire extends Animation {
     static description = "Individual pixel objects with color cycle effects on them. (more of a ledder way of doing it)"
 
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) {
-
         //main fx that moves fire up and does wind
         let wind = new FxRandomMove(scheduler, controls.group("Wind"), -0.3, 0.3, -1, -0.9, 1, 0, false)
 
@@ -36,15 +35,14 @@ export default class ParticleFire extends Animation {
 
         let sparksCycler = new FxColorCycle(scheduler, sparksGroup.group("Spark cycle"), "reverse", 8, 8, 1)
         let sparksMover = new FxRandomMove(scheduler, sparksGroup.group("Movement"), -1, 1, -0.1, 0.1, 1, 0, true)
-
-        wind.run(box)
+        wind.run(box, 0, box)
 
         let fireContainer = new PixelSet()
         box.add(fireContainer)
 
         let sparksContainer = new PixelSet()
         box.add(sparksContainer)
-        sparksMover.run(sparksContainer)
+        // sparksMover.run(sparksContainer)
 
         //glower
         let glower = []
@@ -87,6 +85,7 @@ export default class ParticleFire extends Animation {
 
                     })
                 }
+
 
 
             }

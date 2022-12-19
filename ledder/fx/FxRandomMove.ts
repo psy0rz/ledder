@@ -5,6 +5,8 @@ import PixelSet from "../PixelSet.js";
 import Scheduler from "../Scheduler.js";
 import { random, randomFloatGaussian} from "../utils.js";
 import ControlSwitch from "../ControlSwitch.js";
+import BoxInterface from "../BoxInterface.js"
+import controls from "../../src/pages/controls.svelte"
 
 
 //Move pixels in a random direction/speed.
@@ -17,6 +19,8 @@ export default class FxRandomMove extends Fx {
     yStepMinControl: ControlValue;
     yStepMaxControl: ControlValue;
     independentControl: ControlSwitch
+    private wrapXControl: ControlSwitch
+    private wrapYControl: ControlSwitch
 
 
     constructor(scheduler: Scheduler, controlGroup: ControlGroup, xStepMin = -1, xStepMax = 1, yStepMin = -1, yStepMax = 1, interval = 1, intervalRandomizer = 0, independent=false) {
@@ -29,13 +33,14 @@ export default class FxRandomMove extends Fx {
         this.yStepMinControl = controlGroup.value('Move Y step min', yStepMin, -5, 5, 0.01)
         this.yStepMaxControl = controlGroup.value('Move Y step max', yStepMax, -5, 5, 0.01)
         this.independentControl = controlGroup.switch("Move independently", independent)
+        this.wrapXControl=controlGroup.switch("Wrap X", false,true)
+        this.wrapYControl=controlGroup.switch("Wrap Y", false,true)
     }
 
     //move all pixels in the pixelcontainer
     //stops after steps number of steps
-    run(container: PixelSet , steps?: number) {
+    run(container: PixelSet , steps?: number, bbox?: BoxInterface) {
         this.running = true
-
 
 
         const randomizer = random(0, this.intervalRandomizerControl.value)
@@ -51,6 +56,15 @@ export default class FxRandomMove extends Fx {
                         randomFloatGaussian(this.yStepMinControl.value, this.yStepMaxControl.value)
                     )
 
+                    if (bbox!==undefined)
+                    {
+                        if (this.wrapXControl.enabled)
+                            pixel.wrapX(bbox)
+                        if (this.wrapYControl.enabled)
+                            pixel.wrapY(bbox)
+                    }
+
+
                 })
 
             }
@@ -59,6 +73,14 @@ export default class FxRandomMove extends Fx {
                     randomFloatGaussian(this.xStepMinControl.value, this.xStepMaxControl.value),
                     randomFloatGaussian(this.yStepMinControl.value, this.yStepMaxControl.value)
                 )
+                    if (bbox!==undefined)
+                    {
+                        if (this.wrapXControl.enabled)
+                            container.wrapX(bbox)
+                        if (this.wrapYControl.enabled)
+                            container.wrapY(bbox)
+                    }
+
 
             }
 

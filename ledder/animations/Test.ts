@@ -16,5 +16,12 @@ export default class Test extends Animation {
         box.add(new DrawText(0,0, fontSelect(controls), "Test 123.", new Color(255,0,0)))
         // box.add(new DrawText(0,0, fontSelect(controls, "A", "Tiny 3x3"), "Test 123.", new Color(0,255,0)))
 
+        scheduler.interval(1, ()=>
+
+        {
+            box.move(1,0)
+            box.wrapX(box)
+        })
+
     }
 }

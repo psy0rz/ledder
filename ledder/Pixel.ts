@@ -62,18 +62,32 @@ export default class Pixel implements PixelInterface {
             this.y = bbox.yMax
     }
 
-    // //keep pixel inside this box by wrapping (inclusive)
-    wrap(bbox: BoxInterface) {
+
+    //keep pixel inside these x coordinates of box by wrapping (inclusive)
+    wrapX(bbox: BoxInterface) {
         if (this.x < bbox.xMin)
             this.x += (bbox.xMax - bbox.xMin + 1)
-        else if (this.x > bbox.xMax)
+        else if (~~this.x > bbox.xMax) //floor to make rounding errors compatible with display drivers
             this.x -= (bbox.xMax - bbox.xMin + 1)
+
+
+    }
+
+
+    //keep pixel inside these y coordinates of box by wrapping (inclusive)
+    wrapY(bbox: BoxInterface) {
 
         if (this.y < bbox.yMin)
             this.y += (bbox.yMax - bbox.yMin + 1)
-        else if (this.y > bbox.yMax)
+        else if (~~this.y > bbox.yMax) //floor to make rounding errors compatible with display drivers
             this.y -= (bbox.yMax - bbox.yMin + 1)
 
+    }
+
+    // keep pixel inside this box by wrapping (inclusive)
+    wrap(bbox: BoxInterface) {
+        this.wrapX(bbox)
+        this.wrapY(bbox)
     }
 
     //pixel outside this box? (inclusive)

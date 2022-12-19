@@ -26,6 +26,12 @@
    },
    "Move independently": {
     "enabled": false
+   },
+   "Wrap X": {
+    "enabled": true
+   },
+   "Wrap Y": {
+    "enabled": false
    }
   },
   "Fire": {
@@ -104,6 +110,12 @@
     },
     "Move independently": {
      "enabled": true
+    },
+    "Wrap X": {
+     "enabled": true
+    },
+    "Wrap Y": {
+     "enabled": false
     }
    }
   }
