@@ -1,0 +1,49 @@
+{
+ "title": "",
+ "description": "",
+ "values": {
+  "FPS": {
+   "value": 60
+  },
+  "Fire interval": {
+   "value": 1
+  },
+  "Fire minimum intensity %": {
+   "value": 0
+  },
+  "Fire maximum intensity %": {
+   "value": 100
+  },
+  "Fire wildness %": {
+   "value": 33
+  },
+  "Fire decay ": {
+   "value": 20
+  },
+  "Fire decay density % ": {
+   "value": 100
+  },
+  "Fire colors": {
+   "selected": "Brainsmoke fire"
+  },
+  "Fire intensity range %": {
+   "from": 0,
+   "to": 73
+  },
+  "Fire sintel factor": {
+   "from": 1.21,
+   "to": 1.5
+  },
+  "Fire glower range %": {
+   "from": 0,
+   "to": 79
+  },
+  "Fire glower wildness %": {
+   "value": 76
+  },
+  "Fire move factor": {
+   "from": 1.02,
+   "to": 1.24
+  }
+ }
+}
