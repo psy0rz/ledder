@@ -82,7 +82,7 @@ export default class PlasmaFire extends Animation {
             pixels[x] = []
 
             for (let y = 0; y < box.height() + 2; y++) {
-                pixels[x][y] = new FlamePixel(x, y - 2)
+                pixels[x][y] = new FlamePixel(x, y )
                 box.add(pixels[x][y])
             }
         }
@@ -94,12 +94,12 @@ export default class PlasmaFire extends Animation {
             for (let y = 1; y < box.height() - 1 + 2; y++) {
                 const p = pixels[x][y]
 
-                //lower
+                //upper
                 p.neighbours.push(pixels[x - 1][y - 1])
                 p.neighbours.push(pixels[x][y - 1])
                 p.neighbours.push(pixels[x + 1][y - 1])
 
-                //upper
+                //lower
                 p.neighbours.push(pixels[x - 1][y + 1])
                 p.neighbours.push(pixels[x][y + 1])
                 p.neighbours.push(pixels[x + 1][y + 1])
@@ -118,24 +118,25 @@ export default class PlasmaFire extends Animation {
 
             //calculate new values
             for (let x = 0; x < box.width(); x++) {
-                for (let y = 1; y < box.height() + 2; y++) {
+                for (let y = 0; y < box.height() + 1; y++) {
                     pixels[x][y].calculate()
 
                 }
             }
 
-            //apply calculated values
+            //apply calculated values and move up
             for (let x = 0; x < box.width(); x++) {
-                for (let y = 1; y < box.height() + 2; y++) {
-                    pixels[x][y].apply(pixels[x][y - 1].newValue)
+                for (let y = box.height(); y >=0;y--) {
+                    pixels[x][y].apply(pixels[x][y+1].newValue)
                 }
             }
 
             //glow
+            const y=box.height()+1
             for (let x = 0; x < box.width(); x++) {
                 // if (pixels[x][0].value<=1)
-                pixels[x][0].value = pixels[x][0].newValue =
-                    glow(pixels[x][0].value,
+                pixels[x][y].value = pixels[x][y].newValue =
+                    glow(pixels[x][y].value,
                         ~~minIntensityControl.value * colorScale,
                         ~~maxIntensityControl.value * colorScale,
                         ~~wildnessIntensityControl.value * colorScale, 3)
