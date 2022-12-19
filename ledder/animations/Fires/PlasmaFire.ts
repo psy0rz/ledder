@@ -1,12 +1,13 @@
 import PixelBox from "../../PixelBox.js"
 import {colorBlack} from "../../Colors.js"
-import {glow, randomGaussian} from "../../utils.js"
+import {glow, randomFloatGaussian, randomGaussian} from "../../utils.js"
 import Scheduler from "../../Scheduler.js"
 import {patternSelect} from "../../ColorPatterns.js"
 import ControlGroup from "../../ControlGroup.js"
 import Pixel from "../../Pixel.js"
 
 import Animation from "../../Animation.js"
+import {inspect} from "util"
 
 export default class PlasmaFire extends Animation {
     static category = "Fire"
@@ -17,11 +18,12 @@ export default class PlasmaFire extends Animation {
 
 
         const fireintervalControl = controls.value("Fire interval", 1, 1, 10, 0.1)
-        const minIntensityControl = controls.value("Fire minimum intensity %", 0, 0, 100, 1);
-        const maxIntensityControl = controls.value("Fire maximum intensity %", 100, 0, 100, 1);
-        const wildnessIntensityControl = controls.value("Fire wildness %", 25, 0, 100, 1);
-        const decayControl = controls.value("Fire decay ", 25, 0, 100, 1)
-        const decayDensity = controls.value("Fire decay density % ", 100, 0, 100, 1)
+        const intensityControl = controls.range("Fire glower range %", 0, 100, 0, 100);
+        const wildnessIntensityControl = controls.value("Fire glower wildness %", 25, 0, 100, 1);
+        const decayControl = controls.value("Fire decay ", 25, 0, 300, 1)
+        // const decayDensity = controls.value("Fire decay density % ", 100, 0, 100, 1)
+
+        const fireMoveFactorControl = controls.range("Fire move factor", 1, 1, 0.5, 1.5, 0.01)
 
         // const fireMoveFactorControl = controls.value("Fire sintel factor", 0, 0, 2, 0.01)
         // const fireSpeedControl = controls.value("Fire speed", 1, 1, 10, 1)
@@ -52,20 +54,22 @@ export default class PlasmaFire extends Animation {
                 }
 
 //                const cool = ~~this.newValue & 3
-                this.newValue = this.newValue / (this.neighbours.length)
+                this.newValue = (this.newValue / (this.neighbours.length))*  ( randomFloatGaussian(fireMoveFactorControl.from, fireMoveFactorControl.to))
 
                 // if (cool && this.newValue >= 10) {
                 //     this.newValue=this.newValue-10
                 // }
-                if (randomGaussian(0, 100) < decayDensity.value) {
+                // if (randomGaussian(0, 100) < decayDensity.value) {
                     if (this.newValue >= decayControl.value)
                         this.newValue = this.newValue - decayControl.value
                     else
                         this.newValue = 0
 
 
-                }
+                // }
 
+                if (this.newValue>=colors.length)
+                    this.newValue=colors.length-1
             }
 
             //apply a value and color
@@ -128,6 +132,7 @@ export default class PlasmaFire extends Animation {
             for (let x = 0; x < box.width(); x++) {
                 for (let y = box.height(); y >=0;y--) {
                     pixels[x][y].apply(pixels[x][y+1].newValue)
+                    // pixels[x][y+1].apply(pixels[x][y+1].newValue)
                 }
             }
 
@@ -137,8 +142,8 @@ export default class PlasmaFire extends Animation {
                 // if (pixels[x][0].value<=1)
                 pixels[x][y].value = pixels[x][y].newValue =
                     glow(pixels[x][y].value,
-                        ~~minIntensityControl.value * colorScale,
-                        ~~maxIntensityControl.value * colorScale,
+                        ~~intensityControl.from * colorScale,
+                        ~~intensityControl.to * colorScale,
                         ~~wildnessIntensityControl.value * colorScale, 3)
             }
         })

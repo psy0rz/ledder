@@ -15,16 +15,35 @@
    "value": 100
   },
   "Fire wildness %": {
-   "value": 25
+   "value": 33
   },
   "Fire decay ": {
-   "value": 65
+   "value": 126
   },
   "Fire decay density % ": {
-   "value": 72
+   "value": 100
   },
   "Fire colors": {
    "selected": "Bertrik fire"
+  },
+  "Fire intensity range %": {
+   "from": 0,
+   "to": 73
+  },
+  "Fire sintel factor": {
+   "from": 1.21,
+   "to": 1.5
+  },
+  "Fire glower range %": {
+   "from": 0,
+   "to": 79
+  },
+  "Fire glower wildness %": {
+   "value": 25
+  },
+  "Fire move factor": {
+   "from": 1.19,
+   "to": 1.44
   }
  }
 }
