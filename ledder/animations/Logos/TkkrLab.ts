@@ -52,14 +52,14 @@ export default class TkkrLab extends Animation {
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) {
 
         const font = fontSelect(controls)
-        const text = new DrawText(13, 0, font, "TkkrLab", controls.color("tekst"))
+        const text = new DrawText(15, 0, font, "TkkrLab", controls.color("tekst"))
         box.add(text)
 
         const bbox = text.bbox()
         bbox.xMax += 20
         // new FxRotate(scheduler, controls).run(text, bbox)
 
-        box.add(new DrawAsciiArtColor(0, 8, logo))
+        box.add(new DrawAsciiArtColor(0, 0, logo))
         // display.add(new DrawAsciiArtColor(display.width-15, 8, logo))
 
         box.center(box)

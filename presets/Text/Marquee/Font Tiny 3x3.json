@@ -6,10 +6,10 @@
    "value": 60
   },
   "Font": {
-   "selected": "Anarchist"
+   "selected": "Tiny 3x3"
   },
   "Text": {
-   "text": "Anachist"
+   "text": "Tiny 3x3"
   },
   "Text color": {
    "r": 33,
@@ -54,7 +54,7 @@
   },
   "Cursor": {
    "Enabled": {
-    "enabled": true
+    "enabled": false
    },
    "Color": {
     "r": 128,
@@ -69,10 +69,10 @@
     "value": 1
    },
    "Height": {
-    "value": 6
+    "value": 3
    },
    "Width": {
-    "value": 5
+    "value": 3
    },
    "On time": {
     "value": 30
@@ -85,6 +85,11 @@
    },
    "Fade out time randomizer": {
     "value": 0
+   }
+  },
+  "Twinkle": {
+   "Enabled": {
+    "enabled": false
    }
   }
  }

@@ -66,7 +66,7 @@
     "value": 2
    },
    "Y offset": {
-    "value": 0
+    "value": 5
    },
    "Height": {
     "value": 2
@@ -85,6 +85,11 @@
    },
    "Off time": {
     "value": 10
+   }
+  },
+  "Twinkle": {
+   "Enabled": {
+    "enabled": false
    }
   }
  }

@@ -26,7 +26,7 @@ export default class FxFlames extends Fx {
         this.intensityControl = controls.value("Fire intensity [%]", 100, 0, 100, 1)
         this.burnWidthControl = controls.value("Fire depth [pixels]", depth, 1, 100, 1, true)
         this.windXControl = controls.value("Fire wind X", 0.1, -0.5, 0.5, 0.01)
-        this.windYControl = controls.value("Fire wind Y", 0.2, -0.5, 0.5, 0.01)
+        this.windYControl = controls.value("Fire wind Y", -0.2, -0.5, 0.5, 0.01)
 
         this.flameCycle = new FxColorCycle(scheduler, controls.group("Fire cycle"), "reverse", 15, 15, 1)
 
@@ -54,12 +54,12 @@ export default class FxFlames extends Fx {
 
         this.promise = this.scheduler.interval(1, () => {
 
-            const heads = new PixelSet()
+            // const heads = new PixelSet()
 
 
             sourceContainer.forEachPixel((p) => {
 
-                if (p.y <= bbox.yMax - this.burnWidthControl.value)
+                if (p.y >= bbox.yMax - this.burnWidthControl.value)
                     return
 
                 if (random(0, 100) >= this.densityControl.value)

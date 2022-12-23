@@ -6,10 +6,10 @@
    "value": 60
   },
   "Font": {
-   "selected": "Tiny 3x3"
+   "selected": "ORG v01"
   },
   "Text": {
-   "text": "Tiny 3x3"
+   "text": "Org v01"
   },
   "Text color": {
    "r": 33,
@@ -54,7 +54,7 @@
   },
   "Cursor": {
    "Enabled": {
-    "enabled": true
+    "enabled": false
    },
    "Color": {
     "r": 128,
@@ -69,10 +69,10 @@
     "value": 1
    },
    "Height": {
-    "value": 3
+    "value": 6
    },
    "Width": {
-    "value": 3
+    "value": 5
    },
    "On time": {
     "value": 30
@@ -85,6 +85,11 @@
    },
    "Fade out time randomizer": {
     "value": 0
+   }
+  },
+  "Twinkle": {
+   "Enabled": {
+    "enabled": false
    }
   }
  }

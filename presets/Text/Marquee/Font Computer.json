@@ -6,10 +6,10 @@
    "value": 60
   },
   "Font": {
-   "selected": "Tom thumb"
+   "selected": "Computer"
   },
   "Text": {
-   "text": "Tom thumb"
+   "text": "Computer"
   },
   "Text color": {
    "r": 33,
@@ -54,7 +54,7 @@
   },
   "Cursor": {
    "Enabled": {
-    "enabled": true
+    "enabled": false
    },
    "Color": {
     "r": 128,
@@ -85,6 +85,11 @@
    },
    "Fade out time randomizer": {
     "value": 0
+   }
+  },
+  "Twinkle": {
+   "Enabled": {
+    "enabled": false
    }
   }
  }
