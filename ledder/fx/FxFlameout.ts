@@ -18,7 +18,7 @@ export default class FxFlameout extends Fx {
         super(scheduler, controls)
 
         this.flameCycle = new FxColorCycle(scheduler, controls, "reverse", 15, 15, 1)
-        this.mover = new FxMove(scheduler, controls, 0.4, 1, 3, 3)
+        this.mover = new FxMove(scheduler, controls, 0.4, -1, 3, 3)
 
     }
 

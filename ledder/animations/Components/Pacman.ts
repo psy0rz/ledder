@@ -1,4 +1,3 @@
-
 import PixelBox from "../../PixelBox.js"
 import Scheduler from "../../Scheduler.js"
 import ControlGroup from "../../ControlGroup.js"
@@ -10,18 +9,16 @@ import Animation from "../../Animation.js"
 import DrawAsciiArtColor from "../../draw/DrawAsciiArtColor.js"
 
 
-
-export default class Pacman extends  Animation
-{
+export default class Pacman extends Animation {
     static category = "Misc"
     static title = "Pacman"
     static description = "blabla"
 
-    async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup, x=0, y=0) {
+    async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup, x = 0, y = 0) {
 
 
-        const frames=new PixelSet()
-        frames.add(new DrawAsciiArtColor(x,y, `
+        const frames = new PixelSet()
+        frames.add(new DrawAsciiArtColor(x, y, `
         00yyyy0.
         0yyyyyy.
         yyyyyyyy
@@ -31,7 +28,7 @@ export default class Pacman extends  Animation
         0yyyyyy.
         00yyyy0.
         `))
-        frames.add(new DrawAsciiArtColor(x,y, `
+        frames.add(new DrawAsciiArtColor(x, y, `
         00yyyy00
         0yyyyyy.
         yyyyyyyy
@@ -41,7 +38,7 @@ export default class Pacman extends  Animation
         0yyyyyy.
         00yyyy0.
         `))
-        frames.add(new DrawAsciiArtColor(x,y, `
+        frames.add(new DrawAsciiArtColor(x, y, `
         00yyyy0.
         0yyyyyy.
         yyyyy...
@@ -51,7 +48,7 @@ export default class Pacman extends  Animation
         0yyyy...
         00yyyy..
         `))
-        frames.add(new DrawAsciiArtColor(x,y, `
+        frames.add(new DrawAsciiArtColor(x, y, `
         00yyyy0.
         0yyyyyy.
         yyyyy...
@@ -61,7 +58,7 @@ export default class Pacman extends  Animation
         0yyyy...
         00yyyy..
         `))
-        frames.add(new DrawAsciiArtColor(x,y, `
+        frames.add(new DrawAsciiArtColor(x, y, `
         00yyyy0.
         0yyyyyy.
         yyyyyyyy
@@ -88,9 +85,13 @@ export default class Pacman extends  Animation
         // `))
 
         frames.centerV(box)
-         new FxMovie(scheduler, controls, 4,0).run(frames,box)
 
-        new FxRotate(scheduler, controls, 1).run(frames, box)
+        let pacmanBox=new PixelBox(box)
+        box.add(pacmanBox)
+
+        new FxMovie(scheduler, controls, 4, 0).run(frames, pacmanBox)
+
+        new FxRotate(scheduler, controls, 1).run(frames, pacmanBox)
 
 
     }

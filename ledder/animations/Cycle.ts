@@ -4,6 +4,7 @@ import FxPacman from "../fx/FxPacman.js"
 import ControlGroup from "../ControlGroup.js"
 import {PresetStore} from "../server/PresetStore.js"
 import Animation from "../Animation.js"
+import {FxFadeMask} from "../fx/FxFadeMask.js"
 
 
 const presetStore = new PresetStore()
@@ -17,7 +18,17 @@ export default class Template extends Animation {
 
     async run(box, scheduler: Scheduler, controls: ControlGroup) {
 
+        const fader=new FxFadeMask(scheduler,controls)
+
         async function show(animationName, presetName, time) {
+
+            //fade out and stop animation
+            if (box.size>0)
+                await fader.run(box, true, 30)
+            scheduler.clear()
+            box.clear()
+
+
             const subControls=controls.group(animationName)
             const animationClass=await presetStore.loadAnimation(animationName)
             const animation= new animationClass()
@@ -27,6 +38,9 @@ export default class Template extends Animation {
             }
             animation.run(box, scheduler,subControls)
 
+            //fade in
+            await fader.run(box, false, 30)
+
             await scheduler.delay(time/16.6)
 
             // scheduler.clear()
@@ -34,71 +48,21 @@ export default class Template extends Animation {
 
         const fxControls=controls.group("FX")
         while(1) {
-            await show("Text/BTC", "default", 30000)
-            scheduler.clear()
-            await new FxFlameout(scheduler, fxControls).run(box)
-
-            // await show("MQTTcounter", "default", 30000)
+            await show("Text/BTC", "default", 6000)
             // scheduler.clear()
-            // await new FxFlameout(scheduler, fxControls).run(display)
+            // await new FxFlameout(scheduler, fxControls).run(box)
 
 
+            await show("Memes/ItsFine", "default", 6000)
+            // await new FxFlameout(scheduler, fxControls).run(box)
 
-            await show("ItsFine", "default", 8000)
-            scheduler.clear()
-            await new FxFlameout(scheduler, fxControls).run(box)
-
-
-            show ("Starfield", "",0)
-            await show("Marquee", "idiopolisstatic", 3000)
+            await show("Memes/Nyancat", "default", 6000)
+            // await new FxPacman(scheduler, fxControls).run(box, 0, box.height )
             scheduler.clear()
             await new FxFlameout(scheduler, fxControls).run(box)
 
 
-            await show("Syn2cat", "default", 3000)
-            scheduler.clear()
-            await new FxFlameout(scheduler, fxControls).run(box)
-
-            await show("Haxogreen", "default", 3000)
-            scheduler.clear()
-            await new FxFlameout(scheduler, fxControls).run(box)
-
-
-            // await show("Marquee", "idiopolis", 6000)
-            // await new FxFlameout(scheduler, fxControls).run(display)
-            // scheduler.clear()
-
-            // await show("BrainsmokeFire", "", 6000)
-            // await new FxPacman(scheduler, fxControls).run(display, 0, display.height )
-            // scheduler.clear()
-
-
-            // await show("MaakPlek", "default", 3000)
-            // await new FxFlameout(scheduler, fxControls).run(display)
-            // scheduler.clear()
-
-            // show("PoliceLights", "hackers", 0)
-            // await scheduler.delay(6000/display.frameMs)
-            // await new FxPacman(scheduler, fxControls).run(display, 0, display.height )
-            // // await new FxFlameout(scheduler, fxControls).run(display)
-            // scheduler.clear()
-
-            // await show("TDVENLO", "default", 3000)
-            // await new FxFlameout(scheduler, fxControls).run(display)
-            // scheduler.clear()
-            //
-            await show("Nyancat", "", 3000)
-            await new FxPacman(scheduler, fxControls).run(box, 0, box.height )
-            scheduler.clear()
-
-            // await show("TkkrLab", "default", 3000)
-            // await new FxFlameout(scheduler, fxControls).run(display)
-            // scheduler.clear()
-
-            await show("HSD", "default", 4000)
-            await new FxPacman(scheduler, fxControls).run(box, 0, box.height )
-            // await new FxFlameout(scheduler, fxControls).run(display)
-            scheduler.clear()
+            await show("Logos/HSD", "default", 10000)
 
 
             // await show("Cyber", "default", 2000)
