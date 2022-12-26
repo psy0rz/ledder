@@ -92,10 +92,10 @@
   },
   "Wobble head x": {
    "Wobble interval": {
-    "value": 15
+    "value": 10
    },
    "Wobble interval offset": {
-    "value": 10
+    "value": 5
    },
    "Wobble X amount": {
     "value": 1
@@ -106,10 +106,10 @@
   },
   "Wobble head y": {
    "Wobble interval": {
-    "value": 15
+    "value": 10
    },
    "Wobble interval offset": {
-    "value": 5
+    "value": 10
    },
    "Wobble X amount": {
     "value": 0

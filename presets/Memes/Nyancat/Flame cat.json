@@ -95,7 +95,7 @@
     "value": 15
    },
    "Wobble interval offset": {
-    "value": 10
+    "value": 5
    },
    "Wobble X amount": {
     "value": 1
@@ -109,7 +109,7 @@
     "value": 15
    },
    "Wobble interval offset": {
-    "value": 5
+    "value": 11
    },
    "Wobble X amount": {
     "value": 0

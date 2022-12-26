@@ -45,7 +45,7 @@ export default class Nyancat extends Animation {
         box.add(rainbowContainer)
 
         //the body and its wobblyness
-        const body = new DrawAsciiArtColor(6, 7, `
+        const body = new DrawAsciiArtColor(6, 1, `
           .00000000.
           0ffffpfff0
           0fpffffff0
@@ -59,7 +59,7 @@ export default class Nyancat extends Animation {
 
 
         //the head and its wobblyness
-        const head = new DrawAsciiArtColor(12, 8, `
+        const head = new DrawAsciiArtColor(12, 1, `
           .00...00.
           .0500050.
           05w05w050
@@ -68,8 +68,8 @@ export default class Nyancat extends Animation {
           .0555550.
           ..00000..
         `)
-        new FxWobble(scheduler, controls.group("Wobble head x", false, true), 1, 0, 15, 10).run(head)
-        new FxWobble(scheduler, controls.group("Wobble head y", false, true), 0, 1, 15, 5).run(head)
+        new FxWobble(scheduler, controls.group("Wobble head x", false, true), 1, 0, 15, 5).run(head)
+        new FxWobble(scheduler, controls.group("Wobble head y", false, true), 0, 1, 15, 10).run(head)
         cat.add(head)
 
 
@@ -95,7 +95,7 @@ export default class Nyancat extends Animation {
 
             if (fireControl.enabled) {
 
-                let skips=[
+                let intensity=[
                     50,
                     25,
                     0,
@@ -108,7 +108,7 @@ export default class Nyancat extends Animation {
 
                     const p = new Pixel(x, c + y + 1,  new Color())
                     rainbowContainer.add(p)
-                    cycleFx.run( p.color, skips[c])
+                    cycleFx.run( p.color, intensity[c])
                         .then(() => {
                             rainbowContainer.delete(p)
                         })

@@ -12,6 +12,6 @@ export async function animationRun(box: PixelBox, scheduler: Scheduler, controls
         const presetValues = await presetStore.load(animationName, presetName)
         controls.load(presetValues.values)
     }
-    animation.run(box, scheduler, controls)
+    return animation.run(box, scheduler, controls)
 
 }
