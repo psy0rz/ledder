@@ -43,7 +43,6 @@ export class RunnerServer {
 
         this.controlGroup = controls
         this.presetStore = presetStore
-        this.autoreload().then()
         this.resetControls()
         this.resetAnimation()
         // console.log("Runner server for ", display)
@@ -103,9 +102,16 @@ export class RunnerServer {
     }
 
     //automaticly reload animation file on change to make development easier.
-    async autoreload() {
+    async autoreload(filename: string) {
+
+        if (this.watchAbort !== undefined)
+            this.watchAbort.abort()
+
         this.watchAbort = new AbortController()
-        let watcher = watch(this.presetStore.animationPath, this.watchAbort)
+
+        let watcher = watch(filename, {
+            signal: this.watchAbort.signal
+        })
 
         try {
             for await (const event of watcher) {
@@ -117,6 +123,7 @@ export class RunnerServer {
         } catch (e) {
             if (e.name === 'AbortError')
                 return
+            throw e
         }
     }
 
@@ -125,7 +132,6 @@ export class RunnerServer {
     stop() {
         this.stopRenderLoop()
         this.resetAnimation()
-        this.watchAbort.abort()
 
     }
 
@@ -165,6 +171,7 @@ export class RunnerServer {
         this.presetName = presetName
         this.animationName = animationName
         this.animationClass = await this.presetStore.loadAnimation(animationName)
+        this.autoreload(this.presetStore.animationFilename(animationName)).then()
 
         console.log("Runner: starting", animationName, presetName)
         this.resetControls()
@@ -202,14 +209,14 @@ export class RunnerServer {
         this.presetValues.values = this.controlGroup.save()
         await this.presetStore.save(this.animationName, presetName, this.presetValues)
         await this.presetStore.createPreview(this.animationClass, this.animationName, presetName, this.presetValues)
-        await this.presetStore.storeAnimationPresetList(false,false)
+        await this.presetStore.storeAnimationPresetList(false, false)
     }
 
     //delete current running animation preset
     async delete() {
         if (this.presetName !== undefined) {
             await this.presetStore.delete(this.animationName, this.presetName)
-            await this.presetStore.storeAnimationPresetList(false,false)
+            await this.presetStore.storeAnimationPresetList(false, false)
             this.presetName = undefined
         }
     }

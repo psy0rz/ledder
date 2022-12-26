@@ -55,7 +55,7 @@ export class PresetStore {
         return (path.join(this.presetPath, animationName, presetName + ".png"))
     }
 
-    private animationFilename(animationName: string) {
+    public animationFilename(animationName: string) {
         return path.join(this.animationPath, animationName + ".js")
     }
 

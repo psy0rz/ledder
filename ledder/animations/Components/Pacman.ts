@@ -10,6 +10,7 @@ import Animation from "../../Animation.js"
 import DrawAsciiArtColor from "../../draw/DrawAsciiArtColor.js"
 
 
+
 export default class Pacman extends  Animation
 {
     static category = "Misc"
@@ -17,6 +18,7 @@ export default class Pacman extends  Animation
     static description = "blabla"
 
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup, x=0, y=0) {
+
 
         const frames=new PixelSet()
         frames.add(new DrawAsciiArtColor(x,y, `
