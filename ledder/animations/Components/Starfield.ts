@@ -69,14 +69,15 @@ export default class Starfield extends Animation {
 
         const baseSpeedControl = controls.value("Base speed", 0.001, 0.00001, 0.1, 0.0001)
         const accelerationControl = controls.value("Acceleration", 0.03, 0, 0.1, 0.0001)
-        const starOffsetControl=controls.value("Star offset", 0.1, 0, 1, 0.001)
+        const starOffsetControl = controls.value("Star offset", 0.1, 0, 1, 0.001)
 
         //move all
         scheduler.interval(1, () => {
             for (const star of stars) {
-                if (!star.update(baseSpeedControl.value, accelerationControl.value, starOffsetControl.value))
+                if (!star.update(baseSpeedControl.value, accelerationControl.value, starOffsetControl.value)) {
+                    c.delete(star.p)
                     stars.delete(star)
-
+                }
             }
 
 
@@ -101,20 +102,20 @@ export default class Starfield extends Animation {
 
             if (side == 0) {
                 //left
-                xEnd = box.xMin-1
+                xEnd = box.xMin - 1
                 yEnd = random(box.yMin, box.yMax)
             } else if (side == 1) {
                 //right
-                xEnd = box.xMax+1
+                xEnd = box.xMax + 1
                 yEnd = random(box.yMin, box.yMax)
             } else if (side == 2) {
                 //bottom
                 xEnd = random(box.xMin, box.xMax)
-                yEnd = box.yMin-1
+                yEnd = box.yMin - 1
             } else if (side == 3) {
                 //top
                 xEnd = random(box.xMin, box.xMax)
-                yEnd = box.yMax+1
+                yEnd = box.yMax + 1
             }
 
             const star = new Star(xStart + xOffset, yStart + yOffset, xEnd, yEnd)
