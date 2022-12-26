@@ -51,7 +51,7 @@
    "value": 0.001
   },
   "Counter dim %": {
-   "value": 80
+   "value": 59
   },
   "Counter dim middle %": {
    "value": 50
@@ -81,6 +81,9 @@
   },
   "Font": {
    "selected": "Picopixel"
+  },
+  "Counter dim steps": {
+   "value": 3
   }
  }
 }

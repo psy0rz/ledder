@@ -48,10 +48,10 @@
    "a": 1
   },
   "Rotate speed": {
-   "value": 0.0045000000000000005
+   "value": 0.0027
   },
   "Counter dim %": {
-   "value": 85
+   "value": 62
   },
   "Counter dim middle %": {
    "value": 50
@@ -81,6 +81,9 @@
   },
   "Font": {
    "selected": "Picopixel"
+  },
+  "Counter dim steps": {
+   "value": 3
   }
  }
 }

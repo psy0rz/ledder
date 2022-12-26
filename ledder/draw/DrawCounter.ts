@@ -82,11 +82,11 @@ export default class DrawCounter extends Draw {
         this.add(digitContainer)
 
         //make digits look round by fading them
-        const startAlphaControl = controls.value("Counter dim %", 80, 0, 100, 1, true)
-        const middleAlphaControl = controls.value("Counter dim middle %", 50, 0, 100, 1, true)
+        const startAlphaControl = controls.value("Counter dim %", 50, 0, 100, 1, true)
+        const alphaStepsControl = controls.value("Counter dim steps", 3, 0, 4, 1, true)
 
         if (startAlphaControl.value != 0)
-            this.add(new DrawGlowMask(x, y, charWidth * digitCount, charHeight + 1, startAlphaControl.value / 100, middleAlphaControl.value / 100))
+            this.add(new DrawGlowMask(x, y, charWidth * digitCount, charHeight + 1, startAlphaControl.value / 100, alphaStepsControl.value ))
 
         this.update(0)
 
