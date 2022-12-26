@@ -9,12 +9,12 @@
    "selected": "C64"
   },
   "Text": {
-   "text": "Marquee  "
+   "text": "Twinkle"
   },
   "Text color": {
-   "r": 33,
-   "g": 255,
-   "b": 0,
+   "r": 255,
+   "g": 0,
+   "b": 170,
    "a": 1
   },
   "Stars": {
@@ -68,7 +68,7 @@
   },
   "Scrolling": {
    "Enabled": {
-    "enabled": true
+    "enabled": false
    },
    "Whitespace": {
     "value": 10

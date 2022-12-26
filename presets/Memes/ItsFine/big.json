@@ -23,6 +23,26 @@
    },
    "Fire colors": {
     "selected": "Brainsmoke fire"
+   },
+   "Fire intensity %": {
+    "from": 0,
+    "to": 100
+   },
+   "Fire wildness %": {
+    "value": 10
+   },
+   "Fire decay %": {
+    "value": 10
+   },
+   "Fire sintel factor": {
+    "value": 0
+   },
+   "Fire speed": {
+    "value": 1
+   },
+   "Fire X range %": {
+    "from": 0,
+    "to": 100
    }
   },
   "Text color": {
@@ -48,7 +68,7 @@
     "value": -0.5
    },
    "Fire wind Y": {
-    "value": 0.29
+    "value": -0.15
    },
    "Fire cycle": {
     "Color cycle time": {

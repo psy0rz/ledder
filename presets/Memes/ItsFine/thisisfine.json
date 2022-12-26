@@ -20,6 +20,29 @@
    },
    "Fire decay": {
     "value": 100
+   },
+   "Fire colors": {
+    "selected": "Bertrik fire"
+   },
+   "Fire intensity %": {
+    "from": 0,
+    "to": 100
+   },
+   "Fire wildness %": {
+    "value": 10
+   },
+   "Fire decay %": {
+    "value": 10
+   },
+   "Fire sintel factor": {
+    "value": 0
+   },
+   "Fire speed": {
+    "value": 1
+   },
+   "Fire X range %": {
+    "from": 0,
+    "to": 100
    }
   },
   "Text color": {
@@ -45,7 +68,7 @@
     "value": 0.19
    },
    "Fire wind Y": {
-    "value": 0.2
+    "value": -0.24
    },
    "Fire cycle": {
     "Color cycle time": {
@@ -59,6 +82,9 @@
     },
     "Color cycle mode": {
      "selected": "reverse"
+    },
+    "Color cycle pattern": {
+     "selected": "Bertrik fire"
     }
    }
   },
