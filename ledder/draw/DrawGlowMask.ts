@@ -11,16 +11,15 @@ export default class DrawGlowMask extends Draw {
 
         for (let thisY = y; thisY < y + height; thisY++) {
 
-            let alpha
+            let alpha=0
 
-            if (thisY <= middle) {
+            if (thisY < middle) {
                 let percentage = (thisY - y) / (middle - y)
                 alpha = (1 - percentage) * startAlpha
-            } else {
-                let percentage = (thisY - middle) / (y + height - middle-1)
+            } else if (thisY>middle) {
+                let percentage = (thisY - middle) / (y+height-middle)
                 alpha = percentage * startAlpha
             }
-
             // console.log("ALPHA", thisY, alpha)
 
             let color = new Color(0, 0, 0, alpha)

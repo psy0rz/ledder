@@ -48,10 +48,10 @@
    "a": 1
   },
   "Rotate speed": {
-   "value": 0.001
+   "value": 0.0045000000000000005
   },
   "Counter dim %": {
-   "value": 80
+   "value": 85
   },
   "Counter dim middle %": {
    "value": 50

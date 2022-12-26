@@ -31,29 +31,29 @@ export default class DrawCounter extends Draw {
             for (let offset = 0; offset < wheelHeight; offset++) {
                 const container = new PixelSet()
 
-                const charY = y + (offset % charHeight)
+                const charY = y - (offset % charHeight)
                 const digitValue = ~~(offset / charHeight)
 
                 let aboveDigitValue = (digitValue + 10 - 1) % 10
                 let belowDigitValue = (digitValue + 1) % 10
 
                 //character above
-                container.add(new DrawText(charX, charY + charHeight, font, aboveDigitValue.toString(), colorCounter))
-                container.add(new DrawBox(charX, charY + charHeight, charWidth, 1, colorDivider))
+                container.add(new DrawText(charX, charY - charHeight, font, aboveDigitValue.toString(), colorCounter))
+                container.add(new DrawBox(charX, charY - charHeight - 1, charWidth, 1, colorDivider))
 
                 //character
-                container.add(new DrawText(charX, charY, font, digitValue.toString(), colorCounter))
-                container.add(new DrawBox(charX, charY, charWidth, 1, colorDivider))
+                container.add(new DrawText(charX, charY , font, digitValue.toString(), colorCounter))
+                container.add(new DrawBox(charX, charY - 1, charWidth, 1, colorDivider))
 
                 //character below
-                container.add(new DrawText(charX, charY - charHeight, font, belowDigitValue.toString(), colorCounter))
-                container.add(new DrawBox(charX, charY - charHeight, charWidth, 1, colorDivider))
+                container.add(new DrawText(charX, charY + charHeight, font, belowDigitValue.toString(), colorCounter))
+                container.add(new DrawBox(charX, charY + charHeight - 1, charWidth, 1, colorDivider))
 
                 //draw divider between digits
-                container.add(new DrawBox(charX - 1, charY - charHeight, 1, charHeight * 3, colorDivider))
+                container.add(new DrawBox(charX-1, y, 1, charHeight, colorDivider))
 
                 //crop stuff thats outside
-                container.crop({xMin: x, yMin: y, xMax: x + digitCount * charWidth, yMax: y + font.height})
+                container.crop({xMin: x, yMin: y, xMax: x + digitCount * charWidth, yMax: y + font.height-1})
 
                 digitPixels[digitNr][offset] = container
 
@@ -64,7 +64,7 @@ export default class DrawCounter extends Draw {
 
     }
 
-    public async run(scheduler: Scheduler, controls: ControlGroup, x, y, digitCount = 5, speedPercentage=0.002) {
+    public async run(scheduler: Scheduler, controls: ControlGroup, x, y, digitCount = 5, speedPercentage = 0.002) {
 
         const font = fonts.C64
         font.load()
@@ -74,7 +74,7 @@ export default class DrawCounter extends Draw {
 
         const controlDigitColor = controls.color("Digit color", 255, 0x90, 0)
         const controlDividerColor = controls.color("Divider color", 0x80, 0x80, 0x80)
-        const controlSpeedPercentage = controls.value("Rotate speed", speedPercentage, 0, 0.025, 0.0001)
+        const controlSpeedPercentage = controls.value("Rotate speed", speedPercentage, 0, 0.025, 0.0001, true)
 
         const digitPixels = this.prepareDigits(x, y, charWidth, charHeight, digitCount, font, controlDigitColor, controlDividerColor)
 
@@ -130,7 +130,7 @@ export default class DrawCounter extends Draw {
                     }
 
                     //prevent leading zeros
-                    if (offset==0 && divided==0 && digitNr< digitCount-1)
+                    if (offset == 0 && divided == 0 && digitNr < digitCount - 1)
                         break
 
 
@@ -142,9 +142,7 @@ export default class DrawCounter extends Draw {
                 }
                 // console.log(str)
                 await scheduler.delay(1)
-            }
-            else
-            {
+            } else {
                 await scheduler.delay(10)
             }
         }

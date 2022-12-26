@@ -33,23 +33,23 @@ export function info(title: string, message: string = "", time = 2000) {
 
 let loaders = 0;
 export function progressStart() {
-    if (!loaders)
-        f7.preloader.show()
-
+    // if (!loaders)
+    //     f7.preloader.show()
+    //
     loaders++;
 
 }
 
 export function progressDone() {
     loaders--;
-    if (!loaders) {
-        f7.preloader.hide()
-    }
+    // if (!loaders) {
+    //     f7.preloader.hide()
+    // }
 }
 
 export function progressReset() {
-    loaders = 0;
-    f7.preloader.hide()
+    // loaders = 0;
+    // f7.preloader.hide()
 
 }
 

@@ -78,10 +78,12 @@ export default class BTC extends Animation {
                     }
 
                     counter.update(~~first)
+                    // counter.update(0)
                     init = false
                 }
 
                 counter.update(~~last)
+                // counter.update(100)
             })
         }
 
