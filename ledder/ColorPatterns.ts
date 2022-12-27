@@ -129,6 +129,15 @@ export function patternSelect(control:ControlGroup, name='Color pattern', select
     }
 
     const patternControl = control.select(name, selected, choices, true)
-    const pattern = patterns[patternControl.selected]
-    return (pattern)
+    const patternRangeControl = control.range(name+' range',0,100,0, 100,1, true )
+
+    const pattern=patterns[patternControl.selected]
+    if (patternRangeControl.from==0 && patternRangeControl.to==100)
+        return pattern
+    else
+    {
+        const startI=~~(patternRangeControl.from/100*pattern.length)
+        const endI=~~(patternRangeControl.to/100*pattern.length)
+        return (pattern.slice(startI, endI+1))
+    }
 }

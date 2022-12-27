@@ -32,6 +32,7 @@ export default class FxColorPattern extends Fx {
         this.pingpongControl=controls.switch('Ping pong', pingpong)
         this.cyclePattern = patternSelect(controls, 'Color cycle pattern', colorPatternName)
         this.offsetControl = controls.value('Per pixel offset %', offset, 0, 100, 0.1, true)
+
     }
 
 
