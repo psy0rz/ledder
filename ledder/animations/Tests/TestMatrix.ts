@@ -20,13 +20,13 @@ export default class TestMatrix extends Animation {
      */
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) {
 
-        //color bar
+        //color bar (R G B white)
         for (let x = 0; x < box.width(); x++) {
             const c = 255 / box.width() * (x + 1);
-            box.add(new Pixel(x, 4, new Color(c, 0, 0)));
-            box.add(new Pixel(x, 3, new Color(0, c, 0)));
-            box.add(new Pixel(x, 2, new Color(0, 0, c)));
-            box.add(new Pixel(x, 1, new Color(c, c, c)));
+            box.add(new Pixel(x, 1, new Color(c, 0, 0)));
+            box.add(new Pixel(x, 2, new Color(0, c, 0)));
+            box.add(new Pixel(x, 3, new Color(0, 0, c)));
+            box.add(new Pixel(x, 4, new Color(c, c, c)));
         }
 
         //corners
