@@ -24,12 +24,12 @@ export default class FxColorPattern extends Fx {
     private reverseControl: ControlSwitch
     private pingpongControl: ControlSwitch
 
-    constructor(scheduler: Scheduler, controls: ControlGroup, mode = "pingpong", cycleTime = 240, offset = 1, colorPatternName: string = 'Bertrik fire') {
+    constructor(scheduler: Scheduler, controls: ControlGroup,  cycleTime = 240, offset = 1, reverse=false, pingpong=true, colorPatternName: string = 'Bertrik fire') {
         super(scheduler, controls)
 
         this.cycleTimeControl = controls.value('Color cycle time', cycleTime, 0, 240, 1, true)
-        this.reverseControl=controls.switch('Reverse', false)
-        this.pingpongControl=controls.switch('Ping pong', false)
+        this.reverseControl=controls.switch('Reverse', reverse)
+        this.pingpongControl=controls.switch('Ping pong', pingpong)
         this.cyclePattern = patternSelect(controls, 'Color cycle pattern', colorPatternName)
         this.offsetControl = controls.value('Per pixel offset %', offset, 0, 100, 0.1, true)
     }

@@ -30,6 +30,10 @@ export default class Marquee extends Animation {
         const charPixels = new DrawText(box.xMin, box.yMin, font, input.text, colorControl)
         charPixels.centerV(box)
 
+        //scroll everything thats in this container (if enabled)
+        const scrollContainer=new PixelSet()
+        scrollContainer.add(charPixels)
+
         let starsGroup = control.group("Stars", false, false)
         if (starsGroup.switch('Enabled', false).enabled) {
             new MovingStars().run(box, scheduler, starsGroup)
@@ -42,19 +46,19 @@ export default class Marquee extends Animation {
 
 
         //add on top of stars
-        box.add(charPixels)
+        box.add(scrollContainer)
 
         let scrollGroup = control.group("Scrolling")
         if (scrollGroup.switch('Enabled', true).enabled) {
             const whitespace = scrollGroup.value("Whitespace", 10, 0, 100, 1, true)
             const rotator = new FxRotate(scheduler, scrollGroup)
 
-            const bbox = charPixels.bbox()
+            const bbox = scrollContainer.bbox()
             bbox.xMax = bbox.xMax + whitespace.value
             if (bbox.xMax < box.xMax)
                 bbox.xMax = box.xMax
 
-            rotator.run(charPixels, bbox)
+            rotator.run(scrollContainer, bbox)
         } else {
             charPixels.centerH(box)
         }
@@ -70,7 +74,7 @@ export default class Marquee extends Animation {
         if (twinkleGroup.switch('Enabled', false).enabled) {
             const twinkleContainer=new PixelSet()
             box.add(twinkleContainer)
-            new FxTwinkle(scheduler, twinkleGroup).run(charPixels,  charPixels)
+            new FxTwinkle(scheduler, twinkleGroup).run(charPixels,  scrollContainer)
         }
 
 
