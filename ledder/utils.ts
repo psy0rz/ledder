@@ -100,61 +100,38 @@ export function easeInOutQuart(x: number): number {
     return x < 0.5 ? 8 * x * x * x * x : 1 - Math.pow(-2 * x + 2, 4) / 2
 }
 
-//steps up from 0 to max with stepsize, never reaches max. return floored value
-export class ForwardStepper {
+
+//
+export class Stepper {
     public step: number
     public max: number
     public value: number
+    private reverse: boolean
+    private pingpong: boolean
 
-    constructor(max, step) {
+    constructor(max: number, step: number, reverse: boolean, pingpong: boolean) {
         this.step = step
         this.max = max
-        this.value = 0
+        this.reverse = reverse
+        this.pingpong=pingpong
+
+        //this makes sure that the first call to next() will return the first value
+        this.value = this.max
     }
 
+
     next() {
+
+        if (this.pingpong && this.value+this.step>=this.max)
+            this.reverse=!this.reverse
+
         this.value = (this.value + this.step) % this.max
-        return (~~this.value)
+
+        if (this.reverse)
+            return this.max-1-~~this.value
+        else
+            return ~~this.value
     }
 }
 
-export class ReverseStepper {
-    public step: number
-    public max: number
-    public value: number
 
-    constructor(max, step) {
-        this.step = step
-        this.max = max
-        this.value = 0
-    }
-
-    next() {
-        this.value = (this.value + this.step) % this.max
-        return (~~(this.max - 1 - this.value))
-    }
-}
-
-export class PingPongStepper {
-    public step: number
-    public max: number
-    public value: number
-
-    constructor(max, step) {
-        this.step = step
-        this.max = max
-        this.value = 0
-    }
-
-    next() {
-        this.value = (this.value + this.step)
-        if (this.value >= this.max) {
-            this.step = -Math.abs(this.step)
-            this.value = this.max + this.step
-        } else if (this.value < 0) {
-            this.step = Math.abs(this.step)
-            this.value =  this.step
-        }
-        return (~~(this.value))
-    }
-}

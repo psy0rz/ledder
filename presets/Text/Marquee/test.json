@@ -118,7 +118,13 @@
     "selected": "Bertrik fire"
    },
    "Per pixel offset": {
-    "value": 8.6
+    "value": 14.9
+   },
+   "Reverse": {
+    "enabled": false
+   },
+   "Ping pong": {
+    "enabled": true
    }
   }
  }
