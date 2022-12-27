@@ -131,7 +131,7 @@ export class ReverseStepper {
 
     next() {
         this.value = (this.value + this.step) % this.max
-        return (~~(this.max - this.value))
+        return (~~(this.max - 1 - this.value))
     }
 }
 

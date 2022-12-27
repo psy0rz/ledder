@@ -53,7 +53,11 @@ export default class FxColorPattern extends Fx {
         let mainStepper
         let internalStepper
 
-        let step = this.cyclePattern.length / this.cycleTimeControl.value
+        let step=0
+        if (this.cycleTimeControl.value>0)
+            step = this.cyclePattern.length / this.cycleTimeControl.value
+
+
         if (this.mode.selected == "reverse") {
             mainStepper = new ReverseStepper(this.cyclePattern.length, step)
             internalStepper=new ReverseStepper(this.cyclePattern.length, this.offsetControl.value)
@@ -72,11 +76,11 @@ export default class FxColorPattern extends Fx {
 
             //step
             let colorI = mainStepper.next()
-            internalStepper.value=colorI
-            if (colorI.step>0)
-                internalStepper.step=Math.abs(internalStepper.step)
+            internalStepper.value=mainStepper.value
+            if (mainStepper.step>=0)
+                internalStepper.step=this.offsetControl.value
             else
-                internalStepper.step=-Math.abs(internalStepper.step)
+                internalStepper.step=-this.offsetControl.value
 
             target.forEachPixel((p) => {
                 // Object.assign(p.color, this.cyclePattern[~~pixelColorI])
