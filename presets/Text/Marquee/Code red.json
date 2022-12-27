@@ -6,10 +6,10 @@
    "value": 60
   },
   "Font": {
-   "selected": "Anarchist"
+   "selected": "Skid Row"
   },
   "Text": {
-   "text": "Goldbar"
+   "text": "CODE RED"
   },
   "Text color": {
    "r": 165,
@@ -89,7 +89,7 @@
   },
   "Twinkle": {
    "Enabled": {
-    "enabled": true
+    "enabled": false
    },
    "Color step size": {
     "value": 4.800000000000001
@@ -130,29 +130,29 @@
     "enabled": true
    },
    "Color cycle time": {
-    "value": 112
+    "value": 56
    },
    "Color cycle mode": {
     "selected": "reverse"
    },
    "Color cycle pattern": {
-    "selected": "Brainsmoke fire"
+    "selected": "Bertrik fire"
    },
    "Per pixel offset": {
     "value": 14.9
    },
    "Reverse": {
-    "enabled": false
-   },
-   "Ping pong": {
     "enabled": true
    },
+   "Ping pong": {
+    "enabled": false
+   },
    "Color cycle pattern range": {
-    "from": 22,
-    "to": 59
+    "from": 33,
+    "to": 90
    },
    "Per pixel offset %": {
-    "value": 0.4
+    "value": 0
    }
   }
  }

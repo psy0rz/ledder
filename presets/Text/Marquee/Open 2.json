@@ -9,7 +9,7 @@
    "selected": "Anarchist"
   },
   "Text": {
-   "text": "Goldbar"
+   "text": "OPEN"
   },
   "Text color": {
    "r": 165,
@@ -89,7 +89,7 @@
   },
   "Twinkle": {
    "Enabled": {
-    "enabled": true
+    "enabled": false
    },
    "Color step size": {
     "value": 4.800000000000001
@@ -102,27 +102,6 @@
    },
    "Per pixel offset": {
     "value": 20
-   },
-   "Color": {
-    "r": 255,
-    "g": 255,
-    "b": 255,
-    "a": 1
-   },
-   "Twinkle density": {
-    "value": 3
-   },
-   "Create randomizer %": {
-    "value": 51
-   },
-   "Random colors": {
-    "enabled": false
-   },
-   "Fade out time": {
-    "value": 0
-   },
-   "Fade out time randomizer": {
-    "value": 17
    }
   },
   "Color pattern": {
@@ -130,13 +109,13 @@
     "enabled": true
    },
    "Color cycle time": {
-    "value": 112
+    "value": 54
    },
    "Color cycle mode": {
     "selected": "reverse"
    },
    "Color cycle pattern": {
-    "selected": "Brainsmoke fire"
+    "selected": "Bertrik fire"
    },
    "Per pixel offset": {
     "value": 14.9
@@ -148,11 +127,11 @@
     "enabled": true
    },
    "Color cycle pattern range": {
-    "from": 22,
-    "to": 59
+    "from": 0,
+    "to": 100
    },
    "Per pixel offset %": {
-    "value": 0.4
+    "value": 0.5
    }
   }
  }

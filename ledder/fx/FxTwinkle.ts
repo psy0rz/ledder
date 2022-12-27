@@ -22,8 +22,8 @@ export default class FxTwinkle extends Fx {
         super(scheduler, controls)
 
         this.colorControl = controls.color("Color", 255, 255, 255)
-        this.densityControl = controls.value("Twinkle density", 5, 0, 100)
-        this.createRandomizer = controls.value("Create randomizer %", 100, 50, 100)
+        this.densityControl = controls.value("Twinkle density", 3, 0, 10)
+        this.createRandomizer = controls.value("Create randomizer %", 50, 0, 100)
         this.randomColors=controls.switch("Random colors", false)
 
     }
