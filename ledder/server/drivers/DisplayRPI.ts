@@ -6,6 +6,7 @@ import OffsetMapper from "./OffsetMapper.js"
 /**
  * Uses rpi-ws281x-smi to drive up to 8 displays in parallel.
  * All displays should be oriented from left to right, starting with channel 0.
+ * https://github.com/psy0rz/rpi-ws281x-smi
  */
 export class DisplayRPI extends Display {
 

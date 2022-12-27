@@ -98,7 +98,7 @@
   },
   "Cursor": {
    "Enabled": {
-    "enabled": true
+    "enabled": false
    },
    "Color": {
     "r": 128,
@@ -187,6 +187,30 @@
   "Twinkle": {
    "Enabled": {
     "enabled": false
+   }
+  },
+  "Color pattern": {
+   "Enabled": {
+    "enabled": true
+   },
+   "Color cycle time": {
+    "value": 240
+   },
+   "Reverse": {
+    "enabled": false
+   },
+   "Ping pong": {
+    "enabled": true
+   },
+   "Color cycle pattern": {
+    "selected": "Rainbow"
+   },
+   "Color cycle pattern range": {
+    "from": 53,
+    "to": 86
+   },
+   "Per pixel offset %": {
+    "value": 1
    }
   }
  }

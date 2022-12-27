@@ -7,7 +7,7 @@ IP=$1
 
 [ "$IP" ] || exit 1
 
-STUFF="src www presets fonts ledder displayconf.js package.json"
+STUFF="src www presets fonts ledder package.json"
 
 #find $STUFF|entr -s "npm run build; rsync -avx $STUFF root@$IP:ledder && ssh root@$IP 'pkill node ;cd ledder && node js/server.js'"
 #npm run build

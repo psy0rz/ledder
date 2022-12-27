@@ -48,11 +48,12 @@ export default class BTC extends Animation {
         box.add(counter)
 
         const y=~~box.middleY()-3
+        const x=~~box.middleX()-8
+
         const digitCount=6
-        counter.run(scheduler, controls, box.xMax-(digitCount*7),y,digitCount, 0.001)
 
 
-        const label=new DrawText(1,y+1, fontSelect(controls), symbolSelect.selected, controls.color('Text color'))
+        const label=new DrawText(x-25,y+1, fontSelect(controls), symbolSelect.selected, controls.color('Text color'))
         box.add(label)
 
 
@@ -62,6 +63,8 @@ export default class BTC extends Animation {
             cryptoFirstLast(symbolSelect.selected,  (symbol, first, last) => {
 
                 if (init) {
+
+                    counter.run(scheduler, controls, x,y,digitCount, 0.001)
 
                     const percentage=((last/first)-1)*100
                     console.log("Percentage change 24h:", percentage)
