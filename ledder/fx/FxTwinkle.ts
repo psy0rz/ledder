@@ -36,20 +36,21 @@ export default class FxTwinkle extends Fx {
             for (let i = 0; i < this.densityControl.value; i++) {
                 if (this.createRandomizer.value > randomGaussian(0, 100)) {
                     const p = sourceContainer.randomPixel()
-                    const c = this.colorControl.copy()
+                    if (p!==undefined) {
+                        const c = this.colorControl.copy()
 
-                    if (this.randomColors.enabled)
-                    {
-                        c.r=random(0,c.r)
-                        c.g=random(0,c.g)
-                        c.b=random(0,c.b)
+                        if (this.randomColors.enabled) {
+                            c.r = random(0, c.r)
+                            c.g = random(0, c.g)
+                            c.b = random(0, c.b)
+                        }
+
+                        const twinkle = new Pixel(p.x, p.y, c)
+                        targetContainer.add(twinkle)
+                        fader.run(c).then(() => {
+                            targetContainer.delete(twinkle)
+                        })
                     }
-
-                    const twinkle = new Pixel(p.x, p.y, c)
-                    targetContainer.add(twinkle)
-                    fader.run(c).then( ()=>{
-                      targetContainer.delete(twinkle)
-                    })
                 }
             }
         })

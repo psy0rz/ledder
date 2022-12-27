@@ -130,7 +130,8 @@ export default class PixelSet extends Set<Pixel | PixelSet> {
 
     //get a "random" pixel from the tree.
     //note: because it chooses random containers as well, the pixel distribution might not be totally random
-    //it also can return undefined if it ends up at and empty tree.
+    //Use flatten() to fix this.
+    //it also can return undefined if it ends up at an tree!
     randomPixel(): Pixel | undefined {
         if (this.size == 0)
             return undefined
@@ -161,6 +162,26 @@ export default class PixelSet extends Set<Pixel | PixelSet> {
         }
 
         return (c)
+    }
+
+    //flatten all sub-pixelsets in this container, so we end up with a plain list of pixels.
+    flatten()
+    {
+        let pixels=new PixelSet()
+
+        this.forEachPixel( (p)=>
+        {
+            pixels.add(p)
+        })
+        this.clear()
+
+        pixels.forEachPixel( (p)=>
+        {
+            this.add(p)
+        })
+
+
+
     }
 
     //relatively move all pixels in this tree by this amount
@@ -217,6 +238,17 @@ export default class PixelSet extends Set<Pixel | PixelSet> {
                 }
             }
         )
+
+        //always returns a valid thing
+        if (ret===undefined)
+        {
+            ret={
+                        xMin: 0,
+                        yMin: 0,
+                        xMax: 0,
+                        yMax: 0
+            }
+        }
         return (ret)
     }
 

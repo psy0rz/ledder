@@ -9,7 +9,7 @@
    "selected": "C64"
   },
   "Text": {
-   "text": "Hackerspace Drenthe"
+   "text": "Hackerspace Drenthe. Iedere woensdag vanaf 18:00 geopend."
   },
   "Text color": {
    "r": 229,
@@ -57,6 +57,9 @@
    },
    "Rotate Y step": {
     "value": 0
+   },
+   "Circular": {
+    "enabled": false
    }
   },
   "Flames": {

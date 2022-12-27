@@ -36,24 +36,28 @@ export default class Template extends Animation {
                 const presetValues = await presetStore.load(animationName, presetName)
                 subControls.load(presetValues.values)
             }
-            animation.run(box, scheduler,subControls)
 
-            //fade in
+            const promise=animation.run(box, scheduler, subControls)
             await fader.run(box, false, 30)
 
-            await scheduler.delay(time/16.6)
+            if (time)
+                await scheduler.delay(time/16.6)
+            else
+                await promise
 
             // scheduler.clear()
         }
 
         const fxControls=controls.group("FX")
         while(1) {
-            await show("Text/BTC", "default", 6000)
+            await show("Logos/HSD", "default", 0)
+
+            await show("Text/BTC", "default", 8000)
             // scheduler.clear()
             // await new FxFlameout(scheduler, fxControls).run(box)
 
 
-            await show("Memes/ItsFine", "default", 3000)
+            await show("Memes/ItsFine", "default", 5000)
             // await new FxFlameout(scheduler, fxControls).run(box)
 
             await show("Memes/Nyancat", "default", 3000)
@@ -62,7 +66,6 @@ export default class Template extends Animation {
             await new FxFlameout(scheduler, fxControls).run(box)
 
 
-            await show("Logos/HSD", "default", 10000)
 
 
             // await show("Cyber", "default", 2000)

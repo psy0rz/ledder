@@ -14,6 +14,7 @@ import Animation from "../../Animation.js"
 import FxTemplate from "../../fx/Template.js"
 import FxTwinkle from "../../fx/FxTwinkle.js"
 import FxColorPattern from "../../fx/FxColorPattern.js"
+import {whitespace} from "svelte/types/compiler/utils/patterns.js"
 
 
 export default class Marquee extends Animation {
@@ -31,7 +32,7 @@ export default class Marquee extends Animation {
         charPixels.centerV(box)
 
         //scroll everything thats in this container (if enabled)
-        const scrollContainer=new PixelSet()
+        const scrollContainer = new PixelSet()
         scrollContainer.add(charPixels)
 
         let starsGroup = control.group("Stars", false, false)
@@ -49,16 +50,35 @@ export default class Marquee extends Animation {
         box.add(scrollContainer)
 
         let scrollGroup = control.group("Scrolling")
+        let rotatorPromise
         if (scrollGroup.switch('Enabled', true).enabled) {
-            const whitespace = scrollGroup.value("Whitespace", 10, 0, 100, 1, true)
+
             const rotator = new FxRotate(scheduler, scrollGroup)
 
-            const bbox = scrollContainer.bbox()
-            bbox.xMax = bbox.xMax + whitespace.value
-            if (bbox.xMax < box.xMax)
-                bbox.xMax = box.xMax
+            if (scrollGroup.switch('Circular', false, true).enabled) {
+                //circular display, only add whitespace
+                const whitespace = scrollGroup.value("Whitespace", 10, 0, 100, 1, true)
+                charPixels.move(whitespace.value, 0)
+                //replicate text until display is filled
+                const width=charPixels.bbox().xMax-box.xMin
+                if (charPixels.bbox().xMax>0) {
+                    let charPixelsCopy = charPixels.copy()
+                    while (charPixels.bbox().xMax < box.xMax) {
+                        charPixelsCopy.move(width, 0)
+                        charPixels.add(charPixelsCopy)
 
-            rotator.run(scrollContainer, bbox)
+                        charPixelsCopy=charPixelsCopy.copy()
+                    }
+                    charPixels.flatten()
+                }
+            } else {
+                //make sure marquee starts outside of the display
+                scrollContainer.move(box.width(), 0)
+            }
+            const textBbox = scrollContainer.bbox()
+            textBbox.xMin = 0
+
+            rotatorPromise=rotator.run(scrollContainer, textBbox, charPixels.bbox().xMax-box.xMin)
         } else {
             charPixels.centerH(box)
         }
@@ -72,9 +92,9 @@ export default class Marquee extends Animation {
 
         let twinkleGroup = control.group("Twinkle")
         if (twinkleGroup.switch('Enabled', false).enabled) {
-            const twinkleContainer=new PixelSet()
+            const twinkleContainer = new PixelSet()
             box.add(twinkleContainer)
-            new FxTwinkle(scheduler, twinkleGroup).run(charPixels,  scrollContainer)
+            new FxTwinkle(scheduler, twinkleGroup).run(charPixels, scrollContainer)
         }
 
 
@@ -105,6 +125,7 @@ export default class Marquee extends Animation {
             }
         }
 
+        await rotatorPromise
 
     }
 
