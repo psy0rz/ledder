@@ -1,5 +1,7 @@
 //led utils
 
+import {next} from "dom7"
+
 /**
  * Integer number wwith guassian bell curve distribution from min to max (inclusive)
  * from https://stackoverflow.com/questions/25582882/javascript-math-random-normal-distribution-gaussian-bell-curve
@@ -98,4 +100,61 @@ export function easeInOutQuart(x: number): number {
     return x < 0.5 ? 8 * x * x * x * x : 1 - Math.pow(-2 * x + 2, 4) / 2
 }
 
+//steps up from 0 to max with stepsize, never reaches max. return floored value
+export class ForwardStepper {
+    public step: number
+    public max: number
+    public value: number
 
+    constructor(max, step) {
+        this.step = step
+        this.max = max
+        this.value = 0
+    }
+
+    next() {
+        this.value = (this.value + this.step) % this.max
+        return (~~this.value)
+    }
+}
+
+export class ReverseStepper {
+    public step: number
+    public max: number
+    public value: number
+
+    constructor(max, step) {
+        this.step = step
+        this.max = max
+        this.value = 0
+    }
+
+    next() {
+        this.value = (this.value + this.step) % this.max
+        return (~~(this.max - this.value))
+    }
+}
+
+export class PingPongStepper {
+    public step: number
+    public max: number
+    public value: number
+
+    constructor(max, step) {
+        this.step = step
+        this.max = max
+        this.value = 0
+    }
+
+    next() {
+        this.value = (this.value + this.step)
+        if (this.value >= this.max) {
+            this.step = -Math.abs(this.step)
+            this.value = this.max + this.step
+        } else if (this.value < 0) {
+            this.step = Math.abs(this.step)
+            this.value =  this.step
+        }
+        return (~~(this.value))
+    }
+}

@@ -13,6 +13,7 @@ import FxFlames from "../../fx/FxFlames.js"
 import Animation from "../../Animation.js"
 import FxTemplate from "../../fx/Template.js"
 import FxTwinkle from "../../fx/FxTwinkle.js"
+import FxColorPattern from "../../fx/FxColorPattern.js"
 
 
 export default class Marquee extends Animation {
@@ -70,6 +71,12 @@ export default class Marquee extends Animation {
             const twinkleContainer=new PixelSet()
             box.add(twinkleContainer)
             new FxTwinkle(scheduler, twinkleGroup).run(charPixels,  charPixels)
+        }
+
+
+        let colorPatternGroup = control.group("Color pattern")
+        if (colorPatternGroup.switch('Enabled', false).enabled) {
+            new FxColorPattern(scheduler, colorPatternGroup).run(charPixels)
         }
 
         let cursorGroup = control.group("Cursor")

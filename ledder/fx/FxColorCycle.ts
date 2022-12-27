@@ -9,7 +9,7 @@ import {randomGaussian} from "../utils.js";
 import {patternSelect} from "../ColorPatterns.js";
 import ControlSelect from "../ControlSelect.js"
 
-//Smooth cycle through a list of color objects, with 60 fps. Calculating the optimum step size
+//Smooth cycle a color object through a list of different color objects, with 60 fps. Calculating the optimum step size
 export default class FxColorCycle extends Fx {
 
 
