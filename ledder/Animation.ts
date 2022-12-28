@@ -25,5 +25,10 @@ export default class Animation {
         console.error("Error: This animation has no run() function?")
 
     }
+
+    //called after the animation is stopped to allow cleanup of external stuff.
+    //Like connections to the outside world.
+    //Its not neccesary to cleanup internal stuff, so usually you dont need this.
+    cleanup?()
 }
 

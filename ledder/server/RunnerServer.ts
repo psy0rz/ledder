@@ -50,9 +50,13 @@ export class RunnerServer {
     }
 
     //reset animation, by creating new objects. This ensures that animation that still have some async call running cannot interfere with the next one.
+    //Also calls Animation.cleanup() to allow cleaning up such stuff.
     resetAnimation() {
         this.box = new PixelBox(this.display)
         this.scheduler = new Scheduler()
+        if (this.animation!==undefined && this.animation.cleanup !== undefined)
+            this.animation.cleanup()
+        this.animation=undefined
     }
 
 
@@ -139,8 +143,8 @@ export class RunnerServer {
     start() {
         console.log(`RunnerServer: Starting ${this.animationName}`)
         try {
-            this.animation = new this.animationClass()
             this.resetAnimation()
+            this.animation = new this.animationClass()
             this.animation.run(this.box, this.scheduler, this.controlGroup).then(() => {
                 console.log(`RunnerServer: Animation ${this.animationName} finished.`)
             }).catch((e) => {

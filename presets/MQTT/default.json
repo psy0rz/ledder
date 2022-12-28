@@ -1,0 +1,12 @@
+{
+ "title": "",
+ "description": "",
+ "values": {
+  "FPS": {
+   "value": 60
+  },
+  "MQTT host": {
+   "text": "mqtt://mqtt.iot"
+  }
+ }
+}

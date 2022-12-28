@@ -33,30 +33,6 @@ for (const m of config.displayList) {
 }
 
 
-/////////////////////////mqtt stuff
-//TODO: move/fix
-const client  = mqtt.connect(config.mqttHost,config.mqttOpts)
-
-client.on('connect', ()=> {
-    console.log("Connected to ", config.mqttHost)
-    client.subscribe(`/HACKERSPACE/${config.nodename}/run`, function (err) {
-    })
-})
-
-client.on('error', (e)=>{
-//    console.error("MQTT error: ",e)
-});
-
-
-client.on('message', async  (topic, message) =>{
-    let str=message.toString()
-    console.log("MQTT received: ",str)
-    let pars=str.split('/', 2)
-
-    for (const runner of runners) {
-        await runner.runName(pars[0], pars[1])
-    }
-})
 
 
 //RPC bindings

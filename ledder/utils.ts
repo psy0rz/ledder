@@ -1,7 +1,5 @@
 //led utils
 
-import {next} from "dom7"
-
 /**
  * Integer number wwith guassian bell curve distribution from min to max (inclusive)
  * from https://stackoverflow.com/questions/25582882/javascript-math-random-normal-distribution-gaussian-bell-curve
@@ -101,7 +99,9 @@ export function easeInOutQuart(x: number): number {
 }
 
 
-//
+//step from 0 to max (excluded), in reverse, forward or pingpong mode.
+//stepsize can be a float, and next() will always return a positive int.
+//Used for things like colorcycling,
 export class Stepper {
     public step: number
     public max: number
@@ -133,5 +133,4 @@ export class Stepper {
             return ~~this.value
     }
 }
-
 
