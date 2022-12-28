@@ -16,22 +16,31 @@ export default class MQTT extends Animation {
     }
 
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) {
-        const mqttHost = controls.input('MQTT host', "", true)
+        const mqttHost = controls.input('MQTT host', "mqtt", true)
+        const mqttTopic=controls.input('MQTT topic', "/ledder", true)
 
         statusMessage(box, `Conn ${mqttHost.text}...`)
         console.log(`MQTT: Connecting ${mqttHost.text}`)
-        this.client = mqtt.connect("mqtt://"+mqttHost.text, {})
+        this.client = mqtt.connect("mqtt://" + mqttHost.text, {})
 
+        this.client.on('reconnect', (e) => {
+            statusMessage(box, `Reconn ${mqttHost.text}...`)
+            console.log(`MQTT: Reconnecting ${mqttHost.text}`)
+
+        })
 
         this.client.on('connect', (e) => {
             console.log("MQTT: Connected")
             statusMessage(box, "Conn OK")
-            this.client.subscribe(`/HACKERSPACE/${config.nodename}/run`, function (err) {
-            })
+            this.client.subscribe(mqttTopic.text)
+            // function (err) {
+            //     console.log("MQTT error: ", err)
+            //     statusMessage(box,err.message)
+            // })
         })
 
         this.client.on('error', (e) => {
-            console.error("MQTT error: ", e)
+            console.error("MQTT error: ", e.message)
             statusMessage(box, e.message)
         })
 
@@ -39,6 +48,7 @@ export default class MQTT extends Animation {
         this.client.on('message', async (topic, message) => {
             let str = message.toString()
             console.log("MQTT received: ", str)
+            statusMessage(box, str)
             let pars = str.split('/', 2)
 
             // for (const runner of runners) {
