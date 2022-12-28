@@ -10,39 +10,16 @@ export default class Scheduler {
 
     frameNr: number;
     intervals: Set<Interval>
-    // private controls: PresetControl
 
     constructor() {
         this.frameNr = 0;
         this.intervals = new Set()
-        // this.controls=controls
 
     }
 
-    //abort handler for exceptions
-    // abortHandler(e) {
-    //
-    //     if (e != 'abort')
-    //         console.error("Interval: Promise was rejected: ", e)
-    //     else {
-    //
-    //         console.log("aborted")
-    //     }
-    // }
 
 
     clear() {
-        //install exception handlers on all promises first. (in case they dont have one yet)
-        // for (const interval of this.intervals) {
-        //     //interval.promise.catch(this.abortHandler)
-        // }
-
-        //now abort them all. this causes loops etc to be aborted as well. (since await will raise an error)
-        // for (const interval of this.intervals)
-        // {
-            //console.log("ABORTING", interval)
-               // interval.reject("abort")
-        // }
 
         this.intervals = new Set()
         this.frameNr=0
@@ -88,6 +65,7 @@ export default class Scheduler {
     step() {
         this.frameNr++;
 
+
         let i = 0;
         for (const interval of this.intervals) {
             try {
@@ -102,6 +80,7 @@ export default class Scheduler {
                 this.intervals.delete(interval)
             }
         }
+
     }
 
     status() {
