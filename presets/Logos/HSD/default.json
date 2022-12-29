@@ -60,6 +60,9 @@
    },
    "Circular": {
     "enabled": false
+   },
+   "Show one time only": {
+    "enabled": true
    }
   },
   "Flames": {

@@ -6,7 +6,10 @@
    "value": 60
   },
   "MQTT host": {
-   "text": "mqtt://mqtt.iot"
+   "text": "mqtt.hackerspace-drenthe.nl"
+  },
+  "MQTT topic": {
+   "text": "ledder"
   }
  }
 }

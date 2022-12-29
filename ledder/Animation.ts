@@ -29,6 +29,9 @@ export default class Animation {
     //called after the animation is stopped to allow cleanup of external stuff.
     //Like connections to the outside world.
     //Its not neccesary to cleanup internal stuff, so usually you dont need this.
-    cleanup?()
+    cleanup()
+    {
+
+    }
 }
 
