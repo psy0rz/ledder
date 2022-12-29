@@ -57,8 +57,8 @@ export default class Template extends Animation {
             // await new FxFlameout(scheduler, fxControls).run(box)
 
 
-            await show("Memes/ItsFine", "default", 5000)
-            // await new FxFlameout(scheduler, fxControls).run(box)
+            // await show("Memes/ItsFine", "default", 5000)
+            // // await new FxFlameout(scheduler, fxControls).run(box)
 
             await show("Memes/Nyancat", "default", 3000)
             // await new FxPacman(scheduler, fxControls).run(box, 0, box.height )

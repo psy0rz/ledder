@@ -37,15 +37,10 @@ export let displayList=[];
 //     new DisplayLedstream( 2, 8, 75, ["esp32-f008d161492c.local"], 65000, mapper), //painted board
 // ]
 
-//mqtt stuff used by some animations
-export let nodename="somename"
-export let mqttHost='mqtt://mqttserver.com'
-export let mqttOpts={
-
-    username: 'abc',
-    password: '12345',
-}
 
 //default animation and preset
 export let animationName="Tests/TestMatrix"
 export let presetName="default"
+
+export let brightness=255
+export let gamma=2.8

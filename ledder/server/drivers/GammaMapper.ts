@@ -4,6 +4,7 @@
 
 import ControlGroup from "../../ControlGroup.js"
 import ControlValue from "../../ControlValue.js"
+import {config} from "../config.js"
 
 
 export default class GammaMapper extends Array {
@@ -14,8 +15,8 @@ export default class GammaMapper extends Array {
   {
     super()
 
-    this.gammaControl = controlGroup.value("Gamma", 2.8, 0, 5, 0.1, true)
-    this.brightnessControl = controlGroup.value("Brightness", 255, 0, 255, 1, true)
+    this.gammaControl = controlGroup.value("Gamma", config.gamma, 0, 5, 0.1, true)
+    this.brightnessControl = controlGroup.value("Brightness", config.brightness, 0, 255, 1, true)
 
     controlGroup.setChangedCallback(() =>
     {

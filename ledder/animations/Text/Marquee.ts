@@ -55,6 +55,9 @@ export default class Marquee extends Animation {
 
             const rotator = new FxRotate(scheduler, scrollGroup)
 
+            //show one time or loop?
+            let waitX=0
+
             if (scrollGroup.switch('Circular', false, true).enabled) {
                 //circular display, only add whitespace
                 const whitespace = scrollGroup.value("Whitespace", 10, 0, 100, 1, true)
@@ -74,11 +77,15 @@ export default class Marquee extends Animation {
             } else {
                 //make sure marquee starts outside of the display
                 scrollContainer.move(box.width(), 0)
+
+                //only show one time?
+                if (scrollGroup.switch('Show one time only', false, true).enabled)
+                    waitX=charPixels.bbox().xMax-box.xMin
             }
             const textBbox = scrollContainer.bbox()
             textBbox.xMin = 0
 
-            rotatorPromise=rotator.run(scrollContainer, textBbox, charPixels.bbox().xMax-box.xMin)
+            rotatorPromise=rotator.run(scrollContainer, textBbox, waitX)
         } else {
             charPixels.centerH(box)
         }
