@@ -1,5 +1,5 @@
 import PixelBox from "../../PixelBox.js"
-import PixelSet from "../../PixelSet.js"
+import PixelList from "../../PixelList.js"
 import FxBlink from "../../fx/FxBlink.js"
 import DrawText from "../../draw/DrawText.js"
 import Scheduler from "../../Scheduler.js"
@@ -16,7 +16,7 @@ export default class Haxogreen extends Animation {
 
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) {
 
-        const c = new PixelSet()
+        const c = new PixelList()
         box.add(c)
 
         const blinker = new FxBlink(scheduler, controls, 5, 5, 5)

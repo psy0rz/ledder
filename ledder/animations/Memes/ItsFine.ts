@@ -1,7 +1,7 @@
 import PixelBox from "../../PixelBox.js"
 import Fire from "../Fires/Fire.js"
 import DrawText from "../../draw/DrawText.js"
-import PixelSet from "../../PixelSet.js"
+import PixelList from "../../PixelList.js"
 import Scheduler from "../../Scheduler.js"
 import ControlGroup from "../../ControlGroup.js"
 import {fontSelect} from "../../fonts.js"
@@ -29,7 +29,7 @@ export default class ItsFine extends Animation {
         text.center(box)
 
         await scheduler.delay(60 * 4)
-        const flames = new PixelSet()
+        const flames = new PixelList()
         box.add(flames)
         new FxFlames(scheduler, controls.group("Top fire")).run(text, flames)
 

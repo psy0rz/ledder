@@ -1,5 +1,5 @@
 import PixelBox from "../../PixelBox.js"
-import PixelSet from "../../PixelSet.js"
+import PixelList from "../../PixelList.js"
 import DrawText from "../../draw/DrawText.js"
 import FxPattern from "../../fx/FxPattern.js"
 import DrawBox from "../../draw/DrawBox.js"
@@ -22,21 +22,21 @@ export default class PoliceLights extends Animation {
 
         /////////////// text
         const font = fontSelect(controls)
-        const textList=new PixelSet()
+        const textList=new PixelList()
 
         const colorText1 = controls.color("Text1 color", 255, 0, 0, 1);
         const inputText1 = controls.input('Text1', 'STOP', true)
         textList.add(new DrawText(0,0, font, overrideText1?overrideText1:inputText1.text, colorText1).center(box))
-        textList.add(new PixelSet()) //blank screen
+        textList.add(new PixelList()) //blank screen
 
         const colorText2 = controls.color("Text2 color", 255, 0, 0, 1);
         const inputText2 = controls.input('Text2', 'POLICE', true)
 
         textList.add(new DrawText(0, 0, font, overrideText2?overrideText2:inputText2.text, colorText2).center(box))
-        textList.add(new PixelSet()) //blank screen
+        textList.add(new PixelList()) //blank screen
 
         //fxmovie will display the 2 text-containers that are in the textList container:
-        const textTarget=new PixelSet()
+        const textTarget=new PixelList()
         box.add(textTarget)
         new FxPattern(scheduler, controls, 60).run(textList, textTarget, [60,5,60,5])
 
@@ -56,7 +56,7 @@ export default class PoliceLights extends Animation {
 
         //lamps on the background, so use a sepate container as a layer.
         //the texts above will be added to the display directly by FxMovie while running, so they will end up on top.
-        let lampsLayer=new PixelSet()
+        let lampsLayer=new PixelList()
         box.add(lampsLayer)
 
         //call the blinker effect on the left and right lamps

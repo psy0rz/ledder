@@ -1,7 +1,7 @@
 import PixelBox from "../../PixelBox.js"
 import Scheduler from "../../Scheduler.js"
 import ControlGroup from "../../ControlGroup.js"
-import PixelSet from "../../PixelSet.js"
+import PixelList from "../../PixelList.js"
 import DrawAsciiArt from "../../draw/DrawAsciiArt.js"
 import {random} from "../../utils.js"
 import FxMovie from "../../fx/FxMovie.js"
@@ -30,7 +30,7 @@ export default class MovingStars extends Animation {
 
     createStar(x,y, c)
     {
-        let star = new PixelSet()
+        let star = new PixelList()
         for (const ascii of starAscii)
             star.add(new DrawAsciiArt(x, y, c,ascii))
         return (star)
@@ -40,7 +40,7 @@ export default class MovingStars extends Animation {
 
         const starColorControl = controls.color("Star color", 255, 255, 255, 0.2);
 
-        const stars=new PixelSet()
+        const stars=new PixelList()
         box.add(stars)
 
         const starsControl = controls.value("Number of stars", 10, 1, 100, 1, true)

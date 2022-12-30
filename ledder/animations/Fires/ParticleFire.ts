@@ -1,7 +1,7 @@
 import PixelBox from "../../PixelBox.js"
 import FxRandomMove from "../../fx/FxRandomMove.js"
 import FxColorCycle from "../../fx/FxColorCycle.js"
-import PixelSet from "../../PixelSet.js"
+import PixelList from "../../PixelList.js"
 import {glow, randomGaussian} from "../../utils.js"
 import Color from "../../Color.js"
 import Pixel from "../../Pixel.js"
@@ -37,10 +37,10 @@ export default class ParticleFire extends Animation {
         let sparksMover = new FxRandomMove(scheduler, sparksGroup.group("Movement"), -1, 1, -0.1, 0.1, 1, 0, true)
         wind.run(box, 0, box)
 
-        let fireContainer = new PixelSet()
+        let fireContainer = new PixelList()
         box.add(fireContainer)
 
-        let sparksContainer = new PixelSet()
+        let sparksContainer = new PixelList()
         box.add(sparksContainer)
         // sparksMover.run(sparksContainer)
 

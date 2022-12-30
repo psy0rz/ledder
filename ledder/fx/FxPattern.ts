@@ -1,7 +1,7 @@
 import Fx from "../Fx.js";
 import ControlGroup from "../ControlGroup.js";
 import Scheduler from "../Scheduler.js";
-import PixelSet from "../PixelSet.js";
+import PixelList from "../PixelList.js";
 
 //"plays" a collection of pixelcontainers with a specfied timing pattern, by adding/removing them to the specified target container.
 export default class FxPattern extends Fx {
@@ -14,7 +14,7 @@ export default class FxPattern extends Fx {
 
     }
 
-    run(source: PixelSet, target: PixelSet, intervals:Array<number>, startFrame=0, repeat = 0) {
+    run(source: PixelList, target: PixelList, intervals:Array<number>, startFrame=0, repeat = 0) {
 
         this.running = true
 

@@ -1,7 +1,7 @@
 import Fx from "../Fx.js"
 import ControlValue from "../ControlValue.js"
 import ControlGroup from "../ControlGroup.js"
-import PixelSet from "../PixelSet.js"
+import PixelList from "../PixelList.js"
 import BoxInterface from "../BoxInterface.js"
 import Scheduler from "../Scheduler.js"
 import {random, randomFloatGaussian, randomGaussian} from "../utils.js"
@@ -28,7 +28,7 @@ export default class FxTwinkle extends Fx {
 
     }
 
-    run(sourceContainer: PixelSet, targetContainer: PixelSet) {
+    run(sourceContainer: PixelList, targetContainer: PixelList) {
 
         const fader = new FxFadeOut(this.scheduler, this.controls, 0, 30)
 

@@ -3,7 +3,7 @@ import DrawText from "../../draw/DrawText.js"
 import MovingStars from "../Components/MovingStars.js"
 import Starfield from "../Components/Starfield.js"
 import FxRotate from "../../fx/FxRotate.js"
-import PixelSet from "../../PixelSet.js"
+import PixelList from "../../PixelList.js"
 import DrawBox from "../../draw/DrawBox.js"
 import {FxFadeOut} from "../../fx/FxFadeOut.js"
 import Scheduler from "../../Scheduler.js"
@@ -32,7 +32,7 @@ export default class Marquee extends Animation {
         charPixels.centerV(box)
 
         //scroll everything thats in this container (if enabled)
-        const scrollContainer = new PixelSet()
+        const scrollContainer = new PixelList()
         scrollContainer.add(charPixels)
 
         let starsGroup = control.group("Stars", false, false)
@@ -92,14 +92,14 @@ export default class Marquee extends Animation {
 
         let flameGroup = control.group("Flames", false, false)
         if (flameGroup.switch('Enabled', false).enabled) {
-            const flames = new PixelSet()
+            const flames = new PixelList()
             box.add(flames)
             new FxFlames(scheduler, flameGroup).run(charPixels, flames)
         }
 
         let twinkleGroup = control.group("Twinkle")
         if (twinkleGroup.switch('Enabled', false).enabled) {
-            const twinkleContainer = new PixelSet()
+            const twinkleContainer = new PixelList()
             box.add(twinkleContainer)
             new FxTwinkle(scheduler, twinkleGroup).run(charPixels, scrollContainer)
         }

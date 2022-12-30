@@ -7,7 +7,7 @@ import Scheduler from "../Scheduler.js"
 import {Stepper} from "../utils.js"
 import {patternSelect} from "../ColorPatterns.js"
 import ControlSelect from "../ControlSelect.js"
-import PixelSet from "../PixelSet.js"
+import PixelList from "../PixelList.js"
 import ControlSwitch from "../ControlSwitch.js"
 
 //Applies a color pattern to all pixels in a container. Colors are applied in order of the pixels.
@@ -36,7 +36,7 @@ export default class FxColorPattern extends Fx {
     }
 
 
-    run(target: PixelSet) {
+    run(target: PixelList) {
 
         this.running = true
         let mainStepper

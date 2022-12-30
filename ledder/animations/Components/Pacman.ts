@@ -1,7 +1,7 @@
 import PixelBox from "../../PixelBox.js"
 import Scheduler from "../../Scheduler.js"
 import ControlGroup from "../../ControlGroup.js"
-import PixelSet from "../../PixelSet.js"
+import PixelList from "../../PixelList.js"
 import DrawAsciiArt from "../../draw/DrawAsciiArt.js"
 import FxMovie from "../../fx/FxMovie.js"
 import FxRotate from "../../fx/FxRotate.js"
@@ -17,7 +17,7 @@ export default class Pacman extends Animation {
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup, x = 0, y = 0) {
 
 
-        const frames = new PixelSet()
+        const frames = new PixelList()
         frames.add(new DrawAsciiArtColor(x, y, `
         00yyyy0.
         0yyyyyy.

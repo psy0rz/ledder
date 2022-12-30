@@ -1,6 +1,6 @@
 import PixelBox from "../../PixelBox.js"
 import DrawText from "../../draw/DrawText.js"
-import PixelSet from "../../PixelSet.js"
+import PixelList from "../../PixelList.js"
 import DrawBox from "../../draw/DrawBox.js"
 import Scheduler from "../../Scheduler.js"
 import {colorBlack} from "../../Colors.js"
@@ -20,13 +20,13 @@ export default class Cyber extends  Animation
         const text = new DrawText(0, 0, font, "CYBER", controls.color("tekst", 255,255,0))
         text.center(box)
 
-        const a=new PixelSet()
+        const a=new PixelList()
         a.add(text)
 
         const text2 = new DrawText(0, 0, font, "CYBER", colorBlack)
         text2.center(box)
 
-        const b=new PixelSet()
+        const b=new PixelList()
         b.add(new DrawBox(box.xMin,box.yMin,box.width(), box.height(), controls.color("tekst")))
         b.add(text2)
 

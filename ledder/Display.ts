@@ -1,4 +1,4 @@
-import PixelSet from "./PixelSet.js"
+import PixelList from "./PixelList.js"
 import ColorInterface from "./ColorInterface.js"
 import Pixel from "./Pixel.js"
 import GammaMapper from "./server/drivers/GammaMapper.js"
@@ -85,14 +85,14 @@ export default abstract class Display {
     }
 
     //recursively renders all pixels in this pixeltree
-    render(container: PixelSet) {
+    render(container: PixelList) {
         for (const p of container) {
             if (p instanceof Pixel) {
                 if (p.color.a !== 0) {
                     this.setPixel(p.x, p.y, p.color)
                     // this.colors.add(p.color)
                 }
-            } else if (p instanceof PixelSet) {
+            } else if (p instanceof PixelList) {
                 this.render(p)
             }
         }

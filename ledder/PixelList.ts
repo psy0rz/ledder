@@ -10,7 +10,8 @@ import ColorInterface from "./ColorInterface.js";
  * Also layering is done with this: The render engine renders the PixelSets the order you've added them.
  * A single Pixel object can be referenced by multiple pixel containers.
  */
-export default class PixelSet extends Set<Pixel | PixelSet> {
+export default class PixelList extends Set<Pixel | PixelList> {
+
 
 
 
@@ -106,7 +107,7 @@ export default class PixelSet extends Set<Pixel | PixelSet> {
             for (const p of this) {
                 if (p instanceof Pixel)
                     str = str + indent + `(${p.x}, ${p.y}) (r${p.color.r}, g${p.color.g}, b${p.color.b}, a${p.color.a})\n`
-                else if (p instanceof PixelSet) {
+                else if (p instanceof PixelList) {
                     str = str + p.dump(indent)
                 } else {
                     str = str + indent + `Illegal object type: ${typeof (p)}`
@@ -118,7 +119,7 @@ export default class PixelSet extends Set<Pixel | PixelSet> {
 
 
     //calls  callbackfn for each pixel in the pixeltree
-    forEachPixel(callbackfn: (pixel: Pixel, parent: PixelSet) => void) {
+    forEachPixel(callbackfn: (pixel: Pixel, parent: PixelList) => void) {
         // this.recurseForEachPixel(callbackfn, this)
         for (const p of this) {
             if (p instanceof Pixel)
@@ -155,7 +156,7 @@ export default class PixelSet extends Set<Pixel | PixelSet> {
     //Use copyColor=true to also create copies of the color objects in each pixel
     //NOTE: you should only use copy() if needed, in all other cases just use references
     copy(copyColor = false) {
-        let c = new PixelSet()
+        let c = new PixelList()
         for (const p of this) {
             //NOTE: both Pixel and PixelContainer have the .copy() function, so no if-statement needed here
             c.add(p.copy(copyColor))
@@ -167,7 +168,7 @@ export default class PixelSet extends Set<Pixel | PixelSet> {
     //flatten all sub-pixelsets in this container, so we end up with a plain list of pixels.
     flatten()
     {
-        let pixels=new PixelSet()
+        let pixels=new PixelList()
 
         this.forEachPixel( (p)=>
         {

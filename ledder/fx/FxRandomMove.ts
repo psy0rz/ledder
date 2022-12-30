@@ -1,7 +1,7 @@
 import Fx from "../Fx.js";
 import ControlValue from "../ControlValue.js";
 import ControlGroup from "../ControlGroup.js";
-import PixelSet from "../PixelSet.js";
+import PixelList from "../PixelList.js";
 import Scheduler from "../Scheduler.js";
 import { random, randomFloatGaussian} from "../utils.js";
 import ControlSwitch from "../ControlSwitch.js";
@@ -39,7 +39,7 @@ export default class FxRandomMove extends Fx {
 
     //move all pixels in the pixelcontainer
     //stops after steps number of steps
-    run(container: PixelSet , steps?: number, bbox?: BoxInterface) {
+    run(container: PixelList , steps?: number, bbox?: BoxInterface) {
         this.running = true
 
 

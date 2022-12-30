@@ -1,7 +1,7 @@
 import Fx from "../Fx.js"
 import ControlValue from "../ControlValue.js"
 import ControlGroup from "../ControlGroup.js"
-import PixelSet from "../PixelSet.js"
+import PixelList from "../PixelList.js"
 import BoxInterface from "../BoxInterface.js"
 import Scheduler from "../Scheduler.js"
 import {random} from "../utils.js"
@@ -28,7 +28,7 @@ export default class FxRotate extends Fx {
 
     //rotate pixels inside specified bbox if specified. (otherwise uses bbox() of pixelcontainer)
     //waitX and waitY will stop and resolve the promise when axis has shifted this much.
-    run(container: PixelSet, bbox?: BoxInterface, waitX?: number, waitY?: number) {
+    run(container: PixelList, bbox?: BoxInterface, waitX?: number, waitY?: number) {
         this.running = true
 
         if (bbox === undefined)
