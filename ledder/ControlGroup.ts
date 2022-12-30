@@ -146,7 +146,8 @@ export default class ControlGroup extends Control {
             this.add(controlGroup);
             controlGroup.setCallbacks(
                 () => {
-                    this.clear()
+                    //ging mis als mqtt 2x gestart werd en this.controls.clear() deed
+                    // this.clear()
                 },
                 () => {
                     if (this.addControlCallback)

@@ -58,7 +58,7 @@ export function cryptoFirstLast(symbol = 'BTCUSDT', callback: (symbol, first, la
 
     //start new request
     console.debug("Starting new request")
-    cache[symbol].inProgress=true
+    cache[symbol].inProgress = true
     try {
         const url = `https://api2.binance.com/api/v3/ticker/24hr?symbol=${symbol}&type=mini`
         https.get(url, (res) => {
@@ -85,7 +85,12 @@ export function cryptoFirstLast(symbol = 'BTCUSDT', callback: (symbol, first, la
                 cache[symbol].inProgress = false
                 cache[symbol].callbacks = []
             })
+        }).on('error', (err) => {
+            console.error(err)
+            cache[symbol].inProgress = false
+            cache[symbol].callbacks = []
         })
+
     } catch (e) {
         console.error(e)
         cache[symbol].inProgress = false

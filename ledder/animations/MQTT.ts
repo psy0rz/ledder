@@ -3,11 +3,33 @@ import Scheduler from "../Scheduler.js"
 import ControlGroup from "../ControlGroup.js"
 import Animation from "../Animation.js"
 import mqtt, {MqttClient} from "mqtt"
-import {config} from "../server/config.js"
 import {statusMessage} from "../message.js"
 import {PresetStore} from "../server/PresetStore.js"
-import controls from "../../src/pages/controls.svelte"
-import {nameAndPreset} from "../../src/pages/animationrunner.svelte"
+import DrawText from "../draw/DrawText.js"
+import {random} from "../utils.js"
+import {id} from "framework7/shared/utils.js"
+
+// class test{
+//     constructor() {
+//
+//     }
+//
+//     async test1()
+//     {
+//
+//         console.log("1het is ", this.id)
+//     }
+//     test2()
+//     {
+//         this.id=random(0,1000)
+//         console.log("2het is ", this.id)
+//     }
+//
+// }
+//
+// let t=new test()
+// t.test2()
+// t.test1()
 
 
 export default class MQTT extends Animation {
@@ -17,16 +39,20 @@ export default class MQTT extends Animation {
     private box: PixelBox
     private scheduler: Scheduler
     private controls: ControlGroup
+    private lastStatusMessage: DrawText
 
     cleanup() {
+        console.log("clean", this.id)
         if (this.client !== undefined)
-            this.client.end(true)
+            this.client.end(false)
+
+        this.animationReset()
     }
 
-    async animationReset() {
+    animationReset() {
         if (this.currentAnimation !== undefined) {
             this.currentAnimation.cleanup()
-            this.currentAnimation == undefined
+            this.currentAnimation = undefined
         }
         this.scheduler.clear()
         this.box.clear()
@@ -35,18 +61,35 @@ export default class MQTT extends Animation {
     }
 
     async animationRun(animationName, presetName) {
+
         this.animationReset()
 
-        const presetStore = new PresetStore()
-        const animationClass = await presetStore.loadAnimation(animationName)
-        const animation = new animationClass()
-        const presetValues = await presetStore.load(animationName, presetName)
-        this.controls.load(presetValues.values)
-        return animation.run(this.box, this.scheduler, this.controls)
+        try {
+            const presetStore = new PresetStore()
+            const animationClass = await presetStore.loadAnimation(animationName)
+            this.currentAnimation = new animationClass()
+            const presetValues = await presetStore.load(animationName, presetName)
+            this.controls.load(presetValues.values)
+            return this.currentAnimation.run(this.box, this.scheduler, this.controls)
+        } catch (e) {
+            this.statusMessage("Error: " + e.message)
+        }
 
     }
 
+    cleanStatusMesage() {
+        if (this.lastStatusMessage)
+            this.box.delete(this.lastStatusMessage)
+    }
+
+    statusMessage(text: string) {
+        this.cleanStatusMesage()
+        this.lastStatusMessage = statusMessage(this.box, text)
+    }
+
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) {
+        this.id = random(0, 10000)
+        console.log("IK HEB ID", this.id)
         const mqttHost = controls.input('MQTT host', "mqtt", true)
         const mqttTopic = controls.input('MQTT topic', "ledder", true)
 
@@ -54,25 +97,25 @@ export default class MQTT extends Animation {
         this.scheduler = scheduler
         this.controls = controls.group('Current animation')
 
-        statusMessage(box, `Conn ${mqttHost.text}...`)
+        this.statusMessage(`Conn ${mqttHost.text}...`)
         console.log(`MQTT: Connecting ${mqttHost.text}`)
         this.client = mqtt.connect("mqtt://" + mqttHost.text, {})
 
         this.client.on('reconnect', (e) => {
-            statusMessage(box, `Reconn ${mqttHost.text}...`)
+            this.statusMessage(`Reconn ${mqttHost.text}...`)
             console.log(`MQTT: Reconnecting ${mqttHost.text}`)
 
         })
 
         this.client.on('connect', (e) => {
             console.log("MQTT: Connected")
-            statusMessage(box, "Conn OK")
+            this.statusMessage("Conn OK")
             this.client.subscribe(mqttTopic.text + '/#')
         })
 
         this.client.on('error', (e) => {
             console.error("MQTT error: ", e.message)
-            statusMessage(box, e.message)
+            this.statusMessage(e.message)
         })
 
 
@@ -86,9 +129,16 @@ export default class MQTT extends Animation {
             let pars = parts.slice(1)
 
             if (cmd == 'run') {
-                let animationName = message.match(RegExp("(^.*)/"))[1]
-                let presetName = message.match(RegExp("[^/]+$"))[0]
-                this.animationRun(animationName, presetName)
+                console.log("MQTT: Running animation")
+                try {
+                    let animationName = message.match(RegExp("(^.*)/"))[1]
+                    let presetName = message.match(RegExp("[^/]+$"))[0]
+                    this.animationRun(animationName, presetName)
+
+                } catch (e) {
+                    console.error("MQTT error while starting animation: ", e)
+                    this.statusMessage("Animation failed.")
+                }
             }
 
         })

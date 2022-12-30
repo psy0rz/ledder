@@ -1,0 +1,16 @@
+{
+ "title": "",
+ "description": "",
+ "values": {
+  "FPS": {
+   "value": 60
+  },
+  "MQTT host": {
+   "text": "localhost"
+  },
+  "MQTT topic": {
+   "text": "ledder"
+  },
+  "Current animation": {}
+ }
+}

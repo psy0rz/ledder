@@ -22,6 +22,7 @@ export class WsContext {
         this.client = client
         this.id = id
         this.started=false
+        console.log(`WsContext: New session ${id}`)
 
 
 
@@ -83,7 +84,7 @@ export class WsContext {
     //websocket closed
     stop()
     {
-        console.log(`Stopping ws ${this.id}`)
+        console.log(`WsContext: Stopping ${this.id}`)
         this.stopPreview()
     }
 

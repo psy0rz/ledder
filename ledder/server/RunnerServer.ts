@@ -52,6 +52,8 @@ export class RunnerServer {
     //reset animation, by creating new objects. This ensures that animation that still have some async call running cannot interfere with the next one.
     //Also calls Animation.cleanup() to allow cleaning up such stuff.
     resetAnimation() {
+        // console.log(`RunnerServer: Animation ${this.animationName} finished.`)
+
         this.box = new PixelBox(this.display)
         this.scheduler = new Scheduler()
         if (this.animation!==undefined && this.animation.cleanup !== undefined)
@@ -141,12 +143,12 @@ export class RunnerServer {
 
     //create class instance of currently selected animation and run it
     start() {
-        console.log(`RunnerServer: Starting ${this.animationName}`)
+        console.log(`RunnerServer: Starting: ${this.animationName} ${this.presetName}`)
         try {
             this.resetAnimation()
             this.animation = new this.animationClass()
             this.animation.run(this.box, this.scheduler, this.controlGroup).then(() => {
-                console.log(`RunnerServer: Animation ${this.animationName} finished.`)
+                // console.log(`RunnerServer: Animation ${this.animationName} finished.`)
             }).catch((e) => {
                 if (e != 'abort') {
                     console.error(`RunnerServer: Animation ${this.animationName} rejected promise: `, e)
@@ -177,7 +179,7 @@ export class RunnerServer {
         this.animationClass = await this.presetStore.loadAnimation(animationName)
         this.autoreload(this.presetStore.animationFilename(animationName)).then()
 
-        console.log("Runner: starting", animationName, presetName)
+        // console.log("Runner: starting", animationName, presetName)
         this.resetControls()
 
         this.presetValues = await this.presetStore.load(animationName, presetName)
@@ -203,7 +205,7 @@ export class RunnerServer {
     restart(keepPresets: boolean = false) {
         if (!keepPresets)
             this.resetControls()
-
+        console.log("RESTART")
         this.start()
     }
 

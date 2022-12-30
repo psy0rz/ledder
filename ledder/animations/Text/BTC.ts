@@ -16,6 +16,7 @@ export default class BTC extends Animation {
 
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) {
 
+
         let init = true
         let counter
 
@@ -90,7 +91,7 @@ export default class BTC extends Animation {
             })
         }
 
-        update()
+       update()
 
         scheduler.interval(30*60, () => update())
 
