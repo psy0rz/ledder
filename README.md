@@ -10,12 +10,21 @@ npm install
 npm run build
 ```
 
-After that just start it with:
+Installing/building takes long, but after that starting will be fast:
+
 ```
 npm start
 ```
 
 Go to http://localhost:3000
+
+## Docker 
+
+Just use
+```
+docker-compose up
+```
+Takes a while, since it also has to render the previews the first time.
 
 ## Development
 
