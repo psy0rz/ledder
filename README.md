@@ -2,6 +2,10 @@
 
 ![ledder](./doc/2022-12-30_23-25.png)
 
+Make cool animated pixel animations, and stream it to a led matrix display.
+
+Control in realtime via a webgui.
+
 (No documentation yet)
 
 ## Quick start
