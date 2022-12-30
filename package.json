@@ -8,10 +8,10 @@
   "repository": "",
   "license": "UNLICENSED",
   "scripts": {
-    "start": "npm run dev",
-    "dev": "node ledder/server/buildpreviews.js;NODE_ENV=development node ledder/server/server.js",
+    "start": "NODE_ENV=production node ledder/server/server.js",
+    "dev": "NODE_ENV=development node ledder/server/server.js",
     "perftest": "node ledder/server/perftest.js",
-    "build": "tsc ; NODE_ENV=production vite build",
+    "build": "tsc ; NODE_ENV=production vite build;node ledder/server/buildpreviews.js",
     "buildpreviews": "node ledder/server/buildpreviews.js",
     "production": "NODE_ENV=production node ledder/server/server.js"
   },
