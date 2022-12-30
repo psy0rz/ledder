@@ -22,11 +22,9 @@ RUN NODE_ENV=development npm install
 
 COPY . .
 
-RUN npm run build
-RUN npm run buildpreviews
+RUN npm run buildcode
 
 RUN npm prune --production
-
 
 # final stage
 FROM node:current-alpine AS final
@@ -37,4 +35,4 @@ COPY --from=builder /app /app
 
 
 
-CMD [ "npm", "run", "production" ]
+CMD [ "npm", "run", "docker" ]
