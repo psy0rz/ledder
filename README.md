@@ -1,5 +1,7 @@
 # Ledder
 
+![ledder](./doc/2022-12-30_23-25.png)
+
 (No documentation yet)
 
 ## Quick start
@@ -32,3 +34,4 @@ Takes a while, since it also has to render the previews the first time.
 
 * Webinterface stuff is under src/ (ignore it :)
 
+![ledder](./doc/2022-12-30_23-25_1.png)
