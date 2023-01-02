@@ -3,14 +3,12 @@ import {PresetStore} from "./PresetStore.js"
 import {PresetValues} from "../PresetValues.js"
 import Animation from "../Animation.js"
 // import * as fs from "fs";
-import {watch} from "fs/promises"
-import {AbortController} from "node-abort-controller"
 import Scheduler from "../Scheduler.js"
 import ControlGroup from "../ControlGroup.js"
 import ControlValue from "../ControlValue.js"
 import {Values} from "../Control.js"
-import Pixel from "../Pixel.js"
 import PixelBox from "../PixelBox.js"
+import AnimationManager from "./AnimationManager.js"
 
 
 /**
@@ -23,13 +21,12 @@ export class RunnerServer {
 
     private presetStore: PresetStore
     private animationClass: typeof Animation
-    private animation: Animation
     private animationName: string
     private presetName: string
     private presetValues: PresetValues
 
-    private restartTimeout: any
-    private watchAbort: any
+    // private restartTimeout: any
+    // private watchAbort: any
 
     // private renderInterval: any
     private lastTime: number
@@ -37,29 +34,34 @@ export class RunnerServer {
 
     private fpsControl: ControlValue
     public box: PixelBox
+    public animationManager: AnimationManager
 
     constructor(display: Display, controls: ControlGroup, presetStore: PresetStore) {
         this.display = display
 
         this.controlGroup = controls
         this.presetStore = presetStore
-        this.resetControls()
-        this.resetAnimation()
+        this.box=new PixelBox(display)
+
+        this.scheduler=new Scheduler()
+        this.animationManager=new AnimationManager(this.box, this.scheduler, controls )
+        // this.resetControls()
+        // this.resetAnimation()
         // console.log("Runner server for ", display)
 
     }
 
-    //reset animation, by creating new objects. This ensures that animation that still have some async call running cannot interfere with the next one.
-    //Also calls Animation.cleanup() to allow cleaning up such stuff.
-    resetAnimation() {
-        // console.log(`RunnerServer: Animation ${this.animationName} finished.`)
-
-        this.box = new PixelBox(this.display)
-        this.scheduler = new Scheduler()
-        if (this.animation!==undefined && this.animation.cleanup !== undefined)
-            this.animation.cleanup()
-        this.animation=undefined
-    }
+    // //reset animation, by creating new objects. This ensures that animation that still have some async call running cannot interfere with the next one.
+    // //Also calls Animation.cleanup() to allow cleaning up such stuff.
+    // resetAnimation() {
+    //     // console.log(`RunnerServer: Animation ${this.animationName} finished.`)
+    //
+    //     this.box = new PixelBox(this.display)
+    //     this.scheduler = new Scheduler()
+    //     if (this.animation!==undefined && this.animation.cleanup !== undefined)
+    //         this.animation.cleanup()
+    //     this.animation=undefined
+    // }
 
 
     startRenderLoop() {
@@ -107,107 +109,107 @@ export class RunnerServer {
         // clearInterval(this.renderInterval)
     }
 
-    //automaticly reload animation file on change to make development easier.
-    async autoreload(filename: string) {
-
-        if (this.watchAbort !== undefined)
-            this.watchAbort.abort()
-
-        this.watchAbort = new AbortController()
-
-        let watcher = watch(filename, {
-            signal: this.watchAbort.signal
-        })
-
-        try {
-            for await (const event of watcher) {
-                console.log("Detected animation file change:", event)
-                if (this.restartTimeout !== undefined)
-                    clearTimeout(this.restartTimeout)
-                this.restartTimeout = setTimeout(() => this.reload(), 100)
-            }
-        } catch (e) {
-            if (e.name === 'AbortError')
-                return
-            throw e
-        }
-    }
+    // //automaticly reload animation file on change to make development easier.
+    // async autoreload(filename: string) {
+    //
+    //     if (this.watchAbort !== undefined)
+    //         this.watchAbort.abort()
+    //
+    //     this.watchAbort = new AbortController()
+    //
+    //     let watcher = watch(filename, {
+    //         signal: this.watchAbort.signal
+    //     })
+    //
+    //     try {
+    //         for await (const event of watcher) {
+    //             console.log("Detected animation file change:", event)
+    //             if (this.restartTimeout !== undefined)
+    //                 clearTimeout(this.restartTimeout)
+    //             this.restartTimeout = setTimeout(() => this.reload(), 100)
+    //         }
+    //     } catch (e) {
+    //         if (e.name === 'AbortError')
+    //             return
+    //         throw e
+    //     }
+    // }
 
 
     //stop everything because of cleanup/close
     stop() {
         this.stopRenderLoop()
-        this.resetAnimation()
-
+        // this.resetAnimation()
+        this.animationManager.stop(false)
     }
 
     //create class instance of currently selected animation and run it
-    start() {
-        console.log(`RunnerServer: Starting: ${this.animationName} ${this.presetName}`)
-        try {
-            this.resetAnimation()
-            this.animation = new this.animationClass()
-            this.animation.run(this.box, this.scheduler, this.controlGroup).then(() => {
-                // console.log(`RunnerServer: Animation ${this.animationName} finished.`)
-            }).catch((e) => {
-                if (e != 'abort') {
-                    console.error(`RunnerServer: Animation ${this.animationName} rejected promise: `, e)
-                    // if (process.env.NODE_ENV === 'development')
-                    //     throw(e)
-                }
-            })
-        } catch (e) {
-            console.error("RunnerServer: Exception in animation", e)
-            // if (process.env.NODE_ENV === 'development')
-            //     throw(e)
-        }
-    }
+    // start() {
+    //     console.log(`RunnerServer: Starting: ${this.animationName} ${this.presetName}`)
+    //     try {
+    //         this.resetAnimation()
+    //         this.animation = new this.animationClass()
+    //         this.animation.run(this.box, this.scheduler, this.controlGroup).then(() => {
+    //             // console.log(`RunnerServer: Animation ${this.animationName} finished.`)
+    //         }).catch((e) => {
+    //             if (e != 'abort') {
+    //                 console.error(`RunnerServer: Animation ${this.animationName} rejected promise: `, e)
+    //                 // if (process.env.NODE_ENV === 'development')
+    //                 //     throw(e)
+    //             }
+    //         })
+    //     } catch (e) {
+    //         console.error("RunnerServer: Exception in animation", e)
+    //         // if (process.env.NODE_ENV === 'development')
+    //         //     throw(e)
+    //     }
+    // }
 
-    resetControls() {
-        this.controlGroup.clear()
-        this.fpsControl = this.controlGroup.value("FPS", 60, 1, 120)
-        this.display.setFps(this.fpsControl.value)
+    // resetControls() {
+    //     this.controlGroup.clear()
+    //     this.fpsControl = this.controlGroup.value("FPS", 60, 1, 120)
+    //     this.display.setFps(this.fpsControl.value)
+    //
+    // }
 
-    }
+    // //load presetName and run
+    // async runName(animationName: string, presetName: string = "default") {
+    //
+    //
+    //     this.presetName = presetName
+    //     this.animationName = animationName
+    //     this.animationClass = await this.presetStore.loadAnimation(animationName)
+    //     this.autoreload(this.presetStore.animationFilename(animationName)).then()
+    //
+    //     // console.log("Runner: starting", animationName, presetName)
+    //     this.resetControls()
+    //
+    //     this.presetValues = await this.presetStore.load(animationName, presetName)
+    //
+    //     this.controlGroup.load(this.presetValues.values)
+    //     this.display.setFps(this.fpsControl.value)
+    //
+    //     this.start()
+    //
+    // }
+    //
+    // //force reload of animation from disk
+    // async reload() {
+    //     try {
+    //         if (this.animationName !== undefined)
+    //             await this.runName(this.animationName, this.presetName)
+    //     } catch (e) {
+    //         console.error(e)
+    //     }
+    // }
 
-    //load presetName and run
-    async runName(animationName: string, presetName: string = "default") {
-
-
-        this.presetName = presetName
-        this.animationName = animationName
-        this.animationClass = await this.presetStore.loadAnimation(animationName)
-        this.autoreload(this.presetStore.animationFilename(animationName)).then()
-
-        // console.log("Runner: starting", animationName, presetName)
-        this.resetControls()
-
-        this.presetValues = await this.presetStore.load(animationName, presetName)
-
-        this.controlGroup.load(this.presetValues.values)
-        this.display.setFps(this.fpsControl.value)
-
-        this.start()
-
-    }
-
-    //force reload of animation from disk
-    async reload() {
-        try {
-            if (this.animationName !== undefined)
-                await this.runName(this.animationName, this.presetName)
-        } catch (e) {
-            console.error(e)
-        }
-    }
-
-    //restart animation but optionally keep preset values.
-    restart(keepPresets: boolean = false) {
-        if (!keepPresets)
-            this.resetControls()
-        console.log("RESTART")
-        this.start()
-    }
+    // //restart animation but optionally keep preset values.
+    // restart(keepPresets: boolean = false) {
+    //     if (!keepPresets)
+    //         this.resetControls()
+    //     console.log("RESTART")
+    //     this.start()
+    // }
 
     //save current running animation preset
     async save(presetName: string) {

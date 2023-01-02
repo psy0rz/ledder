@@ -24,11 +24,11 @@ for (const m of config.displayList) {
     let display:Display
     display = m
     display.gammaMapper=gammaMapper
-    let controlGroup = new ControlGroup('Animation controls')
+    let controlGroup = new ControlGroup('Root')
 
     let runner = new RunnerServer(display, controlGroup, presetStore)
     runner.startRenderLoop()
-    await runner.runName(config.animationName, config.presetName)
+    runner.animationManager.select(config.animation)
     runners.push(runner)
 }
 

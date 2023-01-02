@@ -4,7 +4,19 @@ import IntervalStatic from "./IntervalStatic.js"
 import Interval from "./Interval.js"
 import ValueInterface from "./ValueInterface.js"
 import IntervalOnce from "./IntervalOnce.js"
+/*
 
+ A
+ b=a.child()
+ c=b.child()
+
+ alles wijst naar a.intervals
+ a.step() word gecalled
+
+
+
+
+ */
 
 export default class Scheduler {
 
@@ -16,26 +28,38 @@ export default class Scheduler {
     // public finished: Promise<any>
 
 
-    constructor() {
+    constructor(parentIntervals?: Set<Interval>) {
 
+        if (parentIntervals !== undefined)
+            this.intervals = parentIntervals
+        else
+            this.intervals = new Set()
+        this.frameNr = 0
 
         this.clear()
 
     }
 
+    //NOTE: never call this yourself, its used by AnimationManager
+    //Return a new Scheduler which uses our intervals-set.
+    //This way we can detach ourself to prevent "stopped" animation from adding new stuff to the scheduler.
+    public child()
+    {
+        return (new Scheduler(this.intervals))
+    }
 
+    //NOTE: never call this yourself, its used by AnimationManager
+    //Detach ourself from parent scheduler.
+    //Creates a new this.interval, so that only we control it.
+    //Its like a super-clear() :p
+    public detach() {
+        this.intervals = new Set()
+    }
+
+    //clear all intervals
     public clear() {
 
-        this.intervals = new Set()
-        this.frameNr = 0
-
-        // if (this.resolve !== undefined)
-        //     this.resolve(true)
-        //
-        // this.finished = new Promise((resolve, reject) => {
-        //     this.resolve = resolve
-        //     this.reject = reject
-        // })
+        this.intervals.clear()
 
     }
 
