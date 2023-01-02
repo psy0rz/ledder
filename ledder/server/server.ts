@@ -57,6 +57,7 @@ rpc.addMethod("context.runner.delete", async (params, context) =>
 
 
 rpc.addMethod("context.startPreview", async (params, context) => {
+    console.log("start preview")
    await context.startPreview(presetStore, params[0], params[1])
 })
 

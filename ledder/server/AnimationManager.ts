@@ -108,7 +108,7 @@ export default class AnimationManager {
     }
 
     //start or restart currently loaded animation
-    public async start(keepControls: boolean) {
+    public async restart(keepControls: boolean) {
         this.stop(keepControls)
         return this.run()
 
@@ -122,23 +122,23 @@ export default class AnimationManager {
         this.newChilds(keepControls)
     }
 
+    //force reload of animation from disk and restart it
+    public async reload(keepControls: boolean) {
+        this.stop(keepControls)
+        await this.load()
+        this.run()
+
+    }
+
     //select an animation and preset, load it and start it
     public async select(animationAndPresetPath: string, keepControls: boolean) {
         this.animationName = animationAndPresetPath.match(RegExp("(^.*)/"))[1]
         this.presetName = animationAndPresetPath.match(RegExp("[^/]+$"))[0]
 
-        await this.load()
-        return this.start(keepControls)
+        await this.reload(keepControls)
 
     }
 
-    //force reload of animation from disk and restart it
-    public async reload(keepControls: boolean) {
-        this.stop(keepControls)
-        await this.load()
-        return this.start(keepControls)
-
-    }
 
 
     //automaticly reload animation file on change to make development easier.
@@ -170,7 +170,7 @@ export default class AnimationManager {
     public updateValue(path: [string], values: Values): boolean {
         const ret = this.childControlGroup.updateValue(path, values)
         if (ret)
-            this.start(true)
+            this.restart(true)
         return ret
     }
 
