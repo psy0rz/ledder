@@ -23,15 +23,13 @@ export default class Scheduler {
     private frameNr: number
     private intervals: Set<Interval>
 
-    // private resolve: (value: boolean) => void
-    // private reject: (reason?: any) => void
-    // public finished: Promise<any>
 
+    constructor(parentScheduler?: Scheduler) {
 
-    constructor(parentIntervals?: Set<Interval>) {
+        if (parentScheduler !== undefined) {
+            this.intervals = parentScheduler.intervals
 
-        if (parentIntervals !== undefined)
-            this.intervals = parentIntervals
+        }
         else
             this.intervals = new Set()
         this.frameNr = 0
@@ -45,7 +43,7 @@ export default class Scheduler {
     //This way we can detach ourself to prevent "stopped" animation from adding new stuff to the scheduler.
     public child()
     {
-        return (new Scheduler(this.intervals))
+        return new Scheduler(this)
     }
 
     //NOTE: never call this yourself, its used by AnimationManager

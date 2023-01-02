@@ -50,11 +50,18 @@ export default class AnimationManager {
         this.childBox = new PixelBox(this.box)
         this.box.add(this.childBox)
 
+        if (this.childScheduler!==undefined)
+            this.childScheduler.detach()
         this.childScheduler = this.scheduler.child()
+
         this.animation = undefined
 
-        if (!keepControls)
-            this.childControlGroup = this.controlGroup.group('Child')
+        if (!keepControls) {
+            if (this.childControlGroup!==undefined)
+                this.childControlGroup.detach()
+
+            this.childControlGroup=this.controlGroup.child()
+        }
     }
 
     //cleanup existing child stuff
@@ -63,6 +70,7 @@ export default class AnimationManager {
             this.animation.cleanup()
         this.childScheduler.clear() //will actual clear parent as well
         this.childBox.clear()
+        this.childControlGroup.clear()
 
         if (!keepControls)
             this.childControlGroup.clear()

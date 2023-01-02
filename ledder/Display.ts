@@ -15,6 +15,7 @@ export default abstract class Display {
 
     //maximum fps this driver supports
     maxFps = 60
+    defaultFps=60
     //should frametimes be whole numbers (usefull for ledstream)
     roundFrametime = false
 
@@ -46,6 +47,8 @@ export default abstract class Display {
         this.yMin = 0
         this.xMax = width - 1
         this.yMax = height - 1
+
+        this.setFps(this.defaultFps)
 
         // this.colors=new Set()
     }
