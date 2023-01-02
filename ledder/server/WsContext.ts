@@ -49,6 +49,7 @@ export class WsContext {
         this.runner = new RunnerServer(display,  controls, presetStore)
         this.runner.startRenderLoop()
 
+        //todo: add delay or queue
         controls.setCallbacks(
             () => {
                 this.request("control.reset").then()

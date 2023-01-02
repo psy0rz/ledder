@@ -229,11 +229,11 @@ export class RunnerServer {
         }
     }
 
-    updateValue(path: [string], values: Values): boolean {
-        const ret = this.controlGroup.updateValue(path, values)
-        this.display.setFps(this.fpsControl.value)
-        return ret
-    }
+    // updateValue(path: [string], values: Values): boolean {
+    //     const ret = this.controlGroup.updateValue(path, values)
+    //     this.display.setFps(this.fpsControl.value)
+    //     return ret
+    // }
 }
 
 

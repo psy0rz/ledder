@@ -161,6 +161,7 @@ export default class ControlGroup extends Control {
     }
 
 
+
     setCallbacks(reset, addControl) {
         this.resetCallback = reset
         this.addControlCallback = addControl
@@ -201,6 +202,7 @@ export default class ControlGroup extends Control {
         }
     }
 
+    //return true if animation should be restarted
     updateValue(path: [string], values: Values): boolean {
         let changed=false
 

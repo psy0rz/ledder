@@ -28,7 +28,7 @@ for (const m of config.displayList) {
 
     let runner = new RunnerServer(display, controlGroup, presetStore)
     runner.startRenderLoop()
-    runner.animationManager.select(config.animation)
+    runner.animationManager.select(config.animation, false)
     runners.push(runner)
 }
 
@@ -68,23 +68,20 @@ rpc.addMethod("context.stopPreview", async (params, context) => {
 rpc.addMethod("runner.runName", async (params, context) => {
 
     if (context.runner)
-        await context.runner.runName(params[0], params[1])
+        await context.runner.animationManager.select(params[0]+"/"+ params[1], false)
 
     for (const runner of runners) {
-        await runner.runName(params[0], params[1])
+        await runner.animationManager.select(params[0]+"/"+ params[1], false)
     }
 })
 
 rpc.addMethod("display.control.updateValue", async (params, context) => {
 
     if (context.runner)
-        if (context.runner.updateValue(params[0], params[1])) {
-            context.runner.restart(true)
-        }
+     context.runner.animationManager.updateValue(params[0], params[1])
 
     for (const runner of runners) {
-        if (runner.updateValue(params[0], params[1]))
-            runner.restart(true)
+        runner.animationManager.updateValue(params[0], params[1])
     }
 })
 
