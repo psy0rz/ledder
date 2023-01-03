@@ -9,19 +9,31 @@ import PixelBox from "../PixelBox.js"
 import DrawText from "../draw/DrawText.js"
 import {fonts, fontSelect} from "../fonts.js"
 import {Col} from "framework7-svelte"
+import {colorRed} from "../Colors.js"
 
 export default class Test extends Animation {
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) {
-    console.log(fonts)
-        box.add(new DrawText(0,0, fontSelect(controls), "Test 123.", new Color(255,0,0)))
-        // box.add(new DrawText(0,0, fontSelect(controls, "A", "Tiny 3x3"), "Test 123.", new Color(0,255,0)))
 
-        scheduler.interval(1, ()=>
+        setInterval(() => {
+            console.log("test interval")
+            try {
+                box.add(new Pixel(0, 0, colorRed))
+            } catch (e) {
 
-        {
-            box.move(1,0)
-            box.wrapX(box)
-        })
+            }
+            try {
+                scheduler.interval(60, () => {
+                    console.log("SCHEDULER LOOPT NOG")
+                })
+            } catch (e) {
+
+            }
+            try {
+                controls.value("TEST")
+            } catch (e) {
+
+            }
+        }, 1000)
 
     }
 }

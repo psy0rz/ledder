@@ -38,7 +38,7 @@ export default class AnimationManager {
         this.scheduler = scheduler
         this.controlGroup = controlGroup
 
-        this.newChilds(false)
+        this.detachChilds(false)
 
     }
 
@@ -46,22 +46,28 @@ export default class AnimationManager {
     // This ensures that animations that still have some async call running cannot interfere anymore.
     // Dont forget to cleanup() before, if needed
     // Also detaches this.animation.
-    private newChilds(keepControls: boolean) {
+    private detachChilds(keepControls: boolean) {
+        //box
+        if (this.childBox!==undefined)
+            this.box.delete(this.childBox)
+
         this.childBox = new PixelBox(this.box)
         this.box.add(this.childBox)
 
+        //scheduler
         if (this.childScheduler!==undefined)
             this.childScheduler.detach()
         this.childScheduler = this.scheduler.child()
 
+        //controls
+        if (this.childControlGroup!==undefined)
+            this.childControlGroup.detach()
+
+        this.childControlGroup=this.controlGroup.child()
+
+        //animation
         this.animation = undefined
 
-        if (!keepControls) {
-            if (this.childControlGroup!==undefined)
-                this.childControlGroup.detach()
-
-            this.childControlGroup=this.controlGroup.child()
-        }
     }
 
     //cleanup existing child stuff
@@ -70,10 +76,10 @@ export default class AnimationManager {
             this.animation.cleanup()
         this.childScheduler.clear() //will actual clear parent as well
         this.childBox.clear()
-        this.childControlGroup.clear()
 
-        if (!keepControls)
-            this.childControlGroup.clear()
+        if (!keepControls) {
+            this.controlGroup.clear()
+        }
     }
 
 
@@ -102,7 +108,8 @@ export default class AnimationManager {
     private async load() {
         this.animationClass = await this.presetStore.loadAnimation(this.animationName)
         this.presetValues = await this.presetStore.load(this.animationName, this.presetName)
-        this.childControlGroup.load(this.presetValues.values)
+        // this.childControlGroup.load(this.presetValues.values)
+        this.controlGroup.load(this.presetValues.values)
 //        this.autoreload(this.presetStore.animationFilename(this.animationName)).then()
 
     }
@@ -119,7 +126,7 @@ export default class AnimationManager {
     public stop(keepControls: boolean) {
 
         this.cleanup(keepControls)
-        this.newChilds(keepControls)
+        this.detachChilds(keepControls)
     }
 
     //force reload of animation from disk and restart it
@@ -168,7 +175,8 @@ export default class AnimationManager {
     // }
 
     public updateValue(path: [string], values: Values): boolean {
-        const ret = this.childControlGroup.updateValue(path, values)
+        // const ret = this.childControlGroup.updateValue(path, values)
+        const ret = this.controlGroup.updateValue(path, values)
         if (ret)
             this.restart(true)
         return ret

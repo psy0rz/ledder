@@ -8,7 +8,7 @@ import ControlSelect, {Choices} from "./ControlSelect.js"
 import ControlRange from "./ControlRange.js"
 
 
-type ControlMap = Record<string,  Control>
+type ControlMap = Record<string, Control>
 
 interface ControlGroupMeta extends ControlMeta {
     controls: ControlMap
@@ -49,20 +49,19 @@ export default class ControlGroup extends Control {
         const c = new ControlGroup()
         c.meta = this.meta
         c.loadedValues = this.loadedValues
-        c.addControlCallback=this.addControlCallback
-        c.resetCallback=this.resetCallback
-        c.changedCallback=this.changedCallback
+        c.addControlCallback = this.addControlCallback
+        c.resetCallback = this.resetCallback
+        c.changedCallback = this.changedCallback
         return (c)
     }
 
     //detach ourself from parent (invalidates all fields)
-    detach()
-    {
-        this.meta=undefined
-        this.loadedValues=undefined
-        this.addControlCallback=undefined
-        this.resetCallback=undefined
-        this.changedCallback=undefined
+    detach() {
+        this.meta = undefined
+        this.loadedValues = undefined
+        this.addControlCallback = undefined
+        this.resetCallback = undefined
+        this.changedCallback = undefined
 
     }
 
@@ -222,7 +221,14 @@ export default class ControlGroup extends Control {
      * Set different preset
      */
     load(values: Values) {
-        this.loadedValues = values
+
+        //we cant do a regular assignment since it has to stay attached to parent/child
+        for (const key in this.loadedValues) {
+            delete this.loadedValues[key]
+        }
+        Object.assign(this.loadedValues, values)
+
+        // this.loadedValues = values
 
         //update existing controls
         for (const [name, control] of Object.entries(this.meta.controls)) {
