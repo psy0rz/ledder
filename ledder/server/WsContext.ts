@@ -45,21 +45,23 @@ export class WsContext {
         this.started=true
 
         let controls = new ControlGroup('Root controls')
-        let display = new DisplayWebsocket( width, height, this.ws)
-        this.runner = new RunnerServer(display,  controls, presetStore)
-        this.runner.startRenderLoop()
-
         //todo: add delay or queue
         controls.setCallbacks(
             () => {
                 this.request("control.reset").then()
             },
             (control) => {
+                console.log("add", control)
                 this.request("control.add", control).then()
             })
             // (controlName, controlValues) => {
             //     this.request("control.update", controlName, controlValues)
             // })
+
+        let display = new DisplayWebsocket( width, height, this.ws)
+        this.runner = new RunnerServer(display,  controls, presetStore)
+        this.runner.startRenderLoop()
+
 
         this.statsInterval=setInterval( ()=>{
             let count=0

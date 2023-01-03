@@ -8,10 +8,9 @@ import ControlSelect, {Choices} from "./ControlSelect.js"
 import ControlRange from "./ControlRange.js"
 
 
-type ControlMap = Map<string, Control>
+type ControlMap = Record<string,  Control>
 
 interface ControlGroupMeta extends ControlMeta {
-    // controls:  {[key: string]: Control}
     controls: ControlMap
     collapsed: boolean
 }
@@ -37,10 +36,10 @@ export default class ControlGroup extends Control {
     constructor(name: string = 'root', restartOnChange: boolean = false, collapsed = false) {
         super(name, 'controls', restartOnChange)
 
-        this.clear()
         this.meta.collapsed = collapsed
-        this.meta.controls = new Map()
+        this.meta.controls = {}
         this.loadedValues = {}
+        this.clear()
 
     }
 
@@ -68,9 +67,11 @@ export default class ControlGroup extends Control {
     }
 
     clear() {
-        this.meta.controls.clear()
+        //make sure stuff stays attached to parent, in case we're a child
+        for (const key in this.meta.controls) {
+            delete this.meta.controls[key]
+        }
 
-        //make sure loadedValues stays attached to parent, in case we're a child
         for (const key in this.loadedValues) {
             delete this.loadedValues[key]
         }
@@ -97,6 +98,7 @@ export default class ControlGroup extends Control {
 
     }
 
+
     /**
      * Get or create value-control with specified name
      * @param name Name of the control
@@ -110,7 +112,7 @@ export default class ControlGroup extends Control {
         if (!(name in this.meta.controls)) {
             this.add(new ControlValue(name, value, min, max, step, restartOnChange))
         }
-        return this.meta.controls[name]
+        return this.meta.controls[name] as ControlValue
     }
 
 
@@ -128,7 +130,7 @@ export default class ControlGroup extends Control {
         if (!(name in this.meta.controls)) {
             this.add(new ControlRange(name, from, to, min, max, step, restartOnChange))
         }
-        return this.meta.controls[name]
+        return this.meta.controls[name] as ControlRange
     }
 
 
@@ -141,7 +143,7 @@ export default class ControlGroup extends Control {
         }
 
 
-        return this.meta.controls[name]
+        return this.meta.controls[name] as ControlColor
     }
 
     input(name: string, text: string, restartOnChange: boolean = false): ControlInput {
@@ -149,7 +151,7 @@ export default class ControlGroup extends Control {
             this.add(new ControlInput(name, text, restartOnChange))
         }
 
-        return this.meta.controls[name]
+        return this.meta.controls[name] as ControlInput
     }
 
     switch(name: string, enabled: boolean, restartOnChange: boolean = true): ControlSwitch {
@@ -157,7 +159,7 @@ export default class ControlGroup extends Control {
             this.add(new ControlSwitch(name, enabled, restartOnChange))
         }
 
-        return this.meta.controls[name]
+        return this.meta.controls[name] as ControlSwitch
     }
 
     select(name: string, selected: string, choices: Choices, restartOnChange: boolean = false): ControlSelect {
@@ -165,7 +167,7 @@ export default class ControlGroup extends Control {
             this.add(new ControlSelect(name, selected, choices, restartOnChange))
         }
 
-        return this.meta.controls[name]
+        return this.meta.controls[name] as ControlSelect
     }
 
     //sub Controls group instance.
@@ -185,7 +187,7 @@ export default class ControlGroup extends Control {
             )
         }
 
-        return this.meta.controls[name]
+        return this.meta.controls[name] as ControlGroup
 
     }
 
@@ -230,7 +232,7 @@ export default class ControlGroup extends Control {
     }
 
     //return true if animation should be restarted
-    updateValue(path: [string], values: Values): boolean {
+    updateValue(path: Array<string>, values: Values): boolean {
         let changed = false
 
         if (this.meta.controls[path[0]] !== undefined) {
