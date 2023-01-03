@@ -47,11 +47,11 @@ export abstract class DisplayQOIS extends Display {
 
         this.statsBytes = 0
 
-        setInterval(() => {
-            const raw = this.pixelCount * 3 * this.fps
-            // console.log(`"QOIS stats: ${this.statsBytes} of ${raw} bytes/s. compression=${100 - ~~(this.statsBytes * 100 / raw)})`)
-            this.statsBytes = 0
-        }, 1000)
+        // setInterval(() => {
+        //     const raw = this.pixelCount * 3 * this.fps
+        //     // console.log(`"QOIS stats: ${this.statsBytes} of ${raw} bytes/s. compression=${100 - ~~(this.statsBytes * 100 / raw)})`)
+        //     this.statsBytes = 0
+        // }, 1000)
 
     }
 

@@ -22,17 +22,21 @@ export default class Scheduler {
 
     private frameNr: number
     private intervals: Set<Interval>
+    private frameTimeMicros: number
 
 
     constructor(parentScheduler?: Scheduler) {
 
         if (parentScheduler !== undefined) {
             this.intervals = parentScheduler.intervals
+            this.setFrameTime=parentScheduler.setFrameTime
 
         }
         else
             this.intervals = new Set()
+
         this.frameNr = 0
+        this.frameTimeMicros=0
 
         this.clear()
 
@@ -52,7 +56,20 @@ export default class Scheduler {
     //Its like a super-clear() :p
     public detach() {
         this.intervals = new Set()
+        this.setFrameTime=()=>{}
     }
+
+    /*
+     * Sets FPS, by specifying the frametime in whole uS.
+     * The actual FPS depends on the display driver. Some use rounding, and most have maximum limits.
+     * Set to 0 to use default FPS of display driver
+     */
+    public setFrameTime(frameTimeMicros)
+    {
+        this.frameTimeMicros=~~frameTimeMicros
+
+    }
+
 
     //clear all intervals
     public clear() {
@@ -105,6 +122,7 @@ export default class Scheduler {
 
     //called by renderloop on every frame.
     //Dont call this directly!
+    //Returns time in uS until next frame should be rendered.
     public step() {
         this.frameNr++
 
@@ -121,6 +139,8 @@ export default class Scheduler {
                 this.intervals.delete(interval)
             }
         }
+
+        return this.frameTimeMicros
 
     }
 

@@ -1,14 +1,16 @@
 //rebuild preset store and updates preview thumbnails
 
-import {PresetStore} from "./PresetStore.js";
 
-const presetStore = new PresetStore()
+import {presetStore} from "./PresetStore.js"
+import {previewStore} from "./PreviewStore.js"
 
-console.log("Creating animation preset list...")
 
-await presetStore.storeAnimationPresetList(true, process.argv[2]=='--force')
+await presetStore.storeAnimationPresetList()
 
-console.log("Build complete")
+
+
+console.log("__________________________________")
+await previewStore.renderAll(await presetStore.loadAnimationPresetList(), false)
 
 //force exit, in case of async hanging stuff
 process.exit(0)

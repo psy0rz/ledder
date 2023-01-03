@@ -10,19 +10,20 @@ import GammaMapper from "./server/drivers/GammaMapper.js"
  */
 export default abstract class Display {
 
-    // runScheduler: boolean
-    // fpsControl: ControlValue
-
+    /*
+     * information for the renderer:
+     */
     //maximum fps this driver supports
-    maxFps = 60
-    defaultFps=60
-    //should frametimes be whole numbers (usefull for ledstream)
-    roundFrametime = false
+    minFrameTime=~~(1000000/60)
 
-    //current fps its running at (after maxing and rounding)
-    fps: number
-    //current frame delay (after maxing and rounding)
-    frameMs: number
+    //default fps
+    defaultFrameTime=~~(1000000/60)
+
+    //frame rounding.
+    //Use this to force the framerate to be a multiple of this
+    frameRounding=1
+
+
 
 
     width: number
@@ -48,34 +49,34 @@ export default abstract class Display {
         this.xMax = width - 1
         this.yMax = height - 1
 
-        this.setFps(this.defaultFps)
+        // this.setFps(this.defaultFps)
 
         // this.colors=new Set()
     }
 
     //set display fps (usually controlled externally by FPS control)
-    setFps(fps: number) {
-
-        //limit
-        if (fps > this.maxFps)
-            fps = this.maxFps
-
-        if (this.roundFrametime) {
-            //make sure we have a rounded framedelay. (needed for LedStream)
-            this.frameMs = ~~(1000 / fps)
-            //readjust fps to account for the rounded framedelay.
-            this.fps = 1000 / this.frameMs
-        } else {
-            //no rounding
-            this.frameMs = (1000 / fps)
-            this.fps = fps
-        }
-    }
+    // setFps(fps: number) {
+    //
+    //     //limit
+    //     if (fps > this.maxFps)
+    //         fps = this.maxFps
+    //
+    //     if (this.roundFrametime) {
+    //         //make sure we have a rounded framedelay. (needed for LedStream)
+    //         this.frameMs = ~~(1000 / fps)
+    //         //readjust fps to account for the rounded framedelay.
+    //         this.fps = 1000 / this.frameMs
+    //     } else {
+    //         //no rounding
+    //         this.frameMs = (1000 / fps)
+    //         this.fps = fps
+    //     }
+    // }
 
     //calculate time to number of frames (can be a float!)
-    seconds2frames(seconds: number): number {
-        return (seconds * 1000 / this.frameMs)
-    }
+    // seconds2frames(seconds: number): number {
+    //     return (seconds * 1000 / this.frameMs)
+    // }
 
     //bbox of a display is the whole screen
     bbox() {
@@ -112,8 +113,9 @@ export default abstract class Display {
     abstract setPixel(x: number, y: number, color: ColorInterface);
 
     //should send the current rendered frame buffer and clear the buffer
-    //Parameter is time when the frame should be rendered.
-    abstract frame(displayTime: number)
+    //Parameter is time in uS when the frame should be rendered.
+    //For pre-rendeers this starts counting at 0, for live renders this is the systemtime.
+    abstract frame(displayTimeMicros: number)
 
 }
 

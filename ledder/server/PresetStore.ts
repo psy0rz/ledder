@@ -6,43 +6,19 @@ import * as path from "path"
 import {mkdir, readdir, readFile, rm, stat, writeFile} from "fs/promises"
 import glob from "glob-promise"
 import {PresetValues} from "../PresetValues.js"
-import {PreviewStore} from "./PreviewStore.js"
 import Animation from "../Animation.js"
-import {AnimationList, PresetList} from "../AnimationLists.js"
+import {AnimationList, AnimationListDir, AnimationListItem, PresetList, PresetListItem} from "../AnimationLists.js"
+import {createParentDir, getMtime} from "./utils.js"
 
-
-/***
- * Get mtime of filename, returns 0 if it doesnt exist.
- * @param fileName
- */
-export async function getMtime(fileName: string) {
-    try {
-        const s = await stat(fileName)
-        return (s.mtimeMs)
-    } catch (e) {
-        return (0)
-    }
-}
-
-export async function createParentDir(fileName: string) {
-    try {
-        await mkdir(path.dirname(fileName), {recursive: true})
-    } catch (e) {
-        //exists
-    }
-
-}
 
 
 export class PresetStore {
     presetPath: string
     animationPath: string
-    private previewStore: PreviewStore
 
     constructor(animationPath: string = "ledder/animations", presetPath: string = "presets") {
         this.presetPath = presetPath
         this.animationPath = animationPath
-        this.previewStore = new PreviewStore()
 
 
     }
@@ -51,7 +27,7 @@ export class PresetStore {
         return (path.join(this.presetPath, animationName, presetName + ".json"))
     }
 
-    private previewFilename(animationName: string, presetName: string) {
+    public previewFilename(animationName: string, presetName: string) {
         return (path.join(this.presetPath, animationName, presetName + ".png"))
     }
 
@@ -60,27 +36,6 @@ export class PresetStore {
     }
 
 
-    //recursively scan animation dir and return list of all javascript names (short form without base path and extension)
-    // async scanAnimationDir(basePath: string = ""): Promise<AnimationList> {
-    //     let ret = {
-    //         name: basePath,
-    //         entries: []
-    //     }
-    //     const startPath = path.join(this.animationPath, basePath)
-    //     for (const entry of await readdir(startPath, {withFileTypes: true})) {
-    //         if (entry.isDirectory())
-    //             //recurse
-    //             ret.entries.push(await this.scanAnimationDir(path.join(basePath, entry.name)))
-    //         else {
-    //             if (path.extname(entry.name) == '.js') {
-    //                 ret.entries.push({
-    //                     name: path.basename(entry.name, ".js")
-    //                 })
-    //             }
-    //         }
-    //     }
-    //     return (ret)
-    // }
 
     //dynamicly loads an animation class from disk and returns the Class
     async loadAnimation(animationName: string): Promise<typeof Animation> {
@@ -156,92 +111,8 @@ export class PresetStore {
         // await this.updateAnimationPresetList()
     }
 
-    /**
-     * Render preview of a preset and save it to disk
-     */
-    async createPreview(animationClass: typeof Animation, animationName: string, presetName: string, preset: PresetValues) {
 
 
-        const previewFilename = this.previewFilename(animationName, presetName)
-        await createParentDir(previewFilename)
-        // const animationClass = await this.loadAnimation(animationName)
-        await this.previewStore.render(previewFilename, animationClass, preset)
-    }
-
-
-    /**
-     * Update all previews for all presets that need it. (either presetfile-mtime or animationfile-mtime is newer)
-     */
-    // async updatePresetPreviews(animatonName: string, animationMtime: number, force: boolean) {
-    //
-    //     const presetNames = await this.scanPresetNames(animatonName)
-    //
-    //     presetNames.push("default")
-    //
-    //     for (const presetName of presetNames) {
-    //         const previewFilename = this.previewFilename(animatonName, presetName)
-    //         const presetFilename = this.presetFilename(animatonName, presetName)
-    //         const previewMtime = await getMtime(previewFilename)
-    //         if (force || animationMtime == 0 || previewMtime < animationMtime || previewMtime < await getMtime(presetFilename)) {
-    //             const preset = await this.load(animatonName, presetName)
-    //             try {
-    //                 await this.createPreview(animatonName, presetName, preset)
-    //             } catch (e) {
-    //                 console.error(` ${animatonName} / ${presetName}: `, e)
-    //             }
-    //         }
-    //     }
-    //
-    // }
-
-
-    /**
-     * Update all previews for all animation/preset combinations that need it, according to mtime
-     */
-    // async updateAnimationPreviews(force: boolean) {
-    //
-    //     console.log("Rendering previews...")
-    //
-    //     for (let animationName of await this.scanAnimationDir()) {
-    //         try {
-    //
-    //             // let animationClass = await this.loadAnimation(animationName)
-    //             // const previewFilename = this.previewFilename(animationName, "")
-    //             const animationFilename = path.join("ledder", "animations", animationName + ".js")
-    //             const animationMtime = await getMtime(animationFilename)
-    //             if (animationMtime == 0)
-    //                 console.warn("Cant find " + animationFilename + ", always re-creating all previews. (check if filename matches classname)")
-    //
-    //
-    //             // if (force || animationMtime == 0 || await getMtime(previewFilename) <= animationMtime) {
-    //             //     try {
-    //             //         await this.createPreview(animationClass, "default", undefined)
-    //             //     } catch (e) {
-    //             //         console.error(` ${animationName}: `, e)
-    //             //         // throw(e)
-    //             //     }
-    //             // }
-    //
-    //             await this.updatePresetPreviews(animationName, animationMtime, force)
-    //         } catch (e) {
-    //             console.error(` ${animationName}: ${e}`)
-    //             // throw(e)
-    //         }
-    //
-    //     }
-    //     // console.log("Preview rendering complete")
-    // }
-
-
-    // async getCategories() {
-    //     let cat = new Set();
-    //     for (const [animationName, animation] of Object.entries(animations)) {
-    //
-    //         cat.add(animation.category)
-    //     }
-    //
-    //     return ([...cat]);
-    // }
 
     async previewOutdated(animationName: string, presetName: string) {
         const previewMtime = await getMtime(this.previewFilename(animationName, presetName))
@@ -252,34 +123,18 @@ export class PresetStore {
     }
 
     // Gets stripped list of all presets for animation, and adds previewUrl
-    async buildPresetList(animationClass: typeof Animation, animationName: string, updatePreview: boolean, forcePreview: boolean): Promise<PresetList> {
+    async buildPresetList(animationClass: typeof Animation, animationName: string): Promise<PresetList> {
         let ret: PresetList = []
         const presetNames = await this.scanPresetNames(animationName)
         for (const presetName of presetNames) {
             const preset = await this.load(animationName, presetName)
-
-            if (updatePreview) {
-                if (forcePreview || await this.previewOutdated(animationName, presetName)) {
-                    try {
-                        console.log(` - Rendering ${presetName} ...`)
-                        await this.createPreview(animationClass, animationName, presetName, preset)
-                    } catch (e) {
-                        // if (process.env.NODE_ENV === 'development') {
-                        //     throw(e)
-                        // } else {
-                            console.error(`Exception while creating preview: `, e)
-                        // }
-
-                    }
-                }
-            }
 
             const previewFilename = this.previewFilename(animationName, presetName)
             ret.push({
                 name: presetName,
                 title: preset.title,
                 description: preset.description,
-                previewFile: previewFilename + "?" + await getMtime(previewFilename)
+                previewFile: previewFilename + "?" + await getMtime(this.animationFilename(animationName))
             })
         }
         return (ret)
@@ -287,7 +142,7 @@ export class PresetStore {
 
 
     // scans and loads all animations and returns the grand preset list
-    async buildAnimationPresetList(dir: string = "", updatePreview: boolean, forcePreview: boolean): Promise<AnimationList> {
+    async buildAnimationPresetList(dir: string = ""): Promise<AnimationList> {
         let ret: AnimationList = []
 
 
@@ -298,14 +153,14 @@ export class PresetStore {
                 //recurse
                 ret.push({
                     name: entry.name,
-                    animationList: await this.buildAnimationPresetList(entry.name, updatePreview, forcePreview)
+                    animationList: await this.buildAnimationPresetList(entry.name)
                 })
             else {
                 //actual animation?
                 if (path.extname(entry.name) == '.js') {
 
                     const animationName = path.join(dir, path.basename(entry.name, ".js"))
-                    console.log(`\nLoading ${animationName}:`)
+                    // console.log(`\nLoading ${animationName}:`)
                     try {
                         const animationClass = await this.loadAnimation(animationName)
 
@@ -313,7 +168,7 @@ export class PresetStore {
                             name: animationName,
                             title: animationClass.title,
                             description: animationClass.description,
-                            presets: await this.buildPresetList(animationClass, animationName, updatePreview, forcePreview)
+                            presets: await this.buildPresetList(animationClass, animationName)
                         })
                     } catch (e) {
                         // if (process.env.NODE_ENV === 'development') {
@@ -330,44 +185,43 @@ export class PresetStore {
         return (ret)
 
 
-        // for (const animationName of) {
-        //
-        //     try {
-        //         let animationClass: typeof Animation
-        //         animationClass = await this.loadAnimation(animationName)
-        //
-        //
-        //
-        //         let presets = await this.scanPresetList(animationName)
-        //         ret.push({
-        //             name: animationName,
-        //             title: animationClass.title,
-        //             description: animationClass.description,
-        //             presets: presets,
-        //             //add preview url, browsercache aware
-        //             previewFile: previewFilename + '?' + await getMtime(previewFilename)
-        //
-        //         })
-        //     } catch (e) {
-        //         console.error(` ${animationName}: `, e)
-        //     }
-        //
-        // }
-        // return (ret)
     }
 
     //load animation preset list from disk (cached)
     async loadAnimationPresetList() {
+        //TODO:cache
         return JSON.parse(await readFile(path.join(this.presetPath, 'index.json'), 'utf8'))
     }
 
     //update stored animation preset list
-    async storeAnimationPresetList(updatePreview: boolean, forcePreview: boolean) {
+    async storeAnimationPresetList() {
+        console.log("Creating animation preset list...")
         await writeFile(
             path.join(this.presetPath, 'index.json'),
-            JSON.stringify(await this.buildAnimationPresetList("", updatePreview, forcePreview), undefined, ' '), 'utf8'
+            JSON.stringify(await this.buildAnimationPresetList(""), undefined, ' '), 'utf8'
         )
+        console.log("Completed animation list.")
     }
 
 
+    //calls back for every animation,preset item.
+    //e.g. traverse the whole list recursively.
+    async forEachPreset(animationList:AnimationList, callback: (animationListItem:AnimationListItem, presetListItem:PresetListItem)=>void) {
+
+        for (const item of animationList) {
+            const animationListItem = item as AnimationListItem
+            const animationListDir = item as AnimationListDir
+            if (animationListDir.animationList) {
+                await this.forEachPreset(animationListDir.animationList, callback)
+            } else {
+                for (const presetListItem of animationListItem.presets) {
+                    await callback(animationListItem, presetListItem)
+                }
+            }
+        }
+    }
 }
+
+
+
+export let presetStore=new PresetStore()

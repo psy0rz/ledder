@@ -1,5 +1,5 @@
 import Display from "../Display.js"
-import {PresetStore} from "./PresetStore.js"
+import {presetStore, PresetStore} from "./PresetStore.js"
 import {PresetValues} from "../PresetValues.js"
 import Animation from "../Animation.js"
 // import * as fs from "fs";
@@ -19,7 +19,6 @@ export class RunnerServer {
     public scheduler: Scheduler
     private controlGroup: ControlGroup
 
-    private presetStore: PresetStore
     private animationClass: typeof Animation
     private animationName: string
     private presetName: string
@@ -36,11 +35,10 @@ export class RunnerServer {
     public box: PixelBox
     public animationManager: AnimationManager
 
-    constructor(display: Display, controls: ControlGroup, presetStore: PresetStore) {
+    constructor(display: Display, controls: ControlGroup) {
         this.display = display
 
         this.controlGroup = controls
-        this.presetStore = presetStore
         this.box=new PixelBox(display)
 
         this.scheduler=new Scheduler()
@@ -215,16 +213,16 @@ export class RunnerServer {
     async save(presetName: string) {
         this.presetName = presetName
         this.presetValues.values = this.controlGroup.save()
-        await this.presetStore.save(this.animationName, presetName, this.presetValues)
-        await this.presetStore.createPreview(this.animationClass, this.animationName, presetName, this.presetValues)
-        await this.presetStore.storeAnimationPresetList(false, false)
+        await presetStore.save(this.animationName, presetName, this.presetValues)
+        // await this.presetStore.createPreview(this.animationClass, this.animationName, presetName, this.presetValues)
+        await presetStore.storeAnimationPresetList()
     }
 
     //delete current running animation preset
     async delete() {
         if (this.presetName !== undefined) {
-            await this.presetStore.delete(this.animationName, this.presetName)
-            await this.presetStore.storeAnimationPresetList(false, false)
+            await presetStore.delete(this.animationName, this.presetName)
+            await presetStore.storeAnimationPresetList()
             this.presetName = undefined
         }
     }

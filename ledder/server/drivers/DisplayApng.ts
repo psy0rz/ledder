@@ -1,8 +1,9 @@
 import Display from "../../Display.js";
-import pkg from 'upng-js';
+import UPNG from 'upng-js';
+import {writeFile} from "fs/promises"
+import {createParentDir} from "../utils.js"
 
 
-const UPNG = pkg;
 
 //Matrix driver to render animations to a APNG file. (used for browser previewing)
 export class DisplayApng extends Display {
@@ -11,6 +12,8 @@ export class DisplayApng extends Display {
     filename: string
 
     images: Array<ArrayBuffer>
+    private delays: number[]
+    private lastTime: number
 
     /**
      *
@@ -20,9 +23,16 @@ export class DisplayApng extends Display {
     constructor(width, height) {
         super(width, height);
 
-        this.images = []
         this.clearFrame()
 
+    }
+
+    clear()
+    {
+        this.images = []
+        this.delays=[]
+        this.clearFrame()
+        this.lastTime=0
     }
 
     //sets a pixel in the render buffer (called from Draw-classes render() functions)
@@ -45,26 +55,42 @@ export class DisplayApng extends Display {
         this.imageBuf8.fill(0); //alpha of all pixels will be 0, so image is transparent
     }
 
-    frame() {
+    frame(displayTimeMicros:number) {
 
-        //keep image
+
+        //store
         this.images.push(this.imageBuf8.buffer)
+        this.delays.push((displayTimeMicros-this.lastTime)/1000000)
+        this.lastTime=displayTimeMicros
         this.clearFrame()
 
     }
 
     /**
-     * Generate apng file from currently stored images
+     * Generate apng file from currently stored images, and clears buffer.
      */
     get(fps: number) {
 
-        let delays = []
-        for (let i = 0; i < this.images.length; i++)
-            delays.push(1000 / fps)
-        let image = UPNG.encode(this.images, this.width, this.height, 0, delays)
+        let image = UPNG.encode(this.images, this.width, this.height, 128, this.delays)
         this.images = []
         return (image)
     }
+
+
+    /*
+    Create apng file from currently stored images
+     */
+    async store(filename)
+    {
+        //generate and store APNG
+        let imageData = this.get(60)
+
+        await createParentDir(filename)
+
+        await writeFile(filename, Buffer.from(imageData))
+
+    }
+
 }
 
 

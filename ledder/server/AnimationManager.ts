@@ -1,10 +1,7 @@
-import {AbortController} from "node-abort-controller"
-import {watch} from "fs/promises"
 import PixelBox from "../PixelBox.js"
 import Scheduler from "../Scheduler.js"
-import {PresetStore} from "./PresetStore.js"
+import {presetStore} from "./PresetStore.js"
 import Animation from "../Animation.js"
-import Display from "../Display.js"
 import ControlGroup from "../ControlGroup.js"
 import {PresetValues} from "../PresetValues.js"
 import {Values} from "../Control.js"
@@ -16,15 +13,14 @@ import {Values} from "../Control.js"
  */
 export default class AnimationManager {
     private presetName: string
-    private animationClass: typeof Animation
+    public animationClass: typeof Animation
     private animationName: string
-    private presetStore: PresetStore
     private presetValues: PresetValues
     private animation: Animation
 
     //parents
-    private box: PixelBox
-    private scheduler: Scheduler
+    public box: PixelBox
+    public scheduler: Scheduler
     private controlGroup: ControlGroup
 
     //childs
@@ -33,7 +29,7 @@ export default class AnimationManager {
     private childControlGroup: ControlGroup
 
     constructor(box: PixelBox, scheduler: Scheduler, controlGroup: ControlGroup) {
-        this.presetStore = new PresetStore()
+
         this.box = box
         this.scheduler = scheduler
         this.controlGroup = controlGroup
@@ -84,8 +80,8 @@ export default class AnimationManager {
 
 
     //create class instance of currently loaded animation call run() on it
-    private run() {
-        console.log(`RunnerServer: Starting: ${this.animationName} ${this.presetName}`)
+    public run() {
+        // console.log(`RunnerServer: Starting: ${this.animationName} ${this.presetName}`)
         try {
             this.animation = new this.animationClass()
             this.animation.run(this.childBox, this.childScheduler, this.childControlGroup).then(() => {
@@ -104,14 +100,27 @@ export default class AnimationManager {
         }
     }
 
-    //load currently selected animation from disk
-    private async load() {
-        this.animationClass = await this.presetStore.loadAnimation(this.animationName)
-        this.presetValues = await this.presetStore.load(this.animationName, this.presetName)
-        // this.childControlGroup.load(this.presetValues.values)
+    //load currently selected animation and preset from disk
+    private async loadSelected() {
+        this.animationClass = await presetStore.loadAnimation(this.animationName)
+        this.presetValues = await presetStore.load(this.animationName, this.presetName)
         this.controlGroup.load(this.presetValues.values)
-//        this.autoreload(this.presetStore.animationFilename(this.animationName)).then()
 
+    }
+
+    //load only animation
+    public async loadAnimation(animationName:string)
+    {
+        this.animationName=animationName
+        this.animationClass = await presetStore.loadAnimation(this.animationName)
+    }
+
+    //load only preset
+    public async loadPreset(presetName:string)
+    {
+        this.presetName=presetName
+        this.presetValues = await presetStore.load(this.animationName, this.presetName)
+        this.controlGroup.load(this.presetValues.values)
     }
 
     //start or restart currently loaded animation
@@ -132,7 +141,7 @@ export default class AnimationManager {
     //force reload of animation from disk and restart it
     public async reload(keepControls: boolean) {
         this.stop(keepControls)
-        await this.load()
+        await this.loadSelected()
         this.run()
 
     }
