@@ -46,7 +46,7 @@ export  class Control {
     load?(values: Values)
 
     //return true if animation should be restarted
-    updateValue(path:[string],value:Values):boolean
+    updateValue(path:Array<string>,value:Values):boolean
     {
         this.load(value)
 
