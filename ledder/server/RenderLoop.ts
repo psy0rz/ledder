@@ -16,7 +16,7 @@ export class RenderLoop {
     public animationManager: AnimationManager
     private box: PixelBox
     private scheduler: Scheduler
-    private controlGroup: ControlGroup
+    public controlGroup: ControlGroup
 
     constructor(display: Display) {
         this.display = display
@@ -32,11 +32,11 @@ export class RenderLoop {
         if (!this.keepRendering) {
             this.keepRendering = true
             this.nextTimeuS = Date.now() * 1000
-            this.renderFrame()
+            this.renderInterval()
         }
     }
 
-    renderFrame() {
+    renderInterval() {
         if (!this.keepRendering)
             return
 
@@ -51,7 +51,7 @@ export class RenderLoop {
         this.display.frame(this.nextTimeuS)
 
         const intervalmS = (this.nextTimeuS /1000) - Date.now()
-        setTimeout(() => this.renderFrame(), intervalmS)
+        setTimeout(() => this.renderInterval(), intervalmS)
 
     }
 

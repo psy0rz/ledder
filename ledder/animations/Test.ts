@@ -15,26 +15,26 @@ export default class Test extends Animation {
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) {
 
         //animation that does illegal stuff after ending it
-        // setInterval(() => {
-        //     console.log("test interval")
-        //     try {
-        //         box.add(new Pixel(0, 0, colorRed))
-        //     } catch (e) {
-        //
-        //     }
-        //     try {
-        //         scheduler.interval(60, () => {
-        //             console.log("SCHEDULER LOOPT NOG")
-        //         })
-        //     } catch (e) {
-        //
-        //     }
-        //     try {
-        //         controls.value("TEST")
-        //     } catch (e) {
-        //
-        //     }
-        // }, 1000)
+        setInterval(() => {
+            console.log("test interval")
+            try {
+                box.add(new Pixel(0, 0, colorRed))
+            } catch (e) {
+
+            }
+            try {
+                scheduler.interval(60, () => {
+                    console.log("SCHEDULER LOOPT NOG")
+                })
+            } catch (e) {
+console.log("scheduler stuk")
+            }
+            try {
+                controls.value("TEST")
+            } catch (e) {
+
+            }
+        }, 1000)
 
     }
 }

@@ -14,18 +14,17 @@ const gammaMapper=new GammaMapper(settingsControl.group("Display settings"))
 
 
 //create run all the displayes
-let runners:Array<RenderLoop>=[]
+let renderLoops:Array<RenderLoop>=[]
 
 for (const m of config.displayList) {
     let display:Display
     display = m
     display.gammaMapper=gammaMapper
-    let controlGroup = new ControlGroup('Root')
 
-    let runner = new RenderLoop(display, controlGroup)
-    runner.start()
-    runner.animationManager.select(config.animation, false)
-    runners.push(runner)
+    let renderLoop = new RenderLoop(display)
+    renderLoop.start()
+    renderLoop.animationManager.select(config.animation, false)
+    renderLoops.push(renderLoop)
 }
 
 
@@ -41,14 +40,14 @@ rpc.addMethod("presetStore.loadAnimationPresetList", async (params) => {
 
 rpc.addMethod("context.runner.save", async (params, context) =>
 {
-    if (context.runner)
-        await context.runner.save(params[0])
+    if (context.renderLoop)
+        await context.renderLoop.save(params[0])
 })
 
 rpc.addMethod("context.runner.delete", async (params, context) =>
 {
-    if (context.runner)
-        await context.runner.delete()
+    if (context.renderLoop)
+        await context.renderLoop.delete()
 })
 
 
@@ -64,20 +63,20 @@ rpc.addMethod("context.stopPreview", async (params, context) => {
 
 rpc.addMethod("runner.runName", async (params, context) => {
 
-    if (context.runner)
-        await context.runner.animationManager.select(params[0]+"/"+ params[1], false)
+    if (context.renderLoop)
+        await context.renderLoop.animationManager.select(params[0]+"/"+ params[1], false)
 
-    for (const runner of runners) {
+    for (const runner of renderLoops) {
         await runner.animationManager.select(params[0]+"/"+ params[1], false)
     }
 })
 
 rpc.addMethod("display.control.updateValue", async (params, context) => {
 
-    if (context.runner)
-     context.runner.animationManager.updateValue(params[0], params[1])
+    if (context.renderLoop)
+     context.renderLoop.animationManager.updateValue(params[0], params[1])
 
-    for (const runner of runners) {
+    for (const runner of renderLoops) {
         runner.animationManager.updateValue(params[0], params[1])
     }
 })

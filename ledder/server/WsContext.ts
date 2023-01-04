@@ -4,6 +4,7 @@ import {DisplayWebsocket} from "./drivers/DisplayWebsocket.js";
 import {presetStore, PresetStore} from "./PresetStore.js"
 import {JSONRPCServerAndClient} from "json-rpc-2.0";
 import ControlGroup from "../ControlGroup.js";
+import controls from "../../src/pages/controls.svelte"
 
 
 //Per websocket context, used to generate the preview animation that is shown in the browser.
@@ -11,7 +12,7 @@ import ControlGroup from "../ControlGroup.js";
 export class WsContext {
     ws: WebSocket
     client: JSONRPCServerAndClient<WsContext, WsContext>
-    runner: RenderLoop
+    renderLoop: RenderLoop
     id: number
 
     statsInterval: any
@@ -44,9 +45,11 @@ export class WsContext {
 
         this.started=true
 
-        let controls = new ControlGroup('Root controls')
+
+        let display = new DisplayWebsocket( width, height, this.ws)
+        this.renderLoop = new RenderLoop(display)
         //todo: add delay or queue
-        controls.setCallbacks(
+        this.renderLoop.controlGroup.setCallbacks(
             () => {
                 this.request("control.reset").then()
             },
@@ -58,18 +61,17 @@ export class WsContext {
             //     this.request("control.update", controlName, controlValues)
             // })
 
-        let display = new DisplayWebsocket( width, height, this.ws)
-        this.runner = new RenderLoop(display,  controls)
-        this.runner.start()
+
+        this.renderLoop.start()
 
 
         this.statsInterval=setInterval( ()=>{
             let count=0
-            this.runner.box.forEachPixel( ()=>{
+            this.renderLoop.box.forEachPixel( ()=>{
                 count++
             })
            // @ts-ignore
-            console.log(`Stats ${this.id}: ${count} pixels, ${this.runner.scheduler.intervals.size} intervals`)
+            console.log(`Stats ${this.id}: ${count} pixels, ${this.renderLoop.scheduler.intervals.size} intervals`)
         }, 3000)
 
 
@@ -77,10 +79,10 @@ export class WsContext {
 
     stopPreview() {
         //should stop because of gc
-        if (this.runner) {
+        if (this.renderLoop) {
             this.started=false
-            this.runner.stop()
-            this.runner=undefined
+            this.renderLoop.stop()
+            this.renderLoop=undefined
             clearInterval(this.statsInterval)
         }
     }
