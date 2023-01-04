@@ -1,7 +1,7 @@
 //context of a websocket connection
-import {RunnerServer} from "./RunnerServer.js";
+import {RenderLoop} from "./RenderLoop.js";
 import {DisplayWebsocket} from "./drivers/DisplayWebsocket.js";
-import {PresetStore} from "./PresetStore.js";
+import {presetStore, PresetStore} from "./PresetStore.js"
 import {JSONRPCServerAndClient} from "json-rpc-2.0";
 import ControlGroup from "../ControlGroup.js";
 
@@ -11,7 +11,7 @@ import ControlGroup from "../ControlGroup.js";
 export class WsContext {
     ws: WebSocket
     client: JSONRPCServerAndClient<WsContext, WsContext>
-    runner: RunnerServer
+    runner: RenderLoop
     id: number
 
     statsInterval: any
@@ -51,7 +51,7 @@ export class WsContext {
                 this.request("control.reset").then()
             },
             (control) => {
-                console.log("add", control)
+                // console.log("add", control)
                 this.request("control.add", control).then()
             })
             // (controlName, controlValues) => {
@@ -59,8 +59,8 @@ export class WsContext {
             // })
 
         let display = new DisplayWebsocket( width, height, this.ws)
-        this.runner = new RunnerServer(display,  controls, presetStore)
-        this.runner.startRenderLoop()
+        this.runner = new RenderLoop(display,  controls)
+        this.runner.start()
 
 
         this.statsInterval=setInterval( ()=>{
@@ -68,7 +68,8 @@ export class WsContext {
             this.runner.box.forEachPixel( ()=>{
                 count++
             })
-           console.log(`Stats ${this.id}: ${count} pixels, ${this.runner.scheduler.intervals.size} intervals`)
+           // @ts-ignore
+            console.log(`Stats ${this.id}: ${count} pixels, ${this.runner.scheduler.intervals.size} intervals`)
         }, 3000)
 
 
@@ -90,6 +91,23 @@ export class WsContext {
         console.log(`WsContext: Stopping ${this.id}`)
         this.stopPreview()
     }
+    // //save current running animation preset
+    // async save(presetName: string) {
+    //     this.presetName = presetName
+    //     this.presetValues.values = this.controlGroup.save()
+    //     await presetStore.save(this.animationName, presetName, this.presetValues)
+    //     // await this.presetStore.createPreview(this.animationClass, this.animationName, presetName, this.presetValues)
+    //     await presetStore.storeAnimationPresetList()
+    // }
+    //
+    // //delete current running animation preset
+    // async delete() {
+    //     if (this.presetName !== undefined) {
+    //         await presetStore.delete(this.animationName, this.presetName)
+    //         await presetStore.storeAnimationPresetList()
+    //         this.presetName = undefined
+    //     }
+    // }
 
 
 }

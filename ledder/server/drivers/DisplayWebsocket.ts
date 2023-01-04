@@ -9,7 +9,7 @@ export class DisplayWebsocket extends Display {
     constructor(width, height, ws) {
         super( width, height);
 
-        this.maxFps=120
+
 
         this.imageBuf8 = new Uint8ClampedArray(height * width * 4);
         this.ws=ws
@@ -32,18 +32,11 @@ export class DisplayWebsocket extends Display {
 
 
     frame() {
-        // setTimeout(() => this.frame(), 1000 / this.fpsControl.value)
-
-        //
-        // if (this.runScheduler)
-        //     this.scheduler.update();
 
         if (this.ws)
             this.ws.send(this.imageBuf8)
 
         this.imageBuf8.fill(0); //alpha of all pixels will be 0, so canvas is transparent.
-        // this.render();
-
 
     }
 

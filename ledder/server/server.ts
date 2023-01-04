@@ -1,5 +1,5 @@
 import {RpcServer} from "./RpcServer.js"
-import {RunnerServer} from "./RunnerServer.js"
+import {RenderLoop} from "./RenderLoop.js"
 import ControlGroup from "../ControlGroup.js"
 import Display from "../Display.js"
 import GammaMapper from "./drivers/GammaMapper.js"
@@ -14,7 +14,7 @@ const gammaMapper=new GammaMapper(settingsControl.group("Display settings"))
 
 
 //create run all the displayes
-let runners:Array<RunnerServer>=[]
+let runners:Array<RenderLoop>=[]
 
 for (const m of config.displayList) {
     let display:Display
@@ -22,8 +22,8 @@ for (const m of config.displayList) {
     display.gammaMapper=gammaMapper
     let controlGroup = new ControlGroup('Root')
 
-    let runner = new RunnerServer(display, controlGroup)
-    runner.startRenderLoop()
+    let runner = new RenderLoop(display, controlGroup)
+    runner.start()
     runner.animationManager.select(config.animation, false)
     runners.push(runner)
 }
@@ -53,7 +53,7 @@ rpc.addMethod("context.runner.delete", async (params, context) =>
 
 
 rpc.addMethod("context.startPreview", async (params, context) => {
-    console.log("start preview")
+    // console.log("start preview")
    await context.startPreview(presetStore, params[0], params[1])
 })
 

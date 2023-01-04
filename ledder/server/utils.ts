@@ -30,12 +30,14 @@ export async function createParentDir(fileName: string) {
 
 
 /*
-Pre-render animation non-realtime. (e.g. a preview or static rendered animation)
+ * Pre-render animation non-realtime. (e.g. a preview or static rendered animation)
+ * AnimationManager should be prepared, and stopped after returning.
+ * Display-class and caller are reponsible for saving the result somewhere.
  */
-export  function preRender(display: Display, animationManager: AnimationManager) {
+export function preRender(display: Display, animationManager: AnimationManager) {
 
     //set default fps (animation can change this)
-    animationManager.scheduler.setFrameTime(display.defaultFrameTime)
+    animationManager.scheduler.setDefaultFrameTime(display.defaultFrameTime)
 
     //skip first frames, just run scheduler
     for (let i = 0; i < animationManager.animationClass.previewSkip; i++)

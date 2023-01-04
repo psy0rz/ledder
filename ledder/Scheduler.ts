@@ -4,39 +4,24 @@ import IntervalStatic from "./IntervalStatic.js"
 import Interval from "./Interval.js"
 import ValueInterface from "./ValueInterface.js"
 import IntervalOnce from "./IntervalOnce.js"
-/*
-
- A
- b=a.child()
- c=b.child()
-
- alles wijst naar a.intervals
- a.step() word gecalled
-
-
-
-
- */
 
 export default class Scheduler {
 
     private frameNr: number
     private intervals: Set<Interval>
     private frameTimeMicros: number
+    private defaultFrameTimeMicros: number
 
 
     constructor(parentScheduler?: Scheduler) {
 
         if (parentScheduler !== undefined) {
             this.intervals = parentScheduler.intervals
-            this.setFrameTime=parentScheduler.setFrameTime
+            this.setFrameTime = parentScheduler.setFrameTime
 
-        }
-        else
+        } else
             this.intervals = new Set()
 
-        this.frameNr = 0
-        this.frameTimeMicros=0
 
         this.clear()
 
@@ -45,8 +30,7 @@ export default class Scheduler {
     //NOTE: never call this yourself, its used by AnimationManager
     //Return a new Scheduler which uses our intervals-set.
     //This way we can detach ourself to prevent "stopped" animation from adding new stuff to the scheduler.
-    public child()
-    {
+    public child() {
         return new Scheduler(this)
     }
 
@@ -56,7 +40,8 @@ export default class Scheduler {
     //Its like a super-clear() :p
     public detach() {
         this.intervals = new Set()
-        this.setFrameTime=()=>{}
+        this.setFrameTime = () => {
+        }
     }
 
     /*
@@ -64,15 +49,23 @@ export default class Scheduler {
      * The actual FPS depends on the display driver. Some use rounding, and most have maximum limits.
      * Set to 0 to use default FPS of display driver
      */
-    public setFrameTime(frameTimeMicros)
-    {
-        this.frameTimeMicros=~~frameTimeMicros
+    public setFrameTime(frameTimeMicros) {
+        this.frameTimeMicros = ~~frameTimeMicros
+    }
 
+    /* Never call this directly. Set by renderer
+     * Default frametime thats set after a clear().
+     */
+    public setDefaultFrameTime(frameTimeMicros) {
+        this.defaultFrameTimeMicros = frameTimeMicros
+        this.setFrameTime(frameTimeMicros)
     }
 
 
     //clear all intervals
     public clear() {
+        this.frameNr = 0
+        this.setFrameTime(this.defaultFrameTimeMicros)
 
         this.intervals.clear()
 

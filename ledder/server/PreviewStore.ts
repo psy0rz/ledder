@@ -28,14 +28,14 @@ export class PreviewStore {
     /**
      * Renders preview to APNG file. AnimationManager should be prepared.
      */
-    async render(animation: AnimationListItem, preset: PresetListItem) {
+    async render(animationName: string, presetName: string) {
         this.display.clear()
-        await this.animationManager.loadAnimation(animation.name)
-        await this.animationManager.loadPreset(preset.name)
+        await this.animationManager.loadAnimation(animationName)
+        await this.animationManager.loadPreset(presetName)
         this.animationManager.run()
         preRender(this.display, this.animationManager)
         this.animationManager.stop(false)
-        await this.display.store(presetStore.previewFilename(animation.name, preset.name))
+        await this.display.store(presetStore.previewFilename(animationName, presetName), 128)
     }
 
     async renderAll(animationList: AnimationList, force: boolean) {
@@ -45,14 +45,9 @@ export class PreviewStore {
             if (force || await presetStore.previewOutdated(animation.name, preset.name)) {
                 try {
                     console.log(` - Rendering ${animation.name}/${preset.name} ...`)
-                    await this.render(animation, preset)
+                    await this.render(animation.name, preset.name)
                 } catch (e) {
-                    // if (process.env.NODE_ENV === 'development') {
-                    //     throw(e)
-                    // } else {
                     console.error(`Exception while creating preview: `, e)
-                    // }
-
                 }
             }
         })

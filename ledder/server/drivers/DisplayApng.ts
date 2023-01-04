@@ -60,7 +60,7 @@ export class DisplayApng extends Display {
 
         //store
         this.images.push(this.imageBuf8.buffer)
-        this.delays.push((displayTimeMicros-this.lastTime)/1000000)
+        this.delays.push(~~(displayTimeMicros-this.lastTime)/1000)
         this.lastTime=displayTimeMicros
         this.clearFrame()
 
@@ -69,9 +69,9 @@ export class DisplayApng extends Display {
     /**
      * Generate apng file from currently stored images, and clears buffer.
      */
-    get(fps: number) {
+    get(quality: number) {
 
-        let image = UPNG.encode(this.images, this.width, this.height, 128, this.delays)
+        let image = UPNG.encode(this.images, this.width, this.height, quality, this.delays)
         this.images = []
         return (image)
     }
@@ -79,11 +79,12 @@ export class DisplayApng extends Display {
 
     /*
     Create apng file from currently stored images
+    Quality: 0 lossless,  1-225  from bad to good.
      */
-    async store(filename)
+    async store(filename:string, quality:number)
     {
         //generate and store APNG
-        let imageData = this.get(60)
+        let imageData = this.get(quality)
 
         await createParentDir(filename)
 

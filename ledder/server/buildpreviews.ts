@@ -6,11 +6,7 @@ import {previewStore} from "./PreviewStore.js"
 
 
 await presetStore.storeAnimationPresetList()
-
-
-
-console.log("__________________________________")
-await previewStore.renderAll(await presetStore.loadAnimationPresetList(), false)
+await previewStore.renderAll(await presetStore.loadAnimationPresetList(), process.argv[2]=='-f')
 
 //force exit, in case of async hanging stuff
 process.exit(0)
