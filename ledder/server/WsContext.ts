@@ -1,10 +1,8 @@
 //context of a websocket connection
-import {RenderLoop} from "./RenderLoop.js";
-import {DisplayWebsocket} from "./drivers/DisplayWebsocket.js";
-import {presetStore, PresetStore} from "./PresetStore.js"
-import {JSONRPCServerAndClient} from "json-rpc-2.0";
-import ControlGroup from "../ControlGroup.js";
-import controls from "../../src/pages/controls.svelte"
+import {RenderLoop} from "./RenderLoop.js"
+import {DisplayWebsocket} from "./drivers/DisplayWebsocket.js"
+import {PresetStore} from "./PresetStore.js"
+import {JSONRPCServerAndClient} from "json-rpc-2.0"
 
 
 //Per websocket context, used to generate the preview animation that is shown in the browser.
@@ -51,11 +49,12 @@ export class WsContext {
         //todo: add delay or queue
         this.renderLoop.controlGroup.setCallbacks(
             () => {
+                console.log("reset")
                 this.request("control.reset").then()
             },
             (control) => {
-                // console.log("add", control)
-                this.request("control.add", control).then()
+                console.log("add", control)
+                this.request("control.add", this.renderLoop.controlGroup).then()
             })
             // (controlName, controlValues) => {
             //     this.request("control.update", controlName, controlValues)

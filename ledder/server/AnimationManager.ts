@@ -120,7 +120,7 @@ export default class AnimationManager {
     }
 
     //start or restart currently loaded animation
-    public async restart(keepControls: boolean) {
+    public restart(keepControls: boolean) {
         this.stop(keepControls)
         return this.run()
 
@@ -132,6 +132,7 @@ export default class AnimationManager {
 
         this.createProxies(keepControls)
         this.cleanup(keepControls)
+
     }
 
     //force reload of animation from disk and restart it
@@ -184,7 +185,7 @@ export default class AnimationManager {
 
         const ret = this.controlGroup.updateValue(path, values)
         if (ret)
-            await this.restart(true)
+            this.restart(true)
         return ret
         }
         catch (e) {

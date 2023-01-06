@@ -24,9 +24,8 @@ export default class ControlGroup extends Control {
     declare meta: ControlGroupMeta
     loadedValues: Values
 
-    //Added controls are send to the webinterface via the addControlCallback.
-    //This is because controls usually are added on the fly in an async fasion.
-    addControlCallback: (controls: ControlGroup) => void
+    //called when controls have been added somewhere in the control tree
+    addControlCallback: () => void
 
     //remove all controls and reset
     resetCallback: () => void
@@ -64,7 +63,7 @@ export default class ControlGroup extends Control {
             control.load(this.loadedValues[control.meta.name])
 
         if (this.addControlCallback)
-            this.addControlCallback(this)
+            this.addControlCallback()
 
     }
 
@@ -145,15 +144,14 @@ export default class ControlGroup extends Control {
         if (!(name in this.meta.controls)) {
             const controlGroup = new ControlGroup(name, restartOnChange, collapsed)
             this.add(controlGroup)
+
+            //XXX: this is een proxy object :(
             controlGroup.setCallbacks(
                 () => {
                     //ging mis als mqtt 2x gestart werd en this.controls.clear() deed
                     // this.clear()
                 },
-                () => {
-                    if (this.addControlCallback)
-                        this.addControlCallback(this)
-                }
+                this.addControlCallback
             )
         }
 
@@ -163,6 +161,8 @@ export default class ControlGroup extends Control {
 
     //NOTE: internal use only
     setCallbacks(reset, addControl) {
+
+
         this.resetCallback = reset
         this.addControlCallback = addControl
     }
@@ -209,6 +209,7 @@ export default class ControlGroup extends Control {
 
     detach()
     {
+        super.detach()
         for (const [name, control] of Object.entries(this.meta.controls)) {
             control.detach()
         }
