@@ -57,10 +57,11 @@ export default class AnimationManager {
 
 
         //controls
-        if (this.proxyControlGroup !== undefined)
-            this.proxyControlGroup.revoke()
-        this.proxyControlGroup = Proxy.revocable(this.controlGroup, {})
-
+        if (!keepControls) {
+            if (this.proxyControlGroup !== undefined)
+                this.proxyControlGroup.revoke()
+            this.proxyControlGroup = Proxy.revocable(this.controlGroup, {})
+        }
 
 
     }
