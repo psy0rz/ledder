@@ -67,10 +67,6 @@ export default class AnimationManager {
 
     //cleanup existing child stuff
     private cleanup(keepControls: boolean) {
-        if (this.animation !== undefined && this.animation.cleanup !== undefined) {
-            this.animation.cleanup()
-            this.animation=undefined
-        }
 
         this.scheduler.clear()
         this.childBox.clear()

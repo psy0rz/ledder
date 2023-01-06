@@ -50,10 +50,6 @@ export default class MQTT extends Animation {
     }
 
     animationReset() {
-        if (this.currentAnimation !== undefined) {
-            this.currentAnimation.cleanup()
-            this.currentAnimation = undefined
-        }
         this.scheduler.clear()
         this.box.clear()
         this.controls.clear()
