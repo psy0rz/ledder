@@ -28,20 +28,20 @@ export async function createParentDir(fileName: string) {
 }
 
 
-
 /*
  * Pre-render animation non-realtime. (e.g. a preview or static rendered animation)
  * AnimationManager should be prepared, and stopped after returning.
  * Display-class and caller are reponsible for saving the result somewhere.
  */
-export function preRender(display: Display, animationManager: AnimationManager) {
+export async function preRender(display: Display, animationManager: AnimationManager) {
 
     //set default fps (animation can change this)
     animationManager.scheduler.setDefaultFrameTime(display.defaultFrameTime)
 
     //skip first frames, just run scheduler
     for (let i = 0; i < animationManager.animationClass.previewSkip; i++)
-        animationManager.scheduler.step()
+        //NOTE: await is needed, to allow other microtasks to run!
+        await animationManager.scheduler.step()
 
     //render frames
     let displayTime = 0
@@ -49,10 +49,11 @@ export function preRender(display: Display, animationManager: AnimationManager) 
     for (let i = 0; i < animationManager.animationClass.previewFrames; i++) {
 
         for (let d = 0; d < animationManager.animationClass.previewDivider; d++) {
-            frameTime = frameTime + animationManager.scheduler.step()
+            //NOTE: await is needed, to allow other microtasks to run!
+            frameTime = frameTime + await animationManager.scheduler.step()
         }
 
-        frameTime=~~(frameTime/display.frameRounding)*display.frameRounding
+        frameTime = ~~(frameTime / display.frameRounding) * display.frameRounding
 
         //skip frames until frameTime is more than minimum allowed
         if (frameTime >= display.minFrameTime) {

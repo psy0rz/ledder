@@ -33,7 +33,7 @@ export class PreviewStore {
         await this.animationManager.loadAnimation(animationName)
         await this.animationManager.loadPreset(presetName)
         this.animationManager.run()
-        preRender(this.display, this.animationManager)
+        await preRender(this.display, this.animationManager)
         this.animationManager.stop(false)
         await this.display.store(presetStore.previewFilename(animationName, presetName), 128)
     }
