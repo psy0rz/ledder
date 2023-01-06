@@ -1,4 +1,5 @@
 //schedules updates for animations, based on frame-updates from the display.
+
 import IntervalControlled from "./IntervalControlled.js"
 import IntervalStatic from "./IntervalStatic.js"
 import Interval from "./Interval.js"
@@ -11,17 +12,43 @@ export default class Scheduler {
     private intervals: Set<Interval>
     private frameTimeMicros: number
     private defaultFrameTimeMicros: number
+    private onCleanupCallbacks: any[]
 
 
     constructor() {
 
         this.intervals = new Set()
-
-
+        this.onCleanupCallbacks = []
         this.clear()
 
     }
 
+    //Use this to do cleanup stuff in your animation. (like closing connections or other external stuff)
+    onCleanup(callback) {
+
+        this.onCleanupCallbacks.push(callback)
+    }
+
+
+    //clear all intervals
+    public clear() {
+
+
+        for (const callback of this.onCleanupCallbacks) {
+            try {
+                callback()
+
+            } catch (e) {
+                console.error("onCleanup error:", e)
+            }
+        }
+        this.onCleanupCallbacks=[]
+
+        this.frameNr = 0
+        this.setFrameTime(this.defaultFrameTimeMicros)
+        this.intervals.clear()
+
+    }
 
     /*
      * Sets FPS, by specifying the frametime in whole uS.
@@ -40,15 +67,6 @@ export default class Scheduler {
         this.setFrameTime(frameTimeMicros)
     }
 
-
-    //clear all intervals
-    public clear() {
-        this.frameNr = 0
-        this.setFrameTime(this.defaultFrameTimeMicros)
-
-        this.intervals.clear()
-
-    }
 
     /**
      * Create a new interval

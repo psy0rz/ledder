@@ -18,10 +18,10 @@ export default class Test extends Animation {
 
         //animation that does illegal stuff after ending it
         this.i=setInterval(() => {
-            console.log("test interval")
+            console.log("IINTERVAL LOOPT NOG")
             try {
                 box.add(new Pixel(0, 0, colorRed))
-                console.log("PIXEL LOOPT NOG")
+                // console.log("PIXEL LOOPT NOG")
             } catch (e) {
 
             }
@@ -39,11 +39,20 @@ export default class Test extends Animation {
             }
         }, 1000)
 
+
+        scheduler.onCleanup(() => {
+            console.log("CLEAUP")
+            clearInterval(this.i)
+            throw("kk")
+
+        })
+
+
     }
 
-    cleanup() {
-        super.cleanup()
-        console.log("CLEAUP")
-        clearInterval(this.i)
-    }
+    // cleanup() {
+    //     super.cleanup()
+    //     console.log("CLEAUP")
+    //     clearInterval(this.i)
+    // }
 }
