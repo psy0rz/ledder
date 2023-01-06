@@ -83,7 +83,6 @@ export default class Pacman extends Animation {
         // ..y.yyy..
         // .yy.yyyy
         // `))
-
         frames.centerV(box)
 
         let pacmanBox=new PixelBox(box)

@@ -23,10 +23,10 @@ export default class AnimationManager {
     public scheduler: Scheduler
     private controlGroup: ControlGroup
 
-    //childs
-    private childBox: PixelBox
+    //childs/proxies
     private proxyScheduler: { proxy: Scheduler; revoke: () => void }
     private proxyControlGroup: { proxy: ControlGroup; revoke: () => void }
+    private childBox: PixelBox //NOTE: we cant use a Proxy since its a subclass of a native Set()
 
     constructor(box: PixelBox, scheduler: Scheduler, controlGroup: ControlGroup) {
 
@@ -134,8 +134,8 @@ export default class AnimationManager {
     //stop current animation by cleaningup and detaching child objects
     public stop(keepControls: boolean) {
 
-        this.cleanup(keepControls)
         this.createProxies(keepControls)
+        this.cleanup(keepControls)
     }
 
     //force reload of animation from disk and restart it
