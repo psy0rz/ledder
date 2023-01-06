@@ -31,8 +31,8 @@ export default class ControlGroup extends Control {
     //remove all controls and reset
     resetCallback: () => void
 
-    //changed callback. called when a control is changed that has restartOnChange set.
-    changedCallback: () => void
+    //called when a control is changed by the user.
+    changedCallback: (control:Control) => void
 
     constructor(name: string = 'root', restartOnChange: boolean = false, collapsed = false) {
         super(name, 'controls', restartOnChange)
@@ -163,18 +163,19 @@ export default class ControlGroup extends Control {
 
     }
 
-
+    //NOTE: internal use only
     setCallbacks(reset, addControl) {
         this.resetCallback = reset
         this.addControlCallback = addControl
     }
 
-    setChangedCallback(callback?: () => void) {
+    //Is called when user changes something via the controls.
+    onChange(callback?: (Control) => void) {
         this.changedCallback = callback
 
         //always call it the first time:
         if (this.changedCallback !== undefined)
-            this.changedCallback()
+            this.changedCallback(this)
 
     }
 
@@ -213,8 +214,8 @@ export default class ControlGroup extends Control {
             changed = (this.meta.controls[path[0]].updateValue(path.slice(1), values) || this.meta.restartOnChange)
         }
 
-        if (changed && this.changedCallback !== undefined) {
-            this.changedCallback()
+        if (this.changedCallback !== undefined) {
+            this.changedCallback(this.meta.controls[path[0]])
         }
 
         return changed

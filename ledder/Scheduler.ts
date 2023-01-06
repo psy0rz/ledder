@@ -45,7 +45,7 @@ export default class Scheduler {
         this.onCleanupCallbacks=[]
 
         this.frameNr = 0
-        this.setFrameTime(this.defaultFrameTimeMicros)
+        this.setFrameTimeuS(this.defaultFrameTimeMicros)
         this.intervals.clear()
 
     }
@@ -55,8 +55,16 @@ export default class Scheduler {
      * The actual FPS depends on the display driver. Some use rounding, and most have maximum limits.
      * Set to 0 to use default FPS of display driver
      */
-    public setFrameTime(frameTimeMicros) {
+    public setFrameTimeuS(frameTimeMicros) {
         this.frameTimeMicros = ~~frameTimeMicros
+    }
+
+    /*
+     * Same as above but in fps
+     */
+    public setFps(fps)
+    {
+        this.setFrameTimeuS(1000000/fps)
     }
 
     /* Never call this directly. Set by renderer
@@ -64,7 +72,7 @@ export default class Scheduler {
      */
     public setDefaultFrameTime(frameTimeMicros) {
         this.defaultFrameTimeMicros = frameTimeMicros
-        this.setFrameTime(frameTimeMicros)
+        this.setFrameTimeuS(frameTimeMicros)
     }
 
 

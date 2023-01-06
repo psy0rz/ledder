@@ -25,6 +25,11 @@ export default class Marquee extends Animation {
 
     async run(box: PixelBox, scheduler: Scheduler, control: ControlGroup) {
 
+        const fpsControl=control.value("FPS", 60,1,120,1)
+        control.onChange( (c)=>{
+            scheduler.setFps(fpsControl.value)
+        })
+
         const font = fontSelect(control, 'Font')
         const input = control.input('Text', "Marquee  ", true)
         const colorControl = control.color("Text color", 0x21, 0xff, 0, 1)

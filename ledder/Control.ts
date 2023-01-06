@@ -32,12 +32,6 @@ export  class Control {
 
     }
 
-    /**
-     */
-    // setChangedCallback(changedCallback) {
-    //     this.changedCallback = changedCallback;
-    //
-    // }
 
 
     save?():Values;
