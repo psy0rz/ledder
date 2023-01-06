@@ -19,6 +19,7 @@ export default class Test extends Animation {
             console.log("test interval")
             try {
                 box.add(new Pixel(0, 0, colorRed))
+                console.log("PIXEL LOOPT NOG")
             } catch (e) {
 
             }
@@ -27,10 +28,10 @@ export default class Test extends Animation {
                     console.log("SCHEDULER LOOPT NOG")
                 })
             } catch (e) {
-console.log("scheduler stuk")
             }
             try {
                 controls.value("TEST")
+                console.log("CONTROLGROUP LOOPT NOG")
             } catch (e) {
 
             }

@@ -44,28 +44,7 @@ export default class ControlGroup extends Control {
 
     }
 
-    //Return a detachable child version of ourself.
-    //Needed in case of misbehaving animations that do stuff after the scheduler is stopped.
-    child() {
 
-        const c = new ControlGroup()
-        c.meta = this.meta
-        c.loadedValues = this.loadedValues
-        c.addControlCallback = this.addControlCallback
-        c.resetCallback = this.resetCallback
-        c.changedCallback = this.changedCallback
-        return (c)
-    }
-
-    //detach ourself from parent (invalidates all fields)
-    detach() {
-        this.meta = undefined
-        this.loadedValues = undefined
-        this.addControlCallback = undefined
-        this.resetCallback = undefined
-        this.changedCallback = undefined
-
-    }
 
     clear() {
         //make sure stuff stays attached to parent, in case we're a child

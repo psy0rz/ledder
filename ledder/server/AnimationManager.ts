@@ -25,8 +25,8 @@ export default class AnimationManager {
 
     //childs
     private childBox: PixelBox
-    private childControlGroup: ControlGroup
     private proxyScheduler: { proxy: Scheduler; revoke: () => void }
+    private proxyControlGroup: { proxy: ControlGroup; revoke: () => void }
 
     constructor(box: PixelBox, scheduler: Scheduler, controlGroup: ControlGroup) {
 
@@ -34,7 +34,7 @@ export default class AnimationManager {
         this.scheduler = scheduler
         this.controlGroup = controlGroup
 
-        this.detachChilds(false)
+        this.createProxies(false)
 
     }
 
@@ -42,24 +42,25 @@ export default class AnimationManager {
     // This ensures that animations that still have some async call running cannot interfere anymore.
     // Dont forget to cleanup() before, if needed
     // Also detaches this.animation.
-    private detachChilds(keepControls: boolean) {
+    private createProxies(keepControls: boolean) {
         //box
-        if (this.childBox!==undefined)
+        if (this.childBox !== undefined)
             this.box.delete(this.childBox)
 
         this.childBox = new PixelBox(this.box)
         this.box.add(this.childBox)
 
         //scheduler
-        if (this.proxyScheduler!==undefined)
+        if (this.proxyScheduler !== undefined)
             this.proxyScheduler.revoke()
-        this.proxyScheduler=Proxy.revocable(this.scheduler, {})
+        this.proxyScheduler = Proxy.revocable(this.scheduler, {})
+
 
         //controls
-        if (this.childControlGroup!==undefined)
-            this.childControlGroup.detach()
+        if (this.proxyControlGroup !== undefined)
+            this.proxyControlGroup.revoke()
+        this.proxyControlGroup = Proxy.revocable(this.controlGroup, {})
 
-        this.childControlGroup=this.controlGroup.child()
 
         //animation
         this.animation = undefined
@@ -85,7 +86,7 @@ export default class AnimationManager {
         // console.log(`RunnerServer: Starting: ${this.animationName} ${this.presetName}`)
         try {
             this.animation = new this.animationClass()
-            this.animation.run(this.childBox, this.proxyScheduler.proxy, this.childControlGroup).then(() => {
+            this.animation.run(this.childBox, this.proxyScheduler.proxy, this.proxyControlGroup.proxy).then(() => {
                 // console.log(`RunnerServer: Animation ${this.animationName} finished.`)
             }).catch((e) => {
                 if (e != 'abort') {
@@ -110,16 +111,14 @@ export default class AnimationManager {
     }
 
     //load only animation
-    public async loadAnimation(animationName:string)
-    {
-        this.animationName=animationName
+    public async loadAnimation(animationName: string) {
+        this.animationName = animationName
         this.animationClass = await presetStore.loadAnimation(this.animationName)
     }
 
     //load only preset
-    public async loadPreset(presetName:string)
-    {
-        this.presetName=presetName
+    public async loadPreset(presetName: string) {
+        this.presetName = presetName
         this.presetValues = await presetStore.load(this.animationName, this.presetName)
         this.controlGroup.load(this.presetValues.values)
     }
@@ -136,7 +135,7 @@ export default class AnimationManager {
     public stop(keepControls: boolean) {
 
         this.cleanup(keepControls)
-        this.detachChilds(keepControls)
+        this.createProxies(keepControls)
     }
 
     //force reload of animation from disk and restart it
@@ -155,7 +154,6 @@ export default class AnimationManager {
         await this.reload(keepControls)
 
     }
-
 
 
     //automaticly reload animation file on change to make development easier.
