@@ -13,36 +13,15 @@ export default class Scheduler {
     private defaultFrameTimeMicros: number
 
 
-    constructor(parentScheduler?: Scheduler) {
+    constructor() {
 
-        if (parentScheduler !== undefined) {
-            this.intervals = parentScheduler.intervals
-            this.setFrameTime = parentScheduler.setFrameTime
-
-        } else
-            this.intervals = new Set()
+        this.intervals = new Set()
 
 
         this.clear()
 
     }
 
-    //NOTE: never call this yourself, its used by AnimationManager
-    //Return a new Scheduler which uses our intervals-set.
-    //This way we can detach ourself to prevent "stopped" animation from adding new stuff to the scheduler.
-    public child() {
-        return new Scheduler(this)
-    }
-
-    //NOTE: never call this yourself, its used by AnimationManager
-    //Detach ourself from parent scheduler.
-    //Creates a new this.interval, so that only we control it.
-    //Its like a super-clear() :p
-    public detach() {
-        this.intervals = new Set()
-        this.setFrameTime = () => {
-        }
-    }
 
     /*
      * Sets FPS, by specifying the frametime in whole uS.

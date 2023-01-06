@@ -25,8 +25,8 @@ export default class AnimationManager {
 
     //childs
     private childBox: PixelBox
-    private childScheduler: Scheduler
     private childControlGroup: ControlGroup
+    private proxyScheduler: { proxy: Scheduler; revoke: () => void }
 
     constructor(box: PixelBox, scheduler: Scheduler, controlGroup: ControlGroup) {
 
@@ -51,9 +51,9 @@ export default class AnimationManager {
         this.box.add(this.childBox)
 
         //scheduler
-        if (this.childScheduler!==undefined)
-            this.childScheduler.detach()
-        this.childScheduler = this.scheduler.child()
+        if (this.proxyScheduler!==undefined)
+            this.proxyScheduler.revoke()
+        this.proxyScheduler=Proxy.revocable(this.scheduler, {})
 
         //controls
         if (this.childControlGroup!==undefined)
@@ -70,7 +70,8 @@ export default class AnimationManager {
     private cleanup(keepControls: boolean) {
         if (this.animation !== undefined && this.animation.cleanup !== undefined)
             this.animation.cleanup()
-        this.childScheduler.clear() //will actual clear parent as well
+
+        this.scheduler.clear()
         this.childBox.clear()
 
         if (!keepControls) {
@@ -84,7 +85,7 @@ export default class AnimationManager {
         // console.log(`RunnerServer: Starting: ${this.animationName} ${this.presetName}`)
         try {
             this.animation = new this.animationClass()
-            this.animation.run(this.childBox, this.childScheduler, this.childControlGroup).then(() => {
+            this.animation.run(this.childBox, this.proxyScheduler.proxy, this.childControlGroup).then(() => {
                 // console.log(`RunnerServer: Animation ${this.animationName} finished.`)
             }).catch((e) => {
                 if (e != 'abort') {

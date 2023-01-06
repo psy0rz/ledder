@@ -10,6 +10,7 @@ import ControlRange from "./ControlRange.js"
 
 type ControlMap = Record<string, Control>
 
+
 interface ControlGroupMeta extends ControlMeta {
     controls: ControlMap
     collapsed: boolean
@@ -46,6 +47,7 @@ export default class ControlGroup extends Control {
     //Return a detachable child version of ourself.
     //Needed in case of misbehaving animations that do stuff after the scheduler is stopped.
     child() {
+
         const c = new ControlGroup()
         c.meta = this.meta
         c.loadedValues = this.loadedValues
