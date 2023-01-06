@@ -40,7 +40,7 @@ export async function createParentDir(fileName: string) {
 export async function preRender(display: Display, animationManager: AnimationManager) {
 
     //set default fps (animation can change this)
-    animationManager.scheduler.setDefaultFrameTime(display.defaultFrameTime)
+    animationManager.scheduler.setDefaultFrameTime(display.defaultFrameTimeMicros)
 
     //skip first frames, just run scheduler
     for (let i = 0; i < animationManager.animationClass.previewSkip; i++)
@@ -57,10 +57,10 @@ export async function preRender(display: Display, animationManager: AnimationMan
             frameTime = frameTime + await animationManager.scheduler.step()
         }
 
-        frameTime = ~~(frameTime / display.frameRounding) * display.frameRounding
+        frameTime = ~~(frameTime / display.frameRoundingMicros) * display.frameRoundingMicros
 
         //skip frames until frameTime is more than minimum allowed
-        if (frameTime >= display.minFrameTime) {
+        if (frameTime >= display.minFrameTimeMicros) {
             displayTime += frameTime
             frameTime = 0
             display.render(animationManager.box)

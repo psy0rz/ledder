@@ -5,10 +5,10 @@ export class DisplayWebsocket extends Display {
     ws: WebSocket
 
 
+
     //width and height are led-display-pixels, not canvas pixels.
     constructor(width, height, ws) {
         super( width, height);
-
 
 
         this.imageBuf8 = new Uint8ClampedArray(height * width * 4);
