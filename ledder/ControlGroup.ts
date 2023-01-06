@@ -38,8 +38,6 @@ export default class ControlGroup extends Control {
         super(name, 'controls', restartOnChange)
 
         this.meta.collapsed = collapsed
-        this.meta.controls = {}
-        this.loadedValues = {}
         this.clear()
 
     }
@@ -47,14 +45,8 @@ export default class ControlGroup extends Control {
 
 
     clear() {
-        //make sure stuff stays attached to parent, in case we're a child
-        for (const key in this.meta.controls) {
-            delete this.meta.controls[key]
-        }
-
-        for (const key in this.loadedValues) {
-            delete this.loadedValues[key]
-        }
+        this.meta.controls = {}
+        this.loadedValues = {}
 
         if (this.resetCallback) {
             this.resetCallback()
@@ -203,13 +195,7 @@ export default class ControlGroup extends Control {
      */
     load(values: Values) {
 
-        //we cant do a regular assignment since it has to stay attached to parent/child
-        for (const key in this.loadedValues) {
-            delete this.loadedValues[key]
-        }
-        Object.assign(this.loadedValues, values)
-
-        // this.loadedValues = values
+        this.loadedValues=values
 
         //update existing controls
         for (const [name, control] of Object.entries(this.meta.controls)) {
