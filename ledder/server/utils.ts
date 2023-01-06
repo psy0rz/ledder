@@ -3,6 +3,10 @@ import Display from "../Display.js"
 import AnimationManager from "./AnimationManager.js"
 import {mkdir, stat} from "fs/promises"
 import path from "path"
+import PixelBox from "../PixelBox.js"
+import Scheduler from "../Scheduler.js"
+import ControlGroup from "../ControlGroup.js"
+import {presetStore} from "./PresetStore.js"
 
 
 /***
@@ -63,5 +67,19 @@ export async function preRender(display: Display, animationManager: AnimationMan
             display.frame(displayTime)
         }
     }
+
+}
+//Run an animation, optionally loading a preset.
+//Use this to run an Animation from withint another Animation.
+//However, if you want to safely stop and cleanup an animation, it might be better to use a full fledged AnimationManager instance.
+export async function animationRun(box: PixelBox, scheduler: Scheduler, controls: ControlGroup, animationName, presetName?: string) {
+
+    const animationClass = await presetStore.loadAnimation(animationName)
+    const animation = new animationClass()
+    if (presetName) {
+        const presetValues = await presetStore.load(animationName, presetName)
+        controls.load(presetValues.values)
+    }
+    return animation.run(box, scheduler, controls)
 
 }
