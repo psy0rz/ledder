@@ -10,12 +10,14 @@ import DrawText from "../draw/DrawText.js"
 import {fonts, fontSelect} from "../fonts.js"
 import {Col} from "framework7-svelte"
 import {colorRed} from "../Colors.js"
+import {clearInterval} from "timers"
 
 export default class Test extends Animation {
+    private i: NodeJS.Timer
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) {
 
         //animation that does illegal stuff after ending it
-        setInterval(() => {
+        this.i=setInterval(() => {
             console.log("test interval")
             try {
                 box.add(new Pixel(0, 0, colorRed))
@@ -37,5 +39,11 @@ export default class Test extends Animation {
             }
         }, 1000)
 
+    }
+
+    cleanup() {
+        super.cleanup()
+        console.log("CLEAUP")
+        clearInterval(this.i)
     }
 }

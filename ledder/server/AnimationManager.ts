@@ -62,15 +62,15 @@ export default class AnimationManager {
         this.proxyControlGroup = Proxy.revocable(this.controlGroup, {})
 
 
-        //animation
-        this.animation = undefined
 
     }
 
     //cleanup existing child stuff
     private cleanup(keepControls: boolean) {
-        if (this.animation !== undefined && this.animation.cleanup !== undefined)
+        if (this.animation !== undefined && this.animation.cleanup !== undefined) {
             this.animation.cleanup()
+            this.animation=undefined
+        }
 
         this.scheduler.clear()
         this.childBox.clear()
