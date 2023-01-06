@@ -56,12 +56,11 @@ export default class AnimationManager {
         this.proxyScheduler = Proxy.revocable(this.scheduler, {})
 
 
-        //controls
-        if (!keepControls) {
-            if (this.proxyControlGroup !== undefined)
-                this.proxyControlGroup.revoke()
-            this.proxyControlGroup = Proxy.revocable(this.controlGroup, {})
-        }
+
+        this.controlGroup.detach() //removes onChange handlers etc
+        if (this.proxyControlGroup !== undefined)
+            this.proxyControlGroup.revoke()
+        this.proxyControlGroup = Proxy.revocable(this.controlGroup, {})
 
 
     }
@@ -179,12 +178,18 @@ export default class AnimationManager {
     //     }
     // }
 
-    public updateValue(path: [string], values: Values): boolean {
+    public async updateValue(path: [string], values: Values) {
         // const ret = this.childControlGroup.updateValue(path, values)
+        try {
+
         const ret = this.controlGroup.updateValue(path, values)
         if (ret)
-            this.restart(true)
+            await this.restart(true)
         return ret
+        }
+        catch (e) {
+            console.error(e)
+        }
     }
 
 

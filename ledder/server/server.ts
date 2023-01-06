@@ -9,17 +9,16 @@ import {presetStore} from "./PresetStore.js"
 
 const settingsControl = new ControlGroup('Global settings')
 
-const gammaMapper=new GammaMapper(settingsControl.group("Display settings"))
-
+const gammaMapper = new GammaMapper(settingsControl.group("Display settings"))
 
 
 //create run all the displayes
-let renderLoops:Array<RenderLoop>=[]
+let renderLoops: Array<RenderLoop> = []
 
 for (const m of config.displayList) {
-    let display:Display
+    let display: Display
     display = m
-    display.gammaMapper=gammaMapper
+    display.gammaMapper = gammaMapper
 
     let renderLoop = new RenderLoop(display)
     renderLoop.start()
@@ -28,24 +27,20 @@ for (const m of config.displayList) {
 }
 
 
-
-
 //RPC bindings
-let rpc = new RpcServer();
+let rpc = new RpcServer()
 
 
 rpc.addMethod("presetStore.loadAnimationPresetList", async (params) => {
     return await presetStore.loadAnimationPresetList()
 })
 
-rpc.addMethod("context.runner.save", async (params, context) =>
-{
+rpc.addMethod("context.runner.save", async (params, context) => {
     if (context.renderLoop)
         await context.renderLoop.save(params[0])
 })
 
-rpc.addMethod("context.runner.delete", async (params, context) =>
-{
+rpc.addMethod("context.runner.delete", async (params, context) => {
     if (context.renderLoop)
         await context.renderLoop.delete()
 })
@@ -53,7 +48,7 @@ rpc.addMethod("context.runner.delete", async (params, context) =>
 
 rpc.addMethod("context.startPreview", async (params, context) => {
     // console.log("start preview")
-   await context.startPreview(presetStore, params[0], params[1])
+    await context.startPreview(presetStore, params[0], params[1])
 })
 
 rpc.addMethod("context.stopPreview", async (params, context) => {
@@ -64,23 +59,22 @@ rpc.addMethod("context.stopPreview", async (params, context) => {
 rpc.addMethod("runner.runName", async (params, context) => {
 
     if (context.renderLoop)
-        await context.renderLoop.animationManager.select(params[0]+"/"+ params[1], false)
+        await context.renderLoop.animationManager.select(params[0] + "/" + params[1], false)
 
     for (const runner of renderLoops) {
-        await runner.animationManager.select(params[0]+"/"+ params[1], false)
+        await runner.animationManager.select(params[0] + "/" + params[1], false)
     }
 })
 
 rpc.addMethod("display.control.updateValue", async (params, context) => {
 
     if (context.renderLoop)
-     context.renderLoop.animationManager.updateValue(params[0], params[1])
+         await context.renderLoop.animationManager.updateValue(params[0], params[1])
 
     for (const runner of renderLoops) {
-        runner.animationManager.updateValue(params[0], params[1])
+        await runner.animationManager.updateValue(params[0], params[1])
     }
 })
-
 
 
 rpc.addMethod("settings.get", async (params, context) => {
@@ -91,5 +85,11 @@ rpc.addMethod("settings.get", async (params, context) => {
 
 rpc.addMethod("settings.updateValue", async (params, context) => {
 
-    settingsControl.updateValue(params[0], params[1])
+    try {
+
+        settingsControl.updateValue(params[0], params[1])
+    } catch (e) {
+        console.error("Error while updating settings value:", e)
+    }
+
 })

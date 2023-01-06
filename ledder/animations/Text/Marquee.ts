@@ -25,11 +25,6 @@ export default class Marquee extends Animation {
 
     async run(box: PixelBox, scheduler: Scheduler, control: ControlGroup) {
 
-        const fpsControl=control.value("FPS", 60,1,120,1)
-        control.onChange( (c)=>{
-            scheduler.setFps(fpsControl.value)
-        })
-
         const font = fontSelect(control, 'Font')
         const input = control.input('Text', "Marquee  ", true)
         const colorControl = control.color("Text color", 0x21, 0xff, 0, 1)
@@ -58,24 +53,31 @@ export default class Marquee extends Animation {
         let rotatorPromise
         if (scrollGroup.switch('Enabled', true).enabled) {
 
+            //allow finetuning via actual FPS
+            const fpsControl = scrollGroup.value("FPS", 60, 1, 120, 1)
+            fpsControl.onChange(() => {
+                scheduler.setFps(fpsControl.value)
+            })
+
+
             const rotator = new FxRotate(scheduler, scrollGroup)
 
             //show one time or loop?
-            let waitX=0
+            let waitX = 0
 
             if (scrollGroup.switch('Circular', false, true).enabled) {
                 //circular display, only add whitespace
                 const whitespace = scrollGroup.value("Whitespace", 10, 0, 100, 1, true)
                 charPixels.move(whitespace.value, 0)
                 //replicate text until display is filled
-                const width=charPixels.bbox().xMax-box.xMin
-                if (charPixels.bbox().xMax>0) {
+                const width = charPixels.bbox().xMax - box.xMin
+                if (charPixels.bbox().xMax > 0) {
                     let charPixelsCopy = charPixels.copy()
                     while (charPixels.bbox().xMax < box.xMax) {
                         charPixelsCopy.move(width, 0)
                         charPixels.add(charPixelsCopy)
 
-                        charPixelsCopy=charPixelsCopy.copy()
+                        charPixelsCopy = charPixelsCopy.copy()
                     }
                     charPixels.flatten()
                 }
@@ -85,12 +87,12 @@ export default class Marquee extends Animation {
 
                 //only show one time?
                 if (scrollGroup.switch('Show one time only', false, true).enabled)
-                    waitX=charPixels.bbox().xMax-box.xMin
+                    waitX = charPixels.bbox().xMax - box.xMin
             }
             const textBbox = scrollContainer.bbox()
             textBbox.xMin = 0
 
-            rotatorPromise=rotator.run(scrollContainer, textBbox, waitX)
+            rotatorPromise = rotator.run(scrollContainer, textBbox, waitX)
         } else {
             charPixels.centerH(box)
         }
