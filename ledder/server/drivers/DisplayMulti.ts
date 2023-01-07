@@ -15,20 +15,12 @@ export class DisplayMulti extends Display {
         this.displays = displays
         this.unitWidth=displays[0][0].width
         this.unitHeight=displays[0][0].height
-        this.roundFrametime=true
 
 
-    }
-
-    setFps(fps:number)
-    {
-        super.setFps(fps)
-        for (const displays of this.displays)
-            for (const display of displays) {
-                display.setFps(fps)
-            }
 
     }
+
+
 
     frame(displayTime: number) {
         // this.displays[0][0].frame(displayTime)

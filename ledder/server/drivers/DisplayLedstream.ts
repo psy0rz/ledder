@@ -33,7 +33,7 @@ export class DisplayLedstream extends DisplayQOIS {
         super(width, height, mapper)
 
 
-        this.roundFrametime = true
+        this.frameRoundingMicros=1000
 
         this.ips = ips
         this.port = port
@@ -79,7 +79,7 @@ export class DisplayLedstream extends DisplayQOIS {
         const maxTimeLag=500
 
         //buffer this many frames
-        const lag = Math.min(maxTimeLag, maxFramesLag * this.frameMs)
+        const lag = Math.min(maxTimeLag, maxFramesLag * this.defaultFrameTimeMicros/1000)
 
         //try to full up packets, but dont wait longer than this time:
         // const maxWait= (lag/2)  * this.frameMs

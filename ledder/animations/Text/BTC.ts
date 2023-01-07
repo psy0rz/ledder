@@ -57,11 +57,17 @@ export default class BTC extends Animation {
         const label=new DrawText(x-25,y+1, fontSelect(controls), symbolSelect.selected, controls.color('Text color'))
         box.add(label)
 
-
+        let stopped=false
+        scheduler.onCleanup(()=>{
+            stopped=true
+        })
 
         function update() {
 
             cryptoFirstLast(symbolSelect.selected,  (symbol, first, last) => {
+
+                if (stopped)
+                    return
 
                 if (init) {
 

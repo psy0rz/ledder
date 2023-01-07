@@ -65,6 +65,15 @@ export class RenderLoop {
         this.keepRendering = false
     }
 
+    getStats()
+    {
+            let count=0
+            this.box.forEachPixel( ()=>{
+                count++
+            })
+            return (`${count} pixels.\n${this.scheduler.getStats()}`)
+    }
+
 }
 
 

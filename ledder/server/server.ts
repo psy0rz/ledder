@@ -35,15 +35,15 @@ rpc.addMethod("presetStore.loadAnimationPresetList", async (params) => {
     return await presetStore.loadAnimationPresetList()
 })
 
-rpc.addMethod("context.runner.save", async (params, context) => {
-    if (context.renderLoop)
-        await context.renderLoop.save(params[0])
-})
-
-rpc.addMethod("context.runner.delete", async (params, context) => {
-    if (context.renderLoop)
-        await context.renderLoop.delete()
-})
+// rpc.addMethod("context.runner.save", async (params, context) => {
+//     if (context.renderLoop)
+//         await context.renderLoop.save(params[0])
+// })
+//
+// rpc.addMethod("context.runner.delete", async (params, context) => {
+//     if (context.renderLoop)
+//         await context.renderLoop.delete()
+// })
 
 
 rpc.addMethod("context.startPreview", async (params, context) => {

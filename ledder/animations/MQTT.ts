@@ -42,7 +42,7 @@ export default class MQTT extends Animation {
     private lastStatusMessage: DrawText
 
     cleanup() {
-        console.log("clean", this.id)
+        // console.log("clean", this.id)
         if (this.client !== undefined)
             this.client.end(false)
 
@@ -84,8 +84,8 @@ export default class MQTT extends Animation {
     }
 
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) {
-        this.id = random(0, 10000)
-        console.log("IK HEB ID", this.id)
+        // this.id = random(0, 10000)
+        // console.log("IK HEB ID", this.id)
         const mqttHost = controls.input('MQTT host', "mqtt", true)
         const mqttTopic = controls.input('MQTT topic', "ledder", true)
 

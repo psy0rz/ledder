@@ -65,12 +65,7 @@ export class WsContext {
 
 
         this.statsInterval=setInterval( ()=>{
-            let count=0
-            this.renderLoop.box.forEachPixel( ()=>{
-                count++
-            })
-           // @ts-ignore
-            console.log(`Stats ${this.id}: ${count} pixels, ${this.renderLoop.scheduler.intervals.size} intervals`)
+            console.log(`Stats ${this.id}: ${this.renderLoop.getStats()}`)
         }, 3000)
 
 

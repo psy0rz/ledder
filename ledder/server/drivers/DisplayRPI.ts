@@ -1,4 +1,6 @@
 import Display from "../../Display.js"
+
+// @ts-ignore
 import leds from "rpi-ws281x-smi"
 import OffsetMapper from "./OffsetMapper.js"
 

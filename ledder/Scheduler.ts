@@ -142,7 +142,7 @@ export default class Scheduler {
 
     }
 
-    public status() {
-        console.log("Scheduler intervals: ", this.intervals.size)
+    public getStats() {
+        return (`Scheduler: ${this.intervals.size}`)
     }
 }
