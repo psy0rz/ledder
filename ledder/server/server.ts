@@ -7,6 +7,7 @@ import {config} from "./config.js"
 import {presetStore} from "./PresetStore.js"
 
 
+
 const settingsControl = new ControlGroup('Global settings')
 
 const gammaMapper = new GammaMapper(settingsControl.group("Display settings"))

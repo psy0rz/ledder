@@ -122,6 +122,8 @@ export default class Scheduler {
     //Dont call this directly!
     //Returns time in uS until next frame should be rendered.
     public step() {
+
+
         this.frameNr++
 
         for (const interval of this.intervals) {

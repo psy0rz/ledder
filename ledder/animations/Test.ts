@@ -11,41 +11,52 @@ import {fonts, fontSelect} from "../fonts.js"
 import {Col} from "framework7-svelte"
 import {colorRed} from "../Colors.js"
 import {clearInterval} from "timers"
+import {FxFadeMask} from "../fx/FxFadeMask.js"
 
 export default class Test extends Animation {
     private i: NodeJS.Timer
+
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) {
 
+        const fader = new FxFadeMask(scheduler, controls)
+
+        while (1) {
+            await fader.run(box, true, 30)
+
+            await scheduler.delay(1)
+            console.log("hoi")
+        }
+
         //animation that does illegal stuff after ending it
-        this.i=setInterval(() => {
-            console.log("IINTERVAL LOOPT NOG")
-            try {
-                box.add(new Pixel(0, 0, colorRed))
-                // console.log("PIXEL LOOPT NOG")
-            } catch (e) {
+        // this.i=setInterval(() => {
+        //     console.log("IINTERVAL LOOPT NOG")
+        //     try {
+        //         box.add(new Pixel(0, 0, colorRed))
+        //         // console.log("PIXEL LOOPT NOG")
+        //     } catch (e) {
+        //
+        //     }
+        //     try {
+        //         scheduler.interval(60, () => {
+        //             console.log("SCHEDULER LOOPT NOG")
+        //         })
+        //     } catch (e) {
+        //     }
+        //     try {
+        //         controls.value("TEST")
+        //         console.log("CONTROLGROUP LOOPT NOG")
+        //     } catch (e) {
+        //
+        //     }
+        // }, 1000)
 
-            }
-            try {
-                scheduler.interval(60, () => {
-                    console.log("SCHEDULER LOOPT NOG")
-                })
-            } catch (e) {
-            }
-            try {
-                controls.value("TEST")
-                console.log("CONTROLGROUP LOOPT NOG")
-            } catch (e) {
 
-            }
-        }, 1000)
-
-
-        scheduler.onCleanup(() => {
-            console.log("CLEAUP")
-            clearInterval(this.i)
-            throw("kk")
-
-        })
+        // scheduler.onCleanup(() => {
+        //     console.log("CLEAUP")
+        //     clearInterval(this.i)
+        //     throw("kk")
+        //
+        // })
 
 
     }

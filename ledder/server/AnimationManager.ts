@@ -6,6 +6,17 @@ import ControlGroup from "../ControlGroup.js"
 import {PresetValues} from "../PresetValues.js"
 import {Values} from "../Control.js"
 
+
+/*
+ * We need this, since we will have unhandled rejections once we revoke proxy objects (see below)
+ * We cant expect all animations to behave correctly all the time and handle all the edge cases regarding this.
+ */
+process.on('unhandledRejection', (err, origin) => {
+  console.error("Unhandled rejection: ", err)
+
+})
+
+
 /**
  * Manages livecycle of an animation. (Loading/Starting/Restarting/Stopping/Cleaning up)
  * Also: This should be used from an Animation to manage sub-animations.

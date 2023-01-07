@@ -1,0 +1,355 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="7de4510b-f0e5-4402-9e95-cb9c8d6f6b3a" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ledder/Scheduler.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/Scheduler.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ledder/animations/Cycle.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/animations/Cycle.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ledder/animations/Test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/animations/Test.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ledder/fx/FxFadeMask.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/fx/FxFadeMask.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ledder/server/AnimationManager.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/server/AnimationManager.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ledder/server/buildpreviews.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/server/buildpreviews.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ledder/server/server.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/server/server.ts" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2K00LGm4WpFcz2QTHdEoAwHWv2q" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="false" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/psy/WebstormProjects/ledder&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.ide.settings.new.ui&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;/home/psy/WebstormProjects/ledder/node_modules/typescript/lib&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RunManager" selected="Node.js.buildpreviews.js">
+    <configuration name="buildpreviews.js" type="NodeJSConfigurationType" application-parameters="-- -f" nameIsGenerated="true" path-to-js-file="ledder/server/buildpreviews.js" working-dir="$PROJECT_DIR$">
+      <method v="2">
+        <option name="TypeScript.Before.Run" enabled="true" FAIL_ON_ERROR="true" />
+      </method>
+    </configuration>
+    <configuration name="server.js" type="NodeJSConfigurationType" nameIsGenerated="true" path-to-js-file="ledder/server/server.js" working-dir="$PROJECT_DIR$">
+      <method v="2">
+        <option name="TypeScript.Before.Run" enabled="true" FAIL_ON_ERROR="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Node.js.server.js" />
+      <item itemvalue="Node.js.buildpreviews.js" />
+    </list>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="7de4510b-f0e5-4402-9e95-cb9c8d6f6b3a" name="Changes" comment="" />
+      <created>1673096136347</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1673096136347</updated>
+      <workItem from="1673096139641" duration="4849000" />
+      <workItem from="1673102340801" duration="6540000" />
+    </task>
+    <task id="LOCAL-00001" summary="kjh">
+      <created>1673098884534</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1673098884534</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+    <option name="exactExcludedFiles">
+      <list>
+        <option value="$PROJECT_DIR$/ledder/animations/Text/Marquee.js" />
+        <option value="$PROJECT_DIR$/ledder/animations/Text/BTC.js" />
+        <option value="$PROJECT_DIR$/ledder/animations/Text/BTC.js.map" />
+        <option value="$PROJECT_DIR$/ledder/animations/Text/Marquee.js.map" />
+        <option value="$PROJECT_DIR$/src/js/Rpc.js.map" />
+        <option value="$PROJECT_DIR$/src/js/Rpc.js" />
+        <option value="$PROJECT_DIR$/ledder/draw/DrawText.js.map" />
+        <option value="$PROJECT_DIR$/ledder/draw/DrawText.js" />
+        <option value="$PROJECT_DIR$/ledder/draw/DrawGlowMask.js" />
+        <option value="$PROJECT_DIR$/ledder/draw/DrawBox.js.map" />
+        <option value="$PROJECT_DIR$/ledder/draw/DrawAsciiArt.js.map" />
+        <option value="$PROJECT_DIR$/ledder/draw/DrawCounter.js" />
+        <option value="$PROJECT_DIR$/ledder/draw/DrawLine.js" />
+        <option value="$PROJECT_DIR$/ledder/draw/DrawAsciiArtColor.js.map" />
+        <option value="$PROJECT_DIR$/ledder/draw/DrawAsciiArtColor.js" />
+        <option value="$PROJECT_DIR$/ledder/draw/DrawBox.js" />
+        <option value="$PROJECT_DIR$/ledder/draw/DrawCounter.js.map" />
+        <option value="$PROJECT_DIR$/ledder/draw/DrawAsciiArt.js" />
+        <option value="$PROJECT_DIR$/ledder/draw/DrawLine.js.map" />
+        <option value="$PROJECT_DIR$/ledder/draw/DrawGlowMask.js.map" />
+        <option value="$PROJECT_DIR$/ledder/animations/Lights/PoliceLights.js.map" />
+        <option value="$PROJECT_DIR$/ledder/animations/Lights/PoliceLights.js" />
+        <option value="$PROJECT_DIR$/src/js/web/RunnerBrowser.js.map" />
+        <option value="$PROJECT_DIR$/src/js/web/svelteStore.js" />
+        <option value="$PROJECT_DIR$/src/js/web/routes.js.map" />
+        <option value="$PROJECT_DIR$/src/js/web/RunnerBrowser.js" />
+        <option value="$PROJECT_DIR$/src/js/web/routes.js" />
+        <option value="$PROJECT_DIR$/src/js/web/RpcClient.js" />
+        <option value="$PROJECT_DIR$/src/js/web/util.js.map" />
+        <option value="$PROJECT_DIR$/src/js/web/RpcClient.js.map" />
+        <option value="$PROJECT_DIR$/src/js/web/DisplayCanvas.js" />
+        <option value="$PROJECT_DIR$/src/js/web/svelteStore.js.map" />
+        <option value="$PROJECT_DIR$/src/js/web/util.js" />
+        <option value="$PROJECT_DIR$/src/js/web/app.js" />
+        <option value="$PROJECT_DIR$/src/js/web/app.js.map" />
+        <option value="$PROJECT_DIR$/src/js/web/DisplayCanvas.js.map" />
+        <option value="$PROJECT_DIR$/ledder/animations/Fires/BrainsmokeFire.js.map" />
+        <option value="$PROJECT_DIR$/ledder/animations/Fires/ParticleFire.js" />
+        <option value="$PROJECT_DIR$/ledder/animations/Fires/PlasmaFire.js" />
+        <option value="$PROJECT_DIR$/ledder/animations/Fires/Fire.js.map" />
+        <option value="$PROJECT_DIR$/ledder/animations/Fires/PlasmaFire.js.map" />
+        <option value="$PROJECT_DIR$/ledder/animations/Fires/ParticleFire.js.map" />
+        <option value="$PROJECT_DIR$/ledder/animations/Fires/Fire.js" />
+        <option value="$PROJECT_DIR$/ledder/animations/Fires/BrainsmokeFire.js" />
+        <option value="$PROJECT_DIR$/ledder/Color.js.map" />
+        <option value="$PROJECT_DIR$/ledder/ControlGroup.js.map" />
+        <option value="$PROJECT_DIR$/ledder/ControlValue.js.map" />
+        <option value="$PROJECT_DIR$/ledder/IntervalStatic.js" />
+        <option value="$PROJECT_DIR$/ledder/ColorInterface.js" />
+        <option value="$PROJECT_DIR$/ledder/ControlRange.js" />
+        <option value="$PROJECT_DIR$/ledder/Scheduler.js.map" />
+        <option value="$PROJECT_DIR$/ledder/Draw.js" />
+        <option value="$PROJECT_DIR$/ledder/ColorPatterns.js" />
+        <option value="$PROJECT_DIR$/ledder/fonts.js.map" />
+        <option value="$PROJECT_DIR$/ledder/utils.js" />
+        <option value="$PROJECT_DIR$/ledder/Animation.js.map" />
+        <option value="$PROJECT_DIR$/ledder/ControlColor.js" />
+        <option value="$PROJECT_DIR$/ledder/IntervalControlled.js.map" />
+        <option value="$PROJECT_DIR$/ledder/PixelInterface.js" />
+        <option value="$PROJECT_DIR$/ledder/AnimationLists.js" />
+        <option value="$PROJECT_DIR$/ledder/PixelInterface.js.map" />
+        <option value="$PROJECT_DIR$/ledder/crypto.js.map" />
+        <option value="$PROJECT_DIR$/ledder/Control.js" />
+        <option value="$PROJECT_DIR$/ledder/Display.js" />
+        <option value="$PROJECT_DIR$/ledder/ValueInterface.js" />
+        <option value="$PROJECT_DIR$/ledder/Fx.js.map" />
+        <option value="$PROJECT_DIR$/ledder/Scheduler.js" />
+        <option value="$PROJECT_DIR$/ledder/IntervalOnce.js" />
+        <option value="$PROJECT_DIR$/ledder/PresetValues.js" />
+        <option value="$PROJECT_DIR$/ledder/IntervalControlled.js" />
+        <option value="$PROJECT_DIR$/ledder/Value.js.map" />
+        <option value="$PROJECT_DIR$/ledder/IntervalOnce.js.map" />
+        <option value="$PROJECT_DIR$/ledder/message.js.map" />
+        <option value="$PROJECT_DIR$/ledder/Pixel.js" />
+        <option value="$PROJECT_DIR$/ledder/Display.js.map" />
+        <option value="$PROJECT_DIR$/ledder/Font.js" />
+        <option value="$PROJECT_DIR$/ledder/Color.js" />
+        <option value="$PROJECT_DIR$/ledder/ControlGroup.js" />
+        <option value="$PROJECT_DIR$/ledder/ControlSelect.js.map" />
+        <option value="$PROJECT_DIR$/ledder/ControlInput.js" />
+        <option value="$PROJECT_DIR$/ledder/PixelBox.js.map" />
+        <option value="$PROJECT_DIR$/ledder/AnimationLists.js.map" />
+        <option value="$PROJECT_DIR$/ledder/ControlSwitch.js" />
+        <option value="$PROJECT_DIR$/ledder/PixelList.js" />
+        <option value="$PROJECT_DIR$/ledder/ValueInterface.js.map" />
+        <option value="$PROJECT_DIR$/ledder/Colors.js.map" />
+        <option value="$PROJECT_DIR$/ledder/ControlInput.js.map" />
+        <option value="$PROJECT_DIR$/ledder/message.js" />
+        <option value="$PROJECT_DIR$/ledder/ControlColor.js.map" />
+        <option value="$PROJECT_DIR$/ledder/fonts.js" />
+        <option value="$PROJECT_DIR$/ledder/BoxInterface.js.map" />
+        <option value="$PROJECT_DIR$/ledder/utils.js.map" />
+        <option value="$PROJECT_DIR$/ledder/Draw.js.map" />
+        <option value="$PROJECT_DIR$/ledder/ControlSwitch.js.map" />
+        <option value="$PROJECT_DIR$/ledder/PixelBox.js" />
+        <option value="$PROJECT_DIR$/ledder/PresetValues.js.map" />
+        <option value="$PROJECT_DIR$/ledder/Value.js" />
+        <option value="$PROJECT_DIR$/ledder/Animation.js" />
+        <option value="$PROJECT_DIR$/ledder/Fx.js" />
+        <option value="$PROJECT_DIR$/ledder/Control.js.map" />
+        <option value="$PROJECT_DIR$/ledder/crypto.js" />
+        <option value="$PROJECT_DIR$/ledder/Pixel.js.map" />
+        <option value="$PROJECT_DIR$/ledder/ControlRange.js.map" />
+        <option value="$PROJECT_DIR$/ledder/ControlSelect.js" />
+        <option value="$PROJECT_DIR$/ledder/ColorPatterns.js.map" />
+        <option value="$PROJECT_DIR$/ledder/PixelList.js.map" />
+        <option value="$PROJECT_DIR$/ledder/IntervalStatic.js.map" />
+        <option value="$PROJECT_DIR$/ledder/Font.js.map" />
+        <option value="$PROJECT_DIR$/ledder/BoxInterface.js" />
+        <option value="$PROJECT_DIR$/ledder/Colors.js" />
+        <option value="$PROJECT_DIR$/ledder/ColorInterface.js.map" />
+        <option value="$PROJECT_DIR$/ledder/Interval.js" />
+        <option value="$PROJECT_DIR$/ledder/Interval.js.map" />
+        <option value="$PROJECT_DIR$/ledder/ControlValue.js" />
+        <option value="$PROJECT_DIR$/ledder/animations/Tests/TestStrip.js.map" />
+        <option value="$PROJECT_DIR$/ledder/animations/Tests/TestMatrix.js.map" />
+        <option value="$PROJECT_DIR$/ledder/animations/Tests/TestStrip.js" />
+        <option value="$PROJECT_DIR$/ledder/animations/Tests/TestMatrix.js" />
+        <option value="$PROJECT_DIR$/ledder/animations/MQTTcounter.js" />
+        <option value="$PROJECT_DIR$/ledder/animations/Cycle.js.map" />
+        <option value="$PROJECT_DIR$/ledder/animations/Music.js.map" />
+        <option value="$PROJECT_DIR$/ledder/animations/Test.js.map" />
+        <option value="$PROJECT_DIR$/ledder/animations/Countdown.js" />
+        <option value="$PROJECT_DIR$/ledder/animations/MQTT.js.map" />
+        <option value="$PROJECT_DIR$/ledder/animations/Countdown.js.map" />
+        <option value="$PROJECT_DIR$/ledder/animations/Open.js.map" />
+        <option value="$PROJECT_DIR$/ledder/animations/Template.js.map" />
+        <option value="$PROJECT_DIR$/ledder/animations/Open.js" />
+        <option value="$PROJECT_DIR$/ledder/animations/Cycle.js" />
+        <option value="$PROJECT_DIR$/ledder/animations/Rain.js.map" />
+        <option value="$PROJECT_DIR$/ledder/animations/Test.js" />
+        <option value="$PROJECT_DIR$/ledder/animations/SyncTest.js" />
+        <option value="$PROJECT_DIR$/ledder/animations/MQTT.js" />
+        <option value="$PROJECT_DIR$/ledder/animations/MQTTcounter.js.map" />
+        <option value="$PROJECT_DIR$/ledder/animations/Music.js" />
+        <option value="$PROJECT_DIR$/ledder/animations/SyncTest.js.map" />
+        <option value="$PROJECT_DIR$/ledder/animations/Rain.js" />
+        <option value="$PROJECT_DIR$/ledder/animations/Template.js" />
+        <option value="$PROJECT_DIR$/ledder/animations/Memes/Cyber.js" />
+        <option value="$PROJECT_DIR$/ledder/animations/Memes/Nyancat.js.map" />
+        <option value="$PROJECT_DIR$/ledder/animations/Memes/Cyber.js.map" />
+        <option value="$PROJECT_DIR$/ledder/animations/Memes/ItsFine.js" />
+        <option value="$PROJECT_DIR$/ledder/animations/Memes/Nyancat.js" />
+        <option value="$PROJECT_DIR$/ledder/animations/Memes/ItsFine.js.map" />
+        <option value="$PROJECT_DIR$/ledder/fx/FxRotate.js" />
+        <option value="$PROJECT_DIR$/ledder/fx/FxFlames.js.map" />
+        <option value="$PROJECT_DIR$/ledder/fx/FxFadeOut.js" />
+        <option value="$PROJECT_DIR$/ledder/fx/FxPacman.js" />
+        <option value="$PROJECT_DIR$/ledder/fx/FxTwinkle.js.map" />
+        <option value="$PROJECT_DIR$/ledder/fx/FxFlames.js" />
+        <option value="$PROJECT_DIR$/ledder/fx/FxWobble.js" />
+        <option value="$PROJECT_DIR$/ledder/fx/FxMove.js" />
+        <option value="$PROJECT_DIR$/ledder/fx/FxPattern.js" />
+        <option value="$PROJECT_DIR$/ledder/fx/FxBlinkAlpha.js.map" />
+        <option value="$PROJECT_DIR$/ledder/fx/FxBlink.js.map" />
+        <option value="$PROJECT_DIR$/ledder/fx/FxRotate.js.map" />
+        <option value="$PROJECT_DIR$/ledder/fx/FxFlameout.js.map" />
+        <option value="$PROJECT_DIR$/ledder/fx/FxPacman.js.map" />
+        <option value="$PROJECT_DIR$/ledder/fx/FxColorPattern.js" />
+        <option value="$PROJECT_DIR$/ledder/fx/FxFadeMask.js" />
+        <option value="$PROJECT_DIR$/ledder/fx/FxFadeOut.js.map" />
+        <option value="$PROJECT_DIR$/ledder/fx/FxFadeMask.js.map" />
+        <option value="$PROJECT_DIR$/ledder/fx/FxMovie.js" />
+        <option value="$PROJECT_DIR$/ledder/fx/FxMovie.js.map" />
+        <option value="$PROJECT_DIR$/ledder/fx/FxPattern.js.map" />
+        <option value="$PROJECT_DIR$/ledder/fx/FxFlameout.js" />
+        <option value="$PROJECT_DIR$/ledder/fx/FxColorPattern.js.map" />
+        <option value="$PROJECT_DIR$/ledder/fx/Template.js.map" />
+        <option value="$PROJECT_DIR$/ledder/fx/FxTwinkle.js" />
+        <option value="$PROJECT_DIR$/ledder/fx/FxRandomMove.js" />
+        <option value="$PROJECT_DIR$/ledder/fx/FxColorCycle.js" />
+        <option value="$PROJECT_DIR$/ledder/fx/FxMove.js.map" />
+        <option value="$PROJECT_DIR$/ledder/fx/FxRandomMove.js.map" />
+        <option value="$PROJECT_DIR$/ledder/fx/FxWobble.js.map" />
+        <option value="$PROJECT_DIR$/ledder/fx/FxBlink.js" />
+        <option value="$PROJECT_DIR$/ledder/fx/FxColorCycle.js.map" />
+        <option value="$PROJECT_DIR$/ledder/fx/FxBlinkAlpha.js" />
+        <option value="$PROJECT_DIR$/ledder/fx/Template.js" />
+        <option value="$PROJECT_DIR$/ledder/server/AnimationManager.js" />
+        <option value="$PROJECT_DIR$/ledder/server/WsContext.js.map" />
+        <option value="$PROJECT_DIR$/ledder/server/PreviewStore.js.map" />
+        <option value="$PROJECT_DIR$/ledder/server/PresetStore.js.map" />
+        <option value="$PROJECT_DIR$/ledder/server/RpcServer.js" />
+        <option value="$PROJECT_DIR$/ledder/server/PreviewStore.js" />
+        <option value="$PROJECT_DIR$/ledder/server/RpcServer.js.map" />
+        <option value="$PROJECT_DIR$/ledder/server/server.js.map" />
+        <option value="$PROJECT_DIR$/ledder/server/DisplayQOIS.js" />
+        <option value="$PROJECT_DIR$/ledder/server/buildpreviews.js.map" />
+        <option value="$PROJECT_DIR$/ledder/server/RenderLoop.js" />
+        <option value="$PROJECT_DIR$/ledder/server/buildpreviews.js" />
+        <option value="$PROJECT_DIR$/ledder/server/perftest.js.map" />
+        <option value="$PROJECT_DIR$/ledder/server/DisplayQOIS.js.map" />
+        <option value="$PROJECT_DIR$/ledder/server/RenderLoop.js.map" />
+        <option value="$PROJECT_DIR$/ledder/server/server.js" />
+        <option value="$PROJECT_DIR$/ledder/server/perftest.js" />
+        <option value="$PROJECT_DIR$/ledder/server/config.js.map" />
+        <option value="$PROJECT_DIR$/ledder/server/utils.js.map" />
+        <option value="$PROJECT_DIR$/ledder/server/utils.js" />
+        <option value="$PROJECT_DIR$/ledder/server/AnimationManager.js.map" />
+        <option value="$PROJECT_DIR$/ledder/server/config.js" />
+        <option value="$PROJECT_DIR$/ledder/server/WsContext.js" />
+        <option value="$PROJECT_DIR$/ledder/server/PresetStore.js" />
+        <option value="$PROJECT_DIR$/ledder/animations/Components/MovingStars.js" />
+        <option value="$PROJECT_DIR$/ledder/animations/Components/Pacman.js" />
+        <option value="$PROJECT_DIR$/ledder/animations/Components/Starfield.js" />
+        <option value="$PROJECT_DIR$/ledder/animations/Components/TheMatrix.js.map" />
+        <option value="$PROJECT_DIR$/ledder/animations/Components/TheMatrix.js" />
+        <option value="$PROJECT_DIR$/ledder/animations/Components/Pacman.js.map" />
+        <option value="$PROJECT_DIR$/ledder/animations/Components/MovingStars.js.map" />
+        <option value="$PROJECT_DIR$/ledder/animations/Components/Starfield.js.map" />
+        <option value="$PROJECT_DIR$/ledder/animations/Logos/TDVENLO.js" />
+        <option value="$PROJECT_DIR$/ledder/animations/Logos/TkkrLab.js" />
+        <option value="$PROJECT_DIR$/ledder/animations/Logos/Syn2cat.js.map" />
+        <option value="$PROJECT_DIR$/ledder/animations/Logos/TDVENLO.js.map" />
+        <option value="$PROJECT_DIR$/ledder/animations/Logos/TkkrLab.js.map" />
+        <option value="$PROJECT_DIR$/ledder/animations/Logos/MaakPlek.js.map" />
+        <option value="$PROJECT_DIR$/ledder/animations/Logos/MaakPlek.js" />
+        <option value="$PROJECT_DIR$/ledder/animations/Logos/HSD.js" />
+        <option value="$PROJECT_DIR$/ledder/animations/Logos/Haxogreen.js.map" />
+        <option value="$PROJECT_DIR$/ledder/animations/Logos/Haxogreen.js" />
+        <option value="$PROJECT_DIR$/ledder/animations/Logos/Syn2cat.js" />
+        <option value="$PROJECT_DIR$/ledder/animations/Logos/HSD.js.map" />
+        <option value="$PROJECT_DIR$/ledder/server/drivers/GammaMapper.js.map" />
+        <option value="$PROJECT_DIR$/ledder/server/drivers/DisplayWebsocket.js.map" />
+        <option value="$PROJECT_DIR$/ledder/server/drivers/OffsetMapper.js.map" />
+        <option value="$PROJECT_DIR$/ledder/server/drivers/DisplayApng.js.map" />
+        <option value="$PROJECT_DIR$/ledder/server/drivers/DisplayPixelflut.js" />
+        <option value="$PROJECT_DIR$/ledder/server/drivers/GammaMapper.js" />
+        <option value="$PROJECT_DIR$/ledder/server/drivers/MulticastSync.js.map" />
+        <option value="$PROJECT_DIR$/ledder/server/drivers/DisplayWLED.js" />
+        <option value="$PROJECT_DIR$/ledder/server/drivers/DisplayLedstream.js" />
+        <option value="$PROJECT_DIR$/ledder/server/drivers/DisplayRPI.js.map" />
+        <option value="$PROJECT_DIR$/ledder/server/drivers/DisplayWLED.js.map" />
+        <option value="$PROJECT_DIR$/ledder/server/drivers/MulticastSync.js" />
+        <option value="$PROJECT_DIR$/ledder/server/drivers/DisplayLedstream.js.map" />
+        <option value="$PROJECT_DIR$/ledder/server/drivers/DisplayApng.js" />
+        <option value="$PROJECT_DIR$/ledder/server/drivers/DisplayPixelflut.js.map" />
+        <option value="$PROJECT_DIR$/ledder/server/drivers/DisplayWebsocket.js" />
+        <option value="$PROJECT_DIR$/ledder/server/drivers/DisplayMulti.js" />
+        <option value="$PROJECT_DIR$/ledder/server/drivers/DisplayRPI.js" />
+        <option value="$PROJECT_DIR$/ledder/server/drivers/DisplayMulti.js.map" />
+        <option value="$PROJECT_DIR$/ledder/server/drivers/OffsetMapper.js" />
+      </list>
+    </option>
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="kjh" />
+    <option name="LAST_COMMIT_MESSAGE" value="kjh" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+</project>

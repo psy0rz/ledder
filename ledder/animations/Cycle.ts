@@ -9,7 +9,7 @@ import {FxFadeMask} from "../fx/FxFadeMask.js"
 
 const presetStore = new PresetStore()
 
-export default class Template extends Animation {
+export default class Cycle extends Animation {
     static category = "Misc"
     static title = "Cycle stuff"
     static description = ""
