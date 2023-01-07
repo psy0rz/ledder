@@ -49,16 +49,11 @@ export class WsContext {
         //todo: add delay or queue
         this.renderLoop.controlGroup.setCallbacks(
             () => {
-                console.log("reset")
                 this.request("control.reset").then()
             },
-            (control) => {
-                console.log("add", control)
+            () => {
                 this.request("control.add", this.renderLoop.controlGroup).then()
             })
-            // (controlName, controlValues) => {
-            //     this.request("control.update", controlName, controlValues)
-            // })
 
 
         this.renderLoop.start()

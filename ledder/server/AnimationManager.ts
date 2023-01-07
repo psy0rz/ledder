@@ -91,22 +91,23 @@ export default class AnimationManager {
     //create class instance of currently loaded animation call run() on it
     public run() {
         // console.log(`RunnerServer: Starting: ${this.animationName} ${this.presetName}`)
-        try {
+        // try {
             this.animation = new this.animationClass()
-            this.animation.run(this.childBox, this.proxyScheduler.proxy, this.proxyControlGroup.proxy).then(() => {
-                // console.log(`RunnerServer: Animation ${this.animationName} finished.`)
-            }).catch((e) => {
-                if (e != 'abort') {
-                    console.error(`Animation ${this.animationName} failed: `, e)
-                    // if (process.env.NODE_ENV === 'development')
-                    //     throw(e)
-                }
-            })
-        } catch (e) {
-            console.error("Exception in animation", e)
-            // if (process.env.NODE_ENV === 'development')
-            //     throw(e)
-        }
+            this.animation.run(this.childBox, this.proxyScheduler.proxy, this.proxyControlGroup.proxy)
+            // .then(() => {
+            //     // console.log(`RunnerServer: Animation ${this.animationName} finished.`)
+            // }).catch((e) => {
+            //     if (e != 'abort') {
+            //         console.error(`Animation ${this.animationName} failed: `, e)
+            //         // if (process.env.NODE_ENV === 'development')
+            //         //     throw(e)
+            //     }
+            // })
+        // } catch (e) {
+        //     console.error("Exception in animation", e)
+        //     // if (process.env.NODE_ENV === 'development')
+        //     //     throw(e)
+        // }
     }
 
     //load currently selected animation and preset from disk
