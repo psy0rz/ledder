@@ -86,13 +86,13 @@ export default class AnimationManager {
                 // console.log(`RunnerServer: Animation ${this.animationName} finished.`)
             }).catch((e) => {
                 if (e != 'abort') {
-                    console.error(`RunnerServer: Animation ${this.animationName} rejected promise: `, e)
+                    console.error(`Animation ${this.animationName} failed: `, e)
                     // if (process.env.NODE_ENV === 'development')
                     //     throw(e)
                 }
             })
         } catch (e) {
-            console.error("RunnerServer: Exception in animation", e)
+            console.error("Exception in animation", e)
             // if (process.env.NODE_ENV === 'development')
             //     throw(e)
         }
