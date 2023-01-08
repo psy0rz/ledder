@@ -6,7 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="7de4510b-f0e5-4402-9e95-cb9c8d6f6b3a" name="Changes" comment="fixes">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ledder/server/AnimationManager.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/server/AnimationManager.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -14,6 +14,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="Git.Settings">
+    <option name="PREVIEW_PUSH_PROTECTED_ONLY" value="true" />
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="MarkdownSettingsMigration">
@@ -36,7 +37,7 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "preferences.keymap",
+    "settings.editor.selected.configurable": "project.propDebugger",
     "ts.external.directory.path": "/home/psy/WebstormProjects/ledder/node_modules/typescript/lib",
     "vue.rearranger.settings.migration": "true"
   }
@@ -52,8 +53,17 @@
         <option name="TypeScript.Before.Run" enabled="true" FAIL_ON_ERROR="true" />
       </method>
     </configuration>
+    <configuration name="webdev server.js" type="NodeJSConfigurationType" path-to-js-file="ledder/server/server.js" working-dir="$PROJECT_DIR$">
+      <envs>
+        <env name="NODE_ENV" value="development" />
+      </envs>
+      <method v="2">
+        <option name="TypeScript.Before.Run" enabled="true" FAIL_ON_ERROR="true" />
+      </method>
+    </configuration>
     <list>
       <item itemvalue="Node.js.server.js" />
+      <item itemvalue="Node.js.webdev server.js" />
       <item itemvalue="Node.js.buildpreviews.js" />
     </list>
   </component>
@@ -66,7 +76,7 @@
       <option name="presentableId" value="Default" />
       <updated>1673096136347</updated>
       <workItem from="1673096139641" duration="4849000" />
-      <workItem from="1673102340801" duration="7169000" />
+      <workItem from="1673102340801" duration="9687000" />
     </task>
     <task id="LOCAL-00001" summary="kjh">
       <created>1673098884534</created>
@@ -89,7 +99,14 @@
       <option name="project" value="LOCAL" />
       <updated>1673123222223</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="fixes">
+      <created>1673123752888</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1673123752888</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

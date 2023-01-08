@@ -13,7 +13,7 @@
     "perftest": "node ledder/server/perftest.js",
     "build": "tsc ; NODE_ENV=production vite build;node ledder/server/buildpreviews.js",
     "buildpreviews": "node ledder/server/buildpreviews.js",
-    "buildcode": "tsc ; NODE_ENV=production vite build",
+    "buildweb": "tsc ; NODE_ENV=production vite build",
     "production": "NODE_ENV=production node ledder/server/server.js",
     "docker": "node ledder/server/buildpreviews.js;NODE_ENV=production node ledder/server/server.js"
   },
