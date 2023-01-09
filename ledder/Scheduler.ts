@@ -13,26 +13,35 @@ export default class Scheduler {
     private frameTimeMicros: number
     private defaultFrameTimeMicros: number
     private onCleanupCallbacks: any[]
+    private childScheduler: Scheduler
 
 
     constructor() {
 
+        this.childScheduler = undefined
         this.intervals = new Set()
         this.onCleanupCallbacks = []
         this.clear()
 
     }
 
-    //Use this to do cleanup stuff in your animation. (like closing connections or other external stuff)
-    onCleanup(callback) {
+    //Create independent child scheduler. Every scheduler can have one child. (which in turn can have another one)
+    //A clear() detaches the child.
+    //Functions that get call from "higher up", will be pushed down to the child. (things like step() and setFps())
+    //Functions that get called from "below" (this user/anmations), operate only on this scheduler.
+    child() {
+        if (this.childScheduler !== undefined)
+            throw ("Scheduler already has child")
 
-        this.onCleanupCallbacks.push(callback)
+        this.childScheduler = new Scheduler()
+        this.childScheduler.setDefaultFrameTime(this.defaultFrameTimeMicros)
+        this.childScheduler.setFrameTimeuS(this.frameTimeMicros)
+        return(this.childScheduler)
     }
 
 
     //clear all intervals
     public clear() {
-
 
         for (const callback of this.onCleanupCallbacks) {
             try {
@@ -42,13 +51,75 @@ export default class Scheduler {
                 console.error("onCleanup error:", e)
             }
         }
-        this.onCleanupCallbacks=[]
+        this.onCleanupCallbacks = []
+
+
 
         this.frameNr = 0
         this.setFrameTimeuS(this.defaultFrameTimeMicros)
         this.intervals.clear()
 
+        if (this.childScheduler)
+            this.childScheduler.clear()
+        this.childScheduler = undefined
+
     }
+
+
+    /* Never call this directly. Set by renderer
+     * Default frametime thats set after a clear().
+     */
+    public setDefaultFrameTime(frameTimeMicros) {
+
+        this.defaultFrameTimeMicros = frameTimeMicros
+        this.setFrameTimeuS(frameTimeMicros)
+
+        if (this.childScheduler)
+            this.childScheduler.setDefaultFrameTime(frameTimeMicros)
+    }
+
+    //called by renderloop on every frame.
+    //Dont call this directly!
+    //Returns time in uS until next frame should be rendered.
+    public step() {
+
+        this.frameNr++
+
+        for (const interval of this.intervals) {
+            try {
+                if (!interval.check(this.frameNr)) {
+
+                    interval.resolve(true)
+                    this.intervals.delete(interval)
+                }
+            } catch (e) {
+                console.error("Exception during animation interval:", e)
+                //remove this interval since its broken
+                this.intervals.delete(interval)
+            }
+        }
+
+        //child fps takes precedence
+        if (this.childScheduler)
+            return this.childScheduler.step()
+        else
+            return this.frameTimeMicros
+
+    }
+
+    public getStats() {
+        let ret = `Scheduler: ${this.intervals.size}`
+
+        if (this.childScheduler)
+            ret = ret + '\n' + this.childScheduler.getStats()
+
+        return (ret)
+    }
+
+
+    /*******************************************************
+     * Stuff thats called by the user/animation starts here:
+     *******************************************************/
 
     /*
      * Sets FPS, by specifying the frametime in whole uS.
@@ -57,24 +128,21 @@ export default class Scheduler {
      */
     public setFrameTimeuS(frameTimeMicros) {
         this.frameTimeMicros = ~~frameTimeMicros
-    }
 
+    }
     /*
      * Same as above but in fps
      */
-    public setFps(fps)
-    {
-        this.setFrameTimeuS(1000000/fps)
+    public setFps(fps) {
+        this.setFrameTimeuS(1000000 / fps)
     }
 
-    /* Never call this directly. Set by renderer
-     * Default frametime thats set after a clear().
-     */
-    public setDefaultFrameTime(frameTimeMicros) {
-        this.defaultFrameTimeMicros = frameTimeMicros
-        this.setFrameTimeuS(frameTimeMicros)
-    }
 
+    //Use this to do cleanup stuff in your animation. (like closing connections or other external stuff)
+    onCleanup(callback) {
+
+        this.onCleanupCallbacks.push(callback)
+    }
 
     /**
      * Create a new interval
@@ -118,33 +186,4 @@ export default class Scheduler {
     }
 
 
-    //called by renderloop on every frame.
-    //Dont call this directly!
-    //Returns time in uS until next frame should be rendered.
-    public step() {
-
-
-        this.frameNr++
-
-        for (const interval of this.intervals) {
-            try {
-                if (!interval.check(this.frameNr)) {
-
-                    interval.resolve(true)
-                    this.intervals.delete(interval)
-                }
-            } catch (e) {
-                console.error("Exception during animation interval:", e)
-                //remove this interval since its broken
-                this.intervals.delete(interval)
-            }
-        }
-
-        return this.frameTimeMicros
-
-    }
-
-    public getStats() {
-        return (`Scheduler: ${this.intervals.size}`)
-    }
 }

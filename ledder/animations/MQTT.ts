@@ -6,30 +6,7 @@ import mqtt, {MqttClient} from "mqtt"
 import {statusMessage} from "../message.js"
 import {PresetStore} from "../server/PresetStore.js"
 import DrawText from "../draw/DrawText.js"
-import {random} from "../utils.js"
-import {id} from "framework7/shared/utils.js"
-
-// class test{
-//     constructor() {
-//
-//     }
-//
-//     async test1()
-//     {
-//
-//         console.log("1het is ", this.id)
-//     }
-//     test2()
-//     {
-//         this.id=random(0,1000)
-//         console.log("2het is ", this.id)
-//     }
-//
-// }
-//
-// let t=new test()
-// t.test2()
-// t.test1()
+import AnimationManager from "../server/AnimationManager.js"
 
 
 export default class MQTT extends Animation {
@@ -40,14 +17,8 @@ export default class MQTT extends Animation {
     private scheduler: Scheduler
     private controls: ControlGroup
     private lastStatusMessage: DrawText
+    private animationManager: AnimationManager
 
-    cleanup() {
-        // console.log("clean", this.id)
-        if (this.client !== undefined)
-            this.client.end(false)
-
-        this.animationReset()
-    }
 
     animationReset() {
         this.scheduler.clear()
@@ -56,22 +27,6 @@ export default class MQTT extends Animation {
 
     }
 
-    async animationRun(animationName, presetName) {
-
-        this.animationReset()
-
-        try {
-            const presetStore = new PresetStore()
-            const animationClass = await presetStore.loadAnimation(animationName)
-            this.currentAnimation = new animationClass()
-            const presetValues = await presetStore.load(animationName, presetName)
-            this.controls.load(presetValues.values)
-            return this.currentAnimation.run(this.box, this.scheduler, this.controls)
-        } catch (e) {
-            this.statusMessage("Error: " + e.message)
-        }
-
-    }
 
     cleanStatusMesage() {
         if (this.lastStatusMessage)
@@ -84,18 +39,27 @@ export default class MQTT extends Animation {
     }
 
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) {
-        // this.id = random(0, 10000)
-        // console.log("IK HEB ID", this.id)
+
+        scheduler.onCleanup(() => {
+            console.log("DISCONNEC")
+            if (this.client !== undefined)
+                this.client.end(true)
+
+        })
+
+        this.box = box
+
         const mqttHost = controls.input('MQTT host', "mqtt", true)
         const mqttTopic = controls.input('MQTT topic', "ledder", true)
 
-        this.box = box
-        this.scheduler = scheduler
-        this.controls = controls.group('Current animation')
+
+        let childControls = controls.group('Current animation')
+        this.animationManager = new AnimationManager(box, scheduler.child(), childControls)
 
         this.statusMessage(`Conn ${mqttHost.text}...`)
         console.log(`MQTT: Connecting ${mqttHost.text}`)
         this.client = mqtt.connect("mqtt://" + mqttHost.text, {})
+
 
         this.client.on('reconnect', (e) => {
             this.statusMessage(`Reconn ${mqttHost.text}...`)
@@ -116,28 +80,33 @@ export default class MQTT extends Animation {
 
 
         this.client.on('message', async (topic, messageBuf) => {
-            let message = messageBuf.toString()
-            console.log("MQTT received: ", message)
+                let message = messageBuf.toString()
+                console.log(`MQTT ${topic}: ${message}`)
 
-            let subTopic = topic.substring(mqttTopic.text.length + 1)
-            let parts = subTopic.split('/')
-            let cmd = parts[0]
-            let pars = parts.slice(1)
+                let subTopic = topic.substring(mqttTopic.text.length + 1)
+                let parts = subTopic.split('/')
+                let cmd = parts[0]
+                let pars = parts.slice(1)
 
-            if (cmd == 'run') {
-                console.log("MQTT: Running animation")
-                try {
-                    let animationName = message.match(RegExp("(^.*)/"))[1]
-                    let presetName = message.match(RegExp("[^/]+$"))[0]
-                    this.animationRun(animationName, presetName)
+                switch (cmd) {
+                    case 'select':
+                        console.log(`MQTT: Running animation ${message}`)
+                        try {
+                            this.animationManager.select(message, false)
 
-                } catch (e) {
-                    console.error("MQTT error while starting animation: ", e)
-                    this.statusMessage("Animation failed.")
+                        } catch (e) {
+                            console.error("MQTT error while starting animation: ", e)
+                            this.statusMessage("Animation failed.")
+                        }
+                        break
+                    case 'stop':
+                        this.animationManager.stop(false)
+                        break
+
                 }
-            }
 
-        })
+            }
+        )
 
 
     }

@@ -78,16 +78,6 @@ export default class AnimationManager {
 
     }
 
-    //cleanup existing child stuff
-    private cleanup(keepControls: boolean) {
-
-        this.scheduler.clear()
-        this.childBox.clear()
-
-        if (!keepControls) {
-            this.controlGroup.clear()
-        }
-    }
 
 
     //create class instance of currently loaded animation call run() on it
@@ -144,9 +134,17 @@ export default class AnimationManager {
     //stop current animation by cleaningup and detaching child objects
     public stop(keepControls: boolean) {
 
+        //this calls onCleanup for the animation
+        this.scheduler.clear()
+        //now detach and clean again (in case the animation cleanup did something bad)
         this.createProxies(keepControls)
-        this.cleanup(keepControls)
 
+        this.scheduler.clear()
+        this.childBox.clear()
+
+        if (!keepControls) {
+            this.controlGroup.clear()
+        }
     }
 
     //force reload of animation from disk and restart it
