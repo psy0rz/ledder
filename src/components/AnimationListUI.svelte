@@ -1,14 +1,14 @@
 <script lang="ts">
     import {TreeviewItem} from "framework7-svelte"
     import {AnimationList} from "../../ledder/AnimationLists.js"
-    import PresetListItem from "@/components/PresetListItem.svelte"
+    import PresetListItem from "./PresetListItem.svelte"
 
     export let animationList: AnimationList
 
 </script>
 
 
-{#each animationList as animationListItem}
+{#each animationList as animationListItem (animationListItem.name)}
     <!-- recurse-->
     {#if animationListItem.animationList !== undefined}
         <TreeviewItem
@@ -17,6 +17,7 @@
                 toggle={true}
                 itemToggle
                 iconMaterial="folder"
+
         >
             <svelte:self
                     animationList={animationListItem.animationList}
@@ -36,7 +37,7 @@
                     iconMaterial="collections"
 
             >
-                {#each animationListItem.presets as presetListItem}
+                {#each animationListItem.presets as presetListItem ( animationListItem.name+presetListItem.name+presetListItem.previewFile)}
                     <PresetListItem parentName={animationListItem.name} presetListItem={presetListItem}></PresetListItem>
                 {/each}
 

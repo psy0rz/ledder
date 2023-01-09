@@ -2,9 +2,6 @@
  "title": "",
  "description": "",
  "values": {
-  "FPS": {
-   "value": 60
-  },
   "Font": {
    "selected": "C64"
   },
@@ -13,65 +10,26 @@
   },
   "Text color": {
    "r": 255,
-   "g": 193,
+   "g": 23,
    "b": 0,
    "a": 1
   },
   "Stars": {
    "Enabled": {
     "enabled": false
-   },
-   "Star color": {
-    "r": 0,
-    "g": 99,
-    "b": 255,
-    "a": 0.85
-   },
-   "Number of stars": {
-    "value": 10
-   },
-   "Movie interval": {
-    "value": 5
-   },
-   "Movie interval randomizer": {
-    "value": 0
-   },
-   "Rotate interval": {
-    "value": 4
-   },
-   "Rotate interval randomizer": {
-    "value": 2
-   },
-   "Rotate X step": {
-    "value": -1
-   },
-   "Rotate Y step": {
-    "value": 0
    }
   },
   "Star field": {
    "Enabled": {
-    "enabled": true
-   },
-   "Base speed": {
-    "value": 0.001
-   },
-   "Acceleration": {
-    "value": 0.03
-   },
-   "Star offset": {
-    "value": 0.1
-   },
-   "Creation interval": {
-    "value": 5
+    "enabled": false
    }
   },
   "Scrolling": {
    "Enabled": {
-    "enabled": false
+    "enabled": true
    },
-   "Whitespace": {
-    "value": 10
+   "FPS": {
+    "value": 60
    },
    "Rotate interval": {
     "value": 2
@@ -84,6 +42,12 @@
    },
    "Rotate Y step": {
     "value": 0
+   },
+   "Circular": {
+    "enabled": false
+   },
+   "Show one time only": {
+    "enabled": false
    }
   },
   "Flames": {
@@ -96,12 +60,12 @@
     "enabled": false
    }
   },
-  "Cursor": {
+  "Color pattern": {
    "Enabled": {
     "enabled": false
    }
   },
-  "Color pattern": {
+  "Cursor": {
    "Enabled": {
     "enabled": false
    }
