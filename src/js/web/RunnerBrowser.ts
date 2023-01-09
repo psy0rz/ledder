@@ -1,18 +1,16 @@
-import {rpc} from "./RpcClient.js";
-import {svelteAnimations, sveltePresets} from "./svelteStore.js";
-import {confirmPromise, info, promptPromise} from "./util.js";
-import {DisplayCanvas} from "./DisplayCanvas.js";
-import {tick} from "svelte";
-import ControlGroup from "../../../ledder/ControlGroup.js";
+import {rpc} from "./RpcClient.js"
+import {svelteAnimations, sveltePresets} from "./svelteStore.js"
+import {confirmPromise, info, promptPromise} from "./util.js"
+import {DisplayCanvas} from "./DisplayCanvas.js"
+import {tick} from "svelte"
+import ControlGroup from "../../../ledder/ControlGroup.js"
 
 /**
- * Browser side animation runner. Note that animation runs on the server side (WsContext.ts) and is actually streamed to browser via MatrixWebsocket
+ * Browser side animation runner. Note that animation runs on the server side (WsContext.ts) and is actually streamed to browser via DisplayWebsocket
  */
 export class RunnerBrowser {
-    // display: Matrix
     animationName: string
     presetName: string
-    animationClass: Animation
     live: boolean;
 
     presets: Record<string, any>
@@ -69,7 +67,7 @@ export class RunnerBrowser {
         if (this.animationName) {
 
             // await rpc.request("runner.run", this.animationName, this.display.control.save());
-            await rpc.request("runner.runName", this.animationName, this.presetName);
+            await rpc.request("animationManager.select", this.animationName+"/"+ this.presetName);
             // this.restart()
         }
     }
@@ -111,7 +109,7 @@ export class RunnerBrowser {
 
         // await rpc.request("presetStore.save", this.animationClass.presetDir, this.presetName, values);
         // await rpc.request("presetStore.createPreview", this.animationName, this.presetName, values);
-        await rpc.request("context.runner.save", this.presetName)
+        await rpc.request("animationManager.save", this.presetName)
         await this.refreshAnimationList()
 
         await this.run(this.animationName, this.presetName)
@@ -127,7 +125,7 @@ export class RunnerBrowser {
 
         await confirmPromise('Delete preset', 'Do you want to delete preset: ' + this.presetName)
 
-        await rpc.request("context.runner.delete");
+        await rpc.request("animationManager.delete");
         info("Deleted preset " + this.presetName, "", 2000)
 
         this.presetName = ""

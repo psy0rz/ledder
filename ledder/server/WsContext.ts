@@ -82,23 +82,6 @@ export class WsContext {
         console.log(`WsContext: Stopping ${this.id}`)
         this.stopPreview()
     }
-    // //save current running animation preset
-    // async save(presetName: string) {
-    //     this.presetName = presetName
-    //     this.presetValues.values = this.controlGroup.save()
-    //     await presetStore.save(this.animationName, presetName, this.presetValues)
-    //     // await this.presetStore.createPreview(this.animationClass, this.animationName, presetName, this.presetValues)
-    //     await presetStore.storeAnimationPresetList()
-    // }
-    //
-    // //delete current running animation preset
-    // async delete() {
-    //     if (this.presetName !== undefined) {
-    //         await presetStore.delete(this.animationName, this.presetName)
-    //         await presetStore.storeAnimationPresetList()
-    //         this.presetName = undefined
-    //     }
-    // }
 
 
 }

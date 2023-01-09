@@ -5,7 +5,7 @@ import PixelBox from "../PixelBox.js"
 import AnimationManager from "./AnimationManager.js"
 
 /**
- * Main renderer. Will render an AnimationManager to a Display
+ * Main renderer. Will create an AnimationManager that manages an Animation, and renders it to specified Display
  */
 export class RenderLoop {
     private display: Display
@@ -15,10 +15,10 @@ export class RenderLoop {
 
     private keepRendering: boolean
 
-    public animationManager: AnimationManager
-    private box: PixelBox
-    private scheduler: Scheduler
-    public controlGroup: ControlGroup
+    public readonly animationManager: AnimationManager
+    private readonly box: PixelBox
+    private readonly scheduler: Scheduler
+    public readonly controlGroup: ControlGroup
 
     constructor(display: Display) {
         this.display = display

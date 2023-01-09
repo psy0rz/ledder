@@ -5,7 +5,7 @@ import Display from "../Display.js"
 import GammaMapper from "./drivers/GammaMapper.js"
 import {config} from "./config.js"
 import {presetStore} from "./PresetStore.js"
-
+import {previewStore} from "./PreviewStore.js"
 
 
 const settingsControl = new ControlGroup('Global settings')
@@ -36,15 +36,15 @@ rpc.addMethod("presetStore.loadAnimationPresetList", async (params) => {
     return await presetStore.loadAnimationPresetList()
 })
 
-// rpc.addMethod("context.runner.save", async (params, context) => {
-//     if (context.renderLoop)
-//         await context.renderLoop.save(params[0])
-// })
-//
-// rpc.addMethod("context.runner.delete", async (params, context) => {
-//     if (context.renderLoop)
-//         await context.renderLoop.delete()
-// })
+rpc.addMethod("animationManager.save", async (params, context) => {
+    await context.renderLoop.animationManager.save(params[0])
+    await previewStore.render(context.renderLoop.animationManager.animationName, context.renderLoop.animationManager.presetName)
+
+})
+
+rpc.addMethod("animationManager.delete", async (params, context) => {
+    await context.renderLoop.animationManager.delete()
+})
 
 
 rpc.addMethod("context.startPreview", async (params, context) => {
@@ -57,20 +57,20 @@ rpc.addMethod("context.stopPreview", async (params, context) => {
 })
 
 
-rpc.addMethod("runner.runName", async (params, context) => {
+rpc.addMethod("animationManager.select", async (params, context) => {
 
     if (context.renderLoop)
-        await context.renderLoop.animationManager.select(params[0] + "/" + params[1], false)
+        await context.renderLoop.animationManager.select(params[0], false)
 
     for (const runner of renderLoops) {
-        await runner.animationManager.select(params[0] + "/" + params[1], false)
+        await runner.animationManager.select(params[0], false)
     }
 })
 
-rpc.addMethod("display.control.updateValue", async (params, context) => {
+rpc.addMethod("animationManager.updateValue", async (params, context) => {
 
     if (context.renderLoop)
-         await context.renderLoop.animationManager.updateValue(params[0], params[1])
+        await context.renderLoop.animationManager.updateValue(params[0], params[1])
 
     for (const runner of renderLoops) {
         await runner.animationManager.updateValue(params[0], params[1])

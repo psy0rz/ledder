@@ -23,16 +23,18 @@ process.on('unhandledRejection', (err, origin) => {
  *
  */
 export default class AnimationManager {
-    private presetName: string
-    public animationClass: typeof Animation
-    private animationName: string
+    public animationName: string
+
+    public presetName: string
     private presetValues: PresetValues
+
+    public animationClass: typeof Animation
     private animation: Animation
 
     //parents
-    public box: PixelBox
-    public scheduler: Scheduler
-    private controlGroup: ControlGroup
+    public readonly box: PixelBox
+    public readonly scheduler: Scheduler
+    private readonly controlGroup: ControlGroup
 
     //childs/proxies
     private proxyScheduler: { proxy: Scheduler; revoke: () => void }
@@ -202,6 +204,29 @@ export default class AnimationManager {
         }
         catch (e) {
             console.error(e)
+        }
+    }
+
+    //save current running animation preset (optionally as new presetName)
+    async save(presetName?: string) {
+        if (presetName!==undefined)
+            this.presetName = presetName
+
+        if (this.presetName==undefined)
+            return
+
+        this.presetValues.values = this.controlGroup.save()
+        await presetStore.save(this.animationName, this.presetName, this.presetValues)
+        await presetStore.storeAnimationPresetList()
+
+    }
+
+    //delete current running animation preset
+    async delete() {
+        if (this.presetName !== undefined) {
+            await presetStore.delete(this.animationName, this.presetName)
+            await presetStore.storeAnimationPresetList()
+            this.presetName = undefined
         }
     }
 
