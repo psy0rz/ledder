@@ -11,8 +11,8 @@ import {Values} from "../Control.js"
  * We need this, since we will have unhandled rejections once we revoke proxy objects (see below)
  * We cant expect all animations to behave correctly all the time and handle all the edge cases regarding this.
  */
-process.on('unhandledRejection', (err, origin) => {
-  console.error("Unhandled rejection: ", err)
+process.on('unhandledRejection', (err) => {
+    console.error("Unhandled rejection: ", err)
 
 })
 
@@ -55,7 +55,7 @@ export default class AnimationManager {
     // This ensures that animations that still have some async call running cannot interfere anymore.
     // Dont forget to cleanup() before, if needed
     // Also detaches this.animation.
-    private createProxies(keepControls: boolean) {
+    private createProxies() {
         //box
         if (this.childBox !== undefined)
             this.box.delete(this.childBox)
@@ -73,8 +73,8 @@ export default class AnimationManager {
             this.proxyControlGroup.revoke()
         this.proxyControlGroup = Proxy.revocable(this.controlGroup, {})
 
-        this.controlGroup.onRestartRequired(()=>{
-            console.log("chus")
+        this.controlGroup.onRestartRequired(() => {
+
             this.restart(true)
         })
 
@@ -82,27 +82,10 @@ export default class AnimationManager {
     }
 
 
-
     //create class instance of currently loaded animation call run() on it
     public run() {
-        // console.log(`RunnerServer: Starting: ${this.animationName} ${this.presetName}`)
-        // try {
-            this.animation = new this.animationClass()
-            this.animation.run(this.childBox, this.proxyScheduler.proxy, this.proxyControlGroup.proxy)
-            // .then(() => {
-            //     // console.log(`RunnerServer: Animation ${this.animationName} finished.`)
-            // }).catch((e) => {
-            //     if (e != 'abort') {
-            //         console.error(`Animation ${this.animationName} failed: `, e)
-            //         // if (process.env.NODE_ENV === 'development')
-            //         //     throw(e)
-            //     }
-            // })
-        // } catch (e) {
-        //     console.error("Exception in animation", e)
-        //     // if (process.env.NODE_ENV === 'development')
-        //     //     throw(e)
-        // }
+        this.animation = new this.animationClass()
+        this.animation.run(this.childBox, this.proxyScheduler.proxy, this.proxyControlGroup.proxy)
     }
 
     //load currently selected animation and preset from disk
@@ -160,7 +143,6 @@ export default class AnimationManager {
 
     //select an animation and preset, load it and start it
     public async select(animationAndPresetPath: string, keepControls: boolean) {
-        console.log("BAM")
         this.animationName = animationAndPresetPath.match(RegExp("(^.*)/"))[1]
         this.presetName = animationAndPresetPath.match(RegExp("[^/]+$"))[0]
 
@@ -198,19 +180,18 @@ export default class AnimationManager {
     public async updateValue(path: [string], values: Values) {
         try {
 
-        this.controlGroup.updateValue(path, values)
-        }
-        catch (e) {
+            this.controlGroup.updateValue(path, values)
+        } catch (e) {
             console.error(e)
         }
     }
 
     //save current running animation preset (optionally as new presetName)
     async save(presetName?: string) {
-        if (presetName!==undefined)
+        if (presetName !== undefined)
             this.presetName = presetName
 
-        if (this.presetName==undefined)
+        if (this.presetName == undefined)
             return
 
         this.presetValues.values = this.controlGroup.save()
