@@ -20,19 +20,17 @@ export class WsContext {
         this.ws = ws
         this.client = client
         this.id = id
-        this.started=false
+        this.started = false
         console.log(`WsContext: New session ${id}`)
-
 
 
     }
 
     //send rpc request to the connected client
     async request(method: string, ...params) {
-        try{
+        try {
             await this.client.request(method, params, this)
-        }
-        catch (e) {
+        } catch (e) {
             console.error(`RPC client error calling '${method}': ${e}`)
         }
     }
@@ -41,28 +39,27 @@ export class WsContext {
         if (this.started)
             this.stopPreview()
 
-        this.started=true
+        this.started = true
 
 
-        let display = new DisplayWebsocket( width, height, this.ws)
+        let display = new DisplayWebsocket(width, height, this.ws)
         this.renderLoop = new RenderLoop(display)
         //todo: add delay or queue
-        this.renderLoop.controlGroup.onReset(()=>
-        {
-                this.request("control.reset").then()
-
-        })
-        this.renderLoop.controlGroup.onAdd( ()=>
-        {
+        this.renderLoop.controlGroup.onReset(() => {
+            this.request("control.reset").then(() => {
                 this.request("control.add", this.renderLoop.controlGroup).then()
-        })
+            })
 
+        })
+        this.renderLoop.controlGroup.onAdd(() => {
+            this.request("control.add", this.renderLoop.controlGroup).then()
+        })
 
 
         this.renderLoop.start()
 
 
-        this.statsInterval=setInterval( ()=>{
+        this.statsInterval = setInterval(() => {
             console.log(`Stats ${this.id}: ${this.renderLoop.getStats()}`)
         }, 3000)
 
@@ -72,16 +69,15 @@ export class WsContext {
     stopPreview() {
         //should stop because of gc
         if (this.renderLoop) {
-            this.started=false
+            this.started = false
             this.renderLoop.stop()
-            this.renderLoop=undefined
+            this.renderLoop = undefined
             clearInterval(this.statsInterval)
         }
     }
 
     //websocket closed
-    closed()
-    {
+    closed() {
         console.log(`WsContext: Stopping ${this.id}`)
         this.stopPreview()
     }

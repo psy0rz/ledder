@@ -11,6 +11,40 @@
   "MQTT topic": {
    "text": "ledder"
   },
-  "Current animation": {}
+  "Current animation": {
+   "FPS": {
+    "value": 60
+   },
+   "Fire colors": {
+    "selected": "Rainbow"
+   },
+   "Fire interval": {
+    "value": 1.1
+   },
+   "Fire intensity %": {
+    "from": 0,
+    "to": 100
+   },
+   "Fire wildness %": {
+    "value": 23
+   },
+   "Fire decay %": {
+    "value": 1.6
+   },
+   "Fire sintel factor": {
+    "value": 0
+   },
+   "Fire speed": {
+    "value": 1
+   },
+   "Fire X range %": {
+    "from": 0,
+    "to": 100
+   },
+   "Fire colors range": {
+    "from": 0,
+    "to": 100
+   }
+  }
  }
 }

@@ -5,8 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7de4510b-f0e5-4402-9e95-cb9c8d6f6b3a" name="Changes" comment="fixes">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ledder/server/AnimationManager.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/server/AnimationManager.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/js/web/RunnerBrowser.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/js/web/RunnerBrowser.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ledder/server/WsContext.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/server/WsContext.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/presets/MQTT/localhost.json" beforeDir="false" afterPath="$PROJECT_DIR$/presets/MQTT/localhost.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,7 +47,7 @@
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
-  <component name="RunManager" selected="Node.js.webdev server.js">
+  <component name="RunManager" selected="Node.js.server.js">
     <configuration name="buildpreviews.js" type="NodeJSConfigurationType" application-parameters="-- -f" nameIsGenerated="true" path-to-js-file="ledder/server/buildpreviews.js" working-dir="$PROJECT_DIR$">
       <method v="2">
         <option name="TypeScript.Before.Run" enabled="true" FAIL_ON_ERROR="true" />
@@ -138,7 +140,14 @@
       <option name="project" value="LOCAL" />
       <updated>1673382484210</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="fixes">
+      <created>1673382865730</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1673382865730</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

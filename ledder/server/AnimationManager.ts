@@ -47,7 +47,7 @@ export default class AnimationManager {
         this.scheduler = scheduler
         this.controlGroup = controlGroup
 
-        this.createProxies(false)
+        this.createProxies()
 
     }
 
@@ -123,7 +123,7 @@ export default class AnimationManager {
         //this calls onCleanup for the animation
         this.scheduler.clear()
         //now detach and clean again (in case the animation cleanup did something bad)
-        this.createProxies(keepControls)
+        this.createProxies()
 
         this.scheduler.clear()
         this.childBox.clear()
