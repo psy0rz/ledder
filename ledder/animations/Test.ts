@@ -18,6 +18,11 @@ export default class Test extends Animation {
 
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) {
 
+        scheduler.onCleanup(() => {
+            console.log("CLEAUP")
+            clearInterval(this.i)
+
+        })
         // const fader = new FxFadeMask(scheduler, controls)
         //
         // while (1) {
@@ -27,9 +32,11 @@ export default class Test extends Animation {
         //     console.log("hoi")
         // }
 
+        let id=random(0,10000000)
+
         // animation that does illegal stuff after ending it
         this.i=setInterval(() => {
-            console.log("IINTERVAL LOOPT NOG")
+            console.log(`IINTERVAL ${id} LOOPT NOG`)
             try {
                 box.add(new Pixel(0, 0, colorRed))
                 // console.log("PIXEL LOOPT NOG")
@@ -51,12 +58,6 @@ export default class Test extends Animation {
         }, 1000)
 
 
-        scheduler.onCleanup(() => {
-            console.log("CLEAUP")
-            clearInterval(this.i)
-            //throw("kk")
-
-        })
 
 
     }

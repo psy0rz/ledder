@@ -68,7 +68,7 @@ export class RpcServer extends Rpc {
 
             ws.on('close', ()=>
             {
-                context.stop()
+                context.closed()
             })
 
 

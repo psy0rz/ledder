@@ -80,7 +80,7 @@ export class WsContext {
     }
 
     //websocket closed
-    stop()
+    closed()
     {
         console.log(`WsContext: Stopping ${this.id}`)
         this.stopPreview()

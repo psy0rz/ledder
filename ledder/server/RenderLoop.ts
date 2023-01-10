@@ -63,6 +63,7 @@ export class RenderLoop {
 
     stop() {
         this.keepRendering = false
+        this.animationManager.stop(false)
     }
 
     getStats()
