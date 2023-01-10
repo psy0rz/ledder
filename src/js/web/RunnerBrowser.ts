@@ -26,7 +26,7 @@ export class RunnerBrowser {
 
         rpc.addMethod('control.reset', async ()=>
         {
-            console.log("Reset controls")
+            // console.log("Reset controls")
             this.presets={}
             sveltePresets.set(new ControlGroup())
             await tick()
@@ -34,7 +34,7 @@ export class RunnerBrowser {
 
         rpc.addMethod('control.add', async (params)=>{
 
-            console.log("Add control", params[0])
+            // console.log("Add control", params[0])
 
 
             sveltePresets.set(params[0])
@@ -50,7 +50,7 @@ export class RunnerBrowser {
        // await rpc.request('context.stopPreview')
         rpc.display = new DisplayCanvas(width, height, zoom, '#ledder-display', '.ledder-display-box');
         await rpc.request('context.startPreview', width, height)
-        await this.send()
+        //await this.send()
 
     }
 
@@ -67,6 +67,7 @@ export class RunnerBrowser {
         if (this.animationName) {
 
             // await rpc.request("runner.run", this.animationName, this.display.control.save());
+            console.log("SEND")
             await rpc.request("animationManager.select", this.animationName+"/"+ this.presetName);
             // this.restart()
         }
@@ -82,7 +83,7 @@ export class RunnerBrowser {
      * @param presetName
      */
     async run(animationName: string, presetName: string) {
-
+console.log("SRUn")
 
         this.animationName = animationName
         this.presetName = presetName
