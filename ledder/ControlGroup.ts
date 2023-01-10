@@ -24,11 +24,11 @@ export default class ControlGroup extends Control {
     declare meta: ControlGroupMeta
     loadedValues: Values
 
-    //called when controls have been added somewhere in the control tree
-    addControlCallback: () => void
+    //called when controls have been added to a controlgroup somewhere in the tree
+    private onAddCallback: () => void
 
-    //remove all controls and reset
-    resetCallback: () => void
+    //called when all controls are removed and stuff is reset
+    private onResetCallback: () => void
 
 
     constructor(name: string = 'root', restartOnChange: boolean = false, collapsed = false) {
@@ -40,13 +40,12 @@ export default class ControlGroup extends Control {
     }
 
 
-
     clear() {
         this.meta.controls = {}
         this.loadedValues = {}
 
-        if (this.resetCallback) {
-            this.resetCallback()
+        if (this.onResetCallback) {
+            this.onResetCallback()
         }
     }
 
@@ -62,8 +61,13 @@ export default class ControlGroup extends Control {
         if (control.meta.name in this.loadedValues)
             control.load(this.loadedValues[control.meta.name])
 
-        if (this.addControlCallback)
-            this.addControlCallback()
+        control.onRestartRequired(this.onRestartRequiredCallback)
+        control.onChange(this.onChangeCallback)
+
+        if (this.onAddCallback)
+            this.onAddCallback()
+
+
 
     }
 
@@ -145,26 +149,24 @@ export default class ControlGroup extends Control {
             const controlGroup = new ControlGroup(name, restartOnChange, collapsed)
             this.add(controlGroup)
 
-            //XXX: this is een proxy object :(
-            controlGroup.setCallbacks(
-                () => {
-                    //ging mis als mqtt 2x gestart werd en this.controls.clear() deed
-                    // this.clear()
-                },
-                this.addControlCallback
-            )
+            //pass through
+            controlGroup.onReset(this.onResetCallback)
+            controlGroup.onAdd(this.onAddCallback)
+
         }
 
         return this.meta.controls[name] as ControlGroup
 
     }
 
-    //NOTE: internal use only
-    setCallbacks(reset, addControl) {
 
+    onReset(callback) {
+        this.onResetCallback = callback
 
-        this.resetCallback = reset
-        this.addControlCallback = addControl
+    }
+
+    onAdd(callback) {
+        this.onAddCallback = callback
     }
 
 
@@ -185,7 +187,7 @@ export default class ControlGroup extends Control {
      */
     load(values: Values) {
 
-        this.loadedValues=values
+        this.loadedValues = values
 
         //update existing controls
         for (const [name, control] of Object.entries(this.meta.controls)) {
@@ -195,24 +197,28 @@ export default class ControlGroup extends Control {
     }
 
     //return true if animation should be restarted
-    updateValue(path: Array<string>, values: Values): boolean {
-        let changed = false
+    updateValue(path: Array<string>, values: Values) {
 
-        if (this.meta.controls[path[0]] !== undefined) {
+        const c=this.meta.controls[path[0]]
+        if ( c !== undefined) {
 
-            changed = (this.meta.controls[path[0]].updateValue(path.slice(1), values) || this.meta.restartOnChange)
+            c.updateValue(path.slice(1), values)
+
+            if (!c.meta.restartOnChange && this.meta.restartOnChange)
+                if (this.onRestartRequiredCallback)
+                    this.onRestartRequiredCallback()
+
         }
-
-        return changed
 
     }
 
-    detach()
-    {
+    detach() {
         super.detach()
         for (const [name, control] of Object.entries(this.meta.controls)) {
             control.detach()
         }
+        // this.onResetCallback=undefined
+        // this.onAddCallback=undefined
 
     }
 }

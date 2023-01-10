@@ -19,7 +19,11 @@ export class Control {
     meta: ControlMeta
 
     //called when a control is changed by the user.
-    onChangeCallback: (control: Control) => void
+    protected onChangeCallback: (control: Control) => void
+
+    //called when restart is required
+    protected onRestartRequiredCallback: ()=> void
+
 
     constructor(name: string, type: string, restartOnChange: boolean = false) {
         this.meta = {
@@ -31,6 +35,7 @@ export class Control {
     }
 
     //Is called when user changes something via the controls.
+    //Can be used by user.
     onChange(callback?: (Control) => void) {
         this.onChangeCallback = callback
 
@@ -40,32 +45,37 @@ export class Control {
 
     }
 
+    //internal use only.
+    onRestartRequired(callback)
+    {
+        this.onRestartRequiredCallback=callback
+    }
+
     //remove all references to user stuff/animations. (used when restarting an animation)
     detach()
     {
+
         this.onChangeCallback=undefined
+        // this.onRestartRequiredCallback=undefined
     }
 
-    save?(): Values;
+    save?(): Values
 
     load?(values: Values)
 
     //return true if animation should be restarted
-    updateValue(path: Array<string>, value: Values): boolean {
+    updateValue(path: Array<string>, value: Values) {
+
         this.load(value)
         if (this.onChangeCallback !== undefined) {
             this.onChangeCallback(this)
         }
 
-        return (this.meta.restartOnChange)
+        if (this.meta.restartOnChange)
+            if (this.onRestartRequiredCallback)
+                this.onRestartRequiredCallback()
+
     }
-
-    // changed() {
-    //     if (this.changedCallback !== undefined)
-    //         this.changedCallback(this.meta.name, this.save());
-    //
-    // }
-
 
 }
 

@@ -68,12 +68,15 @@ export default class AnimationManager {
             this.proxyScheduler.revoke()
         this.proxyScheduler = Proxy.revocable(this.scheduler, {})
 
-
-
         this.controlGroup.detach() //removes onChange handlers etc
         if (this.proxyControlGroup !== undefined)
             this.proxyControlGroup.revoke()
         this.proxyControlGroup = Proxy.revocable(this.controlGroup, {})
+
+        this.controlGroup.onRestartRequired(()=>{
+            console.log("chus")
+            this.restart(true)
+        })
 
 
     }
@@ -192,13 +195,9 @@ export default class AnimationManager {
     // }
 
     public async updateValue(path: [string], values: Values) {
-        // const ret = this.childControlGroup.updateValue(path, values)
         try {
 
-        const ret = this.controlGroup.updateValue(path, values)
-        if (ret)
-            this.restart(true)
-        return ret
+        this.controlGroup.updateValue(path, values)
         }
         catch (e) {
             console.error(e)
