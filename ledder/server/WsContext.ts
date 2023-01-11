@@ -45,13 +45,13 @@ export class WsContext {
         let display = new DisplayWebsocket(width, height, this.ws)
         this.renderLoop = new RenderLoop(display)
         //todo: add delay or queue
-        this.renderLoop.controlGroup.onReset(() => {
+        this.renderLoop.controlGroup._onReset(() => {
             this.request("control.reset").then(() => {
                 this.request("control.add", this.renderLoop.controlGroup).then()
             })
 
         })
-        this.renderLoop.controlGroup.onAdd(() => {
+        this.renderLoop.controlGroup._onAdd(() => {
             this.request("control.add", this.renderLoop.controlGroup).then()
         })
 

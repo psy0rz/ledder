@@ -61,8 +61,11 @@ export default class ControlGroup extends Control {
         if (control.meta.name in this.loadedValues)
             control.load(this.loadedValues[control.meta.name])
 
-        control.onRestartRequired(this.onRestartRequiredCallback)
-        control.onChange(this.onChangeCallback)
+        control._onRestartRequired(this.onRestartRequiredCallback)
+        control.onChange((c)=>{
+            if (this.onChangeCallback)
+                this.onChangeCallback(c)
+        })
 
         if (this.onAddCallback)
             this.onAddCallback()
@@ -150,8 +153,8 @@ export default class ControlGroup extends Control {
             this.add(controlGroup)
 
             //pass through
-            controlGroup.onReset(this.onResetCallback)
-            controlGroup.onAdd(this.onAddCallback)
+            controlGroup._onReset(this.onResetCallback)
+            controlGroup._onAdd(this.onAddCallback)
 
         }
 
@@ -160,12 +163,12 @@ export default class ControlGroup extends Control {
     }
 
 
-    onReset(callback) {
+    _onReset(callback) {
         this.onResetCallback = callback
 
     }
 
-    onAdd(callback) {
+    _onAdd(callback) {
         this.onAddCallback = callback
     }
 
@@ -198,7 +201,7 @@ export default class ControlGroup extends Control {
 
     //return true if animation should be restarted
     updateValue(path: Array<string>, values: Values) {
-
+console.log("UPD", path, values)
         const c=this.meta.controls[path[0]]
         if ( c !== undefined) {
 
@@ -212,10 +215,10 @@ export default class ControlGroup extends Control {
 
     }
 
-    detach() {
-        super.detach()
+    _detach() {
+        super._detach()
         for (const [name, control] of Object.entries(this.meta.controls)) {
-            control.detach()
+            control._detach()
         }
         // this.onResetCallback=undefined
         // this.onAddCallback=undefined

@@ -16,7 +16,6 @@ export default class MQTT extends Animation {
     private animationManager: AnimationManager
 
 
-
     cleanStatusMesage() {
         if (this.lastStatusMessage)
             this.box.delete(this.lastStatusMessage)
@@ -41,26 +40,23 @@ export default class MQTT extends Animation {
         const mqttHost = controls.input('MQTT host', "mqtt", true)
         const mqttTopic = controls.input('MQTT topic', "ledder", true)
 
-
         let childControls = controls.group('Current animation')
+
+
         this.animationManager = new AnimationManager(box, scheduler.child(), childControls)
 
         this.statusMessage(`Conn ${mqttHost.text}...`)
         console.log(`MQTT: Connecting ${mqttHost.text}`)
         let mqttClient = mqtt.connect("mqtt://" + mqttHost.text, {})
 
-        //recursively send all controls to mqtt
-        function sendControls(topic:string, controlGroup:ControlGroup)
-        {
-            for (const [name, control] of Object.entries(controlGroup)) {
-                if (control.meta.controls!==undefined) {
-                    console.log("INSTANCE", control)
-                    sendControls(topic + "/" + name, control)
-                }
-                else {
-                    console.log("NEEN", control)
+        //recursively send all control values to mqtt
+        function sendControls(topic: string, controlGroup: ControlGroup) {
 
-                    mqttClient.publish(topic + "/" + control.name, JSON.stringify(control))
+            for (const [name, control] of Object.entries(controlGroup.meta.controls)) {
+                if (control instanceof ControlGroup) {
+                    sendControls(topic + "/" + name, control)
+                } else {
+                    mqttClient.publish(topic + "/" + name, JSON.stringify(control.save()))
                 }
             }
 
@@ -87,7 +83,7 @@ export default class MQTT extends Animation {
 
         mqttClient.on('message', async (topic, messageBuf) => {
                 let message = messageBuf.toString()
-                console.log(`MQTT ${topic}: ${message}`)
+                // console.log(`MQTT ${topic}: ${message}`)
                 this.statusMessage("")
 
                 let subTopic = topic.substring(mqttTopic.text.length + 1)
@@ -97,21 +93,29 @@ export default class MQTT extends Animation {
 
                 switch (cmd) {
                     case 'select':
-                        console.log(`MQTT: Running animation ${message}`)
-                        try {
-                            this.animationManager.select(message, false)
+                        console.log(`MQTT select ${message}`)
 
-                        } catch (e) {
-                            console.error("MQTT error while starting animation: ", e)
-                            this.statusMessage("Animation failed.")
-                        }
+                            this.animationManager.select(message, false).catch((e) => {
+                                this.statusMessage((e.message))
+
+                            })
+
                         break
                     case 'stop':
+                        console.log("MQTT stop")
                         this.animationManager.stop(false)
                         break
                     case 'get':
-                        sendControls( mqttTopic.text,childControls)
+                        console.log("MQTT get")
+
+                        sendControls(mqttTopic.text + "/state", childControls)
                         break
+                    case 'set':
+                        const path = pars
+                        console.log("MQTT set: ", path, message)
+                        childControls.updateValue(path, JSON.parse(message))
+                        break
+
 
                 }
 

@@ -46,13 +46,13 @@ export class Control {
     }
 
     //internal use only.
-    onRestartRequired(callback)
+    _onRestartRequired(callback)
     {
         this.onRestartRequiredCallback=callback
     }
 
     //remove all references to user stuff/animations. (used when restarting an animation)
-    detach()
+    _detach()
     {
 
         this.onChangeCallback=undefined
@@ -67,6 +67,7 @@ export class Control {
     updateValue(path: Array<string>, value: Values) {
 
         this.load(value)
+        console.log("CHANGE en", this.onChangeCallback)
         if (this.onChangeCallback !== undefined) {
             this.onChangeCallback(this)
         }

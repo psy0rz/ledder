@@ -12,13 +12,7 @@ import {Values} from "../Control.js"
  * We cant expect all animations to behave correctly all the time and handle all the edge cases regarding this.
  */
 process.on('unhandledRejection', (err) => {
-    // console.log(err)
-    // // @ts-ignore
-    // if (err.message.indexOf('proxy') != -1)
-        throw(err)
-    // else
-    //
-    //     console.error("Unhandled rejection: ", err)
+        console.error(err)
 
 })
 
@@ -74,12 +68,12 @@ export default class AnimationManager {
             this.proxyScheduler.revoke()
         this.proxyScheduler = Proxy.revocable(this.scheduler, {})
 
-        this.controlGroup.detach() //removes onChange handlers etc
+        this.controlGroup._detach() //removes onChange handlers etc
         if (this.proxyControlGroup !== undefined)
             this.proxyControlGroup.revoke()
         this.proxyControlGroup = Proxy.revocable(this.controlGroup, {})
 
-        this.controlGroup.onRestartRequired(() => {
+        this.controlGroup._onRestartRequired(() => {
 
             this.restart(true)
         })
