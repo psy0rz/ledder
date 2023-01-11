@@ -73,6 +73,8 @@ export class DisplayLedstream extends DisplayQOIS {
 
     frame(displayTime: number) {
 
+        displayTime=displayTime/1000
+
         const frameBytes = []
 
         const maxFramesLag=30

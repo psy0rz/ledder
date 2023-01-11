@@ -39,8 +39,7 @@ export let displayList=[];
 
 
 //default animation and preset
-export let animationName="Tests/TestMatrix"
-export let presetName="default"
+export let animation="Tests/TestMatrix/default"
 
 export let brightness=255
 export let gamma=2.8
