@@ -4,28 +4,17 @@ import ControlGroup from "../ControlGroup.js"
 import Animation from "../Animation.js"
 import mqtt, {MqttClient} from "mqtt"
 import {statusMessage} from "../message.js"
-import {PresetStore} from "../server/PresetStore.js"
 import DrawText from "../draw/DrawText.js"
 import AnimationManager from "../server/AnimationManager.js"
 
 
 export default class MQTT extends Animation {
-    private client: MqttClient
-    private currentAnimation: Animation
+    // private client: MqttClient
 
     private box: PixelBox
-    private scheduler: Scheduler
-    private controls: ControlGroup
     private lastStatusMessage: DrawText
     private animationManager: AnimationManager
 
-
-    animationReset() {
-        this.scheduler.clear()
-        this.box.clear()
-        this.controls.clear()
-
-    }
 
 
     cleanStatusMesage() {
@@ -35,15 +24,15 @@ export default class MQTT extends Animation {
 
     statusMessage(text: string) {
         this.cleanStatusMesage()
-        this.lastStatusMessage = statusMessage(this.box, text)
+        if (text)
+            this.lastStatusMessage = statusMessage(this.box, text)
     }
 
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) {
 
         scheduler.onCleanup(() => {
-            console.log("DISCONNEC")
-            if (this.client !== undefined)
-                this.client.end(true)
+            if (mqttClient !== undefined)
+                mqttClient.end(true)
 
         })
 
@@ -58,30 +47,48 @@ export default class MQTT extends Animation {
 
         this.statusMessage(`Conn ${mqttHost.text}...`)
         console.log(`MQTT: Connecting ${mqttHost.text}`)
-        this.client = mqtt.connect("mqtt://" + mqttHost.text, {})
+        let mqttClient = mqtt.connect("mqtt://" + mqttHost.text, {})
+
+        //recursively send all controls to mqtt
+        function sendControls(topic:string, controlGroup:ControlGroup)
+        {
+            for (const [name, control] of Object.entries(controlGroup)) {
+                if (control.meta.controls!==undefined) {
+                    console.log("INSTANCE", control)
+                    sendControls(topic + "/" + name, control)
+                }
+                else {
+                    console.log("NEEN", control)
+
+                    mqttClient.publish(topic + "/" + control.name, JSON.stringify(control))
+                }
+            }
+
+        }
 
 
-        this.client.on('reconnect', (e) => {
+        mqttClient.on('reconnect', () => {
             this.statusMessage(`Reconn ${mqttHost.text}...`)
             console.log(`MQTT: Reconnecting ${mqttHost.text}`)
 
         })
 
-        this.client.on('connect', (e) => {
+        mqttClient.on('connect', () => {
             console.log("MQTT: Connected")
-            this.statusMessage("Conn OK")
-            this.client.subscribe(mqttTopic.text + '/#')
+            this.statusMessage(`${mqttHost.text} connected.`)
+            mqttClient.subscribe(mqttTopic.text + '/#')
         })
 
-        this.client.on('error', (e) => {
+        mqttClient.on('error', (e) => {
             console.error("MQTT error: ", e.message)
             this.statusMessage(e.message)
         })
 
 
-        this.client.on('message', async (topic, messageBuf) => {
+        mqttClient.on('message', async (topic, messageBuf) => {
                 let message = messageBuf.toString()
                 console.log(`MQTT ${topic}: ${message}`)
+                this.statusMessage("")
 
                 let subTopic = topic.substring(mqttTopic.text.length + 1)
                 let parts = subTopic.split('/')
@@ -101,6 +108,9 @@ export default class MQTT extends Animation {
                         break
                     case 'stop':
                         this.animationManager.stop(false)
+                        break
+                    case 'get':
+                        sendControls( mqttTopic.text,childControls)
                         break
 
                 }

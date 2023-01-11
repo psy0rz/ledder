@@ -12,7 +12,13 @@ import {Values} from "../Control.js"
  * We cant expect all animations to behave correctly all the time and handle all the edge cases regarding this.
  */
 process.on('unhandledRejection', (err) => {
-    console.error("Unhandled rejection: ", err)
+    // console.log(err)
+    // // @ts-ignore
+    // if (err.message.indexOf('proxy') != -1)
+        throw(err)
+    // else
+    //
+    //     console.error("Unhandled rejection: ", err)
 
 })
 
