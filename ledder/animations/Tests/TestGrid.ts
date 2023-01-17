@@ -13,6 +13,7 @@ import DrawRectangle from "../../draw/DrawRectangle.js"
 import DrawText from "../../draw/DrawText.js"
 import {fonts} from "../../fonts.js"
 import BoxInterface from "../../BoxInterface.js"
+import FxBlinkAlpha from "../../fx/FxBlinkAlpha.js"
 
 
 export default class TestGrid extends Animation {
@@ -34,10 +35,11 @@ export default class TestGrid extends Animation {
 
         fonts.C64.load()
 
+        const blinker=new FxBlink(scheduler, controls, 15,15)
+
         //traverse displays
         for (let y = 0; y < yCount; y++)
             for (let x = 0; x < xCount; x++) {
-
 
                 box.add(new DrawRectangle(
                     x * controlDisplayWidth.value,
@@ -57,6 +59,11 @@ export default class TestGrid extends Animation {
                 }
                 txt.center( centerRect)
                 box.add(txt)
+
+                blinker.run( new Pixel(centerRect.xMin+1, centerRect.yMin+1, colorYellow), box)
+
+
+
             }
     }
 }
