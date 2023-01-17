@@ -6,6 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="7de4510b-f0e5-4402-9e95-cb9c8d6f6b3a" name="Changes" comment="fixing control callbacks">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ledder/server/drivers/DisplayLedstream.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/server/drivers/DisplayLedstream.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -29,21 +30,21 @@
     <option name="showExcludedFiles" value="false" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/psy/WebstormProjects/ledder&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;com.obiscr.chatgpt.settings.ChatGPTSettingsPanel&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;/home/psy/WebstormProjects/ledder/node_modules/typescript/lib&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "/home/psy/WebstormProjects/ledder",
+    "node.js.detected.package.eslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "ts.external.directory.path": "/home/psy/WebstormProjects/ledder/node_modules/typescript/lib",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RunManager" selected="Node.js.server.js">
     <configuration name="buildpreviews.js" type="NodeJSConfigurationType" application-parameters="-- -f" nameIsGenerated="true" path-to-js-file="ledder/server/buildpreviews.js" working-dir="$PROJECT_DIR$">
       <method v="2">
@@ -80,6 +81,9 @@
       <workItem from="1673096139641" duration="4849000" />
       <workItem from="1673102340801" duration="9687000" />
       <workItem from="1673216964103" duration="15913000" />
+      <workItem from="1673627362249" duration="893000" />
+      <workItem from="1673916143280" duration="12000" />
+      <workItem from="1673916172794" duration="2570000" />
     </task>
     <task id="LOCAL-00001" summary="kjh">
       <created>1673098884534</created>

@@ -22,14 +22,15 @@ export class DisplayLedstream extends DisplayQOIS {
 
     /**
      * Matrix driver for https://github.com/psy0rz/ledstream
-     * We assume it has a Left/Right zigzag pattern, with multiple channels stacked vertically
-     * @param channels Number of channels (zigzag ledstrips)
+     * Our side will create a list of pixels and send it to ledstream. (total of width * height pixels)
+     * Ledstream will send these pixels to the ledstrips, starting with the first channel and filling them all up.
+     * Use offset-mapper to make sure the pixels actually end up in the right position on your actual screen. :)
      * @param width Physical width of display.
-     * @param height Physical height of display. (divded over multiple channels)
+     * @param height Physical height of display.
      * @param ips IP address
      * @param port UDP port
      */
-    constructor(channels, width, height, ips, port, mapper: OffsetMapper) {
+    constructor(width, height, ips, port, mapper: OffsetMapper) {
         super(width, height, mapper)
 
 
@@ -77,8 +78,8 @@ export class DisplayLedstream extends DisplayQOIS {
 
         const frameBytes = []
 
-        const maxFramesLag=30
-        const maxTimeLag=500
+        const maxFramesLag=2
+        const maxTimeLag=2*16
 
         //buffer this many frames
         const lag = Math.min(maxTimeLag, maxFramesLag * this.defaultFrameTimeMicros/1000)
