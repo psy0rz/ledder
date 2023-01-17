@@ -30,10 +30,10 @@ export abstract class DisplayQOIS extends Display {
     private statsBytes: number
     private mapper: OffsetMapper
 
-    constructor(width: number, height: number, mapper: OffsetMapper) {
-        super(width, height)
+    constructor(mapper: OffsetMapper) {
+        super(mapper.width, mapper.height)
 
-        this.pixelCount = width * height
+        this.pixelCount = mapper.width * mapper.height
         this.mapper = mapper
 
         this.pixels = []

@@ -4,9 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7de4510b-f0e5-4402-9e95-cb9c8d6f6b3a" name="Changes" comment="fixing control callbacks">
+    <list default="true" id="7de4510b-f0e5-4402-9e95-cb9c8d6f6b3a" name="Changes" comment="fix">
+      <change afterPath="$PROJECT_DIR$/ledder/animations/Tests/TestGrid.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ledder/draw/DrawRectangle.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ledder/Colors.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/Colors.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ledder/draw/DrawLine.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/draw/DrawLine.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ledder/server/DisplayQOIS.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/server/DisplayQOIS.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ledder/server/drivers/DisplayLedstream.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/server/drivers/DisplayLedstream.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ledder/server/drivers/OffsetMapper.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/server/drivers/OffsetMapper.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -35,7 +41,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "/home/psy/WebstormProjects/ledder",
+    "last_opened_file_path": "/home/psy/WebstormProjects/ledder/ledder/draw",
     "node.js.detected.package.eslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
@@ -45,6 +51,12 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/ledder/draw" />
+      <recent name="$PROJECT_DIR$/ledder/animations/Tests" />
+    </key>
+  </component>
   <component name="RunManager" selected="Node.js.server.js">
     <configuration name="buildpreviews.js" type="NodeJSConfigurationType" application-parameters="-- -f" nameIsGenerated="true" path-to-js-file="ledder/server/buildpreviews.js" working-dir="$PROJECT_DIR$">
       <method v="2">
@@ -83,7 +95,7 @@
       <workItem from="1673216964103" duration="15913000" />
       <workItem from="1673627362249" duration="893000" />
       <workItem from="1673916143280" duration="12000" />
-      <workItem from="1673916172794" duration="2570000" />
+      <workItem from="1673916172794" duration="11082000" />
     </task>
     <task id="LOCAL-00001" summary="kjh">
       <created>1673098884534</created>
@@ -155,7 +167,14 @@
       <option name="project" value="LOCAL" />
       <updated>1673385874062</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="fix">
+      <created>1673919294442</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1673919294442</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -404,6 +423,10 @@
         <option value="$PROJECT_DIR$/ledder/server/drivers/DisplayRPI.js" />
         <option value="$PROJECT_DIR$/ledder/server/drivers/DisplayMulti.js.map" />
         <option value="$PROJECT_DIR$/ledder/server/drivers/OffsetMapper.js" />
+        <option value="$PROJECT_DIR$/ledder/animations/Tests/TestGrid.js.map" />
+        <option value="$PROJECT_DIR$/ledder/animations/Tests/TestGrid.js" />
+        <option value="$PROJECT_DIR$/ledder/draw/DrawRectangle.js.map" />
+        <option value="$PROJECT_DIR$/ledder/draw/DrawRectangle.js" />
       </list>
     </option>
   </component>

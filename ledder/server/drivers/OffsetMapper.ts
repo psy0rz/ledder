@@ -9,16 +9,16 @@
 
 */
 export default class OffsetMapper extends Array {
-    private height: any
-    private width: any
+    public height: number
+    public width: number
 
-    constructor(width, height, horizontal = true) {
+    constructor(width: number, height: number, horizontal = true) {
 
         super()
         this.width = width
         this.height = height
 
-        //horizontal ledstrips
+        //horizontal ledstrips, left to right
         if (horizontal) {
             for (let x = 0; x < width; x++) {
                 this.push([])
@@ -27,7 +27,7 @@ export default class OffsetMapper extends Array {
                 }
             }
         }
-        //vertical ledstrips
+        //vertical ledstrips, top to bottom
         else {
             for (let x = 0; x < this.width; x++) {
                 this.push([])
@@ -70,6 +70,23 @@ export default class OffsetMapper extends Array {
         for (let x = 0; x < this.width; x = x + 2) {
             this[x].reverse()
         }
+    }
+
+    //Copy another mapper to this one, with certain offsets
+    //Usefull for combining smaller displays into a bigger stacked one for example.
+    add(other: OffsetMapper, xOffset: number, yOffset: number, offset: Number) {
+        for (let y = 0; y < other.height; y++)
+            for (let x = 0; x < other.width; x++)
+                this[x + xOffset][y + yOffset] = other[x][y] + offset
+    }
+
+    //Same as above, but now assume we're stacking a bunch of the same displays into a grid.
+    //A channel is just a the offset a full other display has.
+    //Usefull with ledstream.
+    addGrid(other: OffsetMapper, gridX, gridY, channel)
+    {
+        this.add(other, gridX*other.width, gridY*other.height, channel * other.width * other.height)
+
     }
 
 }

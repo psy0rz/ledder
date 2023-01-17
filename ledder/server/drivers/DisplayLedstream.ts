@@ -25,13 +25,12 @@ export class DisplayLedstream extends DisplayQOIS {
      * Our side will create a list of pixels and send it to ledstream. (total of width * height pixels)
      * Ledstream will send these pixels to the ledstrips, starting with the first channel and filling them all up.
      * Use offset-mapper to make sure the pixels actually end up in the right position on your actual screen. :)
-     * @param width Physical width of display.
-     * @param height Physical height of display.
+     * @param mapper Offset mapper that determines the width and height, and which coordinate belongs to with offset in the display buffer.
      * @param ips IP address
      * @param port UDP port
      */
-    constructor(width, height, ips, port, mapper: OffsetMapper) {
-        super(width, height, mapper)
+    constructor(mapper:OffsetMapper, ips, port) {
+        super(mapper)
 
 
         this.frameRoundingMicros=1000
