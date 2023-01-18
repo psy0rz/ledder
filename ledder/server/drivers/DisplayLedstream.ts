@@ -77,8 +77,8 @@ export class DisplayLedstream extends DisplayQOIS {
 
         const frameBytes = []
 
-        const maxFramesLag=2
-        const maxTimeLag=2*16
+        const maxFramesLag=3
+        const maxTimeLag=500
 
         //buffer this many frames
         const lag = Math.min(maxTimeLag, maxFramesLag * this.defaultFrameTimeMicros/1000)
