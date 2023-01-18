@@ -86,7 +86,7 @@ export default class PixelList extends Set<Pixel | PixelList> {
                 if (yFlip)
                     y = height - y
 
-                const p = new Pixel(x, y, color)
+                const p = new Pixel(x, y, c)
                 p.data=data
                 ret[a][b] = p
                 this.add(p)

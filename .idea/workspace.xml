@@ -4,7 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7de4510b-f0e5-4402-9e95-cb9c8d6f6b3a" name="Changes" comment="fixes" />
+    <list default="true" id="7de4510b-f0e5-4402-9e95-cb9c8d6f6b3a" name="Changes" comment="fixes">
+      <change afterPath="$PROJECT_DIR$/ledder/animations/Tests/TestNoise.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ledder/PixelList.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/PixelList.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ledder/server/drivers/DisplayLedstream.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/server/drivers/DisplayLedstream.ts" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -32,7 +37,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "/home/psy/WebstormProjects/ledder/ledder/draw",
+    "last_opened_file_path": "/home/psy/WebstormProjects/ledder/ledder/animations/Tests",
     "node.js.detected.package.eslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
@@ -44,8 +49,8 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/ledder/draw" />
       <recent name="$PROJECT_DIR$/ledder/animations/Tests" />
+      <recent name="$PROJECT_DIR$/ledder/draw" />
     </key>
   </component>
   <component name="RunManager" selected="Node.js.server.js">
@@ -86,7 +91,8 @@
       <workItem from="1673216964103" duration="15913000" />
       <workItem from="1673627362249" duration="893000" />
       <workItem from="1673916143280" duration="12000" />
-      <workItem from="1673916172794" duration="11631000" />
+      <workItem from="1673916172794" duration="14237000" />
+      <workItem from="1673976306178" duration="2021000" />
     </task>
     <task id="LOCAL-00001" summary="kjh">
       <created>1673098884534</created>
@@ -172,7 +178,14 @@
       <option name="project" value="LOCAL" />
       <updated>1673972269763</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="fixes">
+      <created>1673973788748</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1673973788748</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -425,6 +438,8 @@
         <option value="$PROJECT_DIR$/ledder/animations/Tests/TestGrid.js" />
         <option value="$PROJECT_DIR$/ledder/draw/DrawRectangle.js.map" />
         <option value="$PROJECT_DIR$/ledder/draw/DrawRectangle.js" />
+        <option value="$PROJECT_DIR$/ledder/animations/Tests/TestNoise.js.map" />
+        <option value="$PROJECT_DIR$/ledder/animations/Tests/TestNoise.js" />
       </list>
     </option>
   </component>
