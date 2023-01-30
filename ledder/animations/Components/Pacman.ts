@@ -5,11 +5,11 @@ import PixelList from "../../PixelList.js"
 import DrawAsciiArt from "../../draw/DrawAsciiArt.js"
 import FxMovie from "../../fx/FxMovie.js"
 import FxRotate from "../../fx/FxRotate.js"
-import Animation from "../../Animation.js"
+import Animator from "../../Animator.js"
 import DrawAsciiArtColor from "../../draw/DrawAsciiArtColor.js"
 
 
-export default class Pacman extends Animation {
+export default class Pacman extends Animator {
     static category = "Misc"
     static title = "Pacman"
     static description = "blabla"

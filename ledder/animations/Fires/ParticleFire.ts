@@ -7,10 +7,10 @@ import Color from "../../Color.js"
 import Pixel from "../../Pixel.js"
 import Scheduler from "../../Scheduler.js"
 import ControlGroup from "../../ControlGroup.js"
-import Animation from "../../Animation.js"
+import Animator from "../../Animator.js"
 
 
-export default class ParticleFire extends Animation {
+export default class ParticleFire extends Animator {
     static category = "Fire"
     static title = "Particle fire"
     static description = "Individual pixel objects with color cycle effects on them. (more of a ledder way of doing it)"

@@ -6,9 +6,9 @@ import Scheduler from "../../Scheduler.js"
 import {colorBlack} from "../../Colors.js"
 import ControlGroup from "../../ControlGroup.js"
 import {fontSelect} from "../../fonts.js"
-import Animation from "../../Animation.js"
+import Animator from "../../Animator.js"
 
-export default class Cyber extends  Animation
+export default class Cyber extends  Animator
 {
     static category = "Misc"
     static title = "Cyber"

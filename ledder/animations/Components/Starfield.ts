@@ -5,7 +5,7 @@ import Pixel from "../../Pixel.js"
 import Color from "../../Color.js"
 import {random} from "../../utils.js"
 import PixelList from "../../PixelList.js"
-import Animation from "../../Animation.js"
+import Animator from "../../Animator.js"
 
 
 class Star {
@@ -52,7 +52,7 @@ class Star {
 
 }
 
-export default class Starfield extends Animation {
+export default class Starfield extends Animator {
     static category = "Misc"
     static title = "Starfield"
     static description = "blabla"

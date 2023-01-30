@@ -4,9 +4,9 @@ import DrawText from "../../draw/DrawText.js"
 import Scheduler from "../../Scheduler.js"
 import ControlGroup from "../../ControlGroup.js"
 import {fontSelect} from "../../fonts.js"
-import Animation from "../../Animation.js"
+import Animator from "../../Animator.js"
 
-export default class MaakPlek extends  Animation
+export default class MaakPlek extends  Animator
 {
     static category = "Logos"
     static title = "Maakplek"

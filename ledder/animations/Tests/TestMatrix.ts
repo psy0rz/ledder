@@ -6,10 +6,10 @@ import FxRotate from "../../fx/FxRotate.js"
 import Scheduler from "../../Scheduler.js"
 import Color from "../../Color.js"
 import ControlGroup from "../../ControlGroup.js"
-import Animation from "../../Animation.js"
+import Animator from "../../Animator.js"
 
 
-export default class TestMatrix extends Animation {
+export default class TestMatrix extends Animator {
 
     static title = "Matrix test screen"
     static description = "To verify correct orientation and color configuration of a display"

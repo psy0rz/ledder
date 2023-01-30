@@ -6,7 +6,7 @@ import FxRotate from "../../fx/FxRotate.js"
 import Scheduler from "../../Scheduler.js"
 import Color from "../../Color.js"
 import ControlGroup from "../../ControlGroup.js"
-import Animation from "../../Animation.js"
+import Animator from "../../Animator.js"
 import DrawBox from "../../draw/DrawBox.js"
 import {colorBlue, colorGreen, colorRed, colorYellow} from "../../Colors.js"
 import DrawRectangle from "../../draw/DrawRectangle.js"
@@ -16,7 +16,7 @@ import BoxInterface from "../../BoxInterface.js"
 import FxBlinkAlpha from "../../fx/FxBlinkAlpha.js"
 
 
-export default class TestGrid extends Animation {
+export default class TestGrid extends Animator {
 
     static title = "Grid layout test"
     static description = "Usefull to verify the layout of a grid of displays."

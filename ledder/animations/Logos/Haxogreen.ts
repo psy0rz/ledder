@@ -5,11 +5,11 @@ import DrawText from "../../draw/DrawText.js"
 import Scheduler from "../../Scheduler.js"
 import ControlGroup from "../../ControlGroup.js"
 import {fontSelect} from "../../fonts.js"
-import Animation from "../../Animation.js"
+import Animator from "../../Animator.js"
 
 
 
-export default class Haxogreen extends Animation {
+export default class Haxogreen extends Animator {
     static category = "Misc"
     static title = "Haxogreen"
     static description = "blabla"

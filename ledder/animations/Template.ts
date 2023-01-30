@@ -3,10 +3,10 @@ import Pixel from "../Pixel.js"
 import Scheduler from "../Scheduler.js"
 import Color from "../Color.js"
 import ControlGroup from "../ControlGroup.js"
-import Animation from "../Animation.js"
+import Animator from "../Animator.js"
 
 
-export default class Template extends  Animation
+export default class Template extends  Animator
 {
 
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) {

@@ -28,7 +28,7 @@ import DrawAsciiArtColor from "../../draw/DrawAsciiArtColor.js"
 import Scheduler from "../../Scheduler.js"
 import ControlGroup from "../../ControlGroup.js"
 import {fontSelect} from "../../fonts.js"
-import Animation from "../../Animation.js"
+import Animator from "../../Animator.js"
 
 const logo=`
 .......y...
@@ -43,7 +43,7 @@ yyyyyyyyyyyyyyy
 
 
 
-export default class TkkrLab extends Animation {
+export default class TkkrLab extends Animator {
     static category = "Logos"
     static title = "TkkrLab"
     static description = ""

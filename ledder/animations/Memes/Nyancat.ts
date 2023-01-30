@@ -17,10 +17,10 @@ import Pixel from "../../Pixel.js"
 import Color from "../../Color.js"
 import Scheduler from "../../Scheduler.js"
 import ControlGroup from "../../ControlGroup.js"
-import Animation from "../../Animation.js"
+import Animator from "../../Animator.js"
 
 
-export default class Nyancat extends Animation {
+export default class Nyancat extends Animator {
 
     static category = "Memes"
     static title = "Nyancat"

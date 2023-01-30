@@ -6,12 +6,12 @@ import FxRotate from "../../fx/FxRotate.js"
 import Scheduler from "../../Scheduler.js"
 import Color from "../../Color.js"
 import ControlGroup from "../../ControlGroup.js"
-import Animation from "../../Animation.js"
+import Animator from "../../Animator.js"
 import {colorBlack} from "../../Colors.js"
 import {random} from "../../utils.js"
 
 
-export default class TestNoise extends Animation {
+export default class TestNoise extends Animator {
 
 
   async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) {

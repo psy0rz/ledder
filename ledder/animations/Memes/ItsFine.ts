@@ -6,11 +6,11 @@ import Scheduler from "../../Scheduler.js"
 import ControlGroup from "../../ControlGroup.js"
 import {fontSelect} from "../../fonts.js"
 import FxFlames from "../../fx/FxFlames.js"
-import Animation from "../../Animation.js"
+import Animator from "../../Animator.js"
 
 
 
-export default class ItsFine extends Animation {
+export default class ItsFine extends Animator {
 
     static title = "Its fine"
     static description = ""

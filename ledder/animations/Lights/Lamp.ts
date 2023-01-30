@@ -2,9 +2,9 @@ import PixelBox from "../../PixelBox.js"
 import Scheduler from "../../Scheduler.js"
 import ControlGroup from "../../ControlGroup.js"
 import DrawBox from "../../draw/DrawBox.js"
-import Animation from "../../Animation.js"
+import Animator from "../../Animator.js"
 
-export default class Lamp extends  Animation
+export default class Lamp extends  Animator
 {
 
 

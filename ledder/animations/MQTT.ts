@@ -1,14 +1,14 @@
 import PixelBox from "../PixelBox.js"
 import Scheduler from "../Scheduler.js"
 import ControlGroup from "../ControlGroup.js"
-import Animation from "../Animation.js"
+import Animator from "../Animator.js"
 import mqtt, {MqttClient} from "mqtt"
 import {statusMessage} from "../message.js"
 import DrawText from "../draw/DrawText.js"
 import AnimationManager from "../server/AnimationManager.js"
 
 
-export default class MQTT extends Animation {
+export default class MQTT extends Animator {
     // private client: MqttClient
 
     private box: PixelBox

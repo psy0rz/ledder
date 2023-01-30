@@ -4,7 +4,7 @@ import DrawAsciiArtColor from "../../draw/DrawAsciiArtColor.js"
 import Scheduler from "../../Scheduler.js"
 import ControlGroup from "../../ControlGroup.js"
 import {animationRun} from "../../server/utils.js"
-import Animation from "../../Animation.js"
+import Animator from "../../Animator.js"
 import DrawBox from "../../draw/DrawBox.js"
 import Color from "../../Color.js"
 
@@ -21,7 +21,7 @@ const logo = `
   rrr00rrr
 `
 
-export default class HSD extends Animation {
+export default class HSD extends Animator {
     static category = "Misc"
     static title = "HSD"
     static description = ""

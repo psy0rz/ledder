@@ -1,4 +1,4 @@
-import Animation from "../Animation.js"
+import Animator from "../Animator.js"
 import Scheduler from "../Scheduler.js"
 import ControlGroup from "../ControlGroup.js"
 import Pixel from "../Pixel.js"
@@ -13,7 +13,7 @@ import {colorRed} from "../Colors.js"
 import {clearInterval} from "timers"
 import {FxFadeMask} from "../fx/FxFadeMask.js"
 
-export default class Test extends Animation {
+export default class Test extends Animator {
     private i: NodeJS.Timer
 
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) {

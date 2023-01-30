@@ -3,13 +3,13 @@ import FxFlameout from "../fx/FxFlameout.js"
 import FxPacman from "../fx/FxPacman.js"
 import ControlGroup from "../ControlGroup.js"
 import {PresetStore} from "../server/PresetStore.js"
-import Animation from "../Animation.js"
+import Animator from "../Animator.js"
 import {FxFadeMask} from "../fx/FxFadeMask.js"
 
 
 const presetStore = new PresetStore()
 
-export default class Cycle extends Animation {
+export default class Cycle extends Animator {
     static category = "Misc"
     static title = "Cycle stuff"
     static description = ""

@@ -6,10 +6,10 @@ import FxRotate from "../../fx/FxRotate.js"
 import Scheduler from "../../Scheduler.js"
 import Color from "../../Color.js"
 import ControlGroup from "../../ControlGroup.js"
-import Animation from "../../Animation.js"
+import Animator from "../../Animator.js"
 
 
-export default class TestStrip extends Animation {
+export default class TestStrip extends Animator {
 
   static title="Strip test"
   static description="To verify functionality of a led strip."

@@ -6,7 +6,7 @@ import Scheduler from "../../Scheduler.js"
 import ControlGroup from "../../ControlGroup.js"
 import {fontSelect} from "../../fonts.js"
 
-import Animation from "../../Animation.js"
+import Animator from "../../Animator.js"
 
 const logo=`
 r.wbbbbw.wbbbb..r..
@@ -19,7 +19,7 @@ y...bb...wwbbbb.y..
 ....ww...wbbbb.....
 `
 
-export default class TDVenlo extends Animation {
+export default class TDVenlo extends Animator {
     static category = "Logos"
     static title = "TDvenlo"
     static description = ""

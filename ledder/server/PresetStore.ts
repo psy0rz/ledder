@@ -6,7 +6,7 @@ import * as path from "path"
 import {mkdir, readdir, readFile, rm, stat, writeFile} from "fs/promises"
 import glob from "glob-promise"
 import {PresetValues} from "../PresetValues.js"
-import Animation from "../Animation.js"
+import Animator from "../Animator.js"
 import {AnimationList, AnimationListDir, AnimationListItem, PresetList, PresetListItem} from "../AnimationLists.js"
 import {createParentDir, getMtime} from "./utils.js"
 
@@ -38,13 +38,13 @@ export class PresetStore {
 
 
     //dynamicly loads an animation class from disk and returns the Class
-    async loadAnimation(animationName: string): Promise<typeof Animation> {
+    async loadAnimation(animationName: string): Promise<typeof Animator> {
         //note: this path is relative to this javascript module instead of current working dir.
         const importFilename = path.join("..", "..", this.animationFilename(animationName))
 
         let module = await import(importFilename + "?" + Date.now()) //prevent caching
 
-        if (module.default === undefined || !(module.default.prototype instanceof Animation))
+        if (module.default === undefined || !(module.default.prototype instanceof Animator))
 
             throw ("Not a valid Animation")
 
@@ -123,7 +123,7 @@ export class PresetStore {
     }
 
     // Gets stripped list of all presets for animation, and adds previewUrl
-    async buildPresetList(animationClass: typeof Animation, animationName: string): Promise<PresetList> {
+    async buildPresetList(animationClass: typeof Animator, animationName: string): Promise<PresetList> {
         let ret: PresetList = []
         const presetNames = await this.scanPresetNames(animationName)
         for (const presetName of presetNames) {

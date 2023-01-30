@@ -5,12 +5,38 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7de4510b-f0e5-4402-9e95-cb9c8d6f6b3a" name="Changes" comment="fixes">
-      <change afterPath="$PROJECT_DIR$/ledder/animations/Lights/Lamp.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ledder/ControlGroup.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/ControlGroup.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ledder/Animation.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/Animator.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ledder/animations/Components/MovingStars.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/animations/Components/MovingStars.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ledder/animations/Components/Pacman.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/animations/Components/Pacman.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ledder/animations/Components/Starfield.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/animations/Components/Starfield.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ledder/animations/Cycle.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/animations/Cycle.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ledder/animations/Fires/BrainsmokeFire.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/animations/Fires/BrainsmokeFire.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ledder/animations/Fires/Fire.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/animations/Fires/Fire.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ledder/animations/Fires/ParticleFire.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/animations/Fires/ParticleFire.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ledder/animations/Fires/PlasmaFire.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/animations/Fires/PlasmaFire.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ledder/animations/Lights/Lamp.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/animations/Lights/Lamp.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ledder/animations/Lights/PoliceLights.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/animations/Lights/PoliceLights.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ledder/animations/Logos/HSD.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/animations/Logos/HSD.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ledder/animations/Logos/Haxogreen.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/animations/Logos/Haxogreen.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ledder/animations/Logos/MaakPlek.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/animations/Logos/MaakPlek.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ledder/animations/Logos/Syn2cat.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/animations/Logos/Syn2cat.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ledder/animations/Logos/TDVENLO.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/animations/Logos/TDVENLO.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ledder/animations/Logos/TkkrLab.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/animations/Logos/TkkrLab.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ledder/animations/MQTT.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/animations/MQTT.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ledder/animations/Memes/Cyber.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/animations/Memes/Cyber.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ledder/animations/Memes/ItsFine.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/animations/Memes/ItsFine.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ledder/animations/Memes/Nyancat.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/animations/Memes/Nyancat.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ledder/animations/Template.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/animations/Template.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ledder/server/drivers/DisplayLedstream.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/server/drivers/DisplayLedstream.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/categories.svelte" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/categories.svelte" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ledder/animations/Test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/animations/Test.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ledder/animations/Tests/TestGrid.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/animations/Tests/TestGrid.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ledder/animations/Tests/TestMatrix.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/animations/Tests/TestMatrix.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ledder/animations/Tests/TestNoise.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/animations/Tests/TestNoise.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ledder/animations/Tests/TestStrip.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/animations/Tests/TestStrip.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ledder/animations/Text/BTC.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/animations/Text/BTC.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ledder/animations/Text/Marquee.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/animations/Text/Marquee.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ledder/server/AnimationManager.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/server/AnimationManager.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ledder/server/PresetStore.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/server/PresetStore.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -34,21 +60,21 @@
     <option name="showExcludedFiles" value="false" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "/home/psy/WebstormProjects/ledder/ledder/animations/Lights",
-    "node.js.detected.package.eslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
-    "ts.external.directory.path": "/home/psy/WebstormProjects/ledder/node_modules/typescript/lib",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/psy/WebstormProjects/ledder/ledder/animations/Lights&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;/home/psy/WebstormProjects/ledder/node_modules/typescript/lib&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/ledder/animations/Lights" />
@@ -99,6 +125,7 @@
       <workItem from="1674058772648" duration="3185000" />
       <workItem from="1674406716978" duration="586000" />
       <workItem from="1675023334040" duration="754000" />
+      <workItem from="1675106240697" duration="704000" />
     </task>
     <task id="LOCAL-00001" summary="kjh">
       <created>1673098884534</created>
@@ -253,7 +280,6 @@
         <option value="$PROJECT_DIR$/ledder/ColorPatterns.js" />
         <option value="$PROJECT_DIR$/ledder/fonts.js.map" />
         <option value="$PROJECT_DIR$/ledder/utils.js" />
-        <option value="$PROJECT_DIR$/ledder/Animation.js.map" />
         <option value="$PROJECT_DIR$/ledder/ControlColor.js" />
         <option value="$PROJECT_DIR$/ledder/IntervalControlled.js.map" />
         <option value="$PROJECT_DIR$/ledder/PixelInterface.js" />
@@ -295,7 +321,6 @@
         <option value="$PROJECT_DIR$/ledder/PixelBox.js" />
         <option value="$PROJECT_DIR$/ledder/PresetValues.js.map" />
         <option value="$PROJECT_DIR$/ledder/Value.js" />
-        <option value="$PROJECT_DIR$/ledder/Animation.js" />
         <option value="$PROJECT_DIR$/ledder/Fx.js" />
         <option value="$PROJECT_DIR$/ledder/Control.js.map" />
         <option value="$PROJECT_DIR$/ledder/crypto.js" />
@@ -448,6 +473,8 @@
         <option value="$PROJECT_DIR$/ledder/animations/Tests/TestNoise.js" />
         <option value="$PROJECT_DIR$/ledder/animations/Lights/Lamp.js.map" />
         <option value="$PROJECT_DIR$/ledder/animations/Lights/Lamp.js" />
+        <option value="$PROJECT_DIR$/ledder/Animator.js.map" />
+        <option value="$PROJECT_DIR$/ledder/Animator.js" />
       </list>
     </option>
   </component>

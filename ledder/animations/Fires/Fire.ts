@@ -1,4 +1,4 @@
-import Animation from "../../Animation.js"
+import Animator from "../../Animator.js"
 import Pixel from "../../Pixel.js"
 import Color from "../../Color.js"
 import Scheduler from "../../Scheduler.js"
@@ -8,7 +8,7 @@ import {patternSelect} from "../../ColorPatterns.js"
 import {glow, randomFloatGaussian} from "../../utils.js"
 
 
-export default class Fire extends Animation {
+export default class Fire extends Animator {
     static category = "Fire"
     static title = "Fire"
     static description = "Standard fire algorithm, based on https://github.com/bertrik/nyancat/blob/master/fire.c'>"

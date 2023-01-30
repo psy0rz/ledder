@@ -7,9 +7,9 @@ import {patternSelect} from "../../ColorPatterns.js"
 import {glow} from "../../utils.js"
 import Scheduler from "../../Scheduler.js"
 import ControlGroup from "../../ControlGroup.js"
-import Animation from "../../Animation.js"
+import Animator from "../../Animator.js"
 
-export default class BrainsmokeFire extends Animation {
+export default class BrainsmokeFire extends Animator {
 
     static category = "Fire"
     static title = "Brainsmoke"

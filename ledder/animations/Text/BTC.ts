@@ -7,9 +7,9 @@ import DrawText from "../../draw/DrawText.js"
 import {cryptoFirstLast} from "../../crypto.js"
 import Fire from "../Fires/Fire.js"
 import Starfield from "../Components/Starfield.js"
-import Animation from "../../Animation.js"
+import Animator from "../../Animator.js"
 
-export default class BTC extends Animation {
+export default class BTC extends Animator {
     static category = "Misc"
     static title = "BTC"
     static description = "Rotating bitcoin counter."

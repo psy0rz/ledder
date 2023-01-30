@@ -1,7 +1,7 @@
 import PixelBox from "../PixelBox.js"
 import Scheduler from "../Scheduler.js"
 import {presetStore} from "./PresetStore.js"
-import Animation from "../Animation.js"
+import Animator from "../Animator.js"
 import ControlGroup from "../ControlGroup.js"
 import {PresetValues} from "../PresetValues.js"
 import {Values} from "../Control.js"
@@ -28,8 +28,8 @@ export default class AnimationManager {
     public presetName: string
     private presetValues: PresetValues
 
-    public animationClass: typeof Animation
-    private animation: Animation
+    public animationClass: typeof Animator
+    private animation: Animator
 
     //parents
     public readonly box: PixelBox

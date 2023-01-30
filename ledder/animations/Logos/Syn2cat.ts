@@ -2,10 +2,10 @@ import PixelBox from "../../PixelBox.js"
 import DrawAsciiArtColor from "../../draw/DrawAsciiArtColor.js"
 import Scheduler from "../../Scheduler.js"
 import ControlGroup from "../../ControlGroup.js"
-import Animation from "../../Animation.js"
+import Animator from "../../Animator.js"
 
 
-export default class Syn2Cat extends  Animation
+export default class Syn2Cat extends  Animator
 {
     static category = "Logos"
     static title = "Syn2cat"

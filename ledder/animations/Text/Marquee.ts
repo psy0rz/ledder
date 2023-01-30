@@ -10,12 +10,12 @@ import Scheduler from "../../Scheduler.js"
 import ControlGroup from "../../ControlGroup.js"
 import {fontSelect} from "../../fonts.js"
 import FxFlames from "../../fx/FxFlames.js"
-import Animation from "../../Animation.js"
+import Animator from "../../Animator.js"
 import FxTwinkle from "../../fx/FxTwinkle.js"
 import FxColorPattern from "../../fx/FxColorPattern.js"
 
 
-export default class Marquee extends Animation {
+export default class Marquee extends Animator {
 
     static title = "Marquee"
     static description = ""

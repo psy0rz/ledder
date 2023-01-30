@@ -4,10 +4,11 @@ import ControlGroup from "./ControlGroup.js"
 import PixelBox from "./PixelBox.js"
 
 
+
 /**
  * An animation is a pixelcontainer and animates the properties of those pixels via the scheduler.
  */
-export default class Animation {
+export default class Animator {
 
     // keep: boolean;
     static category = "Misc"

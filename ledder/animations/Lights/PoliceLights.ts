@@ -7,11 +7,11 @@ import FxBlink from "../../fx/FxBlink.js"
 import Scheduler from "../../Scheduler.js"
 import ControlGroup from "../../ControlGroup.js"
 import {fontSelect} from "../../fonts.js"
-import Animation from "../../Animation.js"
+import Animator from "../../Animator.js"
 
 
 
-export default class PoliceLights extends Animation {
+export default class PoliceLights extends Animator {
 
     static title = "Police lights"
     static description = ""

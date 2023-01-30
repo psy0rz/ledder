@@ -6,7 +6,7 @@ import DrawAsciiArt from "../../draw/DrawAsciiArt.js"
 import {random} from "../../utils.js"
 import FxMovie from "../../fx/FxMovie.js"
 import FxRotate from "../../fx/FxRotate.js"
-import Animation from "../../Animation.js"
+import Animator from "../../Animator.js"
 
 let starAscii=[`
         ...
@@ -22,7 +22,7 @@ let starAscii=[`
         .w.
 `]
 
-export default class MovingStars extends Animation {
+export default class MovingStars extends Animator {
 
     static category = "Basic"
     static title = "Moving stars left"
