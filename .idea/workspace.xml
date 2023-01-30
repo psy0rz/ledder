@@ -4,40 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7de4510b-f0e5-4402-9e95-cb9c8d6f6b3a" name="Changes" comment="fixes">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ledder/Animation.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/Animator.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ledder/animations/Components/MovingStars.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/animations/Components/MovingStars.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ledder/animations/Components/Pacman.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/animations/Components/Pacman.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ledder/animations/Components/Starfield.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/animations/Components/Starfield.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ledder/animations/Cycle.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/animations/Cycle.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ledder/animations/Fires/BrainsmokeFire.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/animations/Fires/BrainsmokeFire.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ledder/animations/Fires/Fire.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/animations/Fires/Fire.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ledder/animations/Fires/ParticleFire.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/animations/Fires/ParticleFire.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ledder/animations/Fires/PlasmaFire.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/animations/Fires/PlasmaFire.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ledder/animations/Lights/Lamp.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/animations/Lights/Lamp.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ledder/animations/Lights/PoliceLights.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/animations/Lights/PoliceLights.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ledder/animations/Logos/HSD.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/animations/Logos/HSD.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ledder/animations/Logos/Haxogreen.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/animations/Logos/Haxogreen.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ledder/animations/Logos/MaakPlek.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/animations/Logos/MaakPlek.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ledder/animations/Logos/Syn2cat.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/animations/Logos/Syn2cat.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ledder/animations/Logos/TDVENLO.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/animations/Logos/TDVENLO.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ledder/animations/Logos/TkkrLab.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/animations/Logos/TkkrLab.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ledder/animations/MQTT.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/animations/MQTT.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ledder/animations/Memes/Cyber.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/animations/Memes/Cyber.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ledder/animations/Memes/ItsFine.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/animations/Memes/ItsFine.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ledder/animations/Memes/Nyancat.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/animations/Memes/Nyancat.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ledder/animations/Template.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/animations/Template.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ledder/animations/Test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/animations/Test.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ledder/animations/Tests/TestGrid.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/animations/Tests/TestGrid.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ledder/animations/Tests/TestMatrix.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/animations/Tests/TestMatrix.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ledder/animations/Tests/TestNoise.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/animations/Tests/TestNoise.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ledder/animations/Tests/TestStrip.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/animations/Tests/TestStrip.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ledder/animations/Text/BTC.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/animations/Text/BTC.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ledder/animations/Text/Marquee.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/animations/Text/Marquee.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ledder/server/AnimationManager.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/server/AnimationManager.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ledder/server/PresetStore.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/server/PresetStore.ts" afterDir="false" />
-    </list>
+    <list default="true" id="7de4510b-f0e5-4402-9e95-cb9c8d6f6b3a" name="Changes" comment="rename Animation to Animator (conflicted with existing class)" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -125,7 +92,7 @@
       <workItem from="1674058772648" duration="3185000" />
       <workItem from="1674406716978" duration="586000" />
       <workItem from="1675023334040" duration="754000" />
-      <workItem from="1675106240697" duration="704000" />
+      <workItem from="1675106240697" duration="1176000" />
     </task>
     <task id="LOCAL-00001" summary="kjh">
       <created>1673098884534</created>
@@ -218,7 +185,14 @@
       <option name="project" value="LOCAL" />
       <updated>1673973788748</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="rename Animation to Animator (conflicted with existing class)">
+      <created>1675106990541</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1675106990541</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -496,7 +470,8 @@
     <MESSAGE value="child animationManagers ok" />
     <MESSAGE value="fix" />
     <MESSAGE value="fixes" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixes" />
+    <MESSAGE value="rename Animation to Animator (conflicted with existing class)" />
+    <option name="LAST_COMMIT_MESSAGE" value="rename Animation to Animator (conflicted with existing class)" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

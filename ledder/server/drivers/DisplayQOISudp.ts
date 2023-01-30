@@ -8,7 +8,7 @@ const qoisDataLength = 1460 - 6 //6 bytes package-frame overhead
 
 
 
-export class DisplayLedstream extends DisplayQOIS {
+export class DisplayQOISudp extends DisplayQOIS {
 
     sockets: Array<dgram.Socket>
     ips: string
