@@ -4,7 +4,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7de4510b-f0e5-4402-9e95-cb9c8d6f6b3a" name="Changes" comment="rename Animation to Animator (conflicted with existing class)" />
+    <list default="true" id="7de4510b-f0e5-4402-9e95-cb9c8d6f6b3a" name="Changes" comment="rneame">
+      <change afterPath="$PROJECT_DIR$/ledder/server/Render.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ledder/server/RenderPreview.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ledder/server/drivers/DisplayQOISfile.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ledder/server/PreviewStore.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/server/PreviewStore.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ledder/server/RenderLoop.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/server/RenderRealtime.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ledder/server/WsContext.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/server/WsContext.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ledder/server/drivers/DisplayApng.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/server/drivers/DisplayApng.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ledder/server/drivers/DisplayQOISudp.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/server/drivers/DisplayQOISudp.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ledder/server/server.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/server/server.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ledder/server/utils.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/server/utils.ts" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -27,23 +39,24 @@
     <option name="showExcludedFiles" value="false" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/psy/WebstormProjects/ledder/ledder/animations/Lights&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;/home/psy/WebstormProjects/ledder/node_modules/typescript/lib&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "/home/psy/WebstormProjects/ledder/ledder/server/drivers",
+    "node.js.detected.package.eslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "ts.external.directory.path": "/home/psy/WebstormProjects/ledder/node_modules/typescript/lib",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/ledder/server/drivers" />
       <recent name="$PROJECT_DIR$/ledder/animations/Lights" />
       <recent name="$PROJECT_DIR$/ledder/animations/Tests" />
       <recent name="$PROJECT_DIR$/ledder/draw" />
@@ -92,7 +105,7 @@
       <workItem from="1674058772648" duration="3185000" />
       <workItem from="1674406716978" duration="586000" />
       <workItem from="1675023334040" duration="754000" />
-      <workItem from="1675106240697" duration="1176000" />
+      <workItem from="1675106240697" duration="6173000" />
     </task>
     <task id="LOCAL-00001" summary="kjh">
       <created>1673098884534</created>
@@ -192,7 +205,14 @@
       <option name="project" value="LOCAL" />
       <updated>1675106990541</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="rneame">
+      <created>1675107622603</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1675107622603</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -385,11 +405,9 @@
         <option value="$PROJECT_DIR$/ledder/server/server.js.map" />
         <option value="$PROJECT_DIR$/ledder/server/DisplayQOIS.js" />
         <option value="$PROJECT_DIR$/ledder/server/buildpreviews.js.map" />
-        <option value="$PROJECT_DIR$/ledder/server/RenderLoop.js" />
         <option value="$PROJECT_DIR$/ledder/server/buildpreviews.js" />
         <option value="$PROJECT_DIR$/ledder/server/perftest.js.map" />
         <option value="$PROJECT_DIR$/ledder/server/DisplayQOIS.js.map" />
-        <option value="$PROJECT_DIR$/ledder/server/RenderLoop.js.map" />
         <option value="$PROJECT_DIR$/ledder/server/server.js" />
         <option value="$PROJECT_DIR$/ledder/server/perftest.js" />
         <option value="$PROJECT_DIR$/ledder/server/config.js.map" />
@@ -427,11 +445,9 @@
         <option value="$PROJECT_DIR$/ledder/server/drivers/GammaMapper.js" />
         <option value="$PROJECT_DIR$/ledder/server/drivers/MulticastSync.js.map" />
         <option value="$PROJECT_DIR$/ledder/server/drivers/DisplayWLED.js" />
-        <option value="$PROJECT_DIR$/ledder/server/drivers/DisplayLedstream.js" />
         <option value="$PROJECT_DIR$/ledder/server/drivers/DisplayRPI.js.map" />
         <option value="$PROJECT_DIR$/ledder/server/drivers/DisplayWLED.js.map" />
         <option value="$PROJECT_DIR$/ledder/server/drivers/MulticastSync.js" />
-        <option value="$PROJECT_DIR$/ledder/server/drivers/DisplayLedstream.js.map" />
         <option value="$PROJECT_DIR$/ledder/server/drivers/DisplayApng.js" />
         <option value="$PROJECT_DIR$/ledder/server/drivers/DisplayPixelflut.js.map" />
         <option value="$PROJECT_DIR$/ledder/server/drivers/DisplayWebsocket.js" />
@@ -449,6 +465,16 @@
         <option value="$PROJECT_DIR$/ledder/animations/Lights/Lamp.js" />
         <option value="$PROJECT_DIR$/ledder/Animator.js.map" />
         <option value="$PROJECT_DIR$/ledder/Animator.js" />
+        <option value="$PROJECT_DIR$/ledder/server/drivers/DisplayQOISudp.js.map" />
+        <option value="$PROJECT_DIR$/ledder/server/drivers/DisplayQOISudp.js" />
+        <option value="$PROJECT_DIR$/ledder/server/drivers/DisplayQOISfile.js" />
+        <option value="$PROJECT_DIR$/ledder/server/drivers/DisplayQOISfile.js.map" />
+        <option value="$PROJECT_DIR$/ledder/server/RenderRealtime.js.map" />
+        <option value="$PROJECT_DIR$/ledder/server/RenderRealtime.js" />
+        <option value="$PROJECT_DIR$/ledder/server/Render.js" />
+        <option value="$PROJECT_DIR$/ledder/server/Render.js.map" />
+        <option value="$PROJECT_DIR$/ledder/server/RenderPreview.js.map" />
+        <option value="$PROJECT_DIR$/ledder/server/RenderPreview.js" />
       </list>
     </option>
   </component>
@@ -471,7 +497,8 @@
     <MESSAGE value="fix" />
     <MESSAGE value="fixes" />
     <MESSAGE value="rename Animation to Animator (conflicted with existing class)" />
-    <option name="LAST_COMMIT_MESSAGE" value="rename Animation to Animator (conflicted with existing class)" />
+    <MESSAGE value="rneame" />
+    <option name="LAST_COMMIT_MESSAGE" value="rneame" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

@@ -1,5 +1,5 @@
 //context of a websocket connection
-import {RenderLoop} from "./RenderLoop.js"
+import {RenderRealtime} from "./RenderRealtime.js"
 import {DisplayWebsocket} from "./drivers/DisplayWebsocket.js"
 import {PresetStore} from "./PresetStore.js"
 import {JSONRPCServerAndClient} from "json-rpc-2.0"
@@ -10,7 +10,7 @@ import {JSONRPCServerAndClient} from "json-rpc-2.0"
 export class WsContext {
     ws: WebSocket
     client: JSONRPCServerAndClient<WsContext, WsContext>
-    renderLoop: RenderLoop
+    renderLoop: RenderRealtime
     id: number
 
     statsInterval: any
@@ -43,7 +43,7 @@ export class WsContext {
 
 
         let display = new DisplayWebsocket(width, height, this.ws)
-        this.renderLoop = new RenderLoop(display)
+        this.renderLoop = new RenderRealtime(display)
         //todo: add delay or queue
         this.renderLoop.controlGroup._onReset(() => {
             this.request("control.reset").then(() => {

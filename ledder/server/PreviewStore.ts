@@ -1,24 +1,19 @@
 import {DisplayApng} from "./drivers/DisplayApng.js"
-import Scheduler from "../Scheduler.js"
-import ControlGroup from "../ControlGroup.js"
-import PixelBox from "../PixelBox.js"
-import AnimationManager from "./AnimationManager.js"
-import {preRender} from "./utils.js"
 import {AnimationList} from "../AnimationLists.js"
 import {presetStore} from "./PresetStore.js"
+import {RenderPreview} from "./RenderPreview.js"
 
 
 //handles creation of previews
 export class PreviewStore {
 
     private display: DisplayApng
-    public animationManager: AnimationManager
+    private renderer: RenderPreview
 
     constructor() {
 
         this.display = new DisplayApng(40, 8)
-        let box = new PixelBox(this.display)
-        this.animationManager = new AnimationManager(box, new Scheduler(), new ControlGroup('root'))
+        this.renderer=new RenderPreview(this.display)
     }
 
 
@@ -26,13 +21,10 @@ export class PreviewStore {
      * Renders preview to APNG file. AnimationManager should be prepared.
      */
     async render(animationName: string, presetName: string) {
-        this.display.clear()
-        await this.animationManager.loadAnimation(animationName)
-        await this.animationManager.loadPreset(presetName)
-        this.animationManager.run()
-        await preRender(this.display, this.animationManager)
-        this.animationManager.stop(false)
+
+        await this.renderer.render(animationName, presetName)
         await this.display.store(presetStore.previewFilename(animationName, presetName), 128)
+        this.display.clear()
     }
 
     async renderAll(animationList: AnimationList, force: boolean) {

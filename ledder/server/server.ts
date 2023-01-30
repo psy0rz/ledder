@@ -1,5 +1,5 @@
 import {RpcServer} from "./RpcServer.js"
-import {RenderLoop} from "./RenderLoop.js"
+import {RenderRealtime} from "./RenderRealtime.js"
 import ControlGroup from "../ControlGroup.js"
 import Display from "../Display.js"
 import GammaMapper from "./drivers/GammaMapper.js"
@@ -8,20 +8,21 @@ import {presetStore} from "./PresetStore.js"
 import {previewStore} from "./PreviewStore.js"
 
 
+
 const settingsControl = new ControlGroup('Global settings')
 
 const gammaMapper = new GammaMapper(settingsControl.group("Display settings"))
 
 
 //create run all the displayes
-let renderLoops: Array<RenderLoop> = []
+let renderLoops: Array<RenderRealtime> = []
 
 for (const m of config.displayList) {
     let display: Display
     display = m
     display.gammaMapper = gammaMapper
 
-    let renderLoop = new RenderLoop(display)
+    let renderLoop = new RenderRealtime(display)
     renderLoop.start()
     renderLoop.animationManager.select(config.animation, false)
     renderLoops.push(renderLoop)
@@ -94,3 +95,11 @@ rpc.addMethod("settings.updateValue", async (params, context) => {
     }
 
 })
+
+
+rpc.addMethod("static.upload", async (params, context) => {
+
+
+})
+
+

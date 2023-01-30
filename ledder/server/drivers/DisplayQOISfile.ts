@@ -1,3 +1,4 @@
+
 import dgram from "dgram"
 
 import {DisplayQOIS} from "../DisplayQOIS.js"
@@ -7,7 +8,7 @@ const qoisDataLength = 1460 - 6 //6 bytes package-frame overhead
 
 
 
-export class DisplayQOISudp extends DisplayQOIS {
+export class DisplayQOISfile extends DisplayQOIS {
 
     sockets: Array<dgram.Socket>
     ips: string
@@ -20,7 +21,8 @@ export class DisplayQOISudp extends DisplayQOIS {
     private bufferEmptyTime: number
 
     /**
-     * Matrix driver for https://github.com/psy0rz/ledstream
+     * QOIS file driver, used in for https://github.com/psy0rz/ledstream
+     * Instead of streaming via UDP like DisplayQOISudp, this one pre-renders to a static file which can be uploaded.
      * Our side will create a list of pixels and send it to ledstream. (total of width * height pixels)
      * Ledstream will send these pixels to the ledstrips, starting with the first channel and filling them all up.
      * Use offset-mapper to make sure the pixels actually end up in the right position on your actual screen. :)

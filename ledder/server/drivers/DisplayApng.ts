@@ -24,9 +24,11 @@ export class DisplayApng extends Display {
         super(width, height);
 
         this.clearFrame()
+        this.clear()
 
     }
 
+    //clear data and get ready to create a new apng
     clear()
     {
         this.images = []

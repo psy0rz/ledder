@@ -32,30 +32,61 @@ export async function createParentDir(fileName: string) {
 }
 
 
+// /*
+//  * Pre-render animation preview.
+//  * AnimationManager should be prepared, and stopped after returning.
+//  * Display-class and caller are reponsible for saving the result somewhere.
+//  */
+// export async function renderPreview(display: Display, animationManager: AnimationManager) {
+//
+//     //set default fps (animation can change this)
+//     animationManager.scheduler.setDefaultFrameTime(display.defaultFrameTimeMicros)
+//
+//     //skip first frames, just run scheduler
+//     for (let i = 0; i < animationManager.animationClass.previewSkip; i++)
+//         //NOTE: await is needed, to allow other microtasks to run!
+//         await animationManager.scheduler.step()
+//
+//     //render frames
+//     let displayTime = 0
+//     let frameTime = 0
+//     for (let i = 0; i < animationManager.animationClass.previewFrames; i++) {
+//
+//         for (let d = 0; d < animationManager.animationClass.previewDivider; d++) {
+//             //NOTE: await is needed, to allow  microtasks to run!
+//             frameTime = frameTime + await animationManager.scheduler.step()
+//         }
+//
+//         frameTime = ~~(frameTime / display.frameRoundingMicros) * display.frameRoundingMicros
+//
+//         //skip frames until frameTime is more than minimum allowed
+//         if (frameTime >= display.minFrameTimeMicros) {
+//             displayTime += frameTime
+//             frameTime = 0
+//             display.render(animationManager.box)
+//             display.frame(displayTime)
+//         }
+//     }
+//
+// }
+
 /*
- * Pre-render animation non-realtime. (e.g. a preview or static rendered animation)
+ * Pre-render static animation.
  * AnimationManager should be prepared, and stopped after returning.
- * Display-class and caller are reponsible for saving the result somewhere.
+ * Display-class and caller are responsible for saving the result somewhere.
  */
-export async function preRender(display: Display, animationManager: AnimationManager) {
+export async function renderStatic(display: Display, animationManager: AnimationManager, maxFrmaes:number) {
 
     //set default fps (animation can change this)
     animationManager.scheduler.setDefaultFrameTime(display.defaultFrameTimeMicros)
 
-    //skip first frames, just run scheduler
-    for (let i = 0; i < animationManager.animationClass.previewSkip; i++)
-        //NOTE: await is needed, to allow other microtasks to run!
-        await animationManager.scheduler.step()
-
     //render frames
     let displayTime = 0
     let frameTime = 0
-    for (let i = 0; i < animationManager.animationClass.previewFrames; i++) {
+    for (let i = 0; i < maxFrmaes; i++) {
 
-        for (let d = 0; d < animationManager.animationClass.previewDivider; d++) {
-            //NOTE: await is needed, to allow other microtasks to run!
-            frameTime = frameTime + await animationManager.scheduler.step()
-        }
+        //NOTE: await is needed, to allow  microtasks to run!
+        frameTime = frameTime + await animationManager.scheduler.step()
 
         frameTime = ~~(frameTime / display.frameRoundingMicros) * display.frameRoundingMicros
 
@@ -69,9 +100,10 @@ export async function preRender(display: Display, animationManager: AnimationMan
     }
 
 }
+
 //Run an animation, optionally loading a preset.
 //Use this to run an Animation from withint another Animation.
-//However, if you want to safely stop and cleanup an animation, it might be better to use a full fledged AnimationManager instance.
+//However, if you want to safely stop and cleanup an animation, it might be better to use a fully fledged AnimationManager instance.
 export async function animationRun(box: PixelBox, scheduler: Scheduler, controls: ControlGroup, animationName, presetName?: string) {
 
     const animationClass = await presetStore.loadAnimation(animationName)
