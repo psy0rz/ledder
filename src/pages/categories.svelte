@@ -67,6 +67,8 @@
                         <MenuDropdownItem link text="75x8" on:click={ ()=>runnerBrowser.setSize(75, 8, 8)}/>
                         <MenuDropdownItem link text="72x18" on:click={ ()=>runnerBrowser.setSize(72, 18, 8)}/>
                         <MenuDropdownItem link text="75x16" on:click={ ()=>runnerBrowser.setSize(75, 16, 8)}/>
+                        <MenuDropdownItem link text="128x16" on:click={ ()=>runnerBrowser.setSize(128, 16, 8)}/>
+                        <MenuDropdownItem link text="160x16" on:click={ ()=>runnerBrowser.setSize(160, 16, 8)}/>
                         <MenuDropdownItem divider/>
                         <MenuDropdownItem link text="Disable preview" on:click={ ()=>runnerBrowser.stopPreview()}/>
                     </MenuDropdown>

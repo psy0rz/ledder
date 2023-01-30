@@ -33,7 +33,9 @@ export class DisplayLedstream extends DisplayQOIS {
         super(mapper)
 
 
+
         this.frameRoundingMicros=1000
+        this.minFrameTimeMicros=~~(1000000/120)
 
         this.ips = ips
         this.port = port
@@ -77,7 +79,7 @@ export class DisplayLedstream extends DisplayQOIS {
 
         const frameBytes = []
 
-        const maxFramesLag=3
+        const maxFramesLag=6
         const maxTimeLag=500
 
         //buffer this many frames

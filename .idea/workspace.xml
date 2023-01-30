@@ -5,10 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7de4510b-f0e5-4402-9e95-cb9c8d6f6b3a" name="Changes" comment="fixes">
-      <change afterPath="$PROJECT_DIR$/ledder/animations/Tests/TestNoise.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ledder/animations/Lights/Lamp.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ledder/PixelList.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/PixelList.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ledder/ControlGroup.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/ControlGroup.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ledder/animations/Template.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/animations/Template.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ledder/server/drivers/DisplayLedstream.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/server/drivers/DisplayLedstream.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/categories.svelte" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/categories.svelte" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,7 +39,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "/home/psy/WebstormProjects/ledder/ledder/animations/Tests",
+    "last_opened_file_path": "/home/psy/WebstormProjects/ledder/ledder/animations/Lights",
     "node.js.detected.package.eslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
@@ -49,6 +51,7 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/ledder/animations/Lights" />
       <recent name="$PROJECT_DIR$/ledder/animations/Tests" />
       <recent name="$PROJECT_DIR$/ledder/draw" />
     </key>
@@ -93,6 +96,9 @@
       <workItem from="1673916143280" duration="12000" />
       <workItem from="1673916172794" duration="14237000" />
       <workItem from="1673976306178" duration="2021000" />
+      <workItem from="1674058772648" duration="3185000" />
+      <workItem from="1674406716978" duration="586000" />
+      <workItem from="1675023334040" duration="754000" />
     </task>
     <task id="LOCAL-00001" summary="kjh">
       <created>1673098884534</created>
@@ -440,6 +446,8 @@
         <option value="$PROJECT_DIR$/ledder/draw/DrawRectangle.js" />
         <option value="$PROJECT_DIR$/ledder/animations/Tests/TestNoise.js.map" />
         <option value="$PROJECT_DIR$/ledder/animations/Tests/TestNoise.js" />
+        <option value="$PROJECT_DIR$/ledder/animations/Lights/Lamp.js.map" />
+        <option value="$PROJECT_DIR$/ledder/animations/Lights/Lamp.js" />
       </list>
     </option>
   </component>

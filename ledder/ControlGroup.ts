@@ -113,7 +113,7 @@ export default class ControlGroup extends Control {
     /**
      * Get or create color-control with specified name
      */
-    color(name: string, r: number = 128, g: number = 128, b: number = 128, a: number = 1, restartOnChange: boolean = false): ControlColor {
+    color(name: string="Color", r: number = 128, g: number = 128, b: number = 128, a: number = 1, restartOnChange: boolean = false): ControlColor {
         if (!(name in this.meta.controls)) {
             this.add(new ControlColor(name, r, g, b, a, restartOnChange))
         }

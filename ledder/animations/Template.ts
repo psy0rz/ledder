@@ -8,9 +8,6 @@ import Animation from "../Animation.js"
 
 export default class Template extends  Animation
 {
-    static category = "Misc"
-    static title = "Template for new animations"
-    static description = "blabla"
 
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) {
 
