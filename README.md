@@ -7,6 +7,8 @@ Make cool animated pixel animations, and stream it to a led matrix display.
 
 Control in realtime via a webgui.
 
+**Documentation and code are still work in progress, come back later if you're not that adventurous. :)**
+
 
 ## Quick start
 
