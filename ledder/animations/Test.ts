@@ -12,59 +12,25 @@ import {Col} from "framework7-svelte"
 import {colorRed} from "../Colors.js"
 import {clearInterval} from "timers"
 import {FxFadeMask} from "../fx/FxFadeMask.js"
+import PixelList from "../PixelList.js"
 
 export default class Test extends Animator {
-    private i: NodeJS.Timer
 
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) {
 
-        scheduler.onCleanup(() => {
-            console.log("CLEAUP")
-            clearInterval(this.i)
+        const colorControl=controls.color('Main color')
+        const controlY=controls.value('Y coordinate', 3, box.yMin, box.yMax , 1, true)
+        const controlInterval=controls.value('Move interval', 1, 1,60)
+
+        const pixel=new Pixel(0,controlY.value, colorControl)
+        box.add(pixel)
+
+        scheduler.intervalControlled(controlInterval, ()=>
+        {
+            box.move(1,0)
+            box.wrap(box)
 
         })
-        // const fader = new FxFadeMask(scheduler, controls)
-        //
-        // while (1) {
-        //     await fader.run(box, true, 30)
-        //
-        //     await scheduler.delay(1)
-        //     console.log("hoi")
-        // }
-
-        let id=random(0,10000000)
-
-        // animation that does illegal stuff after ending it
-        this.i=setInterval(() => {
-            console.log(`IINTERVAL ${id} LOOPT NOG`)
-            try {
-                box.add(new Pixel(0, 0, colorRed))
-                // console.log("PIXEL LOOPT NOG")
-            } catch (e) {
-
-            }
-            try {
-                scheduler.interval(60, () => {
-                    console.log("SCHEDULER LOOPT NOG")
-                })
-            } catch (e) {
-            }
-            try {
-                controls.value("TEST")
-                console.log("CONTROLGROUP LOOPT NOG")
-            } catch (e) {
-
-            }
-        }, 1000)
-
-
-
 
     }
-
-    // cleanup() {
-    //     super.cleanup()
-    //     console.log("CLEAUP")
-    //     clearInterval(this.i)
-    // }
 }

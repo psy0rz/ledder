@@ -13,6 +13,8 @@ export default class Template extends  Animator
 
         const pixel=new Pixel(0,0, new Color(255,0,0))
         box.add(pixel)
+        box.xMin
+        box.yMax
 
     }
 }

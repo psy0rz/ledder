@@ -117,6 +117,12 @@ export default class PixelList extends Set<Pixel | PixelList> {
         return str
     }
 
+    //print pixeltree to console
+    print()
+    {
+        console.log(this.dump())
+    }
+
 
     //calls  callbackfn for each pixel in the pixeltree
     forEachPixel(callbackfn: (pixel: Pixel, parent: PixelList) => void) {

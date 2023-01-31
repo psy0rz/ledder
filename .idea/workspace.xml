@@ -4,18 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7de4510b-f0e5-4402-9e95-cb9c8d6f6b3a" name="Changes" comment="rneame">
-      <change afterPath="$PROJECT_DIR$/ledder/server/Render.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ledder/server/RenderPreview.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ledder/server/drivers/DisplayQOISfile.ts" afterDir="false" />
+    <list default="true" id="7de4510b-f0e5-4402-9e95-cb9c8d6f6b3a" name="Changes" comment="moved more stuff to render class">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ledder/server/PreviewStore.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/server/PreviewStore.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ledder/server/RenderLoop.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/server/RenderRealtime.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ledder/server/WsContext.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/server/WsContext.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ledder/server/drivers/DisplayApng.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/server/drivers/DisplayApng.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ledder/server/drivers/DisplayQOISudp.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/server/drivers/DisplayQOISudp.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ledder/server/server.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/server/server.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ledder/server/utils.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/server/utils.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ledder/PixelList.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/PixelList.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ledder/animations/Template.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/animations/Template.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ledder/animations/Test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/animations/Test.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -105,7 +99,7 @@
       <workItem from="1674058772648" duration="3185000" />
       <workItem from="1674406716978" duration="586000" />
       <workItem from="1675023334040" duration="754000" />
-      <workItem from="1675106240697" duration="6173000" />
+      <workItem from="1675106240697" duration="11979000" />
     </task>
     <task id="LOCAL-00001" summary="kjh">
       <created>1673098884534</created>
@@ -212,7 +206,14 @@
       <option name="project" value="LOCAL" />
       <updated>1675107622603</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="moved more stuff to render class">
+      <created>1675112544070</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1675112544070</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -498,7 +499,8 @@
     <MESSAGE value="fixes" />
     <MESSAGE value="rename Animation to Animator (conflicted with existing class)" />
     <MESSAGE value="rneame" />
-    <option name="LAST_COMMIT_MESSAGE" value="rneame" />
+    <MESSAGE value="moved more stuff to render class" />
+    <option name="LAST_COMMIT_MESSAGE" value="moved more stuff to render class" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
