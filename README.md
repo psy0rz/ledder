@@ -206,3 +206,27 @@ However, another goal of ledder is to make reusable components: Classes to draw 
 
 ### Draw classes
 
+In the draw-folder you'll find classes to "draw".
+
+These are just PixelLists that fill themselfs with pixels.
+
+E.g. to draw a rectangle:
+
+```typescript
+const rect = new DrawRectangle(0,0,3,3, color)
+box.add(rect)
+
+```
+
+There are a bunch of really cool ones like DrawAsciiArt and DrawText. Look at other Animators how to use them. (The Logos for example)
+
+Its also very easy to create new Draw-classes.
+
+### FX classes
+
+FX classes operate on existing PixelList() and Color() objects.
+
+They can do some really awesome stuff, look at what the Marquee Animator can do for example.
+
+The ledder-logo you see above is just a DrawText() combined with FxColorPattern(). 
+I've just clicked around in the controls of the Marquee animator and took a screenshot. :)
