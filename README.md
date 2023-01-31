@@ -83,6 +83,8 @@ pixeltree:
   (3, 3) (r255, g0, b0, a1)
 ```
 
+Its setup this way so that we can add/remove sets of huge pixelLists and still have high performance. (Since you're only adding/removing references.)
+
 ## Animators
 
 (Note: Before you start its usefull to have a good editor. I prefer Webstorm, but vscode works as well.) 
@@ -105,6 +107,11 @@ export default class Test extends Animator {
 
 }
 ```
+
+It has THE 3 main parameters you will be working with:
+* The box
+* The scheduler
+* The controls
 
 ### The box
 
