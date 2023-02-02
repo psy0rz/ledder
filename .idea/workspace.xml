@@ -5,7 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7de4510b-f0e5-4402-9e95-cb9c8d6f6b3a" name="Changes" comment="docs">
+      <change afterPath="$PROJECT_DIR$/ledder/server/RenderStatic.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ledder/server/drivers/DisplayQOISfile.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/server/drivers/DisplayQOISfile.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ledder/server/server.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/server/server.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ledder/server/utils.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/server/utils.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -34,18 +38,19 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "/home/psy/WebstormProjects/ledder/ledder/server/drivers",
+    "last_opened_file_path": "/home/psy/WebstormProjects/ledder/ledder/server",
     "node.js.detected.package.eslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "settings.editor.selected.configurable": "reference.settings.ide.settings.new.ui",
     "ts.external.directory.path": "/home/psy/WebstormProjects/ledder/node_modules/typescript/lib",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/ledder/server" />
       <recent name="$PROJECT_DIR$/ledder/server/drivers" />
       <recent name="$PROJECT_DIR$/ledder/animations/Lights" />
       <recent name="$PROJECT_DIR$/ledder/animations/Tests" />
@@ -96,6 +101,10 @@
       <workItem from="1674406716978" duration="586000" />
       <workItem from="1675023334040" duration="754000" />
       <workItem from="1675106240697" duration="13751000" />
+      <workItem from="1675168867812" duration="1372000" />
+      <workItem from="1675367377854" duration="535000" />
+      <workItem from="1675368079701" duration="20000" />
+      <workItem from="1675368118078" duration="6969000" />
     </task>
     <task id="LOCAL-00001" summary="kjh">
       <created>1673098884534</created>
@@ -493,6 +502,8 @@
         <option value="$PROJECT_DIR$/ledder/server/Render.js.map" />
         <option value="$PROJECT_DIR$/ledder/server/RenderPreview.js.map" />
         <option value="$PROJECT_DIR$/ledder/server/RenderPreview.js" />
+        <option value="$PROJECT_DIR$/ledder/server/RenderStatic.js.map" />
+        <option value="$PROJECT_DIR$/ledder/server/RenderStatic.js" />
       </list>
     </option>
   </component>

@@ -75,31 +75,31 @@ export async function createParentDir(fileName: string) {
  * AnimationManager should be prepared, and stopped after returning.
  * Display-class and caller are responsible for saving the result somewhere.
  */
-export async function renderStatic(display: Display, animationManager: AnimationManager, maxFrmaes:number) {
-
-    //set default fps (animation can change this)
-    animationManager.scheduler.setDefaultFrameTime(display.defaultFrameTimeMicros)
-
-    //render frames
-    let displayTime = 0
-    let frameTime = 0
-    for (let i = 0; i < maxFrmaes; i++) {
-
-        //NOTE: await is needed, to allow  microtasks to run!
-        frameTime = frameTime + await animationManager.scheduler.step()
-
-        frameTime = ~~(frameTime / display.frameRoundingMicros) * display.frameRoundingMicros
-
-        //skip frames until frameTime is more than minimum allowed
-        if (frameTime >= display.minFrameTimeMicros) {
-            displayTime += frameTime
-            frameTime = 0
-            display.render(animationManager.box)
-            display.frame(displayTime)
-        }
-    }
-
-}
+// export async function renderStatic(display: Display, animationManager: AnimationManager, maxFrmaes:number) {
+//
+//     //set default fps (animation can change this)
+//     animationManager.scheduler.setDefaultFrameTime(display.defaultFrameTimeMicros)
+//
+//     //render frames
+//     let displayTime = 0
+//     let frameTime = 0
+//     for (let i = 0; i < maxFrmaes; i++) {
+//
+//         //NOTE: await is needed, to allow  microtasks to run!
+//         frameTime = frameTime + await animationManager.scheduler.step()
+//
+//         frameTime = ~~(frameTime / display.frameRoundingMicros) * display.frameRoundingMicros
+//
+//         //skip frames until frameTime is more than minimum allowed
+//         if (frameTime >= display.minFrameTimeMicros) {
+//             displayTime += frameTime
+//             frameTime = 0
+//             display.render(animationManager.box)
+//             display.frame(displayTime)
+//         }
+//     }
+//
+// }
 
 //Run an animation, optionally loading a preset.
 //Use this to run an Animation from withint another Animation.
