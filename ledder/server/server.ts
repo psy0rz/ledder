@@ -17,15 +17,15 @@ const settingsControl = new ControlGroup('Global settings')
 const gammaMapper = new GammaMapper(settingsControl.group("Display settings"))
 
 
-const m=new OffsetMapper(75,16)
-
-const d=new DisplayQOISfile(m)
-d.gammaMapper=gammaMapper
-const s=new RenderStatic(d)
-d.openFile('test.qois')
-// await s.render('Text/Marquee', 'HSD',60*60)
-await s.render('Logos/HSD', 'default',60*60*3)
-d.closeFile()
+// const m=new OffsetMapper(75,16)
+//
+// const d=new DisplayQOISfile(m)
+// d.gammaMapper=gammaMapper
+// const s=new RenderStatic(d)
+// d.openFile('test.qois')
+// // await s.render('Text/Marquee', 'HSD',60*60)
+// await s.render('Logos/HSD', 'default',60*60*3)
+// d.closeFile()
 
 
 //create run all the displayes

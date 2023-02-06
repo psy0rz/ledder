@@ -52,6 +52,7 @@ export default class Cycle extends Animator {
         while(1) {
             await show("Logos/HSD", "default", 0)
 
+
             await show("Text/BTC", "default", 8000)
             // scheduler.clear()
             // await new FxFlameout(scheduler, fxControls).run(box)

@@ -5,11 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7de4510b-f0e5-4402-9e95-cb9c8d6f6b3a" name="Changes" comment="docs">
-      <change afterPath="$PROJECT_DIR$/ledder/server/RenderStatic.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ledder/server/drivers/DisplayQOISfile.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/server/drivers/DisplayQOISfile.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ledder/server/AnimationManager.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/server/AnimationManager.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ledder/server/server.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/server/server.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ledder/server/utils.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/server/utils.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -33,21 +31,21 @@
     <option name="showExcludedFiles" value="false" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "/home/psy/WebstormProjects/ledder/ledder/server",
-    "node.js.detected.package.eslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "reference.settings.ide.settings.new.ui",
-    "ts.external.directory.path": "/home/psy/WebstormProjects/ledder/node_modules/typescript/lib",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/psy/WebstormProjects/ledder/ledder/server&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.ide.settings.new.ui&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;/home/psy/WebstormProjects/ledder/node_modules/typescript/lib&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/ledder/server" />
@@ -105,6 +103,7 @@
       <workItem from="1675367377854" duration="535000" />
       <workItem from="1675368079701" duration="20000" />
       <workItem from="1675368118078" duration="6969000" />
+      <workItem from="1675686422107" duration="2966000" />
     </task>
     <task id="LOCAL-00001" summary="kjh">
       <created>1673098884534</created>
@@ -246,6 +245,13 @@
     <option name="version" value="3" />
     <option name="exactExcludedFiles">
       <list>
+        <option value="$PROJECT_DIR$/ledder/animations/Lights/Lamp.js" />
+        <option value="$PROJECT_DIR$/ledder/animations/Lights/Lamp.js.map" />
+        <option value="$PROJECT_DIR$/ledder/server/RenderStatic.js" />
+        <option value="$PROJECT_DIR$/ledder/server/RenderRealtime.js.map" />
+        <option value="$PROJECT_DIR$/ledder/server/Render.js.map" />
+        <option value="$PROJECT_DIR$/ledder/server/Render.js" />
+        <option value="$PROJECT_DIR$/ledder/server/RenderRealtime.js" />
         <option value="$PROJECT_DIR$/ledder/animations/Text/Marquee.js" />
         <option value="$PROJECT_DIR$/ledder/animations/Text/BTC.js" />
         <option value="$PROJECT_DIR$/ledder/animations/Text/BTC.js.map" />
@@ -327,17 +333,20 @@
         <option value="$PROJECT_DIR$/ledder/ControlInput.js" />
         <option value="$PROJECT_DIR$/ledder/PixelBox.js.map" />
         <option value="$PROJECT_DIR$/ledder/AnimationLists.js.map" />
+        <option value="$PROJECT_DIR$/ledder/server/RenderStatic.js.map" />
         <option value="$PROJECT_DIR$/ledder/ControlSwitch.js" />
         <option value="$PROJECT_DIR$/ledder/PixelList.js" />
         <option value="$PROJECT_DIR$/ledder/ValueInterface.js.map" />
         <option value="$PROJECT_DIR$/ledder/Colors.js.map" />
         <option value="$PROJECT_DIR$/ledder/ControlInput.js.map" />
+        <option value="$PROJECT_DIR$/ledder/server/drivers/DisplayQOISfile.js.map" />
         <option value="$PROJECT_DIR$/ledder/message.js" />
         <option value="$PROJECT_DIR$/ledder/ControlColor.js.map" />
         <option value="$PROJECT_DIR$/ledder/fonts.js" />
         <option value="$PROJECT_DIR$/ledder/BoxInterface.js.map" />
         <option value="$PROJECT_DIR$/ledder/utils.js.map" />
         <option value="$PROJECT_DIR$/ledder/Draw.js.map" />
+        <option value="$PROJECT_DIR$/ledder/server/drivers/DisplayQOISfile.js" />
         <option value="$PROJECT_DIR$/ledder/ControlSwitch.js.map" />
         <option value="$PROJECT_DIR$/ledder/PixelBox.js" />
         <option value="$PROJECT_DIR$/ledder/PresetValues.js.map" />
@@ -365,6 +374,7 @@
         <option value="$PROJECT_DIR$/ledder/animations/MQTTcounter.js" />
         <option value="$PROJECT_DIR$/ledder/animations/Cycle.js.map" />
         <option value="$PROJECT_DIR$/ledder/animations/Music.js.map" />
+        <option value="$PROJECT_DIR$/ledder/server/drivers/DisplayQOISudp.js" />
         <option value="$PROJECT_DIR$/ledder/animations/Test.js.map" />
         <option value="$PROJECT_DIR$/ledder/animations/Countdown.js" />
         <option value="$PROJECT_DIR$/ledder/animations/MQTT.js.map" />
@@ -376,6 +386,7 @@
         <option value="$PROJECT_DIR$/ledder/animations/Rain.js.map" />
         <option value="$PROJECT_DIR$/ledder/animations/Test.js" />
         <option value="$PROJECT_DIR$/ledder/animations/SyncTest.js" />
+        <option value="$PROJECT_DIR$/ledder/server/drivers/DisplayQOISudp.js.map" />
         <option value="$PROJECT_DIR$/ledder/animations/MQTT.js" />
         <option value="$PROJECT_DIR$/ledder/animations/MQTTcounter.js.map" />
         <option value="$PROJECT_DIR$/ledder/animations/Music.js" />
@@ -387,6 +398,7 @@
         <option value="$PROJECT_DIR$/ledder/animations/Memes/Cyber.js.map" />
         <option value="$PROJECT_DIR$/ledder/animations/Memes/ItsFine.js" />
         <option value="$PROJECT_DIR$/ledder/animations/Memes/Nyancat.js" />
+        <option value="$PROJECT_DIR$/ledder/Animator.js" />
         <option value="$PROJECT_DIR$/ledder/animations/Memes/ItsFine.js.map" />
         <option value="$PROJECT_DIR$/ledder/fx/FxRotate.js" />
         <option value="$PROJECT_DIR$/ledder/fx/FxFlames.js.map" />
@@ -461,6 +473,7 @@
         <option value="$PROJECT_DIR$/ledder/animations/Logos/MaakPlek.js" />
         <option value="$PROJECT_DIR$/ledder/animations/Logos/HSD.js" />
         <option value="$PROJECT_DIR$/ledder/animations/Logos/Haxogreen.js.map" />
+        <option value="$PROJECT_DIR$/ledder/Animator.js.map" />
         <option value="$PROJECT_DIR$/ledder/animations/Logos/Haxogreen.js" />
         <option value="$PROJECT_DIR$/ledder/animations/Logos/Syn2cat.js" />
         <option value="$PROJECT_DIR$/ledder/animations/Logos/HSD.js.map" />
@@ -482,28 +495,14 @@
         <option value="$PROJECT_DIR$/ledder/server/drivers/DisplayRPI.js" />
         <option value="$PROJECT_DIR$/ledder/server/drivers/DisplayMulti.js.map" />
         <option value="$PROJECT_DIR$/ledder/server/drivers/OffsetMapper.js" />
-        <option value="$PROJECT_DIR$/ledder/animations/Tests/TestGrid.js.map" />
-        <option value="$PROJECT_DIR$/ledder/animations/Tests/TestGrid.js" />
         <option value="$PROJECT_DIR$/ledder/draw/DrawRectangle.js.map" />
         <option value="$PROJECT_DIR$/ledder/draw/DrawRectangle.js" />
+        <option value="$PROJECT_DIR$/ledder/animations/Tests/TestGrid.js.map" />
+        <option value="$PROJECT_DIR$/ledder/animations/Tests/TestGrid.js" />
         <option value="$PROJECT_DIR$/ledder/animations/Tests/TestNoise.js.map" />
         <option value="$PROJECT_DIR$/ledder/animations/Tests/TestNoise.js" />
-        <option value="$PROJECT_DIR$/ledder/animations/Lights/Lamp.js.map" />
-        <option value="$PROJECT_DIR$/ledder/animations/Lights/Lamp.js" />
-        <option value="$PROJECT_DIR$/ledder/Animator.js.map" />
-        <option value="$PROJECT_DIR$/ledder/Animator.js" />
-        <option value="$PROJECT_DIR$/ledder/server/drivers/DisplayQOISudp.js.map" />
-        <option value="$PROJECT_DIR$/ledder/server/drivers/DisplayQOISudp.js" />
-        <option value="$PROJECT_DIR$/ledder/server/drivers/DisplayQOISfile.js" />
-        <option value="$PROJECT_DIR$/ledder/server/drivers/DisplayQOISfile.js.map" />
-        <option value="$PROJECT_DIR$/ledder/server/RenderRealtime.js.map" />
-        <option value="$PROJECT_DIR$/ledder/server/RenderRealtime.js" />
-        <option value="$PROJECT_DIR$/ledder/server/Render.js" />
-        <option value="$PROJECT_DIR$/ledder/server/Render.js.map" />
-        <option value="$PROJECT_DIR$/ledder/server/RenderPreview.js.map" />
         <option value="$PROJECT_DIR$/ledder/server/RenderPreview.js" />
-        <option value="$PROJECT_DIR$/ledder/server/RenderStatic.js.map" />
-        <option value="$PROJECT_DIR$/ledder/server/RenderStatic.js" />
+        <option value="$PROJECT_DIR$/ledder/server/RenderPreview.js.map" />
       </list>
     </option>
   </component>
