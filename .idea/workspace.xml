@@ -4,10 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7de4510b-f0e5-4402-9e95-cb9c8d6f6b3a" name="Changes" comment="docs">
+    <list default="true" id="7de4510b-f0e5-4402-9e95-cb9c8d6f6b3a" name="Changes" comment="added image support">
+      <change afterPath="$PROJECT_DIR$/ledder/draw/DrawImage.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ledder/server/AnimationManager.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/server/AnimationManager.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ledder/server/server.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/server/server.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ledder/Draw.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/Draw.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ledder/animations/Test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/animations/Test.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Display.svelte" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Display.svelte" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/categories.svelte" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/categories.svelte" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,23 +41,24 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/psy/WebstormProjects/ledder/ledder/server&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/psy/WebstormProjects/ledder/ledder/draw&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.ide.settings.new.ui&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;editor.preferences.import&quot;,
     &quot;ts.external.directory.path&quot;: &quot;/home/psy/WebstormProjects/ledder/node_modules/typescript/lib&quot;,
+    &quot;typescript.add.unambiguous.imports.on.the.fly&quot;: &quot;true&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/ledder/draw" />
       <recent name="$PROJECT_DIR$/ledder/server" />
       <recent name="$PROJECT_DIR$/ledder/server/drivers" />
       <recent name="$PROJECT_DIR$/ledder/animations/Lights" />
       <recent name="$PROJECT_DIR$/ledder/animations/Tests" />
-      <recent name="$PROJECT_DIR$/ledder/draw" />
     </key>
   </component>
   <component name="RunManager" selected="Node.js.server.js">
@@ -103,7 +109,8 @@
       <workItem from="1675367377854" duration="535000" />
       <workItem from="1675368079701" duration="20000" />
       <workItem from="1675368118078" duration="6969000" />
-      <workItem from="1675686422107" duration="2966000" />
+      <workItem from="1675686422107" duration="8075000" />
+      <workItem from="1675695028599" duration="10184000" />
     </task>
     <task id="LOCAL-00001" summary="kjh">
       <created>1673098884534</created>
@@ -238,7 +245,14 @@
       <option name="project" value="LOCAL" />
       <updated>1675158310110</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="fixed autoreload">
+      <created>1675689614604</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1675689614604</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -503,6 +517,8 @@
         <option value="$PROJECT_DIR$/ledder/animations/Tests/TestNoise.js" />
         <option value="$PROJECT_DIR$/ledder/server/RenderPreview.js" />
         <option value="$PROJECT_DIR$/ledder/server/RenderPreview.js.map" />
+        <option value="$PROJECT_DIR$/ledder/draw/DrawImage.js" />
+        <option value="$PROJECT_DIR$/ledder/draw/DrawImage.js.map" />
       </list>
     </option>
   </component>
@@ -528,7 +544,9 @@
     <MESSAGE value="rneame" />
     <MESSAGE value="moved more stuff to render class" />
     <MESSAGE value="docs" />
-    <option name="LAST_COMMIT_MESSAGE" value="docs" />
+    <MESSAGE value="fixed autoreload" />
+    <MESSAGE value="added image support" />
+    <option name="LAST_COMMIT_MESSAGE" value="added image support" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

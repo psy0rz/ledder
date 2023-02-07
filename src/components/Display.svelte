@@ -5,8 +5,8 @@
     import { f7ready } from "framework7-svelte";
 
     export let zoom = 8;
-    let width = 75;
-    let height = 16;
+    let width = 80;
+    let height = 32;
 
     onMount(async () => {
         f7ready(async () => {
