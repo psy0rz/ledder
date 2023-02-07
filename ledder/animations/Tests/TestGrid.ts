@@ -50,7 +50,8 @@ export default class TestGrid extends Animator {
                 colorNr = (colorNr + 1) % colors.length
 
 
-                const txt=new DrawText(0,0, fonts.C64, `${x},${y}`, new Color(128,128,128))
+                // const txt=new DrawText(0,0, fonts.C64, `${x},${y}`, new Color(128,128,128))
+                const txt=new DrawText(0,0, fonts.C64, `${x}`, new Color(128,128,128))
                 const centerRect:BoxInterface={
                     xMin: x * controlDisplayWidth.value,
                     yMin: y * controlDisplayHeight.value,
