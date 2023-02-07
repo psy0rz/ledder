@@ -6,6 +6,7 @@ import DrawImage from "../draw/DrawImage.js"
 import sharp from "sharp"
 import FxColorCycle from "../fx/FxColorCycle.js"
 import FxColorPattern from "../fx/FxColorPattern.js"
+import drawImage from "../draw/DrawImage.js"
 
 
 export default class Test extends Animator {
@@ -21,7 +22,7 @@ export default class Test extends Animator {
             // .resize({width: 80, height:32, fit:'inside', kernel: "lanczos3" })
 
 
-        box.add(await new DrawImage().addImage(0,0,image))
+        box.add(await drawImage(0,0,image))
 
         // const cycle=new FxColorPattern(scheduler, controls)
         // cycle.run(box)

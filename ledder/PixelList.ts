@@ -1,7 +1,7 @@
-import Pixel from "./Pixel.js";
-import BoxInterface from "./BoxInterface.js";
-import {random} from "./utils.js";
-import ColorInterface from "./ColorInterface.js";
+import Pixel from "./Pixel.js"
+import BoxInterface from "./BoxInterface.js"
+import {random} from "./utils.js"
+import ColorInterface from "./ColorInterface.js"
 
 /**
  * A pixeltree. A PixelSet is just a simple Set() of Pixels, but can also contain other PixelSets.
@@ -11,8 +11,6 @@ import ColorInterface from "./ColorInterface.js";
  * A single Pixel object can be referenced by multiple pixel containers.
  */
 export default class PixelList extends Set<Pixel | PixelList> {
-
-
 
 
     /* Creates a traditional x/y raster, with seperate pixels that each get a copy of the color object.
@@ -28,7 +26,7 @@ export default class PixelList extends Set<Pixel | PixelList> {
            YX = false,
            xFlip = false,
            yFlip = false,
-           copyColor = true, data?:any): Array<Array<Pixel>> {
+           copyColor = true, data?: any): Array<Array<Pixel>> {
 
         //(probably more complicated than it needs to be?)
 
@@ -87,7 +85,7 @@ export default class PixelList extends Set<Pixel | PixelList> {
                     y = height - y
 
                 const p = new Pixel(x, y, c)
-                p.data=data
+                p.data = data
                 ret[a][b] = p
                 this.add(p)
             }
@@ -95,6 +93,22 @@ export default class PixelList extends Set<Pixel | PixelList> {
         return (ret)
     }
 
+    //Returns an x/y array with all pixels in the list.
+    //Coordinates that do not have a corresponding pixel are undefined.
+    //Coordinates that are occupied more than once contain only the latest match.
+    index()
+    {
+        let ret: Array<Array<Pixel>>
+        ret = []
+
+        this.forEachPixel( (p)=>{
+            if (ret[p.x]===undefined)
+                ret[p.x]=[]
+            ret[p.x][p.y]=p
+        })
+
+        return ret
+    }
 
     //dump pixeltree in string format, for debugging
     dump(indent = "") {
@@ -118,8 +132,7 @@ export default class PixelList extends Set<Pixel | PixelList> {
     }
 
     //print pixeltree to console
-    print()
-    {
+    print() {
         console.log(this.dump())
     }
 
@@ -172,27 +185,23 @@ export default class PixelList extends Set<Pixel | PixelList> {
     }
 
     //flatten all sub-pixelsets in this container, so we end up with a plain list of pixels.
-    flatten()
-    {
-        let pixels=new PixelList()
+    flatten() {
+        let pixels = new PixelList()
 
-        this.forEachPixel( (p)=>
-        {
+        this.forEachPixel((p) => {
             pixels.add(p)
         })
         this.clear()
 
-        pixels.forEachPixel( (p)=>
-        {
+        pixels.forEachPixel((p) => {
             this.add(p)
         })
-
 
 
     }
 
     //relatively move all pixels in this tree by this amount
-    move(x: number, y: number, round=false) {
+    move(x: number, y: number, round = false) {
         for (const p of this)
             p.move(x, y, round)
     }
@@ -247,13 +256,12 @@ export default class PixelList extends Set<Pixel | PixelList> {
         )
 
         //always returns a valid thing
-        if (ret===undefined)
-        {
-            ret={
-                        xMin: 0,
-                        yMin: 0,
-                        xMax: 0,
-                        yMax: 0
+        if (ret === undefined) {
+            ret = {
+                xMin: 0,
+                yMin: 0,
+                xMax: 0,
+                yMax: 0
             }
         }
         return (ret)
@@ -308,24 +316,75 @@ export default class PixelList extends Set<Pixel | PixelList> {
     }
 
     //remove pixels that are outside bounding box
-    crop(bbox: BoxInterface)
-    {
+    crop(bbox: BoxInterface) {
         this.forEachPixel((p, parent) => {
             if (p.isOutside(bbox))
                 parent.delete(p)
         })
     }
 
-    //flip pixel positions around X axis
-    // flipX(bbox: BboxInterface)
-    // {
+    //remove all pixels that have this color and return them as pixel list. (ignores alpha)
+    filterColor(color: ColorInterface, tolerance = 0) {
+        return (this.filterRGB(color.r, color.g, color.b))
+
+    }
+
+    //remove all pixels that have this color and return them as pixel list. (ignores alpha)
+    filterRGB(r: number, g:number ,b:number, tolerance = 0) {
+        const ret = new PixelList()
+
+        this.forEachPixel((p, parent) => {
+            if (Math.abs(r - p.color.r) <= tolerance &&
+                Math.abs(g - p.color.g) <= tolerance &&
+                Math.abs(b - p.color.b) <= tolerance
+            ) {
+                parent.delete(p)
+                ret.add(p)
+            }
+        })
+
+        return ret
+
+    }
 
 
-    //     this.forEachPixel((p) => {
+    //Finds all neighbouring pixels (and their neighbours) and returns it as a pixel list.
+    //Will remove the pixels from this list.
+    filterCluster(pixel:Pixel)
+    {
+        const index=this.index()
+        const ret=new PixelList()
+        const neighbours=new PixelList()
 
-    //     })
+        //add inital pixel to nieghbourlist, but not to index
+        neighbours.add(pixel)
 
-    // }
+        //dont you love how flexible Sets() are? :) You can delete/add stuff while you traverse them.
+        neighbours.forEachPixel( (p)=>
+        {
+            //this neighbour is done:
+            neighbours.delete(p)
+            this.delete(p)
+            ret.add(p)
+
+            for (let x=p.x-1; x<=p.x+1; x++)
+            {
+                for (let y=p.y-1; y<=p.y+1; y++)
+                {
+                    if (index[x]!==undefined && index[x][y]!==undefined)
+                    {
+                        //found new neighbour, add it to list to be checked
+                        neighbours.add(index[x][y])
+                        delete index[x][y]
+                    }
+                }
+            }
+        })
+
+        return ret
+    }
+
+
 
 }
 
