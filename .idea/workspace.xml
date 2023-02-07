@@ -4,12 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7de4510b-f0e5-4402-9e95-cb9c8d6f6b3a" name="Changes" comment="hackerhotel">
-      <change afterPath="$PROJECT_DIR$/ledder/animations/Logos/Hackerhotel.ts" afterDir="false" />
+    <list default="true" id="7de4510b-f0e5-4402-9e95-cb9c8d6f6b3a" name="Changes" comment="hackerhotel wip">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ledder/PixelList.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/PixelList.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ledder/animations/Test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/animations/Test.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ledder/draw/DrawImage.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/draw/DrawImage.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ledder/Color.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/Color.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ledder/animations/Logos/Hackerhotel.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/animations/Logos/Hackerhotel.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -108,7 +106,7 @@
       <workItem from="1675368118078" duration="6969000" />
       <workItem from="1675686422107" duration="8075000" />
       <workItem from="1675695028599" duration="10184000" />
-      <workItem from="1675803316615" duration="7519000" />
+      <workItem from="1675803316615" duration="8911000" />
     </task>
     <task id="LOCAL-00001" summary="kjh">
       <created>1673098884534</created>
@@ -257,7 +255,14 @@
       <option name="project" value="LOCAL" />
       <updated>1675803712452</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="hackerhotel wip">
+      <created>1675811013968</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1675811013968</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -554,7 +559,8 @@
     <MESSAGE value="fixed autoreload" />
     <MESSAGE value="added image support" />
     <MESSAGE value="hackerhotel" />
-    <option name="LAST_COMMIT_MESSAGE" value="hackerhotel" />
+    <MESSAGE value="hackerhotel wip" />
+    <option name="LAST_COMMIT_MESSAGE" value="hackerhotel wip" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
