@@ -5,44 +5,55 @@ import Scheduler from "../../Scheduler.js"
 import ControlGroup from "../../ControlGroup.js"
 import Animator from "../../Animator.js"
 import PixelList from "../../PixelList.js"
-import FxColorPattern from "../../fx/FxColorPattern.js"
 import Color from "../../Color.js"
-
+import {random} from "../../utils.js"
+import FxTrace from "../../fx/FxTrace.js"
 
 
 export default class Hackerhotel extends Animator {
 
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) {
-        // const {data, info} = await sharp('/home/psy/Downloads/hackerhotel1.png').trim().resize({width: 75, height:16}).raw().toBuffer({resolveWithObject: true})
-        // const {data, info} = await sharp('/home/psy/Downloads/pixil-frame-0.png').trim().resize({width: 75, height:16, fit:'fill'}).raw().toBuffer({resolveWithObject: true})
-        // const image = await sharp('/home/psy/Downloads/hackerhotel1.png')
+
+        //load image and determine colors
         const image = await sharp('images/hackerhotel.png')
         const letterColor=new Color(255, 216, 0)
         const traceStartColor=new Color(128,128,128)
 
         const logo = await drawImage(0, 0, image)
-        //letter color:
+
+        //get letters:
         const letters = logo.filterColor(letterColor)
-
-        const pattern = new FxColorPattern(scheduler, controls, 240, 10)
-
-        let first = true
-
-        //find start of each trace and filter it out
-        logo.forEachPixel((p) => {
-            if (traceStartColor.equal(p.color)) {
-                const trace = logo.filterCluster(p)
-                box.add(trace)
-                pattern.run(trace)
-            }
-
-        })
         box.add(letters)
 
 
 
-        // const cycle=new FxColorPattern(scheduler, controls)
-        // cycle.run(box)
+        //find start of each trace and filter it out
+        const traces=new PixelList()
+        box.add(traces)
+
+        logo.forEachPixel((p) => {
+            if (traceStartColor.equal(p.color)) {
+                const trace = logo.filterCluster(p)
+                traces.add(trace)
+            }
+        })
+
+        const traceFx=new FxTrace(scheduler, controls)
+
+        traceFx.run(letters, box)
+
+        while(1) {
+            await scheduler.delay(random(0, 30))
+            const trace=traces.random()
+            if (trace instanceof PixelList)
+            {
+                traceFx.run(trace, box)
+
+
+
+            }
+
+        }
 
 
     }

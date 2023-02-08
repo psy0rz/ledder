@@ -96,15 +96,14 @@ export default class PixelList extends Set<Pixel | PixelList> {
     //Returns an x/y array with all pixels in the list.
     //Coordinates that do not have a corresponding pixel are undefined.
     //Coordinates that are occupied more than once contain only the latest match.
-    index()
-    {
+    index() {
         let ret: Array<Array<Pixel>>
         ret = []
 
-        this.forEachPixel( (p)=>{
-            if (ret[p.x]===undefined)
-                ret[p.x]=[]
-            ret[p.x][p.y]=p
+        this.forEachPixel((p) => {
+            if (ret[p.x] === undefined)
+                ret[p.x] = []
+            ret[p.x][p.y] = p
         })
 
         return ret
@@ -148,7 +147,7 @@ export default class PixelList extends Set<Pixel | PixelList> {
         }
     }
 
-    //get a "random" pixel from the tree.
+    //get a "random" pixel from the whole tree.
     //note: because it chooses random containers as well, the pixel distribution might not be totally random
     //Use flatten() to fix this.
     //NOTE: it also can return undefined if it ends up at an empty tree!
@@ -171,10 +170,28 @@ export default class PixelList extends Set<Pixel | PixelList> {
 
     }
 
+    //chooses a random item from the pixel list (non recursive)
+    //Can be either a Pixel, PixelList or undefined if its empty
+    random(): Pixel | PixelList | undefined {
+
+        if (this.size == 0)
+            return undefined
+
+        let r = random(0, this.size - 1)
+        const i = this.values()
+        let p
+        while (r >= 0) {
+            p = i.next()
+            r--
+        }
+
+        return p.value
+    }
+
     //Returns a deep copy of the pixeltree.
     //Use copyColor=true to also create copies of the color objects in each pixel
     //NOTE: you should only use copy() if needed, in all other cases just use references
-    copy(copyColor = false):PixelList {
+    copy(copyColor = false): PixelList {
         let c = new PixelList()
         for (const p of this) {
             //NOTE: both Pixel and PixelContainer have the .copy() function, so no if-statement needed here
@@ -185,7 +202,7 @@ export default class PixelList extends Set<Pixel | PixelList> {
     }
 
     //flatten all sub-pixelsets in this list, so we end up with a plain list of pixels.
-    flatten():PixelList {
+    flatten(): PixelList {
         let pixels = new PixelList()
 
         this.forEachPixel((p) => {
@@ -203,12 +220,11 @@ export default class PixelList extends Set<Pixel | PixelList> {
     }
 
     //removes all empty pixel trees recursively
-    prune():PixelList
-    {
+    prune(): PixelList {
         // this.recurseForEachPixel(callbackfn, this)
         for (const p of this) {
             if (p instanceof PixelList) {
-                if (p.size==0)
+                if (p.size == 0)
                     this.delete(p)
                 else
                     p.prune()
@@ -217,9 +233,6 @@ export default class PixelList extends Set<Pixel | PixelList> {
 
         return this
     }
-
-
-
 
 
     //relatively move all pixels in this tree by this amount
@@ -352,7 +365,7 @@ export default class PixelList extends Set<Pixel | PixelList> {
     }
 
     //remove all pixels that have this color and return them as pixel list. (ignores alpha)
-    filterRGB(r: number, g:number ,b:number, tolerance = 0) {
+    filterRGB(r: number, g: number, b: number, tolerance = 0) {
         const ret = new PixelList()
 
         this.forEachPixel((p, parent) => {
@@ -372,29 +385,24 @@ export default class PixelList extends Set<Pixel | PixelList> {
 
     //Finds all neighbouring pixels (and their neighbours) and returns it as a pixel list.
     //Will remove the pixels from this list.
-    filterCluster(pixel:Pixel)
-    {
-        const index=this.index()
-        const ret=new PixelList()
-        const neighbours=new PixelList()
+    filterCluster(pixel: Pixel) {
+        const index = this.index()
+        const ret = new PixelList()
+        const neighbours = new PixelList()
 
         //add inital pixel to nieghbourlist, but not to index
         neighbours.add(pixel)
 
         //dont you love how flexible Sets() are? :) You can delete/add stuff while you traverse them.
-        neighbours.forEachPixel( (p)=>
-        {
+        neighbours.forEachPixel((p) => {
             //this neighbour is done:
             neighbours.delete(p)
             this.delete(p)
             ret.add(p)
 
-            for (let x=p.x-1; x<=p.x+1; x++)
-            {
-                for (let y=p.y-1; y<=p.y+1; y++)
-                {
-                    if (index[x]!==undefined && index[x][y]!==undefined)
-                    {
+            for (let x = p.x - 1; x <= p.x + 1; x++) {
+                for (let y = p.y - 1; y <= p.y + 1; y++) {
+                    if (index[x] !== undefined && index[x][y] !== undefined) {
                         //found new neighbour, add it to list to be checked
                         neighbours.add(index[x][y])
                         delete index[x][y]
@@ -405,7 +413,6 @@ export default class PixelList extends Set<Pixel | PixelList> {
 
         return ret
     }
-
 
 
 }

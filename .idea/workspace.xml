@@ -5,9 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7de4510b-f0e5-4402-9e95-cb9c8d6f6b3a" name="Changes" comment="hackerhotel wip">
+      <change afterPath="$PROJECT_DIR$/ledder/fx/FxTrace.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ledder/Color.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/Color.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ledder/Fx.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/Fx.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ledder/PixelList.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/PixelList.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ledder/animations/Logos/Hackerhotel.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/animations/Logos/Hackerhotel.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ledder/fx/FxTwinkle.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/fx/FxTwinkle.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,7 +39,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "/home/psy/WebstormProjects/ledder/ledder/animations/Logos",
+    "last_opened_file_path": "/home/psy/WebstormProjects/ledder/ledder/fx",
     "node.js.detected.package.eslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
@@ -49,11 +52,11 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/ledder/fx" />
       <recent name="$PROJECT_DIR$/ledder/animations/Logos" />
       <recent name="$PROJECT_DIR$/ledder/draw" />
       <recent name="$PROJECT_DIR$/ledder/server" />
       <recent name="$PROJECT_DIR$/ledder/server/drivers" />
-      <recent name="$PROJECT_DIR$/ledder/animations/Lights" />
     </key>
   </component>
   <component name="RunManager" selected="Node.js.server.js">
@@ -106,7 +109,8 @@
       <workItem from="1675368118078" duration="6969000" />
       <workItem from="1675686422107" duration="8075000" />
       <workItem from="1675695028599" duration="10184000" />
-      <workItem from="1675803316615" duration="8911000" />
+      <workItem from="1675803316615" duration="9977000" />
+      <workItem from="1675840539826" duration="5399000" />
     </task>
     <task id="LOCAL-00001" summary="kjh">
       <created>1673098884534</created>
@@ -262,7 +266,21 @@
       <option name="project" value="LOCAL" />
       <updated>1675811013968</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="hackerhotel wip">
+      <created>1675812356752</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1675812356752</updated>
+    </task>
+    <task id="LOCAL-00024" summary="hackerhotel wip">
+      <created>1675841673259</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1675841673259</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -531,6 +549,8 @@
         <option value="$PROJECT_DIR$/ledder/draw/DrawImage.js.map" />
         <option value="$PROJECT_DIR$/ledder/animations/Logos/Hackerhotel.js" />
         <option value="$PROJECT_DIR$/ledder/animations/Logos/Hackerhotel.js.map" />
+        <option value="$PROJECT_DIR$/ledder/fx/FxTrace.js" />
+        <option value="$PROJECT_DIR$/ledder/fx/FxTrace.js.map" />
       </list>
     </option>
   </component>

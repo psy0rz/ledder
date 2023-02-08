@@ -2,13 +2,12 @@ import Fx from "../Fx.js"
 import ControlValue from "../ControlValue.js"
 import ControlGroup from "../ControlGroup.js"
 import PixelList from "../PixelList.js"
-import BoxInterface from "../BoxInterface.js"
 import Scheduler from "../Scheduler.js"
-import {random, randomFloatGaussian, randomGaussian} from "../utils.js"
-import FxColorCycle from "./FxColorCycle.js"
+import {random, randomGaussian} from "../utils.js"
 import Pixel from "../Pixel.js"
 import ControlColor from "../ControlColor.js"
 import {FxFadeOut} from "./FxFadeOut.js"
+import ControlSwitch from "../ControlSwitch.js"
 
 
 //Add flames to the top pixels of a container
@@ -16,7 +15,7 @@ export default class FxTwinkle extends Fx {
     colorControl: ControlColor
     private densityControl: ControlValue
     createRandomizer: ControlValue
-    randomColors: import("/home/psy/WebstormProjects/ledder/ledder/ControlSwitch").default
+    randomColors: ControlSwitch
 
     constructor(scheduler: Scheduler, controls: ControlGroup) {
         super(scheduler, controls)

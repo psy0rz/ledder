@@ -21,7 +21,7 @@ export default class Fx {
         this.running=false
     }
 
-    //Run fx on pixels. Should return promise and NOT use async keyword in function defintion.
+    //Run fx on pixels.
     //Can be called multiple times. Use stop() to stop all running schedulers of this effect.
     //Note that stop() only returns the last promise.
     //Run should set this.running to True and it should end when this.running becomes false.
