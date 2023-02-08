@@ -67,7 +67,7 @@ export class Control {
     updateValue(path: Array<string>, value: Values) {
 
         this.load(value)
-        console.log("CHANGE en", this.onChangeCallback)
+        // console.log("CHANGE en", this.onChangeCallback)
         if (this.onChangeCallback !== undefined) {
             this.onChangeCallback(this)
         }

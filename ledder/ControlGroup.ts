@@ -201,7 +201,6 @@ export default class ControlGroup extends Control {
 
     //return true if animation should be restarted
     updateValue(path: Array<string>, values: Values) {
-console.log("UPD", path, values)
         const c=this.meta.controls[path[0]]
         if ( c !== undefined) {
 

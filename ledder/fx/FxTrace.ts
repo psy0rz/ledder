@@ -8,15 +8,14 @@ import Pixel from "../Pixel.js"
 import ControlColor from "../ControlColor.js"
 import {FxFadeOut} from "./FxFadeOut.js"
 import ControlSwitch from "../ControlSwitch.js"
+import ControlRange from "../ControlRange.js"
 
 
 //Add make a glowing pixel trace a list of pixels. (look at hackerhotel.ts for example)
 export default class FxTrace extends Fx {
     colorControl: ControlColor
-    private densityControl: ControlValue
-    createRandomizer: ControlValue
     private randomColors: ControlSwitch
-    private intervalControl: ControlValue
+    private intervalControl: ControlRange
     private fader: FxFadeOut
 
     constructor(scheduler: Scheduler, controls: ControlGroup) {
@@ -24,14 +23,15 @@ export default class FxTrace extends Fx {
 
         this.colorControl = controls.color("Color", 255, 255, 255)
         this.randomColors = controls.switch("Random colors", false)
-        this.intervalControl = controls.value("Interval", 2, 1, 120)
+        this.intervalControl = controls.range("Trace interval range", 1, 3, 1, 30)
         this.fader = new FxFadeOut(this.scheduler, this.controls, 30, 0)
 
     }
 
-    async run(sourceContainer: PixelList, targetContainer: PixelList) {
+    async run(trace: PixelList, targetList: PixelList) {
 
-        for (const p of sourceContainer) {
+        const interval=random(this.intervalControl.from, this.intervalControl.to)
+        for (const p of trace) {
             if (p instanceof Pixel) {
                 const c = this.colorControl.copy()
 
@@ -41,12 +41,12 @@ export default class FxTrace extends Fx {
                     c.b = random(0, c.b)
                 }
                 const twinkle = new Pixel(p.x, p.y, c)
-                targetContainer.add(twinkle)
+                targetList.add(twinkle)
                 this.fader.run(c).then(() => {
-                    targetContainer.delete(twinkle)
+                    targetList.delete(twinkle)
                 })
 
-                await this.scheduler.delay(this.intervalControl.value)
+                await this.scheduler.delay(interval)
             }
         }
     }

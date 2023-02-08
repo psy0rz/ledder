@@ -5,17 +5,24 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7de4510b-f0e5-4402-9e95-cb9c8d6f6b3a" name="Changes" comment="hackerhotel wip">
-      <change afterPath="$PROJECT_DIR$/ledder/fx/FxTrace.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ledder/fx/FxAutoTrace.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ledder/Fx.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/Fx.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ledder/PixelList.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/PixelList.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ledder/Control.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/Control.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ledder/ControlGroup.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/ControlGroup.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ledder/animations/Logos/Hackerhotel.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/animations/Logos/Hackerhotel.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ledder/fx/FxTwinkle.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/fx/FxTwinkle.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ledder/fx/FxTrace.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/fx/FxTrace.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="TypeScript File" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="PREVIEW_PUSH_PROTECTED_ONLY" value="true" />
@@ -110,7 +117,7 @@
       <workItem from="1675686422107" duration="8075000" />
       <workItem from="1675695028599" duration="10184000" />
       <workItem from="1675803316615" duration="9977000" />
-      <workItem from="1675840539826" duration="5399000" />
+      <workItem from="1675840539826" duration="7653000" />
     </task>
     <task id="LOCAL-00001" summary="kjh">
       <created>1673098884534</created>
@@ -280,7 +287,14 @@
       <option name="project" value="LOCAL" />
       <updated>1675841673259</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL-00025" summary="hackerhotel wip">
+      <created>1675846330854</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1675846330854</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -551,6 +565,8 @@
         <option value="$PROJECT_DIR$/ledder/animations/Logos/Hackerhotel.js.map" />
         <option value="$PROJECT_DIR$/ledder/fx/FxTrace.js" />
         <option value="$PROJECT_DIR$/ledder/fx/FxTrace.js.map" />
+        <option value="$PROJECT_DIR$/ledder/fx/FxAutoTrace.js" />
+        <option value="$PROJECT_DIR$/ledder/fx/FxAutoTrace.js.map" />
       </list>
     </option>
   </component>

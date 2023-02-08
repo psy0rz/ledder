@@ -8,6 +8,7 @@ import PixelList from "../../PixelList.js"
 import Color from "../../Color.js"
 import {random} from "../../utils.js"
 import FxTrace from "../../fx/FxTrace.js"
+import FxAutoTrace from "../../fx/FxAutoTrace.js"
 
 
 export default class Hackerhotel extends Animator {
@@ -38,22 +39,10 @@ export default class Hackerhotel extends Animator {
             }
         })
 
-        const traceFx=new FxTrace(scheduler, controls)
 
-        traceFx.run(letters, box)
+        const autoTraceFx=new FxAutoTrace(scheduler,controls)
 
-        while(1) {
-            await scheduler.delay(random(0, 30))
-            const trace=traces.random()
-            if (trace instanceof PixelList)
-            {
-                traceFx.run(trace, box)
-
-
-
-            }
-
-        }
+        await autoTraceFx.run(traces, box)
 
 
     }
