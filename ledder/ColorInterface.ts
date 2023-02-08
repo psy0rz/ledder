@@ -7,7 +7,7 @@ export default interface ColorInterface {
 
     //returns a copy of the colorobject
     copy():ColorInterface
-
+    equal(color: ColorInterface):boolean
 
 }
 

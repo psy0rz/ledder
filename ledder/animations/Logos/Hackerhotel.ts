@@ -16,9 +16,8 @@ export default class Hackerhotel extends Animator {
         //load image and determine colors
         const image = await sharp('images/hackerhotel.png')
         const imageLetterColor=new Color(255, 216, 0)
-        const imageTracerStartColor=new Color(128,128,128)
-
-
+        const imageTraceStartColor=new Color(128,128,128)
+        const imageTraceColor=new Color(38,127,0)
 
         const logo = await drawImage(0, 0, image)
 
@@ -28,22 +27,23 @@ export default class Hackerhotel extends Animator {
         letters.setColor(letterColorControl)
         box.add(letters)
 
-
-
         //find start of each trace and filter it out
         const traces=new PixelList()
         box.add(traces)
 
         logo.forEachPixel((p) => {
-            if (imageTracerStartColor.equal(p.color)) {
+            if (imageTraceStartColor.equal(p.color)) {
                 const trace = logo.filterCluster(p)
                 traces.add(trace)
             }
         })
 
+        //make trace color configurable
+        const traceColorControl=controls.color('Trace color', imageTraceColor.r, imageTraceColor.g, imageTraceColor.b)
+        box.replaceColor(imageTraceColor, traceColorControl)
 
+        //start trace-effect on all the traces we've found
         const autoTraceFx=new FxAutoTrace(scheduler,controls)
-
         await autoTraceFx.run(traces, box)
 
 
