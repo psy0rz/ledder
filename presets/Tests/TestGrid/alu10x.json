@@ -1,0 +1,21 @@
+{
+ "title": "",
+ "description": "",
+ "values": {
+  "Display width": {
+   "value": 8
+  },
+  "Display height": {
+   "value": 32
+  },
+  "Blink on delay": {
+   "value": 15
+  },
+  "Blink off delay": {
+   "value": 15
+  },
+  "Blink repeat": {
+   "value": 0
+  }
+ }
+}
