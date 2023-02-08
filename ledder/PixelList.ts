@@ -151,7 +151,7 @@ export default class PixelList extends Set<Pixel | PixelList> {
     //get a "random" pixel from the tree.
     //note: because it chooses random containers as well, the pixel distribution might not be totally random
     //Use flatten() to fix this.
-    //it also can return undefined if it ends up at an tree!
+    //NOTE: it also can return undefined if it ends up at an empty tree!
     randomPixel(): Pixel | undefined {
         if (this.size == 0)
             return undefined
@@ -174,7 +174,7 @@ export default class PixelList extends Set<Pixel | PixelList> {
     //Returns a deep copy of the pixeltree.
     //Use copyColor=true to also create copies of the color objects in each pixel
     //NOTE: you should only use copy() if needed, in all other cases just use references
-    copy(copyColor = false) {
+    copy(copyColor = false):PixelList {
         let c = new PixelList()
         for (const p of this) {
             //NOTE: both Pixel and PixelContainer have the .copy() function, so no if-statement needed here
@@ -184,8 +184,8 @@ export default class PixelList extends Set<Pixel | PixelList> {
         return (c)
     }
 
-    //flatten all sub-pixelsets in this container, so we end up with a plain list of pixels.
-    flatten() {
+    //flatten all sub-pixelsets in this list, so we end up with a plain list of pixels.
+    flatten():PixelList {
         let pixels = new PixelList()
 
         this.forEachPixel((p) => {
@@ -197,8 +197,30 @@ export default class PixelList extends Set<Pixel | PixelList> {
             this.add(p)
         })
 
+        return this
+
 
     }
+
+    //removes all empty pixel trees recursively
+    prune():PixelList
+    {
+        // this.recurseForEachPixel(callbackfn, this)
+        for (const p of this) {
+            if (p instanceof PixelList) {
+                if (p.size==0)
+                    this.delete(p)
+                else
+                    p.prune()
+            }
+        }
+
+        return this
+    }
+
+
+
+
 
     //relatively move all pixels in this tree by this amount
     move(x: number, y: number, round = false) {
