@@ -5,12 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7de4510b-f0e5-4402-9e95-cb9c8d6f6b3a" name="Changes" comment="hackerhotel wip">
-      <change afterPath="$PROJECT_DIR$/ledder/fx/FxAutoTrace.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ledder/ColorCache.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ledder/Control.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/Control.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ledder/ControlGroup.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/ControlGroup.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ledder/PixelList.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/PixelList.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ledder/animations/Logos/Hackerhotel.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/animations/Logos/Hackerhotel.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ledder/fx/FxTrace.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/fx/FxTrace.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ledder/draw/DrawImage.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/draw/DrawImage.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -65,6 +64,9 @@
       <recent name="$PROJECT_DIR$/ledder/server" />
       <recent name="$PROJECT_DIR$/ledder/server/drivers" />
     </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/ledder" />
+    </key>
   </component>
   <component name="RunManager" selected="Node.js.server.js">
     <configuration name="buildpreviews.js" type="NodeJSConfigurationType" application-parameters="-- -f" nameIsGenerated="true" path-to-js-file="ledder/server/buildpreviews.js" working-dir="$PROJECT_DIR$">
@@ -117,7 +119,7 @@
       <workItem from="1675686422107" duration="8075000" />
       <workItem from="1675695028599" duration="10184000" />
       <workItem from="1675803316615" duration="9977000" />
-      <workItem from="1675840539826" duration="7653000" />
+      <workItem from="1675840539826" duration="13519000" />
     </task>
     <task id="LOCAL-00001" summary="kjh">
       <created>1673098884534</created>
@@ -294,7 +296,21 @@
       <option name="project" value="LOCAL" />
       <updated>1675846330854</updated>
     </task>
-    <option name="localTasksCounter" value="26" />
+    <task id="LOCAL-00026" summary="hackerhotel wip">
+      <created>1675848430623</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1675848430623</updated>
+    </task>
+    <task id="LOCAL-00027" summary="hackerhotel wip">
+      <created>1675848949472</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1675848949472</updated>
+    </task>
+    <option name="localTasksCounter" value="28" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

@@ -6,8 +6,6 @@ import ControlGroup from "../../ControlGroup.js"
 import Animator from "../../Animator.js"
 import PixelList from "../../PixelList.js"
 import Color from "../../Color.js"
-import {random} from "../../utils.js"
-import FxTrace from "../../fx/FxTrace.js"
 import FxAutoTrace from "../../fx/FxAutoTrace.js"
 
 
@@ -17,13 +15,17 @@ export default class Hackerhotel extends Animator {
 
         //load image and determine colors
         const image = await sharp('images/hackerhotel.png')
-        const letterColor=new Color(255, 216, 0)
-        const traceStartColor=new Color(128,128,128)
+        const imageLetterColor=new Color(255, 216, 0)
+        const imageTracerStartColor=new Color(128,128,128)
+
+
 
         const logo = await drawImage(0, 0, image)
 
         //get letters:
-        const letters = logo.filterColor(letterColor)
+        const letterColorControl=controls.color('Text color', imageLetterColor.r, imageLetterColor.g, imageLetterColor.b)
+        const letters = logo.filterColor(imageLetterColor)
+        letters.setColor(letterColorControl)
         box.add(letters)
 
 
@@ -33,7 +35,7 @@ export default class Hackerhotel extends Animator {
         box.add(traces)
 
         logo.forEachPixel((p) => {
-            if (traceStartColor.equal(p.color)) {
+            if (imageTracerStartColor.equal(p.color)) {
                 const trace = logo.filterCluster(p)
                 traces.add(trace)
             }

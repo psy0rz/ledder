@@ -2,6 +2,7 @@ import Pixel from "./Pixel.js"
 import BoxInterface from "./BoxInterface.js"
 import {random} from "./utils.js"
 import ColorInterface from "./ColorInterface.js"
+import Color from "./Color.js"
 
 /**
  * A pixeltree. A PixelSet is just a simple Set() of Pixels, but can also contain other PixelSets.
@@ -232,6 +233,16 @@ export default class PixelList extends Set<Pixel | PixelList> {
         }
 
         return this
+    }
+
+    //set all pixels in this pixel tree to this color object
+    setColor(color:ColorInterface)
+    {
+        this.forEachPixel( (p)=>
+        {
+            p.color=color
+        })
+
     }
 
 
