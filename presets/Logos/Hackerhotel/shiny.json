@@ -1,0 +1,68 @@
+{
+ "title": "",
+ "description": "",
+ "values": {
+  "Color": {
+   "r": 112,
+   "g": 232,
+   "b": 255,
+   "a": 1
+  },
+  "Random colors": {
+   "enabled": false
+  },
+  "Interval": {
+   "value": 2
+  },
+  "Fade out time": {
+   "value": 30
+  },
+  "Fade out time randomizer": {
+   "value": 0
+  },
+  "Start interval range": {
+   "from": 10,
+   "to": 60
+  },
+  "Trace interval range": {
+   "from": 3,
+   "to": 3
+  },
+  "Text color": {
+   "r": 255,
+   "g": 216,
+   "b": 0,
+   "a": 1
+  },
+  "Trace color": {
+   "r": 38,
+   "g": 127,
+   "b": 0,
+   "a": 1
+  },
+  "Color pattern": {
+   "Color pattern fx": {
+    "enabled": true
+   },
+   "Color cycle time": {
+    "value": 240
+   },
+   "Reverse": {
+    "enabled": false
+   },
+   "Ping pong": {
+    "enabled": true
+   },
+   "Color cycle pattern": {
+    "selected": "Bertrik fire"
+   },
+   "Color cycle pattern range": {
+    "from": 57,
+    "to": 82
+   },
+   "Per pixel offset %": {
+    "value": 10.3
+   }
+  }
+ }
+}
