@@ -7,26 +7,36 @@ import sharp from "sharp"
 import FxColorCycle from "../fx/FxColorCycle.js"
 import FxColorPattern from "../fx/FxColorPattern.js"
 import drawImage from "../draw/DrawImage.js"
+import DrawBox from "../draw/DrawBox.js"
+import {colorRed} from "../Colors.js"
+import FxRotate from "../fx/FxRotate.js"
+import Pixel from "../Pixel.js"
+import Color from "../Color.js"
 
 
 export default class Test extends Animator {
 
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) {
-        // const {data, info} = await sharp('/home/psy/Downloads/hackerhotel1.png').trim().resize({width: 75, height:16}).raw().toBuffer({resolveWithObject: true})
-        // const {data, info} = await sharp('/home/psy/Downloads/pixil-frame-0.png').trim().resize({width: 75, height:16, fit:'fill'}).raw().toBuffer({resolveWithObject: true})
-        // const image = await sharp('/home/psy/Downloads/hackerhotel1.png')
-        const image = await sharp('images/hackerhotel.png')
-            // .threshold(255)
-            // .trim()
-            // .negate({alpha: false})
-            // .resize({width: 80, height:32, fit:'inside', kernel: "lanczos3" })
+
+        scheduler.setFrameTimeuS(1000000)
+
+        const c=new Color(255,0,0,0.3)
+        box.add(new DrawBox(0,0,box.width(),32, c))
+
+        let flip=true
+        while(1) {
+            await scheduler.delay(1)
 
 
-        box.add(await drawImage(0,0,image))
+            // box.move(1,0)
 
-        // const cycle=new FxColorPattern(scheduler, controls)
-        // cycle.run(box)
+            flip=!flip
+            if (flip)
+                c.g=255
+            else
+                c.g=0
 
+        }
 
 
     }

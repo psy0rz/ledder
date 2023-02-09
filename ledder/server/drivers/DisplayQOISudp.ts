@@ -33,8 +33,13 @@ export class DisplayQOISudp extends DisplayQOIS {
 
 
 
+        // this.defaultFrameTimeMicros=~~(1000000/1)
+
+        console.log("was" , this.defaultFrameTimeMicros)
+
         this.frameRoundingMicros=1000
-        this.minFrameTimeMicros=~~(1000000/120)
+        this.minFrameTimeMicros=~~(1000000/50)
+        this.defaultFrameTimeMicros=this.minFrameTimeMicros
 
         this.ips = ips
         this.port = port

@@ -8,6 +8,8 @@ import PixelList from "../../PixelList.js"
 import Color from "../../Color.js"
 import FxAutoTrace from "../../fx/FxAutoTrace.js"
 import FxColorPattern from "../../fx/FxColorPattern.js"
+import FxMove from "../../fx/FxMove.js"
+import FxRotate from "../../fx/FxRotate.js"
 
 
 export default class Hackerhotel extends Animator {
@@ -47,6 +49,10 @@ export default class Hackerhotel extends Animator {
         if (patternGroup.switch('Color pattern fx', false).enabled)
             new FxColorPattern(scheduler, patternGroup
             ).run(letters)
+
+        // new FxMove(scheduler,controls).run(box)
+        // new FxRotate(scheduler, controls).run(box)
+
 
         //start trace-effect on all the traces we've found
         const autoTraceFx=new FxAutoTrace(scheduler,controls)

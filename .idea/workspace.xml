@@ -5,8 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7de4510b-f0e5-4402-9e95-cb9c8d6f6b3a" name="Changes" comment="hackerhotel wip">
+      <change afterPath="$PROJECT_DIR$/ledder/animations/Tests/TestFlip.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ledder/Scheduler.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/Scheduler.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ledder/animations/Logos/Hackerhotel.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/animations/Logos/Hackerhotel.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ledder/animations/Test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/animations/Test.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ledder/server/drivers/DisplayQOISudp.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/server/drivers/DisplayQOISudp.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/presets/Logos/Hackerhotel/shiny.json" beforeDir="false" afterPath="$PROJECT_DIR$/presets/Logos/Hackerhotel/shiny.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,7 +47,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "/home/psy/WebstormProjects/ledder/ledder/fx",
+    "last_opened_file_path": "/home/psy/WebstormProjects/ledder/ledder/animations/Tests",
     "node.js.detected.package.eslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
@@ -55,11 +60,11 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/ledder/animations/Tests" />
       <recent name="$PROJECT_DIR$/ledder/fx" />
       <recent name="$PROJECT_DIR$/ledder/animations/Logos" />
       <recent name="$PROJECT_DIR$/ledder/draw" />
       <recent name="$PROJECT_DIR$/ledder/server" />
-      <recent name="$PROJECT_DIR$/ledder/server/drivers" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/ledder" />
@@ -116,7 +121,7 @@
       <workItem from="1675686422107" duration="8075000" />
       <workItem from="1675695028599" duration="10184000" />
       <workItem from="1675803316615" duration="9977000" />
-      <workItem from="1675840539826" duration="14910000" />
+      <workItem from="1675840539826" duration="28363000" />
     </task>
     <task id="LOCAL-00001" summary="kjh">
       <created>1673098884534</created>
@@ -328,7 +333,14 @@
       <option name="project" value="LOCAL" />
       <updated>1675871275749</updated>
     </task>
-    <option name="localTasksCounter" value="31" />
+    <task id="LOCAL-00031" summary="hackerhotel wip">
+      <created>1675872020641</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1675872020641</updated>
+    </task>
+    <option name="localTasksCounter" value="32" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -601,6 +613,8 @@
         <option value="$PROJECT_DIR$/ledder/fx/FxTrace.js.map" />
         <option value="$PROJECT_DIR$/ledder/fx/FxAutoTrace.js" />
         <option value="$PROJECT_DIR$/ledder/fx/FxAutoTrace.js.map" />
+        <option value="$PROJECT_DIR$/ledder/animations/Tests/TestFlip.js.map" />
+        <option value="$PROJECT_DIR$/ledder/animations/Tests/TestFlip.js" />
       </list>
     </option>
   </component>

@@ -45,7 +45,7 @@
     "enabled": true
    },
    "Color cycle time": {
-    "value": 240
+    "value": 35
    },
    "Reverse": {
     "enabled": false

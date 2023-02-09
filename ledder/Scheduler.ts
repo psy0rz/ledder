@@ -70,7 +70,6 @@ export default class Scheduler {
      * Default frametime thats set after a clear().
      */
     public setDefaultFrameTime(frameTimeMicros) {
-
         this.defaultFrameTimeMicros = frameTimeMicros
         this.setFrameTimeuS(frameTimeMicros)
 
