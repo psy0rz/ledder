@@ -6,7 +6,15 @@ import mqtt, {MqttClient} from "mqtt"
 import {statusMessage} from "../message.js"
 import DrawText from "../draw/DrawText.js"
 import AnimationManager from "../server/AnimationManager.js"
+/*
+Example:
 
+Select animimation:  topc: 'ledder/select' message: Text/Marquee/default
+Get variables: -t 'ledder/get' -m ''
+
+
+
+ */
 
 export default class MQTT extends Animator {
     // private client: MqttClient
@@ -41,6 +49,7 @@ export default class MQTT extends Animator {
         const mqttTopic = controls.input('MQTT topic', "ledder", true)
 
         let childControls = controls.group('Current animation')
+
 
 
         this.animationManager = new AnimationManager(box, scheduler.child(), childControls)
@@ -95,7 +104,7 @@ export default class MQTT extends Animator {
                     case 'select':
                         console.log(`MQTT select ${message}`)
 
-                            this.animationManager.select(message, false).catch((e) => {
+                            await this.animationManager.select(message, false).catch((e) => {
                                 this.statusMessage((e.message))
 
                             })
