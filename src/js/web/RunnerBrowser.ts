@@ -1,5 +1,5 @@
 import {rpc} from "./RpcClient.js"
-import {svelteAnimations, sveltePresets} from "./svelteStore.js"
+import {svelteAnimations, sveltePresets, svelteLive} from "./svelteStore.js"
 import {confirmPromise, info, promptPromise} from "./util.js"
 import {DisplayCanvas} from "./DisplayCanvas.js"
 import {tick} from "svelte"
@@ -11,7 +11,7 @@ import ControlGroup from "../../../ledder/ControlGroup.js"
 export class RunnerBrowser {
     animationName: string
     presetName: string
-    live: boolean;
+
 
     presets: Record<string, any>
 
@@ -65,11 +65,7 @@ export class RunnerBrowser {
      */
     async send() {
         if (this.animationName) {
-
-            // await rpc.request("runner.run", this.animationName, this.display.control.save());
-            console.log("SEND")
-            await rpc.request("animationManager.select", this.animationName+"/"+ this.presetName);
-            // this.restart()
+                await rpc.request("animationManager.select", this.animationName+"/"+ this.presetName, svelteLive);
         }
     }
 
@@ -83,7 +79,6 @@ export class RunnerBrowser {
      * @param presetName
      */
     async run(animationName: string, presetName: string) {
-console.log("SRUn")
 
         this.animationName = animationName
         this.presetName = presetName

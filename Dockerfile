@@ -22,7 +22,7 @@ RUN NODE_ENV=development npm install
 
 COPY . .
 
-RUN npm run buildcode
+RUN npm run buildweb
 
 RUN npm prune --production
 

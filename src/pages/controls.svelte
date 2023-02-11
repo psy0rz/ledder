@@ -14,6 +14,7 @@
     import {
         sveltePresets,
         svelteSelectedTitle,
+        svelteLive,
     } from "../js/web/svelteStore.js";
     import { runnerBrowser } from "../js/web/RunnerBrowser.js";
     import ControlGroup from "../components/ControlGroupUI.svelte";
@@ -77,7 +78,7 @@
             <ControlGroup
                 controlGroup={$sveltePresets}
                 onChanged={(path, values) => {
-                    rpc.notify("animationManager.updateValue", path, values);
+                    rpc.notify("animationManager.updateValue", path, values, $svelteLive);
                 }}
             />
         </Treeview>

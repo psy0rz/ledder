@@ -77,9 +77,13 @@ rpc.addMethod("animationManager.select", async (params, context) => {
     if (context.renderLoop)
         await context.renderLoop.animationManager.select(params[0], false)
 
-    for (const runner of renderLoops) {
-        await runner.animationManager.select(params[0], false)
-    }
+    //live?
+    // if (params[1]) {
+
+        for (const runner of renderLoops) {
+            await runner.animationManager.select(params[0], false)
+        }
+    // }
 })
 
 rpc.addMethod("animationManager.updateValue", async (params, context) => {
@@ -87,9 +91,12 @@ rpc.addMethod("animationManager.updateValue", async (params, context) => {
     if (context.renderLoop)
         await context.renderLoop.animationManager.updateValue(params[0], params[1])
 
-    for (const runner of renderLoops) {
-        await runner.animationManager.updateValue(params[0], params[1])
-    }
+    //live
+    // if (params[1]) {
+        for (const runner of renderLoops) {
+            await runner.animationManager.updateValue(params[0], params[1])
+        }
+    // }
 })
 
 
