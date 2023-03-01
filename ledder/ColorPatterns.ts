@@ -119,11 +119,66 @@ function calculateRainbow() {
 
 export const rainbow = calculateRainbow()
 
+
+function calculateReinbow() 
+{
+    let numColors=255;
+    let ret = []
+    let n = numColors;
+    for(var i = 0; i< numColors; i++)
+    {
+        let red = 255;
+        let green = 0;
+        let blue = 0;
+        //red: (first quarter)
+        if (i <= n / 4)
+        {
+            red = 255;
+            green = Math.round(255 / (n / 4) * i);
+            blue = 0;
+        }
+        else if (i <= n / 2)  //2nd quarter
+        {
+            red = Math.round((-255)/(n/4)*i + 255 * 2);
+            green = 255;
+            blue = 0;
+        }
+        else if (i <= (.75)*n)
+        { // 3rd quarter
+            red = 0;
+            green = 255;
+            blue = Math.round(255 / (n / 4) * i + (-255 * 2));
+        }
+        else if(i > (.75)*n)
+        {
+            red = 0;
+            green = Math.round(-255 * i / (n / 4) + (255 * 4));
+            blue = 255;
+        }
+
+        //generate hex string:
+        let c=new Color()
+        c.r=red
+        c.g=green
+        c.b=blue
+        ret.push(c)
+    
+     
+    }
+    return ret;
+}
+
+
+export const reinbow = calculateReinbow()
+
+
+
 const patterns = {
     'Doom fire': fireColorsDoom,
     'Bertrik fire': fireColorsBertrik,
     'Brainsmoke fire': fireColorsBrainsmoke,
-    'Rainbow': rainbow
+    'Rainbow': rainbow,
+    'Reinbow': reinbow
 }
 
 //helper to make it easier to let the user select a color pattern
