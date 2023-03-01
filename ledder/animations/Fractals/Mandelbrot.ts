@@ -1,3 +1,11 @@
+/**
+ *  Mandelbrot fractal 
+ *  Author: Rein Velt (rein@velt.org)
+ *  Version: 1.0
+ * 
+ *  This script shows a basic mandelbrot fractal with configurable parameters
+ * 
+ */
 import PixelBox from "../../PixelBox.js"
 import {colorBlack} from "../../Colors.js"
 import {glow, randomFloatGaussian, randomGaussian} from "../../utils.js"
@@ -9,18 +17,18 @@ import Pixel from "../../Pixel.js"
 import Color from "../../Color.js";
 import Animator from "../../Animator.js"
 import {inspect} from "util"
-const MAX_ITERATION = 2000
+
 
 
 export default class <Mandelbrot> extends Animator {
     static category = "Fractals"
     static title = "Mandelbrot"
     static description = "Base on the 1993 Firedemo"
-    max_iterations=20
+    max_iterations=128
    
 
     mandelbrot(c) {
-        let z = { x: 0, y: 0 }, n=20, p, d;
+        let z = { x: 0, y: 0 }, n=0, p, d;
         do {
             p = {
                 x: Math.pow(z.x, 2) - Math.pow(z.y, 2),
@@ -73,7 +81,7 @@ export default class <Mandelbrot> extends Animator {
             }
            
             //calculate all visible pixel positions
-            //box.clear();
+            box.clear();
             for (let i = 0; i < box.width(); i++) {
                 for (let j = 0; j < box.height(); j++) {
                     let complex = {
