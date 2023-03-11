@@ -78,12 +78,12 @@ export default class Kong extends Animator {
         oooo.oowrwrwrwrwroo.oooo
         oooo.ooo........ooo.oooo
         oooo.ooo........ooo.oooo
-        oooo..owrwrwrwrwwo..oooo
+        oooo..owrwrwrwrwroo.oooo
         .ooto.oooooooooooo.otoo.
         ..t0t.oooooooooooo.t0t..
         ......oooooooooooo......
-        ........oooo....oooo....
-        ........oooooo..oooooo..
+        .......ooo.....ooo.....
+        .......oooooo..oooooo..
         `)),
      
         
