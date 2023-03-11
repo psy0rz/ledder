@@ -12,7 +12,7 @@ import DrawAsciiArtColor from "../../draw/DrawAsciiArtColor.js"
 export default class Wandelaar extends Animator {
     static category = "Misc"
     static title = "Wandelaar"
-    static description = "waarschijnlijk een Ado supporter"
+    static description = "waarschijnlijk een Ado supporter. Hij loopt zijn neus achterna."
 
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup, x = 0, y = 0) {
 

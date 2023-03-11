@@ -9,7 +9,7 @@ import Starfield from "../Components/Starfield.js"
 import Scheduler from "../../Scheduler.js"
 import ControlGroup from "../../ControlGroup.js"
 import Animator from "../../Animator.js"
-import Nyancat from "../Memes/Nyancat.js"
+import Landscape from "../Components/Landscape.js"
 
 
 
@@ -30,7 +30,7 @@ export default class Stampede extends Animator {
         let kong=new Kong()
         let flames=new Fire();
         let starfield=new Starfield();
-        let nyancat=new Nyancat();
+      
         let x=0;
         let y=0;
         if (box.height()>8) { y=box.height()-4}
