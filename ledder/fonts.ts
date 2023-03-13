@@ -25,7 +25,7 @@ export let fonts = {
 }
 
 //helper to make it easier to let the user select a font
-export function fontSelect(control:ControlGroup, name='Font', selected='C64' ):Font
+export function fontSelect(control:ControlGroup, name='Font', selected='C64' , heightOffset=0):Font
 {
     let choices = []
     for (const [id, font] of Object.entries(fonts)) {
@@ -33,7 +33,7 @@ export function fontSelect(control:ControlGroup, name='Font', selected='C64' ):F
     }
 
     const fontControl = control.select(name, selected, choices, true)
-    const heightControl = control.value(name+ ' height', 0,0,100,1, true)
+    const heightControl = control.value(name+ ' height', heightOffset,0,100,1, true)
 
     const f=fonts[fontControl.selected]
     const fontCopy = new Font(f.name, f.filename, f.width, f.height + heightControl.value, f.baseOffset)
