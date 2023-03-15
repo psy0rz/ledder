@@ -9,15 +9,15 @@
    "value": 1
   },
   "X spacing": {
-   "value": 0
+   "value": 4
   },
   "Y spacing": {
-   "value": 0
+   "value": 3
   },
   "Color": {
-   "r": 255,
-   "g": 255,
-   "b": 255,
+   "r": 56,
+   "g": 7,
+   "b": 239,
    "a": 0.31
   }
  }

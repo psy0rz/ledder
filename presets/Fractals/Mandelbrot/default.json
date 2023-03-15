@@ -1,0 +1,33 @@
+{
+ "title": "",
+ "description": "",
+ "values": {
+  "Colorcycle": {
+   "enabled": false
+  },
+  "Fly around": {
+   "enabled": false
+  },
+  "REAL range (x)": {
+   "from": -2,
+   "to": 1
+  },
+  "IMAGINARY range (y)": {
+   "from": -1,
+   "to": 1
+  },
+  "Fractal iterations": {
+   "value": 12
+  },
+  "Color Palette": {
+   "selected": "Brainsmoke fire"
+  },
+  "Color Palette range": {
+   "from": 0,
+   "to": 100
+  },
+  "Fractal interval": {
+   "value": 1
+  }
+ }
+}
