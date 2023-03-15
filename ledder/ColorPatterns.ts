@@ -167,9 +167,30 @@ function calculateReinbow()
     }
     return ret;
 }
-
-
 export const reinbow = calculateReinbow()
+
+function calculateDimmedReinbow() 
+{
+    let numColors=600
+    let ret = []
+    let n = numColors;
+    for(var i = 0; i< numColors; i++)
+    {
+        //generate hex string:
+        let c=new Color()
+        c.r=Math.sin(0+(i/32))*64+64;
+        c.g=Math.sin(120+(i/32))*64+64;
+        c.b=Math.sin(240+(i/32))*64+64; 
+        //c.a=128-(numColors/i);
+        ret.push(c)
+    
+     
+    }
+    return ret;
+}
+
+
+export const dimmedreinbow = calculateDimmedReinbow()
 
 
 
@@ -178,7 +199,8 @@ const patterns = {
     'Bertrik fire': fireColorsBertrik,
     'Brainsmoke fire': fireColorsBrainsmoke,
     'Rainbow': rainbow,
-    'Reinbow': reinbow
+    'Reinbow': reinbow,
+    'DimmedReinbow': dimmedreinbow
 }
 
 //helper to make it easier to let the user select a color pattern
