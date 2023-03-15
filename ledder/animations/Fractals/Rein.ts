@@ -44,7 +44,7 @@ export default class <Rein> extends Animator {
         box.clear();
         let zoomx=1;
         let zoomy=1;
-        let zoomfactor=0.995
+        let zoomfactor=0.99
         let hotspotSel=0
         let hotspots=[
             { cx:-0.545000, cy:-0.610000},
@@ -58,8 +58,8 @@ export default class <Rein> extends Animator {
             counter=counter+1
             zoomx=zoomx*zoomfactor; 
             zoomy=zoomy*zoomfactor;
-            if (zoomx<0.0000000001) { zoomfactor=1.005; } //zoom in
-            if (zoomx>5) { zoomfactor=0.995;  hotspotSel=hotspotSel+1;} //zoom out
+            if (zoomx<0.000000001) { zoomfactor=1.01; } //zoom in
+            if (zoomx>5) { zoomfactor=0.99;  hotspotSel=hotspotSel+1;} //zoom out
             if (hotspotSel>=hotspots.length) {hotspotSel=0; zoomx=1; zoomy=1;}
 
             //read settings
