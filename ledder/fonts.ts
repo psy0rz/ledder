@@ -20,12 +20,12 @@ export let fonts = {
     'Computer': new Font('Computer', 'fonts/Computer.ttf', 0, 8, 0),
     'Picopixel': new Font('Picopixel', 'fonts/Picopixel.ttf', 0, 7, -1),
     'ORG v01': new Font('Org v01', 'fonts/ORG_V01_.TTF', 0, 8, -2),
-    'Tiny 3x3': new Font('Tiny 3x3', 'fonts/tiny3x3a.ttf', 4, 4, 0),
-    'Tom thumb': new Font('Tom thumb', 'fonts/tom-thumb.bdf', 4, 6, 0),
+    'Tiny 3x3': new Font('Tiny 3x3', 'fonts/tiny3x3a.ttf', 0, 4, 0),
+    // 'Tom thumb': new Font('Tom thumb', 'fonts/tom-thumb.bdf', 0, 6, 0),
 }
 
 //helper to make it easier to let the user select a font
-export function fontSelect(control:ControlGroup, name='Font', selected='C64' ):Font
+export function fontSelect(control:ControlGroup, name='Font', selected='C64' , heightOffset=0):Font
 {
     let choices = []
     for (const [id, font] of Object.entries(fonts)) {
@@ -33,7 +33,10 @@ export function fontSelect(control:ControlGroup, name='Font', selected='C64' ):F
     }
 
     const fontControl = control.select(name, selected, choices, true)
-    const font = fonts[fontControl.selected]
-    font.load()
-    return (font)
+    const heightControl = control.value(name+ ' height', heightOffset,0,100,1, true)
+
+    const f=fonts[fontControl.selected]
+    const fontCopy = new Font(f.name, f.filename, f.width, f.height + heightControl.value, f.baseOffset)
+    fontCopy.load()
+    return (fontCopy)
 }

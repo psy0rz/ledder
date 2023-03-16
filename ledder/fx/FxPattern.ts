@@ -35,8 +35,11 @@ export default class FxPattern extends Fx {
                 target.delete(prevFrame.value)
 
             let frame = frameI.next()
+
+
+
             intervalNr=(intervalNr+1)%intervals.length
-            if (frame.done) {
+            if (frame.done ) {
                 if (repeat) {
                     repeat--
                     if (repeat == 0)
@@ -50,7 +53,8 @@ export default class FxPattern extends Fx {
 
             }
 
-            target.add(frame.value)
+            if (frame.value!==undefined)
+                target.add(frame.value)
             prevFrame=frame
 
             if (this.running)

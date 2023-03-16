@@ -125,7 +125,7 @@ export default class PixelList extends Set<Pixel | PixelList> {
                 else if (p instanceof PixelList) {
                     str = str + p.dump(indent)
                 } else {
-                    str = str + indent + `Illegal object type: ${typeof (p)}`
+                    str = str + indent + `Illegal object type: ${typeof (p)}\n`
                 }
             }
         }

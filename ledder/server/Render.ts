@@ -26,6 +26,8 @@ export class Render {
 
     getStats() {
         let count = 0
+
+
         this.box.forEachPixel(() => {
             count++
         })

@@ -16,14 +16,14 @@ export default class DrawText extends Draw {
 
                 for (let row = 0; row < glyph.bitmap.height; row++) {
                     const offset = (row * glyph.bitmap.pitch)
-                    const bits = glyph.bitmap.buffer.readUInt8(offset)
+                    const bits = glyph.bitmap.buffer.readUInt16BE(offset)
                     for (let col = 0; col < glyph.bitmap.width; col++) {
 
                         const thisX = x + col + glyph.bitmapLeft
 //                        const thisY =  y + glyph.bitmapTop - row-1 + font.baseOffset
                         const thisY = y - glyph.bitmapTop + row + font.height-1 + font.baseOffset
 
-                        if (bits & (1 << (7 - col)))
+                        if (bits & (1 << (15 - col)))
                             this.add(new Pixel(thisX, thisY, color))
                     }
                 }
