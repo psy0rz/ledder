@@ -10,13 +10,14 @@ import {fontSelect} from "../../fonts.js"
 import Animator from "../../Animator.js"
 import Font from "../../Font.js"
 import Starfield from "../Components/Starfield.js"
+import {colorWhite} from "../../Colors.js"
 
 
 export default class Stijn extends Animator {
 
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) {
 
-        new Starfield().run(box, scheduler,controls)
+        new Starfield().run(box, scheduler, controls)
 
 
         /////////////// text
@@ -47,11 +48,23 @@ export default class Stijn extends Animator {
         //lamps on the background, so use a sepate container as a layer.
         //the texts above will be added to the display directly by FxMovie while running, so they will end up on top.
         let lampsLayer = new PixelList()
-        box.add(lampsLayer)
 
+        //big text
         const text1 = new DrawText(0, -1, font1, inputText1.text, colorText1).centerH(box)
+        if (controls.switch('White flash', true).enabled)
+            box.add(text1.copy().setColor(colorWhite)) //white flash
+        lampsLayer.add(text1)
+
+        //2 smaller texts
         const text2 = new DrawText(0, 15, font2, inputText2A.text, colorText2).centerH(box)
         text2.add(new DrawText(0, 15 + 8, font2, inputText2B.text, colorText2).centerH(box))
+        if (controls.switch('White flash', true).enabled)
+            box.add(text2.copy().setColor(colorWhite)) //white flash
+        lampsLayer.add(text2)
+
+        //lamp layer on top of background (white) text
+        box.add(lampsLayer)
+
 
         //call the blinker effect on the left and right lamps
         const blinker = new FxBlink(scheduler, lightControls, 6, 2, 3, true)
