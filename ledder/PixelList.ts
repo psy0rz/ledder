@@ -237,13 +237,14 @@ export default class PixelList extends Set<Pixel | PixelList> {
     }
 
     //set all pixels in this pixel tree to this color object
-    setColor(color:ColorInterface)
+    setColor(color:ColorInterface):PixelList
     {
         this.forEachPixel( (p)=>
         {
             p.color=color
         })
 
+        return (this)
     }
 
     //replace a color in this pixel tree
