@@ -37,6 +37,25 @@ export let displayList=[];
 //     new DisplayLedstream( 2, 8, 75, ["esp32-f008d161492c.local"], 65000, mapper), //painted board
 // ]
 
+///////// simple 8x32 x4 matrix zigzag
+/*let mastermatrix=new OffsetMapper(64,16)
+
+let matrixzigzagupper = new OffsetMapper(64, 8,false)
+matrixzigzagupper.zigZagY()
+matrixzigzagupper.flipY()
+mastermatrix.addGrid(matrixzigzagupper,0,0,0);
+
+let matrixzigzaglower= new OffsetMapper(64, 8,false)
+matrixzigzaglower.zigZagY()
+matrixzigzaglower.flipY()
+mastermatrix.addGrid(matrixzigzaglower,0,8,1);
+
+displayList.push(new DisplayQOISudp(mastermatrix, "192.168.1.142", 65000))
+//displayList.push(new DisplayQOISudp(matrixzigzag, "10.10.10.169", 65000))
+
+
+*/
+
 
 //default animation and preset
 export let animation="Tests/TestMatrix/default"
