@@ -70,12 +70,17 @@ export class DisplayQOISudp extends DisplayQOIS {
         // this.socket.connect(this.port, this.ips)
     }
 
+    //QOIS FRAME:
+    // - frame length: 2 bytes
+    // - display time: 2 bytes
+    // - QOIS encoded bytes
 
     //UDP PACKET:
-    //  [packetNr][reserved][current time (2 bytes)][syncoffset (2 bytes)][QOIS FRAME]
-    //
-    //QOIS FRAME:
-    // [display time (2 bytes)][QOIS encoded bytes]
+    // - packetNr: 1 byte
+    // - reserved: 1 bytes
+    // - current time: 2 bytes
+    // - syncoffset: 2 bytes (offset of next QOIS frame start)
+    // - [QOIS FRAMES]: multiple frames, until packet is full. can also be partial frame if its too big.
 
     frame(displayTime: number) {
 
