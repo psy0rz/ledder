@@ -6,9 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="7de4510b-f0e5-4402-9e95-cb9c8d6f6b3a" name="Changes" comment="fixes">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ledder/server/server.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/server/server.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/js/web/RunnerBrowser.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/js/web/RunnerBrowser.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/controls.svelte" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/controls.svelte" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -121,6 +118,7 @@
       <workItem from="1675840539826" duration="29594000" />
       <workItem from="1676034768472" duration="9420000" />
       <workItem from="1676107065659" duration="3524000" />
+      <workItem from="1679749946537" duration="613000" />
     </task>
     <task id="LOCAL-00001" summary="kjh">
       <created>1673098884534</created>

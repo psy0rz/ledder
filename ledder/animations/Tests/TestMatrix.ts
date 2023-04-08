@@ -19,6 +19,10 @@ export default class TestMatrix extends Animator {
      * Test display orientation, border limit, colors and smoothness.
      */
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) {
+            const fpsControl = controls.value("FPS", 60, 1, 120, 1)
+            fpsControl.onChange(() => {
+                scheduler.setFps(fpsControl.value)
+            })
 
         //color bar (R G B white)
         for (let x = 0; x < box.width(); x++) {
