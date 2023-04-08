@@ -6,7 +6,6 @@ import OffsetMapper from "./OffsetMapper.js"
 const qoisDataLength = 1460 - 6 //6 bytes package-frame overhead
 
 
-
 export class DisplayQOISudp extends DisplayQOIS {
 
     sockets: Array<dgram.Socket>
@@ -18,6 +17,7 @@ export class DisplayQOISudp extends DisplayQOIS {
 
     packetNr: number
     private bufferEmptyTime: number
+    private pixelsPerChannel: number
 
     /**
      * Matrix driver for https://github.com/psy0rz/ledstream
@@ -27,25 +27,26 @@ export class DisplayQOISudp extends DisplayQOIS {
      * @param mapper Offset mapper that determines the width and height, and which coordinate belongs to with offset in the display buffer.
      * @param ips IP address
      * @param port UDP port
+     * @param pixelsPerChannel Number of pixels per channel you want to use. Doesnt have to correspondent with how you compiled ledder, leds will be skipped/cropped. Or 0 to use all the leds available in the firmware.
      */
-    constructor(mapper:OffsetMapper, ips, port) {
+    constructor(mapper: OffsetMapper, ips, port, pixelsPerChannel = 0) {
         super(mapper)
-
 
 
         // this.defaultFrameTimeMicros=~~(1000000/1)
 
-        console.log("was" , this.defaultFrameTimeMicros)
+        console.log("was", this.defaultFrameTimeMicros)
 
-        this.frameRoundingMicros=1000
-        this.minFrameTimeMicros=~~(1000000/50)
-        this.defaultFrameTimeMicros=this.minFrameTimeMicros
+        this.frameRoundingMicros = 1000
+        this.minFrameTimeMicros = ~~(1000000 / 50)
+        this.defaultFrameTimeMicros = this.minFrameTimeMicros
 
         this.ips = ips
         this.port = port
         this.byteStream = []
         this.nextSyncOffset = 0
         this.packetNr = 0
+        this.pixelsPerChannel = pixelsPerChannel
 
         this.bufferEmptyTime = 0
 
@@ -60,7 +61,7 @@ export class DisplayQOISudp extends DisplayQOIS {
                 console.log(`server error:\n${err.stack}`)
             })
 
-            s.on('connect', (e)=>{
+            s.on('connect', (e) => {
 
                 s.setSendBufferSize(1)
 
@@ -72,6 +73,7 @@ export class DisplayQOISudp extends DisplayQOIS {
 
     //QOIS FRAME:
     // - frame length: 2 bytes
+    // - pixels per channel: 2 bytes
     // - display time: 2 bytes
     // - QOIS encoded bytes
 
@@ -84,19 +86,19 @@ export class DisplayQOISudp extends DisplayQOIS {
 
     frame(displayTime: number) {
 
-        displayTime=displayTime/1000
+        displayTime = displayTime / 1000
 
         const frameBytes = []
 
-        const maxFramesLag=6
-        const maxTimeLag=500
+        const maxFramesLag = 6
+        const maxTimeLag = 500
 
         //buffer this many frames
-        const lag = Math.min(maxTimeLag, maxFramesLag * this.defaultFrameTimeMicros/1000)
+        const lag = Math.min(maxTimeLag, maxFramesLag * this.defaultFrameTimeMicros / 1000)
 
         //try to full up packets, but dont wait longer than this time:
         // const maxWait= (lag/2)  * this.frameMs
-        const maxWait= ~~(lag/2)
+        const maxWait = ~~(lag / 2)
         // const maxWait=0
 
         const laggedTime = displayTime + lag
@@ -104,6 +106,10 @@ export class DisplayQOISudp extends DisplayQOIS {
         // //frame byte length
         frameBytes.push(0) //0
         frameBytes.push(0) //1
+
+        //pixels per channel
+        frameBytes.push(this.pixelsPerChannel & 0xff)
+        frameBytes.push((this.pixelsPerChannel >> 8) & 0xff)
 
         //time when to display frame
         frameBytes.push(laggedTime & 0xff)
@@ -123,7 +129,7 @@ export class DisplayQOISudp extends DisplayQOIS {
 
         //is it time to send, or packet is full?
 
-        while (((displayTime-this.bufferEmptyTime)>=maxWait && this.byteStream.length > 0) || this.byteStream.length >= qoisDataLength) {
+        while (((displayTime - this.bufferEmptyTime) >= maxWait && this.byteStream.length > 0) || this.byteStream.length >= qoisDataLength) {
             // if ( this.byteStream.length ) {
 
 
@@ -146,7 +152,7 @@ export class DisplayQOISudp extends DisplayQOIS {
                 //packet byte 2-3
                 //current time
                 packet.push(time & 0xff)
-                packet.push((time>>8) & 0xff)
+                packet.push((time >> 8) & 0xff)
 
                 //packet byte 4-5
                 //add current syncoffset
@@ -170,8 +176,8 @@ export class DisplayQOISudp extends DisplayQOIS {
             } catch (e) {
                 console.error("MatrixLedstream: error: " + e)
             }
-            if (this.byteStream.length==0)
-               this.bufferEmptyTime=displayTime
+            if (this.byteStream.length == 0)
+                this.bufferEmptyTime = displayTime
 
 
             // if (this.nextSyncOffset != 0) {
