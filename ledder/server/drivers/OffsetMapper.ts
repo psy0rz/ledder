@@ -74,6 +74,7 @@ export default class OffsetMapper extends Array {
 
     //Copy another mapper to this one, with certain offsets
     //Usefull for combining smaller displays into a bigger stacked one for example.
+    //NOTE: the order in which you call add doesnt matter.
     add(other: OffsetMapper, xOffset: number, yOffset: number, offset: Number) {
         for (let y = 0; y < other.height; y++)
             for (let x = 0; x < other.width; x++)
@@ -81,11 +82,12 @@ export default class OffsetMapper extends Array {
     }
 
     //Same as above, but now assume we're stacking a bunch of the same displays into a grid.
-    //A channel is just a the offset a full other display has.
+    //Displaynr starts at channel 0, and each display add the  nuber of pixels that other has to the offset.
     //Usefull with ledstream.
-    addGrid(other: OffsetMapper, gridX, gridY, channel)
+    //NOTE: the order in which you call addGrid doesnt matter.
+    addGrid(other: OffsetMapper, gridX, gridY, displayNr)
     {
-        this.add(other, gridX*other.width, gridY*other.height, channel * other.width * other.height)
+        this.add(other, gridX*other.width, gridY*other.height, displayNr * other.width * other.height)
 
     }
 

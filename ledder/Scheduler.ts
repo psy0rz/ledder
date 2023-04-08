@@ -36,7 +36,7 @@ export default class Scheduler {
         this.childScheduler = new Scheduler()
         this.childScheduler.setDefaultFrameTime(this.defaultFrameTimeMicros)
         this.childScheduler.setFrameTimeuS(this.frameTimeMicros)
-        return(this.childScheduler)
+        return (this.childScheduler)
     }
 
 
@@ -54,7 +54,6 @@ export default class Scheduler {
         this.onCleanupCallbacks = []
 
 
-
         this.frameNr = 0
         this.setFrameTimeuS(this.defaultFrameTimeMicros)
         this.intervals.clear()
@@ -68,6 +67,7 @@ export default class Scheduler {
 
     /* Never call this directly. Set by renderer
      * Default frametime thats set after a clear().
+     * Note that this is also the maximum fps that can be set by an animation.
      */
     public setDefaultFrameTime(frameTimeMicros) {
         this.defaultFrameTimeMicros = frameTimeMicros
@@ -126,11 +126,16 @@ export default class Scheduler {
      * Set to 0 to use default FPS of display driver
      */
     public setFrameTimeuS(frameTimeMicros) {
-        this.frameTimeMicros = ~~frameTimeMicros
+        if (frameTimeMicros < this.defaultFrameTimeMicros)
+            this.frameTimeMicros = this.defaultFrameTimeMicros
+        else
+            this.frameTimeMicros = ~~frameTimeMicros
 
     }
+
     /*
      * Same as above but in fps
+     * The actual FPS depends on the display driver. Some use rounding, and most have maximum limits.
      */
     public setFps(fps) {
         this.setFrameTimeuS(1000000 / fps)

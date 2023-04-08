@@ -6,51 +6,101 @@ import {DisplayQOISudp} from "./ledder/server/drivers/DisplayQOISudp.js"
 
 export let displayList = []
 
-/////////// simple 8x32 matrix zigzag
+/////////// single 8x32 matrix zigzag display
+// (channel0) --> (8x32 display)
 // let matrixzigzag = new OffsetMapper(32, 8, false)
 // matrixzigzag.zigZagY()
 // matrixzigzag.flipY()
-// displayList.push(new DisplayQOISudp(matrixzigzag, ["10.0.0.201"], 65000))
+// displayList.push(new DisplayQOISudp(matrixzigzag, ["192.168.13.137"], 65000,0))
 
+/////////// two 8x32 displays on two channels, stacked in length
+// (channel0) --> (8x32 left display)
+// (channel1) --> (8x32 right display)
+// let matrixzigzag = new OffsetMapper(32, 8, false)
+// matrixzigzag.zigZagY()
+// matrixzigzag.flipY()
+// let stackedMatrix=new OffsetMapper(64,8, false)
+// stackedMatrix.addGrid(matrixzigzag, 0,0,0)
+// stackedMatrix.addGrid(matrixzigzag, 1,0,1)
+// displayList.push(new DisplayQOISudp(stackedMatrix, ["192.168.13.137"], 65000,256))
 
+/////////// two 8x32 displays on two channels, stacked in height
+// (channel0) --> (8x32 top display)
+// (channel1) --> (8x32 bottom display)
+// let matrixzigzag = new OffsetMapper(32, 8, false)
+// matrixzigzag.zigZagY()
+// matrixzigzag.flipY()
+// let stackedMatrix=new OffsetMapper(32,16, false)
+// stackedMatrix.addGrid(matrixzigzag, 0,0,0)
+// stackedMatrix.addGrid(matrixzigzag, 0,1,1)
+// displayList.push(new DisplayQOISudp(stackedMatrix, ["192.168.13.137"], 65000,256))
 
-/////////// 10 stacked 8*32 matrixes
-// let displayWidth=8;
-// let displayHeight=32;
-// let stackWidth=10;
-// let stackHeight=1;
+/////////// two 8x32 displays on one channel, stacked in length
+// (channel0) --> (8x32 left display) --> (8x32 right display)
+// let matrixzigzag = new OffsetMapper(32, 8, false)
+// matrixzigzag.zigZagY()
+// matrixzigzag.flipY()
+// let stackedMatrix=new OffsetMapper(64,8, false)
+// stackedMatrix.addGrid(matrixzigzag, 0,0,0)
+// stackedMatrix.addGrid(matrixzigzag, 1,0,1)
+// displayList.push(new DisplayQOISudp(stackedMatrix, ["192.168.13.137"], 65000,512))
 
-// //mapper for one display unit
+/////////// two 8x32 displays on one channel, stacked in height
+// (channel0) --> (8x32 top display) --> (8x32 bottom display)
+// let matrixzigzag = new OffsetMapper(32, 8, false)
+// matrixzigzag.zigZagY()
+// matrixzigzag.flipY()
+// let stackedMatrix=new OffsetMapper(32,16, false)
+// stackedMatrix.addGrid(matrixzigzag, 0,0,0)
+// stackedMatrix.addGrid(matrixzigzag, 0,1,1)
+// displayList.push(new DisplayQOISudp(stackedMatrix, ["192.168.13.137"], 65000,512))
 
-// let right=new OffsetMapper(displayWidth,displayHeight, true);
-// right.zigZagX()
-// right.flipX()
-// right.flipY()
+/////////// four 8x32 displays on two channels
+// (channel0) --> (8x32 top left display) --> (8x32 top right display)
+// (channel1) --> (8x32 bottom left display) --> (8x32 bottom right display)
+// let matrixzigzag = new OffsetMapper(32, 8, false)
+// matrixzigzag.zigZagY()
+// matrixzigzag.flipY()
+// let stackedMatrix=new OffsetMapper(64,16, false)
+// stackedMatrix.addGrid(matrixzigzag, 0,0,0)
+// stackedMatrix.addGrid(matrixzigzag, 1,0,1)
+// stackedMatrix.addGrid(matrixzigzag, 0,1,2)
+// stackedMatrix.addGrid(matrixzigzag, 1,1,3)
+// displayList.push(new DisplayQOISudp(stackedMatrix, ["192.168.13.137"], 65000,512))
 
-// //the combined mapper that will contain all displays combined:
-// let grid=new OffsetMapper(displayWidth*stackWidth, displayHeight*stackHeight, false)
-// grid.addGrid(right, 0,0,0)
-// grid.addGrid(right, 1,0,1)
-
-// grid.addGrid(right, 2,0,4)
-// grid.addGrid(right, 3,0,5)
-
-// grid.addGrid(right, 4,0,2)
-// grid.addGrid(right, 5,0,3)
-
-// grid.addGrid(right, 6,0,8)
-// grid.addGrid(right, 7,0,9)
-
-// grid.addGrid(right, 8,0,6)
-// grid.addGrid(right, 9,0,7)
-
-// displayList.push(
-//     new DisplayQOISudp(grid, ["192.168.13.116"], 65000),
-//     // new DisplayQOISudp(grid, ["10.0.0.209"], 65000),
-//     // new DisplayQOISudp(grid, ["204.2.68.66"], 65000),
-// )
-
+/////////// use the maximum config: eight channels with 2 displays per channel.
+// let matrixzigzag = new OffsetMapper(32, 8, false)
+// matrixzigzag.zigZagY()
+// matrixzigzag.flipY()
+// let stackedMatrix=new OffsetMapper(32*2,8*8, false)
+// stackedMatrix.addGrid(matrixzigzag, 0,0,0)
+// stackedMatrix.addGrid(matrixzigzag, 1,0,1)
 //
+// stackedMatrix.addGrid(matrixzigzag, 0,1,2)
+// stackedMatrix.addGrid(matrixzigzag, 1,1,3)
+//
+// stackedMatrix.addGrid(matrixzigzag, 0,2,4)
+// stackedMatrix.addGrid(matrixzigzag, 1,2,5)
+//
+// stackedMatrix.addGrid(matrixzigzag, 0,3,6)
+// stackedMatrix.addGrid(matrixzigzag, 1,3,7)
+//
+// stackedMatrix.addGrid(matrixzigzag, 0,4,8)
+// stackedMatrix.addGrid(matrixzigzag, 1,4,9)
+//
+// stackedMatrix.addGrid(matrixzigzag, 0,5,10)
+// stackedMatrix.addGrid(matrixzigzag, 1,5,11)
+//
+// stackedMatrix.addGrid(matrixzigzag, 0,6,12)
+// stackedMatrix.addGrid(matrixzigzag, 1,6,13)
+//
+// stackedMatrix.addGrid(matrixzigzag, 0,7,14)
+// stackedMatrix.addGrid(matrixzigzag, 1,7,15)
+//
+//
+// displayList.push(new DisplayQOISudp(stackedMatrix, ["192.168.13.137"], 65000,512))
+
+
 /////////// normal landscape 75 x 8, left zigzagged ledstream:
 //  let mapper = new OffsetMapper(75, 8, true)
 //  mapper.zigZagX()
