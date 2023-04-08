@@ -11,6 +11,13 @@ Control in realtime via a webgui.
 
 LIVE DEMO: https://ledder.datux.nl
 
+## Hardware
+
+To control actual hardware use this in combination with DisplayQIOSUdp: https://github.com/psy0rz/ledstream
+
+The displayconf-example.js has examples on how to configure it.
+
+(We had raspberry, pixelflut and WLED drivers as well, but they are currenly broken)
 
 ## Quick start
 
