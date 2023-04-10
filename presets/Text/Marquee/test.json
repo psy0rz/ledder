@@ -2,9 +2,6 @@
  "title": "",
  "description": "",
  "values": {
-  "FPS": {
-   "value": 60
-  },
   "Font": {
    "selected": "C64"
   },
@@ -12,8 +9,8 @@
    "text": "Marquee  "
   },
   "Text color": {
-   "r": 33,
-   "g": 255,
+   "r": 255,
+   "g": 23,
    "b": 0,
    "a": 1
   },
@@ -31,8 +28,11 @@
    "Enabled": {
     "enabled": true
    },
+   "FPS": {
+    "value": 60
+   },
    "Rotate interval": {
-    "value": 2
+    "value": 60
    },
    "Rotate interval randomizer": {
     "value": 0
@@ -44,10 +44,10 @@
     "value": 0
    },
    "Circular": {
-    "enabled": true
+    "enabled": false
    },
-   "Whitespace": {
-    "value": 10
+   "Show one time only": {
+    "enabled": false
    }
   },
   "Flames": {
@@ -57,28 +57,7 @@
   },
   "Twinkle": {
    "Enabled": {
-    "enabled": true
-   },
-   "Color": {
-    "r": 255,
-    "g": 255,
-    "b": 255,
-    "a": 1
-   },
-   "Twinkle density": {
-    "value": 3
-   },
-   "Create randomizer %": {
-    "value": 50
-   },
-   "Random colors": {
     "enabled": false
-   },
-   "Fade out time": {
-    "value": 0
-   },
-   "Fade out time randomizer": {
-    "value": 30
    }
   },
   "Color pattern": {
@@ -90,6 +69,9 @@
    "Enabled": {
     "enabled": false
    }
+  },
+  "Font height": {
+   "value": 0
   }
  }
 }

@@ -118,16 +118,17 @@ export class DisplayQOISudp extends DisplayQOIS {
         frameBytes.push((laggedTime >> 8) & 0xff)
 
         //encodes current frame via QIOS into bytes
-        this.encode(frameBytes)
+        if (this.encode(frameBytes)  ) {
 
-        // //update frame byte length
-        frameBytes[0] = frameBytes.length & 0xff
-        frameBytes[1] = (frameBytes.length >> 8) & 0xff
+            // //update frame byte length
+            frameBytes[0] = frameBytes.length & 0xff
+            frameBytes[1] = (frameBytes.length >> 8) & 0xff
 
-        //the syncoffset is needed so that a display can pickup a stream thats already running, or if it lost packets
-        this.nextSyncOffset = this.nextSyncOffset + frameBytes.length
+            //the syncoffset is needed so that a display can pickup a stream thats already running, or if it lost packets
+            this.nextSyncOffset = this.nextSyncOffset + frameBytes.length
 
-        this.byteStream.push(...frameBytes)
+            this.byteStream.push(...frameBytes)
+        }
 
         //is it time to send, or packet is full?
 

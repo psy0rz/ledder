@@ -1,5 +1,4 @@
 import ColorInterface from "./ColorInterface.js"
-import {Col} from "framework7-svelte"
 
 export default class Color implements ColorInterface {
     r: number

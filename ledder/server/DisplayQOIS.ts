@@ -75,11 +75,11 @@ export abstract class DisplayQOIS extends Display {
     }
 
     //encodes current pixels by adding bytes to bytes array.
-    encode(bytes: Array<number>) {
+    encode(bytes: Array<number>):boolean {
         let prevPixel = colorBlack
         let run = 0
         let pixelCount = 1
-
+        let changed=false
 
         this.statsBytes -= bytes.length //substract header overhead
         for (let i = 0; i < this.pixelCount; i++) {
@@ -92,6 +92,24 @@ export abstract class DisplayQOIS extends Display {
                 pixel.g = this.gammaMapper[Math.round(c.g)]
                 pixel.b = this.gammaMapper[Math.round(c.b)]
             }
+
+            //whole frame is still unchanged compared to previous?
+            if (!changed)
+            {
+                if (this.prevPixels[i]===undefined) {
+                    changed = true;
+                }
+                else
+                {
+                    if (!this.prevPixels[i].equal(pixel))
+                    {
+                        changed = true;
+                    }
+
+                }
+            }
+            this.prevPixels[i]=pixel;
+
 
             if (pixel.equal(prevPixel)) {
                 run++
@@ -150,7 +168,6 @@ export abstract class DisplayQOIS extends Display {
         }
 
         //prepare for next frame
-        this.prevPixels = this.pixels
         this.pixels = []
 
         this.statsBytes += bytes.length
@@ -161,6 +178,8 @@ export abstract class DisplayQOIS extends Display {
         for (let i = 0; i < 64; i++) {
             this.index.push(colorBlack)
         }
+
+        return (changed)
 
 
     }

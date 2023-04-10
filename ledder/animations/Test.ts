@@ -12,29 +12,31 @@ import {colorRed} from "../Colors.js"
 import FxRotate from "../fx/FxRotate.js"
 import Pixel from "../Pixel.js"
 import Color from "../Color.js"
+import {flip} from "svelte/animate"
 
 
 export default class Test extends Animator {
 
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) {
 
-        scheduler.setFrameTimeuS(1000000)
+        const c = new Color(0,255, 0, 1)
+       const p=new Pixel(3,3,c)
 
-        const c=new Color(255,0,0,0.3)
-        box.add(new DrawBox(0,0,box.width(),32, c))
+        const c2 = new Color(255, 0, 0, 1)
+       const p2=new Pixel(3,3,c2)
 
-        let flip=true
-        while(1) {
-            await scheduler.delay(1)
+        scheduler.setFps(50)
+        while (1) {
+            box.add(p)
+            await scheduler.delay(50)
+            box.delete(p)
+            await scheduler.delay(50)
+            box.add(p2)
+            await scheduler.delay(10)
+            box.delete(p2)
+            await scheduler.delay(50)
 
 
-            // box.move(1,0)
-
-            flip=!flip
-            if (flip)
-                c.g=255
-            else
-                c.g=0
 
         }
 
