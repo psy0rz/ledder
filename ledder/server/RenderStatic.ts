@@ -8,11 +8,8 @@ export class RenderStatic extends Render {
      * Pre-render animation preview.
      * Display-class and caller are reponsible for saving the result somewhere.
      */
-    async render(animationName: string, presetName: string, maxFrames: number) {
-        this.animationManager.stop(false)
-        await this.animationManager.loadAnimation(animationName)
-        await this.animationManager.loadPreset(presetName)
-        this.animationManager.run()
+    async render(animationAndPresetPath: string, maxFrames: number) {
+        await this.animationManager.select(animationAndPresetPath, false)
 
         //render frames
         let displayTime = 0
