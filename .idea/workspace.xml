@@ -4,13 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7de4510b-f0e5-4402-9e95-cb9c8d6f6b3a" name="Changes" comment="docs">
+    <list default="true" id="7de4510b-f0e5-4402-9e95-cb9c8d6f6b3a" name="Changes" comment="fixes">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ledder/Color.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/Color.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ledder/ColorPatterns.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/ColorPatterns.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ledder/animations/Test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/animations/Test.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ledder/server/DisplayQOIS.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/server/DisplayQOIS.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ledder/server/drivers/DisplayQOISudp.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/server/drivers/DisplayQOISudp.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ledder/server/Render.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/server/Render.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ledder/server/RenderStatic.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/server/RenderStatic.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ledder/server/server.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/server/server.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/presets/Text/Marquee/test.json" beforeDir="false" afterPath="$PROJECT_DIR$/presets/Text/Marquee/test.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -125,8 +124,9 @@
       <workItem from="1675840539826" duration="29594000" />
       <workItem from="1676034768472" duration="9420000" />
       <workItem from="1676107065659" duration="3524000" />
-      <workItem from="1679749946537" duration="613000" />
-      <workItem from="1680961210276" duration="21270000" />
+      <workItem from="1678717876429" duration="5485000" />
+      <workItem from="1679667290828" duration="314000" />
+      <workItem from="1679667629267" duration="3548000" />
     </task>
     <task id="LOCAL-00001" summary="kjh">
       <created>1673098884534</created>
@@ -359,19 +359,19 @@
       <option name="project" value="LOCAL" />
       <updated>1676047952409</updated>
     </task>
-    <task id="LOCAL-00034" summary="fixes">
-      <created>1680969056111</created>
+    <task id="LOCAL-00034" summary="font size">
+      <created>1678720391217</created>
       <option name="number" value="00034" />
       <option name="presentableId" value="LOCAL-00034" />
       <option name="project" value="LOCAL" />
-      <updated>1680969056111</updated>
+      <updated>1678720391217</updated>
     </task>
-    <task id="LOCAL-00035" summary="docs">
-      <created>1680969608155</created>
+    <task id="LOCAL-00035" summary="fixes">
+      <created>1678722510863</created>
       <option name="number" value="00035" />
       <option name="presentableId" value="LOCAL-00035" />
       <option name="project" value="LOCAL" />
-      <updated>1680969608155</updated>
+      <updated>1678722510863</updated>
     </task>
     <option name="localTasksCounter" value="36" />
     <servers />
@@ -648,6 +648,8 @@
         <option value="$PROJECT_DIR$/ledder/fx/FxAutoTrace.js.map" />
         <option value="$PROJECT_DIR$/ledder/animations/Tests/TestFlip.js.map" />
         <option value="$PROJECT_DIR$/ledder/animations/Tests/TestFlip.js" />
+        <option value="$PROJECT_DIR$/ledder/animations/Lights/Stijn.js.map" />
+        <option value="$PROJECT_DIR$/ledder/animations/Lights/Stijn.js" />
       </list>
     </option>
   </component>
@@ -671,14 +673,15 @@
     <MESSAGE value="rename Animation to Animator (conflicted with existing class)" />
     <MESSAGE value="rneame" />
     <MESSAGE value="moved more stuff to render class" />
+    <MESSAGE value="docs" />
     <MESSAGE value="fixed autoreload" />
     <MESSAGE value="added image support" />
     <MESSAGE value="hackerhotel" />
     <MESSAGE value="hackerhotel wip" />
     <MESSAGE value="temporary cap at 50fps" />
+    <MESSAGE value="font size" />
     <MESSAGE value="fixes" />
-    <MESSAGE value="docs" />
-    <option name="LAST_COMMIT_MESSAGE" value="docs" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixes" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

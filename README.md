@@ -51,8 +51,9 @@ Takes a while, since it also has to render the previews the first time.
 
 * Webinterface stuff is under src/ Ignore it if you jusst want to play with leds and animations :)
 
-# Using ledder to create animations
+Its much easier if you have a good editor that does good autocompletion. (Its the main reason i'm using Webstorm)
 
+# Using ledder to create animations
 
 ## Pixels and colors
 

@@ -1,4 +1,5 @@
 //render base class
+//exposes the animationManager and controlGroup that may be accessed directly.
 import AnimationManager from "./AnimationManager.js"
 import ControlGroup from "../ControlGroup.js"
 import Display from "../Display.js"
