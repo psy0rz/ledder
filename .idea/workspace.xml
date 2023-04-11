@@ -6,11 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="7de4510b-f0e5-4402-9e95-cb9c8d6f6b3a" name="Changes" comment="fixes">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ledder/server/Render.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/server/Render.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ledder/server/RenderStatic.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/server/RenderStatic.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ledder/server/server.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/server/server.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/presets/Text/Marquee/test.json" beforeDir="false" afterPath="$PROJECT_DIR$/presets/Text/Marquee/test.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,23 +36,23 @@
     <option name="showExcludedFiles" value="false" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "main",
-    "last_opened_file_path": "/home/psy/WebstormProjects/ledder/ledder/animations/Tests",
-    "node.js.detected.package.eslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "editor.preferences.import",
-    "ts.external.directory.path": "/home/psy/WebstormProjects/ledder/node_modules/typescript/lib",
-    "typescript.add.unambiguous.imports.on.the.fly": "true",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/psy/WebstormProjects/ledder/ledder/animations/Tests&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;editor.preferences.import&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;/home/psy/WebstormProjects/ledder/node_modules/typescript/lib&quot;,
+    &quot;typescript.add.unambiguous.imports.on.the.fly&quot;: &quot;true&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/ledder/animations/Tests" />
@@ -127,6 +122,7 @@
       <workItem from="1678717876429" duration="5485000" />
       <workItem from="1679667290828" duration="314000" />
       <workItem from="1679667629267" duration="3548000" />
+      <workItem from="1681146481808" duration="2700000" />
     </task>
     <task id="LOCAL-00001" summary="kjh">
       <created>1673098884534</created>
