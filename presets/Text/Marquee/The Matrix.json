@@ -1,0 +1,152 @@
+{
+ "title": "",
+ "description": "",
+ "values": {
+  "Font": {
+   "selected": "C64"
+  },
+  "Text": {
+   "text": "NEO"
+  },
+  "Text color": {
+   "r": 100,
+   "g": 255,
+   "b": 172,
+   "a": 1
+  },
+  "Stars": {
+   "Enabled": {
+    "enabled": false
+   }
+  },
+  "Star field": {
+   "Enabled": {
+    "enabled": false
+   }
+  },
+  "Scrolling": {
+   "Enabled": {
+    "enabled": false
+   },
+   "FPS": {
+    "value": 60
+   },
+   "Rotate interval": {
+    "value": 2
+   },
+   "Rotate interval randomizer": {
+    "value": 0
+   },
+   "Rotate X step": {
+    "value": -1
+   },
+   "Rotate Y step": {
+    "value": 0
+   },
+   "Circular": {
+    "enabled": false
+   },
+   "Show one time only": {
+    "enabled": false
+   }
+  },
+  "Flames": {
+   "Enabled": {
+    "enabled": false
+   }
+  },
+  "Twinkle": {
+   "Enabled": {
+    "enabled": false
+   }
+  },
+  "Color pattern": {
+   "Enabled": {
+    "enabled": false
+   }
+  },
+  "Cursor": {
+   "Enabled": {
+    "enabled": true
+   },
+   "Color": {
+    "r": 0,
+    "g": 255,
+    "b": 174,
+    "a": 1
+   },
+   "X offset": {
+    "value": 2
+   },
+   "Y offset": {
+    "value": 5
+   },
+   "Height": {
+    "value": 2
+   },
+   "Width": {
+    "value": 5
+   },
+   "On time": {
+    "value": 30
+   },
+   "Off time": {
+    "value": 30
+   },
+   "Fade out time": {
+    "value": 0
+   },
+   "Fade out time randomizer": {
+    "value": 0
+   }
+  },
+  "Font height": {
+   "value": 0
+  },
+  "The Matrix": {
+   "Enabled": {
+    "enabled": true
+   },
+   "Head color": {
+    "r": 128,
+    "g": 128,
+    "b": 128,
+    "a": 1
+   },
+   "Tail color": {
+    "r": 0,
+    "g": 128,
+    "b": 0,
+    "a": 1
+   },
+   "Fall interval": {
+    "value": 5
+   },
+   "Create interval": {
+    "value": 10
+   },
+   "Slow trials (percent)": {
+    "value": 10
+   },
+   "Slow fall interval": {
+    "value": 10
+   },
+   "Fade head": {
+    "Fade out time": {
+     "value": 10
+    },
+    "Fade out time randomizer": {
+     "value": 5
+    }
+   },
+   "Fade tail": {
+    "Fade out time": {
+     "value": 30
+    },
+    "Fade out time randomizer": {
+     "value": 5
+    }
+   }
+  }
+ }
+}
