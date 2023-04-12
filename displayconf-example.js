@@ -14,13 +14,11 @@ export let displayList=[];
 
 
 /////////// normal landscape 75 x 8, left zigzagged ledstream:
-// let mapper = new OffsetMapper(75, 8, true)
-// mapper.zigZagX()
-// mapper.flipY()
-// displayList.push(
-//     // new DisplayLedstream( 2, 75, 8, ["esp32-240ac4973068.local"], 65000, mapper), //smokeplastic board
-//     new DisplayLedstream( 2, 75, 8, ["10.0.0.160"], 65000, mapper), //painted board
-// )
+let mapper328 = new OffsetMapper(32, 8, true)
+mapper328.zigZagX()
+mapper328.flipY()
+displayList.push(new DisplayQOISudp(mapper328, "192.168.1.169", 65000))
+
 //
 // ///////////// display pascal HSD
 // mapper = new OffsetMapper(18*4, 18, false)
@@ -38,7 +36,7 @@ export let displayList=[];
 // ]
 
 ///////// simple 8x32 x4 matrix zigzag
-/*let mastermatrix=new OffsetMapper(64,16)
+let mastermatrix=new OffsetMapper(64,16)
 
 let matrixzigzagupper = new OffsetMapper(64, 8,false)
 matrixzigzagupper.zigZagY()
@@ -54,7 +52,7 @@ displayList.push(new DisplayQOISudp(mastermatrix, "192.168.1.142", 65000))
 //displayList.push(new DisplayQOISudp(matrixzigzag, "10.10.10.169", 65000))
 
 
-*/
+
 
 
 //default animation and preset
