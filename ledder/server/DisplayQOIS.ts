@@ -23,6 +23,7 @@ function QOI_COLOR_HASH(C: Color) {
 export abstract class DisplayQOIS extends Display {
     protected pixelCount: number
 
+    private pixelsPerChannel: number
 
     private pixels: Array<Color>
     private prevPixels: Array<Color>
@@ -30,8 +31,10 @@ export abstract class DisplayQOIS extends Display {
     private statsBytes: number
     private mapper: OffsetMapper
 
-    constructor(mapper: OffsetMapper) {
+    constructor(mapper: OffsetMapper, pixelsPerChannel) {
         super(mapper.width, mapper.height)
+
+        this.pixelsPerChannel = pixelsPerChannel
 
         this.pixelCount = mapper.width * mapper.height
         this.mapper = mapper
@@ -59,9 +62,8 @@ export abstract class DisplayQOIS extends Display {
         const floor_y = ~~y
         const floor_x = ~~x
 
-        if (floor_x<0 || floor_y<0 || floor_x>=this.width || floor_y>=this.height)
+        if (floor_x < 0 || floor_y < 0 || floor_x >= this.width || floor_y >= this.height)
             return
-
 
 
         const offset = this.mapper[floor_x][floor_y]
@@ -75,18 +77,31 @@ export abstract class DisplayQOIS extends Display {
     }
 
     //encodes current pixels by adding bytes to bytes array.
-    encode(bytes: Array<number>):boolean {
+    encode(bytes: Array<number>, displayTime): boolean {
         let prevPixel = colorBlack
         let run = 0
         let pixelCount = 1
-        let changed=false
+        let changed = false
+
+        // //frame byte length
+        bytes.push(0) //0
+        bytes.push(0) //1
+
+        //pixels per channel
+        bytes.push(this.pixelsPerChannel & 0xff)
+        bytes.push((this.pixelsPerChannel >> 8) & 0xff)
+
+        //time when to display frame
+        bytes.push(displayTime & 0xff)
+        bytes.push((displayTime >> 8) & 0xff)
+
 
         this.statsBytes -= bytes.length //substract header overhead
         for (let i = 0; i < this.pixelCount; i++) {
 
             //gamma/brightness mapping
             const c = this.pixels[i]
-            let pixel = new Color(0,0,0,1)
+            let pixel = new Color(0, 0, 0, 1)
             if (c !== undefined) {
                 pixel.r = this.gammaMapper[Math.round(c.r)]
                 pixel.g = this.gammaMapper[Math.round(c.g)]
@@ -94,21 +109,17 @@ export abstract class DisplayQOIS extends Display {
             }
 
             //whole frame is still unchanged compared to previous?
-            if (!changed)
-            {
-                if (this.prevPixels[i]===undefined) {
-                    changed = true;
-                }
-                else
-                {
-                    if (!this.prevPixels[i].equal(pixel))
-                    {
-                        changed = true;
+            if (!changed) {
+                if (this.prevPixels[i] === undefined) {
+                    changed = true
+                } else {
+                    if (!this.prevPixels[i].equal(pixel)) {
+                        changed = true
                     }
 
                 }
             }
-            this.prevPixels[i]=pixel;
+            this.prevPixels[i] = pixel
 
 
             if (pixel.equal(prevPixel)) {
@@ -127,7 +138,7 @@ export abstract class DisplayQOIS extends Display {
 
                 // //its in index?
                 if (this.index[index_pos].equal(pixel)) {
-                // if(false) {
+                    // if(false) {
                     bytes.push(QOI_OP_INDEX | index_pos)
 
                 } else {
@@ -178,6 +189,11 @@ export abstract class DisplayQOIS extends Display {
         for (let i = 0; i < 64; i++) {
             this.index.push(colorBlack)
         }
+
+
+        // //update frame byte length
+        bytes[0] = bytes.length & 0xff
+        bytes[1] = (bytes.length >> 8) & 0xff
 
         return (changed)
 

@@ -17,7 +17,6 @@ export class DisplayQOISudp extends DisplayQOIS {
 
     packetNr: number
     private bufferEmptyTime: number
-    private pixelsPerChannel: number
 
     /**
      * Matrix driver for https://github.com/psy0rz/ledstream
@@ -31,7 +30,7 @@ export class DisplayQOISudp extends DisplayQOIS {
      * @param maxFps Maximum frames per second. This depends on the total leds and leds per channel (512 leds per channel is max 58fps or less). We use 50fps to be on the safe side. Keep an eye ledstream and see if the udpbuffer keeps overflowing.
      */
     constructor(mapper: OffsetMapper, ips, port, pixelsPerChannel = 0, maxFps=50) {
-        super(mapper)
+        super(mapper, pixelsPerChannel)
 
 
         // this.defaultFrameTimeMicros=~~(1000000/1)
@@ -48,7 +47,6 @@ export class DisplayQOISudp extends DisplayQOIS {
         this.byteStream = []
         this.nextSyncOffset = 0
         this.packetNr = 0
-        this.pixelsPerChannel = pixelsPerChannel
 
         this.bufferEmptyTime = 0
 
@@ -105,24 +103,8 @@ export class DisplayQOISudp extends DisplayQOIS {
 
         const laggedTime = displayTime + lag
 
-        // //frame byte length
-        frameBytes.push(0) //0
-        frameBytes.push(0) //1
-
-        //pixels per channel
-        frameBytes.push(this.pixelsPerChannel & 0xff)
-        frameBytes.push((this.pixelsPerChannel >> 8) & 0xff)
-
-        //time when to display frame
-        frameBytes.push(laggedTime & 0xff)
-        frameBytes.push((laggedTime >> 8) & 0xff)
-
         //encodes current frame via QIOS into bytes
-        if (this.encode(frameBytes)  ) {
-
-            // //update frame byte length
-            frameBytes[0] = frameBytes.length & 0xff
-            frameBytes[1] = (frameBytes.length >> 8) & 0xff
+        if (this.encode(frameBytes, laggedTime)  ) {
 
             //the syncoffset is needed so that a display can pickup a stream thats already running, or if it lost packets
             this.nextSyncOffset = this.nextSyncOffset + frameBytes.length

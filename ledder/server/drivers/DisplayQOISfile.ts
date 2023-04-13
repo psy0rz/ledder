@@ -12,19 +12,15 @@ export class DisplayQOISfile extends DisplayQOIS {
     /**
      * QOIS file driver, used in for https://github.com/psy0rz/ledstream
      * Instead of streaming via UDP like DisplayQOISudp, this one writes frames to a file which can be uploaded.
-     * Our side will create a list of pixels and send it to ledstream. (total of width * height pixels)
-     * Ledstream will send these pixels to the ledstrips, starting with the first channel and filling them all up.
-     * Use offset-mapper to make sure the pixels actually end up in the right position on your actual screen. :)
      * @param mapper Offset mapper that determines the width and height, and which coordinate belongs to with offset in the display buffer.
-     * @param ips IP address
-     * @param port UDP port
+     @param pixelsPerChannel Number of pixels per channel you want to use. Doesnt have to correspondent with how you compiled ledder, leds will be skipped/cropped. Or 0 to use all the leds available in the firmware.
      */
-    constructor(mapper: OffsetMapper) {
-        super(mapper)
+    constructor(mapper: OffsetMapper, pixelsPerChannel,maxFps=50) {
+        super(mapper, pixelsPerChannel)
 
+        this.minFrameTimeMicros = ~~(1000000 / maxFps)
+        this.defaultFrameTimeMicros = this.minFrameTimeMicros
 
-        this.frameRoundingMicros = 1000
-        this.minFrameTimeMicros = ~~(1000000 / 120)
 
 
     }
@@ -39,21 +35,7 @@ export class DisplayQOISfile extends DisplayQOIS {
 
         const frameBytes = []
 
-        // //frame byte length
-        frameBytes.push(0) //0
-        frameBytes.push(0) //1
-
-        //time when to display frame
-        frameBytes.push(displayTime & 0xff)
-        frameBytes.push((displayTime >> 8) & 0xff)
-
-        //encodes current frame via QIOS into bytes
-        this.encode(frameBytes)
-
-        // //update frame byte length
-        frameBytes[0] = frameBytes.length & 0xff
-        frameBytes[1] = (frameBytes.length >> 8) & 0xff
-
+        this.encode(frameBytes, displayTime)
 
         this.fh.write(new Uint8Array(frameBytes))
 
@@ -63,11 +45,10 @@ export class DisplayQOISfile extends DisplayQOIS {
     openFile(filePath: string) {
 
         // this.fh = await open(filePath, 'w')
-        this.fh=createWriteStream(filePath)
+        this.fh = createWriteStream(filePath)
     }
 
-     closeFile()
-    {
+    closeFile() {
         this.fh.close()
     }
 }
