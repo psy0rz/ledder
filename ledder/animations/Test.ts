@@ -32,7 +32,7 @@ export default class Test extends Animator {
             box.delete(p)
             await scheduler.delay(50)
             box.add(p2)
-            await scheduler.delay(10)
+            await scheduler.delay(1)
             box.delete(p2)
             await scheduler.delay(50)
 

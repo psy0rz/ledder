@@ -13,6 +13,7 @@ import FxFlames from "../../fx/FxFlames.js"
 import Animator from "../../Animator.js"
 import FxTwinkle from "../../fx/FxTwinkle.js"
 import FxColorPattern from "../../fx/FxColorPattern.js"
+import TheMatrix from "../MovieFx/TheMatrix.js"
 
 
 export default class Marquee extends Animator {
@@ -35,13 +36,17 @@ export default class Marquee extends Animator {
 
         let starsGroup = control.group("Stars", false, false)
         if (starsGroup.switch('Enabled', false).enabled) {
-console.log(starsGroup)
             new MovingStars().run(box, scheduler, starsGroup)
         }
 
         let starFieldGroup = control.group("Star field", false, false)
         if (starFieldGroup.switch('Enabled', false).enabled) {
             new Starfield().run(box, scheduler, starFieldGroup)
+        }
+
+        let theMatrixGroup = control.group("The Matrix", false, false)
+        if (theMatrixGroup.switch('Enabled', false).enabled) {
+            new TheMatrix().run(box, scheduler, theMatrixGroup)
         }
 
 
@@ -118,7 +123,7 @@ console.log(starsGroup)
 
         let cursorGroup = control.group("Cursor")
         if (cursorGroup.switch('Enabled', false).enabled) {
-            const cursorColor = cursorGroup.color("Color", 128, 128, 128).copy()
+            const cursorColor = cursorGroup.color("Color", 128, 128, 128, 1, true).copy()
             const cursorX = cursorGroup.value("X offset", 2, 0, 100, 1, true)
             const cursorY = cursorGroup.value("Y offset", 1, 0, 100, 1, true)
             const cursorH = cursorGroup.value("Height", 6, 0, 100, 1, true)
