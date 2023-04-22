@@ -1,0 +1,21 @@
+{
+ "title": "",
+ "description": "",
+ "values": {
+  "Text color": {
+   "r": 64,
+   "g": 22,
+   "b": 0,
+   "a": 1
+  },
+  "Fractal interval": {
+   "value": 1
+  },
+  "Font": {
+   "selected": "C64"
+  },
+  "Font height": {
+   "value": 0
+  }
+ }
+}
