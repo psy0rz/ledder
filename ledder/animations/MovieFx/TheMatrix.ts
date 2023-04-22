@@ -16,24 +16,28 @@ import PixelBox from "../../PixelBox.js"
 import Scheduler from "../../Scheduler.js"
 import ControlGroup from "../../ControlGroup.js"
 import Animator from "../../Animator.js"
+import PixelList from "../../PixelList.js"
 
 export default class TheMatrix extends Animator {
 
 
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) {
 
-        const startColor = controls.color("Start color", 255, 255, 255)
+        const headColor = controls.color("Head color", 128, 128, 128)
         const tailColor = controls.color("Tail color", 0, 128, 0)
         const speed = controls.value("Fall interval", 5, 1, 30, 0.1)
-        const createinterval = controls.value("Create interval", 1, 1, 40, 1)
+        const createinterval = controls.value("Create interval", 10, 1, 40, 1)
 
         const slowprecentage = controls.value("Slow trials (percent)", 10, 0, 100, 1)
         const speedSlow = controls.value("Slow fall interval", 10, 1, 100, 1)
 
-        const fxFadeStart = new FxFadeOut(scheduler, controls.group("Fade start"), 10, 5)
+        const fxFadeHead = new FxFadeOut(scheduler, controls.group("Fade head"), 10, 5)
         const fxFadeTail = new FxFadeOut(scheduler, controls.group("Fade tail"), 30, 5)
 
         let trails = []
+
+        const container = new PixelList()
+        box.add(container)
 
         //interval to start new trails
         scheduler.intervalControlled(createinterval, () => {
@@ -59,22 +63,22 @@ export default class TheMatrix extends Animator {
             scheduler.interval(thisSpeed, () => {
 
                 //add pixel to trail
-                if (y < box.yMax) {
+                if (y <= box.yMax) {
 
-                    let c1 = new Color(startColor.r, startColor.g, startColor.b)
+                    let c1 = new Color(headColor.r, headColor.g, headColor.b)
                     const p1 = new Pixel(x, y, c1)
 
                     let c2 = new Color(tailColor.r, tailColor.g, tailColor.b)
                     const p2 = new Pixel(x, y, c2)
 
                     //layered approach with alpha bending
-                    box.add(p2)
-                    box.add(p1)
+                    container.add(p2)
+                    container.add(p1)
 
-                    fxFadeStart.run(c1).then(() => {
-                        box.delete(p1)
+                    fxFadeHead.run(c1).then(() => {
+                        container.delete(p1)
                         fxFadeTail.run(c2).then(() => {
-                            box.delete(p2)
+                            container.delete(p2)
                         })
                     })
                 } else {

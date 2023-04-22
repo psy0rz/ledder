@@ -1,0 +1,46 @@
+{
+ "title": "",
+ "description": "",
+ "values": {
+  "Head color": {
+   "r": 62,
+   "g": 255,
+   "b": 97,
+   "a": 1
+  },
+  "Tail color": {
+   "r": 255,
+   "g": 0,
+   "b": 167,
+   "a": 1
+  },
+  "Fall interval": {
+   "value": 6.4
+  },
+  "Create interval": {
+   "value": 7
+  },
+  "Slow trials (percent)": {
+   "value": 10
+  },
+  "Slow fall interval": {
+   "value": 17
+  },
+  "Fade head": {
+   "Fade out time": {
+    "value": 24
+   },
+   "Fade out time randomizer": {
+    "value": 0
+   }
+  },
+  "Fade tail": {
+   "Fade out time": {
+    "value": 27
+   },
+   "Fade out time randomizer": {
+    "value": 13
+   }
+  }
+ }
+}
