@@ -68,6 +68,7 @@ stackedMatrix.addGrid(matrixzigzag, 0,1,2)
 stackedMatrix.addGrid(matrixzigzag, 1,1,3)
 displayList.push(new DisplayQOISudp(stackedMatrix, ["192.168.13.142"], 65000,512))
 
+
 /////////// use the maximum config: eight channels with 2 displays per channel.
 // let matrixzigzag = new OffsetMapper(32, 8, false)
 // matrixzigzag.zigZagY()
