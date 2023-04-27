@@ -1,5 +1,6 @@
-import express from "express";
+import express, {Express} from "express"
 import expressWs from "express-ws";
+
 import {JSONRPCClient, JSONRPCServer, JSONRPCServerAndClient} from "json-rpc-2.0";
 import {Rpc} from "../../src/js/Rpc.js";
 import {WsContext} from "./WsContext.js";
@@ -16,13 +17,17 @@ export class RpcServer extends Rpc {
 
     server: JSONRPCServerAndClient<WsContext, WsContext>;
     idCount: number
+    public app: Express
+
+
 
     constructor() {
         super();
 
         console.log("Creating RPC server")
 
-        const app = express()
+        this.app = express()
+
         const port = 3000
 
         this.idCount=0
@@ -33,10 +38,10 @@ export class RpcServer extends Rpc {
                 server: {middlewareMode: "html"},
 
             }).then(vite => {
-                app.use(vite.middlewares)
+                this.app.use(vite.middlewares)
             })
         }
-        expressWs(app);
+        expressWs(this.app);
 
         // let lastWs;
 
@@ -52,7 +57,8 @@ export class RpcServer extends Rpc {
             })
         );
 
-        app.ws('/ws', (ws, req) => {
+        // @ts-ignore
+        this.app.ws('/ws', (ws, req) => {
             this.idCount++
             let context = new WsContext(ws, this.server, this.idCount)
 
@@ -76,12 +82,12 @@ export class RpcServer extends Rpc {
 
 
         //allow acces to presets dir to get preview-files
-        app.use("/presets", express.static("presets"));
+        this.app.use("/presets", express.static("presets"));
 
         if (process.env.NODE_ENV != 'development')
-            app.use(express.static("www"));
+            this.app.use(express.static("www"));
 
-        app.listen(port, () => {
+        this.app.listen(port, () => {
             console.log(`Listening at http://localhost:${port}`)
         })
 

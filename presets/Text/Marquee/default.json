@@ -6,7 +6,7 @@
    "selected": "C64"
   },
   "Text": {
-   "text": "Marquee  "
+   "text": "Dit is een test"
   },
   "Text color": {
    "r": 255,
@@ -29,10 +29,10 @@
     "enabled": true
    },
    "FPS": {
-    "value": 60
+    "value": 61
    },
    "Rotate interval": {
-    "value": 2
+    "value": 10
    },
    "Rotate interval randomizer": {
     "value": 0
@@ -69,6 +69,60 @@
    "Enabled": {
     "enabled": false
    }
+  },
+  "Font height": {
+   "value": 0
+  },
+  "The Matrix": {
+   "Enabled": {
+    "enabled": false
+   },
+   "Head color": {
+    "r": 128,
+    "g": 128,
+    "b": 128,
+    "a": 1
+   },
+   "Tail color": {
+    "r": 0,
+    "g": 128,
+    "b": 0,
+    "a": 1
+   },
+   "Fall interval": {
+    "value": 5
+   },
+   "Create interval": {
+    "value": 10
+   },
+   "Slow trials (percent)": {
+    "value": 10
+   },
+   "Slow fall interval": {
+    "value": 10
+   },
+   "Fade head": {
+    "Fade out time": {
+     "value": 10
+    },
+    "Fade out time randomizer": {
+     "value": 5
+    }
+   },
+   "Fade tail": {
+    "Fade out time": {
+     "value": 30
+    },
+    "Fade out time randomizer": {
+     "value": 5
+    }
+   }
+  },
+  "blursteps": {
+   "value": 12
+  },
+  "Blur percentage": {
+   "value": 300
   }
  }
 }

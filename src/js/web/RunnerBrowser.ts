@@ -130,6 +130,12 @@ export class RunnerBrowser {
         await this.refreshAnimationList()
 
     }
+
+    //staticly render animation on server and stream it to browser via regular HTTP, while uploading it to ESP via regular HTTP :)
+    async uploadStatic()
+    {
+
+    }
 }
 
 export let runnerBrowser = new RunnerBrowser()

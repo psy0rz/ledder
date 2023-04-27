@@ -7,9 +7,7 @@ import {config} from "./config.js"
 import {presetStore} from "./PresetStore.js"
 import {previewStore} from "./PreviewStore.js"
 import {RenderStatic} from "./RenderStatic.js"
-import {DisplayQOISfile} from "./drivers/DisplayQOISfile.js"
-import OffsetMapper from "./drivers/OffsetMapper.js"
-
+import {DisplayQOISstream} from "./drivers/DisplayQOISstream.js"
 
 
 const settingsControl = new ControlGroup('Global settings')
@@ -48,7 +46,6 @@ for (const m of config.displayList) {
 //RPC bindings
 let rpc = new RpcServer()
 
-
 rpc.addMethod("presetStore.loadAnimationPresetList", async (params) => {
     return await presetStore.loadAnimationPresetList()
 })
@@ -82,9 +79,9 @@ rpc.addMethod("animationManager.select", async (params, context) => {
     //live?
     // if (params[1]) {
 
-        for (const runner of renderLoops) {
-            await runner.animationManager.select(params[0], false)
-        }
+    for (const runner of renderLoops) {
+        await runner.animationManager.select(params[0], false)
+    }
     // }
 })
 
@@ -95,9 +92,9 @@ rpc.addMethod("animationManager.updateValue", async (params, context) => {
 
     //live
     // if (params[1]) {
-        for (const runner of renderLoops) {
-            await runner.animationManager.updateValue(params[0], params[1])
-        }
+    for (const runner of renderLoops) {
+        await runner.animationManager.updateValue(params[0], params[1])
+    }
     // }
 })
 
@@ -120,9 +117,15 @@ rpc.addMethod("settings.updateValue", async (params, context) => {
 })
 
 
-rpc.addMethod("static.upload", async (params, context) => {
+rpc.app.get('/render',async  (req, resp) => {
+    const display:DisplayQOISstream = config.staticDisplayList[0]
+    display.writeCallback=(data)=>{resp.write(data)}
+    display.gammaMapper=gammaMapper
+
+    const renderer = new RenderStatic(display)
+    await renderer.animationManager.select("Tests/TestMatrix/default", false)
+    await renderer.render(60)
+    resp.end()
 
 
 })
-
-
