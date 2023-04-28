@@ -6,12 +6,12 @@
    "selected": "ORG v01"
   },
   "Text": {
-   "text": "Hack42"
+   "text": "hack42"
   },
   "Text color": {
-   "r": 100,
-   "g": 255,
-   "b": 172,
+   "r": 128,
+   "g": 122,
+   "b": 255,
    "a": 1
   },
   "Stars": {

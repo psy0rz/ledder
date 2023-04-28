@@ -4,14 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7de4510b-f0e5-4402-9e95-cb9c8d6f6b3a" name="Changes" comment="fixes">
-      <change afterPath="$PROJECT_DIR$/ledder/server/DisplayDeviceStore.ts" afterDir="false" />
+    <list default="true" id="7de4510b-f0e5-4402-9e95-cb9c8d6f6b3a" name="Changes" comment="offline static animations work now \o/">
+      <change afterPath="$PROJECT_DIR$/ledder/animations/Logos/hack42.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ledder/animations/Text/Marquee.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/animations/Text/Marquee.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ledder/server/server.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/server/server.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/devices/B4:E6:2D:CA:ED:F1.json" beforeDir="false" afterPath="$PROJECT_DIR$/devices/B4:E6:2D:CA:ED:F1.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ledder/animations/Logos/HSD.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/animations/Logos/HSD.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/presets/Text/Marquee/The Matrix.json" beforeDir="false" afterPath="$PROJECT_DIR$/presets/Text/Marquee/The Matrix.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Display.svelte" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Display.svelte" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/categories.svelte" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/categories.svelte" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,7 +46,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
     "git-widget-placeholder": "main",
-    "last_opened_file_path": "/home/psy/WebstormProjects/ledder/ledder/animations/Tests",
+    "last_opened_file_path": "/home/psy/WebstormProjects/ledder/ledder/animations/Logos",
     "node.js.detected.package.eslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
@@ -61,9 +59,9 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/ledder/animations/Logos" />
       <recent name="$PROJECT_DIR$/ledder/animations/Tests" />
       <recent name="$PROJECT_DIR$/ledder/fx" />
-      <recent name="$PROJECT_DIR$/ledder/animations/Logos" />
       <recent name="$PROJECT_DIR$/ledder/draw" />
       <recent name="$PROJECT_DIR$/ledder/server" />
     </key>
@@ -75,7 +73,7 @@
       <recent name="$PROJECT_DIR$/ledder/server/DisplayDeviceInfo.ts" />
     </key>
   </component>
-  <component name="RunManager" selected="Node.js.webdev server.js">
+  <component name="RunManager" selected="Node.js.server.js">
     <configuration name="buildpreviews.js" type="NodeJSConfigurationType" application-parameters="-- -f" nameIsGenerated="true" path-to-js-file="ledder/server/buildpreviews.js" working-dir="$PROJECT_DIR$">
       <method v="2">
         <option name="TypeScript.Before.Run" enabled="true" FAIL_ON_ERROR="true" />
@@ -146,7 +144,7 @@
       <workItem from="1682368463336" duration="1653000" />
       <workItem from="1682496898070" duration="83000" />
       <workItem from="1682579391813" duration="651000" />
-      <workItem from="1682584270376" duration="23252000" />
+      <workItem from="1682584270376" duration="26447000" />
     </task>
     <task id="LOCAL-00001" summary="kjh">
       <created>1673098884534</created>
@@ -414,7 +412,14 @@
       <option name="project" value="LOCAL" />
       <updated>1682584528269</updated>
     </task>
-    <option name="localTasksCounter" value="39" />
+    <task id="LOCAL-00039" summary="offline static animations work now \o/">
+      <created>1682684335193</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1682684335193</updated>
+    </task>
+    <option name="localTasksCounter" value="40" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -693,6 +698,8 @@
         <option value="$PROJECT_DIR$/ledder/draw/DrawBlur.js.map" />
         <option value="$PROJECT_DIR$/ledder/server/DisplayDeviceStore.js.map" />
         <option value="$PROJECT_DIR$/ledder/server/DisplayDeviceStore.js" />
+        <option value="$PROJECT_DIR$/ledder/animations/Logos/hack42.js" />
+        <option value="$PROJECT_DIR$/ledder/animations/Logos/hack42.js.map" />
       </list>
     </option>
     <option name="includedJSSourcePackages">
@@ -731,7 +738,8 @@
     <MESSAGE value="fixed the matrix movie fx" />
     <MESSAGE value="more the matrix stuff" />
     <MESSAGE value="fixes" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixes" />
+    <MESSAGE value="offline static animations work now \o/" />
+    <option name="LAST_COMMIT_MESSAGE" value="offline static animations work now \o/" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
