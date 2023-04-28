@@ -11,35 +11,43 @@ import Starfield from "../Components/Starfield.js"
 
 
 
-const logo = `
-.#.#.
-#####
-.#.#.
-#####.#..##.
-.#.#.##.#..#
-....#.#...#.
-....####.#..
-......#.####
+const hack = `
+#...#..###...###.#...#..........
+#...#.#...#.#....#...#..........
+#...#.#...#.#....#..#...........
+#####.#####.#....###............
+#...#.#...#.#....#..#...........
+#...#.#...#.#....#...#..........
+#...#.#...#..###.#...#..........
 `
+
+
+const _42 = `
+................................
+................................
+.........................#...##.
+........................##..#..#
+.......................#.#....#.
+.......................####..#..
+.........................#..####
+
+`
+
 
 export default class HSD extends Animator {
 
 
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) {
 
-        const colorControl=controls.color("Logo color", 0x16,0x16,0x50)
+        const colorHack=controls.color("Hack color", 0x16,0x16,0x50)
+        const color42=controls.color("42 color",  0x82,0x82,0xa1)
 
         // new Starfield().run(box,scheduler,controls)
 
         new TheMatrix().run(box,scheduler, controls)
 
-        const logoBox=new DrawAsciiArt(0,0, colorControl, logo).center(box)
-
-        box.add(logoBox)
-
-
-
-
+        box.add(new DrawAsciiArt(0,0, colorHack, hack))
+        box.add(new DrawAsciiArt(0,0, color42, _42))
 
 
     }
