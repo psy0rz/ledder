@@ -6,7 +6,7 @@
    "selected": "C64"
   },
   "Text": {
-   "text": "NEO"
+   "text": "hack"
   },
   "Text color": {
    "r": 100,
@@ -79,13 +79,13 @@
     "value": 2
    },
    "Y offset": {
-    "value": 5
+    "value": 1
    },
    "Height": {
-    "value": 2
+    "value": 5
    },
    "Width": {
-    "value": 5
+    "value": 2
    },
    "On time": {
     "value": 30

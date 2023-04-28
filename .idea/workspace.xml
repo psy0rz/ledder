@@ -4,19 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7de4510b-f0e5-4402-9e95-cb9c8d6f6b3a" name="Changes" comment="more the matrix stuff">
-      <change afterPath="$PROJECT_DIR$/ledder/draw/DrawBlur.ts" afterDir="false" />
+    <list default="true" id="7de4510b-f0e5-4402-9e95-cb9c8d6f6b3a" name="Changes" comment="fixes">
+      <change afterPath="$PROJECT_DIR$/ledder/server/DisplayDeviceStore.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ledder/animations/Text/Marquee.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/animations/Text/Marquee.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ledder/draw/DrawText.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/draw/DrawText.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ledder/server/RenderStatic.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/server/RenderStatic.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ledder/server/RpcServer.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/server/RpcServer.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ledder/server/drivers/DisplayQOISfile.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/server/drivers/DisplayQOISstream.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ledder/server/server.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/server/server.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/presets/Text/Marquee/default.json" beforeDir="false" afterPath="$PROJECT_DIR$/presets/Text/Marquee/default.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/js/web/RunnerBrowser.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/js/web/RunnerBrowser.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/presets/Text/Marquee/The Matrix.json" beforeDir="false" afterPath="$PROJECT_DIR$/presets/Text/Marquee/The Matrix.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Display.svelte" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Display.svelte" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/categories.svelte" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/categories.svelte" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,23 +42,23 @@
     <option name="showExcludedFiles" value="false" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/psy/WebstormProjects/ledder/ledder/animations/Tests&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;editor.preferences.import&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;/home/psy/WebstormProjects/ledder/node_modules/typescript/lib&quot;,
-    &quot;typescript.add.unambiguous.imports.on.the.fly&quot;: &quot;true&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "/home/psy/WebstormProjects/ledder/ledder/animations/Tests",
+    "node.js.detected.package.eslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "ts.external.directory.path": "/home/psy/WebstormProjects/ledder/node_modules/typescript/lib",
+    "typescript.add.unambiguous.imports.on.the.fly": "true",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/ledder/animations/Tests" />
@@ -75,8 +70,12 @@
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/ledder" />
     </key>
+    <key name="es6.move.members.recent.items">
+      <recent name="$PROJECT_DIR$/ledder/server/DisplayDeviceStore.ts" />
+      <recent name="$PROJECT_DIR$/ledder/server/DisplayDeviceInfo.ts" />
+    </key>
   </component>
-  <component name="RunManager" selected="Node.js.server.js">
+  <component name="RunManager" selected="Node.js.webdev server.js">
     <configuration name="buildpreviews.js" type="NodeJSConfigurationType" application-parameters="-- -f" nameIsGenerated="true" path-to-js-file="ledder/server/buildpreviews.js" working-dir="$PROJECT_DIR$">
       <method v="2">
         <option name="TypeScript.Before.Run" enabled="true" FAIL_ON_ERROR="true" />
@@ -147,6 +146,7 @@
       <workItem from="1682368463336" duration="1653000" />
       <workItem from="1682496898070" duration="83000" />
       <workItem from="1682579391813" duration="651000" />
+      <workItem from="1682584270376" duration="23252000" />
     </task>
     <task id="LOCAL-00001" summary="kjh">
       <created>1673098884534</created>
@@ -407,7 +407,14 @@
       <option name="project" value="LOCAL" />
       <updated>1681338999586</updated>
     </task>
-    <option name="localTasksCounter" value="38" />
+    <task id="LOCAL-00038" summary="fixes">
+      <created>1682584528269</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1682584528269</updated>
+    </task>
+    <option name="localTasksCounter" value="39" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -684,6 +691,8 @@
         <option value="$PROJECT_DIR$/ledder/server/drivers/DisplayQOISstream.js" />
         <option value="$PROJECT_DIR$/ledder/draw/DrawBlur.js" />
         <option value="$PROJECT_DIR$/ledder/draw/DrawBlur.js.map" />
+        <option value="$PROJECT_DIR$/ledder/server/DisplayDeviceStore.js.map" />
+        <option value="$PROJECT_DIR$/ledder/server/DisplayDeviceStore.js" />
       </list>
     </option>
     <option name="includedJSSourcePackages">
@@ -719,10 +728,10 @@
     <MESSAGE value="hackerhotel wip" />
     <MESSAGE value="temporary cap at 50fps" />
     <MESSAGE value="font size" />
-    <MESSAGE value="fixes" />
     <MESSAGE value="fixed the matrix movie fx" />
     <MESSAGE value="more the matrix stuff" />
-    <option name="LAST_COMMIT_MESSAGE" value="more the matrix stuff" />
+    <MESSAGE value="fixes" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixes" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

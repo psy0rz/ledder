@@ -61,7 +61,8 @@ export default class Marquee extends Animator {
 
 
         //add on top of stars
-        box.add(blurredScrollContainer)
+        // box.add(blurredScrollContainer)
+        box.add(scrollContainer)
 
         let scrollGroup = control.group("Scrolling")
         let rotatorPromise
@@ -112,46 +113,46 @@ export default class Marquee extends Animator {
         }
 
 
-        const blurcontrol = control.value('Blur factor', 1, 0, 3, 0.1)
-
-
-        //XXX:move to seperate fx
-        scheduler.interval(1, () => {
-            const index = scrollContainer.index()
-
-            const rotateInterval=scrollGroup.value('Rotate interval').value
-
-            const blurStep =(1/rotateInterval)*blurcontrol.value
-
-            blurredScrollContainer.forEachPixel((blurred) => {
-
-
-                let p = undefined
-
-                if (index[blurred.x] != undefined)
-                    p = index[blurred.x][blurred.y]
-
-                if (p == undefined) {
-                    //pixel is gone, fade out
-                    blurred.color.a = blurred.color.a - blurStep
-                    if (blurred.color.a < 0)
-                        blurred.color.a = 0
-
-                } else {
-                    //fade is on, take over color and fade in
-                    blurred.color.r = p.color.r
-                    blurred.color.g = p.color.g
-                    blurred.color.b = p.color.b
-
-                    blurred.color.a = blurred.color.a + blurStep
-                    if (blurred.color.a > 1)
-                        blurred.color.a = 1
-                }
-
-
-            })
-
-        })
+        // const blurcontrol = control.value('Blur factor', 1, 0, 3, 0.1)
+        //
+        //
+        // //XXX:move to seperate fx
+        // scheduler.interval(1, () => {
+        //     const index = scrollContainer.index()
+        //
+        //     const rotateInterval=scrollGroup.value('Rotate interval').value
+        //
+        //     const blurStep =(1/rotateInterval)*blurcontrol.value
+        //
+        //     blurredScrollContainer.forEachPixel((blurred) => {
+        //
+        //
+        //         let p = undefined
+        //
+        //         if (index[blurred.x] != undefined)
+        //             p = index[blurred.x][blurred.y]
+        //
+        //         if (p == undefined) {
+        //             //pixel is gone, fade out
+        //             blurred.color.a = blurred.color.a - blurStep
+        //             if (blurred.color.a < 0)
+        //                 blurred.color.a = 0
+        //
+        //         } else {
+        //             //fade is on, take over color and fade in
+        //             blurred.color.r = p.color.r
+        //             blurred.color.g = p.color.g
+        //             blurred.color.b = p.color.b
+        //
+        //             blurred.color.a = blurred.color.a + blurStep
+        //             if (blurred.color.a > 1)
+        //                 blurred.color.a = 1
+        //         }
+        //
+        //
+        //     })
+        //
+        // })
 
 
         let flameGroup = control.group("Flames", false, false)

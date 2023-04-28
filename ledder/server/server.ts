@@ -8,6 +8,7 @@ import {presetStore} from "./PresetStore.js"
 import {previewStore} from "./PreviewStore.js"
 import {RenderStatic} from "./RenderStatic.js"
 import {DisplayQOISstream} from "./drivers/DisplayQOISstream.js"
+import {displayDeviceStore} from "./DisplayDeviceStore.js"
 
 
 const settingsControl = new ControlGroup('Global settings')
@@ -117,14 +118,36 @@ rpc.addMethod("settings.updateValue", async (params, context) => {
 })
 
 
-rpc.app.get('/render',async  (req, resp) => {
-    const display:DisplayQOISstream = config.staticDisplayList[0]
-    display.writeCallback=(data)=>{resp.write(data)}
-    display.gammaMapper=gammaMapper
+
+//display device stuff (regular http GET requests)
+rpc.app.get('/get/status/:id', async (req, resp) => {
+    console.log(`Seen display device ${req.params.id}`)
+
+    resp.send(
+        await displayDeviceStore.load(req.params.id).catch((e) => {
+            console.error(e)
+            resp.status(500).send(e)
+
+        })
+    )
+
+
+})
+
+rpc.app.get('/get/render/:id', async (req, resp) => {
+
+    let deviceInfo=await displayDeviceStore.load(req.params.id)
+
+    //XXX:fix me, now only supports first display
+    const display: DisplayQOISstream = config.staticDisplayList[0]
+    display.writeCallback = (data) => {
+        resp.write(data)
+    }
+    display.gammaMapper = gammaMapper
 
     const renderer = new RenderStatic(display)
-    await renderer.animationManager.select("Tests/TestMatrix/default", false)
-    await renderer.render(60)
+    await renderer.animationManager.select(deviceInfo.animation, false)
+    await renderer.render(60*60)
     resp.end()
 
 
