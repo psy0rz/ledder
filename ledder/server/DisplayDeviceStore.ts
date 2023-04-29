@@ -1,63 +1,75 @@
-import {readFile, rm, writeFile} from "fs/promises"
+// import {JSONFile} from "lowdb/lib/adapters/node/JSONFile.js"
+import {Low} from "lowdb"
+import {JSONFile} from 'lowdb/node'
+import path from "path"
+import glob from "glob-promise"
 
 export type DisplayDeviceInfo =
     {
-        id: string,
         name: string,
         timestamp: number,
         animation: string
     }
 
+export type DisplayDeviceInfoDb = Record<string, DisplayDeviceInfo>
 
 export class DisplayDeviceStore {
-    devicePath: string
+    private db: Low<DisplayDeviceInfoDb>
 
-    constructor(devicePath: string = "devices") {
-        this.devicePath = devicePath
+    constructor() {
+// Configure lowdb to write data to JSON file
+        const adapter = new JSONFile<DisplayDeviceInfoDb>("devices.json")
+        const defaultData = {}
+        this.db = new Low(adapter, defaultData)
 
 
     }
 
-    deviceFileName(id: string) {
-        let strippedId = id.replace(/[^a-zA-Z0-9:]/g, '')
+    async read() {
+        await this.db.read()
 
-        return (`${this.devicePath}/${strippedId}.json`)
     }
 
-    async load(id: string): Promise<DisplayDeviceInfo> {
+    async get(id: string): Promise<DisplayDeviceInfo> {
 
-        try {
-            return JSON.parse(await readFile(this.deviceFileName(id), 'utf8'))
-        } catch (e) {
-            //default if doesnt exist
-            let newDevice= {
-                name: id,
-                id: id,
-                timestamp: 0,
-                animation: ""
-            }
+        if (id in this.db.data)
+            return (this.db.data[id])
 
-            await this.save(newDevice)
-            return newDevice
 
+        //defaults
+        let newDev = {
+            name: id,
+            timestamp: 0,
+            animation: ""
         }
 
+        await this.write(id, newDev)
+
+        return newDev
+
     }
+
 
     async delete(id: string) {
-        await rm(this.deviceFileName(id))
+        delete this.db.data[id]
+        await this.db.write()
 
     }
 
 
-    async save(deviceInfo: DisplayDeviceInfo) {
+    async write(id: string, deviceInfo: DisplayDeviceInfo) {
 
-        await writeFile(
-            this.deviceFileName(deviceInfo.id),
-            JSON.stringify(deviceInfo, undefined, ' '), 'utf8'
-        )
+        this.db.data[id] = deviceInfo
+        await this.db.write()
+    }
+
+    async list() {
+
+        return Object.keys(this.db.data).map(key => ({id: key, ...this.db.data[key]}))
+
     }
 
 }
 
-export let displayDeviceStore=new DisplayDeviceStore()
+export let displayDeviceStore = new DisplayDeviceStore()
+displayDeviceStore.read()
