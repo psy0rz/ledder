@@ -6,12 +6,15 @@ import glob from "glob-promise"
 
 export type DisplayDeviceInfo =
     {
+        id?: string,
         name: string,
         timestamp: number,
         animation: string
     }
 
 export type DisplayDeviceInfoDb = Record<string, DisplayDeviceInfo>
+
+export type DisplayDeviceInfoList=Array<DisplayDeviceInfo>
 
 export class DisplayDeviceStore {
     private db: Low<DisplayDeviceInfoDb>
@@ -63,7 +66,7 @@ export class DisplayDeviceStore {
         await this.db.write()
     }
 
-    async list() {
+    async list():Promise<DisplayDeviceInfoList> {
 
         return Object.keys(this.db.data).map(key => ({id: key, ...this.db.data[key]}))
 

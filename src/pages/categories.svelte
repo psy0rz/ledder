@@ -59,7 +59,7 @@
                         if ($svelteLive) runnerBrowser.send();
                     }}
                 />
-                <MenuItem dropdown link
+                <MenuItem dropdown
                           tite="Preview size"
                           iconMd="material:view_comfy"
                 >
@@ -76,11 +76,11 @@
                     </MenuDropdown>
                 </MenuItem>
             </Menu>
-            <Searchbar
-                    bind:value={search}
-                    searchContainer=".search-list"
-                    searchIn=".item-title"
-            />
+<!--            <Searchbar-->
+<!--                    bind:value={search}-->
+<!--                    searchContainer=".search-list"-->
+<!--                    searchIn=".item-title"-->
+<!--            />-->
         </Subnavbar>
     </Navbar>
 

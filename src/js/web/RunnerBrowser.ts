@@ -1,5 +1,5 @@
 import {rpc} from "./RpcClient.js"
-import {svelteAnimations, sveltePresets, svelteLive} from "./svelteStore.js"
+import {svelteAnimations, sveltePresets, svelteLive, svelteDisplayDeviceInfoList} from "./svelteStore.js"
 import {confirmPromise, info, promptPromise} from "./util.js"
 import {DisplayCanvas} from "./DisplayCanvas.js"
 import {tick} from "svelte"
@@ -21,18 +21,17 @@ export class RunnerBrowser {
 
 
     async init() {
-        this.presets={}
+        this.presets = {}
         sveltePresets.set(new ControlGroup())
 
-        rpc.addMethod('control.reset', async ()=>
-        {
+        rpc.addMethod('control.reset', async () => {
             // console.log("Reset controls")
-            this.presets={}
+            this.presets = {}
             sveltePresets.set(new ControlGroup())
             await tick()
         })
 
-        rpc.addMethod('control.add', async (params)=>{
+        rpc.addMethod('control.add', async (params) => {
 
             // console.log("Add control", params[0])
 
@@ -41,21 +40,18 @@ export class RunnerBrowser {
         })
 
 
-
     }
 
-    async setSize(width, height, zoom)
-    {
+    async setSize(width, height, zoom) {
 
-       // await rpc.request('context.stopPreview')
-        rpc.display = new DisplayCanvas(width, height, zoom, '#ledder-display', '.ledder-display-box');
+        // await rpc.request('context.stopPreview')
+        rpc.display = new DisplayCanvas(width, height, zoom, '#ledder-display', '.ledder-display-box')
         await rpc.request('context.startPreview', width, height)
         await this.send()
 
     }
 
-    async stopPreview()
-    {
+    async stopPreview() {
         await rpc.request('context.stopPreview')
 
     }
@@ -65,11 +61,9 @@ export class RunnerBrowser {
      */
     async send() {
         if (this.animationName) {
-                await rpc.request("animationManager.select", this.animationName+"/"+ this.presetName, svelteLive);
+            await rpc.request("animationManager.select", this.animationName + "/" + this.presetName, svelteLive)
         }
     }
-
-
 
 
     /**
@@ -87,8 +81,13 @@ export class RunnerBrowser {
     }
 
     async refreshAnimationList() {
-        const list=await rpc.request("presetStore.loadAnimationPresetList")
+        const list = await rpc.request("presetStore.loadAnimationPresetList")
         svelteAnimations.set(list)
+    }
+
+    async refreshDisplayDeviceInfoList() {
+        const list = await rpc.request("displayDeviceStore.list")
+        svelteDisplayDeviceInfoList.set(list)
     }
 
 
@@ -121,7 +120,7 @@ export class RunnerBrowser {
 
         await confirmPromise('Delete preset', 'Do you want to delete preset: ' + this.presetName)
 
-        await rpc.request("animationManager.delete");
+        await rpc.request("animationManager.delete")
         info("Deleted preset " + this.presetName, "", 2000)
 
         this.presetName = ""
@@ -132,8 +131,7 @@ export class RunnerBrowser {
     }
 
     //staticly render animation on server and stream it to browser via regular HTTP, while uploading it to ESP via regular HTTP :)
-    async uploadStatic()
-    {
+    async uploadStatic() {
 
     }
 }
