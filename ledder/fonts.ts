@@ -34,9 +34,10 @@ export function fontSelect(control:ControlGroup, name='Font', selected='C64' , h
 
     const fontControl = control.select(name, selected, choices, true)
     const heightControl = control.value(name+ ' height', heightOffset,0,100,1, true)
+    const widthControl = control.value(name+ ' width', heightOffset,0,100,1, true)
 
     const f=fonts[fontControl.selected]
-    const fontCopy = new Font(f.name, f.filename, f.width, f.height + heightControl.value, f.baseOffset)
+    const fontCopy = new Font(f.name, f.filename, f.width+widthControl.value, f.height + heightControl.value, f.baseOffset)
     fontCopy.load()
     return (fontCopy)
 }
