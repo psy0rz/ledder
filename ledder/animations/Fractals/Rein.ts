@@ -46,11 +46,14 @@ export default class <Rein> extends Animator {
         let zoomy=1;
         let zoomfactor=0.99
         let hotspotSel=0
+        let zoomMax=5
         let hotspots=[
-            { cx:-0.545000, cy:-0.610000},
-          //  { cx:-1.226, xy:-0.380},
-            { cx:-0.980000, cy:-0.278000},
-            { cx:-0.108000, cy:-0.925000}
+            {cx:-0.15554376019751, cy:-0.65010365004009, maxz:8.76},
+            {cx:0.13614939178535, cy:-0.66905589958398,maxz:13.76},
+            { cx:0.081159563329829,      cy:-0.62558306990165, maxz:11.14},
+            { cx:0.25347098330532, cy:-0.00032872330789825,maxz:10.64},
+            { cx:-1.0658884716107, cy:-0.25431284056064,maxz:13.27},
+            { cx:-1.0657340413104, cy:-0.25412076186408,maxz:15}
         ]
      
         scheduler.intervalControlled(fractalintervalControl, (frameNr) => {
@@ -59,7 +62,7 @@ export default class <Rein> extends Animator {
             zoomx=zoomx*zoomfactor; 
             zoomy=zoomy*zoomfactor;
             if (zoomx<0.000000001) { zoomfactor=1.01; } //zoom in
-            if (zoomx>5) { zoomfactor=0.99;  hotspotSel=hotspotSel+1;} //zoom out
+            if (zoomx>zoomMax) { zoomfactor=0.99;  hotspotSel=hotspotSel+1;} //zoom out
             if (hotspotSel>=hotspots.length) {hotspotSel=0; zoomx=1; zoomy=1;}
 
             //read settings
@@ -67,6 +70,7 @@ export default class <Rein> extends Animator {
            
             //hotspotSel=counter%4
             let hotspot=hotspots[hotspotSel]
+            zoomMax=Math.pow(10,hotspot.maxz)
             let REAL_SET = { start:hotspot.cx-zoomx , end:hotspot.cx+zoomx }
             let IMAGINARY_SET = { start: hotspot.cy-zoomy, end: hotspot.cy+zoomy }
             
