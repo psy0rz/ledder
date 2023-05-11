@@ -1,0 +1,40 @@
+{
+ "title": "",
+ "description": "",
+ "values": {
+  "Color Palette": {
+   "selected": "Rainbow"
+  },
+  "Color Palette range": {
+   "from": 17,
+   "to": 100
+  },
+  "Fractal interval": {
+   "value": 1
+  },
+  "zoom min": {
+   "value": 0.1
+  },
+  "zoom max": {
+   "value": 6.800000000000001
+  },
+  "zoomspeed": {
+   "value": 0.02
+  },
+  "random move": {
+   "enabled": false
+  },
+  "invert color palette": {
+   "enabled": false
+  },
+  "pixel decay": {
+   "value": 0.2
+  },
+  "max iterations": {
+   "value": 2000
+  },
+  "Color smoothness": {
+   "value": 11
+  }
+ }
+}

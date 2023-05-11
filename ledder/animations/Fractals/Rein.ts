@@ -49,11 +49,13 @@ export default class <Rein> extends Animator {
         let zoomMax=5
         let hotspots=[
             {cx:-0.15554376019751, cy:-0.65010365004009, maxz:8.76},
-            {cx:0.13614939178535, cy:-0.66905589958398,maxz:13.76},
-            { cx:0.081159563329829,      cy:-0.62558306990165, maxz:11.14},
+            {cx:-1.1785276064604, cy:0.30096231141302,maxz:8.90},
+            {cx:0.13614939178535, cy:-0.66905589958398,maxz:10.76},
+            { cx:0.081159563329829,      cy:-0.62558306990165, maxz:10.14},
             { cx:0.25347098330532, cy:-0.00032872330789825,maxz:10.64},
-            { cx:-1.0658884716107, cy:-0.25431284056064,maxz:13.27},
-            { cx:-1.0657340413104, cy:-0.25412076186408,maxz:15}
+            { cx:-1.0658884716107, cy:-0.25431284056064,maxz:10.27},
+            { cx:-1.0657340413104, cy:-0.25412076186408,maxz:10},
+            { cx:-1.1780691868827, cy:0.30014031883977,maxz:15}
         ]
      
         scheduler.intervalControlled(fractalintervalControl, (frameNr) => {
@@ -85,15 +87,16 @@ export default class <Rein> extends Animator {
                         y: IMAGINARY_SET.start + (y / box.height()) * (IMAGINARY_SET.end - IMAGINARY_SET.start)
                     }
                     const [m, isMandelbrotSet] = this.mandelbrot(complex);
-                    if (m!=false)
+                    (m!=false)
                     {
-                        let colornum=+m % (colors.length-1)
+                        let mp=parseInt(m.toString())
+                        let colornum=+(mp*11) % (colors.length-1)
                         let color= colors[colornum];
                         
                          let pixel = new Pixel(x,y,color);
                           box.add(pixel);
                         
-                    }
+                   }
                    
                 }
             }
