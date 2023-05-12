@@ -5,11 +5,12 @@ import {Render} from "./Render.js"
  */
 export class RenderStatic extends Render {
     /*
-     * Pre-render animation preview.
-     * Display-class and caller are reponsible for saving the result somewhere.
+     * Pre-render animation preview to writable
+
      */
-    async render(animationAndPresetPath: string, maxFrames: number) {
-        await this.animationManager.select(animationAndPresetPath, false)
+    async render( maxFrames: number) {
+        // await this.animationManager.select(animationAndPresetPath, false)
+
 
         //render frames
         let displayTime = 0

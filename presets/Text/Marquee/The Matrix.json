@@ -3,10 +3,10 @@
  "description": "",
  "values": {
   "Font": {
-   "selected": "C64"
+   "selected": "ORG v01"
   },
   "Text": {
-   "text": "NEO"
+   "text": "Hack42"
   },
   "Text color": {
    "r": 100,
@@ -79,13 +79,13 @@
     "value": 2
    },
    "Y offset": {
-    "value": 5
+    "value": 1
    },
    "Height": {
-    "value": 2
+    "value": 5
    },
    "Width": {
-    "value": 5
+    "value": 2
    },
    "On time": {
     "value": 30

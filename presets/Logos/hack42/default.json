@@ -1,0 +1,58 @@
+{
+ "title": "",
+ "description": "",
+ "values": {
+  "Hack color": {
+   "r": 97,
+   "g": 97,
+   "b": 255,
+   "a": 1
+  },
+  "42 color": {
+   "r": 150,
+   "g": 150,
+   "b": 215,
+   "a": 1
+  },
+  "Head color": {
+   "r": 109,
+   "g": 109,
+   "b": 109,
+   "a": 1
+  },
+  "Tail color": {
+   "r": 0,
+   "g": 97,
+   "b": 0,
+   "a": 1
+  },
+  "Fall interval": {
+   "value": 5
+  },
+  "Create interval": {
+   "value": 10
+  },
+  "Slow trials (percent)": {
+   "value": 10
+  },
+  "Slow fall interval": {
+   "value": 10
+  },
+  "Fade head": {
+   "Fade out time": {
+    "value": 10
+   },
+   "Fade out time randomizer": {
+    "value": 5
+   }
+  },
+  "Fade tail": {
+   "Fade out time": {
+    "value": 30
+   },
+   "Fade out time randomizer": {
+    "value": 5
+   }
+  }
+ }
+}

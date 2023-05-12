@@ -4,10 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7de4510b-f0e5-4402-9e95-cb9c8d6f6b3a" name="Changes" comment="fixed the matrix movie fx">
+    <list default="true" id="7de4510b-f0e5-4402-9e95-cb9c8d6f6b3a" name="Changes" comment="explain references">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ledder/animations/MovieFx/TheMatrix.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/animations/MovieFx/TheMatrix.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ledder/animations/Text/Marquee.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/animations/Text/Marquee.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ledder/animations/Components/Landscape.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/animations/Components/Landscape.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ledder/server/DisplayDeviceStore.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/server/DisplayDeviceStore.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/js/web/RunnerBrowser.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/js/web/RunnerBrowser.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/js/web/svelteStore.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/js/web/svelteStore.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/categories.svelte" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/categories.svelte" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,12 +48,12 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/psy/WebstormProjects/ledder/ledder/animations/Tests&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/psy/WebstormProjects/ledder/ledder/animations/Logos&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;editor.preferences.import&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
     &quot;ts.external.directory.path&quot;: &quot;/home/psy/WebstormProjects/ledder/node_modules/typescript/lib&quot;,
     &quot;typescript.add.unambiguous.imports.on.the.fly&quot;: &quot;true&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
@@ -57,17 +61,21 @@
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/ledder/animations/Logos" />
       <recent name="$PROJECT_DIR$/ledder/animations/Tests" />
       <recent name="$PROJECT_DIR$/ledder/fx" />
-      <recent name="$PROJECT_DIR$/ledder/animations/Logos" />
       <recent name="$PROJECT_DIR$/ledder/draw" />
       <recent name="$PROJECT_DIR$/ledder/server" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/ledder" />
     </key>
+    <key name="es6.move.members.recent.items">
+      <recent name="$PROJECT_DIR$/ledder/server/DisplayDeviceStore.ts" />
+      <recent name="$PROJECT_DIR$/ledder/server/DisplayDeviceInfo.ts" />
+    </key>
   </component>
-  <component name="RunManager" selected="Node.js.server.js">
+  <component name="RunManager" selected="Node.js.webdev server.js">
     <configuration name="buildpreviews.js" type="NodeJSConfigurationType" application-parameters="-- -f" nameIsGenerated="true" path-to-js-file="ledder/server/buildpreviews.js" working-dir="$PROJECT_DIR$">
       <method v="2">
         <option name="TypeScript.Before.Run" enabled="true" FAIL_ON_ERROR="true" />
@@ -126,7 +134,21 @@
       <workItem from="1679667629267" duration="3548000" />
       <workItem from="1681146481808" duration="2700000" />
       <workItem from="1681212590417" duration="6671000" />
-      <workItem from="1681335901866" duration="2489000" />
+      <workItem from="1681335901866" duration="4093000" />
+      <workItem from="1681389442117" duration="687000" />
+      <workItem from="1681477405057" duration="12453000" />
+      <workItem from="1681668331419" duration="12389000" />
+      <workItem from="1681775812877" duration="15000" />
+      <workItem from="1681776683746" duration="598000" />
+      <workItem from="1681823049094" duration="2000" />
+      <workItem from="1682247375229" duration="6000" />
+      <workItem from="1682277544630" duration="14000" />
+      <workItem from="1682368463336" duration="1653000" />
+      <workItem from="1682496898070" duration="83000" />
+      <workItem from="1682579391813" duration="651000" />
+      <workItem from="1682584270376" duration="26447000" />
+      <workItem from="1682701910037" duration="892000" />
+      <workItem from="1682937998392" duration="7928000" />
     </task>
     <task id="LOCAL-00001" summary="kjh">
       <created>1673098884534</created>
@@ -380,7 +402,35 @@
       <option name="project" value="LOCAL" />
       <updated>1681227319488</updated>
     </task>
-    <option name="localTasksCounter" value="37" />
+    <task id="LOCAL-00037" summary="more the matrix stuff">
+      <created>1681338999586</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1681338999586</updated>
+    </task>
+    <task id="LOCAL-00038" summary="fixes">
+      <created>1682584528269</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1682584528269</updated>
+    </task>
+    <task id="LOCAL-00039" summary="offline static animations work now \o/">
+      <created>1682684335193</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1682684335193</updated>
+    </task>
+    <task id="LOCAL-00040" summary="explain references">
+      <created>1682761967601</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1682761967601</updated>
+    </task>
+    <option name="localTasksCounter" value="41" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -481,14 +531,12 @@
         <option value="$PROJECT_DIR$/ledder/ValueInterface.js.map" />
         <option value="$PROJECT_DIR$/ledder/Colors.js.map" />
         <option value="$PROJECT_DIR$/ledder/ControlInput.js.map" />
-        <option value="$PROJECT_DIR$/ledder/server/drivers/DisplayQOISfile.js.map" />
         <option value="$PROJECT_DIR$/ledder/message.js" />
         <option value="$PROJECT_DIR$/ledder/ControlColor.js.map" />
         <option value="$PROJECT_DIR$/ledder/fonts.js" />
         <option value="$PROJECT_DIR$/ledder/BoxInterface.js.map" />
         <option value="$PROJECT_DIR$/ledder/utils.js.map" />
         <option value="$PROJECT_DIR$/ledder/Draw.js.map" />
-        <option value="$PROJECT_DIR$/ledder/server/drivers/DisplayQOISfile.js" />
         <option value="$PROJECT_DIR$/ledder/ControlSwitch.js.map" />
         <option value="$PROJECT_DIR$/ledder/PixelBox.js" />
         <option value="$PROJECT_DIR$/ledder/PresetValues.js.map" />
@@ -655,7 +703,20 @@
         <option value="$PROJECT_DIR$/ledder/animations/Tests/TestFlip.js" />
         <option value="$PROJECT_DIR$/ledder/animations/Lights/Stijn.js.map" />
         <option value="$PROJECT_DIR$/ledder/animations/Lights/Stijn.js" />
+        <option value="$PROJECT_DIR$/ledder/server/drivers/DisplayQOISstream.js.map" />
+        <option value="$PROJECT_DIR$/ledder/server/drivers/DisplayQOISstream.js" />
+        <option value="$PROJECT_DIR$/ledder/draw/DrawBlur.js" />
+        <option value="$PROJECT_DIR$/ledder/draw/DrawBlur.js.map" />
+        <option value="$PROJECT_DIR$/ledder/server/DisplayDeviceStore.js.map" />
+        <option value="$PROJECT_DIR$/ledder/server/DisplayDeviceStore.js" />
+        <option value="$PROJECT_DIR$/ledder/animations/Logos/hack42.js" />
+        <option value="$PROJECT_DIR$/ledder/animations/Logos/hack42.js.map" />
       </list>
+    </option>
+    <option name="includedJSSourcePackages">
+      <set>
+        <option value="json-rpc-2.0" />
+      </set>
     </option>
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -685,9 +746,12 @@
     <MESSAGE value="hackerhotel wip" />
     <MESSAGE value="temporary cap at 50fps" />
     <MESSAGE value="font size" />
-    <MESSAGE value="fixes" />
     <MESSAGE value="fixed the matrix movie fx" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixed the matrix movie fx" />
+    <MESSAGE value="more the matrix stuff" />
+    <MESSAGE value="fixes" />
+    <MESSAGE value="offline static animations work now \o/" />
+    <MESSAGE value="explain references" />
+    <option name="LAST_COMMIT_MESSAGE" value="explain references" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

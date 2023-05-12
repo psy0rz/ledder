@@ -72,7 +72,7 @@ const pixel=new Pixel(3,3, color)
 
 Just a list of pixels. Its actually just a Set() with extras.
 
-They are very important and used for all kinds of things:
+They are very important and used for all kinds of things. Adding a pixel to a list:
 
 ```typescript
 const pixels=new PixelList()
@@ -96,6 +96,26 @@ pixeltree:
 ```
 
 Its setup this way so that we can add/remove sets of huge pixelLists and still have high performance. (Since you're only adding/removing references.)
+
+
+## Everythings a reference
+
+Its important to remember that variables in javascript are actually references to objects.
+
+![](doc/referencememe.png)
+
+For example:
+```typescript
+let color1=new Color(255,0,0)
+let color2=color1;
+```
+Now color1 and color2 both point to the same Color object. If you manipulate color1, then color2 will be changed as well.  
+
+Ledder extensively makes use of this: If you add a pixel to a pixelList, you're actually adding a reference to that pixel.
+
+If we run an effect on a Color-Object, that same color object is most likely used by multiple Pixels.
+
+To create an actual copy you can use the copy() function on most objects.
 
 ## Animators
 

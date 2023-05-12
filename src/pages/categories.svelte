@@ -59,11 +59,12 @@
                         if ($svelteLive) runnerBrowser.send();
                     }}
                 />
-                <MenuItem dropdown link
+                <MenuItem dropdown
                           tite="Preview size"
                           iconMd="material:view_comfy"
                 >
                     <MenuDropdown>
+                        <MenuDropdownItem link text="32x8" on:click={ ()=>runnerBrowser.setSize(32, 8, 8)}/>
                         <MenuDropdownItem link text="75x8" on:click={ ()=>runnerBrowser.setSize(75, 8, 8)}/>
                         <MenuDropdownItem link text="72x18" on:click={ ()=>runnerBrowser.setSize(72, 18, 8)}/>
                         <MenuDropdownItem link text="75x16" on:click={ ()=>runnerBrowser.setSize(75, 16, 8)}/>
@@ -75,11 +76,11 @@
                     </MenuDropdown>
                 </MenuItem>
             </Menu>
-            <Searchbar
-                    bind:value={search}
-                    searchContainer=".search-list"
-                    searchIn=".item-title"
-            />
+<!--            <Searchbar-->
+<!--                    bind:value={search}-->
+<!--                    searchContainer=".search-list"-->
+<!--                    searchIn=".item-title"-->
+<!--            />-->
         </Subnavbar>
     </Navbar>
 

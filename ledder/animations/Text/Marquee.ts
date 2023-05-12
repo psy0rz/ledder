@@ -14,6 +14,9 @@ import Animator from "../../Animator.js"
 import FxTwinkle from "../../fx/FxTwinkle.js"
 import FxColorPattern from "../../fx/FxColorPattern.js"
 import TheMatrix from "../MovieFx/TheMatrix.js"
+import DrawBlur from "../../draw/DrawBlur.js"
+import Color from "../../Color.js"
+import {unpack_destructuring} from "svelte/types/compiler/compile/nodes/shared/Context.js"
 
 
 export default class Marquee extends Animator {
@@ -28,11 +31,18 @@ export default class Marquee extends Animator {
         const input = control.input('Text', "Marquee  ", true)
         const colorControl = control.color("Text color", 0x21, 0xff, 0, 1)
         const charPixels = new DrawText(box.xMin, box.yMin, font, input.text, colorControl)
+
+
         charPixels.centerV(box)
 
         //scroll everything thats in this container (if enabled)
         const scrollContainer = new PixelList()
         scrollContainer.add(charPixels)
+
+        const blurredScrollContainer = new PixelList()
+        const off = new Color(0, 0, 0, 0)
+        const raster = blurredScrollContainer.raster(box, off)
+
 
         let starsGroup = control.group("Stars", false, false)
         if (starsGroup.switch('Enabled', false).enabled) {
@@ -51,6 +61,7 @@ export default class Marquee extends Animator {
 
 
         //add on top of stars
+        // box.add(blurredScrollContainer)
         box.add(scrollContainer)
 
         let scrollGroup = control.group("Scrolling")
@@ -100,6 +111,49 @@ export default class Marquee extends Animator {
         } else {
             charPixels.centerH(box)
         }
+
+
+        // const blurcontrol = control.value('Blur factor', 1, 0, 3, 0.1)
+        //
+        //
+        // //XXX:move to seperate fx
+        // scheduler.interval(1, () => {
+        //     const index = scrollContainer.index()
+        //
+        //     const rotateInterval=scrollGroup.value('Rotate interval').value
+        //
+        //     const blurStep =(1/rotateInterval)*blurcontrol.value
+        //
+        //     blurredScrollContainer.forEachPixel((blurred) => {
+        //
+        //
+        //         let p = undefined
+        //
+        //         if (index[blurred.x] != undefined)
+        //             p = index[blurred.x][blurred.y]
+        //
+        //         if (p == undefined) {
+        //             //pixel is gone, fade out
+        //             blurred.color.a = blurred.color.a - blurStep
+        //             if (blurred.color.a < 0)
+        //                 blurred.color.a = 0
+        //
+        //         } else {
+        //             //fade is on, take over color and fade in
+        //             blurred.color.r = p.color.r
+        //             blurred.color.g = p.color.g
+        //             blurred.color.b = p.color.b
+        //
+        //             blurred.color.a = blurred.color.a + blurStep
+        //             if (blurred.color.a > 1)
+        //                 blurred.color.a = 1
+        //         }
+        //
+        //
+        //     })
+        //
+        // })
+
 
         let flameGroup = control.group("Flames", false, false)
         if (flameGroup.switch('Enabled', false).enabled) {

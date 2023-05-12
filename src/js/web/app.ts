@@ -31,6 +31,8 @@ rpc.init(
         const app = new App({
             target: document.getElementById('app'),
         });
+
+        console.log(await rpc.request("displayDeviceStore.list"))
     },
     //disconnected
     async () => {

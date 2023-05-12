@@ -3,15 +3,15 @@
  "description": "",
  "values": {
   "Font": {
-   "selected": "C64"
+   "selected": "ORG v01"
   },
   "Text": {
-   "text": "Dit is een test"
+   "text": "hack42"
   },
   "Text color": {
-   "r": 255,
-   "g": 23,
-   "b": 0,
+   "r": 128,
+   "g": 122,
+   "b": 255,
    "a": 1
   },
   "Stars": {
@@ -26,13 +26,13 @@
   },
   "Scrolling": {
    "Enabled": {
-    "enabled": true
+    "enabled": false
    },
    "FPS": {
-    "value": 61
+    "value": 60
    },
    "Rotate interval": {
-    "value": 10
+    "value": 2
    },
    "Rotate interval randomizer": {
     "value": 0
@@ -67,7 +67,37 @@
   },
   "Cursor": {
    "Enabled": {
-    "enabled": false
+    "enabled": true
+   },
+   "Color": {
+    "r": 0,
+    "g": 255,
+    "b": 174,
+    "a": 1
+   },
+   "X offset": {
+    "value": 2
+   },
+   "Y offset": {
+    "value": 1
+   },
+   "Height": {
+    "value": 5
+   },
+   "Width": {
+    "value": 2
+   },
+   "On time": {
+    "value": 30
+   },
+   "Off time": {
+    "value": 30
+   },
+   "Fade out time": {
+    "value": 0
+   },
+   "Fade out time randomizer": {
+    "value": 0
    }
   },
   "Font height": {
@@ -75,7 +105,7 @@
   },
   "The Matrix": {
    "Enabled": {
-    "enabled": false
+    "enabled": true
    },
    "Head color": {
     "r": 128,
@@ -117,12 +147,6 @@
      "value": 5
     }
    }
-  },
-  "blursteps": {
-   "value": 12
-  },
-  "Blur percentage": {
-   "value": 300
   }
  }
 }

@@ -21,6 +21,7 @@ export default class Landscape extends Animator {
         let seed=0;
         let width=box.width();
         let height=box.height();
+
   
         scheduler.intervalControlled(controls.value("Creation interval", 5), (frameNr) => {
             let x=frameNr%width;
