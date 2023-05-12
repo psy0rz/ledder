@@ -12,6 +12,7 @@ import {patternSelect} from "../../ColorPatterns.js"
 import ControlGroup from "../../ControlGroup.js"
 import Pixel from "../../Pixel.js"
 import Animator from "../../Animator.js"
+import PixelList from "../../PixelList.js"
 import {fontSelect} from "../../fonts.js"
 import ControlSelect from "../../ControlSelect.js"
 import DrawText from "../../draw/DrawText.js"
@@ -23,8 +24,8 @@ import Color from "../../Color.js"
 
 export default class <Julibrot> extends Animator {
     static category = "Fractals"
-    static title = "Mandelbrot"
-    static description = "Mandelbrot fractal"
+    static title = "Julibrot"
+    static description = "Julia & Mandelbrot fractal sets"
     max_iterations=900
     
    
@@ -88,7 +89,6 @@ export default class <Julibrot> extends Animator {
         const fractalIntervalControl = controls.value("Fractal interval", 1, 1, 10, 0.1)
         const zoomSpeedControl = controls.value("Zoom speed", 0.01, 0.0001, 0.1, 0.0001)
         const bounceControl = controls.switch("Bounce",false,false)
-        const colorControl = controls.color("Text color", 0, 255, 0)
         let choices=[]
         choices.push({id:1, name:"Mandelbrot"})
         choices.push({id:2, name:"Julia"})
@@ -96,14 +96,18 @@ export default class <Julibrot> extends Animator {
         //choices[2]={id:2, name:"Julia"}
         const fractalTypeControl = controls.select("Fractal type","Mandelbrot",choices,false)
         let counter=0; //palettecycle var
-        box.clear();
+        //box.clear();
         let zoom=0.01;
         let zoomfactor=1-zoomSpeedControl.value
         let hotspotSel=0
         let zoomMax=5
         let hotspots=[
+            {cx:-0.74999446951885,cy:0.0047777284160031,maxz:10},
             { cx:-0.15554376019751, cy:-0.65010365004009,   maxz:8},
-            { cx:0.24679672392427,  cy:0.50342253979013, maxz:9},
+            {cx:-0.81812825180059, cy:-0.19884971553421, maxz:10},
+            {cx:0.35164493860728,cy:-0.58133391051187,maxz:10},
+            { cx: 0.43792424135946,cy:0.34189208433812 ,    maxz:10},
+            { cx:0.24679672392427,  cy:0.50342253979013,     maxz:9},
             { cx:-1.1785276064604,  cy:0.30096231141302,    maxz:8},
             { cx:0.13614939178535,  cy:-0.66905589958398,   maxz:9},
             { cx:0.081159563329829, cy:-0.62558306990165,   maxz:7},
@@ -136,8 +140,8 @@ export default class <Julibrot> extends Animator {
                 if (hotspotSel>=hotspots.length) {hotspotSel=0; }
             }
 
-             let text = new DrawText(0, 0, fontSelect(controls), "F:"+hotspotSel.toString()+" Z:"+Math.sqrt(zoom).toFixed(0).toString(), colorControl)
-
+            //
+        
             box.clear();
             let colorIndex=0;
             
