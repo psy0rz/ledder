@@ -19,10 +19,10 @@
    "value": 1
   },
   "Zoom speed": {
-   "value": 0.01
+   "value": 0.012100000000000001
   },
   "Bounce": {
-   "enabled": false
+   "enabled": true
   },
   "Text color": {
    "r": 0,
@@ -31,7 +31,7 @@
    "a": 1
   },
   "Fractal type": {
-   "selected": "Mandelbrot"
+   "selected": "3"
   },
   "Font": {
    "selected": "Picopixel"
