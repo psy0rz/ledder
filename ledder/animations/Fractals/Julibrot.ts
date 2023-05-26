@@ -12,6 +12,7 @@ import {patternSelect} from "../../ColorPatterns.js"
 import ControlGroup from "../../ControlGroup.js"
 import Pixel from "../../Pixel.js"
 import Animator from "../../Animator.js"
+import Color from "../../Color.js"
 
 
 
@@ -22,7 +23,7 @@ export default class <Julibrot> extends Animator {
     static category = "Fractals"
     static title = "Julibrot"
     static description = "Julia & Mandelbrot fractal sets"
-    max_iterations=900
+    max_iterations=1600
     
    
     mandelbrot(c,px:number,py:number,width:number,height:number,zoom:number) {
@@ -51,6 +52,8 @@ export default class <Julibrot> extends Animator {
         return n
     }
 
+    
+
 
     julia(c,px:number,py:number,width:number,height:number,zoom:number)
     {
@@ -77,6 +80,9 @@ export default class <Julibrot> extends Animator {
          return n
     }
 
+    
+
+
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) {
    
         const colors = patternSelect(controls, 'Color Palette', 'DimmedReinbow')
@@ -88,6 +94,7 @@ export default class <Julibrot> extends Animator {
         let choices=[]
         choices.push({id:1, name:"Mandelbrot"})
         choices.push({id:2, name:"Julia"})
+        choices.push({id:3, name:"Krentenbrot"})
 
         const fractalTypeControl = controls.select("Fractal type","Mandelbrot",choices,false)
         let counter=0; //palettecycle var
@@ -153,24 +160,48 @@ export default class <Julibrot> extends Animator {
                             colorIndex = this.julia(hotspot,x,y,box.width(),box.height(),zoom);
                     }
 
-    
-                    let mp=parseInt(colorIndex.toString())
-                    let colornum=+(mp*colorSteepnessControls.value) % (colors.length-1)
-                    let color= colors[colornum];
-                    let pixel = new Pixel(x,y,color);
-                    if (pixel.color.a)
-                    {
-                        try
-                        {
-                            pixel.color.a=alphaControls.value
-                        }
-                        catch (e)
-                        {
-
+                    if (fractalTypeControl.selected=="Krentenbrot" || fractalTypeControl.selected=="3")
+                    {     
+                    box.wrap(box);
+                       let colorIndex1 = this.mandelbrot(hotspot, x, y, box.width(), box.height(), 1 / zoom);
+                        let colorIndex2 = this.julia(hotspot, x, y, box.width(), box.height(), zoom);
+                        let c2 = colors[colorIndex1 % colors.length];
+                        let c1 = colors[colorIndex2 % colors.length];
+                        if (c1 != undefined) {
+                            let r=(Math.sin((c2.r+c1.r)/32)*64)+64
+                            let g=(Math.sin((c2.g+c1.g)/32)*64)+64
+                            let b=(Math.sin((c2.b+c1.b)/32)*64)+64
+                            let cn = new Color(r, g, b, alphaControls.value);
+                            let p1 = new Pixel(x, y, cn);
+                            box.add(p1);
+                            
                         }
                     }
-                    box.add(pixel);
+                     else 
+                     {
+                    
 
+                     
+
+    
+                        let mp=parseInt(colorIndex.toString())
+                        let colornum=+(mp*colorSteepnessControls.value) % (colors.length-1)
+                        let color= colors[colornum];
+                        let pixel = new Pixel(x,y,color);
+                        if (pixel.color.a)
+                        {
+                            try
+                            {
+                                pixel.color.a=alphaControls.value
+                            }
+                            catch (e)
+                            {
+
+                            }
+                        }
+                        box.add(pixel);
+                    
+                     }
                 }
             }
           
