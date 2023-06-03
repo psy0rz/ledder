@@ -22,7 +22,7 @@ export default class Sinusrainbow extends Animator {
            box.clear()
            for (let x=0;x<box.width();x++)
            {
-                let rand=(Math.cos(frameNr/5000)+1)*20-20
+                let rand=(Math.cos(frameNr/1000)+1)*30-30
                 let y=Math.round(Math.sin((frameNr+x)/rand)*((box.height()/2)-1)+(box.height()/2)-1)
 
                 let h=Math.round((box.height()*2))
