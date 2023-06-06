@@ -6,20 +6,20 @@
    "selected": "DimmedReinbow"
   },
   "Color Palette range": {
-   "from": 0,
+   "from": 20,
    "to": 100
   },
   "alpha/brightness": {
    "value": 1
   },
   "Color change": {
-   "value": 1
+   "value": 5
   },
   "Fractal interval": {
    "value": 1
   },
   "Zoom speed": {
-   "value": 0.012100000000000001
+   "value": 0.010100000000000001
   },
   "Bounce": {
    "enabled": true
@@ -31,7 +31,7 @@
    "a": 1
   },
   "Fractal type": {
-   "selected": "3"
+   "selected": "1"
   },
   "Font": {
    "selected": "Picopixel"
@@ -73,6 +73,12 @@
     "from": 0,
     "to": 100
    }
+  },
+  "Blur": {
+   "enabled": false
+  },
+  "Blurfactor": {
+   "value": 1
   }
  }
 }

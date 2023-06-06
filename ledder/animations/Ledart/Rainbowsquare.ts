@@ -6,7 +6,7 @@ import Pixel from "../../Pixel.js"
 import Color from "../../Color.js"
 
 
-export default class Squarerainbow extends Animator {
+export default class Squarerainbow2 extends Animator {
     static category = "Viz"
     static title = "Squarerainbow"
     static description = "blabla"
@@ -26,18 +26,21 @@ export default class Squarerainbow extends Animator {
            let rShade=0;
            let bShade=0;
            let gShade=0;
-           teller++
-           for (let x=0;x<(box.width()+1)/2;x++)
+           let divider=1;
+           let dividerD=0.0001
+           teller=teller+.1
+           for (let x=0;x<(box.width()/2+1);x++)
            {
-              for (let y=0;y<(box.height()+1)/2;y++)
+              for (let y=0;y<(box.height()/2+1);y++)
               {
                
                     let speed=10;
                     let colorDivider=1;
-                    let divider=Math.sin((teller)/5000)*3.141592
-                    if (divider==0) {divider=1;}
+                    divider=divider+dividerD;
+                    if (divider>15) { divider=-15}
+                    if (divider==0) {divider=dividerD;}
                     rShade=Math.max(Math.round((Math.sin((teller+x+y)/divider)*127)+127),0)
-                    gShade=Math.max(Math.round((Math.sin((teller+x+y)/divider)*127)+127),0)
+                    gShade=Math.max(Math.round((Math.sin((90+teller+x+y)/divider)*127)+127),0)
                     bShade=Math.max(Math.round((Math.cos((teller+x+y)/divider)*127)+127),0)
                     box.add(new Pixel(x,y,new Color(rShade,gShade,bShade,0.8))); 
                     box.add(new Pixel(box.width()-x,y,new Color(rShade,gShade,bShade,0.8))); 

@@ -6,9 +6,9 @@ import Pixel from "../../Pixel.js"
 import Color from "../../Color.js"
 
 
-export default class Sinusrainbow extends Animator {
-    static category = "Time"
-    static title = "Sinusrainbow"
+export default class Rainbowsquare extends Animator {
+    static category = "Ledart"
+    static title = "Rainbowquare"
     static description = "blabla"
 
 
