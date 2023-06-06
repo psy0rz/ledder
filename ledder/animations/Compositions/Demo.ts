@@ -66,8 +66,6 @@ export default class Cycle extends Animator {
         const fxControls=controls.group("FX")
         while(1) {
             await show("Logos/HSD", "default", 5000)
-
-
            
             await show("Components/Clock", "default", 5000)
             scheduler.clear()
@@ -75,31 +73,18 @@ export default class Cycle extends Animator {
             await show("Ledart/Rainbowsinus", "default", 30000)
             scheduler.clear()
            
-            await show("Fires/Fire", "default", 5000)
-            scheduler.clear()
            
             await show("Ledart/Rainbowcross", "default", 15000)
             scheduler.clear()
-            
-            await show("Components/Pacman", "default", 1500)
-            scheduler.clear()
-            
+        
 
             await show("Ledart/Rainbowzero", "default", 50000)
             scheduler.clear()
            
-        
-            await show("Components/Wandelaarster", "default", 1500)
-            scheduler.clear()
            
             await show("Ledart/Rainbowsquare", "default", 30000)
             scheduler.clear()
 
-            await show("Fires/Fire", "default", 5000)
-            scheduler.clear()
-
-            await show("Memes/Nyancat", "default", 1500)
-            scheduler.clear()
            
             await show("Fractals/Julibrot", "default", 60000)
             scheduler.clear()
