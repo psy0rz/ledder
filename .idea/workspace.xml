@@ -3,20 +3,25 @@
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
+  <component name="CMakeSettings">
+    <configurations>
+      <configuration PROFILE_NAME="Debug" ENABLED="true" CONFIG_NAME="Debug" />
+    </configurations>
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="7de4510b-f0e5-4402-9e95-cb9c8d6f6b3a" name="Changes" comment="explain references">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ledder/animations/Components/Landscape.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/animations/Components/Landscape.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ledder/server/DisplayDeviceStore.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/server/DisplayDeviceStore.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/maten.js" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/js/web/RunnerBrowser.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/js/web/RunnerBrowser.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/js/web/svelteStore.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/js/web/svelteStore.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/categories.svelte" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/categories.svelte" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ClangdSettings">
+    <option name="formatViaClangd" value="false" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -28,6 +33,9 @@
   <component name="Git.Settings">
     <option name="PREVIEW_PUSH_PROTECTED_ONLY" value="true" />
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/node_modules/framework7-svelte/components/menu-dropdown-item.d.ts" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -42,23 +50,26 @@
     <option name="showExcludedFiles" value="false" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/psy/WebstormProjects/ledder/ledder/animations/Logos&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;/home/psy/WebstormProjects/ledder/node_modules/typescript/lib&quot;,
-    &quot;typescript.add.unambiguous.imports.on.the.fly&quot;: &quot;true&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.cidr.known.project.marker": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "cf.first.check.clang-format": "false",
+    "cidr.known.project.marker": "true",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "/home/psy/ledder",
+    "node.js.detected.package.eslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "Errors",
+    "ts.external.directory.path": "/home/psy/ledder/node_modules/typescript/lib",
+    "typescript.add.unambiguous.imports.on.the.fly": "true",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/ledder/animations/Logos" />
@@ -75,7 +86,7 @@
       <recent name="$PROJECT_DIR$/ledder/server/DisplayDeviceInfo.ts" />
     </key>
   </component>
-  <component name="RunManager" selected="Node.js.webdev server.js">
+  <component name="RunManager" selected="Node.js.webdev">
     <configuration name="buildpreviews.js" type="NodeJSConfigurationType" application-parameters="-- -f" nameIsGenerated="true" path-to-js-file="ledder/server/buildpreviews.js" working-dir="$PROJECT_DIR$">
       <method v="2">
         <option name="TypeScript.Before.Run" enabled="true" FAIL_ON_ERROR="true" />
@@ -86,7 +97,7 @@
         <option name="TypeScript.Before.Run" enabled="true" FAIL_ON_ERROR="true" />
       </method>
     </configuration>
-    <configuration name="webdev server.js" type="NodeJSConfigurationType" path-to-js-file="ledder/server/server.js" working-dir="$PROJECT_DIR$">
+    <configuration name="webdev" type="NodeJSConfigurationType" path-to-js-file="ledder/server/server.js" working-dir="$PROJECT_DIR$">
       <envs>
         <env name="NODE_ENV" value="development" />
       </envs>
@@ -95,8 +106,8 @@
       </method>
     </configuration>
     <list>
+      <item itemvalue="Node.js.webdev" />
       <item itemvalue="Node.js.server.js" />
-      <item itemvalue="Node.js.webdev server.js" />
       <item itemvalue="Node.js.buildpreviews.js" />
     </list>
   </component>
@@ -149,6 +160,12 @@
       <workItem from="1682584270376" duration="26447000" />
       <workItem from="1682701910037" duration="892000" />
       <workItem from="1682937998392" duration="7928000" />
+      <workItem from="1686333009258" duration="3105000" />
+      <workItem from="1686336778375" duration="118000" />
+      <workItem from="1686336956186" duration="31000" />
+      <workItem from="1686336999678" duration="14000" />
+      <workItem from="1686337217545" duration="2000" />
+      <workItem from="1686339418096" duration="1181000" />
     </task>
     <task id="LOCAL-00001" summary="kjh">
       <created>1673098884534</created>
@@ -711,6 +728,26 @@
         <option value="$PROJECT_DIR$/ledder/server/DisplayDeviceStore.js" />
         <option value="$PROJECT_DIR$/ledder/animations/Logos/hack42.js" />
         <option value="$PROJECT_DIR$/ledder/animations/Logos/hack42.js.map" />
+        <option value="$PROJECT_DIR$/ledder/animations/Components/Kong.js" />
+        <option value="$PROJECT_DIR$/ledder/animations/Components/Landscape.js" />
+        <option value="$PROJECT_DIR$/ledder/animations/Components/Kong.js.map" />
+        <option value="$PROJECT_DIR$/ledder/animations/Components/Landscape.js.map" />
+        <option value="$PROJECT_DIR$/ledder/animations/Components/PacmanGhost.js" />
+        <option value="$PROJECT_DIR$/ledder/animations/Components/PacmanGhost.js.map" />
+        <option value="$PROJECT_DIR$/ledder/animations/Components/Wandelaar.js.map" />
+        <option value="$PROJECT_DIR$/ledder/animations/Components/Wandelaarster.js" />
+        <option value="$PROJECT_DIR$/ledder/animations/Components/Wandelaar.js" />
+        <option value="$PROJECT_DIR$/ledder/animations/Components/Wandelaarster.js.map" />
+        <option value="$PROJECT_DIR$/ledder/animations/MovieFx/TheMatrix.js" />
+        <option value="$PROJECT_DIR$/ledder/animations/MovieFx/TheMatrix.js.map" />
+        <option value="$PROJECT_DIR$/ledder/animations/Fractals/Mandelbrot.js.map" />
+        <option value="$PROJECT_DIR$/ledder/animations/Fractals/Rein.js.map" />
+        <option value="$PROJECT_DIR$/ledder/animations/Fractals/Mandelbrot.js" />
+        <option value="$PROJECT_DIR$/ledder/animations/Fractals/Rein.js" />
+        <option value="$PROJECT_DIR$/ledder/ColorCache.js.map" />
+        <option value="$PROJECT_DIR$/ledder/ColorCache.js" />
+        <option value="$PROJECT_DIR$/ledder/animations/Compositions/Stampede.js.map" />
+        <option value="$PROJECT_DIR$/ledder/animations/Compositions/Stampede.js" />
       </list>
     </option>
     <option name="includedJSSourcePackages">
