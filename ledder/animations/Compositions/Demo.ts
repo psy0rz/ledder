@@ -5,6 +5,7 @@ import Rainbowcross from "../Ledart/Rainbowcross.js"
 import Rainbowsquare from "../Ledart/Rainbowsquare.js"
 import Rainbowsinus from "../Ledart/Rainbowsinus.js"
 import Rainbowzero from "../Ledart/Rainbowzero.js"
+import Rainbowzerocopy from "../Ledart/Rainbowzerocopy.js"
 import Fire from "../Fires/Fire.js"
 import Starfield from "../Components/Starfield.js"
 import FxPacman from "../../fx/FxPacman.js"
@@ -79,6 +80,9 @@ export default class Cycle extends Animator {
         
 
             await show("Ledart/Rainbowzero", "default", 50000)
+            scheduler.clear()
+
+            await show("Ledart/Rainbowzerocopy", "default", 50000)
             scheduler.clear()
            
            

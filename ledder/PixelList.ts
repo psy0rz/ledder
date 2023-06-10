@@ -439,5 +439,65 @@ export default class PixelList extends Set<Pixel | PixelList> {
     }
 
 
+
+     //Finds all neighbouring pixels (and their neighbours) and returns it as a pixel list.
+    //Will remove the pixels from this list.
+    minimize(bbox: BoxInterface) {
+        const index = this.index()
+        const ret = new PixelList()
+        const neighbours = new PixelList()
+        let rr:number=0;
+        let rg:number=0
+        let rb:number=0;
+        let ra:number=0
+        let j:number=0
+        let lastP:Pixel
+        let consolidatedPixel:Pixel //=new Pixel(0,0,new Color(0,0,0,1));
+        let pixelCollection=[]
+
+        //loop over all pixels and store them in an array per xy position
+        this.forEachPixel((p, parent) => {
+            let key=p.x+","+p.y
+            if (pixelCollection[key]==undefined) { pixelCollection[key]=[]}
+            pixelCollection[key].push(p);
+            parent.delete(p);
+        });
+
+       
+
+      
+        //Combine all pixel per x/y position to 1 pixel
+        for (var i in pixelCollection)
+        {   
+            //console.log(pixelCollection[i]);
+            
+                rr=0
+                rg=0
+                rb=0
+                ra=0;
+                let itemCount=0;
+                let coordinateCollection=pixelCollection[i]
+                for (j=0;j<coordinateCollection.length;j++)
+                {
+                    itemCount++
+                    rr=rr+coordinateCollection[j].color.r
+                    rg=rg+coordinateCollection[j].color.g
+                    rb=rb+coordinateCollection[j].color.b
+                    ra=ra+coordinateCollection[j].color.a
+                    lastP=coordinateCollection[j]
+                }
+                if (lastP.x>-1 && lastP.y>-1 && lastP.x<bbox.xMax && lastP.y<bbox.yMax)
+                {
+                    consolidatedPixel=new Pixel(lastP.x,lastP.y, new Color(Math.round(rr/itemCount),Math.round(rg/itemCount),Math.round(rb/itemCount),Math.round(ra/itemCount)))
+                    ret.add(consolidatedPixel);
+                }
+            
+        }
+        //console.log("PIXELCOLLECTION",ret)
+        return ret
+    }
+
+
+
 }
 
