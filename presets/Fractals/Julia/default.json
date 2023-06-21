@@ -2,20 +2,6 @@
  "title": "",
  "description": "",
  "values": {
-  "Colorcycle": {
-   "enabled": false
-  },
-  "Fly around": {
-   "enabled": true
-  },
-  "REAL range (x)": {
-   "from": -2,
-   "to": 1
-  },
-  "IMAGINARY range (y)": {
-   "from": -1,
-   "to": 1
-  },
   "Color Palette": {
    "selected": "DimmedReinbow"
   },
@@ -25,6 +11,15 @@
   },
   "Fractal interval": {
    "value": 1
+  },
+  "zoom min": {
+   "value": 0.064
+  },
+  "zoom max": {
+   "value": 9200
+  },
+  "zoomspeed": {
+   "value": 0.0036000000000000003
   }
  }
 }

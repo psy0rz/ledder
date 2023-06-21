@@ -1,0 +1,84 @@
+{
+ "title": "",
+ "description": "",
+ "values": {
+  "Color Palette": {
+   "selected": "DimmedReinbow"
+  },
+  "Color Palette range": {
+   "from": 20,
+   "to": 100
+  },
+  "alpha/brightness": {
+   "value": 1
+  },
+  "Color change": {
+   "value": 5
+  },
+  "Fractal interval": {
+   "value": 1
+  },
+  "Zoom speed": {
+   "value": 0.010100000000000001
+  },
+  "Bounce": {
+   "enabled": true
+  },
+  "Text color": {
+   "r": 0,
+   "g": 255,
+   "b": 0,
+   "a": 1
+  },
+  "Fractal type": {
+   "selected": "1"
+  },
+  "Font": {
+   "selected": "Picopixel"
+  },
+  "Font height": {
+   "value": 0
+  },
+  "Font width": {
+   "value": 0
+  },
+  "Bottom fire": {
+   "Fire colors": {
+    "selected": "Doom fire"
+   },
+   "Fire colors range": {
+    "from": 0,
+    "to": 100
+   },
+   "Fire interval": {
+    "value": 1
+   },
+   "Fire intensity %": {
+    "from": 0,
+    "to": 100
+   },
+   "Fire wildness %": {
+    "value": 34
+   },
+   "Fire decay %": {
+    "value": 10
+   },
+   "Fire sintel factor": {
+    "value": 0.06
+   },
+   "Fire speed": {
+    "value": 1
+   },
+   "Fire X range %": {
+    "from": 0,
+    "to": 100
+   }
+  },
+  "Blur": {
+   "enabled": false
+  },
+  "Blurfactor": {
+   "value": 1
+  }
+ }
+}
