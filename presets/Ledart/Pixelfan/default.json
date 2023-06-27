@@ -1,0 +1,18 @@
+{
+ "title": "",
+ "description": "",
+ "values": {
+  "particle count": {
+   "value": 938
+  },
+  "radius modifier": {
+   "value": 26
+  },
+  "delay": {
+   "value": 7
+  },
+  "Fractal interval": {
+   "value": 1
+  }
+ }
+}
