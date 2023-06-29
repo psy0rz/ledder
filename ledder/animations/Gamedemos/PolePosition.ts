@@ -12,7 +12,7 @@ import DrawAsciiArtColor from "../../draw/DrawAsciiArtColor.js"
 
 
 const car = `
-..rrrrr
+..rrrrr..
 ..rrrrr..
 .00rrr00.
 .00...00.
