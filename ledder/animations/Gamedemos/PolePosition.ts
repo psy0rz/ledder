@@ -36,10 +36,10 @@ const horiz = `
 
 
 
-export default class Planetsgone extends Animator {
+export default class Poleposition extends Animator {
     static category = "Gamesdemos"
     static title = "Pole position"
-    static description = "inspired by the game"
+    static description = "inspired by the vic-20 game"
     
 
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) 
