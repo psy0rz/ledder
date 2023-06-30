@@ -12,13 +12,13 @@ import DrawAsciiArtColor from "../../draw/DrawAsciiArtColor.js"
 
 
 const plane = `
-....ww....
+...5w5....
 ....w5....
 .w..ww5...
-wwwwwbbww.
+wwwwwrrww.
 .w..ww5...
 ....w5....
-....ww....
+...5w5....
 `
 
 
@@ -29,18 +29,18 @@ ggggggggggggggwbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
 ggggggggggggggggggggggggggggbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbgggggggggggggggggggggggggggbbbbbbbggggggggggggggggggggggggggggggggg
 ggggggggggggggggggggggggggggggggggggggggbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbgggggggggggggggggggggggggggggggggggggggbbbbbggggggggggggggggggggggggggggg
 gggggggggggggggggggggggggggggggggggggggggggggggbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbggggbbbbbbbggggggggggggggggggggggggggggggggggggggggggggggggbbbbbbbgggggggggggggggggggggggg
-gggggggggggggggggggggggggggggggggggggggggggggggggggbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbggggbbbbbggggggggggggggggggggggggggggggggggggggggggggggggggggggggggbbbbbbbgggggggggggggggggggg
-gggggggggggggggggggggggggggggggggggggggggggggggggggggggbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbgggggggggggggggggggggggggggbbbbbbgggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggbbbgggggggggggggggggggggggggg
-ggggggggggggggggggggggggggggggggggggggggggggggggggggggggbbbbbbbbbbbbbbbbbbbbbbbgggggggbbbbbbbgggggggggggggggbbbbbbgggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggbbbbbggggggggggggggggggggggggggg
-gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggbbbbbbbbbbbbbbbbggggggggggggggggggbbbbbbbbbbbbbbbbggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggbbbbbbgggggggggggggggggggggggggggg
-gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggbbbggggggggggggggggggggggggggggggg
-gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggbbbggggggggggggggggggggggggggggggg
-gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggbbbbgggggggggggggggggggggggggggggg
-ggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggbbbbbgggggggggggggggggggggggggggg
-gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggbbbbgggggggggggggggggggggggggggg
-gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggbbbbgggggggggggggggggggggggggg
-gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggbbbggggggggggggggggggggggggg
-gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggbbbbbbbbbggggggggggggggggg
+ggg55555555555555555555555555555gggggggggggggggggggbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbgbbbbbgggggggggggggggggggrgggggggggggggggggggggggggggggggggggggggbbbbbbbgggggggggggggggggggg
+ggg55555555555555555555555555555gggggggggggggggggggggggbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbgggggggggggggggggggggggggggbbbbbbggggggbbgggggggggggggggggggggggggwgggggggggggggggggggggggggggggggggggggbbbgggggggggggggggggggggggggg
+ggg55555555555555555555555555555ggggggggggggggggggggggggbbbbbbbbbbbbbbbbbbbbbbbgggggggbbbbbbbgggggggggggggggbbbbbbggggggggggggbbggggggggggggggggggggggrwgwrggggggggggggggggggggggggggggggggbbbbbggggggggggggggggggggggggggg
+ggg55ww55ww55ww55ww55ww55ww55ww5gggggggggggggggggggggggggggbbbbbbbbbbbbbbbbggggggggggggggggggbbbbbbbbbbbbbbbbggggggggggggggggggbbgggggggggggggggggggggggwgggggggggggggggggg5555555gggggggggggbbbbbbgggggggggggggggggggggggg
+ggg55555555555555555555555555555ggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggbbggggggggggggggggggggggrggggggggggggggg5555555555555555555555555gggggggggggggggggggggggggg
+55g555555555555555555555555yyyggyyygyyyggggwwwggyggwwwwggwgwggwwwggwwwggwwwggggggggggggggggggggggggggggggggggggggggggggggggggggggbbggggg00gg00ggggggggggggggggggggg5555555555ggggg55555555555555555555555555555555555555555
+55g55555555555555555555555555yggyggggygggggwgggggggwgggggwgwgggwgggwggggwggggggggggggggggggggggggggggggggggggggggggggggggggggggggbbggggrrrrrrr555555555555555555555555ggggggggggggggggggggbbbbgggggggg555555555555555555555
+gggggggggggggggggggggggggggggyggyyyggygggggwwgggwggwgwwggwwwgggwgggwwwggwggggggggggggggggggggggggggggggggggggggggggggggg00gg00gggbbgg55rrrrrrr555555555555555555555555ggggggggggggggggggggbbbbbgggggggggg5555555ggggggggggg
+gggggggggggggggggggggggggggggyggyggggygggggwggggwggwggwggwgwgggwgggwggggwgggggggggggggggggggggggg5555555555555555555555rrrrrrr555555555500gg00gggggggggggggggggggggggggggggggggggggggggggggbbbbbggggggggggggg555555gggggggg
+ggggggggggggggggggggggggggggyyggyyyggygggggwggggwggwwwwggwgwgggwgggwwwggwggggggggggggggg5555555555555555555555555555555rrrrrrr555555555ggggggggggggggggggggggggggggggggggggggggggggggggggbbbbbbbbgggggggggggggggg5555gggggg
+ggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg55555555ggggggggggggggggggggggggggggg00gg00ggggbbggggggbbbbgggbbbbbbbgggggggbbbbbbbggggggggbbbbgggggbbbbbbbbbbggggggggggggggggg555gggggg
+gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg5555555555ggggggggggggggggggggggggggggggggggggggggggggggbbbbbbbggbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbgggggggggg55ggggg
 `
 
 
@@ -58,39 +58,30 @@ export default class Jetfighter extends Animator {
 
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) 
     {
-        const countControl = 100
-        const speedControl = controls.value("speed", 10, 1, 100, 1)
+    
         const intervalControl = controls.value("Animation interval", 1, 1, 10, 0.1)
         let groundlist=new PixelList()
         let planelist=new PixelList();
-        let time=0   
+        let shootinglist=new PixelList();
+        let time=0  
+        box.setColor(new Color(0,200,0,1)) 
         box.add(groundlist)
         box.add(planelist);
-        planelist.add(new DrawAsciiArtColor(3,5,  plane))
+        box.add(shootinglist)
+        planelist.add(new DrawAsciiArtColor(3,box.height()/2-3,  plane))
         
         
 
        scheduler.intervalControlled(intervalControl, (frameNr) => {
+        time++
         groundlist.clear()
-        
-        time=time+speedControl.value;
-      
-        
-       
-
-        let bglength=180
+        shootinglist.clear()
+        let bglength=200
         let groundx=Math.round((frameNr)/10)%bglength
-        groundlist.add(new DrawAsciiArtColor(Math.round(1-groundx),0, ground))
-      
-        
-       
-
-
-        
-
-
-
-    
+        groundlist.add(new DrawAsciiArtColor(Math.round(1-groundx),box.height()-16, ground))
+        groundlist.add(new DrawAsciiArtColor(Math.round(1-groundx)+bglength,box.height()-16, ground))
+        shootinglist.add( new Pixel(((time)%100)+6,box.height()/2-3,new Color(128,128,128,1)))
+        shootinglist.add( new Pixel(((time)%100)+6,box.height()/2+3,new Color(128,128,128,1)))
        });
        
     }
