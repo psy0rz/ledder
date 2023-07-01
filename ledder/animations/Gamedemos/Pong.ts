@@ -26,7 +26,7 @@ export default class Pong extends Animator {
         let dydefault=0.3141592
         let dx=dxdefault;
         let dy=dydefault;
-        let ballX=3.0;
+        let ballX=5.0;
         let ballY=box.height()/2   
         let player1X=0+4;
         let player2X=box.width()-5
@@ -39,6 +39,7 @@ export default class Pong extends Animator {
 
        scheduler.intervalControlled(intervalControl, (frameNr) => {
             ponglist.clear()
+            font.load()
 
             //ball
             ponglist.add(new Pixel(Math.round(ballX),Math.round(ballY),new Color(255,255,255,1)))
