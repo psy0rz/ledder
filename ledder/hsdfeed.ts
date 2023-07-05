@@ -11,7 +11,7 @@ interface CacheInterface {
 
 const cache: Record<string, CacheInterface> = {}
 
-function titleParser(data:String)
+function titleParser(url:String, data:String)
 {
     const regexp=RegExp('<title>.*<\/title>','gm' )
     const titles=[...data.matchAll(regexp)];
@@ -76,7 +76,7 @@ export function getRssFeedData(symbol = 'HSDNEWS', callback: (symbol, headlines)
 
             res.on('end', () => {
                 console.debug("Got freshdata")
-                let titles=titleParser(xml)
+                let titles=titleParser(url,xml)
                 cache[symbol].result = titles
                 cache[symbol].lastTime = Date.now()
                 cache[symbol].inProgress = false
