@@ -26,7 +26,7 @@ export default class Headlines extends Animator {
     {
         let xOffset=10 //box.width()
         let headlineIndex=1
-        let font=fonts.C64
+        let font=fontSelect(controls,"Rss scroller font",fonts.C64.name,0)
         font.load()
       
        
@@ -37,7 +37,7 @@ export default class Headlines extends Animator {
         //box.add(new DrawText(0,8,font,"NEWSFEED",new Color(255,255,255,1)))
        
         const intervalControl = controls.value("headlines scroller interval", 1, 1, 10, 0.1)
-        console.log("runscroller data: ",headlinesArr)
+        const colorSetting=controls.color("Headlines text color", 128, 128, 200)
         scheduler.intervalControlled(intervalControl, (frameNr) => {
            
            scrollList.clear()
@@ -45,21 +45,15 @@ export default class Headlines extends Animator {
             let headlineTitle=headlinesArr[headlineIndex]
             if (xOffset<(-1*headlineTitle.length*font.width)){ headlineIndex++; xOffset=box.width()+2}
             if (headlineIndex>headlinesArr.length-1) { headlineIndex=0;}
-            scrollList.add(new DrawText(x+xOffset,y,font,headlineTitle,new Color(128,128,128,1)))
+            scrollList.add(new DrawText(x+xOffset,y,font,headlineTitle,colorSetting))
            
         });
     }
 
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup,headlinesArray=[]) {
-        console.log("headlinesArray=",headlinesArray)
       
         this.headlinesArray=headlinesArray
         let init = true
-        let counter
-
-
-
-        fonts.C64.load()
 
         const firebox=new PixelBox(box)
         //firebox.xMin=5
@@ -69,8 +63,8 @@ export default class Headlines extends Animator {
         const starBox=new PixelBox(box)
         box.add(starBox)
 
-        counter = new DrawCounter()
-        box.add(counter)
+        const scrollerBox=new PixelBox(box)
+        box.add(scrollerBox)
 
        
         let stopped=false
@@ -86,30 +80,16 @@ export default class Headlines extends Animator {
                     return
 
                 if (init) {
-
-                       
-
                     const scroller=new Headlines()
-                        scroller.runScroller(box,scheduler, controls, 0,0, headlinesArray)
+                    scroller.runScroller(scrollerBox,scheduler, controls, 0,0, headlinesArray)
                        
-                   
-                        const flames=new Fire()
-                        flames.run(firebox, scheduler,controls)
-                
-                    
+                    const flames=new Fire()
+                    flames.run(firebox, scheduler,controls)
 
-                        const stars = new Starfield()
-                        stars.run(starBox, scheduler, controls.group("stars"))
-
-                       
-
-                    //counter.update(~~first)
-                    // counter.update(0)
+                    const stars = new Starfield()
+                    stars.run(starBox, scheduler, controls.group("stars"))
                     init = false
                 }
-
-                //counter.update(~~last)
-                // counter.update(100)
             })
         }
 
