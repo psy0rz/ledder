@@ -25,7 +25,7 @@ export default class Headlines extends Animator {
     async runScroller(box: PixelBox, scheduler: Scheduler, controls: ControlGroup,x:number,y:number,headlinesJSON)
     {
         let xOffset=10 //box.width()
-        let headlineIndex=0
+        let headlineIndex=1
         let font=fonts.C64
         font.load()
       
@@ -33,6 +33,7 @@ export default class Headlines extends Animator {
         let scrollList=new PixelList()
         box.add(scrollList)
         let headlinesArr=JSON.parse(headlinesJSON)
+        headlinesArr.push("Lees meer op https://hackerspace-drenthe.nl")
         //box.add(new DrawText(0,8,font,"NEWSFEED",new Color(255,255,255,1)))
        
         const intervalControl = controls.value("headlines scroller interval", 1, 1, 10, 0.1)
@@ -40,11 +41,11 @@ export default class Headlines extends Animator {
         scheduler.intervalControlled(intervalControl, (frameNr) => {
            
            scrollList.clear()
-            xOffset=xOffset-0.3
+            xOffset=xOffset-1
             let headlineTitle=headlinesArr[headlineIndex]
             if (xOffset<(-1*headlineTitle.length*font.width)){ headlineIndex++; xOffset=box.width()+2}
             if (headlineIndex>headlinesArr.length-1) { headlineIndex=0;}
-            scrollList.add(new DrawText(x+xOffset,y,font,headlineTitle,new Color(255,255,255,1)))
+            scrollList.add(new DrawText(x+xOffset,y,font,headlineTitle,new Color(128,128,128,1)))
            
         });
     }

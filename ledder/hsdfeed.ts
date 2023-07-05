@@ -16,7 +16,7 @@ function titleParser(data:String)
     const regexp=RegExp('<title>.*<\/title>','gm' )
     const titles=[...data.matchAll(regexp)];
     let titlesList=[]
-    for (let i=1;i<titles.length;i++)
+    for (let i=0;i<titles.length;i++)
     {
         let titledirty=titles[i].toString()
         let titleclean=titledirty.substring(7,titledirty.length-8)
