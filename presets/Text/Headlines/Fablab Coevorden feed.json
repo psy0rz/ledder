@@ -3,7 +3,7 @@
  "description": "",
  "values": {
   "Rss scroller font": {
-   "selected": "MSX"
+   "selected": "ZX Sierra Quest"
   },
   "Rss scroller font height": {
    "value": 0
@@ -65,7 +65,7 @@
    }
   },
   "rssFeedUrl": {
-   "text": "https://www.hackerspace-drenthe.nl/feed/"
+   "text": "https://www.fablabcoevorden.nl/feed/"
   },
   "Title text color": {
    "r": 217,
@@ -80,13 +80,13 @@
    "a": 1
   },
   "Show RSS feed descriptions": {
-   "enabled": false
+   "enabled": true
   },
   "Enabled Fire FX": {
    "enabled": false
   },
   "Enabled Stars FX": {
-   "enabled": true
+   "enabled": false
   }
  }
 }
