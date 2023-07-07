@@ -10,10 +10,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7de4510b-f0e5-4402-9e95-cb9c8d6f6b3a" name="Changes" comment="explain references">
+      <change afterPath="$PROJECT_DIR$/ledder/animations/Logos/Rammstein.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/maten.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/categories.svelte" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/categories.svelte" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ledder/server/DisplayDeviceStore.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/server/DisplayDeviceStore.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ledder/server/RenderStatic.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/server/RenderStatic.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ledder/server/server.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/server/server.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -59,7 +60,7 @@
     "cf.first.check.clang-format": "false",
     "cidr.known.project.marker": "true",
     "git-widget-placeholder": "main",
-    "last_opened_file_path": "/home/psy/ledder",
+    "last_opened_file_path": "/home/psy/ledder/ledder/animations/Logos",
     "node.js.detected.package.eslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
@@ -86,7 +87,7 @@
       <recent name="$PROJECT_DIR$/ledder/server/DisplayDeviceInfo.ts" />
     </key>
   </component>
-  <component name="RunManager" selected="Node.js.webdev">
+  <component name="RunManager" selected="Node.js.server.js">
     <configuration name="buildpreviews.js" type="NodeJSConfigurationType" application-parameters="-- -f" nameIsGenerated="true" path-to-js-file="ledder/server/buildpreviews.js" working-dir="$PROJECT_DIR$">
       <method v="2">
         <option name="TypeScript.Before.Run" enabled="true" FAIL_ON_ERROR="true" />
@@ -166,6 +167,9 @@
       <workItem from="1686336999678" duration="14000" />
       <workItem from="1686337217545" duration="2000" />
       <workItem from="1686339418096" duration="1181000" />
+      <workItem from="1686856041611" duration="10614000" />
+      <workItem from="1687973547520" duration="2988000" />
+      <workItem from="1688659754958" duration="1760000" />
     </task>
     <task id="LOCAL-00001" summary="kjh">
       <created>1673098884534</created>
@@ -740,14 +744,18 @@
         <option value="$PROJECT_DIR$/ledder/animations/Components/Wandelaarster.js.map" />
         <option value="$PROJECT_DIR$/ledder/animations/MovieFx/TheMatrix.js" />
         <option value="$PROJECT_DIR$/ledder/animations/MovieFx/TheMatrix.js.map" />
-        <option value="$PROJECT_DIR$/ledder/animations/Fractals/Mandelbrot.js.map" />
-        <option value="$PROJECT_DIR$/ledder/animations/Fractals/Rein.js.map" />
-        <option value="$PROJECT_DIR$/ledder/animations/Fractals/Mandelbrot.js" />
-        <option value="$PROJECT_DIR$/ledder/animations/Fractals/Rein.js" />
         <option value="$PROJECT_DIR$/ledder/ColorCache.js.map" />
         <option value="$PROJECT_DIR$/ledder/ColorCache.js" />
         <option value="$PROJECT_DIR$/ledder/animations/Compositions/Stampede.js.map" />
         <option value="$PROJECT_DIR$/ledder/animations/Compositions/Stampede.js" />
+        <option value="$PROJECT_DIR$/ledder/animations/Ledart/Planetsgone.js" />
+        <option value="$PROJECT_DIR$/ledder/animations/Ledart/Pixelfan.js" />
+        <option value="$PROJECT_DIR$/ledder/animations/Ledart/Planets.js.map" />
+        <option value="$PROJECT_DIR$/ledder/animations/Ledart/Planetsgone.js.map" />
+        <option value="$PROJECT_DIR$/ledder/animations/Ledart/Pixelfan.js.map" />
+        <option value="$PROJECT_DIR$/ledder/animations/Ledart/Planets.js" />
+        <option value="$PROJECT_DIR$/ledder/animations/Logos/Rammstein.js.map" />
+        <option value="$PROJECT_DIR$/ledder/animations/Logos/Rammstein.js" />
       </list>
     </option>
     <option name="includedJSSourcePackages">
