@@ -32,26 +32,47 @@ export default class Headlines extends Animator {
        
         let scrollList=new PixelList()
         box.add(scrollList)
-        let headlinesArr=JSON.parse(headlinesJSON)
-        headlinesArr.push("Lees meer op https://hackerspace-drenthe.nl")
+        //console.log("headlinesjson1:",headlinesJSON)
+
+        let headlinesArr=headlinesJSON
         //box.add(new DrawText(0,8,font,"NEWSFEED",new Color(255,255,255,1)))
        
+        
         const intervalControl = controls.value("headlines scroller interval", 1, 1, 10, 0.1)
-        const colorSetting=controls.color("Headlines text color", 128, 128, 200)
+        const colorSettingTitle=controls.color("Title text color", 128, 128, 200)
+        const colorSettingDescription=controls.color("Description text color", 128, 128, 200)
         scheduler.intervalControlled(intervalControl, (frameNr) => {
            
+            let headlineTitle=""
+            let headlineDescription=""
            scrollList.clear()
-            xOffset=xOffset-1
-            let headlineTitle=headlinesArr[headlineIndex]
-            if (xOffset<(-1*headlineTitle.length*font.width)){ headlineIndex++; xOffset=box.width()+2}
-            if (headlineIndex>headlinesArr.length-1) { headlineIndex=0;}
-            scrollList.add(new DrawText(x+xOffset,y,font,headlineTitle,colorSetting))
-           
+           xOffset=xOffset-1
+           //console.log("headlinesarr:",headlinesArr)
+           if (headlinesArr.length>0)
+           {
+            
+            //console.log("headlines",headlinesArr)
+            headlineTitle=headlinesArr[headlineIndex].title[0].toString()
+            headlineDescription=headlinesArr[headlineIndex].description[0].toString()
+           }
+           else
+           {
+            headlineTitle="RSS HEADLINES"
+            headlineDescription="loading..."
+           }
+           let titlePixelX=headlineTitle.length*font.width
+           if (xOffset<(-1*(headlineTitle.length+headlineDescription.length)*font.width)){ headlineIndex++; xOffset=box.width()+2}
+           if (headlineIndex>headlinesArr.length-1) { headlineIndex=0;}
+           scrollList.add(new DrawText(x+xOffset,y,font,headlineTitle,colorSettingTitle))
+           scrollList.add(new DrawText(x+xOffset+font.width+titlePixelX,y,font,headlineDescription,colorSettingDescription))
         });
     }
 
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup,headlinesArray=[]) {
-      
+        const rssfeedControl =controls.input("rssFeedUrl","https://www.hackerspace-drenthe.nl/feed/",true)
+        const intervalControl = controls.value("headlines scroller interval", 1, 1, 10, 0.1)
+        const colorSettingTitle=controls.color("Title text color", 128, 128, 200)
+        const colorSettingDescription=controls.color("Description text color", 128, 128, 200)
         this.headlinesArray=headlinesArray
         let init = true
 
@@ -74,14 +95,15 @@ export default class Headlines extends Animator {
 
         function update() {
 
-            getRssFeedData("HSDNEWS",  (symbol, headlinesArray) => {
+            let rssFeedUrlStr=rssfeedControl.text
+            getRssFeedData(rssFeedUrlStr,(rssFeedUrl, titles) => {
 
                 if (stopped)
                     return
 
                 if (init) {
                     const scroller=new Headlines()
-                    scroller.runScroller(scrollerBox,scheduler, controls, 0,0, headlinesArray)
+                    scroller.runScroller(scrollerBox,scheduler, controls, 0,0, titles)
                        
                     const flames=new Fire()
                     flames.run(firebox, scheduler,controls)
