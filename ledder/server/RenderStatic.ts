@@ -1,7 +1,7 @@
 import {Render} from "./Render.js"
 
 /** Renderer to create statically pre-render stuff.
- * Normally used with DisplayQOISfile
+ * Normally used with DisplayQOISstream
  */
 export class RenderStatic extends Render {
     /*

@@ -1,8 +1,6 @@
 // import {JSONFile} from "lowdb/lib/adapters/node/JSONFile.js"
 import {Low} from "lowdb"
 import {JSONFile} from 'lowdb/node'
-import path from "path"
-import glob from "glob-promise"
 
 export type DisplayDeviceInfo =
     {

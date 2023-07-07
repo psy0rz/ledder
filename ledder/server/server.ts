@@ -155,3 +155,16 @@ rpc.app.get('/get/render/:id', async (req, resp) => {
 
 
 })
+
+rpc.app.get('/get/stream/:id', async (req, resp) => {
+
+    let deviceInfo = await displayDeviceStore.get(req.params.id)
+
+
+
+    resp.once('finish', () => {
+        console.log("CLOSE")
+    })
+
+
+})
