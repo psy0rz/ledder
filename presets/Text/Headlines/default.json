@@ -3,7 +3,7 @@
  "description": "",
  "values": {
   "Rss scroller font": {
-   "selected": "C64"
+   "selected": "MSX"
   },
   "Rss scroller font height": {
    "value": 0
@@ -63,6 +63,21 @@
    "Creation interval": {
     "value": 17
    }
+  },
+  "rssFeedUrl": {
+   "text": "https://www.hackerspace-drenthe.nl/feed/"
+  },
+  "Title text color": {
+   "r": 179,
+   "g": 255,
+   "b": 0,
+   "a": 1
+  },
+  "Description text color": {
+   "r": 128,
+   "g": 128,
+   "b": 200,
+   "a": 1
   }
  }
 }

@@ -5,32 +5,83 @@ import * as https from "https"
 interface CacheInterface {
     lastTime: number,
     result: any,
-    callbacks: Array<(symbol, titles) => void>,
+    callbacks: Array<(rssFeedUrl, titles) => void>,
     inProgress: boolean
 }
 
 const cache: Record<string, CacheInterface> = {}
 
-function titleParser(url:String, data:String)
+function rssTagParser(data:String,tag="item",subtags=[])
 {
-    const regexp=RegExp('<title>.*<\/title>','gm' )
-    const titles=[...data.matchAll(regexp)];
-    let titlesList=[]
-    for (let i=0;i<titles.length;i++)
+    const regexpTag=RegExp("<"+tag+">\s*(.+?)\s*</"+tag+">","g" )
+    let filteredData=filterDirtyChars(data.toString())
+    const items=[...filteredData.matchAll(regexpTag)];
+    //console.log("regext result:",regexpTag,items,filteredData)
+    let itemslist=[]
+    if (items && items.length>0)
     {
-        let titledirty=titles[i].toString()
-        let titleclean=titledirty.substring(7,titledirty.length-8)
-        titlesList.push(titleclean)
+        for (let i=0;i<items.length;i++)
+        {
+            let itemsDirty=items[i].toString().split("</"+tag)
+            let itemClean=itemsDirty[0].substring(tag.length+2)
+             //console.log("processing: ",itemClean)
+            if (subtags.length>0)
+            {
+                //console.log('processing sub:',subtags)
+                let subs=[]
+                for (let j=0;j<subtags.length;j++)
+                {
+                    subs[subtags[j]]=rssTagParser(itemClean,subtags[j],[])
+                }
+                itemslist.push(subs)
+            }
+            else
+            {
+                itemslist.push(itemClean)
+            }
+            
+        }
     }
-    console.log("Rss feed titles",titlesList)
-    return JSON.stringify(titlesList)
+    console.log("itemlist:",itemslist)
+    return itemslist
 }
 
-export function getRssFeedData(symbol = 'HSDNEWS', callback: (symbol, headlines) => void) {
+function filterDirtyChars(mystring:String)
+{
+    const regexDirtychars=RegExp("\r?\n|\r|\t","gm")
+    let result=mystring.replace(regexDirtychars,"")
+   
+    return filterDirtyChars2(result)
+}
+function filterDirtyChars2(mystring:String)
+{
+    let result=mystring
+    let filter=["<![CDATA[","]]>","<p>","</p>","&nbsp;","&#8230;"]
+    
+    for (let i=0;i<filter.length;i++)
+    {  
+        //console.log("filtering",filter[i])
+        let filtered=result.split(filter[i])
+        result=filtered.join("")
+    }
+   
+    return result
+}
 
-    if (!(symbol in cache)) {
+function titleParser(url:String, tag:string, data:String, fields:string[])
+{
+    
+    let titlesList=rssTagParser(data,tag,fields)
+    //return JSON.stringify(titlesList)
+    console.log(titlesList)
+    return titlesList
+}
+
+export function getRssFeedData(rssFeedUrl = 'RSSFEED', callback: (rssFeedUrl, titles) => void) {
+
+    if (!(rssFeedUrl in cache)) {
         //add new
-        cache[symbol] = {
+        cache[rssFeedUrl] = {
             lastTime: 0,
             result: {},
             inProgress: false,
@@ -39,66 +90,70 @@ export function getRssFeedData(symbol = 'HSDNEWS', callback: (symbol, headlines)
     }
 
     //add ourselfs to callback queue
-    cache[symbol].callbacks.push(callback)
+    cache[rssFeedUrl].callbacks.push(callback)
 
     //inprogress?
-    if (cache[symbol].inProgress) {
+    if (cache[rssFeedUrl].inProgress) {
         console.debug("Already in progress")
         return
     }
 
     function doCallbacks(d: CacheInterface) {
         for (const callback of d.callbacks)
-            callback(symbol,d.result)
+            callback(rssFeedUrl,d.result)
 
         d.callbacks = []
 
     }
 
+   
+
     //fresh?
-    if (Date.now() - cache[symbol].lastTime < 15000) {
-        console.debug("Returning cached response")
-        doCallbacks(cache[symbol])
+    if (Date.now() - cache[rssFeedUrl].lastTime < 15000) {
+        console.debug("Returning cached response",)
+        doCallbacks(cache[rssFeedUrl])
+        console.log("cache",cache)
         return
     }
 
     //start new request
     console.debug("Starting new request")
-    cache[symbol].inProgress = true
+    cache[rssFeedUrl].inProgress = true
     try {
-        const url = `https://www.hackerspace-drenthe.nl/feed/` //fixed for now..make flex when it works
+        const url = rssFeedUrl //fixed for now..make flex when it works
         https.get(url, (res) => {
      
             let xml = ""
             res.on('data', (d) => {
-               xml += d.toString()
+               xml=xml.concat(d.toString())
             })
 
             res.on('end', () => {
                 console.debug("Got freshdata")
-                let titles=titleParser(url,xml)
-                cache[symbol].result = titles
-                cache[symbol].lastTime = Date.now()
-                cache[symbol].inProgress = false
+                let fields=['title','description']
+                let titles=titleParser(url,'item',filterDirtyChars(xml),fields)
+                cache[rssFeedUrl].result = titles
+                cache[rssFeedUrl].lastTime = Date.now()
+                cache[rssFeedUrl].inProgress = false
 
-                doCallbacks(cache[symbol])
+                doCallbacks(cache[rssFeedUrl])
                 return
             })
 
             res.on('error', (err) => {
                 console.error(err)
-                cache[symbol].inProgress = false
-                cache[symbol].callbacks = []
+                cache[rssFeedUrl].inProgress = false
+                cache[rssFeedUrl].callbacks = []
             })
         }).on('error', (err) => {
             console.error(err)
-            cache[symbol].inProgress = false
-            cache[symbol].callbacks = []
+            cache[rssFeedUrl].inProgress = false
+            cache[rssFeedUrl].callbacks = []
         })
 
     } catch (e) {
         console.error(e)
-        cache[symbol].inProgress = false
-        cache[symbol].callbacks = []
+        cache[rssFeedUrl].inProgress = false
+        cache[rssFeedUrl].callbacks = []
     }
 }
