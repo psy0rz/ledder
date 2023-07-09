@@ -5,6 +5,11 @@ import IntervalStatic from "./IntervalStatic.js"
 import Interval from "./Interval.js"
 import ValueInterface from "./ValueInterface.js"
 import IntervalOnce from "./IntervalOnce.js"
+import PublicPromise from "./PublicPromise.js"
+import {clearTimeout} from "timers"
+
+
+
 
 export default class Scheduler {
 
@@ -15,12 +20,16 @@ export default class Scheduler {
     private onCleanupCallbacks: any[]
     private childScheduler: Scheduler
 
+    private stopCount: number
+    public resumePromise: PublicPromise<boolean>
 
     constructor() {
 
         this.childScheduler = undefined
         this.intervals = new Set()
         this.onCleanupCallbacks = []
+        this.stopCount=0
+        this.resumePromise=new PublicPromise<boolean>()
         this.clear()
 
     }
@@ -40,9 +49,9 @@ export default class Scheduler {
     }
 
 
-    //clear all intervals
+    //clear all intervals and detach childs
     public clear() {
-
+        this.resumePromise.resolve(false)
         for (const callback of this.onCleanupCallbacks) {
             try {
                 callback()
@@ -53,7 +62,6 @@ export default class Scheduler {
         }
         this.onCleanupCallbacks = []
 
-
         this.frameNr = 0
         this.setFrameTimeuS(this.defaultFrameTimeMicros)
         this.intervals.clear()
@@ -61,6 +69,9 @@ export default class Scheduler {
         if (this.childScheduler)
             this.childScheduler.clear()
         this.childScheduler = undefined
+
+        this.stopCount=0
+
 
     }
 
@@ -80,7 +91,15 @@ export default class Scheduler {
     //called by renderloop on every frame.
     //Dont call this directly!
     //Returns time in uS until next frame should be rendered.
-    public step() {
+    public async step(realtime:boolean) {
+
+        if (!realtime && this.stopCount!==0) {
+            let timeout=setTimeout( ()=>{
+                console.warn("Warning: scheduler is paused for a long time, did you forget to call scheduler.resume() ?")
+            },1000)
+            await this.resumePromise.promise
+            clearTimeout(timeout)
+        }
 
         this.frameNr++
 
@@ -100,7 +119,7 @@ export default class Scheduler {
 
         //child fps takes precedence
         if (this.childScheduler)
-            return this.childScheduler.step()
+            return await this.childScheduler.step(realtime)
         else
             return this.frameTimeMicros
 
@@ -114,6 +133,20 @@ export default class Scheduler {
 
         return (ret)
     }
+
+
+    // //returns true if this and child are empty
+    // public isEmpty()
+    // {
+    //     if (this.intervals.size!==0)
+    //         return false
+    //
+    //     if (this.childScheduler)
+    //         return this.childScheduler.isEmpty()
+    //
+    //     return true
+    // }
+
 
 
     /*******************************************************
@@ -189,5 +222,34 @@ export default class Scheduler {
         return (interval.createPromise())
     }
 
+    /** Temporary stop the scheduler. Use when you do external async stuff. (like loading a file)
+     * Can be called multiple times. Resume has to called the same amount of times.
+     */
+    public stop()
+    {
+        //start with fresh promise
+        if (this.stopCount===0)
+            this.resumePromise=new PublicPromise<boolean>()
+
+        this.stopCount++
+        // console.log("STOP", this.stopCount)
+    }
+
+    /** Resume the scheduler
+     *
+     */
+    public resume()
+    {
+        if (this.stopCount>0) {
+            this.stopCount--
+        // console.log("RESUME", this.stopCount)
+            if (this.stopCount===0)
+                this.resumePromise.resolve(true)
+        }
+        else
+        {
+            console.warn("Called Scheduler.resume() too many times!")
+        }
+    }
 
 }

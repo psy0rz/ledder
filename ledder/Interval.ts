@@ -2,6 +2,7 @@
 export default class Interval
 {
 
+  //TODO: use PublicPromise instead
   resolve: (value: boolean) => void
   reject: (reason?: any) => void
   promise: Promise<any>

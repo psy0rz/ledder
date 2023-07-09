@@ -88,7 +88,7 @@ export default class AnimationManager {
     //create class instance of currently loaded animation call run() on it
     public run() {
         this.animation = new this.animationClass()
-        this.animation.run(this.childBox, this.proxyScheduler.proxy, this.proxyControlGroup.proxy)
+        return this.animation.run(this.childBox, this.proxyScheduler.proxy, this.proxyControlGroup.proxy)
     }
 
     //load only animation

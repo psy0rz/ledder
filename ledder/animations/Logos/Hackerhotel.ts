@@ -16,6 +16,8 @@ export default class Hackerhotel extends Animator {
 
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) {
 
+        scheduler.stop() //going to do external async stuff
+
         //load image and determine colors
         const image = await sharp('images/hackerhotel.png')
         const imageLetterColor=new Color(255, 216, 0)
@@ -53,6 +55,7 @@ export default class Hackerhotel extends Animator {
         // new FxMove(scheduler,controls).run(box)
         // new FxRotate(scheduler, controls).run(box)
 
+       scheduler.resume()
 
         //start trace-effect on all the traces we've found
         const autoTraceFx=new FxAutoTrace(scheduler,controls)

@@ -36,6 +36,7 @@ export class PreviewStore {
                     console.log(` - Rendering ${animation.name}/${preset.name} ...`)
                     await this.render(animation.name, preset.name)
                 } catch (e) {
+
                     console.error(`Exception while creating preview: `, e)
                 }
             }

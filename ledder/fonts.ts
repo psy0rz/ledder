@@ -32,6 +32,7 @@ export function fontSelect(control:ControlGroup, name='Font', selected='C64' , h
         choices.push({id: id, name: font.name})
     }
 
+
     const fontControl = control.select(name, selected, choices, true)
     const heightControl = control.value(name+ ' height', heightOffset,0,100,1, true)
     const widthControl = control.value(name+ ' width', heightOffset,0,100,1, true)

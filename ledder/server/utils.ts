@@ -106,12 +106,15 @@ export async function createParentDir(fileName: string) {
 //However, if you want to safely stop and cleanup an animation, it might be better to use a fully fledged AnimationManager instance.
 export async function animationRun(box: PixelBox, scheduler: Scheduler, controls: ControlGroup, animationName, presetName?: string) {
 
+    scheduler.stop() //we are going to do external async stuff
     const animationClass = await presetStore.loadAnimation(animationName)
     const animation = new animationClass()
     if (presetName) {
         const presetValues = await presetStore.load(animationName, presetName)
         controls.load(presetValues.values)
     }
-    return animation.run(box, scheduler, controls)
+    const animationPromise=animation.run(box, scheduler, controls)
+    scheduler.resume()
+    return animationPromise
 
 }
