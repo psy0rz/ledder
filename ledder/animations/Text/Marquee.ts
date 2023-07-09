@@ -16,7 +16,6 @@ import FxColorPattern from "../../fx/FxColorPattern.js"
 import TheMatrix from "../MovieFx/TheMatrix.js"
 import DrawBlur from "../../draw/DrawBlur.js"
 import Color from "../../Color.js"
-import {unpack_destructuring} from "svelte/types/compiler/compile/nodes/shared/Context.js"
 
 
 export default class Marquee extends Animator {
