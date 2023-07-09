@@ -190,6 +190,8 @@ export default class Test extends Animator {
 
 Note that you can also call move() and wrap() on the box to move all the pixels that added to the box.
 
+*NOTE: Dont use internal methods of the scheduler, they start with `__`*
+
 ### The controls
 
 One awesome feature of ledder is that you can easily make stuff controllable by the user.
@@ -222,6 +224,8 @@ export default class Test extends Animator {
 
 The use can now control your animation and even make presets! 
 Some controls are realtime, while others will restart the animation if you change them. (by specifying true at the end)
+
+*NOTE: Dont use the internal methods of the controls, they start with `__`*
 
 #### Control types
 
@@ -292,4 +296,18 @@ To fix this, call scheduler.stop() before doing that stuff, and scheduler.resume
 (We use proxy objects to prevent interaction between a new animation and a previous one that still does async stuff)
 
 Note that this will also happen when you use setInterval or setTimeout. Never use those in ledder!
+
+### Which functions can i use to make animations?
+
+You shouldn't use stuff that starts with __. Thats for internal use only. (In case of the scheduler and controls this is pretty clear.)
+
+If you DO need them for some reason, you're either doing something wrong, or we need to fix/extend the API.
+
+You can use everything explained here, and AnimationManager. (still have to document that, look at MQTT for an example)
+
+We probably need to be more clear whats usable from animations and what is not. Stuff outside the ledder subdirectory is definitely off limits for animations.
+
+You can offcourse use external npm modules and do regular nodejs stuff. 
+
+
 
