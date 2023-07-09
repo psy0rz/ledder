@@ -22,6 +22,7 @@ export default class Cycle extends Animator {
 
         async function show(animationName, presetName, time) {
 
+
             //fade out and stop animation
             if (box.size>0)
                 await fader.run(box, true, 30)
@@ -30,17 +31,24 @@ export default class Cycle extends Animator {
 
 
             const subControls=controls.group(animationName)
+
+            //doing external async stuff
+            scheduler.stop()
+
             const animationClass=await presetStore.loadAnimation(animationName)
             const animation= new animationClass()
+
             if (presetName!=="") {
                 const presetValues = await presetStore.load(animationName, presetName)
                 subControls.load(presetValues.values)
             }
+            scheduler.resume()
 
             const promise=animation.run(box, scheduler, subControls)
             await fader.run(box, false, 30)
 
             if (time)
+
                 await scheduler.delay(time/16.6)
             else
                 await promise
