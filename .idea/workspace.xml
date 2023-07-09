@@ -9,24 +9,13 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7de4510b-f0e5-4402-9e95-cb9c8d6f6b3a" name="Changes" comment="fix">
-      <change afterPath="$PROJECT_DIR$/ledder/PublicPromise.ts" afterDir="false" />
+    <list default="true" id="7de4510b-f0e5-4402-9e95-cb9c8d6f6b3a" name="Changes" comment="prefixing internal function with __">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ledder/Interval.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/Interval.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ledder/Scheduler.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/Scheduler.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ledder/animations/Compositions/Demo.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/animations/Compositions/Demo.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ledder/animations/Cycle.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/animations/Cycle.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ledder/animations/Logos/HSD.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/animations/Logos/HSD.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ledder/animations/Logos/Hackerhotel.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/animations/Logos/Hackerhotel.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ledder/fonts.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/fonts.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ledder/Control.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/Control.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ledder/ControlGroup.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/ControlGroup.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ledder/animations/Test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/animations/Test.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ledder/server/AnimationManager.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/server/AnimationManager.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ledder/server/PreviewStore.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/server/PreviewStore.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ledder/server/RenderPreview.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/server/RenderPreview.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ledder/server/RenderRealtime.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/server/RenderRealtime.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ledder/server/RenderStatic.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/server/RenderStatic.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ledder/server/server.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/server/server.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ledder/server/utils.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/server/utils.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/presets/Text/Marquee/Font Tom thumb.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ledder/server/WsContext.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/server/WsContext.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -183,6 +172,7 @@
       <workItem from="1687973547520" duration="2988000" />
       <workItem from="1688659754958" duration="9500000" />
       <workItem from="1688903415363" duration="16845000" />
+      <workItem from="1688930582524" duration="4400000" />
     </task>
     <task id="LOCAL-00001" summary="kjh">
       <created>1673098884534</created>
@@ -488,7 +478,47 @@
       <option name="project" value="LOCAL" />
       <updated>1688903618587</updated>
     </task>
-    <option name="localTasksCounter" value="44" />
+    <task id="LOCAL-00044" summary="the scheduler can be stop temporarily to allow for external async stuff to be done. (like loading files or feeds). this is needed during preview rendering and static rendering">
+      <option name="closed" value="true" />
+      <created>1688930779949</created>
+      <option name="number" value="00044" />
+      <option name="presentableId" value="LOCAL-00044" />
+      <option name="project" value="LOCAL" />
+      <updated>1688930779949</updated>
+    </task>
+    <task id="LOCAL-00045" summary="asaync fixes">
+      <option name="closed" value="true" />
+      <created>1688931848626</created>
+      <option name="number" value="00045" />
+      <option name="presentableId" value="LOCAL-00045" />
+      <option name="project" value="LOCAL" />
+      <updated>1688931848626</updated>
+    </task>
+    <task id="LOCAL-00046" summary="fix c64 font">
+      <option name="closed" value="true" />
+      <created>1688932818133</created>
+      <option name="number" value="00046" />
+      <option name="presentableId" value="LOCAL-00046" />
+      <option name="project" value="LOCAL" />
+      <updated>1688932818133</updated>
+    </task>
+    <task id="LOCAL-00047" summary="explain stop/resume">
+      <option name="closed" value="true" />
+      <created>1688933774196</created>
+      <option name="number" value="00047" />
+      <option name="presentableId" value="LOCAL-00047" />
+      <option name="project" value="LOCAL" />
+      <updated>1688933774196</updated>
+    </task>
+    <task id="LOCAL-00048" summary="prefixing internal function with __">
+      <option name="closed" value="true" />
+      <created>1688934230881</created>
+      <option name="number" value="00048" />
+      <option name="presentableId" value="LOCAL-00048" />
+      <option name="project" value="LOCAL" />
+      <updated>1688934230881</updated>
+    </task>
+    <option name="localTasksCounter" value="49" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -817,7 +847,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="kjh" />
     <MESSAGE value="fixed saving" />
     <MESSAGE value="fixing control callbacks" />
     <MESSAGE value="child animationManagers ok" />
@@ -838,7 +867,12 @@
     <MESSAGE value="explain references" />
     <MESSAGE value="ramstein hat :)" />
     <MESSAGE value="fix" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix" />
+    <MESSAGE value="the scheduler can be stop temporarily to allow for external async stuff to be done. (like loading files or feeds). this is needed during preview rendering and static rendering" />
+    <MESSAGE value="asaync fixes" />
+    <MESSAGE value="fix c64 font" />
+    <MESSAGE value="explain stop/resume" />
+    <MESSAGE value="prefixing internal function with __" />
+    <option name="LAST_COMMIT_MESSAGE" value="prefixing internal function with __" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

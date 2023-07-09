@@ -71,12 +71,12 @@ export default class AnimationManager {
             this.proxyScheduler.revoke()
         this.proxyScheduler = Proxy.revocable(this.scheduler, {})
 
-        this.controlGroup._detach() //removes onChange handlers etc
+        this.controlGroup.__detach() //removes onChange handlers etc
         if (this.proxyControlGroup !== undefined)
             this.proxyControlGroup.revoke()
         this.proxyControlGroup = Proxy.revocable(this.controlGroup, {})
 
-        this.controlGroup._onRestartRequired(() => {
+        this.controlGroup.__onRestartRequired(() => {
 
             this.restart(true)
         })
@@ -128,7 +128,7 @@ export default class AnimationManager {
         this.childBox.clear()
 
         if (!keepControls) {
-            this.controlGroup.clear()
+            this.controlGroup.__clear()
         }
 
         this.autoreloadStop()

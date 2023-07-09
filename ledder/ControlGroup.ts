@@ -22,30 +22,30 @@ interface ControlGroupMeta extends ControlMeta {
  */
 export default class ControlGroup extends Control {
     declare meta: ControlGroupMeta
-    loadedValues: Values
+    private __loadedValues: Values
 
     //called when controls have been added to a controlgroup somewhere in the tree
-    private onAddCallback: () => void
+    private __onAddCallback: () => void
 
     //called when all controls are removed and stuff is reset
-    private onResetCallback: () => void
+    private __onResetCallback: () => void
 
 
     constructor(name: string = 'root', restartOnChange: boolean = false, collapsed = false) {
         super(name, 'controls', restartOnChange)
 
         this.meta.collapsed = collapsed
-        this.clear()
+        this.__clear()
 
     }
 
 
-    clear() {
+    public __clear() {
         this.meta.controls = {}
-        this.loadedValues = {}
+        this.__loadedValues = {}
 
-        if (this.onResetCallback) {
-            this.onResetCallback()
+        if (this.__onResetCallback) {
+            this.__onResetCallback()
         }
     }
 
@@ -54,21 +54,21 @@ export default class ControlGroup extends Control {
      * Add control to set
      * @param control
      */
-    add(control: Control) {
+    private __add(control: Control) {
         this.meta.controls[control.meta.name] = control
 
         //already has a preset in values?
-        if (control.meta.name in this.loadedValues)
-            control.load(this.loadedValues[control.meta.name])
+        if (control.meta.name in this.__loadedValues)
+            control.load(this.__loadedValues[control.meta.name])
 
-        control._onRestartRequired(this.onRestartRequiredCallback)
+        control.__onRestartRequired(this.__onRestartRequiredCallback)
         control.onChange((c)=>{
-            if (this.onChangeCallback)
-                this.onChangeCallback(c)
+            if (this.__onChangeCallback)
+                this.__onChangeCallback(c)
         })
 
-        if (this.onAddCallback)
-            this.onAddCallback()
+        if (this.__onAddCallback)
+            this.__onAddCallback()
 
 
 
@@ -86,7 +86,7 @@ export default class ControlGroup extends Control {
      */
     value(name: string, value = 0, min = 0, max = 100, step: number = 1, restartOnChange: boolean = false): ControlValue {
         if (!(name in this.meta.controls)) {
-            this.add(new ControlValue(name, value, min, max, step, restartOnChange))
+            this.__add(new ControlValue(name, value, min, max, step, restartOnChange))
         }
         return this.meta.controls[name] as ControlValue
     }
@@ -104,7 +104,7 @@ export default class ControlGroup extends Control {
      */
     range(name: string, from = 0, to = 100, min = 0, max = 100, step: number = 1, restartOnChange: boolean = false): ControlRange {
         if (!(name in this.meta.controls)) {
-            this.add(new ControlRange(name, from, to, min, max, step, restartOnChange))
+            this.__add(new ControlRange(name, from, to, min, max, step, restartOnChange))
         }
         return this.meta.controls[name] as ControlRange
     }
@@ -115,7 +115,7 @@ export default class ControlGroup extends Control {
      */
     color(name: string="Color", r: number = 128, g: number = 128, b: number = 128, a: number = 1, restartOnChange: boolean = false): ControlColor {
         if (!(name in this.meta.controls)) {
-            this.add(new ControlColor(name, r, g, b, a, restartOnChange))
+            this.__add(new ControlColor(name, r, g, b, a, restartOnChange))
         }
 
 
@@ -124,7 +124,7 @@ export default class ControlGroup extends Control {
 
     input(name: string, text: string, restartOnChange: boolean = false): ControlInput {
         if (!(name in this.meta.controls)) {
-            this.add(new ControlInput(name, text, restartOnChange))
+            this.__add(new ControlInput(name, text, restartOnChange))
         }
 
         return this.meta.controls[name] as ControlInput
@@ -132,7 +132,7 @@ export default class ControlGroup extends Control {
 
     switch(name: string, enabled: boolean, restartOnChange: boolean = true): ControlSwitch {
         if (!(name in this.meta.controls)) {
-            this.add(new ControlSwitch(name, enabled, restartOnChange))
+            this.__add(new ControlSwitch(name, enabled, restartOnChange))
         }
 
         return this.meta.controls[name] as ControlSwitch
@@ -140,7 +140,7 @@ export default class ControlGroup extends Control {
 
     select(name: string, selected: string, choices: Choices, restartOnChange: boolean = false): ControlSelect {
         if (!(name in this.meta.controls)) {
-            this.add(new ControlSelect(name, selected, choices, restartOnChange))
+            this.__add(new ControlSelect(name, selected, choices, restartOnChange))
         }
 
         return this.meta.controls[name] as ControlSelect
@@ -150,11 +150,11 @@ export default class ControlGroup extends Control {
     group(name: string, restartOnChange: boolean = false, collapsed = false): ControlGroup {
         if (!(name in this.meta.controls)) {
             const controlGroup = new ControlGroup(name, restartOnChange, collapsed)
-            this.add(controlGroup)
+            this.__add(controlGroup)
 
             //pass through
-            controlGroup._onReset(this.onResetCallback)
-            controlGroup._onAdd(this.onAddCallback)
+            controlGroup.__onReset(this.__onResetCallback)
+            controlGroup.__onAdd(this.__onAddCallback)
 
         }
 
@@ -163,13 +163,13 @@ export default class ControlGroup extends Control {
     }
 
 
-    _onReset(callback) {
-        this.onResetCallback = callback
+    public __onReset(callback) {
+        this.__onResetCallback = callback
 
     }
 
-    _onAdd(callback) {
-        this.onAddCallback = callback
+    public __onAdd(callback) {
+        this.__onAddCallback = callback
     }
 
 
@@ -179,10 +179,10 @@ export default class ControlGroup extends Control {
      */
     save() {
         for (const [name, control] of Object.entries(this.meta.controls)) {
-            this.loadedValues[name] = control.save()
+            this.__loadedValues[name] = control.save()
         }
 
-        return this.loadedValues
+        return this.__loadedValues
     }
 
     /**
@@ -190,12 +190,12 @@ export default class ControlGroup extends Control {
      */
     load(values: Values) {
 
-        this.loadedValues = values
+        this.__loadedValues = values
 
         //update existing controls
         for (const [name, control] of Object.entries(this.meta.controls)) {
-            if (name in this.loadedValues)
-                control.load(this.loadedValues[name])
+            if (name in this.__loadedValues)
+                control.load(this.__loadedValues[name])
         }
     }
 
@@ -207,17 +207,17 @@ export default class ControlGroup extends Control {
             c.updateValue(path.slice(1), values)
 
             if (!c.meta.restartOnChange && this.meta.restartOnChange)
-                if (this.onRestartRequiredCallback)
-                    this.onRestartRequiredCallback()
+                if (this.__onRestartRequiredCallback)
+                    this.__onRestartRequiredCallback()
 
         }
 
     }
 
-    _detach() {
-        super._detach()
+    public  __detach() {
+        super.__detach()
         for (const [name, control] of Object.entries(this.meta.controls)) {
-            control._detach()
+            control.__detach()
         }
         // this.onResetCallback=undefined
         // this.onAddCallback=undefined

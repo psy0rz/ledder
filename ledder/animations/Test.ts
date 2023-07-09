@@ -19,6 +19,8 @@ export default class Test extends Animator {
 
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) {
 
+
+
         const c = new Color(0,255, 0, 1)
        const p=new Pixel(3,3,c)
 
