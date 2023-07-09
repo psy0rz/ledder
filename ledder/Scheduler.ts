@@ -21,7 +21,7 @@ export default class Scheduler {
     private childScheduler: Scheduler
 
     private stopCount: number
-    public resumePromise: PublicPromise<boolean>
+    public __resumePromise: PublicPromise<boolean>
 
     constructor() {
 
@@ -29,7 +29,7 @@ export default class Scheduler {
         this.intervals = new Set()
         this.onCleanupCallbacks = []
         this.stopCount=0
-        this.resumePromise=new PublicPromise<boolean>()
+        this.__resumePromise=new PublicPromise<boolean>()
         this.__clear()
 
     }
@@ -38,7 +38,7 @@ export default class Scheduler {
 
     //clear all intervals and detach childs
     public __clear() {
-        this.resumePromise.resolve(false)
+        this.__resumePromise.resolve(false)
         for (const callback of this.onCleanupCallbacks) {
             try {
                 callback()
@@ -84,7 +84,7 @@ export default class Scheduler {
             let timeout=setTimeout( ()=>{
                 console.warn("Warning: scheduler is paused for a long time, did you forget to call scheduler.resume() ?")
             },1000)
-            await this.resumePromise.promise
+            await this.__resumePromise.promise
             clearTimeout(timeout)
         }
 
@@ -216,7 +216,7 @@ export default class Scheduler {
     {
         //start with fresh promise
         if (this.stopCount===0)
-            this.resumePromise=new PublicPromise<boolean>()
+            this.__resumePromise=new PublicPromise<boolean>()
 
         this.stopCount++
         // console.log("STOP", this.stopCount)
@@ -231,7 +231,7 @@ export default class Scheduler {
             this.stopCount--
         // console.log("RESUME", this.stopCount)
             if (this.stopCount===0)
-                this.resumePromise.resolve(true)
+                this.__resumePromise.resolve(true)
         }
         else
         {
