@@ -21,7 +21,7 @@ export class Render {
         this.controlGroup = new ControlGroup('root')
         this.box = new PixelBox(display)
         this.scheduler = new Scheduler()
-        this.scheduler.setDefaultFrameTime(display.defaultFrameTimeMicros)
+        this.scheduler.__setDefaultFrameTime(display.defaultFrameTimeMicros)
         this.animationManager = new AnimationManager(this.box, this.scheduler, this.controlGroup)
     }
 
@@ -32,7 +32,7 @@ export class Render {
         this.box.forEachPixel(() => {
             count++
         })
-        return (`${count} pixels.\n${this.scheduler.getStats()}`)
+        return (`${count} pixels.\n${this.scheduler.__getStats()}`)
     }
 
 }

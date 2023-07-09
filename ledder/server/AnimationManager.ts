@@ -120,11 +120,11 @@ export default class AnimationManager {
     public stop(keepControls: boolean) {
 
         //this calls onCleanup for the animation
-        this.scheduler.clear()
+        this.scheduler.__clear()
         //now detach and clean again (in case the animation cleanup did something bad)
         this.createProxies()
 
-        this.scheduler.clear()
+        this.scheduler.__clear()
         this.childBox.clear()
 
         if (!keepControls) {

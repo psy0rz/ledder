@@ -18,7 +18,7 @@ export class RenderStatic extends Render {
         for (let i = 0; i < maxFrames; i++) {
 
             //NOTE: await is needed, to allow  microtasks to run!
-            frameTime = frameTime + await this.scheduler.step(false)
+            frameTime = frameTime + await this.scheduler.__step(false)
 
             frameTime = ~~(frameTime / this.display.frameRoundingMicros) * this.display.frameRoundingMicros
 

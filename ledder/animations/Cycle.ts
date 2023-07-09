@@ -26,7 +26,7 @@ export default class Cycle extends Animator {
             //fade out and stop animation
             if (box.size>0)
                 await fader.run(box, true, 30)
-            scheduler.clear()
+            scheduler.__clear()
             box.clear()
 
 
@@ -71,7 +71,7 @@ export default class Cycle extends Animator {
 
             await show("Memes/Nyancat", "default", 3000)
             // await new FxPacman(scheduler, fxControls).run(box, 0, box.height )
-            scheduler.clear()
+            scheduler.__clear()
             await new FxFlameout(scheduler, fxControls).run(box)
 
 

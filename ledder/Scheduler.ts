@@ -30,27 +30,14 @@ export default class Scheduler {
         this.onCleanupCallbacks = []
         this.stopCount=0
         this.resumePromise=new PublicPromise<boolean>()
-        this.clear()
+        this.__clear()
 
     }
 
-    //Create independent child scheduler. Every scheduler can have one child. (which in turn can have another one)
-    //A clear() detaches the child.
-    //Functions that get call from "higher up", will be pushed down to the child. (things like step() and setFps())
-    //Functions that get called from "below" (this user/anmations), operate only on this scheduler.
-    child() {
-        if (this.childScheduler !== undefined)
-            throw ("Scheduler already has child")
-
-        this.childScheduler = new Scheduler()
-        this.childScheduler.setDefaultFrameTime(this.defaultFrameTimeMicros)
-        this.childScheduler.setFrameTimeuS(this.frameTimeMicros)
-        return (this.childScheduler)
-    }
 
 
     //clear all intervals and detach childs
-    public clear() {
+    public __clear() {
         this.resumePromise.resolve(false)
         for (const callback of this.onCleanupCallbacks) {
             try {
@@ -67,7 +54,7 @@ export default class Scheduler {
         this.intervals.clear()
 
         if (this.childScheduler)
-            this.childScheduler.clear()
+            this.childScheduler.__clear()
         this.childScheduler = undefined
 
         this.stopCount=0
@@ -80,18 +67,18 @@ export default class Scheduler {
      * Default frametime thats set after a clear().
      * Note that this is also the maximum fps that can be set by an animation.
      */
-    public setDefaultFrameTime(frameTimeMicros) {
+    public __setDefaultFrameTime(frameTimeMicros) {
         this.defaultFrameTimeMicros = frameTimeMicros
         this.setFrameTimeuS(frameTimeMicros)
 
         if (this.childScheduler)
-            this.childScheduler.setDefaultFrameTime(frameTimeMicros)
+            this.childScheduler.__setDefaultFrameTime(frameTimeMicros)
     }
 
     //called by renderloop on every frame.
     //Dont call this directly!
     //Returns time in uS until next frame should be rendered.
-    public async step(realtime:boolean) {
+    public async __step(realtime:boolean) {
 
         if (!realtime && this.stopCount!==0) {
             let timeout=setTimeout( ()=>{
@@ -119,17 +106,17 @@ export default class Scheduler {
 
         //child fps takes precedence
         if (this.childScheduler)
-            return await this.childScheduler.step(realtime)
+            return await this.childScheduler.__step(realtime)
         else
             return this.frameTimeMicros
 
     }
 
-    public getStats() {
+    public __getStats() {
         let ret = `Scheduler: ${this.intervals.size}`
 
         if (this.childScheduler)
-            ret = ret + '\n' + this.childScheduler.getStats()
+            ret = ret + '\n' + this.childScheduler.__getStats()
 
         return (ret)
     }
@@ -251,5 +238,21 @@ export default class Scheduler {
             console.warn("Called Scheduler.resume() too many times!")
         }
     }
+
+    //Create independent child scheduler. Every scheduler can have one child. (which in turn can have another one)
+    //A clear() detaches the child.
+    //Functions that get call from "higher up", will be pushed down to the child. (things like step() and setFps())
+    //Functions that get called from "below" (this user/anmations), operate only on this scheduler.
+    //Use this if you created a new AnimationManager. Pass the child scheduler to it.
+    child() {
+        if (this.childScheduler !== undefined)
+            throw ("Scheduler already has child")
+
+        this.childScheduler = new Scheduler()
+        this.childScheduler.__setDefaultFrameTime(this.defaultFrameTimeMicros)
+        this.childScheduler.setFrameTimeuS(this.frameTimeMicros)
+        return (this.childScheduler)
+    }
+
 
 }

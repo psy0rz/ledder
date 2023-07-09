@@ -27,7 +27,7 @@ export class RenderRealtime extends Render {
         if (!this.keepRendering)
             return
 
-        this.nextTimeMicros += await this.scheduler.step(true)
+        this.nextTimeMicros += await this.scheduler.__step(true)
         if (this.nextTimeMicros - this.lastFrameMicros >= this.display.minFrameTimeMicros) {
             try {
                 this.display.render(this.box)
