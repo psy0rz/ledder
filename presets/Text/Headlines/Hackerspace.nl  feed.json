@@ -65,25 +65,25 @@
    }
   },
   "rssFeedUrl": {
-   "text": "https://www.hackerspace-drenthe.nl/feed/"
+   "text": "https://hackerspaces.nl/feed/"
   },
   "Title text color": {
-   "r": 217,
-   "g": 68,
+   "r": 133,
+   "g": 217,
    "b": 0,
    "a": 1
   },
   "Description text color": {
-   "r": 41,
-   "g": 0,
-   "b": 117,
+   "r": 117,
+   "g": 34,
+   "b": 0,
    "a": 1
   },
   "Show RSS feed descriptions": {
-   "enabled": false
+   "enabled": true
   },
   "Enabled Fire FX": {
-   "enabled": false
+   "enabled": true
   },
   "Enabled Stars FX": {
    "enabled": true

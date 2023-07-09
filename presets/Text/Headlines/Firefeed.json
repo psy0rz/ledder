@@ -3,13 +3,13 @@
  "description": "",
  "values": {
   "Rss scroller font": {
-   "selected": "MSX"
+   "selected": "C64"
   },
   "Rss scroller font height": {
-   "value": 0
+   "value": 5
   },
   "Rss scroller font width": {
-   "value": 0
+   "value": 4
   },
   "headlines scroller interval": {
    "value": 1
@@ -21,7 +21,7 @@
    "a": 1
   },
   "Fire colors": {
-   "selected": "Doom fire"
+   "selected": "Brainsmoke fire"
   },
   "Fire colors range": {
    "from": 0,
@@ -32,7 +32,7 @@
   },
   "Fire intensity %": {
    "from": 0,
-   "to": 0
+   "to": 100
   },
   "Fire wildness %": {
    "value": 40
@@ -61,32 +61,32 @@
     "value": 0.1
    },
    "Creation interval": {
-    "value": 10
+    "value": 17
    }
   },
   "rssFeedUrl": {
    "text": "https://www.hackerspace-drenthe.nl/feed/"
   },
   "Title text color": {
-   "r": 217,
-   "g": 68,
+   "r": 165,
+   "g": 42,
    "b": 0,
    "a": 1
   },
   "Description text color": {
-   "r": 41,
+   "r": 0,
    "g": 0,
-   "b": 117,
+   "b": 67,
    "a": 1
   },
   "Show RSS feed descriptions": {
-   "enabled": false
+   "enabled": true
   },
   "Enabled Fire FX": {
-   "enabled": false
+   "enabled": true
   },
   "Enabled Stars FX": {
-   "enabled": true
+   "enabled": false
   }
  }
 }
