@@ -42,7 +42,7 @@ function rssTagParser(data:String,tag="item",subtags=[])
             
         }
     }
-    console.log("itemlist:",itemslist)
+    //console.log("itemlist:",itemslist)
     return itemslist
 }
 
@@ -73,7 +73,7 @@ function titleParser(url:String, tag:string, data:String, fields:string[])
     
     let titlesList=rssTagParser(data,tag,fields)
     //return JSON.stringify(titlesList)
-    console.log(titlesList)
+    //console.log(titlesList)
     return titlesList
 }
 
@@ -112,7 +112,7 @@ export function getRssFeedData(rssFeedUrl = 'RSSFEED', callback: (rssFeedUrl, ti
     if (Date.now() - cache[rssFeedUrl].lastTime < 15000) {
         console.debug("Returning cached response",)
         doCallbacks(cache[rssFeedUrl])
-        console.log("cache",cache)
+        //console.log("cache",cache)
         return
     }
 

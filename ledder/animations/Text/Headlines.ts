@@ -22,7 +22,7 @@ export default class Headlines extends Animator {
     public headLinesIndex=0
     public scrollcounter=0
 
-    async runScroller(box: PixelBox, scheduler: Scheduler, controls: ControlGroup,x:number,y:number,headlinesJSON)
+    async runScroller(box: PixelBox, scheduler: Scheduler, controls: ControlGroup,x:number,y:number,width:number,height:number,headlinesJSON)
     {
         let xOffset=10 //box.width()
         let headlineIndex=1
@@ -33,13 +33,14 @@ export default class Headlines extends Animator {
         let scrollList=new PixelList()
         box.add(scrollList)
         let headlinesArr=headlinesJSON
-        const rssfeedControl =controls.input("rssFeedUrl","https://www.hackerspace-drenthe.nl/feed/",true)
-        const enableDescriptionControl=controls.switch("Show RSS feed descriptions",false,true)
-        const intervalControl = controls.value("headlines scroller interval", 1, 1, 10, 0.1)
-        const colorSettingTitle=controls.color("Title text color", 128, 128, 200)
-        const colorSettingDescription=controls.color("Description text color", 128, 128, 200)
-        const enableFXFireControl=controls.switch("Enabled Fire FX",false,true)
-        const enableFXStarsControl=controls.switch("Enabled Stars FX",false,true)
+        const groupControl=controls.group("headlines")
+        const rssfeedControl =groupControl.input("rssFeedUrl","https://www.hackerspace-drenthe.nl/feed/",true)
+        const enableDescriptionControl=groupControl.switch("Show RSS feed descriptions",false,true)
+        const intervalControl = groupControl.value("headlines scroller interval", 1, 1, 10, 0.1)
+        const colorSettingTitle=groupControl.color("Title text color", 128, 128, 200)
+        const colorSettingDescription=groupControl.color("Description text color", 128, 128, 200)
+        const enableFXFireControl=groupControl.switch("Enabled Fire FX",false,true)
+        const enableFXStarsControl=groupControl.switch("Enabled Stars FX",false,true)
         scheduler.intervalControlled(intervalControl, (frameNr) => {
            
             let headlineTitle=""
@@ -63,46 +64,60 @@ export default class Headlines extends Animator {
            if (enableDescriptionControl.enabled)
            {
                 //show items and descriptions
-                if (xOffset<(-1*(headlineTitle.length+headlineDescription.length)*font.width)){ headlineIndex++; xOffset=box.width()+2}
+                if (xOffset<(-1*(headlineTitle.length+headlineDescription.length)*font.width)){ headlineIndex++; xOffset=width+2}
                 if (headlineIndex>headlinesArr.length-1) { headlineIndex=0;}
                 scrollList.add(new DrawText(x+xOffset,y,font,headlineTitle,colorSettingTitle))
                 scrollList.add(new DrawText(x+xOffset+font.width+titlePixelX,y,font,headlineDescription,colorSettingDescription))
+                scrollList.crop(box)
            }
            else
            {
                 //show titles only
-                if (xOffset<(-1*(headlineTitle.length)*font.width)){ headlineIndex++; xOffset=box.width()+2}
+                if (xOffset<(-1*(headlineTitle.length)*font.width)){ headlineIndex++; xOffset=width+2}
                 if (headlineIndex>headlinesArr.length-1) { headlineIndex=0;}
                 scrollList.add(new DrawText(x+xOffset,y,font,headlineTitle,colorSettingTitle))
-
+                scrollList.crop(box)
            }
           
         });
     }
 
-    async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup,headlinesArray=[]) {
-        const rssfeedControl =controls.input("rssFeedUrl","https://www.hackerspace-drenthe.nl/feed/",true)
-        const enableDescriptionControl=controls.switch("Show RSS feed descriptions",false,true)
-        const intervalControl = controls.value("headlines scroller interval", 1, 1, 10, 0.1)
-        const colorSettingTitle=controls.color("Title text color", 128, 128, 200)
-        const colorSettingDescription=controls.color("Description text color", 128, 128, 200)
-        const enableFXFireControl=controls.switch("Enabled Fire FX",false,true)
-        const enableFXStarsControl=controls.switch("Enabled Stars FX",false,true)
+    async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup,x:number=0, y:number=0,width:number=box.width(),height:number=box.height(),headlinesArray=[]) {
+        const groupControl=controls.group("headlines")
+        const rssfeedControl =groupControl.input("rssFeedUrl","https://www.hackerspace-drenthe.nl/feed/",true)
+        const enableDescriptionControl=groupControl.switch("Show RSS feed descriptions",false,true)
+        const intervalControl = groupControl.value("headlines scroller interval", 1, 1, 10, 0.1)
+        const colorSettingTitle=groupControl.color("Title text color", 128, 128, 200)
+        const colorSettingDescription=groupControl.color("Description text color", 128, 128, 200)
+        const enableFXFireControl=groupControl.switch("Enabled Fire FX",false,true)
+        const enableFXStarsControl=groupControl.switch("Enabled Stars FX",false,true)
         
   
         this.headlinesArray=headlinesArray
         let init = true
 
-        const firebox=new PixelBox(box)
-        //firebox.xMin=5
-        //firebox.xMax=20
-        box.add(firebox)
+        let headlinesPixelbox=new PixelBox(box)
+        box.xMin=0
+        box.yMin=0
+        box.xMax=width
+        box.yMin=height
+       
 
-        const starBox=new PixelBox(box)
-        box.add(starBox)
+        box.add(headlinesPixelbox)
 
-        const scrollerBox=new PixelBox(box)
-        box.add(scrollerBox)
+        const firebox=new PixelBox(headlinesPixelbox)
+        headlinesPixelbox.add(firebox)
+
+        const starBox=new PixelBox(headlinesPixelbox)
+        headlinesPixelbox.add(starBox)
+
+        const scrollerBox=new PixelBox(headlinesPixelbox)
+        headlinesPixelbox.add(scrollerBox)
+
+       
+    
+
+
 
        
         let stopped=false
@@ -119,8 +134,7 @@ export default class Headlines extends Animator {
                     return
 
                 if (init) {
-                    const scroller=new Headlines()
-                    scroller.runScroller(scrollerBox,scheduler, controls, 0,0, titles)
+                  
                        
                     if (enableFXFireControl.enabled)
                     {
@@ -131,8 +145,12 @@ export default class Headlines extends Animator {
                     if (enableFXStarsControl.enabled)
                     {
                         const stars = new Starfield()
-                        stars.run(starBox, scheduler, controls.group("stars"))
+                        stars.run(starBox, scheduler, controls.group("stars"),)
                     }
+
+                    const scroller=new Headlines()
+                    scroller.runScroller(scrollerBox,scheduler, controls.group("headlines"), 0,0,width,height, titles)
+
                     init = false
                 }
             })
