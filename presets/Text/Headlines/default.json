@@ -21,24 +21,24 @@
    "a": 1
   },
   "Fire colors": {
-   "selected": "Doom fire"
+   "selected": "Reinbow"
   },
   "Fire colors range": {
    "from": 0,
    "to": 100
   },
   "Fire interval": {
-   "value": 1
+   "value": 10
   },
   "Fire intensity %": {
    "from": 0,
-   "to": 0
+   "to": 54
   },
   "Fire wildness %": {
-   "value": 40
+   "value": 44
   },
   "Fire decay %": {
-   "value": 7.6000000000000005
+   "value": 2.4000000000000004
   },
   "Fire sintel factor": {
    "value": 0.71
@@ -87,6 +87,48 @@
   },
   "Enabled Stars FX": {
    "enabled": true
+  },
+  "headlines": {
+   "rssFeedUrl": {
+    "text": "https://www.hackerspace-drenthe.nl/feed/"
+   },
+   "Show RSS feed descriptions": {
+    "enabled": false
+   },
+   "headlines display": {
+    "Headline scroller font": {
+     "selected": "IBM bios"
+    },
+    "Headline scroller font height": {
+     "value": 0
+    },
+    "Headline scroller font width": {
+     "value": 0
+    },
+    "headlines scroller interval": {
+     "value": 1
+    },
+    "Title text color": {
+     "r": 0,
+     "g": 0,
+     "b": 0,
+     "a": 1
+    },
+    "Description text color": {
+     "r": 0,
+     "g": 0,
+     "b": 0,
+     "a": 1
+    }
+   }
+  },
+  "FX": {
+   "Enabled Fire FX": {
+    "enabled": true
+   },
+   "Enabled Stars FX": {
+    "enabled": false
+   }
   }
  }
 }
