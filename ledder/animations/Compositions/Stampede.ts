@@ -3,7 +3,6 @@ import Wandelaarster from "../Components/Wandelaarster.js"
 import Wandelaar from "../Components/Wandelaar.js"
 import Pacman from "../Components/Pacman.js"
 import Ghost from "../Components/PacmanGhost.js"
-import Kong from "../Components/Kong.js"
 import Fire from "../Fires/Fire.js"
 import Starfield from "../Components/Starfield.js"
 import Scheduler from "../../Scheduler.js"
@@ -27,7 +26,6 @@ export default class Stampede extends Animator {
         let wandelaar= new Wandelaar()
         let pacman=new Pacman()
         let ghost=new Ghost()
-        let kong=new Kong()
         let flames=new Fire();
         let starfield=new Starfield();
       
@@ -42,7 +40,7 @@ export default class Stampede extends Animator {
         wandelaar.run(box, scheduler, controls,x-30,y) 
         pacman.run(box, scheduler, controls,x-40,y) 
         ghost.run(box, scheduler, controls,x-50,y) 
-        kong.run(box, scheduler, controls,x-75,y) 
+       
 
 
     }

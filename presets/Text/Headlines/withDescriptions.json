@@ -1,0 +1,134 @@
+{
+ "title": "",
+ "description": "",
+ "values": {
+  "Rss scroller font": {
+   "selected": "MSX"
+  },
+  "Rss scroller font height": {
+   "value": 0
+  },
+  "Rss scroller font width": {
+   "value": 0
+  },
+  "headlines scroller interval": {
+   "value": 1
+  },
+  "Headlines text color": {
+   "r": 254,
+   "g": 254,
+   "b": 254,
+   "a": 1
+  },
+  "Fire colors": {
+   "selected": "Reinbow"
+  },
+  "Fire colors range": {
+   "from": 0,
+   "to": 100
+  },
+  "Fire interval": {
+   "value": 10
+  },
+  "Fire intensity %": {
+   "from": 0,
+   "to": 54
+  },
+  "Fire wildness %": {
+   "value": 5
+  },
+  "Fire decay %": {
+   "value": 2.4000000000000004
+  },
+  "Fire sintel factor": {
+   "value": 1.85
+  },
+  "Fire speed": {
+   "value": 4
+  },
+  "Fire X range %": {
+   "from": 0,
+   "to": 100
+  },
+  "stars": {
+   "Base speed": {
+    "value": 0.001
+   },
+   "Acceleration": {
+    "value": 0.0068000000000000005
+   },
+   "Star offset": {
+    "value": 0.028
+   },
+   "Creation interval": {
+    "value": 3
+   }
+  },
+  "rssFeedUrl": {
+   "text": "https://www.hackerspace-drenthe.nl/feed/"
+  },
+  "Title text color": {
+   "r": 217,
+   "g": 68,
+   "b": 0,
+   "a": 1
+  },
+  "Description text color": {
+   "r": 41,
+   "g": 0,
+   "b": 117,
+   "a": 1
+  },
+  "Show RSS feed descriptions": {
+   "enabled": false
+  },
+  "Enabled Fire FX": {
+   "enabled": false
+  },
+  "Enabled Stars FX": {
+   "enabled": true
+  },
+  "headlines": {
+   "rssFeedUrl": {
+    "text": "https://www.hackerspace-drenthe.nl/feed/"
+   },
+   "Show RSS feed descriptions": {
+    "enabled": true
+   },
+   "headlines display": {
+    "Headline scroller font": {
+     "selected": "Picopixel"
+    },
+    "Headline scroller font height": {
+     "value": 0
+    },
+    "Headline scroller font width": {
+     "value": 0
+    },
+    "headlines scroller interval": {
+     "value": 1
+    },
+    "Title text color": {
+     "r": 246,
+     "g": 72,
+     "b": 0,
+     "a": 1
+    },
+    "Description text color": {
+     "r": 105,
+     "g": 0,
+     "b": 255,
+     "a": 1
+    }
+   }
+  },
+  "FX": {
+   "Enabled Fire FX": {
+    "enabled": false
+   },
+   "Enabled Stars FX": {
+    "enabled": true
+   }
+  }
+ }
+}

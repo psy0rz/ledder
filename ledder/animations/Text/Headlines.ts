@@ -57,14 +57,14 @@ export default class Headlines extends Animator {
             headlineTitle="RSS HEADLINES"
             headlineDescription="loading..."
            }
-           let titlePixelX=headlineTitle.length*font.width
+           let titlePixelX=(headlineTitle.length*font.width)+16
            if (showDescriptions)
            {
                 //show items and descriptions
                 if (xOffset<(-1*(headlineTitle.length+headlineDescription.length)*font.width)){ headlineIndex++; xOffset=width+2}
                 if (headlineIndex>headlinesArr.length-1) { headlineIndex=0;}
-                scrollList.add(new DrawText(x+xOffset,y,font,headlineTitle,colorSettingTitle))
-                scrollList.add(new DrawText(x+xOffset+font.width+titlePixelX,y,font,headlineDescription,colorSettingDescription))
+                scrollList.add(new DrawText(x+xOffset,y,font,headlineTitle.toUpperCase(),colorSettingTitle))
+                scrollList.add(new DrawText(x+xOffset+font.width+titlePixelX,y,font,headlineDescription.toUpperCase(),colorSettingDescription))
                 scrollList.crop(box)
            }
            else
@@ -72,7 +72,7 @@ export default class Headlines extends Animator {
                 //show titles only
                 if (xOffset<(-1*(headlineTitle.length)*font.width)){ headlineIndex++; xOffset=width+2}
                 if (headlineIndex>headlinesArr.length-1) { headlineIndex=0;}
-                scrollList.add(new DrawText(x+xOffset,y,font,headlineTitle,colorSettingTitle))
+                scrollList.add(new DrawText(x+xOffset,y,font,headlineTitle.toUpperCase(),colorSettingTitle))
                 scrollList.crop(box)
            }
           
@@ -86,6 +86,7 @@ export default class Headlines extends Animator {
         const FXControl=controls.group("FX")
         const enableFXFireControl=FXControl.switch("Enabled Fire FX",false,true)
         const enableFXStarsControl=FXControl.switch("Enabled Stars FX",false,true)
+        if (enableDescriptionControl.enabled) { enableFXFireControl.enabled=false}
         
   
         this.headlinesArray=headlinesArray
@@ -93,14 +94,19 @@ export default class Headlines extends Animator {
 
         let headlinesPixelbox=new PixelBox(box)
         box.add(headlinesPixelbox)
+        headlinesPixelbox.crop(box)
 
         const firebox=new PixelBox(headlinesPixelbox)
+        firebox.crop(box)
         headlinesPixelbox.add(firebox)
 
+
         const starBox=new PixelBox(headlinesPixelbox)
+        starBox.crop(box)
         headlinesPixelbox.add(starBox)
 
         const scrollerBox=new PixelBox(headlinesPixelbox)
+        scrollerBox.crop(box)
         headlinesPixelbox.add(scrollerBox)
 
        
