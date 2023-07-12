@@ -71,12 +71,12 @@ export default class AnimationManager {
             this.proxyScheduler.revoke()
         this.proxyScheduler = Proxy.revocable(this.scheduler, {})
 
-        this.controlGroup._detach() //removes onChange handlers etc
+        this.controlGroup.__detach() //removes onChange handlers etc
         if (this.proxyControlGroup !== undefined)
             this.proxyControlGroup.revoke()
         this.proxyControlGroup = Proxy.revocable(this.controlGroup, {})
 
-        this.controlGroup._onRestartRequired(() => {
+        this.controlGroup.__onRestartRequired(() => {
 
             this.restart(true)
         })
@@ -88,7 +88,7 @@ export default class AnimationManager {
     //create class instance of currently loaded animation call run() on it
     public run() {
         this.animation = new this.animationClass()
-        this.animation.run(this.childBox, this.proxyScheduler.proxy, this.proxyControlGroup.proxy)
+        return this.animation.run(this.childBox, this.proxyScheduler.proxy, this.proxyControlGroup.proxy)
     }
 
     //load only animation
@@ -120,15 +120,15 @@ export default class AnimationManager {
     public stop(keepControls: boolean) {
 
         //this calls onCleanup for the animation
-        this.scheduler.clear()
+        this.scheduler.__clear()
         //now detach and clean again (in case the animation cleanup did something bad)
         this.createProxies()
 
-        this.scheduler.clear()
+        this.scheduler.__clear()
         this.childBox.clear()
 
         if (!keepControls) {
-            this.controlGroup.clear()
+            this.controlGroup.__clear()
         }
 
         this.autoreloadStop()

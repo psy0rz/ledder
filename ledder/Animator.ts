@@ -22,7 +22,7 @@ export default class Animator {
 
 
     //will be overridden in animation subclass
-    async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) {
+    async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup):Promise<any> {
         console.error("Error: This animation has no run() function?")
 
     }

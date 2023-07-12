@@ -2,8 +2,6 @@ import Pixel from "./Pixel.js"
 import BoxInterface from "./BoxInterface.js"
 import {random} from "./utils.js"
 import ColorInterface from "./ColorInterface.js"
-import Color from "./Color.js"
-import {Col} from "framework7-svelte"
 
 /**
  * A pixeltree. A PixelSet is just a simple Set() of Pixels, but can also contain other PixelSets.

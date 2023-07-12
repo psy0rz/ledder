@@ -5,6 +5,11 @@ import IntervalStatic from "./IntervalStatic.js"
 import Interval from "./Interval.js"
 import ValueInterface from "./ValueInterface.js"
 import IntervalOnce from "./IntervalOnce.js"
+import PublicPromise from "./PublicPromise.js"
+import {clearTimeout} from "timers"
+
+
+
 
 export default class Scheduler {
 
@@ -15,34 +20,25 @@ export default class Scheduler {
     private onCleanupCallbacks: any[]
     private childScheduler: Scheduler
 
+    private stopCount: number
+    public __resumePromise: PublicPromise<boolean>
 
     constructor() {
 
         this.childScheduler = undefined
         this.intervals = new Set()
         this.onCleanupCallbacks = []
-        this.clear()
+        this.stopCount=0
+        this.__resumePromise=new PublicPromise<boolean>()
+        this.__clear()
 
     }
 
-    //Create independent child scheduler. Every scheduler can have one child. (which in turn can have another one)
-    //A clear() detaches the child.
-    //Functions that get call from "higher up", will be pushed down to the child. (things like step() and setFps())
-    //Functions that get called from "below" (this user/anmations), operate only on this scheduler.
-    child() {
-        if (this.childScheduler !== undefined)
-            throw ("Scheduler already has child")
-
-        this.childScheduler = new Scheduler()
-        this.childScheduler.setDefaultFrameTime(this.defaultFrameTimeMicros)
-        this.childScheduler.setFrameTimeuS(this.frameTimeMicros)
-        return (this.childScheduler)
-    }
 
 
-    //clear all intervals
-    public clear() {
-
+    //clear all intervals and detach childs
+    public __clear() {
+        this.__resumePromise.resolve(false)
         for (const callback of this.onCleanupCallbacks) {
             try {
                 callback()
@@ -53,14 +49,16 @@ export default class Scheduler {
         }
         this.onCleanupCallbacks = []
 
-
         this.frameNr = 0
         this.setFrameTimeuS(this.defaultFrameTimeMicros)
         this.intervals.clear()
 
         if (this.childScheduler)
-            this.childScheduler.clear()
+            this.childScheduler.__clear()
         this.childScheduler = undefined
+
+        this.stopCount=0
+
 
     }
 
@@ -69,18 +67,26 @@ export default class Scheduler {
      * Default frametime thats set after a clear().
      * Note that this is also the maximum fps that can be set by an animation.
      */
-    public setDefaultFrameTime(frameTimeMicros) {
+    public __setDefaultFrameTime(frameTimeMicros) {
         this.defaultFrameTimeMicros = frameTimeMicros
         this.setFrameTimeuS(frameTimeMicros)
 
         if (this.childScheduler)
-            this.childScheduler.setDefaultFrameTime(frameTimeMicros)
+            this.childScheduler.__setDefaultFrameTime(frameTimeMicros)
     }
 
     //called by renderloop on every frame.
     //Dont call this directly!
     //Returns time in uS until next frame should be rendered.
-    public step() {
+    public async __step(realtime:boolean) {
+
+        if (!realtime && this.stopCount!==0) {
+            let timeout=setTimeout( ()=>{
+                console.warn("Warning: scheduler is paused for a long time, did you forget to call scheduler.resume() ?")
+            },1000)
+            await this.__resumePromise.promise
+            clearTimeout(timeout)
+        }
 
         this.frameNr++
 
@@ -100,20 +106,34 @@ export default class Scheduler {
 
         //child fps takes precedence
         if (this.childScheduler)
-            return this.childScheduler.step()
+            return await this.childScheduler.__step(realtime)
         else
             return this.frameTimeMicros
 
     }
 
-    public getStats() {
+    public __getStats() {
         let ret = `Scheduler: ${this.intervals.size}`
 
         if (this.childScheduler)
-            ret = ret + '\n' + this.childScheduler.getStats()
+            ret = ret + '\n' + this.childScheduler.__getStats()
 
         return (ret)
     }
+
+
+    // //returns true if this and child are empty
+    // public isEmpty()
+    // {
+    //     if (this.intervals.size!==0)
+    //         return false
+    //
+    //     if (this.childScheduler)
+    //         return this.childScheduler.isEmpty()
+    //
+    //     return true
+    // }
+
 
 
     /*******************************************************
@@ -187,6 +207,51 @@ export default class Scheduler {
         const interval = new IntervalOnce(frames, this.frameNr)
         this.intervals.add(interval)
         return (interval.createPromise())
+    }
+
+    /** Temporary stop the scheduler. Use when you do external async stuff. (like loading a file)
+     * Can be called multiple times. Resume has to called the same amount of times.
+     */
+    public stop()
+    {
+        //start with fresh promise
+        if (this.stopCount===0)
+            this.__resumePromise=new PublicPromise<boolean>()
+
+        this.stopCount++
+        // console.log("STOP", this.stopCount)
+    }
+
+    /** Resume the scheduler
+     *
+     */
+    public resume()
+    {
+        if (this.stopCount>0) {
+            this.stopCount--
+        // console.log("RESUME", this.stopCount)
+            if (this.stopCount===0)
+                this.__resumePromise.resolve(true)
+        }
+        else
+        {
+            console.warn("Called Scheduler.resume() too many times!")
+        }
+    }
+
+    //Create independent child scheduler. Every scheduler can have one child. (which in turn can have another one)
+    //A clear() detaches the child.
+    //Functions that get call from "higher up", will be pushed down to the child. (things like step() and setFps())
+    //Functions that get called from "below" (this user/anmations), operate only on this scheduler.
+    //Use this if you created a new AnimationManager. Pass the child scheduler to it.
+    child() {
+        if (this.childScheduler !== undefined)
+            throw ("Scheduler already has child")
+
+        this.childScheduler = new Scheduler()
+        this.childScheduler.__setDefaultFrameTime(this.defaultFrameTimeMicros)
+        this.childScheduler.setFrameTimeuS(this.frameTimeMicros)
+        return (this.childScheduler)
     }
 
 

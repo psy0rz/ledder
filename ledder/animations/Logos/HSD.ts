@@ -27,6 +27,7 @@ export default class HSD extends Animator {
 
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) {
 
+
         const marqueeBox = new PixelBox(box)
         box.add(marqueeBox)
 

@@ -19,10 +19,10 @@ export class Control {
     meta: ControlMeta
 
     //called when a control is changed by the user.
-    protected onChangeCallback: (control: Control) => void
+    protected __onChangeCallback: (control: Control) => void
 
     //called when restart is required
-    protected onRestartRequiredCallback: ()=> void
+    protected __onRestartRequiredCallback: ()=> void
 
 
     constructor(name: string, type: string, restartOnChange: boolean = false) {
@@ -36,26 +36,26 @@ export class Control {
 
     //Is called when user changes something via the controls.
     //Can be used by user.
-    onChange(callback?: (Control) => void) {
-        this.onChangeCallback = callback
+    public onChange(callback?: (Control) => void) {
+        this.__onChangeCallback = callback
 
         //always call it the first time:
-        if (this.onChangeCallback !== undefined)
-            this.onChangeCallback(this)
+        if (this.__onChangeCallback !== undefined)
+            this.__onChangeCallback(this)
 
     }
 
     //internal use only.
-    _onRestartRequired(callback)
+    public __onRestartRequired(callback)
     {
-        this.onRestartRequiredCallback=callback
+        this.__onRestartRequiredCallback=callback
     }
 
     //remove all references to user stuff/animations. (used when restarting an animation)
-    _detach()
+    public __detach()
     {
 
-        this.onChangeCallback=undefined
+        this.__onChangeCallback=undefined
         // this.onRestartRequiredCallback=undefined
     }
 
@@ -63,18 +63,18 @@ export class Control {
 
     load?(values: Values)
 
-    //return true if animation should be restarted
+    //update values, return true if animation should be restarted
     updateValue(path: Array<string>, value: Values) {
 
         this.load(value)
         // console.log("CHANGE en", this.onChangeCallback)
-        if (this.onChangeCallback !== undefined) {
-            this.onChangeCallback(this)
+        if (this.__onChangeCallback !== undefined) {
+            this.__onChangeCallback(this)
         }
 
         if (this.meta.restartOnChange)
-            if (this.onRestartRequiredCallback)
-                this.onRestartRequiredCallback()
+            if (this.__onRestartRequiredCallback)
+                this.__onRestartRequiredCallback()
 
     }
 

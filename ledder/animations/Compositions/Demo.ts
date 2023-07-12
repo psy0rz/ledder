@@ -40,17 +40,23 @@ export default class Cycle extends Animator {
             //fade out and stop animation
             if (box.size>0)
                 await fader.run(box, true, 30)
-            scheduler.clear()
+            //FIXME: use AnimationManager to load animations
+            scheduler.__clear()
             box.clear()
 
 
             const subControls=controls.group(animationName)
+
+            //doing external async stuff
+            scheduler.stop()
+
             const animationClass=await presetStore.loadAnimation(animationName)
             const animation= new animationClass()
             if (presetName!=="") {
                 const presetValues = await presetStore.load(animationName, presetName)
                 subControls.load(presetValues.values)
             }
+            scheduler.resume()
 
             const promise=animation.run(box, scheduler, subControls)
             await fader.run(box, false, 30)
@@ -68,26 +74,26 @@ export default class Cycle extends Animator {
             await show("Logos/HSD", "default", 5000)
            
             await show("Components/Clock", "default", 5000)
-            scheduler.clear()
+            scheduler.__clear()
            
             await show("Ledart/Rainbowsinus", "default", 30000)
-            scheduler.clear()
+            scheduler.__clear()
            
            
             await show("Ledart/Rainbowcross", "default", 15000)
-            scheduler.clear()
+            scheduler.__clear()
         
 
             await show("Ledart/Rainbowzero", "default", 50000)
-            scheduler.clear()
+            scheduler.__clear()
            
            
             await show("Ledart/Rainbowsquare", "default", 30000)
-            scheduler.clear()
+            scheduler.__clear()
 
            
             await show("Fractals/Julibrot", "default", 60000)
-            scheduler.clear()
+            scheduler.__clear()
            
 
 

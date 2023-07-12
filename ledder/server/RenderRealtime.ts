@@ -1,4 +1,3 @@
-import Display from "../Display.js"
 import {Render} from "./Render.js"
 
 /**
@@ -24,11 +23,11 @@ export class RenderRealtime extends Render {
 
     //the main step-render-send loop
 
-    renderInterval() {
+    async renderInterval() {
         if (!this.keepRendering)
             return
 
-        this.nextTimeMicros += this.scheduler.step()
+        this.nextTimeMicros += await this.scheduler.__step(true)
         if (this.nextTimeMicros - this.lastFrameMicros >= this.display.minFrameTimeMicros) {
             try {
                 this.display.render(this.box)

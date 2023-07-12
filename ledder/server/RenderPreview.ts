@@ -9,16 +9,18 @@ export class RenderPreview extends Render {
      * Pre-render animation preview.
      * Display-class and caller are reponsible for saving the result somewhere.
      */
-    async render(animationName:string, presetName:string) {
+    async render(animationName: string, presetName: string) {
         this.animationManager.stop(false)
         await this.animationManager.loadAnimation(animationName)
         await this.animationManager.loadPreset(presetName)
+
         this.animationManager.run()
+
 
         //skip first frames, just run scheduler
         for (let i = 0; i < this.animationManager.animationClass.previewSkip; i++)
             //NOTE: await is needed, to allow other microtasks to run!
-            await this.scheduler.step()
+            await this.scheduler.__step(false)
 
         //render frames
         let displayTime = 0
@@ -27,7 +29,7 @@ export class RenderPreview extends Render {
 
             for (let d = 0; d < this.animationManager.animationClass.previewDivider; d++) {
                 //NOTE: await is needed, to allow  microtasks to run!
-                frameTime = frameTime + await this.scheduler.step()
+                frameTime = frameTime + await this.scheduler.__step(false)
             }
 
             frameTime = ~~(frameTime / this.display.frameRoundingMicros) * this.display.frameRoundingMicros

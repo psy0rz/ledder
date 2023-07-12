@@ -190,6 +190,8 @@ export default class Test extends Animator {
 
 Note that you can also call move() and wrap() on the box to move all the pixels that added to the box.
 
+*NOTE: Dont use internal methods of the scheduler, they start with `__`*
+
 ### The controls
 
 One awesome feature of ledder is that you can easily make stuff controllable by the user.
@@ -223,6 +225,8 @@ export default class Test extends Animator {
 The use can now control your animation and even make presets! 
 Some controls are realtime, while others will restart the animation if you change them. (by specifying true at the end)
 
+*NOTE: Dont use the internal methods of the controls, they start with `__`*
+
 #### Control types
 
 Controls are very powerfull and are recursive as well. 
@@ -235,6 +239,8 @@ Look at the other animations how to use them optimally.
 * control.select(): Select box
 * control.group(): Sub ControlGroup (recursively)
 * control.input(): Text input
+
+
 
 ## Other stuff
 
@@ -269,3 +275,39 @@ They can do some really awesome stuff, look at what the Marquee Animator can do 
 
 The ledder-logo you see above is just a DrawText() combined with FxColorPattern(). 
 I've just clicked around in the controls of the Marquee animator and took a screenshot. :)
+
+
+## FAQ
+
+### Previews are blank / I get weird proxy errors. 
+
+If you do external async stuff, like loading files or getting an rss feed, take note:
+
+The scheduler can run in realtime mode (60 fps usually) and "static" mode. 
+
+Static mode is used to render previews and in the future it can even pre-render static animations.
+
+In static mode the render is running as fast as possible: This means if your animation is awaiting for some external stuff, the rest of it will probably never run.
+
+Its also possible that it tries to do stuff too late, when the animation is already aborted. In that case you will get an error like: ".get on revoked proxy object"
+
+To fix this, call scheduler.stop() before doing that stuff, and scheduler.resume() when your done. 
+
+(We use proxy objects to prevent interaction between a new animation and a previous one that still does async stuff)
+
+Note that this will also happen when you use setInterval or setTimeout. Never use those in ledder!
+
+### Which functions can i use to make animations?
+
+You shouldn't use stuff that starts with __. Thats for internal use only. (In case of the scheduler and controls this is pretty clear.)
+
+If you DO need them for some reason, you're either doing something wrong, or we need to fix/extend the API.
+
+You can use everything explained here, and AnimationManager. (still have to document that, look at MQTT for an example)
+
+We probably need to be more clear whats usable from animations and what is not. Stuff outside the ledder subdirectory is definitely off limits for animations.
+
+You can offcourse use external npm modules and do regular nodejs stuff. 
+
+
+

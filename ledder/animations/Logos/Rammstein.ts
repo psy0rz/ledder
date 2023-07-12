@@ -10,19 +10,27 @@ import FxAutoTrace from "../../fx/FxAutoTrace.js"
 import FxColorPattern from "../../fx/FxColorPattern.js"
 import FxMove from "../../fx/FxMove.js"
 import FxRotate from "../../fx/FxRotate.js"
+import Starfield from "../Components/Starfield.js"
+import FxTwinkle from "../../fx/FxTwinkle.js"
 
 
-export default class Hackerhotel extends Animator {
+export default class Rammstein extends Animator {
 
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) {
 
+        let starfield=new Starfield().run(box, scheduler, controls.group('stars'))
+
         //load image and determine colors
         const image = await sharp('images/rammstein.png')
-        const imageLetterColor = new Color(255, 216, 0)
+        const imageLetterColor = controls.color('color', 255, 216, 0)
 
         const logo = await drawImage(0, 0, image)
         logo.setColor(imageLetterColor)
+        logo.move(128,0)
         box.add(logo)
+
+
+        let twinkle=new FxTwinkle(scheduler,controls.group('twinkle')).run(logo, logo)
 
         //get letters:
         // const letterColorControl=controls.color('Text color', imageLetterColor.r, imageLetterColor.g, imageLetterColor.b)
@@ -52,18 +60,21 @@ export default class Hackerhotel extends Animator {
 
         // new FxMove(scheduler,controls).run(box)
 
-        new FxRotate(scheduler, controls).run(box, {
-            xMin: box.bbox().xMin,
-            xMax: box.bbox().xMax+64,
-            yMin: box.bbox().yMin,
-            yMax: box.bbox().yMax,
-
-        })
+        // let rotate=new FxRotate(scheduler, controls).run(logo, {
+        //     xMin: 0,
+        //     xMax: logo.bbox().xMax+64,
+        //     yMin: logo.bbox().yMin,
+        //     yMax: logo.bbox().yMax,
+        //
+        // }, 64*3)
+        new FxMove(scheduler, controls,-1,0,2 ).run(box)
 
 
         //start trace-effect on all the traces we've found
         // const autoTraceFx=new FxAutoTrace(scheduler,controls)
         // await autoTraceFx.run(traces, box)
+        // return Promise.all([starfield, rotate, twinkle])
+        // return starfield
 
 
     }
