@@ -1,0 +1,37 @@
+{
+ "title": "",
+ "description": "",
+ "values": {
+  "Rss scroller font": {
+   "selected": "C64"
+  },
+  "Rss scroller font height": {
+   "value": 0
+  },
+  "Rss scroller font width": {
+   "value": 0
+  },
+  "MQTT host": {
+   "text": "mqtt.hackerspace-drenthe.nl"
+  },
+  "MQTT temperature topic": {
+   "text": "/HACKERSPACE/NODE1/BME280/Temperature"
+  },
+  "MQTT humidity topic": {
+   "text": "/HACKERSPACE/NODE1/BME280/Humidity"
+  },
+  "MQTT pressure topic": {
+   "text": "/HACKERSPACE/NODE1/BME280/Pressure"
+  },
+  "Text color": {
+   "r": 128,
+   "g": 128,
+   "b": 200,
+   "a": 1
+  },
+  "headlines scroller interval": {
+   "value": 1
+  },
+  "Current animation": {}
+ }
+}
