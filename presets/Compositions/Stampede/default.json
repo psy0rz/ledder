@@ -15,24 +15,24 @@
    "value": 5
   },
   "Fire colors": {
-   "selected": "Bertrik fire"
+   "selected": "Rainbow"
   },
   "Fire colors range": {
    "from": 0,
    "to": 100
   },
   "Fire interval": {
-   "value": 1
+   "value": 10
   },
   "Fire intensity %": {
    "from": 0,
    "to": 100
   },
   "Fire wildness %": {
-   "value": 10
+   "value": 100
   },
   "Fire decay %": {
-   "value": 10
+   "value": 1.2000000000000002
   },
   "Fire sintel factor": {
    "value": 0
@@ -54,7 +54,7 @@
    "value": 1
   },
   "Rotate interval randomizer": {
-   "value": 3
+   "value": 1
   },
   "Rotate X step": {
    "value": 1

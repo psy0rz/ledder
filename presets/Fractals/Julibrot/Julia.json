@@ -6,20 +6,20 @@
    "selected": "DimmedReinbow"
   },
   "Color Palette range": {
-   "from": 0,
+   "from": 20,
    "to": 100
   },
   "alpha/brightness": {
    "value": 1
   },
   "Color change": {
-   "value": 10
+   "value": 5
   },
   "Fractal interval": {
    "value": 1
   },
   "Zoom speed": {
-   "value": 0.068
+   "value": 0.0183
   },
   "Bounce": {
    "enabled": true
@@ -31,7 +31,7 @@
    "a": 1
   },
   "Fractal type": {
-   "selected": "3"
+   "selected": "2"
   },
   "Font": {
    "selected": "Picopixel"

@@ -12,11 +12,11 @@ import DrawAsciiArtColor from "../draw/DrawAsciiArtColor.js"
 
 const timeIcon=`
 ..5555..
-.5.w..5.
-5..w...5
-5..w5..5
-5..5w..5
-5....w.5
+.5...55.
+5...5..5
+5..5...5
+5...5..5
+5....5.5
 .5....5.
 ..5555..
 `
@@ -59,6 +59,8 @@ const pressureIcon=`
 
 
 
+
+
 export default class MQTTClimate extends Animator {
     mqttData=new Array()
     statusArr=[]
@@ -79,34 +81,29 @@ export default class MQTTClimate extends Animator {
     }
 
 
-    showAsSingleLineScroller(box,pixellist,frameNr,font,colorSettingText)
+    showAsSingleLineScroller(box,pixellist,frameNr,font,colorSettingText,y=0)
     {
         let slot=Math.round(frameNr/500)%3
         let x=box.width()-Math.round(frameNr/10)%(300+box.width())
      
         let pixelsBefore=0
 
-        let timeStr=new Date().toLocaleTimeString()
-        pixellist.add(new DrawAsciiArtColor(x+pixelsBefore,0, timeIcon))
-        pixellist.add(new DrawText(x+pixelsBefore+8,0,font,timeStr,colorSettingText));
-
-        pixelsBefore=pixelsBefore+(timeStr.length*font.width)+8
         let temperatureStr=this.mqttData["temperature"]+"'C"
         pixellist.add(new DrawAsciiArtColor(x+pixelsBefore,0, temperatureIcon))
-        pixellist.add(new DrawText(x+pixelsBefore+8,0,font,temperatureStr,colorSettingText));
+        pixellist.add(new DrawText(x+pixelsBefore+8,y,font,temperatureStr,colorSettingText));
         
         pixelsBefore=pixelsBefore+(temperatureStr.length*font.width)+8
         let humidityStr=this.mqttData["humidity"]+"%"
         pixellist.add(new DrawAsciiArtColor(x+pixelsBefore,0, humidityIcon))
-        pixellist.add(new DrawText(x+pixelsBefore+8,0,font,humidityStr,colorSettingText)); 
+        pixellist.add(new DrawText(x+pixelsBefore+8,y,font,humidityStr,colorSettingText)); 
         
         pixelsBefore=pixelsBefore+(humidityStr.length*font.width)+8
         let pressureStr=this.mqttData["pressure"]+"hPa"
         pixellist.add(new DrawAsciiArtColor(x+pixelsBefore,0, pressureIcon))
-        pixellist.add(new DrawText(x+pixelsBefore+8,0,font, pressureStr,colorSettingText)); 
+        pixellist.add(new DrawText(x+pixelsBefore+8,y,font, pressureStr,colorSettingText)); 
     }
 
-    async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup){
+    async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup,x=0,y=0){
         this.statusArr.push("Starting")
         this.mqttData['temperature']='?'
         this.mqttData['humidity']='?'
@@ -157,7 +154,7 @@ export default class MQTTClimate extends Animator {
 
         scheduler.intervalControlled(intervalControl, (frameNr) => {
          display.clear()
-        this.showAsSingleLineScroller(box,display,frameNr,font,colorSettingText)
+        this.showAsSingleLineScroller(box,display,frameNr,font,colorSettingText,y)
                    
         })
     }

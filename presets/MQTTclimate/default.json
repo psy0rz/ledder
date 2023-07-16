@@ -24,14 +24,24 @@
    "text": "/HACKERSPACE/NODE1/BME280/Pressure"
   },
   "Text color": {
-   "r": 128,
-   "g": 128,
-   "b": 200,
+   "r": 179,
+   "g": 64,
+   "b": 0,
    "a": 1
   },
   "headlines scroller interval": {
    "value": 1
   },
-  "Current animation": {}
+  "Current animation": {},
+  "Font": {
+   "selected": "ORG v01"
+  },
+  "Font height": {
+   "value": 0
+  },
+  "Font width": {
+   "value": 0
+  },
+  "Sensors": {}
  }
 }
