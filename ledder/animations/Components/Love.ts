@@ -1,3 +1,7 @@
+//By Rein.
+//Created for a friends wedding
+//Under construction...very dirty (but working) code
+
 import PixelBox from "../../PixelBox.js"
 import Color from "../../Color.js"
 import Fire from "../Fires/Fire.js"
@@ -12,6 +16,8 @@ import DrawAsciiArtColor from "../../draw/DrawAsciiArtColor.js"
 import DrawAsciiArt from "../../draw/DrawAsciiArt.js"
 import {fonts, fontSelect} from "../../fonts.js"
 import Starfield from "./Starfield.js"
+import {patternSelect} from "../../ColorPatterns.js"
+import {glow, randomFloatGaussian} from "../../utils.js"
 import Pixel from "../../Pixel.js"
 
 const heartImage=`
@@ -39,6 +45,29 @@ y..............y
 ...y........y...
 .....y....y.....
 .......yy.......
+`
+const heartXSMImage=`
+.r.r.
+rrrrr
+.rrr.
+..r..
+`
+
+
+
+const heartSMImage=`
+.rr..rr.
+rrrrrrrr
+.rrrrrr.
+...rr...
+`
+
+const heartMImage=`
+.rr...rr.
+rrrrrrrrr
+.rrrrrrr.
+..rrrrr..
+....r....
 `
 
 const figureMale1Image=`
@@ -87,15 +116,17 @@ const figureFemale2Image=`
 
 
 const bgImage=`
-..yyyy.yyyy..0000000000000000000000000000000000000000000000000000000000000000000000000000rrr00000rrr0000000000000000000000000000000000000000000000000000000000000wow00000000000000000000000gbbg00000000000000000000000000000000
-.y....y....y.00000000000000000000000000000000000000ww00000000000000000000g00000000000000rrrrr000rrrrr0w0000000000000w0000000000000000yyyy0000000000w0000000000000wow0000000000000y00000000bbbggb00000000000000000yyyyyyy0000000
-y....y.y....y00000000000000000000000www0ww0000000wwww00000000w0w0000000000000000000000wrrrrrrrrrrrrrrr000ww0000000000000000000000000yyyyyy00000000000000000t00000woww000000000000000000000bbbggg0000000000000000000000000000000
-y....y.y....y000000w000000000000000wwwwwwwww000wwwwwww000000w0w0w0000000000000000000wwwrrrrrrrrrrrrrwwwww000000b000000000y00000000yyyyyyyy00000000b0000000000000wwowww000000y00000000000000bggb0000000500000000bbbbbbbbbbb00000
-y....y.y....y00000000000050000000000wwwwwwwwwwwwwwwwwww00000000000000000b0000000000wwwwwwwrrrrrrrrrwwwwwwwww00000000000000000000000yyyyyyyy00000000000000p00000wwwowwww00000000000000000000000000000000000000000000000000000000
-y....y.y....y000000000000000000000000wwwwwwwwwwwwwwwwww000000000y00000000000000000wwwwwwwwwwrrrrrwwwwwwwwwwwww00000000g000000000000yyyyyyyy0000g00000000000000wwwwowwwww00000000b00000000000y0000000000000000ggggggggggggggg000
-.y....y....y.0000000ggggggg0000000000000000000000000000000000000000000000ggggggggg00000000000rrr000ggggggggggg00000000000000gggggggggyyyy0000000000000000000000000owwwwww000000000000000000000000000000000000000000000000000000
-..yyyy.yyyy..gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggrgggggggggggggggggggggggggggggggggggggggggggggggggggggggaaaaarrrrrrrrrrrrrrrraaaaaaaaaaaaaaaaaaaaaaaaaaaaaa00rrrrrrrrrrrrrrrrrrrr
+............wwww........wwwww.........wwwwww....................yyyyy...............................................................................................................................5555...........................................................................................................................yyyy.............
+...........wwwwwww.....wwwwwwwww.....wwwwwwwww.................yyyyyyy.................................ww........55..........................gg...gg........5........rrr.....rrr...................5wwww5................rr..rr.................yyyy...yyyy.......................................................................yyyyyy............
+.........wwwwwwwwwwww.wwwwwwwwwwww..wwwwwwwwwwwwwww...........yyyyyyyyy..............................wwww.......555..........................gg...gg.......555......rrrrr...rrrrr.................5000www5..............rr....rr...............y....y.y....y.....................................................................yyyyyyyy...........
+.......wwwwwwwwwwwwwwwwwwwwwwwwwwww.wwwwwwwwwwwwwwwww.........yyyyyyyyy........................55555555555555555555.............................g...........5......rrrrrrrrrrrrrrr.......ww.......5000www5......ww......rr....rr......ww......y......y......y.........ww...............ww................ww...............ww.........yyyy...........
+........wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww........yyyyyyy........................5555wwwwww55555555wwww.........................gg.g.gg........5........rrrrrrrrrrrr........ww.......5000www5......ww......rr....rr......ww......y......y......y.........ww...............ww................ww...............ww...........yy...........
+................................................................yyyyy..........................5555wwwwww55555555wwww........................gg.g.gg....5...5...5.....rrrrrrrrrr..................5000www5..............rr....rr...............y....y.y....y.........................................................................yyyy...........
+......................................................................................................wwwwww....................................g........5..5..5........rrrrrr.....................500005................rr..rr.................yyyy...yyyy.......................................................................yyyyyy............
+........................................................................................................wwwww..................................g..........55555...........rrr.......................5555..................rrrr.....................................................................................................yyyy.............
 `
+
+
 
 
 
@@ -105,8 +136,243 @@ export default class Love extends Animator {
     static category = "Misc"
     static title = "Love"
     static description = "x loves y"
+    fireshow=true
+    fireFull=false
+    fireFunky=false
+    flameDecay=1
+    curDecay=10
+    max_iterations=2000
+    zoomfactor=0.8
+    hotspotSel=0
+    colors=[]
+    zoom=2;
+    zoomMax=5
+    hotspots=[
+        { cx:-0.15554376019751, cy:-0.65010365004009,   maxz:8},
+        { cx:-0.81812825180059, cy:-0.19884971553421,   maxz:9},
+        { cx:0.35164493860728,  cy:-0.58133391051187,   maxz:9},
+        { cx: 0.43792424135946, cy:0.34189208433812 ,   maxz:9},
+        { cx:0.24679672392427,  cy:0.50342253979013,    maxz:9},
+        { cx:-1.1785276064604,  cy:0.30096231141302,    maxz:8},
+        { cx:0.13614939178535,  cy:-0.66905589958398,   maxz:9},
+        { cx:0.081159563329829, cy:-0.62558306990165,   maxz:7},
+        { cx:0.25347098330532,  cy:-0.00032872330789825,maxz:9},
+        { cx:-1.0658884716107,  cy:-0.25431284056064,   maxz:9},
+        { cx:-1.0657340413104,  cy:-0.25412076186408,   maxz:9},
+        { cx:-1.1780691868827,  cy:0.30014031883977,    maxz:9}
+    ]
 
-   
+    julia(c,px:number,py:number,width:number,height:number,zoom:number)
+    {
+        //calculate the initial real and imaginary part of z, based on the pixel location and zoom and position values
+         let newRe = 1.5 * (px - width / 2) / (0.5 * zoom * width) ;
+         let newIm = (py - height / 2) / (0.5 * zoom * height);
+         let oldRe=0;
+         let oldIm=0
+         //i will represent the number of iterations
+         let n=0
+         //start the iteration process
+         do
+         {
+             //remember value of previous iteration
+             oldRe = newRe;
+             oldIm = newIm;
+             //the actual iteration, the real and imaginary part are calculated
+             newRe = oldRe * oldRe - oldIm * oldIm + c.cx
+             newIm = 2 * oldRe * oldIm + c.cy
+             //if the point is outside the circle with radius 2: stop
+             if((newRe * newRe + newIm * newIm) > 4) break;
+             n++
+         } while (n<this.max_iterations)
+         return n
+    }
+
+    runFractal(box:PixelBox,timer,name1:String,name2:String)
+    {
+        let pixelBox=new PixelBox(box);
+        let hotspot=this.hotspots[this.hotspotSel]
+        let counter=timer
+        this.zoom=this.zoom*this.zoomfactor; 
+        let zoomMax=Math.pow(10,6)
+       
+        
+            if (this.zoom<0.01) { this.zoomfactor=1+0.01; this.hotspotSel=this.hotspotSel+1;} //zoom in
+            if (this.zoom>zoomMax) { this.zoomfactor=1-0.01;  } //zoom out
+            if (this.hotspotSel>=this.hotspots.length) {this.hotspotSel=0; }
+      
+
+        //
+    
+        box.clear();
+        let colorIndex=0;
+        
+        for (let x = 0;  x< box.width(); x++) {
+            for (let y = 0; y < box.height(); y++) {
+               
+              
+
+             
+                        colorIndex = this.julia(hotspot,x,y,box.width(),box.height(),this.zoom);
+              
+                        let mp=parseInt(colorIndex.toString())
+                        let colornum=+(mp*11) % (this.colors.length-1)
+                        let color= this.colors[colornum];
+                       
+                        let yo=y-(box.height()-8)/2
+                        let pixel = new Pixel(x,yo,color);
+                        if (pixel.color.a)
+                        {
+                            try
+                            {
+                                pixel.color.a=0.7
+                            }
+                            catch (e)
+                            {
+
+                            }
+                        }
+                        pixelBox.add(pixel);
+                    
+               
+            }
+        }
+        let font=fonts["IBM bios"]
+        font.load()
+        let imagePixelLength=Math.round(heartImage.length/10)
+        let imageX=(box.width()-imagePixelLength)/2+1
+        pixelBox.add( new DrawAsciiArt(imageX,0,new Color(Math.sin(timer/10)*127+127,0,0,1), heartImage))
+        pixelBox.add( new DrawText(0,2,font,name1.substring(0,1).toUpperCase(),new Color(255,255,0,1)))
+        pixelBox.add( new DrawText(box.width()-8,2,font,name2.substring(0,1).toUpperCase(),new Color(255,255,0,1)))
+        return pixelBox
+    }
+
+    runFire(fireBox,glower,field,pixels,colors)
+    {
+        if (this.flameDecay<this.curDecay) { this.curDecay=this.curDecay-0.1}
+        if (this.flameDecay>this.curDecay) { this.curDecay=this.curDecay+0.1}
+        const colorScale = (colors.length - 1) / 100
+        for (let x = fireBox.xMin; x < fireBox.xMax; x++) {
+
+            const percentageX = fireBox.percentageX( x)
+            if (this.fireshow)
+                glower[x] = glow(glower[x],
+                    ~~0 * colorScale,
+                    ~~100 * colorScale,
+                    ~~10 * colorScale, 3)
+            else
+                glower[x] = 0
+        }
+        for (let y = 0; y < 1; y++)
+            this.move_fire(fireBox, field, this.curDecay * colorScale, colors.length - 1, glower,0)
+
+        this.save_image(fireBox, field, pixels, colors)
+
+    }
+
+    fireShow(state)
+    {
+        this.fireshow=state
+       
+    }
+
+    fireSetFull(state)
+    {
+        this.fireFull=state
+        if (state)
+        {
+            this.flameDecay=4
+        }
+        else
+        {
+            this.flameDecay=10
+        }
+    }
+
+    fireSetFunky(state)
+    {
+        this.fireFunky=state
+    }
+
+    move_fire(firebox: PixelBox, field, decay, maxFlame, glower, moveFactor) {
+        let x, y, flame
+
+        // move flames up
+        for (y = firebox.yMax; y >= firebox.yMin; y--) {
+            for (x = firebox.xMin; x <= firebox.xMax; x++) {
+                let self, left, middle, right
+
+                self = field[y][x]
+                if (y > firebox.yMin) {
+                    middle = field[y - 1][x]
+                    if (x > firebox.xMin)
+                        left = field[y - 1][x - 1]
+                    else
+                        //wrap around
+                        left = field[y - 1][firebox.xMax]
+
+                    if (x < firebox.xMax)
+                        right = field[y - 1][x + 1]
+                    else
+                        //wrap around
+                        right = field[y - 1][firebox.xMin]
+                } else {
+                    //bottom row uses glower as input
+                    middle = glower[x]
+                    if (x > firebox.xMin)
+                        left = glower[x - 1]
+                    else
+                        left = glower[firebox.xMax]
+
+                    if (x < firebox.xMax)
+                        right = glower[x + 1]
+                    else
+                        right = left
+                }
+
+                flame = (self + left + middle + right) / (4 - randomFloatGaussian(moveFactor / 2, moveFactor))
+
+                // decay
+                if (flame > decay) {
+                    flame -= decay
+                } else {
+                    flame /= 2
+                }
+                if (flame < 0)
+                    flame = 0
+
+                if (flame > maxFlame)
+                    flame = maxFlame
+                field[y][x] = flame
+            }
+        }
+    }
+
+
+    save_image(firebox: PixelBox, field, pixels: Array<Array<Pixel>>, colors) {
+        let row, col
+
+        for (row = firebox.yMin; row <= firebox.yMax; row++) {
+            for (col = firebox.xMin; col <= firebox.xMax; col++) {
+                const intensity = field[row][col]
+                pixels[firebox.height()-row-1][col].color = colors[~~intensity]
+            }
+        }
+    }
+
+    drawSmallHeart(box:PixelBox,timer)
+    {
+        let count=5
+        let pl=new PixelList();
+        let width=box.width()
+        let height=box.height()
+        let distance=width/count
+        for (let i=1;i<count+1;i++)
+        {
+            pl.add(new DrawAsciiArtColor(Math.cos(timer/100+i)*(width/2)+width/2-8,Math.sin(timer/100+i)*(height/2)+(height/2)-5, heartXSMImage))
+        }
+
+        return pl
+    }
 
     drawMale(x:number,y:number,timer:number,isWalking:boolean)
     {
@@ -132,7 +398,7 @@ export default class Love extends Animator {
         }
     }
 
-    drawFadingNames(box,font,name1,name2,timer,fireBox:PixelBox)
+    drawFadingNames(box,font,name1,name2,timer)
     {
         const frames = new PixelList()
         const frame1=new PixelList();
@@ -145,11 +411,33 @@ export default class Love extends Animator {
         let name2X=imageX+imagePixelLength
         let heartColor=new Color(Math.round(Math.sin(timer/30)*50)+200,0,0,1)
         let glowColor=new Color(Math.round(Math.sin(timer/60)*127)+127,Math.round(-1*Math.sin(timer/60)*127)+127,Math.round(Math.cos(timer/60)*127)+127,1)
-        if (timer==10) { fireBox.move(0,-1*box.height()) } 
+        if (timer<100) { this.fireShow(true) } 
         //put the heart in the center with a glowing outline
+       let titlefont=fonts["IBM bios"]
+       titlefont.load()
+
+       let subfont=fonts["Tiny 3x3"]
+       subfont.load()
        
+        if (timer<200)
+        {
+            frame1.add(new DrawText(((box.width()-(titlefont.width*4))/2),(box.height()-8)/2,titlefont,"LOVE",new Color(255,0,0)))
+        }
+
+        if (timer==180) { this.fireShow(true); this.fireSetFull(true)}
+        if (timer==220){ this.fireSetFull(false)}
+
+        if (timer>200 && timer<300)
+        {
+            frame1.add(new DrawText(8,box.height()*0-2,subfont,"THE",new Color(0,255,0)))
+            frame1.add(new DrawText(8,box.height()*0.3-2,subfont,"STORY",new Color(0,255,0)))
+            frame1.add(new DrawText(8,box.height()*0.6-2,subfont,"OF",new Color(0,255,0)))
+        }
+
+
         if (timer>0 && timer<1000)
         {
+           
             //scene 1 figure and scrolling names
             let scrollXpos=(timer%500)/2.5
             if (timer<500)
@@ -165,9 +453,10 @@ export default class Love extends Animator {
                 frame1.add(new DrawText(p2x+8,1,font,name2,new Color(255,0,255)))
             }
 
+           
             if (timer>450 && timer<700)
             {
-                frame1.add(new DrawText(((box.width()-8)/2),(Math.sin(timer/10)*3+3),font,"&",new Color(255,0,0)))
+                frame1.add(new DrawText(((box.width()-8)/2),(Math.sin(timer/10)*3+3),font,"&",new Color(255,255,0)))
             }
         }
 
@@ -186,8 +475,8 @@ export default class Love extends Animator {
         
         
         //move to heart
-        if (timer==1310) { fireBox.move(0,1*box.height())}
-        if (timer==1690) { fireBox.move(0,-1*box.height())}
+        if (timer==1600) { this.fireShow(true)}
+        //if (timer>1697) { this.fireShow(false)}
         if (timer>1300 && timer<1700)
         {
             let subtimerWalk=timer-1300
@@ -224,19 +513,18 @@ export default class Love extends Animator {
             let figureFemaleX=box.width()/2-xPos
             let xOffset=Math.round(Math.sin(timer/30)*3+3)
             //frame1.add(new DrawAsciiArt(imageX,0,heartColor, heartImage))
+            frame1.add(this.drawSmallHeart(box,timer))
             frame1.add(this.drawMale(Math.round(box.width()/2-6)+xOffset,0, timer, true))
             frame1.add(this.drawFemale(Math.round(box.width()/2)+xOffset,0, timer, true))
         } 
 
 
-        if (timer>2500 && timer<3500)
+        //dancing with scrolling background
+        if (timer>2500 && timer<4000)
         {
-           
-            if (timer==2510) { fireBox.move(0,1*box.height())}
-            if (timer==3490) { fireBox.move(0,-1*box.height())}
-          
+            this.fireShow(true)
             frame1.add(new DrawAsciiArtColor(box.width()-(timer-2500)/3,0, bgImage))
-            
+            frame1.add(this.drawSmallHeart(box,timer))
            let subtimerWalk=timer-2500
             let xPos=subtimerWalk/10
             let figureMaleX=box.width()/2+xPos 
@@ -252,10 +540,26 @@ export default class Love extends Animator {
             //frame1.add(pl)
         } 
 
+        if (timer>3600 && timer<4000)
+        {
+            this.fireSetFull(true);
+           
+         
+         
+            this.fireShow(true)
+        }
+
+        if (timer>4000 && timer<6000)
+        {
+            this.fireShow(false)
+            frame1.add(this.runFractal(box,timer,name1,name2))
+            frame1.add(this.drawSmallHeart(box,timer))
+        }
+        
 
         
        
-         if (box.height()>8) { frame1.centerV(box) } 
+         if (box.height()>8) { frame1.move(0,(box.height()-8)/2) } 
            
         
         //frame1.add(new DrawText(imagePixelLength+x+name1PixelLength+name2PixelLength,y,font,".",new Color(0,255,255)))
@@ -270,38 +574,95 @@ export default class Love extends Animator {
         let name2Control=controls.input("name2","leds",true)
         const intervalControl = controls.value("speed", 1, 1, 10, 0.1)
         font.load()
-        let fire=new Fire();
         let stars=new Starfield();
         let fireBox=new PixelBox(box);
         let animationBox=new PixelBox(box)
         let starBox=new PixelBox(box);
-        box.add(starBox)
         box.add(fireBox)
+        box.add(starBox)
         box.add(animationBox)
-        fire.run(fireBox,scheduler,controls)
+        
+        this.fireShow(false)
+        let pixels = box.raster(fireBox, new Color(0, 0, 0, 0), true, false, false)
+        let field = []
+        let colors = patternSelect(controls, 'Fire colors', 'Bertrik fire')
+        this.colors = patternSelect(controls, 'Fractal colors', 'DimmedReinbow')
+
+
+        //glower
+        let glower = []
+        for (let x = fireBox.xMin; x <= fireBox.xMax; x++) {
+            glower[x] = 0
+        }
+
+
+        //create clear field
+        for (let y = fireBox.yMin; y <= fireBox.yMax; y++) {
+            field[y] = []
+            for (let x = fireBox.xMin; x <= fireBox.xMax; x++) {
+                field[y][x] = 0
+            }
+        }
+
        
+
+        /*const intensityControl = controls.range("Fire intensity %")
+        const wildnessIntensityControl = controls.value("Fire wildness %", 10, 0, 100, 1)
+        const decayControl = controls.value("Fire decay %", 10, 0, 40, 0.1)
+        const fireMoveFactorControl = controls.value("Fire sintel factor", 0, 0, 2, 0.01)
+        const fireSpeedControl = controls.value("Fire speed", 1, 1, 10, 1)
+
+        const fireXrange = controls.range("Fire X range %", 0, 100)
+*/
+        const colorScale = (colors.length - 1) / 100
+        let newColors=[]
+        let funkyColors=[]
+        for (let c=0;c<colors.length;c++)
+        {
+            newColors.push(new Color(colors[c].r,colors[c].g,colors[c].b,0.3))
+            let fb=Math.round(Math.sin(c/30)*127+127)
+            let fg=Math.round(Math.cos(c/30)*127+127)
+            let fr=Math.round((fb+fg)/2)
+            funkyColors.push(new Color(fr,fg,fb,0.5))
+        }
         stars.run(starBox,scheduler,controls)
-        //let frames=this.drawHeart(box,x,y,font,name1Control.text,name2Control.text)
-        //frames.centerV(box)
-        //fireBox.move(0,-1*box.height(),true)
+       
         let timer=0
         scheduler.intervalControlled(intervalControl, (frameNr) => {
             animationBox.clear()
             timer++
+
+            //glower
+           
+            if (this.fireFull)
+            {
+                this.runFire(fireBox,glower,field,pixels,colors)
+            }
+            else
+            {
+              this.runFire(fireBox,glower,field,pixels,newColors)
+              //this.runFire(fireBox,glower,field,pixels,funkyColors)
+            }
+
+            
+
            
            //box.add(this.drawHeart(box,300-(frameNr%300)-150,y,font,name1Control.text.toUpperCase(),name2Control.text.toUpperCase()))
-           if (timer<3500)
+           if (timer<7000)
            {
            
-                animationBox.add(this.drawFadingNames(box,font,name1Control.text.toUpperCase(),name2Control.text.toUpperCase(),timer,fireBox))
+                animationBox.add(this.drawFadingNames(animationBox,font,name1Control.text.toUpperCase(),name2Control.text.toUpperCase(),timer))
            }  
            else
            {
                 timer=0
                 
-                fire.run(fireBox,scheduler,controls)
+               
          
            }
+
+
+
 
         })
     }

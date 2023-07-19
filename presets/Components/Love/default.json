@@ -3,7 +3,7 @@
  "description": "",
  "values": {
   "Font": {
-   "selected": "C64"
+   "selected": "MSX"
   },
   "Font height": {
    "value": 0
@@ -21,7 +21,7 @@
    "value": 1
   },
   "Fire colors": {
-   "selected": "Brainsmoke fire"
+   "selected": "Doom fire"
   },
   "Fire colors range": {
    "from": 0,
@@ -31,14 +31,14 @@
    "value": 1
   },
   "Fire intensity %": {
-   "from": 7,
+   "from": 46,
    "to": 100
   },
   "Fire wildness %": {
-   "value": 18
+   "value": 100
   },
   "Fire decay %": {
-   "value": 7.800000000000001
+   "value": 1.2000000000000002
   },
   "Fire sintel factor": {
    "value": 0
