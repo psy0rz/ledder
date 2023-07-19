@@ -116,13 +116,13 @@ const figureFemale2Image=`
 
 
 const bgImage=`
-............wwww........wwwww.........wwwwww....................yyyyy...............................................................................................................................5555...........................................................................................................................yyyy.............
-...........wwwwwww.....wwwwwwwww.....wwwwwwwww.................yyyyyyy.................................ww........55..........................gg...gg........5........rrr.....rrr...................5wwww5................rr..rr.................yyyy...yyyy.......................................................................yyyyyy............
-.........wwwwwwwwwwww.wwwwwwwwwwww..wwwwwwwwwwwwwww...........yyyyyyyyy..............................wwww.......555..........................gg...gg.......555......rrrrr...rrrrr.................5000www5..............rr....rr...............y....y.y....y.....................................................................yyyyyyyy...........
-.......wwwwwwwwwwwwwwwwwwwwwwwwwwww.wwwwwwwwwwwwwwwww.........yyyyyyyyy........................55555555555555555555.............................g...........5......rrrrrrrrrrrrrrr.......ww.......5000www5......ww......rr....rr......ww......y......y......y.........ww...............ww................ww...............ww.........yyyy...........
-........wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww........yyyyyyy........................5555wwwwww55555555wwww.........................gg.g.gg........5........rrrrrrrrrrrr........ww.......5000www5......ww......rr....rr......ww......y......y......y.........ww...............ww................ww...............ww...........yy...........
-................................................................yyyyy..........................5555wwwwww55555555wwww........................gg.g.gg....5...5...5.....rrrrrrrrrr..................5000www5..............rr....rr...............y....y.y....y.........................................................................yyyy...........
-......................................................................................................wwwwww....................................g........5..5..5........rrrrrr.....................500005................rr..rr.................yyyy...yyyy.......................................................................yyyyyy............
+............wwww........wwwww.........wwwwww....................yyyyy...............................................................................................................................5555...........................................................................................................................yyyy.........r...
+...........wwwwwww.....wwwwwwwww.....wwwwwwwww.................yyyyyyy.................................ww........55..........................gg...gg........5........rrr.....rrr...................5wwww5................rr..rr.................yyyy...yyyy.......................................................................yyyyyy........rr..
+.........wwwwwwwwwwww.wwwwwwwwwwww..wwwwwwwwwwwwwww...........yyyyyyyyy..............................wwww.......555..........................gg...gg.......555......rrrrr...rrrrr.................5000www5..............rr....rr...............y....y.y....y.....................................................................yyyyyyyy....rrrrrr.
+.......wwwwwwwwwwwwwwwwwwwwwwwwwwww.wwwwwwwwwwwwwwwww.........yyyyyyyyy........................55555555555555555555............................ggg..........5......rrrrrrrrrrrrrrr................5000www5..............rr....rr..............y......y......y..........................ww................ww...............ww.........yyyy....rrrrrrr
+........wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww........yyyyyyy........................5555wwwwww55555555wwww.........................gg.g.gg........5........rrrrrrrrrrrr.................5000www5..............rr....rr..............y......y......y..........................ww................ww...............ww...........yy....rrrrrr.
+................................................................yyyyy..........................5555wwwwww55555555wwww........................gg.g.gg....5...5...5.....rrrrrrrrrr..................5000www5..............rr....rr...............y....y.y....y.........................................................................yyyy.......rr..
+......................................................................................................wwwwww....................................g........5..5..5........rrrrrr.....................500005................rr..rr.................yyyy...yyyy.......................................................................yyyyyy........r...
 ........................................................................................................wwwww..................................g..........55555...........rrr.......................5555..................rrrr.....................................................................................................yyyy.............
 `
 
@@ -148,15 +148,13 @@ export default class Love extends Animator {
     zoom=2;
     zoomMax=5
     hotspots=[
-        { cx:-0.15554376019751, cy:-0.65010365004009,   maxz:8},
+        { cx:0.25347098330532,  cy:-0.00032872330789825,maxz:9},
         { cx:-0.81812825180059, cy:-0.19884971553421,   maxz:9},
         { cx:0.35164493860728,  cy:-0.58133391051187,   maxz:9},
         { cx: 0.43792424135946, cy:0.34189208433812 ,   maxz:9},
         { cx:0.24679672392427,  cy:0.50342253979013,    maxz:9},
         { cx:-1.1785276064604,  cy:0.30096231141302,    maxz:8},
         { cx:0.13614939178535,  cy:-0.66905589958398,   maxz:9},
-        { cx:0.081159563329829, cy:-0.62558306990165,   maxz:7},
-        { cx:0.25347098330532,  cy:-0.00032872330789825,maxz:9},
         { cx:-1.0658884716107,  cy:-0.25431284056064,   maxz:9},
         { cx:-1.0657340413104,  cy:-0.25412076186408,   maxz:9},
         { cx:-1.1780691868827,  cy:0.30014031883977,    maxz:9}
@@ -193,11 +191,11 @@ export default class Love extends Animator {
         let hotspot=this.hotspots[this.hotspotSel]
         let counter=timer
         this.zoom=this.zoom*this.zoomfactor; 
-        let zoomMax=Math.pow(10,6)
+        let zoomMax=Math.pow(10,9)
        
         
-            if (this.zoom<0.01) { this.zoomfactor=1+0.01; this.hotspotSel=this.hotspotSel+1;} //zoom in
-            if (this.zoom>zoomMax) { this.zoomfactor=1-0.01;  } //zoom out
+            if (this.zoom<1) { this.zoomfactor=1+0.1; this.hotspotSel=this.hotspotSel+1;} //zoom in
+            if (this.zoom>zoomMax) { this.zoomfactor=1-0.1;  } //zoom out
             if (this.hotspotSel>=this.hotspots.length) {this.hotspotSel=0; }
       
 
@@ -421,11 +419,11 @@ export default class Love extends Animator {
        
         if (timer<200)
         {
-            frame1.add(new DrawText(((box.width()-(titlefont.width*4))/2),(box.height()-8)/2,titlefont,"LOVE",new Color(255,0,0)))
+            frame1.add(new DrawText(((box.width()-(titlefont.width*4))/2),0,titlefont,"LOVE",new Color(255,0,0)))
         }
 
-        if (timer==180) { this.fireShow(true); this.fireSetFull(true)}
-        if (timer==220){ this.fireSetFull(false)}
+        if (timer==190) { this.fireShow(true); this.fireSetFull(true)}
+        if (timer==210){ this.fireSetFull(false)}
 
         if (timer>200 && timer<300)
         {
@@ -443,11 +441,13 @@ export default class Love extends Animator {
             if (timer<500)
             {
                 let p1x=scrollXpos-100
+                frame1.add(this.drawSmallHeart(box,timer))
                 frame1.add(this.drawMale(p1x,0, timer,true))
                 frame1.add(new DrawText(p1x-(name1PixelLength-8),1,font,name1,new Color(0,0,255)))
             }
             else
             {
+                frame1.add(this.drawSmallHeart(box,timer))
                 let p2x=box.width()-scrollXpos+name2PixelLength
                 frame1.add(this.drawFemale(p2x,0, timer, true))
                 frame1.add(new DrawText(p2x+8,1,font,name2,new Color(255,0,255)))
@@ -456,6 +456,7 @@ export default class Love extends Animator {
            
             if (timer>450 && timer<700)
             {
+                //frame1.add(this.drawSmallHeart(box,timer))
                 frame1.add(new DrawText(((box.width()-8)/2),(Math.sin(timer/10)*3+3),font,"&",new Color(255,255,0)))
             }
         }
@@ -524,7 +525,7 @@ export default class Love extends Animator {
         {
             this.fireShow(true)
             frame1.add(new DrawAsciiArtColor(box.width()-(timer-2500)/3,0, bgImage))
-            frame1.add(this.drawSmallHeart(box,timer))
+            //frame1.add(this.drawSmallHeart(box,timer))
            let subtimerWalk=timer-2500
             let xPos=subtimerWalk/10
             let figureMaleX=box.width()/2+xPos 
@@ -557,6 +558,31 @@ export default class Love extends Animator {
         }
         
 
+       
+        if (timer>6000 && timer<7000)
+        {
+            let subtimerWalk=timer-6000
+            let xPos=subtimerWalk/10
+            let figureMaleX=0+xPos 
+            let figureFemaleX=box.width()-8-xPos
+            frame1.add(new DrawAsciiArt(imageX,0,heartColor, heartImage))
+            frame1.add(new DrawAsciiArt(imageX,0,glowColor, heartoutlineImage))
+            if (figureMaleX<figureFemaleX)
+            {
+               
+                    frame1.add(this.drawMale(figureMaleX,0, timer, true))
+                    frame1.add(this.drawFemale(figureFemaleX,0, timer, true))
+              
+            }
+            else
+            {
+              
+                frame1.randomPixel().color.r=255
+                frame1.add(this.drawMale(Math.round(box.width()/2-8)+3,0, timer, false))
+                frame1.add(this.drawFemale(Math.round(box.width()/2)-3,0, timer, false))
+            }
+        } 
+
         
        
          if (box.height()>8) { frame1.move(0,(box.height()-8)/2) } 
@@ -569,10 +595,12 @@ export default class Love extends Animator {
     }
 
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup, x = 0, y = 0) {
-        let font=fontSelect(controls,"Font",fonts.C64.name,0)
-        let name1Control=controls.input("name1","I",true)
-        let name2Control=controls.input("name2","leds",true)
-        const intervalControl = controls.value("speed", 1, 1, 10, 0.1)
+        let controlGroup=controls.group("LOVE controls")
+        let font=fontSelect(controlGroup,"Font",fonts.C64.name,0)
+        let name1Control=controlGroup.input("name1","I",true)
+        let name2Control=controlGroup.input("name2","leds",true)
+        let starControl=controlGroup.group("stars")
+        const intervalControl = controlGroup.value("speed", 1, 1, 10, 0.1)
         font.load()
         let stars=new Starfield();
         let fireBox=new PixelBox(box);
@@ -585,8 +613,8 @@ export default class Love extends Animator {
         this.fireShow(false)
         let pixels = box.raster(fireBox, new Color(0, 0, 0, 0), true, false, false)
         let field = []
-        let colors = patternSelect(controls, 'Fire colors', 'Bertrik fire')
-        this.colors = patternSelect(controls, 'Fractal colors', 'DimmedReinbow')
+        let colors = patternSelect(controlGroup, 'Fire colors', 'Bertrik fire')
+        this.colors = patternSelect(controlGroup, 'Fractal colors', 'DimmedReinbow')
 
 
         //glower
@@ -606,14 +634,7 @@ export default class Love extends Animator {
 
        
 
-        /*const intensityControl = controls.range("Fire intensity %")
-        const wildnessIntensityControl = controls.value("Fire wildness %", 10, 0, 100, 1)
-        const decayControl = controls.value("Fire decay %", 10, 0, 40, 0.1)
-        const fireMoveFactorControl = controls.value("Fire sintel factor", 0, 0, 2, 0.01)
-        const fireSpeedControl = controls.value("Fire speed", 1, 1, 10, 1)
-
-        const fireXrange = controls.range("Fire X range %", 0, 100)
-*/
+      
         const colorScale = (colors.length - 1) / 100
         let newColors=[]
         let funkyColors=[]
@@ -625,7 +646,7 @@ export default class Love extends Animator {
             let fr=Math.round((fb+fg)/2)
             funkyColors.push(new Color(fr,fg,fb,0.5))
         }
-        stars.run(starBox,scheduler,controls)
+        stars.run(starBox,scheduler,starControl)
        
         let timer=0
         scheduler.intervalControlled(intervalControl, (frameNr) => {
@@ -648,7 +669,7 @@ export default class Love extends Animator {
 
            
            //box.add(this.drawHeart(box,300-(frameNr%300)-150,y,font,name1Control.text.toUpperCase(),name2Control.text.toUpperCase()))
-           if (timer<7000)
+           if (timer<7200)
            {
            
                 animationBox.add(this.drawFadingNames(animationBox,font,name1Control.text.toUpperCase(),name2Control.text.toUpperCase(),timer))
