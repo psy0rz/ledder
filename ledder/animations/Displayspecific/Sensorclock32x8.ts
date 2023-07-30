@@ -1,18 +1,18 @@
-import PixelBox from "../../../PixelBox.js"
-import Scheduler from "../../../Scheduler.js"
-import ControlGroup from "../../../ControlGroup.js"
-import PixelList from "../../../PixelList.js"
-import DrawAsciiArt from "../../../draw/DrawAsciiArt.js"
-import DrawAsciiArtColor from "../../../draw/DrawAsciiArtColor.js"
-import FxMovie from "../../../fx/FxMovie.js"
-import FxRotate from "../../../fx/FxRotate.js"
-import Animator from "../../../Animator.js"
-import Color from "../../../Color.js"
-import FxColorPattern from "../../../fx/FxColorPattern.js"
-import Pixel from "../../../Pixel.js"
+import PixelBox from "../../PixelBox.js"
+import Scheduler from "../../Scheduler.js"
+import ControlGroup from "../../ControlGroup.js"
+import PixelList from "../../PixelList.js"
+import DrawAsciiArt from "../../draw/DrawAsciiArt.js"
+import DrawAsciiArtColor from "../../draw/DrawAsciiArtColor.js"
+import FxMovie from "../../fx/FxMovie.js"
+import FxRotate from "../../fx/FxRotate.js"
+import Animator from "../../Animator.js"
+import Color from "../../Color.js"
+import FxColorPattern from "../../fx/FxColorPattern.js"
+import Pixel from "../../Pixel.js"
 import mqtt, {MqttClient} from "mqtt"
-import DrawText from "../../../draw/DrawText.js"
-import {fonts, fontSelect} from "../../../fonts.js"
+import DrawText from "../../draw/DrawText.js"
+import {fonts, fontSelect} from "../../fonts.js"
 
 
 //This is a clock and sensordispay for 32x8 displays
@@ -22,7 +22,7 @@ import {fonts, fontSelect} from "../../../fonts.js"
 
 
 export default class Sensorclock32x8 extends Animator {
-    static category = "Misc"
+    static category = "Displaysize"
     static title = "Sensorclock32x8"
     static description = "Clock and sensor display optimized for 32x8 display"
 
