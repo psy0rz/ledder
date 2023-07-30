@@ -26,6 +26,8 @@ export default class Sensorclock32x8 extends Animator {
     static title = "Sensorclock32x8"
     static description = "Clock and sensor display optimized for 32x8 display"
 
+    
+
     reinMiniFontAsciiArtImage = [
         {
             character: 'A', width: 4, data: `
@@ -37,138 +39,138 @@ export default class Sensorclock32x8 extends Animator {
             `},
         {
             character: 'B', width: 4, data: `
-                    xx..
-                    x.x.
-                    xxx.
-                    x.x.
-                    xxx.
-                `},
+                xx..
+                x.x.
+                xxx.
+                x.x.
+                xxx.
+            `},
 
         {
             character: 'C', width: 4, data: `
-                        xxx.
-                        x...
-                        x...
-                        x...
-                        xxx.
-                    `},
+                xxx.
+                x...
+                x...
+                x...
+                xxx.
+            `},
 
         {
             character: 'D', width: 4, data: `
-                            xx..
-                            x.x.
-                            x.x.
-                            x.x.
-                            xxx.
-                        `},
+                xx..
+                x.x.
+                x.x.
+                x.x.
+                xxx.
+            `},
 
         {
             character: 'E', width: 4, data: `
-                                xxx.
-                                x...
-                                xxx.
-                                x...
-                                xxx.
-                            `},
+                xxx.
+                x...
+                xxx.
+                x...
+                xxx.
+            `},
 
         {
             character: 'F', width: 4, data: `
-                                    xxx.
-                                    x...
-                                    xxx.
-                                    x...
-                                    x...
-                                `},
+                xxx.
+                x...
+                xxx.
+                x...
+                x...
+            `},
 
         {
             character: 'G', width: 4, data: `
-                                        xxx.
-                                        x...
-                                        x.x.
-                                        x.x.
-                                        xxx.
-                                    `},
+                xxx.
+                x...
+                x.x.
+                x.x.
+                xxx.
+            `},
 
         {
             character: 'H', width: 4, data: `
-                                            x.x.
-                                            x.x.
-                                            xxx.
-                                            x.x.
-                                            x.x.
-                                        `},
+                x.x.
+                x.x.
+                xxx.
+                x.x.
+                x.x.
+            `},
 
         {
             character: 'I', width: 4, data: `
-                                                xxx.
-                                                .x..
-                                                .x..
-                                                .x..
-                                                xxx.
-                                            `},
+                xxx.
+                .x..
+                .x..
+                .x..
+                xxx.
+            `},
 
         {
             character: 'J', width: 4, data: `
-                                                    xxx.
-                                                    ..x.
-                                                    ..x.
-                                                    ..x.
-                                                    xxx.
-                                                `},
+                xxx.
+                ..x.
+                ..x.
+                ..x.
+                xxx.
+            `},
 
         {
             character: 'K', width: 4, data: `
-                                                        x.x.
-                                                        x.x.
-                                                        xx..
-                                                        x.x.
-                                                        x.x.
-                                                    `},
+                x.x.
+                x.x.
+                xx..
+                x.x.
+                x.x.
+            `},
 
         {
             character: 'L', width: 4, data: `
-                                                            x...
-                                                            x...
-                                                            x...
-                                                            x...
-                                                            xxx.
-                                                        `},
+                x...
+                x...
+                x...
+                x...
+                xxx.
+            `},
 
         {
             character: 'M', width: 6, data: `
-                        xxxxx.
-                        x.x.x.
-                        x.x.x.
-                        x.x.x.
-                        x.x.x.
-                    `},
+                xxxxx.
+                x.x.x.
+                x.x.x.
+                x.x.x.
+                x.x.x.
+            `},
 
         {
             character: 'N', width: 4, data: `
-                        xxx.
-                        x.x.
-                        x.x.
-                        x.x.
-                        x.x.
-                    `},
+                xxx.
+                x.x.
+                x.x.
+                x.x.
+                x.x.
+            `},
 
         {
             character: 'O', width: 4, data: `
-                        xxx.
-                        x.x.
-                        x.x.
-                        x.x.
-                        xxx.
-                    `},
+                xxx.
+                x.x.
+                x.x.
+                x.x.
+                xxx.
+            `},
 
         {
             character: 'P', width: 4, data: `
-                        xxx.
-                        x.x.
-                        xxx.
-                        x...
-                        x...
-                    `},
+                xxx.
+                x.x.
+                xxx.
+                x...
+                x...
+            `},
 
         {
             character: 'Q', width: 5, data: `
@@ -190,84 +192,84 @@ export default class Sensorclock32x8 extends Animator {
 
         {
             character: 'S', width: 4, data: `
-                    xxx.
-                    x...
-                    xxx.
-                    ..x.
-                    xxx.
-                `},
+                xxx.
+                x...
+                xxx.
+                ..x.
+                xxx.
+            `},
 
         {
             character: 'T', width: 4, data: `
-                    xxx.
-                    .x..
-                    .x..
-                    .x..
-                    .x..
-                `},
+                xxx.
+                .x..
+                .x..
+                .x..
+                .x..
+            `},
 
         {
         character: 'U', width: 4, data: `
-                    x.x.
-                    x.x.
-                    x.x.
-                    x.x.
-                    xxx.
-                `},
+                x.x.
+                x.x.
+                x.x.
+                x.x.
+                xxx.
+            `},
 
         {
             character: 'V', width: 4, data: `
-                        x.x.
-                        x.x.
-                        x x.
-                        x.x.
-                        .x..
-                    `},
+                x.x.
+                x.x.
+                x x.
+                x.x.
+                .x..
+            `},
 
         {
             character: 'W', width: 6, data: `
-                    x.x.x.
-                    x.x.x.
-                    x.x.x.
-                    x.x.x.
-                    xxxxx.
-                `},
+                x.x.x.
+                x.x.x.
+                x.x.x.
+                x.x.x.
+                xxxxx.
+            `},
 
         {
             character: 'X', width: 4, data: `
-                    x.x.
-                    x.x.
-                    .x..
-                    x.x.
-                    x.x.
-                `},
+                x.x.
+                x.x.
+                .x..
+                x.x.
+                x.x.
+            `},
 
         {
             character: 'Y', width: 4, data: `
-                    x.x.
-                    x.x.
-                    xxx.
-                    .x..
-                    .x..
-                `},
+                x.x.
+                x.x.
+                xxx.
+                .x..
+                .x..
+            `},
 
         {
             character: 'Z', width: 4, data: `
-                    xxx.
-                    ..x.
-                    .x..
-                    x...
-                    xxx.
-                `},
+                xxx.
+                ..x.
+                .x..
+                x...
+                xxx.
+            `},
 
         {
             character: '%', width: 6, data: `
-                    x...x.
-                    ...x..
-                    ..x...
-                    .x....
-                    x...x.
-                `},
+                x...x.
+                ...x..
+                ..x...
+                .x....
+                x...x.
+            `},
 
         {
             character: '0', width: 4, data: `
@@ -383,69 +385,111 @@ export default class Sensorclock32x8 extends Animator {
                 ...
                 `}
 ,
-                {
-                    character: '?', width: 4, data: `
-                        xx..
-                        ..x.
-                        .x..
-                        ....
-                        .x..
-                        `}
-                        ,
-                {
-                    character: ';', width: 2, data: `
-                        ..
-                        x.
-                        ..
-                        x.
-                        x.
-                        `}
+        {
+            character: '?', width: 4, data: `
+                xx..
+                ..x.
+                .x..
+                ....
+                .x..
+                `}
+                ,
+        {
+            character: ';', width: 2, data: `
+                ..
+                x.
+                ..
+                x.
+                x.
+                `}
 
-                        ,
-                {
-                    character: ':', width: 2, data: `
-                        ..
-                        x.
-                        ..
-                        x.
-                        ..
-                        `}
-                    ,
-                    {
-                        character: '.', width: 2, data: `
-                            ..
-                            ..
-                            ..
-                            ..
-                            x.
-                            `}
-                        ,
-                        {
-                            character: ',', width: 2, data: `
-                                ..
-                                ..
-                                ..
-                                x.
-                                x.
-                                `}
-                                ,
-                        {
-                            character: '(', width: 3, data: `
-                                x..
-                                .x.
-                                .x.
-                                .x.
-                                x..
-                                `},
+                ,
+        {
+            character: ':', width: 2, data: `
+                ..
+                x.
+                ..
+                x.
+                ..
+                `}
+            ,
+        {
+            character: '.', width: 2, data: `
+                ..
+                ..
+                ..
+                ..
+                x.
+                `}
+            ,
+        {
+            character: ',', width: 2, data: `
+                ..
+                ..
+                ..
+                x.
+                x.
+                `}
+                ,
+        {
+            character: '(', width: 3, data: `
+                x..
+                .x.
+                .x.
+                .x.
+                x..
+                `},
 
-                                {
-                                    character: ')', width: 3, data: `
-                                        .x.
-                                        x..
-                                        x..
-                                        x..
-                                        .x.
-                                        `}
+        {
+            character: ')', width: 3, data: `
+                .x.
+                x..
+                x..
+                x..
+                .x.
+                `},
+
+        {
+            character: '+', width: 4, data: `
+                ....
+                .x..
+                xxx.
+                .x..
+                ....
+                `},
+        {
+            character: '-', width: 4, data: `
+                ....
+                ....
+                xxx.
+                ....
+                ....
+                `},
+        {
+            character: '*', width: 4, data: `
+                ....
+                x.x.
+                .x..
+                x.x.
+                ....
+                `},
+        {
+            character: '=', width: 4, data: `
+                ....
+                xxx.
+                ....
+                xxx.
+                ....
+        `},
+        {
+            character: '!', width: 2, data: `
+                x.
+                x.
+                x.
+                ..
+                x.
+        `}
+        
     ]
 
     reinIconUnitAsciiArtLibrary=[
@@ -546,7 +590,7 @@ export default class Sensorclock32x8 extends Animator {
         }
     
         
-        showAsSingleLineScroller(box:PixelBox,colorSettingText,colorSettingUnit,x=0,y=0)
+        showAsSingleLineScroller(box:PixelBox,colorSettingText,colorSettingUnit,x=0,y=0,introText="ledder")
         {
            
             let displayTime=300
@@ -582,7 +626,11 @@ export default class Sensorclock32x8 extends Animator {
                 case 0:
                     let iconTimeSource = this.reinIconUnitAsciiArtLibrary.find(element => element.name === "time");
                     pixellist.add(new DrawAsciiArtColor(x,0, iconTimeSource.iconAsciiArtColor))
-                    pixellist.add(this.drawTime(new Date(),x+iconPixelLength-6,y,1));
+                    let now=new Date();
+                    let next=new Date(now.getTime()+1000)
+                    let alpha=now.getMilliseconds()/1000
+                    pixellist.add(this.drawTime(now,x+iconPixelLength-6,y,1-alpha));
+                    pixellist.add(this.drawTime(next,x+iconPixelLength-6,y,alpha));
                     break;
                 case 1:
                     let temperatureStr=this.mqttData["temperature"]
@@ -608,6 +656,8 @@ export default class Sensorclock32x8 extends Animator {
                     textLength=this.getPixelLength(pressureStr);
                     pixellist.add(new DrawAsciiArt(x+textLength+iconPixelLength+1,y,colorSettingUnit, iconPressureSource.suffixAsciiArt))
                     break;
+
+                  
                 default:
                     pixellist.add(this.drawTime(new Date(),x+5,y,1));
                     break;
@@ -629,7 +679,7 @@ export default class Sensorclock32x8 extends Animator {
             {
                if (i==num)
                 {
-                    pl.add(new Pixel(xOffset+(i*pageDotWidth)+j,7,new Color(255,255,255,0.5)))
+                    pl.add(new Pixel(xOffset+(i*pageDotWidth)+j,7,new Color(0,0,255,0.5)))
                 }
                 else
                 {
@@ -639,7 +689,12 @@ export default class Sensorclock32x8 extends Animator {
             }
             
         }
-        pl.add(new Pixel(xOffset+(num*pageDotWidth)+(pageDotWidth*slotfactor),7,new Color(255,255,255,0.7)))
+        let xx:number=xOffset+(num*pageDotWidth)+(pageDotWidth*slotfactor)
+     
+        let remainer=(xx%1)
+        pl.add(new Pixel(xx-1,7,new Color(255,255,255,1-remainer)))
+        pl.add(new Pixel(xx,7,new Color(255,255,255,remainer)))
+      
         return pl
 
     }
@@ -738,12 +793,14 @@ export default class Sensorclock32x8 extends Animator {
     slotTimer=0
     mqttData=new Array()
     statusArr=[]
+    
 
   
 
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup, x = 0, y = 0) {
 
         const mainControls = controls.group("Main controls");
+        const introTextControls=controls.input("Intro text","ledder",true)
         const intervalControl = mainControls.value("Animation interval", 1, 1, 10, 0.1)
         const mqttControls=mainControls.group("MQTT (remote sensors)")
 
@@ -800,7 +857,7 @@ export default class Sensorclock32x8 extends Animator {
             box.clear()
 
 
-            box.add(this.showAsSingleLineScroller(box,colorSettingValue,colorSettingUnit,0,1))
+            box.add(this.showAsSingleLineScroller(box,colorSettingValue,colorSettingUnit,0,1,introTextControls.text))
                           
              
 

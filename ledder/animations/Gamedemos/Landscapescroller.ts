@@ -164,7 +164,7 @@ const WindmillLargeImg=`
 
 const HouseSmallAlt1Img=`
 ..55...
-.5ww5..
+.5005..
 555555.
 505005.
 505555
@@ -172,7 +172,7 @@ const HouseSmallAlt1Img=`
 
 const HouseSmallAlt2Img=`
 ..55...
-.5yy5..
+.5005..
 555555.
 500505.
 555505.
