@@ -138,11 +138,11 @@ export default class Love extends Animator {
     static description = "x loves y"
     fireshow=true
     fireFull=false
-    fireFunky=false
+    fireFunky=true
     flameDecay=1
     curDecay=10
     max_iterations=2000
-    zoomfactor=0.8
+    zoomfactor=0.08
     hotspotSel=0
     colors=[]
     zoom=2;
@@ -194,8 +194,8 @@ export default class Love extends Animator {
         let zoomMax=Math.pow(10,9)
        
         
-            if (this.zoom<1) { this.zoomfactor=1+0.1; this.hotspotSel=this.hotspotSel+1;} //zoom in
-            if (this.zoom>zoomMax) { this.zoomfactor=1-0.1;  } //zoom out
+            if (this.zoom<1) { this.zoomfactor=1+0.01; this.hotspotSel=this.hotspotSel+1;} //zoom in
+            if (this.zoom>zoomMax) { this.zoomfactor=1-0.01;  } //zoom out
             if (this.hotspotSel>=this.hotspots.length) {this.hotspotSel=0; }
       
 
@@ -239,8 +239,8 @@ export default class Love extends Animator {
         let imagePixelLength=Math.round(heartImage.length/10)
         let imageX=(box.width()-imagePixelLength)/2+1
         pixelBox.add( new DrawAsciiArt(imageX,0,new Color(Math.sin(timer/10)*127+127,0,0,1), heartImage))
-        pixelBox.add( new DrawText(0,1,font,name1.substring(0,1).toUpperCase(),new Color(255,255,0,1)))
-        pixelBox.add( new DrawText(box.width()-4,1,font,name2.substring(0,1).toUpperCase(),new Color(255,255,0,1)))
+        pixelBox.add( new DrawText(0,1,font,name1.substring(0,1).toUpperCase(),new Color(0,0,255,1)))
+        pixelBox.add( new DrawText(box.width()-6,1,font,name2.substring(0,1).toUpperCase(),new Color(255,0,255,1)))
         return pixelBox
     }
 
@@ -420,21 +420,14 @@ export default class Love extends Animator {
        smallfont.load()
         if (timer<200)
         {
-            frame1.add(new DrawText(((box.width()-(smallfont.width*4))/2),0,smallfont,"LOVE",new Color(255,0,0)))
+            frame1.add(new DrawText(((box.width()-(smallfont.width*4))/2)+(timer/10%8),0,smallfont,"LOVE",new Color(255,0,0)))
             
         }
 
         if (timer==190) { this.fireShow(true); this.fireSetFull(true)}
         if (timer==210){ this.fireSetFull(false)}
 
-        if (timer>200 && timer<233)
-        {
-            frame1.add(new DrawText(8,box.height()*0.2,subfont,"THE",new Color(0,255,0)))
-      
-            frame1.add(new DrawText(8,box.height()*0.3,subfont,"STORY",new Color(0,255,0)))
-      
-            frame1.add(new DrawText(8,box.height()*0.4,subfont,"OF",new Color(0,255,0)))
-        }
+        
 
             
             
@@ -452,7 +445,7 @@ export default class Love extends Animator {
                 let p1x=scrollXpos-100
                 frame1.add(this.drawSmallHeart(box,timer))
                 frame1.add(this.drawMale(p1x,0, timer,true))
-                frame1.add(new DrawText(p1x-(name1PixelLength-8),1,font,name1,new Color(0,0,255)))
+                frame1.add(new DrawText(p1x-(name1PixelLength-16),1,font,name1,new Color(0,0,255)))
             }
             else
             {
@@ -521,11 +514,11 @@ export default class Love extends Animator {
             let xPos=subtimerWalk/10
             let figureMaleX=box.width()/2+xPos 
             let figureFemaleX=box.width()/2-xPos
-            let xOffset=Math.round(Math.sin(timer/30)*3+3)
+            let xOffset=Math.round(Math.sin(timer/30)*3)
             //frame1.add(new DrawAsciiArt(imageX,0,heartColor, heartImage))
             frame1.add(this.drawSmallHeart(box,timer))
-            frame1.add(this.drawMale(Math.round(box.width()/2-6)+xOffset,0, timer, true))
-            frame1.add(this.drawFemale(Math.round(box.width()/2)+xOffset,0, timer, true))
+            frame1.add(this.drawMale(Math.round(box.width()/2-7)+xOffset,0, timer, true))
+            frame1.add(this.drawFemale(Math.round(box.width()/2-1)+xOffset,0, timer, true))
         } 
 
 
@@ -539,10 +532,10 @@ export default class Love extends Animator {
             let xPos=subtimerWalk/10
             let figureMaleX=box.width()/2+xPos 
             let figureFemaleX=box.width()/2-xPos
-            let xOffset=Math.round(Math.sin(timer/30)*3+2)
+            let xOffset=Math.round(Math.sin(timer/30)*3)
             //frame1.add(new DrawAsciiArt(imageX,0,heartColor, heartImage))
-            frame1.add(this.drawMale(Math.round(box.width()/2-6)+xOffset,0, timer, true))
-            frame1.add(this.drawFemale(Math.round(box.width()/2)+xOffset,0, timer, true))
+            frame1.add(this.drawMale(Math.round(box.width()/2-8)+xOffset,0, timer, true))
+            frame1.add(this.drawFemale(Math.round(box.width()/2-2)+xOffset,0, timer, true))
             let radius=(timer-2500)/50
             let x=(box.width()/2)+Math.sin(timer/10)*radius+radius
             let y=(box.width()/2)+Math.cos(timer/10)*radius+radius

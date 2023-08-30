@@ -23,7 +23,7 @@
      "value": 0.001
     },
     "Acceleration": {
-     "value": 0.008
+     "value": 0.0025
     },
     "Star offset": {
      "value": 0.053
@@ -36,7 +36,7 @@
     "value": 1
    },
    "Fire colors": {
-    "selected": "Bertrik fire"
+    "selected": "DimmedReinbow"
    },
    "Fire colors range": {
     "from": 0,
