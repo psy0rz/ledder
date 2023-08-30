@@ -425,12 +425,25 @@ export default class Love extends Animator {
         if (timer==190) { this.fireShow(true); this.fireSetFull(true)}
         if (timer==210){ this.fireSetFull(false)}
 
-        if (timer>200 && timer<300)
+        if (timer>200 && timer<233)
         {
-            frame1.add(new DrawText(8,box.height()*0-2,subfont,"THE",new Color(0,255,0)))
-            frame1.add(new DrawText(8,box.height()*0.3-2,subfont,"STORY",new Color(0,255,0)))
-            frame1.add(new DrawText(8,box.height()*0.6-2,subfont,"OF",new Color(0,255,0)))
+            frame1.add(new DrawText(8,box.height()*0.2-2,subfont,"THE",new Color(0,255,0)))
         }
+
+        if (timer>233 && timer<266)
+        {
+            frame1.add(new DrawText(8,box.height()*0.3-2,subfont,"STORY",new Color(0,255,0)))
+        }
+
+        if (timer>266 && timer<300)
+        {
+            frame1.add(new DrawText(8,box.height()*0.4-2,subfont,"OF",new Color(0,255,0)))
+        }
+
+            
+            
+            
+        
 
 
         if (timer>0 && timer<1000)
