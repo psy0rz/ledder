@@ -1,0 +1,86 @@
+{
+ "title": "",
+ "description": "",
+ "values": {
+  "Main controls": {
+   "Animation interval": {
+    "value": 1
+   },
+   "MQTT": {
+    "MQTT temperature topic": {
+     "text": "/HACKERSPACE/NODE1/BME280/Temperature"
+    },
+    "MQTT humidity topic": {
+     "text": "/HACKERSPACE/NODE1/BME280/Humidity"
+    },
+    "MQTT pressure topic": {
+     "text": "/HACKERSPACE/NODE1/BME280/Pressure"
+    }
+   },
+   "Text color": {
+    "r": 128,
+    "g": 128,
+    "b": 200,
+    "a": 1
+   },
+   "MQTT (remote sensors)": {
+    "MQTT host": {
+     "text": "mqtt.hackerspace-drenthe.nl"
+    },
+    "MQTT temperature topic": {
+     "text": "/HACKERSPACE/NODE1/BME280/Temperature"
+    },
+    "MQTT humidity topic": {
+     "text": "/HACKERSPACE/NODE1/BME280/Humidity"
+    },
+    "MQTT pressure topic": {
+     "text": "/HACKERSPACE/NODE1/BME280/Pressure"
+    }
+   },
+   "Sensor value color": {
+    "r": 255,
+    "g": 255,
+    "b": 255,
+    "a": 1
+   },
+   "Sensor unit color": {
+    "r": 255,
+    "g": 255,
+    "b": 0,
+    "a": 1
+   }
+  },
+  "Clock controls": {
+   "hours": {
+    "r": 255,
+    "g": 0,
+    "b": 0,
+    "a": 1
+   },
+   "minutes": {
+    "r": 255,
+    "g": 0,
+    "b": 0,
+    "a": 1
+   },
+   "seconds": {
+    "r": 255,
+    "g": 0,
+    "b": 0,
+    "a": 1
+   },
+   "delimiter": {
+    "r": 255,
+    "g": 0,
+    "b": 0,
+    "a": 1
+   },
+   "alpha smoothing": {
+    "enabled": true
+   }
+  },
+  "MQTT host": {
+   "text": "mqtt.hackerspace-drenthe.nl"
+  }
+ }
+}

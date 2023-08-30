@@ -589,17 +589,8 @@ export default class Sensorclock32x8 extends Animator {
           this.statusArr.push(statusMessage)
         }
     
-        
-        showAsSingleLineScroller(box:PixelBox,colorSettingText,colorSettingUnit,x=0,y=0,introText="ledder")
+        updateSlotTimer(slotCount,displayTime)
         {
-           
-            let displayTime=300
-            let slotCount=4
-            let pixellist=new PixelList();
-            let pixelsBefore=0
-            let textLength=0;
-           
-            
             if (this.slotTimer>=displayTime)
             {
                 this.slotTimer=0
@@ -616,14 +607,36 @@ export default class Sensorclock32x8 extends Animator {
             {
                 this.slotTimer++
             }
+        }
+
+        updatePaginator(box,slotCount,displayTime,percentOfTotal)
+        {
+            let pixellist=new PixelList()
+            let slotpercent=(this.slotTimer/displayTime)
+            pixellist.add(this.drawPagination(box,slotCount,this.slotActive,slotpercent,percentOfTotal))
+            return pixellist
+        }
+        
+        showAsSingleLineScroller(box:PixelBox,colorSettingText,colorSettingUnit,x=0,y=0,introText="ledder")
+        {
+           
+            let displayTime=300
+            let slotCount=4
+            let pixellist=new PixelList();
+            let pixelsBefore=0
+            let textLength=0;
+           
+            
+           
 
            
-            let slotpercent=(this.slotTimer/displayTime)
-            //console.log(this.slotActive,slotpercent)
+           
             let iconPixelLength=8
-            pixellist.add(this.drawPagination(box,4,this.slotActive,slotpercent))
+         
             switch (this.slotActive){
                 case 0:
+                    this.updateSlotTimer(slotCount,900)
+                    pixellist.add(this.updatePaginator(box,slotCount,900,9/18))
                     let iconTimeSource = this.reinIconUnitAsciiArtLibrary.find(element => element.name === "time");
                     pixellist.add(new DrawAsciiArtColor(x,0, iconTimeSource.iconAsciiArtColor))
                     let now=new Date();
@@ -633,6 +646,8 @@ export default class Sensorclock32x8 extends Animator {
                     pixellist.add(this.drawTime(next,x+iconPixelLength-6,y,alpha));
                     break;
                 case 1:
+                    this.updateSlotTimer(slotCount,300)
+                    pixellist.add(this.updatePaginator(box,slotCount,300,3/18))
                     let temperatureStr=this.mqttData["temperature"]
                     let iconTemperatureSource = this.reinIconUnitAsciiArtLibrary.find(element => element.name === "temperature");
                     pixellist.add(new DrawAsciiArtColor(x+pixelsBefore,0, iconTemperatureSource.iconAsciiArtColor))
@@ -641,6 +656,8 @@ export default class Sensorclock32x8 extends Animator {
                     pixellist.add(new DrawAsciiArt(x+textLength+iconPixelLength+1,y, colorSettingUnit, iconTemperatureSource.suffixAsciiArt))
                     break;
                 case 2:
+                    this.updateSlotTimer(slotCount,300)
+                    pixellist.add(this.updatePaginator(box,slotCount,300,3/18))
                     let humidityStr=this.mqttData["humidity"]
                     let iconHumiditySource = this.reinIconUnitAsciiArtLibrary.find(element => element.name === "humidity");
                     pixellist.add(new DrawAsciiArtColor(x+pixelsBefore,0, iconHumiditySource.iconAsciiArtColor))
@@ -649,6 +666,8 @@ export default class Sensorclock32x8 extends Animator {
                     pixellist.add(new DrawAsciiArt(x+textLength+iconPixelLength+1,y,colorSettingUnit, iconHumiditySource.suffixAsciiArt))
                     break;
                 case 3:
+                    this.updateSlotTimer(slotCount,300)
+                    pixellist.add(this.updatePaginator(box,slotCount,3/18))
                     let pressureStr=parseInt(this.mqttData["pressure"]).toString()
                     let iconPressureSource = this.reinIconUnitAsciiArtLibrary.find(element => element.name === "pressure");
                     pixellist.add(new DrawAsciiArtColor(x,0, iconPressureSource.iconAsciiArtColor))
@@ -667,7 +686,7 @@ export default class Sensorclock32x8 extends Animator {
             return pixellist
         }
 
-    drawPagination(box,total,num,slotfactor)
+    drawPagination(box,total,num,slotfactor,percentOfTotal)
     {
         let pl=new PixelList();
         let xOffset=0
