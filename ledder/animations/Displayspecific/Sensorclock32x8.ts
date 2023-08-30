@@ -667,7 +667,7 @@ export default class Sensorclock32x8 extends Animator {
                     break;
                 case 3:
                     this.updateSlotTimer(slotCount,300)
-                    pixellist.add(this.updatePaginator(box,slotCount,3/18))
+                    pixellist.add(this.updatePaginator(box,slotCount,300,3/18))
                     let pressureStr=parseInt(this.mqttData["pressure"]).toString()
                     let iconPressureSource = this.reinIconUnitAsciiArtLibrary.find(element => element.name === "pressure");
                     pixellist.add(new DrawAsciiArtColor(x,0, iconPressureSource.iconAsciiArtColor))
