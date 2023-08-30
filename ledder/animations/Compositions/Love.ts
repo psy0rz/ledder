@@ -239,8 +239,8 @@ export default class Love extends Animator {
         let imagePixelLength=Math.round(heartImage.length/10)
         let imageX=(box.width()-imagePixelLength)/2+1
         pixelBox.add( new DrawAsciiArt(imageX,0,new Color(Math.sin(timer/10)*127+127,0,0,1), heartImage))
-        pixelBox.add( new DrawText(0,2,font,name1.substring(0,1).toUpperCase(),new Color(255,255,0,1)))
-        pixelBox.add( new DrawText(box.width()-8,2,font,name2.substring(0,1).toUpperCase(),new Color(255,255,0,1)))
+        pixelBox.add( new DrawText(0,1,font,name1.substring(0,1).toUpperCase(),new Color(255,255,0,1)))
+        pixelBox.add( new DrawText(box.width()-4,1,font,name2.substring(0,1).toUpperCase(),new Color(255,255,0,1)))
         return pixelBox
     }
 
@@ -415,11 +415,13 @@ export default class Love extends Animator {
        titlefont.load()
 
        let subfont=fonts["Tiny 3x3"]
+       let smallfont=fonts["ORG v01"]
        subfont.load()
-       
+       smallfont.load()
         if (timer<200)
         {
-            frame1.add(new DrawText(((box.width()-(titlefont.width*4))/2),0,titlefont,"LOVE",new Color(255,0,0)))
+            frame1.add(new DrawText(((box.width()-(smallfont.width*4))/2),0,smallfont,"LOVE",new Color(255,0,0)))
+            
         }
 
         if (timer==190) { this.fireShow(true); this.fireSetFull(true)}
@@ -427,17 +429,11 @@ export default class Love extends Animator {
 
         if (timer>200 && timer<233)
         {
-            frame1.add(new DrawText(8,box.height()*0.2-2,subfont,"THE",new Color(0,255,0)))
-        }
-
-        if (timer>233 && timer<266)
-        {
-            frame1.add(new DrawText(8,box.height()*0.3-2,subfont,"STORY",new Color(0,255,0)))
-        }
-
-        if (timer>266 && timer<300)
-        {
-            frame1.add(new DrawText(8,box.height()*0.4-2,subfont,"OF",new Color(0,255,0)))
+            frame1.add(new DrawText(8,box.height()*0.2,subfont,"THE",new Color(0,255,0)))
+      
+            frame1.add(new DrawText(8,box.height()*0.3,subfont,"STORY",new Color(0,255,0)))
+      
+            frame1.add(new DrawText(8,box.height()*0.4,subfont,"OF",new Color(0,255,0)))
         }
 
             
@@ -543,7 +539,7 @@ export default class Love extends Animator {
             let xPos=subtimerWalk/10
             let figureMaleX=box.width()/2+xPos 
             let figureFemaleX=box.width()/2-xPos
-            let xOffset=Math.round(Math.sin(timer/30)*3+3)
+            let xOffset=Math.round(Math.sin(timer/30)*3+2)
             //frame1.add(new DrawAsciiArt(imageX,0,heartColor, heartImage))
             frame1.add(this.drawMale(Math.round(box.width()/2-6)+xOffset,0, timer, true))
             frame1.add(this.drawFemale(Math.round(box.width()/2)+xOffset,0, timer, true))
