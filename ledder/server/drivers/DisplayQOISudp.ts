@@ -91,15 +91,16 @@ export class DisplayQOISudp extends DisplayQOIS {
         const frameBytes = []
 
         const maxFramesLag = 12
-        const maxTimeLag = 500
+        const maxTimeLag = 250
 
         //buffer this many frames
         const lag = Math.min(maxTimeLag, maxFramesLag * this.defaultFrameTimeMicros / 1000)
+        // console.log("Max lag", lag)
 
         //try to full up packets, but dont wait longer than this time:
         // const maxWait= (lag/2)  * this.frameMs
-        const maxWait = ~~(lag / 2)
-        // const maxWait=0
+        // const maxWait = ~~(lag / 2)
+        const maxWait=0
 
         const laggedTime = displayTime + lag
 
