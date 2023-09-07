@@ -9,7 +9,7 @@ import AnimationManager from "../server/AnimationManager.js"
 /*
 Example:
 
-Select animimation:  topc: 'ledder/select' message: Text/Marquee/default
+Select animimation:  topic: 'ledder/select' message: Text/Marquee/default
 Get variables: -t 'ledder/get' -m ''
 
 
