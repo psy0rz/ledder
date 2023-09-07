@@ -20,7 +20,7 @@
    },
    "stars": {
     "Base speed": {
-     "value": 0.001
+     "value": 0.0035
     },
     "Acceleration": {
      "value": 0.0025
@@ -29,21 +29,21 @@
      "value": 0.053
     },
     "Creation interval": {
-     "value": 4
+     "value": 20
     }
    },
    "speed": {
     "value": 1
    },
    "Fire colors": {
-    "selected": "DimmedReinbow"
+    "selected": "Bertrik fire"
    },
    "Fire colors range": {
     "from": 0,
     "to": 100
    },
    "Fractal colors": {
-    "selected": "DimmedReinbow"
+    "selected": "Brainsmoke fire"
    },
    "Fractal colors range": {
     "from": 0,

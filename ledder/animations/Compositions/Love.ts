@@ -415,12 +415,12 @@ export default class Love extends Animator {
        titlefont.load()
 
        let subfont=fonts["Tiny 3x3"]
-       let smallfont=fonts["ORG v01"]
+       let smallfont=fonts["IBM bios"]
        subfont.load()
        smallfont.load()
         if (timer<200)
         {
-            frame1.add(new DrawText(((box.width()-(smallfont.width*4))/2)+(timer/10%8),0,smallfont,"LOVE",new Color(255,0,0)))
+            frame1.add(new DrawText(((box.width()-(smallfont.width*4))/2)+(timer/10%box.width()),0,smallfont,"LOVE",new Color(255,0,Math.sin(timer/100)*127+127)))
             
         }
 
@@ -444,7 +444,7 @@ export default class Love extends Animator {
             {
                 let p1x=scrollXpos-100
                 frame1.add(this.drawSmallHeart(box,timer))
-                frame1.add(this.drawMale(p1x,0, timer,true))
+                frame1.add(this.drawMale(p1x-(name1PixelLength-16)-10,0, timer,true))
                 frame1.add(new DrawText(p1x-(name1PixelLength-16),1,font,name1,new Color(0,0,255)))
             }
             else
@@ -552,7 +552,7 @@ export default class Love extends Animator {
             this.fireShow(true)
         }
 
-        if (timer>4000 && timer<6000)
+        if (timer>4000 && timer<5000)
         {
             this.fireShow(false)
             frame1.add(this.runFractal(box,timer,name1,name2))
@@ -561,7 +561,7 @@ export default class Love extends Animator {
         
 
        
-        if (timer>6000 && timer<7000)
+        if (timer>5000 && timer<5500)
         {
             let subtimerWalk=timer-6000
             let xPos=subtimerWalk/10
@@ -671,7 +671,7 @@ export default class Love extends Animator {
 
            
            //box.add(this.drawHeart(box,300-(frameNr%300)-150,y,font,name1Control.text.toUpperCase(),name2Control.text.toUpperCase()))
-           if (timer<7200)
+           if (timer<5500)
            {
            
                 animationBox.add(this.drawFadingNames(animationBox,font,name1Control.text.toUpperCase(),name2Control.text.toUpperCase(),timer))

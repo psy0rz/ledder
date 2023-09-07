@@ -137,12 +137,13 @@ export default class Digger extends Animator {
     
         const intervalControl = controls.value("Animation interval", 1, 1, 10, 0.1)
         let groundlist=new PixelList()
+        groundlist.add(new DrawAsciiArtColor(0,0,  ground))
         let playerlist=new PixelList();
         //let shootinglist=new PixelList();
         let time=0  
         box.setColor(new Color(0,200,0,1)) 
         box.add(groundlist)
-        box.add(playerlist);
+        box.add(playerlist)
       
    
         function playerStand(counter)
@@ -179,42 +180,70 @@ export default class Digger extends Animator {
                 return new DrawAsciiArtColor(8,2,  playerHak2Img)
             }
         }
+
+        function deleteground(box,groundlist,counter)
+        {
+            
+        }
         
 
        scheduler.intervalControlled(intervalControl, (frameNr) => {
         time=time+0.5
-        groundlist.clear()
+     
         playerlist.clear()
         let bglength=30
-        let groundy=Math.round((time)/10)%bglength
+        let groundy=0.08
+        let groundx=0
+        //groundlist.move(groundx*-1,groundy*-1,false)
+       
         //groundlist.add(new DrawAsciiArtColor(0,1-groundy,  ground))
         if (time<160)
-        {
-            groundlist.add(new DrawAsciiArtColor(8,1-(time/10),  ground))
+        {   
+           groundlist.move(0,-0.055,false)
+            //groundlist.add(new DrawAsciiArtColor(8,1-(time/10),  ground))
             playerlist.add(playerVal(time))
 
         }
 
         if (time>160 && time<200)
         {
-            groundlist.add(new DrawAsciiArtColor(8,-16,  ground))
+            //groundlist.add(new DrawAsciiArtColor(8,-16,  ground))
             playerlist.add(playerStand(time))
 
         }
 
         if (time>200 && time<1000)
         {
-            groundlist.add(new DrawAsciiArtColor(1-(time-200)/10,-16,  ground))
+            for (let i=0;i<10;i++)
+            {
+                if (Math.random()<0.1)
+                {
+                  groundlist.add( new Pixel(20+Math.random(), (box.height()-10)/2+i-2, new Color(0,0,0,1)))
+                }
+            }
+            //groundlist.
+            groundlist.move(-0.02,0,false)
             playerlist.add(playerHak(time))
         }
 
         if (time>1000 && time<1200)
         {
-            groundlist.add(new DrawAsciiArtColor(-80,-16-((time-1000)/10),  ground))
+            for (let i=0;i<10;i++)
+            {
+                if (Math.random()<0.1)
+                {
+                  groundlist.add( new Pixel(8+i, (box.height()-10)/2+8, new Color(0,0,0,1)))
+                }
+            }
+            //groundlist.add(new DrawAsciiArtColor(-80,-16-((time-1000)/10),  ground))
+            groundlist.move(0,-0.02,false)
             playerlist.add(playerGraaf(time))
         }
 
-        if (time>1200) {time=0}
+        if (time>1200) {time=0
+        groundlist.clear()
+        groundlist.add(new DrawAsciiArtColor(0,0,  ground))
+    }
         //shootinglist.add( new Pixel(((time)%100)+6,box.height()/2-3,new Color(128,128,128,1)))
         //shootinglist.add( new Pixel(((time)%100)+6,box.height()/2+3,new Color(128,128,128,1)))
        });
