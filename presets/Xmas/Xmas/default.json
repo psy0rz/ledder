@@ -1,0 +1,58 @@
+{
+ "title": "",
+ "description": "",
+ "values": {
+  "Snow": {
+   "Animation interval": {
+    "value": 1
+   },
+   "Snowflakes": {
+    "Snowflake color": {
+     "r": 255,
+     "g": 255,
+     "b": 255,
+     "a": 0.7
+    },
+    "Number of snowflakes": {
+     "value": 705
+    }
+   },
+   "Weather": {
+    "Wind speed": {
+     "value": -6.5
+    }
+   },
+   "Snow ground layer": {
+    "Snow ground layer enabled": {
+     "enabled": true
+    },
+    "Snow ground layer height": {
+     "value": 12
+    }
+   }
+  },
+  "Sled": {
+   "Reindeers count": {
+    "value": 1
+   },
+   "Movie interval": {
+    "value": 8
+   },
+   "Movie interval randomizer": {
+    "value": 0
+   },
+   "Rotate interval": {
+    "value": 8
+   },
+   "Rotate interval randomizer": {
+    "value": 0
+   },
+   "Rotate X step": {
+    "value": 1
+   },
+   "Rotate Y step": {
+    "value": 0
+   }
+  }
+ }
+}

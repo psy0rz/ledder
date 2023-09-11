@@ -1,0 +1,29 @@
+{
+ "title": "",
+ "description": "",
+ "values": {
+  "Sled": {
+   "Reindeers count": {
+    "value": 1
+   },
+   "Movie interval": {
+    "value": 10
+   },
+   "Movie interval randomizer": {
+    "value": 0
+   },
+   "Rotate interval": {
+    "value": 10
+   },
+   "Rotate interval randomizer": {
+    "value": 0
+   },
+   "Rotate X step": {
+    "value": 0
+   },
+   "Rotate Y step": {
+    "value": 0
+   }
+  }
+ }
+}
