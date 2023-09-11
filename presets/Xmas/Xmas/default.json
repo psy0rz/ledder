@@ -53,6 +53,140 @@
    "Rotate Y step": {
     "value": 0
    }
+  },
+  "Font": {
+   "selected": "Skid Row"
+  },
+  "Font height": {
+   "value": 0
+  },
+  "Font width": {
+   "value": 0
+  },
+  "Text": {
+   "text": "Merry XMAS and a happy new year"
+  },
+  "Text color": {
+   "r": 255,
+   "g": 255,
+   "b": 255,
+   "a": 1
+  },
+  "Stars": {
+   "Enabled": {
+    "enabled": false
+   }
+  },
+  "Star field": {
+   "Enabled": {
+    "enabled": false
+   }
+  },
+  "The Matrix": {
+   "Enabled": {
+    "enabled": false
+   }
+  },
+  "Scrolling": {
+   "Enabled": {
+    "enabled": true
+   },
+   "FPS": {
+    "value": 60
+   },
+   "Rotate interval": {
+    "value": 2
+   },
+   "Rotate interval randomizer": {
+    "value": 0
+   },
+   "Rotate X step": {
+    "value": -1
+   },
+   "Rotate Y step": {
+    "value": 0
+   },
+   "Circular": {
+    "enabled": false
+   },
+   "Show one time only": {
+    "enabled": false
+   }
+  },
+  "Flames": {
+   "Enabled": {
+    "enabled": false
+   },
+   "Fire density [%]": {
+    "value": 10
+   },
+   "Fire intensity [%]": {
+    "value": 100
+   },
+   "Fire depth [pixels]": {
+    "value": 2
+   },
+   "Fire wind X": {
+    "value": 0.1
+   },
+   "Fire wind Y": {
+    "value": -0.2
+   },
+   "Fire cycle": {
+    "Color cycle time": {
+     "value": 15
+    },
+    "Color cycle time randomizer": {
+     "value": 15
+    },
+    "Color cycle repeat count": {
+     "value": 1
+    },
+    "Color cycle mode": {
+     "selected": "reverse"
+    },
+    "Color cycle pattern": {
+     "selected": "Bertrik fire"
+    },
+    "Color cycle pattern range": {
+     "from": 0,
+     "to": 100
+    }
+   }
+  },
+  "Twinkle": {
+   "Enabled": {
+    "enabled": false
+   }
+  },
+  "Color pattern": {
+   "Enabled": {
+    "enabled": true
+   },
+   "Color cycle time": {
+    "value": 240
+   },
+   "Reverse": {
+    "enabled": false
+   },
+   "Ping pong": {
+    "enabled": true
+   },
+   "Color cycle pattern": {
+    "selected": "Rainbow"
+   },
+   "Color cycle pattern range": {
+    "from": 0,
+    "to": 100
+   },
+   "Per pixel offset %": {
+    "value": 1
+   }
+  },
+  "Cursor": {
+   "Enabled": {
+    "enabled": false
+   }
   }
  }
 }
