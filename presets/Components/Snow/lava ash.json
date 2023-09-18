@@ -76,15 +76,15 @@
    },
    "Weather": {
     "Wind speed": {
-     "value": -1.5
+     "value": -2.7
     }
    },
    "Snow ground layer": {
     "Snow ground layer enabled": {
-     "enabled": false
+     "enabled": true
     },
     "Snow ground layer height": {
-     "value": 1
+     "value": 56
     }
    }
   },

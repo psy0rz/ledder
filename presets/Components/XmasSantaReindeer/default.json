@@ -1,0 +1,26 @@
+{
+ "title": "",
+ "description": "",
+ "values": {
+  "Sled": {
+   "Movie interval": {
+    "value": 3
+   },
+   "Movie interval randomizer": {
+    "value": 0
+   },
+   "Rotate interval": {
+    "value": 3
+   },
+   "Rotate interval randomizer": {
+    "value": 0
+   },
+   "Rotate X step": {
+    "value": 1
+   },
+   "Rotate Y step": {
+    "value": 0
+   }
+  }
+ }
+}
