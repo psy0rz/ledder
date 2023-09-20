@@ -1,0 +1,27 @@
+{
+ "title": "",
+ "description": "",
+ "values": {
+  "Crawlers": {
+   "Animation interval": {
+    "value": 1
+   },
+   "Number of crawlers": {
+    "value": 41
+   },
+   "Crawlers time to live": {
+    "value": 50
+   },
+   "Target Frequency": {
+    "value": 10
+   }
+  },
+  "Color Palette": {
+   "selected": "Rainbow"
+  },
+  "Color Palette range": {
+   "from": 0,
+   "to": 100
+  }
+ }
+}

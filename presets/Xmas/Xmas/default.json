@@ -156,7 +156,28 @@
   },
   "Twinkle": {
    "Enabled": {
+    "enabled": true
+   },
+   "Color": {
+    "r": 255,
+    "g": 255,
+    "b": 255,
+    "a": 1
+   },
+   "Twinkle density": {
+    "value": 6
+   },
+   "Create randomizer %": {
+    "value": 50
+   },
+   "Random colors": {
     "enabled": false
+   },
+   "Fade out time": {
+    "value": 7
+   },
+   "Fade out time randomizer": {
+    "value": 40
    }
   },
   "Color pattern": {

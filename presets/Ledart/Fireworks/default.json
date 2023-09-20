@@ -1,0 +1,24 @@
+{
+ "title": "",
+ "description": "",
+ "values": {
+  "Fireworks": {
+   "Animation interval": {
+    "value": 2
+   },
+   "Particles": {
+    "value": 51
+   },
+   "Simultanious explosion": {
+    "value": 5
+   },
+   "Color Palette": {
+    "selected": "Reinbow"
+   },
+   "Color Palette range": {
+    "from": 0,
+    "to": 100
+   }
+  }
+ }
+}
