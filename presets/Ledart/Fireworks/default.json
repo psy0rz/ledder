@@ -4,20 +4,29 @@
  "values": {
   "Fireworks": {
    "Animation interval": {
-    "value": 2
+    "value": 1
    },
    "Particles": {
-    "value": 51
+    "value": 16
    },
    "Simultanious explosion": {
     "value": 5
    },
    "Color Palette": {
-    "selected": "Reinbow"
+    "selected": "DimmedReinbow"
    },
    "Color Palette range": {
     "from": 0,
     "to": 100
+   },
+   "Simultanious explosions": {
+    "value": 2
+   },
+   "Speed range": {
+    "value": 0.5
+   },
+   "Particle decay": {
+    "value": 0.02
    }
   }
  }

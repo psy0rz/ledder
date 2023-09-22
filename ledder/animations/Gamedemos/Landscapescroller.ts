@@ -330,7 +330,7 @@ export default class Landscapescroller extends Animator {
             let x=0 //(this.mainBox.width()-7)/2
             let y=this.mainBox.height()-10 //(this.mainBox.height()-7)/2
             let plVisor=new PixelList();
-            plVisor.add(new DrawAsciiArtColor(x,y,playerImg))
+            //plVisor.add(new DrawAsciiArtColor(x,y,playerImg))
             return plVisor
 
         }

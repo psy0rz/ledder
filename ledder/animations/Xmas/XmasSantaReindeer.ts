@@ -190,7 +190,7 @@ export default class XmasSantaReindeer extends Animator {
         box.add(sleeBox)
 
         const sledControls=controls.group('Sled',true)
-        const reindeerCount=sledControls.value("Reindeers count",1,0,4,1,false)
+        const reindeerCount=sledControls.value("Reindeers count",1,0,1,1,false)
         new FxMovie(scheduler, sledControls, 8, 0).run(santaSled,  sleeBox)
         if (reindeerCount.value>0)
         {

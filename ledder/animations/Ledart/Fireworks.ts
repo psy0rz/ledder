@@ -27,74 +27,84 @@ class CloudGeometry{
     particlecount:number
     colorpalette
     speed:number
+   box:PixelBox
+    particleTTL:number
   
 
-    constructor(x:number, y:number,maxWidth:number,maxHeight:number,colorPalette) {
-        this.centerX = x
-        this.centerY = y
+    constructor(box:PixelBox,colorPalette,speed:number,particleTTL) {
+
+        this.box=box
+        this.centerX = box.width()/2
+        this.centerY = box.height()/2
         this.pixellist = new PixelList();
         this.points=[]
-        this.maxHeight=maxHeight
-        this.maxWidth=maxWidth
+        this.maxHeight=box.height()
+        this.maxWidth=box.width()
         this.radius=1
         this.energy=0
         this.particlecount=0
         this.colorpalette=colorPalette
-        this.colorindex=random(0,colorPalette.length)
+        this.colorindex=random(0,colorPalette.length-1)
+        this.speed=speed
+        this.particleTTL=particleTTL  
     }
 
     generate(i:number)
     {
         this.particlecount=i
         this.points=[]
-        this.speed=random(0,10)
         for (let l=0;l<i;l++)
         {
             let x=this.centerX
             let y=this.centerY
-            this.points.push({x:x,y:y,i:1,type:random(0,3),energy:random(0.2,1.0) })
+            let energy=random(0,2000)/1000.0
+            this.points.push({x:x,y:y,i:1,energy:energy })
         }
         //console.log(this.points)
     }
 
 
+    remapX(box:PixelBox,x:number)
+    {
+        //if (x<0) {x=x+box.width()}
+        //if (x>box.width()) { x=x-box.width()}
+        return x
+    }
+
+    remapY(box:PixelBox,y:number)
+    {
+        //if (y<0) {y=y+box.height()}
+        //if (y>box.height()) { y=y-box.height()}
+        return y
+    }
+
 
     update()
     { 
-      this.pixellist.clear();
-      this.radius=this.radius+(this.speed/10)
-        
-        this.energy=0
-        this.colorindex=this.colorindex+10
-        this.colorindex=this.colorindex%(this.colorpalette.length-1)
+       this.pixellist.clear();
+       this.radius=this.radius+this.speed
+       this.energy=0
+       this.colorindex=(this.colorindex+1)%(this.colorpalette.length-1)
        for (let i=0;i<this.points.length;i++)
        {
-          
-            this.points[i].energy=this.points[i].energy-0.03
-            this.points[i].y=Math.cos(i)*(this.radius/2)+this.centerY
-            this.points[i].x=Math.sin(i)*(this.radius/2)+this.centerX
-           
-           
-            
-            this.points[i].y= this.points[i].y +random(0,1)
-            this.points[i].x=this.points[i].x+random(0,1)-1
-           
-          
-           
-           let color=this.colorpalette[this.colorindex].copy()
-           color.a=Math.min(this.points[i].energy,0.7)
-         
-           this.pixellist.add( new Pixel(this.points[i].x,this.points[i].y,color ))
-           this.energy=this.energy+this.points[i].energy
+           if (this.points[i]!=undefined)
+           {
+                this.points[i].energy   = Math.max(0,this.points[i].energy-this.particleTTL)
+                this.points[i].y        = this.remapY(this.box,Math.cos(i)*(this.radius/2)+this.centerY)
+                this.points[i].x        = this.remapX(this.box,Math.sin(i)*(this.radius/2)+this.centerX)
+                let color               = this.colorpalette[this.colorindex].copy()
+                color.a                 = Math.min(1,this.points[i].energy)
+                this.pixellist.add( new Pixel(this.points[i].x,this.points[i].y,color ))
+                this.energy=this.energy+this.points[i].energy
+           }
        }
-       if (this.energy<1)
+       if (this.energy<0.5)
        {
-        this.pixellist.clear();
+          this.pixellist.clear();
           this.centerX=random(0,this.maxWidth)
           this.centerY=random(0,this.maxHeight)
           this.generate(this.particlecount)
-          this.radius=random(1,4)
-          
+          this.radius=random(0,2)
        }
     }
 }
@@ -103,34 +113,39 @@ export default class Fireworks extends Animator {
 
     static category = "Basic"
     static title = "Fireworks"
-    static description = "vuurdingpijlenzonderpijl"
-
+    static description = "vuurpijlen"
 
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) {
-        const fwControl=controls.group("Fireworks",true)
-        const intervalControl = fwControl.value("Animation interval", 1, 1, 10, 1)
-        const particlesControl= fwControl.value("Particles", 1, 1, 100, 1)
-        const explosionsControl= fwControl.value("Simultanious explosion", 1, 1, 100, 1)
-        const colorPaletteControl     = patternSelect(fwControl, 'Color Palette', 'DimmedReinbow')
+        const fwControl             = controls.group("Fireworks",true)
+        const intervalControl       = fwControl.value("Animation interval", 1, 1, 10, 1)
+        const particlesControl      = fwControl.value("Particles", 1, 1, 200, 1)
+        const explosionsControl     = fwControl.value("Simultanious explosions", 1, 1, 32, 1)
+        const speedRangeControl     = fwControl.value("Speed range",0.5,0,1,0.1,true)
+        const particleTTLControl    = fwControl.value("Particle decay",0.03,0.001,0.1,0.001,true)
+        const colorPaletteControl   = patternSelect(fwControl, 'Color Palette', 'DimmedReinbow')
         const cloudlist=new PixelList()
         box.add(cloudlist)
         let clouds=[]
         for (let i=0;i<explosionsControl.value;i++)
         {
-            clouds[i]=new CloudGeometry(box.width()/2,box.height()/2,box.width(),box.height(),colorPaletteControl)
-            clouds[i].generate(particlesControl.value)
+                clouds[i]=new CloudGeometry(box,colorPaletteControl,speedRangeControl.value,particleTTLControl.value)
+                clouds[i].generate(particlesControl.value)
         }   
+      
         
 
        scheduler.intervalControlled(intervalControl, (frameNr) => {
-
-           //cloudlist.clear()
            for (let i=0;i<explosionsControl.value;i++)
            {
-            clouds[i].update();
-            cloudlist.add(clouds[i].pixellist)
+              if (clouds[i]!=undefined)
+              {
+                    clouds[i].update();
+                    if (clouds[i].pixellist!=undefined)
+                    {
+                        cloudlist.add(clouds[i].pixellist)
+                    }
+              }
            }   
-            
         })
 
 
