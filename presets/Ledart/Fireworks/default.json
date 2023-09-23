@@ -20,13 +20,13 @@
     "to": 100
    },
    "Simultanious explosions": {
-    "value": 2
+    "value": 5
    },
    "Speed range": {
     "value": 0.5
    },
    "Particle decay": {
-    "value": 0.02
+    "value": 0.016
    }
   }
  }

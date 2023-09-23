@@ -1,0 +1,208 @@
+{
+ "title": "",
+ "description": "",
+ "values": {
+  "Movie interval": {
+   "value": 8
+  },
+  "Movie interval randomizer": {
+   "value": 0
+  },
+  "Snowflake color": {
+   "r": 255,
+   "g": 255,
+   "b": 255,
+   "a": 0.79
+  },
+  "Number of snowflakes": {
+   "value": 2
+  },
+  "Rotate interval": {
+   "value": 10
+  },
+  "Rotate interval randomizer": {
+   "value": 0
+  },
+  "Rotate X step": {
+   "value": -1
+  },
+  "Rotate Y step": {
+   "value": 1
+  },
+  "Sled": {
+   "Movie interval": {
+    "value": 8
+   },
+   "Movie interval randomizer": {
+    "value": 0
+   },
+   "Rotate interval": {
+    "value": 8
+   },
+   "Rotate interval randomizer": {
+    "value": 0
+   },
+   "Rotate X step": {
+    "value": 1
+   },
+   "Rotate Y step": {
+    "value": 0
+   }
+  },
+  "Snow": {
+   "Snowflake color": {
+    "r": 255,
+    "g": 255,
+    "b": 255,
+    "a": 0.2
+   },
+   "Number of snowflakes": {
+    "value": 10
+   },
+   "Movie interval": {
+    "value": 5
+   },
+   "Movie interval randomizer": {
+    "value": 0
+   },
+   "Rotate interval": {
+    "value": 4
+   },
+   "Rotate interval randomizer": {
+    "value": 2
+   },
+   "Rotate X step": {
+    "value": -2
+   },
+   "Rotate Y step": {
+    "value": 1
+   },
+   "Snow": {
+    "Snowflake color": {
+     "r": 255,
+     "g": 255,
+     "b": 255,
+     "a": 0.2
+    },
+    "Number of snowflakes": {
+     "value": 7
+    },
+    "Rotate interval": {
+     "value": 12
+    },
+    "Rotate interval randomizer": {
+     "value": 0
+    },
+    "Rotate X step": {
+     "value": 0
+    },
+    "Rotate Y step": {
+     "value": 1
+    }
+   },
+   "Snow Ground layer": {
+    "Rotate interval": {
+     "value": 4
+    },
+    "Rotate interval randomizer": {
+     "value": 2
+    },
+    "Rotate X step": {
+     "value": -1
+    },
+    "Rotate Y step": {
+     "value": 0
+    }
+   },
+   "Animation interval": {
+    "value": 1
+   },
+   "Snowflakes": {
+    "Snowflake color": {
+     "r": 255,
+     "g": 255,
+     "b": 255,
+     "a": 0.92
+    },
+    "Number of snowflakes": {
+     "value": 87
+    }
+   },
+   "Weather": {
+    "Wind speed": {
+     "value": -2.3000000000000003
+    }
+   },
+   "Snow ground layer": {
+    "Snow ground layer enabled": {
+     "enabled": true
+    },
+    "Snow ground layer height": {
+     "value": 9
+    }
+   }
+  },
+  "Snowcontrols": {
+   "Snow": {
+    "Snowflake color": {
+     "r": 255,
+     "g": 255,
+     "b": 255,
+     "a": 0.32
+    },
+    "Number of snowflakes": {
+     "value": 5
+    },
+    "Movie interval": {
+     "value": 61
+    },
+    "Movie interval randomizer": {
+     "value": 0
+    },
+    "Rotate interval": {
+     "value": 30
+    },
+    "Rotate interval randomizer": {
+     "value": 0
+    },
+    "Rotate X step": {
+     "value": -5
+    },
+    "Rotate Y step": {
+     "value": 1
+    }
+   },
+   "Snow Ground layer": {
+    "Rotate interval": {
+     "value": 31
+    },
+    "Rotate interval randomizer": {
+     "value": 11
+    },
+    "Rotate X step": {
+     "value": 0
+    },
+    "Rotate Y step": {
+     "value": 0
+    }
+   }
+  },
+  "Snow Ground layer": {
+   "Snow height": {
+    "value": 9
+   },
+   "Rotate interval": {
+    "value": 4
+   },
+   "Rotate interval randomizer": {
+    "value": 2
+   },
+   "Rotate X step": {
+    "value": -1
+   },
+   "Rotate Y step": {
+    "value": 0
+   }
+  }
+ }
+}

@@ -623,8 +623,12 @@ export default class Sensorclock32x8 extends Animator {
             let displayTime=300
             let slotCount=4
             let pixellist=new PixelList();
+            let pagerlist=new PixelList();
+            let alllist=new PixelList()
+           
             let pixelsBefore=0
             let textLength=0;
+            
            
             
            
@@ -636,9 +640,9 @@ export default class Sensorclock32x8 extends Animator {
             switch (this.slotActive){
                 case 0:
                     this.updateSlotTimer(slotCount,900)
-                    pixellist.add(this.updatePaginator(box,slotCount,900,9/18))
+                    pagerlist.add(this.updatePaginator(box,slotCount,900,9/18))
                     let iconTimeSource = this.reinIconUnitAsciiArtLibrary.find(element => element.name === "time");
-                    pixellist.add(new DrawAsciiArtColor(x,0, iconTimeSource.iconAsciiArtColor))
+                    pixellist.add(new DrawAsciiArtColor(x,y, iconTimeSource.iconAsciiArtColor))
                     let now=new Date();
                     let next=new Date(now.getTime()+1000)
                     let alpha=now.getMilliseconds()/1000
@@ -647,33 +651,33 @@ export default class Sensorclock32x8 extends Animator {
                     break;
                 case 1:
                     this.updateSlotTimer(slotCount,300)
-                    pixellist.add(this.updatePaginator(box,slotCount,300,3/18))
+                    pagerlist.add(this.updatePaginator(box,slotCount,300,3/18))
                     let temperatureStr=this.mqttData["temperature"]
                     let iconTemperatureSource = this.reinIconUnitAsciiArtLibrary.find(element => element.name === "temperature");
-                    pixellist.add(new DrawAsciiArtColor(x+pixelsBefore,0, iconTemperatureSource.iconAsciiArtColor))
-                    pixellist.add(this.drawString(x+iconPixelLength,y,temperatureStr,colorSettingText));
+                    pixellist.add(new DrawAsciiArtColor(x+pixelsBefore,y, iconTemperatureSource.iconAsciiArtColor))
+                    pixellist.add(this.drawString(x+iconPixelLength,y+1,temperatureStr,colorSettingText));
                     textLength=this.getPixelLength(temperatureStr);
-                    pixellist.add(new DrawAsciiArt(x+textLength+iconPixelLength+1,y, colorSettingUnit, iconTemperatureSource.suffixAsciiArt))
+                    pixellist.add(new DrawAsciiArt(x+textLength+iconPixelLength+1,y+1, colorSettingUnit, iconTemperatureSource.suffixAsciiArt))
                     break;
                 case 2:
                     this.updateSlotTimer(slotCount,300)
-                    pixellist.add(this.updatePaginator(box,slotCount,300,3/18))
+                    pagerlist.add(this.updatePaginator(box,slotCount,300,3/18))
                     let humidityStr=this.mqttData["humidity"]
                     let iconHumiditySource = this.reinIconUnitAsciiArtLibrary.find(element => element.name === "humidity");
-                    pixellist.add(new DrawAsciiArtColor(x+pixelsBefore,0, iconHumiditySource.iconAsciiArtColor))
-                    pixellist.add(this.drawString(x+iconPixelLength,y,humidityStr,colorSettingText)); 
+                    pixellist.add(new DrawAsciiArtColor(x+pixelsBefore,y, iconHumiditySource.iconAsciiArtColor))
+                    pixellist.add(this.drawString(x+iconPixelLength,y+1,humidityStr,colorSettingText)); 
                     textLength=this.getPixelLength(humidityStr);
-                    pixellist.add(new DrawAsciiArt(x+textLength+iconPixelLength+1,y,colorSettingUnit, iconHumiditySource.suffixAsciiArt))
+                    pixellist.add(new DrawAsciiArt(x+textLength+iconPixelLength+1,y+1,colorSettingUnit, iconHumiditySource.suffixAsciiArt))
                     break;
                 case 3:
                     this.updateSlotTimer(slotCount,300)
-                    pixellist.add(this.updatePaginator(box,slotCount,300,3/18))
+                    pagerlist.add(this.updatePaginator(box,slotCount,300,3/18))
                     let pressureStr=parseInt(this.mqttData["pressure"]).toString()
                     let iconPressureSource = this.reinIconUnitAsciiArtLibrary.find(element => element.name === "pressure");
-                    pixellist.add(new DrawAsciiArtColor(x,0, iconPressureSource.iconAsciiArtColor))
-                    pixellist.add(this.drawString(x+iconPixelLength,y, pressureStr,colorSettingText));
+                    pixellist.add(new DrawAsciiArtColor(x,y, iconPressureSource.iconAsciiArtColor))
+                    pixellist.add(this.drawString(x+iconPixelLength,y+1, pressureStr,colorSettingText));
                     textLength=this.getPixelLength(pressureStr);
-                    pixellist.add(new DrawAsciiArt(x+textLength+iconPixelLength+1,y,colorSettingUnit, iconPressureSource.suffixAsciiArt))
+                    pixellist.add(new DrawAsciiArt(x+textLength+iconPixelLength+1,y+1,colorSettingUnit, iconPressureSource.suffixAsciiArt))
                     break;
 
                   
@@ -682,15 +686,19 @@ export default class Sensorclock32x8 extends Animator {
                     break;
 
             } 
-           
-            return pixellist
+            pixellist.centerH(box)
+            pixellist.centerV(box)
+            alllist.add(pixellist);
+            alllist.add(pagerlist);
+            return alllist
         }
 
     drawPagination(box,total,num,slotfactor,percentOfTotal)
     {
+        let y=box.height()-1
         let pl=new PixelList();
         let xOffset=0
-        let pagerWidth=32-xOffset
+        let pagerWidth=box.width()-xOffset
         let pageDotWidth=(pagerWidth)/total
         for (let i=0;i<total;i++)
         {
@@ -698,11 +706,11 @@ export default class Sensorclock32x8 extends Animator {
             {
                if (i==num)
                 {
-                    pl.add(new Pixel(xOffset+(i*pageDotWidth)+j,7,new Color(0,0,255,0.5)))
+                    pl.add(new Pixel(xOffset+(i*pageDotWidth)+j,y,new Color(0,0,255,0.5)))
                 }
                 else
                 {
-                    pl.add(new Pixel(xOffset+(i*pageDotWidth)+j,7,new Color(255,255,255,0.3)))
+                    pl.add(new Pixel(xOffset+(i*pageDotWidth)+j,y,new Color(255,255,255,0.3)))
                 }
                
             }
@@ -711,8 +719,8 @@ export default class Sensorclock32x8 extends Animator {
         let xx:number=xOffset+(num*pageDotWidth)+(pageDotWidth*slotfactor)
      
         let remainer=(xx%1)
-        pl.add(new Pixel(xx-1,7,new Color(255,255,255,1-remainer)))
-        pl.add(new Pixel(xx,7,new Color(255,255,255,remainer)))
+        pl.add(new Pixel(xx-1,y,new Color(255,255,255,1-remainer)))
+        pl.add(new Pixel(xx,y,new Color(255,255,255,remainer)))
       
         return pl
 
@@ -876,7 +884,7 @@ export default class Sensorclock32x8 extends Animator {
             box.clear()
 
 
-            box.add(this.showAsSingleLineScroller(box,colorSettingValue,colorSettingUnit,0,1,introTextControls.text))
+            box.add(this.showAsSingleLineScroller(box,colorSettingValue,colorSettingUnit,(box.width()-32)/2,(box.height()-5)/2,introTextControls.text))
                           
              
 

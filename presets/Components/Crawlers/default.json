@@ -1,0 +1,27 @@
+{
+ "title": "",
+ "description": "",
+ "values": {
+  "Crawlers": {
+   "Animation interval": {
+    "value": 1
+   },
+   "Number of crawlers": {
+    "value": 2
+   },
+   "Crawlers time to live": {
+    "value": 51
+   },
+   "Target Frequency": {
+    "value": 3
+   }
+  },
+  "Color Palette": {
+   "selected": "DimmedReinbow"
+  },
+  "Color Palette range": {
+   "from": 0,
+   "to": 100
+  }
+ }
+}
