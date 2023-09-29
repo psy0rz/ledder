@@ -1,0 +1,47 @@
+{
+ "title": "",
+ "description": "",
+ "values": {
+  "Dna": {
+   "Clock interval": {
+    "value": 1
+   },
+   "Frequency": {
+    "value": -6.2
+   },
+   "speed": {
+    "value": 0.72
+   },
+   "iterations": {
+    "value": 10
+   },
+   "color1": {
+    "r": 255,
+    "g": 104,
+    "b": 0,
+    "a": 1
+   },
+   "color2": {
+    "r": 0,
+    "g": 0,
+    "b": 255,
+    "a": 1
+   },
+   "steps": {
+    "value": 22
+   }
+  },
+  "Clock interval": {
+   "value": 1
+  },
+  "Frequency": {
+   "value": 5
+  },
+  "speed": {
+   "value": 0.36
+  },
+  "iterations": {
+   "value": 2
+  }
+ }
+}
