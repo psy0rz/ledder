@@ -21,9 +21,11 @@ export default class Landscape extends Animator {
         let seed=0;
         let width=box.width();
         let height=box.height();
-
+        let pl=new PixelList()
+        box.add(pl)
   
         scheduler.intervalControlled(controls.value("Creation interval", 5), (frameNr) => {
+            pl.clear()
             let x=frameNr%width;
             let y=0;
             for (let i=0;i<width;i++)
@@ -32,13 +34,13 @@ export default class Landscape extends Animator {
                 for (y=0;y<height;y++)
                 {
                     let intensity=y*(255/height)
-                    if (y>s)
+                    if (y>=s)
                     {
-                        box.add(new Pixel(i,y,new Color(0,intensity,0))) //ground
+                        pl.add(new Pixel(i,y,new Color(0,intensity,0))) //ground
                     }
                     else
                     {
-                        box.add(new Pixel(i,y,new Color(0,0,intensity))) //sky
+                        pl.add(new Pixel(i,y,new Color(0,0,intensity))) //sky
                     }
                 }
             }
