@@ -85,7 +85,7 @@ export default class Dnaspiral extends Animator {
                     let myRed   =   this.mapValue(j/(xdiff-1),colorFrom.r,colorTo.r)
                     let myGreen =   this.mapValue(j/(xdiff-1),colorFrom.g,colorTo.g)
                     let myBlue  =   this.mapValue(j/(xdiff-1),colorFrom.b,colorTo.b)
-                    let myAlpha =   this.mapValue(j/(xdiff-1),a1,a2)/4
+                    let myAlpha =   this.mapValue(j/(xdiff-1),a1,a2)/2
                    // if (foreground) {myAlpha =   this.mapValue(j/(xdiff-1),a2,a1) /2}
                     let myColor=new Color(myRed,myGreen,myBlue,myAlpha)
                     pl.add(new Pixel(j+p1,y,myColor))

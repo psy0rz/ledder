@@ -7,13 +7,13 @@
     "value": 1
    },
    "Frequency": {
-    "value": -6.2
+    "value": 8.200000000000001
    },
    "speed": {
-    "value": 0.72
+    "value": 0.44
    },
    "iterations": {
-    "value": 10
+    "value": 1
    },
    "color1": {
     "r": 255,
@@ -28,7 +28,7 @@
     "a": 1
    },
    "steps": {
-    "value": 22
+    "value": 2
    }
   },
   "Clock interval": {
