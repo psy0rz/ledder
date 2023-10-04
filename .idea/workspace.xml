@@ -11,8 +11,6 @@
   <component name="ChangeListManager">
     <list default="true" id="7de4510b-f0e5-4402-9e95-cb9c8d6f6b3a" name="Changes" comment="fix">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ledder/animations/Logos/Rammstein.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/animations/Logos/Rammstein.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ledder/server/drivers/DisplayQOISudp.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/server/drivers/DisplayQOISudp.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,9 +40,9 @@
   <component name="ProblemsViewState">
     <option name="selectedTabId" value="CurrentFile" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 3
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 3
+}</component>
   <component name="ProjectId" id="2K00LGm4WpFcz2QTHdEoAwHWv2q" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
@@ -174,6 +172,7 @@
       <workItem from="1688903415363" duration="16845000" />
       <workItem from="1688930582524" duration="5513000" />
       <workItem from="1691167892879" duration="2770000" />
+      <workItem from="1696440313962" duration="1566000" />
     </task>
     <task id="LOCAL-00001" summary="kjh">
       <created>1673098884534</created>
@@ -848,6 +847,8 @@
         <option value="$PROJECT_DIR$/ledder/animations/Gamedemos/Landscapescroller.js" />
         <option value="$PROJECT_DIR$/ledder/animations/Compositions/Love.js" />
         <option value="$PROJECT_DIR$/ledder/animations/Compositions/Love.js.map" />
+        <option value="$PROJECT_DIR$/ledder/animations/Gamedemos/Digger.js" />
+        <option value="$PROJECT_DIR$/ledder/animations/Gamedemos/Digger.js.map" />
       </list>
     </option>
     <option name="includedJSSourcePackages">

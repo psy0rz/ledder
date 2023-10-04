@@ -1,6 +1,5 @@
 import OffsetMapper from "./ledder/server/drivers/OffsetMapper.js"
 
-import {channel} from "diagnostics_channel"
 import {DisplayQOISudp} from "./ledder/server/drivers/DisplayQOISudp.js"
 //import {DisplayRPI} from "./ledder/server/drivers/DisplayRPI.js"
 
