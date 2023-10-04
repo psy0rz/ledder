@@ -15,7 +15,7 @@ import DrawLine from "../../draw/DrawLine.js"
 
 export default class Grasmaaier extends Animator {
     static category = "Misc"
-    static title = "Dnah"
+    static title = "Grasmaaier"
     static description = "blabla"
 
     mapValue(value:number,sourceMin:number,sourceMax:number)
@@ -28,7 +28,7 @@ export default class Grasmaaier extends Animator {
         return ret
     }
 
-    drawDna(box:PixelBox,iterations:number, start:number,frequency:number,color1,color2,stepcount)
+    drawDna(box:PixelBox, start:number,frequency:number,color1,color2,stepcount)
     {
         let pl=new PixelList();
         let halfHeight=(box.height()/2.0)
@@ -41,11 +41,8 @@ export default class Grasmaaier extends Animator {
         let y2=0
         let a2=0
         let c2:Color
-        for (let i=start;i<start+box.width();i=i+(1/iterations))
+        for (let i=start;i<start+box.width();i++)
         {
-           
-            
-            let foreground=false
             xi++;
             let x=i-start
             let colorPhase=93
@@ -55,18 +52,11 @@ export default class Grasmaaier extends Animator {
             c1=color1.copy()
             c1.a=a1
            
-            //pl.add(new Pixel(x-1,y1,new Color(color1.r,color1.g,color1.b,(a1/iterations)/2)))
-            //pl.add(new Pixel(x+1,y1,new Color(color1.r,color1.g,color1.b,(a1/iterations)/2)))
-
             y2=Math.sin((i/frequency)+60)*halfHeight+(halfHeight)
             a2=Math.min(Math.max((Math.sin((i/frequency)+colorPhase+60)+1)/2,0.0),1.0)
             c2=color2.copy()
             c2.a=a2
-           // pl.add(new Pixel(x-1,y2,new Color(color2.r,color2.g,color2.b,(a2/iterations)/2)))
-            //pl.add(new Pixel(x+1,y2,new Color(color2.r,color2.g,color2.b,(a2/iterations)/2)))
-
-            //pl.add(new Pixel(i-start,box.height()/2-1,c1))
-            //pl.add(new Pixel(i-start,box.height()/2+1,c2))
+           
 
             if (((x)%stepcount)<1 )
             {
@@ -75,21 +65,14 @@ export default class Grasmaaier extends Animator {
             
 
             if (Math.sin(i/frequency)>Math.sin((i+0.01)/frequency)){
-                pl.add(new Pixel(x,box.height()/2,c2))
-                pl.add(new Pixel(x,box.height()/2,c1))
+              
                 pl.add(new Pixel(x,y2,c2))
                 pl.add(new Pixel(x,y1,c1))
-              
-                foreground=true;
             }
             else
             {
-                pl.add(new Pixel(x,box.height()/2,c2))
-                pl.add(new Pixel(x,box.height()/2,c1))
                 pl.add(new Pixel(x,y1,c1))
                 pl.add(new Pixel(x,y2,c2))
-              
-                foreground=false;
             }
           
             
@@ -103,11 +86,10 @@ export default class Grasmaaier extends Animator {
 
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup, x = 0, y = 0) {
 
-        const dnaControls=controls.group("Dna")
+        const dnaControls=controls.group("Grasmaaier")
         const dnaIntervalControl = dnaControls.value("Clock interval", 1, 1, 10, 0.1,true)
         const dnaFrequencyControl = dnaControls.value("Frequency", 10,-32, 32, 0.1,true)
-        const dnaSpeedControl = dnaControls.value("speed", 0.2, -1, 1, 0.01,true)
-        const dnaIterationControl = dnaControls.value("iterations", 1, 1, 10, 1,true)
+        const dnaSpeedControl = dnaControls.value("speed", 0.2, -8, 8, 0.01,true)
         const dnaStepCount= dnaControls.value("steps", 2, 0, 32, 1,true)
         const dnaColor1=dnaControls.color("color1",255,0,0,1,true)
         const dnaColor2=dnaControls.color("color2",0,0,255,1,true)
@@ -118,7 +100,7 @@ export default class Grasmaaier extends Animator {
         scheduler.intervalControlled(dnaIntervalControl, (frameNr) => {
             frameCounter=frameCounter+(dnaSpeedControl.value)
          framebuffer.clear()
-         framebuffer.add(this.drawDna(box,dnaIterationControl.value,frameCounter,dnaFrequencyControl.value,dnaColor1,dnaColor2,dnaStepCount.value))
+         framebuffer.add(this.drawDna(box,frameCounter,dnaFrequencyControl.value,dnaColor1,dnaColor2,dnaStepCount.value))
     
         })
 
