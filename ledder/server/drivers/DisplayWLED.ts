@@ -87,7 +87,7 @@ export class DisplayWLED extends Display {
     let sendBuffer=new Uint8Array(2 + this.height * this.width*3);
 
     sendBuffer[0]=2;//DRGB protocol
-    sendBuffer[1]=120; //timeout
+    sendBuffer[1]=1; //timeout
 
 
     for (let i=0, n=this.buffer.length; i<n; ++i)

@@ -2,6 +2,7 @@ import OffsetMapper from "./ledder/server/drivers/OffsetMapper.js"
 
 import {DisplayQOISudp} from "./ledder/server/drivers/DisplayQOISudp.js"
 //import {DisplayRPI} from "./ledder/server/drivers/DisplayRPI.js"
+import {DisplayWLED} from "./ledder/server/drivers/DisplayWLED.js"
 
 export let displayList = []
 
@@ -66,6 +67,7 @@ stackedMatrix.addGrid(matrixzigzag, 1,0,1)
 stackedMatrix.addGrid(matrixzigzag, 0,1,2)
 stackedMatrix.addGrid(matrixzigzag, 1,1,3)
 displayList.push(new DisplayQOISudp(stackedMatrix, ["192.168.13.142"], 65000,512))
+
 
 
 /////////// use the maximum config: eight channels with 2 displays per channel.
@@ -135,7 +137,8 @@ displayList.push(new DisplayQOISudp(stackedMatrix, ["192.168.13.142"], 65000,512
 // mapper.flipY()
 // displayList.push(new DisplayRPI(32*5, 8, 8*32, mapper))
 
-
+/////////// WLED https://github.com/Aircoookie/WLED/wiki/UDP-Realtime-Control via DRGB
+displayList.push(new DisplayWLED(37,8, false, false, '10.0.0.209'))
 
 
 //default animation and preset

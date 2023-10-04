@@ -11,7 +11,7 @@
   <component name="ChangeListManager">
     <list default="true" id="7de4510b-f0e5-4402-9e95-cb9c8d6f6b3a" name="Changes" comment="fix">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ledder/server/drivers/DisplayQOISudp.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/server/drivers/DisplayQOISudp.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/displayconf-example.js" beforeDir="false" afterPath="$PROJECT_DIR$/displayconf-example.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ledder/server/drivers/DisplayWLED.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/server/drivers/DisplayWLED.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -174,7 +174,7 @@
       <workItem from="1688903415363" duration="16845000" />
       <workItem from="1688930582524" duration="5513000" />
       <workItem from="1691167892879" duration="2770000" />
-      <workItem from="1696440313962" duration="6917000" />
+      <workItem from="1696440313962" duration="7777000" />
     </task>
     <task id="LOCAL-00001" summary="kjh">
       <created>1673098884534</created>
