@@ -1,0 +1,31 @@
+{
+ "title": "",
+ "description": "",
+ "values": {
+  "Color Palette": {
+   "selected": "DimmedReinbow"
+  },
+  "Color Palette range": {
+   "from": 19,
+   "to": 100
+  },
+  "alpha/brightness": {
+   "value": 0.8
+  },
+  "Color change": {
+   "value": 9
+  },
+  "Fractal interval": {
+   "value": 1
+  },
+  "Zoom speed": {
+   "value": 0.059500000000000004
+  },
+  "Bounce": {
+   "enabled": true
+  },
+  "Fractal type": {
+   "selected": "1"
+  }
+ }
+}

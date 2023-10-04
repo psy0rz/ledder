@@ -1,5 +1,5 @@
 import PixelBox from "../../PixelBox.js"
-import Snow from "../Components/Snow.js"
+import Snow from "./Snow.js"
 import XmasSantaReindeer from "./XmasSantaReindeer.js"
 import Scheduler from "../../Scheduler.js"
 import ControlGroup from "../../ControlGroup.js"

@@ -20,6 +20,7 @@ export default class Lines extends Animator {
 
         const dnaControls=controls.group("Dna")
         const dnaIntervalControl = dnaControls.value("Clock interval", 1, 1, 10, 0.1,true)
+        const bufferControl = dnaControls.value("Buffer size", 1, 1, 64, 1,true)
         let framebuffer:PixelList=new PixelList()
         box.add(framebuffer)
         let x1=0
@@ -38,9 +39,9 @@ export default class Lines extends Animator {
          c1=c2
          x2=random(1,box.width()-1)
          y2=random(1,box.height()-1)
-         c2=new Color(random(0,255),random(0,255),random(0,255),random(0.1,1.0))
+         c2=new Color(random(0,255),random(0,255),random(0,255),random(0,100)/100)
          lineArray.push(new DrawLine(x1,y1,x2,y2,c1,c2))
-         if (lineArray.length>32) { lineArray.shift()}
+         if (lineArray.length>bufferControl.value) { lineArray.shift()}
          for (let i=0;i<lineArray.length;i++)
          {
             framebuffer.add(lineArray[i])

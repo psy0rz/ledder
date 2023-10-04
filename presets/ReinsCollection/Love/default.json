@@ -1,0 +1,54 @@
+{
+ "title": "",
+ "description": "",
+ "values": {
+  "LOVE controls": {
+   "Font": {
+    "selected": "C64"
+   },
+   "Font height": {
+    "value": 0
+   },
+   "Font width": {
+    "value": 0
+   },
+   "name1": {
+    "text": "Mischa"
+   },
+   "name2": {
+    "text": "Annemarie"
+   },
+   "stars": {
+    "Base speed": {
+     "value": 0.001
+    },
+    "Acceleration": {
+     "value": 0.03
+    },
+    "Star offset": {
+     "value": 0.1
+    },
+    "Creation interval": {
+     "value": 5
+    }
+   },
+   "speed": {
+    "value": 1
+   },
+   "Fire colors": {
+    "selected": "Bertrik fire"
+   },
+   "Fire colors range": {
+    "from": 0,
+    "to": 100
+   },
+   "Fractal colors": {
+    "selected": "DimmedReinbow"
+   },
+   "Fractal colors range": {
+    "from": 0,
+    "to": 100
+   }
+  }
+ }
+}

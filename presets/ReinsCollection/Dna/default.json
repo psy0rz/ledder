@@ -1,0 +1,35 @@
+{
+ "title": "",
+ "description": "",
+ "values": {
+  "Dna": {
+   "Clock interval": {
+    "value": 1
+   },
+   "Frequency": {
+    "value": 14.3
+   },
+   "speed": {
+    "value": 0.75
+   },
+   "iterations": {
+    "value": 1
+   },
+   "steps": {
+    "value": 2
+   },
+   "color1": {
+    "r": 255,
+    "g": 0,
+    "b": 0,
+    "a": 1
+   },
+   "color2": {
+    "r": 0,
+    "g": 0,
+    "b": 255,
+    "a": 1
+   }
+  }
+ }
+}
