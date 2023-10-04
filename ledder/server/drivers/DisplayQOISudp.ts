@@ -51,7 +51,8 @@ export class DisplayQOISudp extends DisplayQOIS {
         this.bufferEmptyTime = 0
 
         this.sockets = []
-        for (const ip of ips) {
+        for (const ip of ips)
+        {
 
             const s = dgram.createSocket('udp4')
             s.connect(this.port, ip)
