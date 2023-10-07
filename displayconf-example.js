@@ -128,7 +128,6 @@ displayList.push(new DisplayQOISudp(stackedMatrix, ["192.168.13.142"], 65000,512
 //     new DisplayLedstream( 2, 8, 75, ["esp32-f008d161492c.local"], 65000, mapper), //painted board
 // ]
 
-//XXX: raspberry needs to be fixed
 //Raspberry PI with 5 displays next to eachother, the displays are zigzag displays of 8x32 pixels
 // (standard ali express stuff)
 // This uses https://github.com/psy0rz/rpi-ws281x-smi

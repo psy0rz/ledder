@@ -13,11 +13,29 @@ LIVE DEMO: https://ledder.datux.nl
 
 ## Hardware
 
-To control actual hardware use this in combination with DisplayQIOSUdp: https://github.com/psy0rz/ledstream
+### Easy, with WLED
 
-The displayconf-example.js has examples on how to configure it.
+You can just use the [WLED](https://kno.wled.ge/) project. (Ledder uses [DRGB mode](https://github.com/Aircoookie/WLED/wiki/UDP-Realtime-Control) )
+
+Look in display display-example.js how to configure WLED. (Its the DisplayWLED driver)
+
+In WLED you can configure the 2D matrix config to configure the matrix layout. 
+
+### Advanced via Ledstream
+
+If you want to control many ws2812 leds in realtime, the DRGB protocol isnt powerfull enough. Also WLED doesnt support updating multiple WS2812 ledstrips in parallel. 
+
+This is why we created [Ledsteam](https://github.com/psy0rz/ledstream) . 
+
+The displayconf-example.js has examples on how to configure it. (Its the DisplayQOISudp driver)
 
 (We had raspberry, pixelflut and WLED drivers as well, but they are currenly broken)
+
+### Advanced via raspberry
+
+This is even more powerfull: Run ledder on a raspberry and connect up to 16 strips to the GPIO pins. (Uses DisplayRPI)
+
+This uses [RPI-ws281x-smi](https://github.com/psy0rz/rpi-ws281x-smi)
 
 ## Quick start, without docker
 
