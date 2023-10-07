@@ -29,13 +29,15 @@ This is why we created [Ledsteam](https://github.com/psy0rz/ledstream) .
 
 The displayconf-example.js has examples on how to configure it. (Its the DisplayQOISudp driver)
 
-(We had raspberry, pixelflut and WLED drivers as well, but they are currenly broken)
-
 ### Advanced via raspberry
 
 This is even more powerfull: Run ledder on a raspberry and connect up to 16 strips to the GPIO pins. (Uses DisplayRPI)
 
 This uses [RPI-ws281x-smi](https://github.com/psy0rz/rpi-ws281x-smi)
+
+### Pixelflut
+
+(Currently broken, needs to be ported to new API. See DisplayPixelflut.ts)
 
 ## Quick start, without docker
 
