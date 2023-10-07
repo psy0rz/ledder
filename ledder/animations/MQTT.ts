@@ -72,23 +72,6 @@ export default class MQTT extends Animator {
         }
 
 
-        mqttClient.on('reconnect', () => {
-            this.statusMessage(`Reconn ${mqttHost.text}...`)
-            console.log(`MQTT: Reconnecting ${mqttHost.text}`)
-
-        })
-
-        mqttClient.on('connect', () => {
-            console.log("MQTT: Connected")
-            this.statusMessage(`${mqttHost.text} connected.`)
-            mqttClient.subscribe(mqttTopic.text + '/#')
-        })
-
-        mqttClient.on('error', (e) => {
-            console.error("MQTT error: ", e.message)
-            this.statusMessage(e.message)
-        })
-
 
         mqttClient.on('message', async (topic, messageBuf) => {
                 let message = messageBuf.toString()

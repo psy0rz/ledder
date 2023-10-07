@@ -98,6 +98,11 @@ export function easeInOutQuart(x: number): number {
     return x < 0.5 ? 8 * x * x * x * x : 1 - Math.pow(-2 * x + 2, 4) / 2
 }
 
+export function mapRange(value:number, inRangeStart:number, inRangeEnd:number, outRangeStart:number, outRangeEnd:number):number {
+    return outRangeStart + ((value - inRangeStart) / (inRangeEnd - inRangeStart)) * (outRangeEnd - outRangeStart);
+}
+
+
 
 //step from 0 to max (excluded), in reverse, forward or pingpong mode.
 //stepsize can be a float, and next() will always return a positive int.
