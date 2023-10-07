@@ -19,7 +19,7 @@ You can just use the [WLED](https://kno.wled.ge/) project. (Ledder uses [DRGB mo
 
 Look in display display-example.js how to configure WLED. (Its the DisplayWLED driver)
 
-In WLED you can configure the 2D matrix config to configure the matrix layout. 
+In WLED you can configure the 2D matrix config to configure the display layout. 
 
 ### Advanced via Ledstream
 
