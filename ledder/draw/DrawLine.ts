@@ -27,10 +27,9 @@
             for (let i=0; i<=distance; i++)
             {
                 let weight=i/distance
-               
                 line.add(new Pixel(x,y,this.interpolateColor(color1,color2,Math.abs(weight))))
-                x=x+xDiff/distance
-                y=y+yDiff/distance
+                x=x+(xDiff/distance)
+                y=y+(yDiff/distance)
             }
             this.add(line)
          }

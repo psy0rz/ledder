@@ -6,7 +6,7 @@ import DrawAsciiArt from "../../draw/DrawAsciiArt.js"
 import FxMovie from "../../fx/FxMovie.js"
 import FxRotate from "../../fx/FxRotate.js"
 import Animator from "../../Animator.js"
-import DrawAsciiArtColor from "../../draw/DrawAsciiArtColor.js"
+import DrawLine from "../../draw/DrawLine.js"
 import Color from "../../Color.js"
 import Pixel from "../../Pixel.js"
 
@@ -69,27 +69,8 @@ export default class Dnaspiral extends Animator {
           
             if ((yi>(stepcount)) )
             {
+               pl.add(new DrawLine(x1,y,x2,y,c1,c2))
                yi=0
-                let opacityMultiplier=1
-                //if (frequency)
-                let p1=x1
-                let p2=x2
-               
-                if (x1>x2) {p1=x2; p2=x1; }
-                let xdiff=(p2-p1)*1.00
-                for (let j=0;j<xdiff;j=j+1)
-                {
-                    let colorFrom=c1.copy()
-                    let colorTo=c2.copy()
-                    //if (x1>x2) { colorFrom=c2.copy(); colorTo=c1.copy();}
-                    let myRed   =   this.mapValue(j/(xdiff-1),colorFrom.r,colorTo.r)
-                    let myGreen =   this.mapValue(j/(xdiff-1),colorFrom.g,colorTo.g)
-                    let myBlue  =   this.mapValue(j/(xdiff-1),colorFrom.b,colorTo.b)
-                    let myAlpha =   this.mapValue(j/(xdiff-1),a1,a2)/2
-                   // if (foreground) {myAlpha =   this.mapValue(j/(xdiff-1),a2,a1) /2}
-                    let myColor=new Color(myRed,myGreen,myBlue,myAlpha)
-                    pl.add(new Pixel(j+p1,y,myColor))
-                }
             }
         }
         return pl
