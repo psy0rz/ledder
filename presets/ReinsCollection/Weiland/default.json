@@ -26,13 +26,13 @@
   },
   "Clouds": {
    "Cloud height": {
-    "value": 5
+    "value": 3
    },
    "Cloud width": {
-    "value": 8
+    "value": 1
    },
    "Cloud Density": {
-    "value": 1.2000000000000002
+    "value": 0.4
    },
    "Rain Density": {
     "value": 1

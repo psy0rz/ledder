@@ -11,7 +11,39 @@ import {random} from "../../utils.js"
 import {patternSelect} from "../../ColorPatterns.js"
 
 
-
+function hourToLightFactor(hour:number)
+{
+    let light=0
+    let lookup=[]
+    lookup[0]={ 'light': 0.0, x:0/24 }  
+    lookup[1]={ 'light': 0.0, x:1/24 }
+    lookup[2]={ 'light': 0.0, x:2/24  }
+    lookup[3]={ 'light': 0.0 , x:3/24 }
+    lookup[4]={ 'light': 0.1, x:4/24  }
+    lookup[5]={ 'light': 0.2, x:5/24  }
+    lookup[6]={ 'light': 0.3 , x:6/24 }
+    lookup[7]={ 'light': 0.4, x:7/24  }
+    lookup[8]={ 'light': 0.6 , x:8/24 }
+    lookup[9]={ 'light': 0.8, x:9/24  }
+    lookup[10]={ 'light': 0.9 , x:10/24 }
+    lookup[11]={ 'light': 1.0 , x:11/24 }
+    lookup[12]={ 'light': 1.0 , x:12/24 }
+    lookup[13]={ 'light': 1.0 , x:13/24 }
+    lookup[14]={ 'light': 1.0 , x:14/24 }
+    lookup[15]={ 'light': 1.0 , x:15/24 }
+    lookup[16]={ 'light': 1.0 , x:16/24 }
+    lookup[17]={ 'light': 0.9 , x:17/24 }
+    lookup[18]={ 'light': 0.8 , x:18/24 }
+    lookup[19]={ 'light': 0.6, x:19/24  }
+    lookup[20]={ 'light': 0.4, x:20/24  }
+    lookup[21]={ 'light': 0.2, x:21/24  }
+    lookup[22]={ 'light': 0.0 , x:22/24 }
+    lookup[23]={ 'light': 0.0 , x:23/24 }
+    lookup[24]={ 'light': 0.0 , x:24/24 }
+   
+    let hrVal=lookup[Math.round(hour)]
+    return hrVal
+}
 
 export class XYCoordinate {
     x:number
@@ -61,22 +93,28 @@ export class Grass {
         for (let s=0;s<grassprietCount;s++)
         {
             let greeniness=random(100,255)
-            let newGrassprietje=new Grasspriet(random(x1,x2),random(1,this.height),new Color(0,greeniness,0,0.8),new Color(0,greeniness-100,0,0.1))
+            let newGrassprietje=new Grasspriet(random(x1,x2),random(1,this.height),new Color(0,greeniness,0,1.0),new Color(0,greeniness-100,0,0.0))
             this.sprietjes.push(newGrassprietje)
             //console.log(newGrassprietje)
         }
         
     }
 
-    render(box,counter,wind)
+    render(box,counter,hour, wind)
     {
         //console.log("grass render")
         let pl=new PixelList()
         let bottomY=this.bbox_lr.y
         for (let s=0;s<this.sprietjes.length;s++)
         {
+            let timedata=hourToLightFactor(hour)
+            let light=timedata.light
+            let c1=this.sprietjes[s].colorTop.copy()
+            let c2=this.sprietjes[s].colorGround.copy()
+            c1.a=Math.max(0.1,light)
+            c2.a=Math.max(0.3,light)
             this.wind=Math.abs(wind*Math.abs(Math.sin(s+(counter/10)))%(this.bbox_lr.x-this.bbox_ul.x))
-            pl.add(new DrawLine(this.sprietjes[s].groundX+this.wind,bottomY-this.sprietjes[s].height,this.sprietjes[s].groundX,bottomY,this.sprietjes[s].colorTop,this.sprietjes[s].colorGround))
+            pl.add(new DrawLine(this.sprietjes[s].groundX+this.wind,bottomY-this.sprietjes[s].height,this.sprietjes[s].groundX,bottomY,c1,c2))
         }
         return pl
     }
@@ -120,35 +158,57 @@ export class Cloud {
 export class SunMoon {
     x:number
     y:number
+    width:number
+    height:number
     radius:number
     color:Color
     intensity:number
    
 
-    constructor(x,y,radius,color,intensity)
+    constructor(x,y,width,height,radius,color,intensity)
     {
         this.x=x
         this.y=y
+        this.width=width
+        this.height=height
         this.radius=radius
         this.color=color
         this.intensity=intensity
     
     }
 
-    render(box)
+    render(box:PixelBox,hour:number)
     {
-        let  pixellist:PixelList=new PixelList()
-        pixellist.clear()
+        let  pixellist=new PixelList()
+        let hourdata=hourToLightFactor(hour)
+        pixellist.add(new Pixel(random(0,box.width()), random(0,box.height()),new Color(32,32,64,1-hourdata.light)))
+        this.x=((box.width())*(hourdata.x)*2)%box.width()
+        this.y=(1-hourdata.light)*(box.height())+2
+        let moony=hourdata.light*(box.height())+2
+        this.radius=Math.max(Math.min(this.height/4-(this.height/4-this.y/4),9),5)
         for (let r=1;r<this.radius;r++)
         {
+            //sun
             for (let i=0;i<Math.pow(r+2,3);i++)
             {
                 let x=Math.sin((r+i)/15.0)*(r/2)
                 let y=Math.cos((r+i)/15.0)*(r/2)
                 pixellist.add(new Pixel(this.x+x,this.y+y,this.color))
-
-
             }
+
+           //moon
+                for (let j=0;j<Math.pow(r+2,3);j++)
+                {
+                    let x=Math.sin((r+j)/15.0)*((r-2)/2)
+                    let y=Math.cos((r+j)/15.0)*((r-2)/2)
+                   
+                        pixellist.add(new Pixel(this.x+3+x,moony+y,new Color(64,64,64,0.7)))
+
+                   
+                }
+
+               
+            
         }
         return pixellist
     }
@@ -183,7 +243,9 @@ export class Sky {
         this.density=cloudDensity
         this.clouds=[]
         this.neerslag=[]
-        this.sunMoon=new SunMoon(8,4,6,new Color(255,255,0,1),1)
+        let date=new Date()
+        let moonX=8
+        this.sunMoon=new SunMoon(moonX,4,6,width,height,new Color(255,255,0,1),1)
         let cloudCount=this.density*10
         for (let s=0;s<cloudCount;s++)
         {
@@ -201,10 +263,23 @@ export class Sky {
         
     }
 
-    render(box, counter,wind)
+    render(box, counter,hour, wind)
     {
         let pl=new PixelList()
-        pl.add(this.sunMoon.render(box))
+        let bgbuffer:PixelList=new PixelList()
+        let time=new Date()
+
+        let lightdata=hourToLightFactor(hour)
+        for (let i=0;i<box.width();i++)
+        {
+           let light=Math.max(0.1,lightdata.light)
+           bgbuffer.add(new DrawLine(i,0,i,box.height(),new Color(0,0,64,light),new Color(0,0,255,light)))
+        }
+
+        pl.add(bgbuffer)
+
+        pl.add(this.sunMoon.render(box,hour))
+
         let bottomY=this.bbox_lr.y
         //console.log(this.clouds)
         for (let s=0;s<this.clouds.length;s++)
@@ -250,13 +325,7 @@ export default class Weiland extends Animator {
         const rainDensityControl = cloudControls.value("Rain Density", 1, 0, 10, 0.1,true)
 
         let framebuffer:PixelList=new PixelList()
-        let bgbuffer:PixelList=new PixelList()
-        for (let i=0;i<box.width();i++)
-        {
-            bgbuffer.add(new DrawLine(i,0,i,box.height(),new Color(0,0,64,1),new Color(0,0,255,0.5)))
-        }
-
-        box.add(bgbuffer)
+        
         box.add(framebuffer)
        
 
@@ -265,9 +334,11 @@ export default class Weiland extends Animator {
         console.log("tma initalized")
 
         scheduler.intervalControlled(grassIntervalControl, (frameNr) => {
+            let time=new Date()
+            let hour=time.getSeconds()/2.5
             framebuffer.clear()
-            framebuffer.add(sky.render(box,frameNr,meteoWindSpeed.value))
-            framebuffer.add(gras.render(box,frameNr,meteoWindSpeed.value))
+            framebuffer.add(sky.render(box,frameNr,hour, meteoWindSpeed.value))
+            framebuffer.add(gras.render(box,frameNr,hour, meteoWindSpeed.value))
         })
 
 

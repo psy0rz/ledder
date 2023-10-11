@@ -1,0 +1,32 @@
+{
+ "title": "",
+ "description": "",
+ "values": {
+  "Grasmaaier": {
+   "Clock interval": {
+    "value": 1
+   },
+   "Frequency": {
+    "value": 31.8
+   },
+   "speed": {
+    "value": 5.37
+   },
+   "steps": {
+    "value": 2
+   },
+   "color1": {
+    "r": 255,
+    "g": 0,
+    "b": 0,
+    "a": 1
+   },
+   "color2": {
+    "r": 0,
+    "g": 0,
+    "b": 255,
+    "a": 1
+   }
+  }
+ }
+}
