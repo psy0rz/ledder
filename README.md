@@ -23,7 +23,7 @@ In WLED you can configure the 2D matrix config to configure the display layout.
 
 ### Advanced via Ledstream
 
-If you want to control many ws2812 leds in realtime, the DRGB protocol isnt powerfull enough. Also WLED doesnt support updating multiple WS2812 ledstrips in parallel. 
+If you want to control many ws2812 leds in realtime, the DRGB protocol isnt powerfull enough. Also WLED doesnt support updating multiple WS2812 ledstrips in parallel, and its sentitive to network jittering.
 
 This is why we created [Ledsteam](https://github.com/psy0rz/ledstream) . 
 
