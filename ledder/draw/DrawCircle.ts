@@ -6,7 +6,7 @@ import ColorInterface from "../ColorInterface.js";
 export default class DrawCircle extends Draw {
     constructor(x0: number, y0: number, radius: number, color: ColorInterface) {
         super();
-        //Midpoint circle algorithm
+        //Midpoint circle algorithm for ledder by WallieOnline
         var x = radius;
         var y = 0;
         var radiusError = 1 - x;
