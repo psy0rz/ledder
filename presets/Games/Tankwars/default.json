@@ -1,0 +1,20 @@
+{
+ "title": "",
+ "description": "",
+ "values": {
+  "Game": {
+   "Clock interval": {
+    "value": 1
+   },
+   "Font": {
+    "selected": "Tiny 3x3"
+   },
+   "Font height": {
+    "value": 0
+   },
+   "Font width": {
+    "value": 0
+   }
+  }
+ }
+}
