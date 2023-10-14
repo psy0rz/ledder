@@ -359,7 +359,7 @@ export default class Tankwars extends Animator {
             if (game.players.length<2)
             {
                 //start new game if 1 player left
-                game=new Tankwarsgame(box,players)
+                game=new Tankwarsgame(box,players) 
             }
             else
             {
