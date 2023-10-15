@@ -7,7 +7,7 @@
     "value": 1
    },
    "Font": {
-    "selected": "Tiny 3x3"
+    "selected": "IBM bios"
    },
    "Font height": {
     "value": 0
@@ -17,7 +17,28 @@
    },
    "Shoot interval": {
     "value": 300
+   },
+   "Number of players": {
+    "value": 3
+   },
+   "Rotation player 0": {
+    "value": -180
+   },
+   "Rotation player 1": {
+    "value": -180
+   },
+   "Rotation player 2": {
+    "value": 180
+   },
+   "Rotation player 3": {
+    "value": 180
    }
+  },
+  "MQTT host": {
+   "text": "mqtt.hackerspace-drenthe.nl"
+  },
+  "MQTT topic": {
+   "text": "tankwars"
   }
  }
 }
