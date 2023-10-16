@@ -14,6 +14,16 @@ import DrawLine from "../../draw/DrawLine.js"
 import DrawText from "../../draw/DrawText.js"
 import { fontSelect } from "../../fonts.js"
 import Font from "../../Font.js"
+import { random } from "../../utils.js"
+
+
+
+function degrees_to_radians(degrees:number)
+{
+    degrees=degrees+90
+  var pi = Math.PI;
+  return degrees * (pi/180);
+}
 
 
 export class Tanklandschap {
@@ -72,9 +82,9 @@ export class Tankprojectile {
         this.time = 0
         this.timer = 0
 
-
-        let targetX = (this.x + (Math.sin(this.rotation) * this.energy))
-        let targetY = (this.y + (Math.cos(this.rotation) * this.energy))
+        let rotationrad=degrees_to_radians(this.rotation)
+        let targetX = (this.x + (Math.sin(rotationrad) * this.energy))
+        let targetY = (this.y + (Math.cos(rotationrad) * this.energy))
         this.xspeed = (targetX - this.x) / this.energy
         this.yspeed = (targetY - this.y) / this.energy
         //console.log(this)
@@ -170,8 +180,9 @@ export class Tank {
     }
 
     renderAim(x: number, y: number, rotation: number, length: number, color: Color) {
-        let targetX = Math.round(x + Math.sin(rotation) * length)
-        let targetY = y + Math.cos(rotation) * length
+        let rotationrad=degrees_to_radians(rotation)
+        let targetX = Math.round(x + Math.sin(rotationrad) * length)
+        let targetY = y + Math.cos(rotationrad) * length
         let pl = new PixelList()
         pl.add(new Pixel(targetX, targetY, color))
         return pl
@@ -248,30 +259,54 @@ export class Tankwarsgame {
             new Color(0, 128, 128, 1),
             new Color(128, 128, 128, 1),
             new Color(0, 0, 255, 1)
-        ]
+        ] //this colorshizzle  should go to a different file because is will be handy for other usecase to have some visual unique colors...or as a color palette
+        //anyways...it should go away from here
         for (let p = 0; p < players.length; p++) {
             let x = Math.round(px * p + 2)
             
-            this.players.push(new Tank(players[p], x, this.width, this.landschap.heightArr[x] - 1, -180, colors[p], 100, 100))
+            this.players.push(new Tank(players[p], x, this.width, this.landschap.heightArr[x] - 1, 45, colors[p], 100, 100))
         }
+
+        
     }
 
     intro(box,servername,topic) {
         this.introtimer++
         let pl = new PixelList();
-        if (this.introtimer%3000<500)
+        let titletime=500
+        let totalintrotime=4000
+        if (this.introtimer>totalintrotime) { this.introtimer=0}
+        if (this.introtimer%totalintrotime<titletime)
         {
             pl.centerH(box)
             pl.centerV(box)
-            pl.add(new DrawText(0, 0, this.font, "TANKWARS", new Color(0, 255, 0, 1)))
+            pl.add(new DrawText(0, 0, this.font, "TANKWARS", new Color(255, 0, 0, 1)))
             pl.centerH(box)
             pl.centerV(box)
         }
         else
         {
-            pl.centerV(box)
-            pl.add(new DrawText(this.width-((this.introtimer/3)%1000), 0, this.font, "usage:  mosquitto_pub -h 192.168.1.10 -t 'tankwars/1'  -m '180'        User 1 will shoot a bullet with a angle of 180 degrees", new Color(0, 0, 255, 1)))
-            pl.centerV(box)
+            if (this.introtimer<3000)
+            {
+                pl.centerV(box)
+                let string="usage:  mosquitto_pub -h "+servername+" -t 'tankwars/USERID' -m 'ANGLE'      /*  USERID=[0.."+Number(this.players.length-1)+"].  ANGLE=[0..180].  Shoot to start the game. */"
+                pl.add(new DrawText((this.width)-(((this.introtimer-(titletime))/3)%(this.font.width*string.length)), 0, this.font, string, new Color(0, 0, 255, 1)))
+                pl.centerV(box)
+            }
+            else
+            {
+                this.timer++
+                this.updateCollissions()
+                pl.wrapX(box)
+                pl.add(this.landschap.render())
+                for (let p = 0; p < this.players.length; p++) {
+                    pl.add(this.players[p].render(box))
+                    if (this.players[p].projectile && this.players[p].projectile.active) { pl.add(this.players[p].projectile.render(box)) }
+            
+                }
+
+                if (this.timer%500==0) { this.shoot(random(0,this.players.length-1),random(0,180),random(4,20))}
+            }
         }
         return pl
     }
@@ -323,7 +358,7 @@ export class Tankwarsgame {
 
     }
 
-    shoot(playerIndex: number, rotation = 180, power = 15) {
+    shoot(playerIndex: number, rotation = 90, power = 15) {
         if (this.players[playerIndex]) {
             this.players[playerIndex].shoot(rotation, power);
         }
@@ -411,7 +446,7 @@ export default class Tankwars extends Animator {
 
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) {
         //do config shizzles
-        this.mqttHost = controls.input('MQTT host', "mqtt.hackerspace-drenthe.nl:11883", true)
+        this.mqttHost = controls.input('MQTT host', "mqtt.hackerspace-drenthe.nl", true)
         this.mqttTopic = controls.input('MQTT topic', "tankwars", true)
         const gameControls = controls.group("Game")
         const gameIntervalControl = gameControls.value("Clock interval", 1, 1, 10, 0.1, true)
@@ -435,8 +470,7 @@ export default class Tankwars extends Animator {
         let gamePixellist = new PixelList()
         box.add(gamePixellist)
 
-        let game = new Tankwarsgame(box, players, gameFont,this.mqttHost ,this.mqttTopic)
-        let nextPlayerShoot: number = 0
+        let game = new Tankwarsgame(box, players, gameFont,this.mqttHost.text ,this.mqttTopic.text)
         console.log(game)
 
         this.mqttClient.on('message', (topic, messageBuf) => {
@@ -460,7 +494,6 @@ export default class Tankwars extends Animator {
             gamePixellist.clear()
             let progress = (1 / gameShootIntervalControl.value) * (frameNr % gameShootIntervalControl.value)
             gamePixellist.add(game.render(box, progress))
-            console.log(game.status)
             if (game.status > 2) {
                 //start new game if outro page has timeout
                 game = new Tankwarsgame(box, players, gameFont,this.mqttHost ,this.mqttTopic)

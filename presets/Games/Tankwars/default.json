@@ -7,7 +7,7 @@
     "value": 1
    },
    "Font": {
-    "selected": "IBM bios"
+    "selected": "MSX"
    },
    "Font height": {
     "value": 0
@@ -19,7 +19,7 @@
     "value": 300
    },
    "Number of players": {
-    "value": 3
+    "value": 10
    },
    "Rotation player 0": {
     "value": -180
