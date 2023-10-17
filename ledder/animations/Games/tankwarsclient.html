@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <title>Tankwars Simple Web Client</title>
+  </head>
+
+  <!-- this is an HTML comment -->
+  <body>
+    <h1>Tankswars Simple Web Client</h1>
+
+    <!-- this is the secton wrapping our new button -->
+    Server:  <input type="text"  name="serverName" id="serverName" value="mqtt.hackerspace-drenthe.nl">
+    userId: <input type="text"  name="userId" id="userId" value="0">
+    rotation: <input type="text"  name="rotation" id="rotation" value="45">
+    shoot: <button onClick="shoot()">Shoot!</button>
+
+    <!-- this is where new text will appear -->
+    <div id="updateMe">
+    </div>
+
+    <!-- import jquery library -->
+    <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+
+    <!-- import paho MQTT library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.min.js" type="text/javascript"></script>
+
+
+    <script>
+
+        function init()
+        {
+        // Generate a new random MQTT client id on each page load
+            var MQTT_CLIENT_ID = "tankwars_client_example_"+Math.floor((1 + Math.random()) * 0x10000000000).toString(16);
+
+            // Create a MQTT client instance
+            var MQTT_CLIENT = new Paho.MQTT.Client(document.getElementById("userId").value, 80, "/", MQTT_CLIENT_ID);
+
+            // Tell the client instance to connect to the MQTT broker
+            MQTT_CLIENT.connect({ onSuccess: myClientConnected });
+
+            // This is the function which handles button clicks
+            function shoot() {
+                // create a new MQTT message with a specific payload
+                var mqttMessage = new Paho.MQTT.Message(document.getElementById("rotation").value);
+
+                // Set the topic it should be published to
+                mqttMessage.destinationName = "tankwars/".document.getElementById("userId").value;
+
+                // Publish the message
+                MQTT_CLIENT.send(mqttMessage);
+            }
+
+            // This is the function which handles subscribing to topics after a connection is made
+            function myClientConnected() {
+                MQTT_CLIENT.subscribe("tankwars/#");
+            }
+
+            // This is the function which handles received messages
+            function myMessageArrived(message) {
+                // Get the payload
+                var messageBody = message.payloadString;
+
+                // Create a new HTML element wrapping the message payload
+                var messageHTML = $("<p>"+messageBody+"</p>");
+
+                // Insert it inside the ```id=updateMe``` element above everything else that is there 
+                $("#updateMe").prepend(messageHTML);
+            };
+
+            // Tell MQTT_CLIENT to call myMessageArrived(message) each time a new message arrives
+            MQTT_CLIENT.onMessageArrived = myMessageArrived;
+        }
+
+
+    </script>
+  </body>
+
+</html>

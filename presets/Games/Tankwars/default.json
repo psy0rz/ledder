@@ -19,7 +19,7 @@
     "value": 300
    },
    "Number of players": {
-    "value": 10
+    "value": 6
    },
    "Rotation player 0": {
     "value": -180
@@ -35,7 +35,7 @@
    }
   },
   "MQTT host": {
-   "text": "mqtt.hackerspace-drenthe.nl"
+   "text": "mqtt.hackerspace-drenthe.nl:11883"
   },
   "MQTT topic": {
    "text": "tankwars"

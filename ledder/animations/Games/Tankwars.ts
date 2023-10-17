@@ -92,7 +92,7 @@ export class Tankprojectile {
 
     update() {
         this.timer++
-        let divisionfactor = 10
+        let divisionfactor = 8
         if (this.active) {
             //this should be replaced by a parabole y=ax²+bx+c
             if (this.energy > 0) {
@@ -114,13 +114,10 @@ export class Tankprojectile {
                     this.active = false
                 }
                 //wrap x
-                if (this.x < 0) { this.x = this.x + this.width }
-                if (this.x > this.width) { this.x = this.x - this.width }
+                
             }
-
-
-
-
+            if (this.x < 0) { this.x = this.x + this.width }
+            if (this.x > this.width) { this.x = this.x - this.width }
         }
     }
 
@@ -129,6 +126,8 @@ export class Tankprojectile {
     render(box: PixelBox) {
         let pl = new PixelList()
         if (this.active) {
+            if (this.x < 0) { this.x = this.x + this.width }
+            if (this.x > this.width) { this.x = this.x - this.width }
 
             pl.add(new Pixel(this.x, this.y, this.color))
             this.update()
@@ -152,6 +151,7 @@ export class Tank {
     projectile: Tankprojectile
     health: number
     timer: number
+    isDead: boolean
 
     constructor(name: String, x: number, y: number, width: number, rotation: number, color: Color, power: number, health: number) {
         this.name = name
@@ -160,9 +160,10 @@ export class Tank {
         this.rotation = rotation
         this.color = color
         this.power = power
-        this.ammopower = 10
+        this.ammopower = 15
         this.health = health
         this.timer = 1000
+        this.isDead=false
     }
 
     setRotation(rotation) {
@@ -170,9 +171,12 @@ export class Tank {
     }
 
     shoot(rotation: number, power: number) {
-        this.rotation = rotation
-        this.ammopower = power
-        this.projectile = new Tankprojectile(this.x, this.y, this.width, this.rotation, this.ammopower, this.color)
+        if (!this.isDead)
+        {
+            this.rotation = rotation
+            this.ammopower=power
+            this.projectile = new Tankprojectile(this.x, this.y, this.width, this.rotation, this.ammopower, this.color)
+        }
     }
 
     getShot(power) {
@@ -182,7 +186,7 @@ export class Tank {
     renderAim(x: number, y: number, rotation: number, length: number, color: Color) {
         let rotationrad=degrees_to_radians(rotation)
         let targetX = Math.round(x + Math.sin(rotationrad) * length)
-        let targetY = y + Math.cos(rotationrad) * length
+        let targetY = Math.round(y + Math.cos(rotationrad) * length)
         let pl = new PixelList()
         pl.add(new Pixel(targetX, targetY, color))
         return pl
@@ -192,21 +196,29 @@ export class Tank {
 
     render(box: PixelBox) {
         let tankpl = new PixelList()
+        if (this.health<0) {this.isDead=true}
+        if (this.x < 0) { this.x = this.x + this.width }
+        if (this.x > this.width) { this.x = this.x % this.width }
+        this.x=Math.round(this.x)
+        this.y=Math.round(this.y)
+        if (!this.isDead)
+        {
+            tankpl.add(new Pixel(Math.round(this.x) - 1, Math.round(this.y), this.color))
+            tankpl.add(new Pixel(Math.round(this.x) + 1, Math.round(this.y), this.color))
+            tankpl.add(new Pixel(Math.round(this.x), Math.round(this.y - 1), this.color))
 
-        tankpl.add(new Pixel(Math.round(this.x) - 1, Math.round(this.y), this.color))
-        tankpl.add(new Pixel(Math.round(this.x) + 1, Math.round(this.y), this.color))
-        tankpl.add(new Pixel(Math.round(this.x), Math.round(this.y - 1), this.color))
-
-        let centerX = Math.round(this.x)
-        let centerY = Math.round(this.y)
-        if (this.projectile && this.projectile.active) {
-            tankpl.add(new Pixel(centerX, centerY, new Color(255, 255, 255, this.health / 100)))
-        }
-        else {
+            let centerX = Math.round(this.x)
+            let centerY = Math.round(this.y)
+           
             tankpl.add(new Pixel(centerX, centerY, new Color(this.color.r, this.color.g, this.color.b, this.health / 100)))
+            
+            //tankpl.add(this.renderAim(centerX,centerY,this.rotation,5,this.color))
+            tankpl.add(this.renderAim(centerX, centerY, this.rotation, 1, this.color))
         }
-        //tankpl.add(this.renderAim(centerX,centerY,this.rotation,5,this.color))
-        tankpl.add(this.renderAim(centerX, centerY, this.rotation, 1, new Color(100, 100, 100, 1)))
+        else
+        {
+            tankpl.add(new Pixel(this.x, 0, new Color(this.color.r, this.color.g, this.color.b, 0.5)))
+        }
         return tankpl
     }
 
@@ -274,10 +286,11 @@ export class Tankwarsgame {
         this.introtimer++
         let pl = new PixelList();
         let titletime=500
-        let totalintrotime=4000
+        let totalintrotime=10000
         if (this.introtimer>totalintrotime) { this.introtimer=0}
         if (this.introtimer%totalintrotime<titletime)
         {
+            //FIRST SHOW TITLE
             pl.centerH(box)
             pl.centerV(box)
             pl.add(new DrawText(0, 0, this.font, "TANKWARS", new Color(255, 0, 0, 1)))
@@ -288,6 +301,7 @@ export class Tankwarsgame {
         {
             if (this.introtimer<3000)
             {
+                //NEXT SHOW LOGO
                 pl.centerV(box)
                 let string="usage:  mosquitto_pub -h "+servername+" -t 'tankwars/USERID' -m 'ANGLE'      /*  USERID=[0.."+Number(this.players.length-1)+"].  ANGLE=[0..180].  Shoot to start the game. */"
                 pl.add(new DrawText((this.width)-(((this.introtimer-(titletime))/3)%(this.font.width*string.length)), 0, this.font, string, new Color(0, 0, 255, 1)))
@@ -295,6 +309,8 @@ export class Tankwarsgame {
             }
             else
             {
+
+                //THIRD SHOW GAME DEMO
                 this.timer++
                 this.updateCollissions()
                 pl.wrapX(box)
@@ -305,7 +321,7 @@ export class Tankwarsgame {
             
                 }
 
-                if (this.timer%500==0) { this.shoot(random(0,this.players.length-1),random(0,180),random(4,20))}
+                if (this.timer%100==0) { this.shoot(random(0,this.players.length-1),random(0,180),random(5,15))}
             }
         }
         return pl
@@ -313,7 +329,7 @@ export class Tankwarsgame {
 
     outro(box) {
         this.outrotimer++
-        if (this.outrotimer > 3000) { this.status = 4 }
+        if (this.outrotimer > 3000) { this.status = 3 }
         let pl = new PixelList();
         pl.add(new DrawText(0, 0, this.font, this.statuslog[this.statuslog.length - 1], new Color(0, 255, 0, 1)))
         pl.centerH(box)
@@ -325,33 +341,52 @@ export class Tankwarsgame {
     updateCollissions() {
 
         for (let p = 0; p < this.players.length; p++) {
-            let oldY = Math.round(this.players[p].y) % this.width
-            let localheight = this.landschap.heightArr[Math.round(this.players[p].x)]
-            this.players[p].y = localheight
-            this.landschap.heightArr[Math.round(this.players[p].x - 2)] = localheight
-            this.landschap.heightArr[Math.round(this.players[p].x - 1)] = localheight
-            this.landschap.heightArr[Math.round(this.players[p].x)] = localheight
-            this.landschap.heightArr[Math.round(this.players[p].x + 1)] = localheight
-            this.landschap.heightArr[Math.round(this.players[p].x + 2)] = localheight
-            if (oldY != Math.round(this.players[p].y)) {
-                this.statuslog.push("player " + this.players[p].name + " hit")
-            }
+            if (!this.players[p].isDead)
+            {
 
-
-
-            if (this.players[p].projectile && this.players[p].projectile.active && this.players[p].projectile.timer > 20) {
-                let bomx = Math.round(this.players[p].projectile.x) % this.width
-                let bomy = Math.round(this.players[p].projectile.y)
-
-                if (this.landschap.heightArr[bomx] < bomy - 1) {
-                    this.landschap.heightArr[bomx]++
-                    this.players[p].projectile.active = false
+                //MOVE PLAYERS TO GROUND/BOTTOM AND FLATTEN GROUND BELOW TANKS
+                let oldY = Math.round(this.players[p].y) % this.width
+                let localheight = this.landschap.heightArr[Math.round(this.players[p].x)]
+                this.players[p].y = localheight
+                this.landschap.heightArr[Math.round(this.players[p].x - 2)] = Math.max(localheight,this.landschap.heightArr[Math.round(this.players[p].x - 2)])
+                this.landschap.heightArr[Math.round(this.players[p].x - 1)] = Math.max(localheight,this.landschap.heightArr[Math.round(this.players[p].x - 1)])
+                this.landschap.heightArr[Math.round(this.players[p].x)] = Math.max(localheight,this.landschap.heightArr[Math.round(this.players[p].x )])
+                this.landschap.heightArr[Math.round(this.players[p].x + 1)] = Math.max(localheight,this.landschap.heightArr[Math.round(this.players[p].x +1)])
+                this.landschap.heightArr[Math.round(this.players[p].x + 2)] = Math.max(localheight,this.landschap.heightArr[Math.round(this.players[p].x +2)])
+                if (oldY != Math.round(this.players[p].y)) {
+                    this.players[p].health=this.players[p].health-8
+                    this.statuslog.push("player " + this.players[p].name + " hit")
                 }
 
-            }
 
-            if (this.players[p].y > this.height) {
-                this.statuslog.push("player " + this.players[p].name + " lost")
+
+                if (this.players[p].projectile && this.players[p].projectile.active && this.players[p].projectile.timer > 5) {
+                    let bomx = Math.round(this.players[p].projectile.x) % this.width
+                    let bomy = Math.round(this.players[p].projectile.y)
+
+                    if (this.landschap.heightArr[bomx] < bomy - 1) {
+                        // projectile impact
+                        this.landschap.heightArr[bomx]++
+                        if (this.landschap.heightArr[bomx-1])
+                        {
+                            this.landschap.heightArr[bomx-1]++
+                        }
+                        if (this.landschap.heightArr[bomx+1])
+                        {
+                            this.landschap.heightArr[bomx+1]++
+                        }
+                        //disarm
+                        this.players[p].projectile.active = false  
+                    }
+
+
+                }
+
+                if (this.players[p].y > this.height && this.players[p].power>0) {
+                    this.statuslog.push("player " + this.players[p].name + " lost")
+                    this.players[p].isDead=true
+                    this.players[p].x=(4*p)
+                }
             }
 
         }
@@ -380,7 +415,7 @@ export class Tankwarsgame {
             for (let p = 0; p < this.players.length; p++) {
                 tankspl.add(this.players[p].render(box))
                 if (this.players[p].projectile && this.players[p].projectile.active) { tankspl.add(this.players[p].projectile.render(box)) }
-                tankspl.add(new Pixel(box.width() * progress, box.height() - 1, new Color(0, 16, 0, 1)))
+                tankspl.add(new Pixel(box.width() * progress, box.height() - 1, new Color(0, 16, 0,0.5)))
             }
             tankspl.wrapX(box)
             return tankspl
