@@ -6,14 +6,21 @@
   </head>
 
   <!-- this is an HTML comment -->
-  <body>
+  <body onload="init()">
     <h1>Tankswars Simple Web Client</h1>
 
     <!-- this is the secton wrapping our new button -->
-    Server:  <input type="text"  name="serverName" id="serverName" value="mqtt.hackerspace-drenthe.nl">
-    userId: <input type="text"  name="userId" id="userId" value="0">
-    rotation: <input type="text"  name="rotation" id="rotation" value="45">
-    shoot: <button onClick="shoot()">Shoot!</button>
+    Server address:   <input type="text"  name="serverName" id="serverName"   value="mqtt.hackerspace-drenthe.nl">
+    Server port:   <input type="text"  name="serverPort" id="serverPort"   value="11883">
+    <br>
+
+    userId:   <input type="text"  name="userId"     id="userId"     value="0">
+    rotation: <input type="text"  name="rotation"   id="rotation"   value="45">
+    <br>
+
+    shoot:   <button onClick="move(-1)">Move left</button>
+    shoot:   <button onClick="shoot()">Shoot!</button>
+    shoot:   <button onClick="move(1)">Move right</button>
 
     <!-- this is where new text will appear -->
     <div id="updateMe">
@@ -28,24 +35,46 @@
 
     <script>
 
+
+      var MQTT_CLIENT_ID=""
+      var MQTT_CLIENT = ""
+
         function init()
         {
+      
         // Generate a new random MQTT client id on each page load
-            var MQTT_CLIENT_ID = "tankwars_client_example_"+Math.floor((1 + Math.random()) * 0x10000000000).toString(16);
+             MQTT_CLIENT_ID = "tankwars_client_example_"+Math.floor((1 + Math.random()) * 0x10000000000).toString(16);
 
             // Create a MQTT client instance
-            var MQTT_CLIENT = new Paho.MQTT.Client(document.getElementById("userId").value, 80, "/", MQTT_CLIENT_ID);
+             MQTT_CLIENT = new Paho.MQTT.Client(document.getElementById("serverName").value, parseInt(document.getElementById("serverPort").value), MQTT_CLIENT_ID);
 
             // Tell the client instance to connect to the MQTT broker
             MQTT_CLIENT.connect({ onSuccess: myClientConnected });
 
             // This is the function which handles button clicks
+           
+
+            // Tell MQTT_CLIENT to call myMessageArrived(message) each time a new message arrives
+            MQTT_CLIENT.onMessageArrived = myMessageArrived;
+        }
+
             function shoot() {
                 // create a new MQTT message with a specific payload
                 var mqttMessage = new Paho.MQTT.Message(document.getElementById("rotation").value);
 
                 // Set the topic it should be published to
-                mqttMessage.destinationName = "tankwars/".document.getElementById("userId").value;
+                mqttMessage.destinationName = "tankwars/"+document.getElementById("userId").value+"/shoot";
+
+                // Publish the message
+                MQTT_CLIENT.send(mqttMessage);
+            }
+
+            function move(movement) {
+                // create a new MQTT message with a specific payload
+                var mqttMessage = new Paho.MQTT.Message(movement);
+
+                // Set the topic it should be published to
+                mqttMessage.destinationName = "tankwars/"+document.getElementById("userId").value+"/move";
 
                 // Publish the message
                 MQTT_CLIENT.send(mqttMessage);
@@ -67,10 +96,7 @@
                 // Insert it inside the ```id=updateMe``` element above everything else that is there 
                 $("#updateMe").prepend(messageHTML);
             };
-
-            // Tell MQTT_CLIENT to call myMessageArrived(message) each time a new message arrives
-            MQTT_CLIENT.onMessageArrived = myMessageArrived;
-        }
+        
 
 
     </script>
