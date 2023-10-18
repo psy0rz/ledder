@@ -3,7 +3,7 @@ import PixelList from "../../PixelList.js";
 import {patternSelect} from "../../ColorPatterns.js"
 import Color from "../../Color.js";
 import Animator from "../../Animator.js";
-export default class RhodoneaRose extends Animator {
+export default class RhodoneaRoseDemo extends Animator {
 
   async run(box, scheduler, controls) {
     const nControl = controls.value("N-Value", 7, 1, 7, 1);
@@ -30,5 +30,5 @@ export default class RhodoneaRose extends Animator {
   }
 }
 
-RhodoneaRose.title = "WallieOnline Rhodonea";
-RhodoneaRose.description = "Rhodonea rose function demo";
+RhodoneaRoseDemo.title = "WallieOnline RhodoneaRose";
+RhodoneaRoseDemo.description = "RhodoneaRose function demo";
