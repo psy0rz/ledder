@@ -8,16 +8,16 @@
   <!-- this is an HTML comment -->
   <body onload="init()">
     <h1>Tankswars Simple Web Client</h1>
-
+    init  <button onClick="init()">Init / reset</button>
     <!-- this is the secton wrapping our new button -->
     Server address:   <input type="text"  name="serverName" id="serverName"   value="mqtt.hackerspace-drenthe.nl">
-    Server port:   <input type="text"  name="serverPort" id="serverPort"   value="11883">
+    Server port:   <input type="text"  name="serverPort" id="serverPort"   value="9001">
     <br>
 
     userId:   <input type="text"  name="userId"     id="userId"     value="0">
     rotation: <input type="text"  name="rotation"   id="rotation"   value="45">
     <br>
-
+  
     shoot:   <button onClick="move(-1)">Move left</button>
     shoot:   <button onClick="shoot()">Shoot!</button>
     shoot:   <button onClick="move(1)">Move right</button>
@@ -38,6 +38,7 @@
 
       var MQTT_CLIENT_ID=""
       var MQTT_CLIENT = ""
+      var isConnected=false
 
         function init()
         {
@@ -56,6 +57,7 @@
 
             // Tell MQTT_CLIENT to call myMessageArrived(message) each time a new message arrives
             MQTT_CLIENT.onMessageArrived = myMessageArrived;
+            $("#updateMe").prepend("<p>Trying to connect...</p>");
         }
 
             function shoot() {
@@ -71,7 +73,7 @@
 
             function move(movement) {
                 // create a new MQTT message with a specific payload
-                var mqttMessage = new Paho.MQTT.Message(movement);
+                var mqttMessage = new Paho.MQTT.Message(movement.toString());
 
                 // Set the topic it should be published to
                 mqttMessage.destinationName = "tankwars/"+document.getElementById("userId").value+"/move";
@@ -82,6 +84,7 @@
 
             // This is the function which handles subscribing to topics after a connection is made
             function myClientConnected() {
+              isConnected=true
                 MQTT_CLIENT.subscribe("tankwars/#");
             }
 
@@ -89,9 +92,9 @@
             function myMessageArrived(message) {
                 // Get the payload
                 var messageBody = message.payloadString;
-
+              console.log(message)
                 // Create a new HTML element wrapping the message payload
-                var messageHTML = $("<p>"+messageBody+"</p>");
+                var messageHTML = $("<p>"+message.destinationName+ " :: "+ messageBody+"</p>");
 
                 // Insert it inside the ```id=updateMe``` element above everything else that is there 
                 $("#updateMe").prepend(messageHTML);
