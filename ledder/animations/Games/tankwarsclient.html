@@ -8,24 +8,31 @@
   <!-- this is an HTML comment -->
   <body onload="init()">
     <h1>Tankswars Simple Web Client</h1>
-    init  <button onClick="init()">Init / reset</button>
+    <div class="container">
+    RESET  <button onClick="init()">Reconnect</button>
     <!-- this is the secton wrapping our new button -->
-    Server address:   <input type="text"  name="serverName" id="serverName"   value="mqtt.hackerspace-drenthe.nl">
-    Server port:   <input type="text"  name="serverPort" id="serverPort"   value="9001">
-    <br>
-
+    <div>
+      SERVER address:   <input type="text"  name="serverName" id="serverName"   value="mqtt.hackerspace-drenthe.nl">
+      port:   <input type="text"  name="serverPort" id="serverPort"   value="19001">
+   </div>
+   <hr>
+   <div>
     userId:   <input type="text"  name="userId"     id="userId"     value="0">
-    rotation: <input type="text"  name="rotation"   id="rotation"   value="45">
-    <br>
-  
-    shoot:   <button onClick="move(-1)">Move left</button>
+   </div>
+   <hr>
+   <div>SHOOT: rotation: <input type="text"  name="rotation"   id="rotation"   value="45">
     shoot:   <button onClick="shoot()">Shoot!</button>
-    shoot:   <button onClick="move(1)">Move right</button>
-
-    <!-- this is where new text will appear -->
-    <div id="updateMe">
+   </div>
+  <hr>
+   <div>
+    MOVE: 
+    <button onClick="move(-1)">Move left</button>
+    <button onClick="move(1)">Move right</button>
     </div>
-
+      <!-- this is where new text will appear -->
+      <div id="updateMe" style="width:100%; height:100px; overflow:scroll;">
+    </div>
+  </div>
     <!-- import jquery library -->
     <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
 

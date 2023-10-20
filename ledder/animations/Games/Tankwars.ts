@@ -177,9 +177,11 @@ export class Tankprojectile {
     }
 
     wrapX()
-    {
-        if (this.x <= 0) { this.x = this.width+this.x }
-        if (this.x >= this.width) { this.x = this.x - this.width }
+    {   let xBefore=Number(this.x)
+        if (this.x < 0) { this.x = this.width+this.x }
+        if (this.x > this.width) { this.x = this.x - this.width }
+        let xAfter=Number(this.x)
+        if (xBefore!=xAfter) {  console.log("wrapx",xBefore,xAfter)}
     }
 
 
