@@ -177,11 +177,9 @@ export class Tankprojectile {
     }
 
     wrapX()
-    {   let xBefore=Number(this.x)
+    {   
         if (this.x < 0) { this.x = this.width+this.x }
         if (this.x > this.width) { this.x = this.x - this.width }
-        let xAfter=Number(this.x)
-        if (xBefore!=xAfter) {  console.log("wrapx",xBefore,xAfter)}
     }
 
 
@@ -221,6 +219,7 @@ export class Tank {
         this.name = name
         this.x = x
         this.y = y
+        this.width=width
         this.rotation = rotation
         this.color = color
         this.power = power
@@ -569,12 +568,9 @@ export default class Tankwars extends Animator {
 
         })
 
-
         let gamePixellist = new PixelList()
         box.add(gamePixellist)
-
         let game = new Tankwarsgame(box, players, gameFont, this.mqttHost.text, this.mqttTopic.text)
-        console.log(game)
 
         this.mqttClient.on('message', (topic, messageBuf) => {
             let message = messageBuf.toString()
