@@ -148,6 +148,7 @@ export class Tankprojectile {
 
     update() {
         this.timer++
+        if (this.timer>500) { this.y+=0.03}
         let divisionfactor = 6
         if (this.active) {
             this.wrapX()

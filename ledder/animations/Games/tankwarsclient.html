@@ -87,9 +87,10 @@
     </script>
     <style>
       h1 {font-size:2em; text-align:center;}
-      input,button,textarea { width:300px; height:48px; font-size:xx-large;}
+      .hh input,.hh button,.hh textarea { width:25vw; height:48px; font-size:xx-large;}
+      input,button,textarea { width:10vw; height:48px; font-size:xx-large;}
       label { width:200px; display:block; float:left;  font-size:xx-large;}
-      .container {font-size:2em; border:solid 1px; border-radius:1em; margin:1em; }
+      .container {font-size:2em; border:solid 1px; border-radius:1em; margin:1em; padding:1em  }
     </style>
   </head>
 
@@ -98,17 +99,29 @@
     
     <div class="container">
       <h1>Tankswars Simple Web Client</h1>
-      <button onClick="init()" style="float:right; padding:5px;">Connect</button>
-          <!-- this is the secton wrapping our new button -->
-      <div style="border:solid 1px; background:silver;">
-            MQTT address:   <input type="text"  name="serverName" id="serverName"   value="mqtt.hackerspace-drenthe.nl"> port:   <input type="text"  name="serverPort" id="serverPort"   value="19001">
+
+      <div class="hh" style="border:solid 4px silver; background:silver; padding:2px;">
+            MQTT address:   <input type="text"  name="serverName" id="serverName"   value="mqtt.hackerspace-drenthe.nl"> port:   <input type="text"  name="serverPort" id="serverPort"   value="19001"> <button onClick="init()" style="float:right; padding:5px;">Connect</button>
       </div>
-        
-      <div style="border:solid 1px; background:silver;"><label>UserId</label><input type="number"  name="userId"     id="userId"     value="0"></div>
+        <br>
+      <table width="100%" border="1">
+        <tr>
+      <td >
+        <h3>Controls</h3>
+        <label>UserId</label><input type="number"  name="userId"     id="userId"     value="0"><br>
+        <br>
+        <label>Rotation</label><input type="number"  name="rotation"   id="rotation"   value="45" onchange="updateSvg(this.value)"><br>
+        <br>
+        <button onClick="shoot()">Shoot!</button><br>
+        <button onClick="move(-1)">Move left!</button><br>
+        <button onClick="move(1)">Move right!</button><br>
+        <br>
+    
+      </td>
 
 
 
-      <div>
+      <td width="800px">
         <svg fill="#cccccc"  stroke="#000000" height="800px" width="800px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
         viewBox="0 0 400 500" xml:space="preserve">
          <g id="tank" transform="translate(200,200)">
@@ -127,21 +140,16 @@
         </g>
 
             </svg>
-            <div><label>Rotation</label><input type="number"  name="rotation"   id="rotation"   value="45" onchange="updateSvg(this.value)"><button onClick="shoot()">Shoot!</button></div>
-          
-            <div>
-              <label>MOVE </label>
-              <button onClick="move(-1)">Move left!</button>
-              <button onClick="move(1)">Move right!</button>
-            </div>
-      </div>       
-    </div>
+            
+          </td>       
+    
 
-  <div>
+  <td width="100%">
       <!-- this is where new text will appear -->
       LOG
-      <div id="updateMe" style="font-family: 'Courier, monospace'; width:100%; height:50vh; overflow:scroll;">
-  </div>
+      <div id="updateMe" style=" border:inset 2px; font-family: Courier,monospace,Verdana; width:100%; height:50vh; overflow:scroll;">
+      </td>
+      </tr></table>
 
   </body>
 
