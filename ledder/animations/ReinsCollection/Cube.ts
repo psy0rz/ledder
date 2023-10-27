@@ -13,7 +13,6 @@ import DrawText from "../../draw/DrawText.js"
 import { fontSelect } from "../../fonts.js"
 import Font from "../../Font.js"
 import { random } from "../../utils.js"
-import { ShowGeometryInstanceAttribute } from "cesium"
 
 
 
@@ -96,7 +95,7 @@ export class Object3d {
 
     rotateX(degrees:number)
     {
-        //this.update()
+        this.update()
         let degreesRad=degrees * (Math.PI / 180) //deg to rad
         let sinTheta=Math.sin(degreesRad)
         let cosTheta=Math.cos(degreesRad)
@@ -111,7 +110,7 @@ export class Object3d {
 
     rotateY(degrees:number)
     {
-        //this.update()
+        this.update()
         let degreesRad=degrees * (Math.PI / 180) //deg to rad
         let sinTheta=Math.sin(degreesRad)
         let cosTheta=Math.cos(degreesRad)
@@ -126,7 +125,7 @@ export class Object3d {
 
     rotateZ(degrees:number)
     {
-        //this.update()
+        this.update()
         let degreesRad=degrees * (Math.PI / 180) //deg to rad
         let sinTheta=Math.sin(degreesRad)
         let cosTheta=Math.cos(degreesRad)
@@ -202,7 +201,7 @@ export class Object3d {
                 let z=this.points[p].projection.z+this.z
                 let c=this.color.copy()
                 c.a=1-Math.max(0.2,(this.points[p].projection.z)*depthLimits.alphaPerZ)
-                //pl.add(new DrawLine(this.x,this.y,x,y,c,c))
+                pl.add(new DrawLine(this.x,this.y,x,y,c,c))
             }
             //drawlines
             for (let l=0;l<this.lines.length;l++)
@@ -270,6 +269,9 @@ class Cube3d extends Object3d {
         this.points.push(new CoordinateXYZ(1*halfWidth,1*halfHeight,-1*halfDepth)) //bot-right-far
         this.points.push(new CoordinateXYZ(-1*halfWidth,1*halfHeight,1*halfDepth)) //bot-left-close
         this.points.push(new CoordinateXYZ(1*halfWidth,1*halfHeight,1*halfDepth)) //bot-right-close
+
+        this.points.push(new CoordinateXYZ(0,0,0)) //center
+
 
         this.lines.push(new CoordinateLine(0,1))
         this.lines.push(new CoordinateLine(1,3))
@@ -350,11 +352,11 @@ export default class Cube extends Animator {
         box.add(pl)
 
 
-        let cube1=new Cube3d(10,8,8, 10,10,10,new Color(255,0,0,1))
+        let cube1=new Cube3d(0+10,8,8, 10,10,10,new Color(255,0,0,1))
         let cube2=new Cube3d(box.width()/2,box.height()/2,10, 10,10,10,new Color(0,255,0,1))
-        let cube3=new Cube3d(54,8,12, 10,10,10,new Color(255,0,0,1))
+        let cube3=new Cube3d(box.width()-10,8,12, 10,10,10,new Color(255,0,0,1))
         let cube4=new Cube3d(box.width()/2,box.height()/2,10, 16,16,16,new Color(0,0,255,1))
-        let axis=new Axis3d(box.width()/2,box.height()/2,10, 20,20,20,new Color(32,32,32,1))
+        let axis=new Axis3d(box.width()/2,box.height()/2,10, 40,40,40,new Color(32,32,32,1))
        
         
      
@@ -368,7 +370,7 @@ export default class Cube extends Animator {
           //
             cube2.rotateZ(rotate)
             cube3.rotateY(rotate)
-            cube3.rotateX(rotate)
+            cube3.rotateY(rotate)
            
 
             axis.rotateX(rotate)
