@@ -11,15 +11,48 @@ import Matrix from "matrix_transformer"
 
 import { random } from "../../utils.js"
 
+export class scene3D {
+    points=[]
+    objects=[]
 
+    constructor()
+    {
+        this.points=[]
+        this.objects=[]
+    }
+
+    render(box,controlSettings)
+    {
+        let pl=new PixelList()
+        for (let o=0; o<this.objects.length;o++)
+        {
+            pl.add(this.objects[o].render(box,controlSettings))
+        }
+        return pl
+    }
+
+}
 
 export class Vec3 extends Matrix {
+   
     constructor(x:number,y:number,z:number)
     {
         super({x:x,y:y,z:z})
     }
+
+   
 }
 
+
+export class Vec3Color extends Matrix {
+   
+    constructor(x:number,y:number,z:number,c:Color)
+    {
+        super({x:x,y:y,z:z})
+    }
+
+   
+}
 
 export class CoordinateLine {
     p1:number
@@ -192,6 +225,24 @@ class Axis3d extends Object3d {
 }
 
 
+class Line3d extends Object3d {
+    constructor(x1:number,y1:number,z1:number, x2:number,y2:number,z2:number,color:Color)
+    {
+        let width=Math.abs(x2-x1)
+        let height=Math.abs(y2-y1)
+        let depth=Math.abs(z2-z1)
+
+        super(x1,y1,z1,width,height,depth,color)
+        let halfWidth=width/2
+        let halfHeight=height/2
+        let halfDepth=depth/2
+
+        this.points.push(new Vec3(x1,y1,z1)) //top-left-far
+        this.points.push(new Vec3(x2,y2,z2)) //top-right-far
+        this.lines.push(new CoordinateLine(0,1))
+    }
+}
+
 class Cube3d extends Object3d {
     constructor(x:number,y:number,z:number, width:number,height:number,depth:number,color:Color)
     {
@@ -200,15 +251,15 @@ class Cube3d extends Object3d {
         let halfHeight=height/2
         let halfDepth=depth/2
 
-        this.points.push(new Vec3(-1*halfWidth,-1*halfHeight,-1*halfDepth)) //top-left-far
-        this.points.push(new Vec3(1*halfWidth,-1*halfHeight,-1*halfDepth)) //top-right-far
-        this.points.push(new Vec3(-1*halfWidth,-1*halfHeight,1*halfDepth)) //top-left-close
-        this.points.push(new Vec3(1*halfWidth,-1*halfHeight,1*halfDepth)) //top-right-close
+        this.points.push(new Vec3(-1*halfWidth,1*halfHeight,-1*halfDepth)) //top-left-far
+        this.points.push(new Vec3(1*halfWidth,1*halfHeight,-1*halfDepth)) //top-right-far
+        this.points.push(new Vec3(-1*halfWidth,1*halfHeight,1*halfDepth)) //top-left-close
+        this.points.push(new Vec3(1*halfWidth,1*halfHeight,1*halfDepth)) //top-right-close
 
-        this.points.push(new Vec3(-1*halfWidth,1*halfHeight,-1*halfDepth)) //bot-left-far
-        this.points.push(new Vec3(1*halfWidth,1*halfHeight,-1*halfDepth)) //bot-right-far
-        this.points.push(new Vec3(-1*halfWidth,1*halfHeight,1*halfDepth)) //bot-left-close
-        this.points.push(new Vec3(1*halfWidth,1*halfHeight,1*halfDepth)) //bot-right-close
+        this.points.push(new Vec3(-1*halfWidth,-1*halfHeight,-1*halfDepth)) //bot-left-far
+        this.points.push(new Vec3(1*halfWidth,-1*halfHeight,-1*halfDepth)) //bot-right-far
+        this.points.push(new Vec3(-1*halfWidth,-1*halfHeight,1*halfDepth)) //bot-left-close
+        this.points.push(new Vec3(1*halfWidth,-1*halfHeight,1*halfDepth)) //bot-right-close
 
         this.points.push(new Vec3(0,0,0)) //center
 
@@ -229,6 +280,8 @@ class Cube3d extends Object3d {
         this.lines.push(new CoordinateLine(2,6))
     }
 }
+
+
 
 
 class Pyramid3d extends Object3d {
@@ -239,15 +292,13 @@ class Pyramid3d extends Object3d {
         let halfHeight=height/2
         let halfDepth=depth/2
 
-        this.points.push(new Vec3(-1*halfWidth,-1*halfHeight,-1*halfDepth)) //top-left-far
-        this.points.push(new Vec3(1*halfWidth,-1*halfHeight,-1*halfDepth)) //top-right-far
-        this.points.push(new Vec3(-1*halfWidth,-1*halfHeight,1*halfDepth)) //top-left-close
-        this.points.push(new Vec3(1*halfWidth,-1*halfHeight,1*halfDepth)) //top-right-close
+        this.points.push(new Vec3(-1*halfWidth,1*halfHeight,-1*halfDepth)) //top-left-far
+        this.points.push(new Vec3(1*halfWidth,1*halfHeight,-1*halfDepth)) //top-right-far
+        this.points.push(new Vec3(-1*halfWidth,1*halfHeight,1*halfDepth)) //top-left-close
+        this.points.push(new Vec3(1*halfWidth,1*halfHeight,1*halfDepth)) //top-right-close
 
-        this.points.push(new Vec3(-1*halfWidth,1*halfHeight,-1*halfDepth)) //bot-left-far
-        this.points.push(new Vec3(1*halfWidth,1*halfHeight,-1*halfDepth)) //bot-right-far
-        this.points.push(new Vec3(-1*halfWidth,1*halfHeight,1*halfDepth)) //bot-left-close
-        this.points.push(new Vec3(1*halfWidth,1*halfHeight,1*halfDepth)) //bot-right-close
+        this.points.push(new Vec3(0,-1*halfHeight,0)) //bot-left-far
+       
 
         this.points.push(new Vec3(0,0,0)) //center
 
@@ -257,15 +308,42 @@ class Pyramid3d extends Object3d {
         this.lines.push(new CoordinateLine(3,2))
         this.lines.push(new CoordinateLine(2,0))
 
-        this.lines.push(new CoordinateLine(4,5))
-        this.lines.push(new CoordinateLine(5,7))
-        this.lines.push(new CoordinateLine(7,6))
-        this.lines.push(new CoordinateLine(6,4))
-
         this.lines.push(new CoordinateLine(0,4))
-        this.lines.push(new CoordinateLine(1,5))
-        this.lines.push(new CoordinateLine(3,7))
-        this.lines.push(new CoordinateLine(2,6))
+        this.lines.push(new CoordinateLine(1,4))
+        this.lines.push(new CoordinateLine(2,4))
+        this.lines.push(new CoordinateLine(3,4))
+
+    }
+}
+
+class Sphere3d extends Object3d {
+    constructor(x:number,y:number,z:number, radius:number,color:Color)
+    {
+        
+        let width=radius*2
+        let height=radius*2
+        let depth=radius*2
+        super(x,y,z,width,height,depth,color)
+        let halfRadius=radius/2
+        let segments=radius
+        this.points.push(new Vec3(0,0,0)) //center
+      
+            for (let p=0;p<360+(360/segments);p=p+(360/segments))
+            {
+                let px=Math.sin(p * (Math.PI / 180) ) * halfRadius
+                let py=Math.cos(p * (Math.PI / 180) ) * halfRadius
+                this.points.push(new Vec3(px,py,0)) //top-left-far
+                this.points.push(new Vec3(0,py,px)) //top-left-far
+                this.points.push(new Vec3(px,0,py)) //top-left-far
+               
+                let ll=this.points.length
+                if (ll>7)
+                {
+                    this.lines.push(new CoordinateLine(ll-1,ll-4))
+                    this.lines.push(new CoordinateLine(ll-2,ll-5))
+                    this.lines.push(new CoordinateLine(ll-3,ll-6))
+                }
+            }
     }
 }
 
@@ -273,7 +351,7 @@ class Pyramid3d extends Object3d {
 
 
 
-export default class Cubevec3 extends Animator {
+export default class Project3 extends Animator {
     static category = "3D"
     static title = "Cubevec3"
     static description = "3d Cube (work in progress) with vec3 lib"
@@ -282,29 +360,33 @@ export default class Cubevec3 extends Animator {
         const gameControls = controls.group("3D")
         const gameIntervalControl = gameControls.value("Clock interval", 1, 1, 10, 0.1, true)
         const gameRotateControl = gameControls.value("Rotation per clock interval", 1, -45, 45, 0.1, true)
-        const gamePerspectiveControl = gameControls.value("Perspective factor", 0.97, 0.9, 1.0, 0.01, false)
-        const gameWireframeControl=gameControls.switch("Draw wireframelines",true,false)
+        const gamePerspectiveControl = gameControls.value("Perspective factor", 0.97, 0.9, 1.0, 0.01, true)
+        const gameWireframeControl=gameControls.switch("Draw wireframelines",true,true)
 
         let  controlSettings={rotation:gameRotateControl.value,wireframe:gameWireframeControl.enabled,perspective:gamePerspectiveControl.value}
         let pl=new PixelList();
         box.add(pl)
 
-
-        let axis=new Axis3d(box.width()/2,box.height()/2,16,box.width(),box.width(),box.width(),new Color(0,0,128,1.0))
-        let axisc=new Axis3d(box.width()/2,box.height()/2,16,box.width(),box.width(),box.width(),new Color(0,0,128,0.8))
-        let cubel=new Cube3d(box.width()/2,box.height()/2,16, box.height(),box.height(),box.height(),new Color(255,255,0,1.0))
+        let scene3d=new scene3D()
+        let cubeC=new Cube3d(box.width()/2,box.height()/2,20, box.height(),box.height(),box.height(),new Color(0,0,128,1.0))
+        let cubeL=new Pyramid3d(0,box.height()/2,20, box.height(),box.height(),box.height(),new Color(128,0,0,0.6))
+        let cubeR=new Sphere3d(box.width(),box.height()/2,20, box.height(),new Color(0,128,0,0.6))
         
+        scene3d.objects.push(cubeC)
+        scene3d.objects.push(cubeL)
+        scene3d.objects.push(cubeR)
         
         let rotate=0
+    
         scheduler.intervalControlled(gameIntervalControl, (frameNr) => {
             pl.clear()
             rotate=rotate+gameRotateControl.value
-            axisc.setRotation(rotate,rotate,rotate)
-            cubel.setRotation(rotate,rotate,rotate)
-        
-            pl.add(axis.render(box, controlSettings))
-            pl.add(axisc.render(box, controlSettings))
-            pl.add(cubel.render(box, controlSettings))
+            for (let p=0;p<scene3d.objects.length;p++)
+            {
+                scene3d.objects[p].setRotation(rotate,rotate,0)
+            }
+            pl.add(scene3d.render(box, controlSettings))
+           
        
            
         })
