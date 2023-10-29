@@ -86,6 +86,8 @@
 
     "material-icons": "^1.10.8",
 
+    "matrix_transformer": "^0.0.8",
+
     "mqtt": "^4.3.7",
 
     "node-abort-controller": "^3.0.1",
