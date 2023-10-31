@@ -1,4 +1,3 @@
-// with help from https://github.com/Azleur/mat3/blob/master/src/index.ts
 import PixelBox from "../../PixelBox.js"
 import Scheduler from "../../Scheduler.js"
 import ControlGroup from "../../ControlGroup.js"
@@ -215,16 +214,16 @@ class Axis3d extends Object3d {
     {
         super(x,y,z,width,height,depth,color)
 
-        this.points.push(new Vec3(-1*width/2,0,0))
-        this.points.push(new Vec3(1*width/2,0,0))
+        this.points.push(new Vec3Color(-1*width/2,0,0,new Color(62,0,0,1)))
+        this.points.push(new Vec3Color(1*width/2,0,0,new Color(62,0,0,1)))
         this.lines.push(new CoordinateLine(0,1))
 
-        this.points.push(new Vec3(0,-1*height/2,0))
-        this.points.push(new Vec3(0,1*height/2,0))
+        this.points.push(new Vec3Color(0,-1*height/2,0,new Color(0,62,0,1)))
+        this.points.push(new Vec3Color(0,1*height/2,0,new Color(0,62,0,1)))
         this.lines.push(new CoordinateLine(2,3))
 
-        this.points.push(new Vec3(0,0,-1*depth/2))
-        this.points.push(new Vec3(0,0,1*depth/2))
+        this.points.push(new Vec3Color(0,0,-1*depth/2,new Color(0,0,62,1)))
+        this.points.push(new Vec3Color(0,0,1*depth/2,new Color(0,0,62,1)))
         this.lines.push(new CoordinateLine(4,5))
 
     }
@@ -243,8 +242,8 @@ class Line3d extends Object3d {
         let halfHeight=height/2
         let halfDepth=depth/2
 
-        this.points.push(new Vec3(x1,y1,z1)) //top-left-far
-        this.points.push(new Vec3(x2,y2,z2)) //top-right-far
+        this.points.push(new Vec3Color(x1,y1,z1,color)) //top-left-far
+        this.points.push(new Vec3Color(x2,y2,z2,color)) //top-right-far
         this.lines.push(new CoordinateLine(0,1))
     }
 }
@@ -298,12 +297,12 @@ class Pyramid3d extends Object3d {
         let halfHeight=height/2
         let halfDepth=depth/2
 
-        this.points.push(new Vec3(-1*halfWidth,1*halfHeight,-1*halfDepth)) //top-left-far
-        this.points.push(new Vec3(1*halfWidth,1*halfHeight,-1*halfDepth)) //top-right-far
-        this.points.push(new Vec3(-1*halfWidth,1*halfHeight,1*halfDepth)) //top-left-close
-        this.points.push(new Vec3(1*halfWidth,1*halfHeight,1*halfDepth)) //top-right-close
+        this.points.push(new Vec3Color(-1*halfWidth,1*halfHeight,-1*halfDepth,color)) //top-left-far
+        this.points.push(new Vec3Color(1*halfWidth,1*halfHeight,-1*halfDepth,color)) //top-right-far
+        this.points.push(new Vec3Color(-1*halfWidth,1*halfHeight,1*halfDepth,color)) //top-left-close
+        this.points.push(new Vec3Color(1*halfWidth,1*halfHeight,1*halfDepth,color)) //top-right-close
 
-        this.points.push(new Vec3(0,-1*halfHeight,0)) //bot-left-far
+        this.points.push(new Vec3Color(0,-1*halfHeight,0,color)) //bot-left-far
        
 
         this.points.push(new Vec3(0,0,0)) //center
@@ -331,7 +330,7 @@ class Sphere3d extends Object3d {
         let depth=radius*2
         super(x,y,z,width,height,depth,color)
         let halfRadius=radius/2
-        let segments=4
+        let segments=8
         this.points.push(new Vec3(0,0,0)) //center
       
             for (let p=0;p<360+(360/segments);p=p+(360/segments))
@@ -370,7 +369,7 @@ class Spiral3d extends Object3d {
                
                 let px=Math.round(Math.sin((l*segments) * (Math.PI / 180) ) * halfRadius)
                 let py=Math.round(Math.cos((l*segments) * (Math.PI / 180) ) * halfRadius)
-                this.points.push(new Vec3(px,py,l)) //top-left-far
+                this.points.push(new Vec3Color(px,py,l,color)) //top-left-far
                 
                 if (l>0)
                 {
@@ -378,6 +377,38 @@ class Spiral3d extends Object3d {
                    
                 }
             }
+    }
+}
+
+
+
+
+class Cross3d extends Object3d{
+    constructor(x:number,y:number,z:number, width,height,depth, color:Color)
+    {
+        
+       
+        super(x,y,z,width,height,depth,color)
+        let halfWidth=width/2
+        let halfHeight=height/2
+        let halfDepth=depth/2
+        this.points.push(new Vec3Color(0,0,0,color)) //center
+
+        this.points.push(new Vec3Color(-1*halfWidth,1*halfHeight,-1*halfDepth,color)) //top-left-far
+        this.points.push(new Vec3Color(1*halfWidth,1*halfHeight,-1*halfDepth,color)) //top-right-far
+        this.points.push(new Vec3Color(-1*halfWidth,1*halfHeight,1*halfDepth,color)) //top-left-close
+        this.points.push(new Vec3Color(1*halfWidth,1*halfHeight,1*halfDepth,color)) //top-right-close
+
+        this.points.push(new Vec3Color(-1*halfWidth,-1*halfHeight,-1*halfDepth,color)) //bot-left-far
+        this.points.push(new Vec3Color(1*halfWidth,-1*halfHeight,-1*halfDepth,color)) //bot-right-far
+        this.points.push(new Vec3Color(-1*halfWidth,-1*halfHeight,1*halfDepth,color)) //bot-left-close
+        this.points.push(new Vec3Color(1*halfWidth,-1*halfHeight,1*halfDepth,color)) //bot-right-close
+
+        for (let l=1;l<this.points.length;l++)
+        {
+            this.lines.push(new CoordinateLine(l,0))
+        }
+
     }
 }
 
@@ -427,17 +458,16 @@ export default class Project3 extends Animator {
         box.add(pl)
 
         let scene3d=new scene3D()
-        let cubeC=new Cube3d(box.width()/2,box.height()/2,20, gameBoxsizeControl.value,gameBoxsizeControl.value,gameBoxsizeControl.value,new Color(128,128,0,1.0))
-        //let cubeL=new Pyramid3d(0,box.height()/2,20, box.height(),box.height(),box.height(),new Color(128,0,0,0.6))
-        //let sphere=new Sphere3d(box.width(),box.height()/2,20, box.height(),new Color(0,128,0,0.6))
-        //let spiral=new Spiral3d(box.width()/2,box.height()/2,20, box.height(),box.height(),new Color(0,128,0,0.6))
+        let cube=new Cube3d(box.width()/2,box.height()/2,20, gameBoxsizeControl.value,gameBoxsizeControl.value,gameBoxsizeControl.value,new Color(128,128,0,0.6))
         let stars=new Random3d(box.width()/2,box.height()/2,20, gameBoxsizeControl.value,gameBoxsizeControl.value,gameBoxsizeControl.value,gameStarsControl.value,new Color(0,0,128,0.5))
-        scene3d.objects.push(stars)
+        let pyramid=new Pyramid3d(10,box.height()/2,15, box.height()/2,box.height()/2,box.height()/2,new Color(128,0,0,0.4))
+        let sphere=new Sphere3d(box.width()-10,box.height()/2,15, box.height()/2,new Color(0,128,0,0.4))
         
-        scene3d.objects.push(cubeC)
-        //scene3d.objects.push(spiral)
-        //scene3d.objects.push(cubeL)
-        //scene3d.objects.push(cubeR)
+        scene3d.objects.push(stars)
+        scene3d.objects.push(cube)
+        //scene3d.objects.push(pyramid)
+        //scene3d.objects.push(sphere)
+      
       
 
         
@@ -445,12 +475,18 @@ export default class Project3 extends Animator {
     
         scheduler.intervalControlled(gameIntervalControl, (frameNr) => {
             pl.clear()
+
+            //let distance=Math.sin(rotate/100)*(gameBoxsizeControl.value*2)+(gameBoxsizeControl.value*2)
+            //scene3d.objects[0].transformation.translate.z=distance
+            //scene3d.objects[1].transformation.translate.z=distance
             rotate=rotate+gameRotateControl.value
             //scene3d.objects[1].setRotation(0,0,rotate*4)
-            scene3d.objects[1].setRotation(rotate,rotate,0)
             scene3d.objects[0].setRotation(rotate,rotate,0)
+            scene3d.objects[1].setRotation(rotate,rotate,0)
+            //scene3d.objects[2].setRotation(rotate,rotate,0)
+            //scene3d.objects[3].setRotation(rotate,rotate,0)
+         
            
-  
             pl.add(scene3d.render(box, controlSettings))
            
        
