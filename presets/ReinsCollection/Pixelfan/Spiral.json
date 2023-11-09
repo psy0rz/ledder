@@ -3,13 +3,13 @@
  "description": "",
  "values": {
   "particle count": {
-   "value": 129
+   "value": 1520
   },
   "radius modifier": {
-   "value": 1
+   "value": 26
   },
-  "speed": {
-   "value": 0.01
+  "delay": {
+   "value": 100
   },
   "Fractal interval": {
    "value": 1

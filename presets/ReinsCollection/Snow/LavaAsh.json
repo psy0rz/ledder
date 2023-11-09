@@ -1,0 +1,35 @@
+{
+ "title": "",
+ "description": "",
+ "values": {
+  "Snow": {
+   "Animation interval": {
+    "value": 1
+   },
+   "Snowflakes": {
+    "Snowflake color": {
+     "r": 241,
+     "g": 74,
+     "b": 0,
+     "a": 0.15
+    },
+    "Number of snowflakes": {
+     "value": 945
+    }
+   },
+   "Weather": {
+    "Wind speed": {
+     "value": -15
+    }
+   },
+   "Snow ground layer": {
+    "Snow ground layer enabled": {
+     "enabled": true
+    },
+    "Snow ground layer height": {
+     "value": 56
+    }
+   }
+  }
+ }
+}

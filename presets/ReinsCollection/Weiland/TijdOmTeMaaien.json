@@ -1,0 +1,43 @@
+{
+ "title": "",
+ "description": "",
+ "values": {
+  "Meteo": {
+   "Sky temperature": {
+    "value": 10
+   },
+   "Ground temperature": {
+    "value": 10
+   },
+   "Wind": {
+    "value": 3
+   }
+  },
+  "Grass": {
+   "Clock interval": {
+    "value": 1
+   },
+   "Grass height": {
+    "value": 14
+   },
+   "Grass Density": {
+    "value": 4.800000000000001
+   }
+  },
+  "Clouds": {
+   "Cloud height": {
+    "value": 4
+   },
+   "Cloud width": {
+    "value": 3
+   },
+   "Cloud Density": {
+    "value": 2
+   },
+   "Rain Density": {
+    "value": 1
+   }
+  },
+  "Rain/Snow": {}
+ }
+}

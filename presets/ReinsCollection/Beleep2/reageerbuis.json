@@ -3,20 +3,23 @@
  "description": "",
  "values": {
   "Color Palette": {
-   "selected": "Doom fire"
+   "selected": "Reinbow"
   },
   "Color Palette range": {
    "from": 0,
    "to": 100
   },
   "particle count": {
-   "value": 51
+   "value": 31
   },
   "speed": {
-   "value": 0.01
+   "value": 1
   },
   "Interval control (FPS)": {
    "value": 1.1
+  },
+  "Delay": {
+   "value": 10
   }
  }
 }

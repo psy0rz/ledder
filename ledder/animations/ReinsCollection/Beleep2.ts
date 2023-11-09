@@ -32,7 +32,7 @@ export class BeleepParticle
         this.type=type
         this.color=color
         this.currentColor=0
-        this.maxmass=Math.random()*8
+        this.maxmass=Math.random()*20
         this.dx=dx
         this.dy=dy
         this.speed=speed
@@ -100,10 +100,10 @@ export class BeleepParticle
         this.y=this.y%16
 
         //wrapping
-        if (this.x<0){ this.x=this.x+64}
-        if (this.x>64){ this.x=this.x-64}
-        if (this.y<0){ this.y=this.y+16}
-        if (this.y>16){ this.y=this.y-16}
+       // if (this.x<0){ this.x=this.x+64}
+       // if (this.x>64){ this.x=this.x-64}
+       // if (this.y<0){ this.y=this.y+16}
+       // if (this.y>16){ this.y=this.y-16}
 
         //bouncing
         
@@ -380,7 +380,7 @@ export class Beleepuniverse
             }
             
         }
-        let restMass=new BeleepParticle(32,8,1,summass,0,new Color(0,0,0,0.1),1,0,1)
+        let restMass=new BeleepParticle(32,8,1,summass,0,new Color(0,0,0,0.5),1,0,1)
         let currentsize=this.matter.length
         let trimcount=currentsize-maxlimit
         if (trimcount>0)
@@ -409,7 +409,7 @@ export default class Beleep2 extends Animator {
         const colorPaletteControl   = patternSelect(controls, 'Color Palette', 'DimmedReinbow')
         const countControl = controls.value("particle count", 100, 1, 255, 1,true)
         const speedControl = controls.value("speed", 0.01, 0, 1, 0.01,true)
-        const intervalControl = controls.value("Interval control (FPS)", 1, 1, 10, 0.1)
+        const intervalControl = controls.value("Delay", 1, 1, 10, 0.1)
         let pixelList=new PixelList()
         box.add(pixelList)
        let universe=new Beleepuniverse(box.width(),box.height(),countControl.value,colorPaletteControl)
@@ -421,7 +421,7 @@ export default class Beleep2 extends Animator {
            universe.update(speedControl.value,frameNr);
            pixelList.add(universe.render())
            pixelList.wrapX(box)
-           console.log(universe.matter.length)
+           //console.log(universe.matter.length)
            pixelList.wrapY(box)
 
            if (universe.matter.length>countControl.value*2)

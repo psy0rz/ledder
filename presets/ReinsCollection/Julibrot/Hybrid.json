@@ -10,22 +10,22 @@
    "to": 100
   },
   "alpha/brightness": {
-   "value": 0.8
+   "value": 1
   },
   "Color change": {
-   "value": 9
+   "value": 11
   },
   "Fractal interval": {
    "value": 1
   },
   "Zoom speed": {
-   "value": 0.0499
+   "value": 0.1
   },
   "Bounce": {
    "enabled": true
   },
   "Fractal type": {
-   "selected": "1"
+   "selected": "3"
   }
  }
 }

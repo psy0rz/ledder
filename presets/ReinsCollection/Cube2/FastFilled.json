@@ -1,0 +1,26 @@
+{
+ "title": "",
+ "description": "",
+ "values": {
+  "3D": {
+   "Clock interval": {
+    "value": 1
+   },
+   "Rotation per clock interval": {
+    "value": -7.9
+   },
+   "Perspective factor": {
+    "value": 0.99
+   },
+   "Draw wireframelines": {
+    "enabled": true
+   },
+   "Stars": {
+    "value": 1000
+   },
+   "Boxsize": {
+    "value": 17
+   }
+  }
+ }
+}

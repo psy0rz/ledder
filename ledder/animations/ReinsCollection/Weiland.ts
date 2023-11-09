@@ -13,7 +13,7 @@ import {patternSelect} from "../../ColorPatterns.js"
 
 function hourToLightFactor(hour:number)
 {
-    let light=0
+   
     let lookup=[]
     lookup[0]={ 'light': 0.0, x:0/24 }  
     lookup[1]={ 'light': 0.0, x:1/24 }
@@ -41,8 +41,18 @@ function hourToLightFactor(hour:number)
     lookup[23]={ 'light': 0.0 , x:23/24 }
     lookup[24]={ 'light': 0.0 , x:24/24 }
    
-    let hrVal=lookup[Math.round(hour)]
-    return hrVal
+    let inthour=parseInt(hour.toString())%24
+    let intnext=(parseInt(hour.toString())+1)%24
+    let fraction=(hour-inthour)*100
+    let antifraction=100-fraction
+    let hrVal=lookup[inthour]
+    let hrVal2=lookup[intnext]
+    let light=hrVal.light
+    let x=(( (fraction*hrVal2.x) + (antifraction*hrVal.x)) /100)
+    
+
+    return {'light':light,x:x}
+    //return hrVal
 }
 
 export class XYCoordinate {
@@ -92,8 +102,8 @@ export class Grass {
         let grassprietCount=(x2-x1)*density
         for (let s=0;s<grassprietCount;s++)
         {
-            let greeniness=random(100,255)
-            let newGrassprietje=new Grasspriet(random(x1,x2),random(1,this.height),new Color(0,greeniness,0,1.0),new Color(0,greeniness-100,0,0.0))
+            let greeniness=random(128,255)
+            let newGrassprietje=new Grasspriet(random(x1,x2),random(1,this.height),new Color(0,greeniness,0,1.0),new Color(0,greeniness-100,0,0.1))
             this.sprietjes.push(newGrassprietje)
             //console.log(newGrassprietje)
         }
@@ -111,8 +121,8 @@ export class Grass {
             let light=timedata.light
             let c1=this.sprietjes[s].colorTop.copy()
             let c2=this.sprietjes[s].colorGround.copy()
-            c1.a=Math.max(0.1,light)
-            c2.a=Math.max(0.3,light)
+            c1.a=Math.max(0.0,light*c1.a)
+            c2.a=Math.max(0.0,light*c2.a)
             this.wind=Math.abs(wind*Math.abs(Math.sin(s+(counter/10)))%(this.bbox_lr.x-this.bbox_ul.x))
             pl.add(new DrawLine(this.sprietjes[s].groundX+this.wind,bottomY-this.sprietjes[s].height,this.sprietjes[s].groundX,bottomY,c1,c2))
         }
@@ -149,7 +159,8 @@ export class Cloud {
                 this.pixellist.add(new DrawLine(x,yTop,x,yBottom,this.colorTop,this.colorBottom))
                 this.pixellist.add(new DrawLine(width-x,yTop,width-x,yBottom,this.colorTop,this.colorBottom))
             }
-        this.pixellist=this.pixellist.prune()
+        //this.pixellist=this.pixellist.flatten()
+       
     }
 
 }
@@ -179,11 +190,14 @@ export class SunMoon {
 
     render(box:PixelBox,hour:number)
     {
+   
         let  pixellist=new PixelList()
         let hourdata=hourToLightFactor(hour)
+        //console.log(hour)
         pixellist.add(new Pixel(random(0,box.width()), random(0,box.height()),new Color(32,32,64,1-hourdata.light)))
         this.x=((box.width())*(hourdata.x)*2)%box.width()
         this.y=(1-hourdata.light)*(box.height())+2
+        //this.y=(1-sy)*(box.height())+2
         let moony=hourdata.light*(box.height())+2
         this.radius=Math.max(Math.min(this.height/4-(this.height/4-this.y/4),9),5)
         for (let r=1;r<this.radius;r++)
@@ -191,9 +205,15 @@ export class SunMoon {
             //sun
             for (let i=0;i<Math.pow(r+2,3);i++)
             {
+                let color=this.color
+                if ( (hour>6 && hour<8) || (hour>19 && hour<20))
+                {
+                    color=new Color(255,0,0,1)
+
+                }
                 let x=Math.sin((r+i)/15.0)*(r/2)
                 let y=Math.cos((r+i)/15.0)*(r/2)
-                pixellist.add(new Pixel(this.x+x,this.y+y,this.color))
+                pixellist.add(new Pixel(this.x+x,this.y+y,color))
             }
 
            //moon
@@ -247,19 +267,18 @@ export class Sky {
         let moonX=8
         this.sunMoon=new SunMoon(moonX,4,6,width,height,new Color(255,255,0,1),1)
         let cloudCount=this.density*10
-        for (let s=0;s<cloudCount;s++)
-        {
+       
             let cloudiness=random(100,255)
             let xRnd=random(0,100)
             let bottomY=height
 
             for (let t=0;t<this.density;t++)
             {
-                let newCloud=new Cloud(xRnd+(8+this.width*t),this.height,xRnd+(8+this.width*t),this.height,new Color(cloudiness,cloudiness,cloudiness,0.1),new Color(cloudiness,cloudiness,cloudiness,0.0))
+                let newCloud=new Cloud(xRnd+(8+this.width*t),this.height,xRnd+(8+this.width*t),this.height,new Color(cloudiness,cloudiness,cloudiness,0.3),new Color(cloudiness,cloudiness,cloudiness,0.1))
                 this.clouds.push(newCloud)
             }
             
-        }
+        
         
     }
 
@@ -268,12 +287,20 @@ export class Sky {
         let pl=new PixelList()
         let bgbuffer:PixelList=new PixelList()
         let time=new Date()
-
         let lightdata=hourToLightFactor(hour)
+     
         for (let i=0;i<box.width();i++)
         {
            let light=Math.max(0.1,lightdata.light)
-           bgbuffer.add(new DrawLine(i,0,i,box.height(),new Color(0,0,64,light),new Color(0,0,255,light)))
+           let color1=new Color(0,0,64,light)
+           let color2=new Color(0,0,255,light)
+           if (  (hour>20 && hour<22))
+           {
+               color1=new Color(64,0,0,light)
+               color2=new Color(255,0,0,light)
+
+           }
+           bgbuffer.add(new DrawLine(i,0,i,box.height(),color1,color2))
         }
 
         pl.add(bgbuffer)
@@ -319,7 +346,7 @@ export default class Weiland extends Animator {
         const cloudControls=controls.group("Clouds")
         const cloudHeightControl = cloudControls.value("Cloud height", 3, 1, 64, 1,true)
         const cloudWidthControl = cloudControls.value("Cloud width", 8, 1, 16, 1,true)
-        const cloudDensityControl = cloudControls.value("Cloud Density", 1, 0, 2, 0.1,true)
+        const cloudDensityControl = cloudControls.value("Cloud Density", 1, 0, 10, 1,true)
 
         const rainControls=controls.group("Rain/Snow")
         const rainDensityControl = cloudControls.value("Rain Density", 1, 0, 10, 0.1,true)
@@ -335,7 +362,8 @@ export default class Weiland extends Animator {
 
         scheduler.intervalControlled(grassIntervalControl, (frameNr) => {
             let time=new Date()
-            let hour=time.getSeconds()/2.5
+            let hour=(time.getSeconds()+(time.getMilliseconds()/1000))/2.5
+            if (hour>24) { hour=hour-24}
             framebuffer.clear()
             framebuffer.add(sky.render(box,frameNr,hour, meteoWindSpeed.value))
             framebuffer.add(gras.render(box,frameNr,hour, meteoWindSpeed.value))
