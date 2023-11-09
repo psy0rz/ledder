@@ -1,0 +1,22 @@
+{
+ "title": "",
+ "description": "",
+ "values": {
+  "Color Palette": {
+   "selected": "DimmedReinbow"
+  },
+  "Color Palette range": {
+   "from": 0,
+   "to": 100
+  },
+  "particle count": {
+   "value": 100
+  },
+  "speed": {
+   "value": 0.01
+  },
+  "Interval control (FPS)": {
+   "value": 1
+  }
+ }
+}
