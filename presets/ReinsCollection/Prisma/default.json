@@ -1,0 +1,17 @@
+{
+ "title": "",
+ "description": "",
+ "values": {
+  "Prisma": {
+   "Animation interval": {
+    "value": 1
+   },
+   "Y delay": {
+    "value": 50
+   },
+   "Diffraction": {
+    "value": 6
+   }
+  }
+ }
+}
