@@ -104,9 +104,9 @@ class PrismaObj
             pl.add(new DrawLine(this.prismaEntrance.x,  this.prismaEntrance.y,    this.prismaExit.x,      this.prismaExit.y,   colorAll,   colors[c]))
             pl.add(new DrawLine(this.prismaEntrance.x,  this.prismaEntrance.y,    this.prismaExit.x,      this.prismaExit.y+0.5,   colorAll,  colors[c]))
             pl.add(new DrawLine(this.prismaEntrance.x,  this.prismaEntrance.y,    this.prismaExit.x,      this.prismaExit.y-0.5,   colorAll,   colors[c]))
-            pl.add(new DrawLine(this.prismaExit.x,      this.prismaExit.y,        this.lightbeamEnd.x,    this.lightbeamEnd.y+(c*beamHeight),  colors[c],  colors[c]))
-            pl.add(new DrawLine(this.prismaExit.x,      this.prismaExit.y,        this.lightbeamEnd.x,    this.lightbeamEnd.y+(c*beamHeight)-0.5,  colors[c],  colors[c]))
-            pl.add(new DrawLine(this.prismaExit.x,      this.prismaExit.y,        this.lightbeamEnd.x,    this.lightbeamEnd.y+(c*beamHeight)+0.5,  colors[c],  colors[c]))
+            pl.add(new DrawLine(this.prismaExit.x,      this.prismaExit.y,        this.lightbeamEnd.x,    this.lightbeamEnd.y+(c*beamHeight)-(beamsHeight/2),  colors[c],  colors[c]))
+            pl.add(new DrawLine(this.prismaExit.x,      this.prismaExit.y,        this.lightbeamEnd.x,    this.lightbeamEnd.y+(c*beamHeight)-(beamsHeight/2)-0.5,  colors[c],  colors[c]))
+            pl.add(new DrawLine(this.prismaExit.x,      this.prismaExit.y,        this.lightbeamEnd.x,    this.lightbeamEnd.y+(c*beamHeight)-(beamsHeight/2)+0.5,  colors[c],  colors[c]))
         }
         return pl
     }
