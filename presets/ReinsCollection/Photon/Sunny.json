@@ -1,0 +1,21 @@
+{
+ "title": "",
+ "description": "",
+ "values": {
+  "Photon": {
+   "Color shift": {
+    "value": 10
+   },
+   "Animation interval": {
+    "value": 1
+   },
+   "Color Palette": {
+    "selected": "Brainsmoke fire"
+   },
+   "Color Palette range": {
+    "from": 0,
+    "to": 100
+   }
+  }
+ }
+}
