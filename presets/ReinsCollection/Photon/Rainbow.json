@@ -4,17 +4,20 @@
  "values": {
   "Photon": {
    "Color shift": {
-    "value": 5
+    "value": 1
    },
    "Animation interval": {
     "value": 1
    },
    "Color Palette": {
-    "selected": "Reinbow"
+    "selected": "Rainbow"
    },
    "Color Palette range": {
     "from": 0,
     "to": 100
+   },
+   "Pattern": {
+    "selected": "3"
    }
   }
  }

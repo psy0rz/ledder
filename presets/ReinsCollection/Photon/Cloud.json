@@ -4,20 +4,20 @@
  "values": {
   "Photon": {
    "Color shift": {
-    "value": 17
+    "value": 1
    },
    "Animation interval": {
     "value": 1
    },
    "Color Palette": {
-    "selected": "Brainsmoke fire"
+    "selected": "DimmedReinbow"
    },
    "Color Palette range": {
-    "from": 0,
+    "from": 82,
     "to": 100
    },
    "Pattern": {
-    "selected": "2"
+    "selected": "4"
    }
   }
  }

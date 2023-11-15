@@ -70,7 +70,7 @@ class PhotonStack
             red=Math.round(rSum/rMass)
             green=Math.round(gSum/gMass)
             blue=Math.round(bSum/bMass)
-            alpha=Math.round(aSum/aMass)
+            alpha=aSum/aMass
             this.stack=[]
             this.stack.push(new PhotonPixel(new Pixel(this.x,this.y,new Color(red,green,blue,alpha))))
         }
@@ -103,6 +103,8 @@ class Photonmatrix
     height:number
     photonStack: PhotonStack[]
     palette:Color[]
+    magic:number
+    radius:number
     
 
     constructor(width:number,height:number)
@@ -111,6 +113,8 @@ class Photonmatrix
         this.height=height
         this.photonStack=[]
         this.palette=[]
+        this.magic=0
+        this.radius=0
         for (let y=0;y<height;y++)
         {
             for (let x=0;x<width;x++)
@@ -158,24 +162,108 @@ class Photonmatrix
         }
     }
 
-
-    addRandomPixels(colorPalette, colorindex, colorshift)
+ 
+    addRandomPhoton(colorPalette,colorindex,colorshift)
     {
-        let d=new Date()
-     
+      for (let q=0;q<3;q++)
+      {
+        this.magic++
+        for (let i=0;i<360;i++)
+        {
+                colorindex=colorindex+colorshift
+                colorindex=colorindex%colorPalette.length
+                let radius=i/(360/this.width/2)
+                let x=Math.round(Math.sin((i+this.magic)/60)*(radius) +(this.width/2 ))
+                let y=Math.round(Math.cos((i+this.magic)/60)*(radius) + (this.height/2))
+                let color=colorPalette[colorindex].copy()
+                //color.a=0.2
+                this.addPixel(new Pixel(x,y,color))
+        }
+      }
+    }
+
+    addRandomCircles(colorPalette, colorindex, colorshift)
+    {
         //put random pixels at random positions (just for testing)
         for (let radius=0; radius<this.width;radius++)
         {
             for (let circle=0; circle<360; circle++)
             {
-                colorindex=colorindex+colorshift
-                colorindex=colorindex%colorPalette.length
-                let x=Math.round(Math.sin(circle/60)*(radius) +(this.width/2 ))
-                let y=Math.round(Math.cos(circle/60)*(radius) + (this.height/2))
-                this.addPixel(new Pixel(x,y,colorPalette[colorindex]))
+               
+                 colorindex=colorindex+colorshift
+                 colorindex=colorindex%colorPalette.length
+                 let x=Math.round(Math.sin(circle/60)*(radius) +(this.width/2 ))
+                 let y=Math.round(Math.cos(circle/60)*(radius) + (this.height/2))
+                 let color=colorPalette[colorindex].copy()
+                 color.a=0.5
+                 this.addPixel(new Pixel(x,y,color))
+             
             }
         }
     }
+
+
+    addRandomGrid(colorPalette, colorindex, colorshift)
+    {
+        //put random pixels at random positions (just for testing)
+        for (let x=0; x<this.width;x++)
+        {
+            for (let y=0; y<this.height; y++)
+            {
+                colorindex=colorindex+colorshift
+                colorindex=colorindex%colorPalette.length
+                let color=colorPalette[colorindex].copy()
+                color.a=0.5
+                this.addPixel(new Pixel(x,y,colorPalette[colorindex].copy()))
+            }
+        }
+
+        for (let y=0; y<this.height;y++)
+        {
+            for (let x=0; x<this.width; x++)
+            {
+                colorindex=colorindex+colorshift
+                colorindex=colorindex%colorPalette.length
+                let color=colorPalette[colorindex].copy()
+                color.a=0.5
+                this.addPixel(new Pixel(x,y,colorPalette[colorindex].copy()))
+            }
+        }   
+    }
+
+    addClouds(colorPalette, colorindex, colorshift)
+    {
+        
+            this.magic++
+            this.magic=this.magic%this.width
+            for (let x=0;x<this.width;x++)
+            {
+                colorindex=colorindex+colorshift
+                colorindex=colorindex%colorPalette.length
+                
+               
+
+                let y=Math.random()*this.height
+                let intensity=128 //Math.round(Math.sin((x)/10)*127+127)
+                //this.addPixel(new Pixel(x,y,new Color(intensity,intensity,intensity,0.4)))
+                
+                    let xx=(Math.round(x)+(this.magic))%this.width
+                    let color=colorPalette[(colorindex+x)%colorPalette.length]
+                    let ccolor=color.copy()
+                    ccolor.a=(Math.sin((x+y)/Math.PI)+1)/2
+                    this.addPixel(new Pixel(xx,y,ccolor))
+               
+            }
+        
+    }
+
+    shift(pixelcount)
+    {
+
+    }
+
+
+
 
     render()
     {
@@ -200,8 +288,14 @@ export default class Photonmatrixtest extends Animator {
 
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) {
         const animatorControl             = controls.group("Photon",true)
-        const colorshiftControl             = animatorControl.value("Color shift", 1, 1, 32, 1)
+        const colorshiftControl             = animatorControl.value("Color shift", 0, 0 32, 1)
         const intervalControl             = animatorControl.value("Animation interval", 1, 1, 10, 1)
+        let choices=[]
+        choices.push({id:1, name:"Photon"})
+        choices.push({id:2, name:"SinCos"})
+        choices.push({id:3, name:"XY"})
+        choices.push({id:4, name:"Clouds"})
+        const patternControl              =animatorControl.select("Pattern","Photon",choices,true)
         const colorPaletteControl   = patternSelect(animatorControl, 'Color Palette', 'DimmedReinbow')
         let photon=new Photonmatrix(box.width(),box.height())
         let pixellist=new PixelList()
@@ -210,9 +304,20 @@ export default class Photonmatrixtest extends Animator {
       
         scheduler.intervalControlled(intervalControl, (frameNr) => {
             pixellist.clear()
-           
-                photon.addRandomPixels(colorPaletteControl,frameNr%colorPaletteControl.length,colorshiftControl.value)
-           
+            switch (patternControl.selected)
+            {
+               
+               
+                
+                case "Photon":  
+                case "1":       photon.addRandomPhoton(colorPaletteControl,frameNr%colorPaletteControl.length,colorshiftControl.value); break;
+                case "SinCos": 
+                case "2":       photon.addRandomCircles(colorPaletteControl,frameNr%colorPaletteControl.length,colorshiftControl.value); break
+                case "XY":   
+                case "3":       photon.addRandomGrid(colorPaletteControl,frameNr%colorPaletteControl.length,colorshiftControl.value); break
+                case "Clouds":   
+                case "4":       photon.addClouds(colorPaletteControl,frameNr%colorPaletteControl.length,colorshiftControl.value); break
+            }
             photon.update()
             let newPixelData:PixelList=photon.render()
             //console.log(newPixelData)
