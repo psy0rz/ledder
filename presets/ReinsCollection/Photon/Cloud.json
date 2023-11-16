@@ -4,13 +4,13 @@
  "values": {
   "Photon": {
    "Color shift": {
-    "value": 1
+    "value": 3
    },
    "Animation interval": {
     "value": 1
    },
    "Color Palette": {
-    "selected": "DimmedReinbow"
+    "selected": "Reinbow"
    },
    "Color Palette range": {
     "from": 82,
@@ -18,6 +18,286 @@
    },
    "Pattern": {
     "selected": "4"
+   },
+   "Font": {
+    "selected": "IBM bios"
+   },
+   "Font height": {
+    "value": 0
+   },
+   "Font width": {
+    "value": 0
+   },
+   "Text": {
+    "text": "Science Fiction"
+   },
+   "Text color": {
+    "r": 183,
+    "g": 251,
+    "b": 0,
+    "a": 1
+   },
+   "Stars": {
+    "Enabled": {
+     "enabled": false
+    },
+    "Star color": {
+     "r": 255,
+     "g": 255,
+     "b": 255,
+     "a": 0.2
+    },
+    "Number of stars": {
+     "value": 10
+    },
+    "Movie interval": {
+     "value": 5
+    },
+    "Movie interval randomizer": {
+     "value": 0
+    },
+    "Rotate interval": {
+     "value": 4
+    },
+    "Rotate interval randomizer": {
+     "value": 2
+    },
+    "Rotate X step": {
+     "value": -1
+    },
+    "Rotate Y step": {
+     "value": 0
+    }
+   },
+   "Star field": {
+    "Enabled": {
+     "enabled": true
+    },
+    "Base speed": {
+     "value": 0.001
+    },
+    "Acceleration": {
+     "value": 0.03
+    },
+    "Star offset": {
+     "value": 0.1
+    },
+    "Creation interval": {
+     "value": 5
+    }
+   },
+   "The Matrix": {
+    "Enabled": {
+     "enabled": false
+    }
+   },
+   "Scrolling": {
+    "Enabled": {
+     "enabled": true
+    },
+    "FPS": {
+     "value": 60
+    },
+    "Rotate interval": {
+     "value": 2
+    },
+    "Rotate interval randomizer": {
+     "value": 0
+    },
+    "Rotate X step": {
+     "value": -1
+    },
+    "Rotate Y step": {
+     "value": 0
+    },
+    "Circular": {
+     "enabled": false
+    },
+    "Show one time only": {
+     "enabled": false
+    }
+   },
+   "Flames": {
+    "Enabled": {
+     "enabled": false
+    }
+   },
+   "Twinkle": {
+    "Enabled": {
+     "enabled": false
+    }
+   },
+   "Color pattern": {
+    "Enabled": {
+     "enabled": false
+    }
+   },
+   "Cursor": {
+    "Enabled": {
+     "enabled": false
+    }
+   },
+   "Fire": {
+    "Fire colors": {
+     "selected": "Brainsmoke fire"
+    },
+    "Fire colors range": {
+     "from": 0,
+     "to": 100
+    },
+    "Fire interval": {
+     "value": 1
+    },
+    "Fire intensity %": {
+     "from": 0,
+     "to": 100
+    },
+    "Fire wildness %": {
+     "value": 49
+    },
+    "Fire decay %": {
+     "value": 8.8
+    },
+    "Fire sintel factor": {
+     "value": 0.79
+    },
+    "Fire speed": {
+     "value": 1
+    },
+    "Fire X range %": {
+     "from": 0,
+     "to": 100
+    }
+   },
+   "Marquee": {
+    "Font": {
+     "selected": "C64"
+    },
+    "Font height": {
+     "value": 0
+    },
+    "Font width": {
+     "value": 0
+    },
+    "Text": {
+     "text": "BBQ in de regen"
+    },
+    "Text color": {
+     "r": 0,
+     "g": 3,
+     "b": 0,
+     "a": 0.67
+    },
+    "Stars": {
+     "Enabled": {
+      "enabled": false
+     }
+    },
+    "Star field": {
+     "Enabled": {
+      "enabled": false
+     }
+    },
+    "The Matrix": {
+     "Enabled": {
+      "enabled": true
+     },
+     "Head color": {
+      "r": 81,
+      "g": 6,
+      "b": 247,
+      "a": 1
+     },
+     "Tail color": {
+      "r": 15,
+      "g": 1,
+      "b": 94,
+      "a": 0.59
+     },
+     "Fall interval": {
+      "value": 6
+     },
+     "Create interval": {
+      "value": 10
+     },
+     "Slow trials (percent)": {
+      "value": 10
+     },
+     "Slow fall interval": {
+      "value": 10
+     },
+     "Fade head": {
+      "Fade out time": {
+       "value": 23
+      },
+      "Fade out time randomizer": {
+       "value": 5
+      }
+     },
+     "Fade tail": {
+      "Fade out time": {
+       "value": 11
+      },
+      "Fade out time randomizer": {
+       "value": 5
+      }
+     }
+    },
+    "Scrolling": {
+     "Enabled": {
+      "enabled": true
+     },
+     "FPS": {
+      "value": 60
+     },
+     "Rotate interval": {
+      "value": 2
+     },
+     "Rotate interval randomizer": {
+      "value": 0
+     },
+     "Rotate X step": {
+      "value": -1
+     },
+     "Rotate Y step": {
+      "value": 0
+     },
+     "Circular": {
+      "enabled": false
+     },
+     "Show one time only": {
+      "enabled": false
+     }
+    },
+    "Flames": {
+     "Enabled": {
+      "enabled": false
+     }
+    },
+    "Twinkle": {
+     "Enabled": {
+      "enabled": false
+     }
+    },
+    "Color pattern": {
+     "Enabled": {
+      "enabled": false
+     }
+    },
+    "Cursor": {
+     "Enabled": {
+      "enabled": false
+     }
+    }
+   },
+   "Algoritm": {
+    "selected": "4"
+   },
+   "Fire enable": {
+    "enabled": true
+   },
+   "Marquee enable": {
+    "enabled": true
    }
   }
  }

@@ -18,6 +18,281 @@
    },
    "Pattern": {
     "selected": "2"
+   },
+   "Font": {
+    "selected": "C64"
+   },
+   "Font height": {
+    "value": 0
+   },
+   "Font width": {
+    "value": 0
+   },
+   "Text": {
+    "text": "Marquee  "
+   },
+   "Text color": {
+    "r": 33,
+    "g": 255,
+    "b": 0,
+    "a": 1
+   },
+   "Stars": {
+    "Enabled": {
+     "enabled": false
+    }
+   },
+   "Star field": {
+    "Enabled": {
+     "enabled": false
+    }
+   },
+   "The Matrix": {
+    "Enabled": {
+     "enabled": false
+    }
+   },
+   "Scrolling": {
+    "Enabled": {
+     "enabled": true
+    },
+    "FPS": {
+     "value": 60
+    },
+    "Rotate interval": {
+     "value": 2
+    },
+    "Rotate interval randomizer": {
+     "value": 0
+    },
+    "Rotate X step": {
+     "value": -1
+    },
+    "Rotate Y step": {
+     "value": 0
+    },
+    "Circular": {
+     "enabled": false
+    },
+    "Show one time only": {
+     "enabled": false
+    }
+   },
+   "Flames": {
+    "Enabled": {
+     "enabled": false
+    },
+    "Fire density [%]": {
+     "value": 10
+    },
+    "Fire intensity [%]": {
+     "value": 100
+    },
+    "Fire depth [pixels]": {
+     "value": 2
+    },
+    "Fire wind X": {
+     "value": 0
+    },
+    "Fire wind Y": {
+     "value": 0
+    },
+    "Fire cycle": {
+     "Color cycle time": {
+      "value": 15
+     },
+     "Color cycle time randomizer": {
+      "value": 15
+     },
+     "Color cycle repeat count": {
+      "value": 1
+     },
+     "Color cycle mode": {
+      "selected": "reverse"
+     },
+     "Color cycle pattern": {
+      "selected": "Bertrik fire"
+     },
+     "Color cycle pattern range": {
+      "from": 0,
+      "to": 100
+     }
+    }
+   },
+   "Twinkle": {
+    "Enabled": {
+     "enabled": false
+    }
+   },
+   "Color pattern": {
+    "Enabled": {
+     "enabled": true
+    },
+    "Color cycle time": {
+     "value": 240
+    },
+    "Reverse": {
+     "enabled": false
+    },
+    "Ping pong": {
+     "enabled": true
+    },
+    "Color cycle pattern": {
+     "selected": "Rainbow"
+    },
+    "Color cycle pattern range": {
+     "from": 0,
+     "to": 100
+    },
+    "Per pixel offset %": {
+     "value": 1
+    }
+   },
+   "Cursor": {
+    "Enabled": {
+     "enabled": false
+    }
+   },
+   "Fire": {
+    "Fire colors": {
+     "selected": "Bertrik fire"
+    },
+    "Fire colors range": {
+     "from": 0,
+     "to": 100
+    },
+    "Fire interval": {
+     "value": 1
+    },
+    "Fire intensity %": {
+     "from": 0,
+     "to": 100
+    },
+    "Fire wildness %": {
+     "value": 50
+    },
+    "Fire decay %": {
+     "value": 4
+    },
+    "Fire sintel factor": {
+     "value": 0.24
+    },
+    "Fire speed": {
+     "value": 1
+    },
+    "Fire X range %": {
+     "from": 0,
+     "to": 100
+    }
+   },
+   "Marquee": {
+    "Font": {
+     "selected": "C64"
+    },
+    "Font height": {
+     "value": 0
+    },
+    "Font width": {
+     "value": 0
+    },
+    "Text": {
+     "text": "Marquee  "
+    },
+    "Text color": {
+     "r": 33,
+     "g": 255,
+     "b": 0,
+     "a": 1
+    },
+    "Stars": {
+     "Enabled": {
+      "enabled": false
+     }
+    },
+    "Star field": {
+     "Enabled": {
+      "enabled": false
+     }
+    },
+    "The Matrix": {
+     "Enabled": {
+      "enabled": false
+     }
+    },
+    "Scrolling": {
+     "Enabled": {
+      "enabled": true
+     },
+     "FPS": {
+      "value": 60
+     },
+     "Rotate interval": {
+      "value": 2
+     },
+     "Rotate interval randomizer": {
+      "value": 0
+     },
+     "Rotate X step": {
+      "value": -1
+     },
+     "Rotate Y step": {
+      "value": 0
+     },
+     "Circular": {
+      "enabled": false
+     },
+     "Show one time only": {
+      "enabled": false
+     }
+    },
+    "Flames": {
+     "Enabled": {
+      "enabled": false
+     }
+    },
+    "Twinkle": {
+     "Enabled": {
+      "enabled": false
+     }
+    },
+    "Color pattern": {
+     "Enabled": {
+      "enabled": true
+     },
+     "Color cycle time": {
+      "value": 240
+     },
+     "Reverse": {
+      "enabled": false
+     },
+     "Ping pong": {
+      "enabled": true
+     },
+     "Color cycle pattern": {
+      "selected": "Brainsmoke fire"
+     },
+     "Color cycle pattern range": {
+      "from": 0,
+      "to": 100
+     },
+     "Per pixel offset %": {
+      "value": 1
+     }
+    },
+    "Cursor": {
+     "Enabled": {
+      "enabled": false
+     }
+    }
+   },
+   "Algoritm": {
+    "selected": "Photon"
+   },
+   "Fire enable": {
+    "enabled": true
+   },
+   "Marquee enable": {
+    "enabled": true
    }
   }
  }

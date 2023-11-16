@@ -4,7 +4,7 @@
  "values": {
   "Photon": {
    "Color shift": {
-    "value": 17
+    "value": 18
    },
    "Animation interval": {
     "value": 1
@@ -18,6 +18,128 @@
    },
    "Pattern": {
     "selected": "2"
+   },
+   "Fire": {
+    "Fire colors": {
+     "selected": "Brainsmoke fire"
+    },
+    "Fire colors range": {
+     "from": 0,
+     "to": 100
+    },
+    "Fire interval": {
+     "value": 1
+    },
+    "Fire intensity %": {
+     "from": 0,
+     "to": 100
+    },
+    "Fire wildness %": {
+     "value": 69
+    },
+    "Fire decay %": {
+     "value": 10
+    },
+    "Fire sintel factor": {
+     "value": 1.04
+    },
+    "Fire speed": {
+     "value": 1
+    },
+    "Fire X range %": {
+     "from": 0,
+     "to": 100
+    }
+   },
+   "Marquee": {
+    "Font": {
+     "selected": "C64"
+    },
+    "Font height": {
+     "value": 0
+    },
+    "Font width": {
+     "value": 0
+    },
+    "Text": {
+     "text": "Solarflames"
+    },
+    "Text color": {
+     "r": 54,
+     "g": 83,
+     "b": 0,
+     "a": 0.76
+    },
+    "Stars": {
+     "Enabled": {
+      "enabled": false
+     }
+    },
+    "Star field": {
+     "Enabled": {
+      "enabled": false
+     }
+    },
+    "The Matrix": {
+     "Enabled": {
+      "enabled": false
+     }
+    },
+    "Scrolling": {
+     "Enabled": {
+      "enabled": true
+     },
+     "FPS": {
+      "value": 60
+     },
+     "Rotate interval": {
+      "value": 2
+     },
+     "Rotate interval randomizer": {
+      "value": 0
+     },
+     "Rotate X step": {
+      "value": -1
+     },
+     "Rotate Y step": {
+      "value": 0
+     },
+     "Circular": {
+      "enabled": false
+     },
+     "Show one time only": {
+      "enabled": false
+     }
+    },
+    "Flames": {
+     "Enabled": {
+      "enabled": false
+     }
+    },
+    "Twinkle": {
+     "Enabled": {
+      "enabled": false
+     }
+    },
+    "Color pattern": {
+     "Enabled": {
+      "enabled": false
+     }
+    },
+    "Cursor": {
+     "Enabled": {
+      "enabled": false
+     }
+    }
+   },
+   "Algoritm": {
+    "selected": "1"
+   },
+   "Fire enable": {
+    "enabled": true
+   },
+   "Marquee enable": {
+    "enabled": true
    }
   }
  }
