@@ -19,8 +19,9 @@ export let fonts = {
     'Quasar': new Font('Quasar', 'fonts/Quasar.ttf', 8, 8, 0),
     'Computer': new Font('Computer', 'fonts/Computer.ttf', 7, 8, 0),
     'Picopixel': new Font('Picopixel', 'fonts/Picopixel.ttf', 7, 7, -1),
-    'ORG v01': new Font('Org v01', 'fonts/ORG_V01_.TTF', 6, 8, -2),
+    'ORG v01': new Font('Org v01', 'fonts/ORG_V01_.TTF', 8, 8, -2),
     'Tiny 3x3': new Font('Tiny 3x3', 'fonts/tiny3x3a.ttf', 4, 4, 0),
+    'Pixel-Gosub': new Font('Pixel-Gosub', 'fonts/pixel-gosub.ttf', 7, 7, -1),
     //broken:
     // 'Tom thumb': new Font('Tom thumb', 'fonts/tom-thumb.bdf', 6, 6, 0),
 }
