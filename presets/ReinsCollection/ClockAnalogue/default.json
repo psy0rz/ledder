@@ -1,0 +1,49 @@
+{
+ "title": "",
+ "description": "",
+ "values": {
+  "Color Palette": {
+   "selected": "Rainbow"
+  },
+  "Color Palette range": {
+   "from": 0,
+   "to": 100
+  },
+  "Hour color": {
+   "r": 255,
+   "g": 0,
+   "b": 0,
+   "a": 1
+  },
+  "Minute color": {
+   "r": 0,
+   "g": 144,
+   "b": 0,
+   "a": 0.44
+  },
+  "Second color": {
+   "r": 36,
+   "g": 36,
+   "b": 255,
+   "a": 0.52
+  },
+  "Milli color": {
+   "r": 0,
+   "g": 0,
+   "b": 255,
+   "a": 0.33
+  },
+  "Clock interval": {
+   "value": 1
+  },
+  "Font": {
+   "selected": "C64"
+  },
+  "Font height": {
+   "value": 0
+  },
+  "Font width": {
+   "value": 0
+  }
+ }
+}
