@@ -1,0 +1,180 @@
+{
+ "title": "",
+ "description": "",
+ "values": {
+  "FPS": {
+   "value": 60
+  },
+  "Font": {
+   "selected": "C64"
+  },
+  "Text": {
+   "text": "Ijspegels"
+  },
+  "Text color": {
+   "r": 0,
+   "g": 222,
+   "b": 255,
+   "a": 1
+  },
+  "Stars": {
+   "Enabled": {
+    "enabled": false
+   }
+  },
+  "Star field": {
+   "Enabled": {
+    "enabled": false
+   }
+  },
+  "Scrolling": {
+   "Enabled": {
+    "enabled": true
+   },
+   "Whitespace": {
+    "value": 10
+   },
+   "Rotate interval": {
+    "value": 2
+   },
+   "Rotate interval randomizer": {
+    "value": 0
+   },
+   "Rotate X step": {
+    "value": -1
+   },
+   "Rotate Y step": {
+    "value": 0
+   },
+   "FPS": {
+    "value": 60
+   },
+   "Circular": {
+    "enabled": false
+   },
+   "Show one time only": {
+    "enabled": false
+   }
+  },
+  "Flames": {
+   "Enabled": {
+    "enabled": false
+   }
+  },
+  "Cursor": {
+   "Enabled": {
+    "enabled": false
+   },
+   "Color": {
+    "r": 0,
+    "g": 177,
+    "b": 255,
+    "a": 1
+   },
+   "X offset": {
+    "value": 2
+   },
+   "Y offset": {
+    "value": 0
+   },
+   "Height": {
+    "value": 6
+   },
+   "Width": {
+    "value": 5
+   },
+   "Fade out time": {
+    "value": 10
+   },
+   "Fade out time randomizer": {
+    "value": 0
+   },
+   "On time": {
+    "value": 30
+   },
+   "Off time": {
+    "value": 30
+   }
+  },
+  "Font height": {
+   "value": 0
+  },
+  "Font width": {
+   "value": 0
+  },
+  "The Matrix": {
+   "Enabled": {
+    "enabled": true
+   },
+   "Head color": {
+    "r": 255,
+    "g": 255,
+    "b": 255,
+    "a": 1
+   },
+   "Tail color": {
+    "r": 28,
+    "g": 0,
+    "b": 128,
+    "a": 1
+   },
+   "Fall interval": {
+    "value": 2
+   },
+   "Create interval": {
+    "value": 1
+   },
+   "Slow trials (percent)": {
+    "value": 45
+   },
+   "Slow fall interval": {
+    "value": 3
+   },
+   "Fade head": {
+    "Fade out time": {
+     "value": 10
+    },
+    "Fade out time randomizer": {
+     "value": 56
+    }
+   },
+   "Fade tail": {
+    "Fade out time": {
+     "value": 100
+    },
+    "Fade out time randomizer": {
+     "value": 58
+    }
+   }
+  },
+  "Twinkle": {
+   "Enabled": {
+    "enabled": false
+   }
+  },
+  "Color pattern": {
+   "Enabled": {
+    "enabled": true
+   },
+   "Color cycle time": {
+    "value": 240
+   },
+   "Reverse": {
+    "enabled": false
+   },
+   "Ping pong": {
+    "enabled": true
+   },
+   "Color cycle pattern": {
+    "selected": "Brainsmoke fire"
+   },
+   "Color cycle pattern range": {
+    "from": 0,
+    "to": 100
+   },
+   "Per pixel offset %": {
+    "value": 1
+   }
+  }
+ }
+}
