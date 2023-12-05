@@ -65,9 +65,16 @@
                 >
                     <MenuDropdown>
                         <MenuDropdownItem link text="32x8"  on:click={ ()=>runnerBrowser.setSize(32, 8, 8)}/>
+                        <MenuDropdownItem link text="32x16"  on:click={ ()=>runnerBrowser.setSize(32, 16, 8)}/>
+                        <MenuDropdownItem link text="32x32"  on:click={ ()=>runnerBrowser.setSize(32, 32, 8)}/>
+                        <MenuDropdownItem link text="64x8"  on:click={ ()=>runnerBrowser.setSize(64, 8, 8)}/>
+                        <MenuDropdownItem link text="64x16"  on:click={ ()=>runnerBrowser.setSize(64, 16, 8)}/>
+                        <MenuDropdownItem link text="64x32"  on:click={ ()=>runnerBrowser.setSize(64, 32, 8)}/>
+                        <MenuDropdownItem link text="64x40"  on:click={ ()=>runnerBrowser.setSize(64, 40, 8)}/>
                         <MenuDropdownItem link text="75x8" on:click={ ()=>runnerBrowser.setSize(75, 8, 8)}/>
                         <MenuDropdownItem link text="72x18" on:click={ ()=>runnerBrowser.setSize(72, 18, 8)}/>
                         <MenuDropdownItem link text="75x16" on:click={ ()=>runnerBrowser.setSize(75, 16, 8)}/>
+                       
                         <MenuDropdownItem link text="80x32" on:click={ ()=>runnerBrowser.setSize(80, 32, 8)}/>
                         <MenuDropdownItem link text="128x16" on:click={ ()=>runnerBrowser.setSize(128, 16, 8)}/>
                         <MenuDropdownItem link text="160x16" on:click={ ()=>runnerBrowser.setSize(160, 16, 8)}/>

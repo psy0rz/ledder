@@ -1,0 +1,40 @@
+{
+ "title": "",
+ "description": "",
+ "values": {
+  "Color Palette": {
+   "selected": "Rainbow"
+  },
+  "Color Palette range": {
+   "from": 0,
+   "to": 100
+  },
+  "Hour color": {
+   "r": 255,
+   "g": 0,
+   "b": 0,
+   "a": 1
+  },
+  "Minute color": {
+   "r": 0,
+   "g": 255,
+   "b": 0,
+   "a": 0.42
+  },
+  "Second color": {
+   "r": 0,
+   "g": 0,
+   "b": 255,
+   "a": 1
+  },
+  "Milli color": {
+   "r": 0,
+   "g": 0,
+   "b": 255,
+   "a": 0.44
+  },
+  "Clock interval": {
+   "value": 1
+  }
+ }
+}

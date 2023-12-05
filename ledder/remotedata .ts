@@ -14,7 +14,7 @@ const cache: Record<string, CacheInterface> = {}
 
 
 
-export function getRemoteData(resourceUrl = 'RSSFEED', callback: (resourceUrl, resourceData) => void) {
+export function getRemoteData(resourceUrl = 'REMOTERESOURCEURL', cacheTime:number, callback: (resourceUrl, resourceData) => void) {
 
     if (!(resourceUrl in cache)) {
         //add new
@@ -46,7 +46,7 @@ export function getRemoteData(resourceUrl = 'RSSFEED', callback: (resourceUrl, r
    
 
     //fresh?
-    if (Date.now() - cache[resourceUrl].lastTime < 15000) {
+    if (Date.now() - cache[resourceUrl].lastTime < (cacheTime)) {
         //console.debug("Returning cached response",)
         doCallbacks(cache[resourceUrl])
         //console.log("cache",cache)

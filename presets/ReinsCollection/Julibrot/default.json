@@ -3,10 +3,10 @@
  "description": "",
  "values": {
   "Color Palette": {
-   "selected": "Brainsmoke fire"
+   "selected": "DimmedReinbow"
   },
   "Color Palette range": {
-   "from": 0,
+   "from": 19,
    "to": 100
   },
   "alpha/brightness": {
@@ -19,7 +19,7 @@
    "value": 1
   },
   "Zoom speed": {
-   "value": 0.0499
+   "value": 0.0162
   },
   "Bounce": {
    "enabled": true
