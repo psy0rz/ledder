@@ -161,7 +161,7 @@
   },
   "Color pattern": {
    "Enabled": {
-    "enabled": true
+    "enabled": false
    },
    "Color cycle time": {
     "value": 240
