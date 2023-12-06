@@ -30,60 +30,60 @@
     "enabled": true
    },
    "Base speed": {
-    "value": 0.0048000000000000004
+    "value": 0.0061
    },
    "Acceleration": {
-    "value": 0.0049
+    "value": 0.0019
    },
    "Star offset": {
-    "value": 0.20400000000000001
+    "value": 0.054
    },
    "Creation interval": {
-    "value": 15
+    "value": 6
    }
   },
   "The Matrix": {
    "Enabled": {
-    "enabled": false
+    "enabled": true
    },
    "Head color": {
     "r": 36,
     "g": 0,
     "b": 255,
-    "a": 0.33
+    "a": 0.08
    },
    "Tail color": {
     "r": 22,
     "g": 0,
     "b": 96,
-    "a": 0.35
+    "a": 0.09
    },
    "Fall interval": {
-    "value": 15.4
+    "value": 1
    },
    "Create interval": {
-    "value": 10
+    "value": 40
    },
    "Slow trials (percent)": {
-    "value": 2
+    "value": 1
    },
    "Slow fall interval": {
     "value": 1
    },
    "Fade head": {
     "Fade out time": {
-     "value": 45
+     "value": 10
     },
     "Fade out time randomizer": {
-     "value": 51
+     "value": 10
     }
    },
    "Fade tail": {
     "Fade out time": {
-     "value": 30
+     "value": 10
     },
     "Fade out time randomizer": {
-     "value": 5
+     "value": 10
     }
    }
   },
@@ -118,10 +118,10 @@
     "enabled": false
    },
    "Fire density [%]": {
-    "value": 10
+    "value": 49
    },
    "Fire intensity [%]": {
-    "value": 100
+    "value": 50
    },
    "Fire depth [pixels]": {
     "value": 2
@@ -156,7 +156,28 @@
   },
   "Twinkle": {
    "Enabled": {
+    "enabled": true
+   },
+   "Color": {
+    "r": 255,
+    "g": 255,
+    "b": 255,
+    "a": 1
+   },
+   "Twinkle density": {
+    "value": 1
+   },
+   "Create randomizer %": {
+    "value": 29
+   },
+   "Random colors": {
     "enabled": false
+   },
+   "Fade out time": {
+    "value": 0
+   },
+   "Fade out time randomizer": {
+    "value": 17
    }
   },
   "Color pattern": {
@@ -164,13 +185,13 @@
     "enabled": true
    },
    "Color cycle time": {
-    "value": 240
+    "value": 239
    },
    "Reverse": {
-    "enabled": false
+    "enabled": true
    },
    "Ping pong": {
-    "enabled": true
+    "enabled": false
    },
    "Color cycle pattern": {
     "selected": "Rainbow"
@@ -180,7 +201,7 @@
     "to": 100
    },
    "Per pixel offset %": {
-    "value": 1
+    "value": 2
    }
   },
   "Cursor": {
