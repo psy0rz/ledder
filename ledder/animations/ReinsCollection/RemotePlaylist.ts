@@ -21,7 +21,8 @@ export default class RemotePlaylist extends Animator {
     activeSlide:number=0
     activeSlideDuration:number=60
     activeSlidePreset:string
-    timer:number=0
+    startSlideTime:number
+    //timer:number=0
 
     activateNext()
     {
@@ -34,9 +35,10 @@ export default class RemotePlaylist extends Animator {
         console.log("slide: #"+this.activeSlide+", preset:"+this. activeSlidePreset+", duration: "+this.activeSlideDuration+"s")
         
         //send to animation manager
-        this.timer=0
+        this.startSlideTime=Date.now()
         this.animationManager.select(this.activeSlidePreset, false).catch((e) => {
             console.log((e.message))
+            
 
         })
     
@@ -49,11 +51,11 @@ export default class RemotePlaylist extends Animator {
     {
         const clockIntervalControl = controls.value("Clock interval", 1, 1, 10, 0.1);
         const playlistUrl = controls.input("playlistUrl","https://mechanicape.nl/playlist.json",true)
-        const cacheControl=controls.value("Cache refresh time (s)",60,15,60*60*24,60,true)
+        const cacheControl=controls.value("Cache refresh time (s)",600,15,60*60*24,60,true)
         let childControls = controls.group('Current animation')
         this.animationManager = new AnimationManager(box, scheduler.child(), childControls)
         this.playListReady=false
-      
+     
 
         getRemoteData(playlistUrl.text,1000*cacheControl.value,(resourceUrl, resourceData) => {
             this.playList=JSON.parse(resourceData)
@@ -61,9 +63,9 @@ export default class RemotePlaylist extends Animator {
             //console.log(this.playList)
             if (this.playList && this.playList.length>0)
             {
+                this.startSlideTime=Date.now()
                 this.animationManager.select(this.playList[0].preset, false).catch((e) => {
                     console.log((e.message))
-        
                 })
             } 
         })
@@ -72,9 +74,8 @@ export default class RemotePlaylist extends Animator {
         scheduler.intervalControlled(clockIntervalControl, (frameNr) => {
             if(this.playListReady)
             {
-                this.timer=this.timer+(clockIntervalControl.value)/50
                 //console.log(this.timer,this.activeSlideDuration)
-                if (this.timer>this.activeSlideDuration) { this.activateNext()   }
+                if ((this.startSlideTime+(this.activeSlideDuration*1000))<Date.now()) { this.activateNext()   }
             }
             else
             {

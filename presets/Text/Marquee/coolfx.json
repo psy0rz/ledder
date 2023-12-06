@@ -3,7 +3,7 @@
  "description": "",
  "values": {
   "Font": {
-   "selected": "Pixel-Gosub"
+   "selected": "IBM bios"
   },
   "Font height": {
    "value": 0
@@ -119,10 +119,10 @@
     "enabled": true
    },
    "FPS": {
-    "value": 60
+    "value": 61
    },
    "Rotate interval": {
-    "value": 2
+    "value": 1
    },
    "Rotate interval randomizer": {
     "value": 0
@@ -137,7 +137,7 @@
     "enabled": false
    },
    "Show one time only": {
-    "enabled": false
+    "enabled": true
    }
   },
   "Flames": {
@@ -147,12 +147,52 @@
   },
   "Twinkle": {
    "Enabled": {
-    "enabled": false
+    "enabled": true
+   },
+   "Color": {
+    "r": 255,
+    "g": 255,
+    "b": 255,
+    "a": 1
+   },
+   "Twinkle density": {
+    "value": 3
+   },
+   "Create randomizer %": {
+    "value": 50
+   },
+   "Random colors": {
+    "enabled": true
+   },
+   "Fade out time": {
+    "value": 0
+   },
+   "Fade out time randomizer": {
+    "value": 30
    }
   },
   "Color pattern": {
    "Enabled": {
+    "enabled": true
+   },
+   "Color cycle time": {
+    "value": 240
+   },
+   "Reverse": {
     "enabled": false
+   },
+   "Ping pong": {
+    "enabled": true
+   },
+   "Color cycle pattern": {
+    "selected": "Rainbow"
+   },
+   "Color cycle pattern range": {
+    "from": 0,
+    "to": 100
+   },
+   "Per pixel offset %": {
+    "value": 1
    }
   },
   "Cursor": {
