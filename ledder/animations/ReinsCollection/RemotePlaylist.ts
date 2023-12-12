@@ -5,7 +5,7 @@ import Scheduler from "../../Scheduler.js"
 import ControlGroup from "../../ControlGroup.js"
 import Animator from "../../Animator.js"
 import Color from "../../Color.js"
-import { getRemoteData } from "../../remotedata .js"
+import { getRemoteData } from "../../remotedata.js"
 import AnimationManager from "../../server/AnimationManager.js"
 
 
@@ -38,11 +38,7 @@ export default class RemotePlaylist extends Animator {
         this.startSlideTime=Date.now()
         this.animationManager.select(this.activeSlidePreset, false).catch((e) => {
             console.log((e.message))
-            
-
         })
-    
-       
     }
 
    
@@ -81,8 +77,6 @@ export default class RemotePlaylist extends Animator {
             {
                 //wait
             }
-
-
         });
        
     }
