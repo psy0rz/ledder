@@ -1,0 +1,53 @@
+{
+ "title": "",
+ "description": "",
+ "values": {
+  "Image URL": {
+   "text": "https://64.media.tumblr.com/537c8d7e27e2f327699da63977e45ece/tumblr_n7l6pylejv1rpco88o1_400.gifv"
+  },
+  "Fractal interval": {
+   "value": 14
+  },
+  "Preset": {
+   "selected": "1"
+  },
+  "Movie interval": {
+   "value": 4
+  },
+  "Movie interval randomizer": {
+   "value": 0
+  },
+  "Rotate interval": {
+   "value": 2
+  },
+  "Rotate interval randomizer": {
+   "value": 0
+  },
+  "Rotate X step": {
+   "value": 0
+  },
+  "Rotate Y step": {
+   "value": 0
+  },
+  "animation control": {
+   "Movie interval": {
+    "value": 1
+   },
+   "Movie interval randomizer": {
+    "value": 0
+   },
+   "Rotate interval": {
+    "value": 1
+   },
+   "Rotate interval randomizer": {
+    "value": 9
+   },
+   "Rotate X step": {
+    "value": 0
+   },
+   "Rotate Y step": {
+    "value": 0
+   }
+  }
+ }
+}
