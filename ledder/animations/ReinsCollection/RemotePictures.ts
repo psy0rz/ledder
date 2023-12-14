@@ -1,6 +1,7 @@
 import PixelBox from "../../PixelBox.js"
 import sharp, { Sharp } from "sharp"
 import drawImage from "../../draw/DrawImage.js"
+import drawAnimatedImage from "../../draw/DrawAnimatedImage.js"
 import Scheduler from "../../Scheduler.js"
 import ControlGroup from "../../ControlGroup.js"
 import Animator from "../../Animator.js"
@@ -31,9 +32,22 @@ export default class Reinstein extends Animator {
         const sharpImg= await sharp(this.toBuffer(imageBuffer),{animated:true, pages:-1}).resize(box.width(),box.height())
         const sharpMetaData=await sharp(this.toBuffer(imageBuffer),{animated:true,pages:-1}).resize(box.width(),box.height()).metadata()
         //console.log(sharpImg,sharpMetaData)
-        pl.add(await drawImage(0,0,sharpImg))
+        if (sharpMetaData.pages<2)
+        {
+            //single image
+            pl.add(await drawImage(0,0,sharpImg))
+        }
+        else
+        {
+            //animation
+            
+                pl.add(await drawAnimatedImage(box,0,0,sharpImg))
+            
+        }
         return pl
       }
+
+      
       
 
    
@@ -48,8 +62,11 @@ export default class Reinstein extends Animator {
         imgBox.add(frames)
         let animationControls=controls.group("animation control")
         //new FxMovie(scheduler, animationControls, 4, 0).run(frames,  imgBox)
-        let rotate=new FxRotate(scheduler, animationControls, 0)
-        rotate.run(frames,  imgBox)
+
+        new FxRotate(scheduler, animationControls).run(frames,  imgBox)
+        
+        
+        
         
     }
 }
