@@ -12,7 +12,6 @@ import FxRotate from "../../fx/FxImgAni.js"
 
 export default class Reinstein extends Animator {
 
-    plImg:PixelList
 
     toBuffer(arrayBuffer) {
         const buffer = Buffer.alloc(arrayBuffer.byteLength);
@@ -26,30 +25,22 @@ export default class Reinstein extends Animator {
 
       async loadImage(imageUrl,box)
       {
-        let pl=new PixelList()
         const image = await fetch(imageUrl);
         const imageBuffer = await image.arrayBuffer();
         const sharpImg= await sharp(this.toBuffer(imageBuffer),{animated:true, pages:-1}).resize(box.width(),box.height())
         const sharpMetaData=await sharp(this.toBuffer(imageBuffer),{animated:true,pages:-1}).resize(box.width(),box.height()).metadata()
-        //console.log(sharpImg,sharpMetaData)
-        if (sharpMetaData.pages<2)
+        let framedata=await drawAnimatedImage(box,0,0,sharpImg)
+        if (sharpMetaData.delay)
         {
-            //single image
-            pl.add(await drawImage(0,0,sharpImg))
+            let delay=sharpMetaData.delay[0]
+            if (delay<1) { delay=100 }
+            framedata.setFrameDelay(delay)
         }
-        else
-        {
-            //animation
-            
-                pl.add(await drawAnimatedImage(box,0,0,sharpImg))
-            
-        }
-        return pl
+        return framedata
       }
 
       
-      
-
+    
    
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) {
         let imgBox=new PixelBox(box)
@@ -57,15 +48,20 @@ export default class Reinstein extends Animator {
         
         const imageConfig = controls.input('Image URL', "http://localhost:3000/presets/Fires/PlasmaFire/Active%202.png?1702419790623.1921",true)
         console.log("loading ",imageConfig.text)
-        let frames=await this.loadImage(imageConfig.text,imgBox)
-        //frames.crop(box)
-        imgBox.add(frames)
+        let framedata=await this.loadImage(imageConfig.text,imgBox)
         let animationControls=controls.group("animation control")
-        //new FxMovie(scheduler, animationControls, 4, 0).run(frames,  imgBox)
-
-        new FxRotate(scheduler, animationControls).run(frames,  imgBox)
-        
-        
+        let delayControl=animationControls.value("delay multiplier",1,0.1,10,0.1,true)
+        let frameId=0
+        scheduler.setFrameTimeuS(framedata.getDelayMs()*1000*delayControl.value)
+        scheduler.interval(1, (frameNr) => {
+            if (framedata && framedata.length()>0)
+            {
+                imgBox.clear()
+                frameId=frameNr%framedata.length()
+                imgBox.add(framedata.getFrame(frameId))
+            }
+           
+        })
         
         
     }
