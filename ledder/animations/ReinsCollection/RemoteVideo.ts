@@ -1,23 +1,13 @@
 import PixelBox from "../../PixelBox.js"
-import sharp, { Sharp } from "sharp"
-import drawAnimatedImage, { ImgAnimationFrames } from "../../draw/DrawAnimatedImage.js"
 import Scheduler from "../../Scheduler.js"
-import drawImage from "../../draw/DrawImage.js"
 import ControlGroup from "../../ControlGroup.js"
 import Animator from "../../Animator.js"
 import PixelList from "../../PixelList.js"
-import fetch from "node-fetch"
 import { spawn } from "child_process"
-import { Writable } from "stream"
 import Pixel from "../../Pixel.js"
 import Color from "../../Color.js"
 
-
-
-//let rawFrames=
 let frameData=[]
-
-// inspiration: https://stackoverflow.com/questions/62050534/how-to-read-video-frames-directly-into-memory-with-nodejs
 
 export default class RemoteVideo extends Animator {
 
@@ -32,7 +22,6 @@ export default class RemoteVideo extends Animator {
 
      async decodeVideo(url,box,fps:number)
     {
-       
        let width=box.width()
        let height=box.height()
        let bufPos = 0
@@ -86,14 +75,9 @@ export default class RemoteVideo extends Animator {
           //console.error(textChunk);
       });
 
-        const frameSize =  width*height*3 // full HD in RGB (24bpp)
-        const buffer = Buffer.alloc(frameSize+1024*1024*100) // frameSize + 10MB headroom
-       
-
-       
-       
-
-        return true
+      const frameSize =  width*height*3 // full HD in RGB (24bpp)
+      const buffer = Buffer.alloc(frameSize+1024*1024*100) // frameSize + 10MB headroom
+      return true
 
     }
         
@@ -118,15 +102,9 @@ export default class RemoteVideo extends Animator {
                 if (frameNr%10==0) { console.log("buffer size:",frameData.length) }  
                 imgBox.clear()
                 let frame=frameData.shift()
-                imgBox.add(frame)
-               
-               
-            }
-            
-           
+                imgBox.add(frame)  
+            } 
         })
-        
-        
     }
 }
 
