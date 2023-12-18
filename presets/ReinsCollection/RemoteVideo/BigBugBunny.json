@@ -1,0 +1,20 @@
+{
+ "title": "",
+ "description": "",
+ "values": {
+  "Image URL": {
+   "text": "https://jsoncompare.org/LearningContainer/SampleFiles/Video/MP4/sample-mp4-file.mp4"
+  },
+  "animation control": {
+   "delay multiplier": {
+    "value": 1
+   },
+   "Movie FPS": {
+    "value": 11
+   },
+   "Delay multiplier": {
+    "value": 1
+   }
+  }
+ }
+}

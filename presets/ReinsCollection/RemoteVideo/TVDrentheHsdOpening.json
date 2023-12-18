@@ -1,0 +1,20 @@
+{
+ "title": "",
+ "description": "",
+ "values": {
+  "Image URL": {
+   "text": "https://d3vbm02trh7zmp.cloudfront.net/media/2022/04/02/-Nerds--openen-eerste-hackerspace-van-Dren-DNO220402XV.mp4"
+  },
+  "animation control": {
+   "delay multiplier": {
+    "value": 1
+   },
+   "Movie FPS": {
+    "value": 10
+   },
+   "Delay multiplier": {
+    "value": 1
+   }
+  }
+ }
+}

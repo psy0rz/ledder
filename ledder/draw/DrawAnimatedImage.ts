@@ -9,7 +9,7 @@ import PixelBox from "../PixelBox.js"
 //doesnt add pixels which have alpha 0
 //animated images have frames in y direction(height)
 
-class ImgAnimationFrames
+export class ImgAnimationFrames
 {
     frames=[]
     delay:number

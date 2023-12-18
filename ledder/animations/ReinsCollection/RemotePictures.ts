@@ -10,7 +10,7 @@ import fetch from "node-fetch"
 import FxMovie from "../../fx/FxMovie.js"
 import FxRotate from "../../fx/FxImgAni.js"
 
-export default class Reinstein extends Animator {
+export default class RemotePicture extends Animator {
 
 
     toBuffer(arrayBuffer) {
