@@ -22,7 +22,7 @@
 
     "perftest": "node ledder/server/perftest.js",
 
-    "build": "tsc ; NODE_ENV=production vite build;node ledder/server/buildpreviews.js",
+    "build": "tsc &&  NODE_ENV=production vite build && node ledder/server/buildpreviews.js",
 
     "buildpreviews": "node ledder/server/buildpreviews.js",
 
@@ -30,7 +30,7 @@
 
     "production": "NODE_ENV=production node ledder/server/server.js",
 
-    "docker": "node ledder/server/buildpreviews.js;NODE_ENV=production node ledder/server/server.js"
+    "docker": "node ledder/server/buildpreviews.js ;NODE_ENV=production node ledder/server/server.js"
 
   },
 
@@ -68,11 +68,11 @@
 
     "express-ws": "^5.0.2",
 
-    "framework7": "^8.3.0",
+    "framework7": "^7.1.5",
 
     "framework7-icons": "^5.0.5",
 
-    "framework7-svelte": "^8.3.0",
+    "framework7-svelte": "^7.1.5",
 
     "freetype2": "^1.0.6",
 

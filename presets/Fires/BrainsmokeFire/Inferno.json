@@ -11,6 +11,13 @@
   },
   "Fire interval": {
    "value": 1.2
+  },
+  "Fire colors": {
+   "selected": "Brainsmoke fire"
+  },
+  "Fire colors range": {
+   "from": 55,
+   "to": 81
   }
  },
  "title": "",

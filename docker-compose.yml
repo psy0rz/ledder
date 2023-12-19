@@ -2,6 +2,7 @@ version: '3.3'
 
 services:
  ledder:
+  stop_grace_period: 0s
   build:
    context: .
 
