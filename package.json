@@ -60,7 +60,7 @@
 
     "@types/node": "^18.7.18",
 
-    "@types/sharp": "^0.31.1",
+    "@types/sharp": "^0.32.0",
 
     "dom7": "^4.0.4",
 
@@ -76,9 +76,8 @@
 
     "freetype2": "^1.0.6",
 
-    "glob": "^8.0.3",
 
-    "glob-promise": "^5.0.0",
+    "glob-promise": "^6.0.5",
 
     "json-rpc-2.0": "^1.4.1",
 
@@ -88,11 +87,11 @@
 
     "matrix_transformer": "^0.0.8",
 
-    "mqtt": "^4.3.7",
+    "mqtt": "^5.3.3",
 
     "node-abort-controller": "^3.0.1",
 
-    "sharp": "^0.31.3",
+    "sharp": "^0.33.1",
 
     "skeleton-elements": "^4.0.0",
 
