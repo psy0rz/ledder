@@ -95,7 +95,7 @@
 
     "skeleton-elements": "^4.0.0",
 
-    "svelte": "^3.46.4",
+    "svelte": "^4.2.8",
 
     "swiper": "^8.4.2",
 
@@ -105,9 +105,9 @@
 
   "devDependencies": {
 
-    "@sveltejs/vite-plugin-svelte": "^1.0.5",
+    "@sveltejs/vite-plugin-svelte": "^2.5.3",
 
-    "@tsconfig/svelte": "^3.0.0",
+    "@tsconfig/svelte": "^4",
 
     "@types/express": "^4.17.17",
 
@@ -117,13 +117,13 @@
 
     "postcss-preset-env": "^7.8.2",
 
-    "svelte-check": "^2.7.1",
+    "svelte-check": "^3.6.2",
 
-    "svelte-preprocess": "^4.10.6",
+    "svelte-preprocess": "^5.1.3",
 
     "typescript": "^4.7.2",
 
-    "vite": "^3.0.0"
+    "vite": "^4"
 
   }
 
