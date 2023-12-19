@@ -68,11 +68,11 @@
 
     "express-ws": "^5.0.2",
 
-    "framework7": "^7.0.8",
+    "framework7": "^8.3.0",
 
     "framework7-icons": "^5.0.5",
 
-    "framework7-svelte": "^7.0.8",
+    "framework7-svelte": "^8.3.0",
 
     "freetype2": "^1.0.6",
 
