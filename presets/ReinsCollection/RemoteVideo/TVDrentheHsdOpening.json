@@ -13,7 +13,10 @@
     "value": 10
    },
    "Delay multiplier": {
-    "value": 1
+    "value": 0.5
+   },
+   "Loop": {
+    "enabled": true
    }
   }
  }

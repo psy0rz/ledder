@@ -8,7 +8,6 @@ import Animator from "../../Animator.js"
 import PixelList from "../../PixelList.js"
 import fetch from "node-fetch"
 import FxMovie from "../../fx/FxMovie.js"
-import FxRotate from "../../fx/FxImgAni.js"
 
 export default class RemotePicture extends Animator {
 
