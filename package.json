@@ -62,9 +62,9 @@
 
     "@types/sharp": "^0.32.0",
 
-    "dom7": "^4.0.4",
+    "dom7": "^4.0.6",
 
-    "express": "^4.17.1",
+    "express": "^4.18.2",
 
     "express-ws": "^5.0.2",
 
@@ -81,23 +81,22 @@
 
     "json-rpc-2.0": "^1.7.0",
 
-    "lowdb": "^6.0.1",
+    "lowdb": "^6.1.1",
 
-    "material-icons": "^1.10.8",
+    "material-icons": "^1.13.12",
 
     "matrix_transformer": "^0.0.8",
 
     "mqtt": "^5.3.3",
 
-    "node-abort-controller": "^3.0.1",
+    "node-abort-controller": "^3.1.1",
 
     "sharp": "^0.33.1",
 
-    "skeleton-elements": "^4.0.0",
+    "skeleton-elements": "^4.0.1",
 
     "svelte": "^4.2.8",
 
-    "swiper": "^8.4.2",
 
     "upng-js": "^2.1.0"
 
