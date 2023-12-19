@@ -22,7 +22,7 @@
 
     "perftest": "node ledder/server/perftest.js",
 
-    "build": "tsc ; NODE_ENV=production vite build;node ledder/server/buildpreviews.js",
+    "build": "tsc &&  NODE_ENV=production vite build && node ledder/server/buildpreviews.js",
 
     "buildpreviews": "node ledder/server/buildpreviews.js",
 
@@ -30,7 +30,7 @@
 
     "production": "NODE_ENV=production node ledder/server/server.js",
 
-    "docker": "node ledder/server/buildpreviews.js;NODE_ENV=production node ledder/server/server.js"
+    "docker": "node ledder/server/buildpreviews.js ;NODE_ENV=production node ledder/server/server.js"
 
   },
 
@@ -60,45 +60,43 @@
 
     "@types/node": "^18.7.18",
 
-    "@types/sharp": "^0.31.1",
+    "@types/sharp": "^0.32.0",
 
-    "dom7": "^4.0.4",
+    "dom7": "^4.0.6",
 
-    "express": "^4.17.1",
+    "express": "^4.18.2",
 
     "express-ws": "^5.0.2",
 
-    "framework7": "^7.0.8",
+    "framework7": "^7.1.5",
 
     "framework7-icons": "^5.0.5",
 
-    "framework7-svelte": "^7.0.8",
+    "framework7-svelte": "^7.1.5",
 
     "freetype2": "^1.0.6",
 
-    "glob": "^8.0.3",
 
-    "glob-promise": "^5.0.0",
+    "glob-promise": "^6.0.5",
 
-    "json-rpc-2.0": "^1.4.1",
+    "json-rpc-2.0": "^1.7.0",
 
-    "lowdb": "^6.0.1",
+    "lowdb": "^6.1.1",
 
-    "material-icons": "^1.10.8",
+    "material-icons": "^1.13.12",
 
     "matrix_transformer": "^0.0.8",
 
-    "mqtt": "^4.3.7",
+    "mqtt": "^5.3.3",
 
-    "node-abort-controller": "^3.0.1",
+    "node-abort-controller": "^3.1.1",
 
-    "sharp": "^0.31.3",
+    "sharp": "^0.33.1",
 
-    "skeleton-elements": "^4.0.0",
+    "skeleton-elements": "^4.0.1",
 
-    "svelte": "^3.46.4",
+    "svelte": "^4.2.8",
 
-    "swiper": "^8.4.2",
 
     "upng-js": "^2.1.0"
 
@@ -106,25 +104,24 @@
 
   "devDependencies": {
 
-    "@sveltejs/vite-plugin-svelte": "^1.0.5",
+    "@sveltejs/vite-plugin-svelte": "^2.5.3",
 
-    "@tsconfig/svelte": "^3.0.0",
+    "@tsconfig/svelte": "^5.0.2",
 
-    "@types/express": "^4.17.17",
+    "@types/express": "^4.17.21",
 
-    "@types/express-ws": "^3.0.1",
+    "@types/express-ws": "^3.0.4",
 
-    "cpy-cli": "^4.1.0",
 
-    "postcss-preset-env": "^7.8.2",
+    "postcss-preset-env": "^9.3.0",
 
-    "svelte-check": "^2.7.1",
+    "svelte-check": "^3.6.2",
 
-    "svelte-preprocess": "^4.10.6",
+    "svelte-preprocess": "^5.1.3",
 
-    "typescript": "^4.7.2",
+    "typescript": "^5.3.3",
 
-    "vite": "^3.0.0"
+    "vite": "^4"
 
   }
 
