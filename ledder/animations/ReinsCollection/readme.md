@@ -1,7 +1,7 @@
 # Rein's Collection
 These examples are just proof-of-concepts to show how easy it is to create a ledder animation. 
 Some animations are really nice, but some suck and will steal your computers processortime and memory to create ten-thousands of obsolete pixels.
-You can use this code for your own animations under the condition that you make things more pretty than i did ;-)
+You can use this code for your own animations under the condition that you (try to) make things more pretty than i did ;-)
 
 ## Starter
 * Rainbowsinus - Sinus, cosinus and a rainbow color palette
@@ -14,14 +14,15 @@ You can use this code for your own animations under the condition that you make 
 
 ## 3D
 * Cube  - 3D cube with rotation calculation bugs....but it looks nice
-* Cube2 - An animated 3d cube without errors...there are more 3d shapes in the code
+* Cubevec3 - slightly improved version of cube..has still som enice looking error
+* Cube2 - An animated 3d cube without errors...there are more 3d shapes in the code you can use
 * DNA   - DNA ladder with 3d fading effect
 * Grasmaaier - Landscape version of DNA
 
 ## Clocks
 * Clock  - A combined digital and analogue clock
 * ClockAnalogue - An analogue clock, best viewed on 32x32 displays or larger
-* Sensorclock32x8 - A digital clock and MQTT sensor value display for temperature, humidity and pressure
+* Sensorclock32x8 - A digital clock and MQTT sensor value display for temperature, humidity and pressure. Optimized for 32x8 displays but works on others
 
 ## Fractals 
 * Julibrot - Mandelbrot and Julia fractal sets with animated zoom and user configurable zoom, speed and colorpalette
@@ -44,8 +45,10 @@ You can use this code for your own animations under the condition that you make 
 * Pong - MQTT multiplayer game
 * Tankwars - MQTT multiplayer game
 
-## REMOTE PLAYLIST
+## REMOTE IMAGES & VIDEO
 * RemotePlaylist - loads a remote json file with  animation preset sequences
+- RemoteImages - loads remote images (also the animated ones)
+- RemoteVideo - loads a remote video. Requires FFmpeg
 
 ## Simulations (for very fast computers with tons of cpu & memory )
 * Beleep - A life simulation - requires a very fast computer with tons of memory because i used to many pixels
