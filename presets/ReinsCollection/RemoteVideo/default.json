@@ -3,11 +3,20 @@
  "description": "",
  "values": {
   "Image URL": {
-   "text": "https://d3vbm02trh7zmp.cloudfront.net/media/2022/04/02/-Nerds--openen-eerste-hackerspace-van-Dren-DNO220402XV.mp4"
+   "text": "https://file-examples.com/storage/fe6e60472c657f757a0e725/2020/03/file_example_WEBM_1920_3_7MB.webm"
   },
   "animation control": {
    "delay multiplier": {
     "value": 1
+   },
+   "Movie FPS": {
+    "value": 20
+   },
+   "Delay multiplier": {
+    "value": 1
+   },
+   "Loop": {
+    "enabled": true
    }
   }
  }

@@ -1,13 +1,10 @@
 import PixelBox from "../../PixelBox.js"
 import sharp, { Sharp } from "sharp"
-import drawImage from "../../draw/DrawImage.js"
 import drawAnimatedImage from "../../draw/DrawAnimatedImage.js"
 import Scheduler from "../../Scheduler.js"
 import ControlGroup from "../../ControlGroup.js"
 import Animator from "../../Animator.js"
-import PixelList from "../../PixelList.js"
 import fetch from "node-fetch"
-import FxMovie from "../../fx/FxMovie.js"
 
 export default class RemotePicture extends Animator {
 
@@ -39,8 +36,6 @@ export default class RemotePicture extends Animator {
       }
 
       
-    
-   
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) {
         let imgBox=new PixelBox(box)
         box.add(imgBox)
