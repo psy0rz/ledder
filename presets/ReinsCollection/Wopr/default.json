@@ -1,0 +1,16 @@
+{
+ "title": "",
+ "description": "",
+ "values": {
+  "Color Palette": {
+   "selected": "DimmedReinbow"
+  },
+  "Color Palette range": {
+   "from": 0,
+   "to": 100
+  },
+  "Refresh interval ms": {
+   "value": 13
+  }
+ }
+}
