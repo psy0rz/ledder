@@ -4,8 +4,10 @@
  The mapping table is precalculated, so the performance impact is minimal.
 
  Tips:
+  - Use this animation to test: Tests/TestMatrix/default (compare to the animation on the screen to see if orientation etc is correct)
   - Start out with figuring out of its horizontal or vertical. If you mess this up you'll get garbage, so try the other one. :)
   - After that it should be easy to determine if you need a zigzag or flip as well.
+  - After that you can stack multiple displays together by creating another OffsetMapper and use AddGrid.
 
 */
 export default class OffsetMapper extends Array {
@@ -81,7 +83,7 @@ export default class OffsetMapper extends Array {
                 this[x + xOffset][y + yOffset] = other[x][y] + offset
     }
 
-    //Same as above, but now assume we're stacking a bunch of the same displays into a grid.
+    //Same as above, but now assume we're stacking a bunch of the same sized displays into a grid.
     //Displaynr starts at channel 0, and each display add the  nuber of pixels that other has to the offset.
     //Usefull with ledstream.
     //NOTE: the order in which you call addGrid doesnt matter.

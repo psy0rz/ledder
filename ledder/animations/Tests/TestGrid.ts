@@ -33,7 +33,7 @@ export default class TestGrid extends Animator {
         let colors = [colorRed, colorGreen, colorBlue]
         let colorNr = 0
 
-        fonts.C64.load()
+        fonts["Pixel-Gosub"].load()
 
         const blinker=new FxBlink(scheduler, controls, 15,15)
 
@@ -51,17 +51,17 @@ export default class TestGrid extends Animator {
 
 
                 // const txt=new DrawText(0,0, fonts.C64, `${x},${y}`, new Color(128,128,128))
-                const txt=new DrawText(0,0, fonts.C64, `${x},${y}`, new Color(128,128,128))
-                const centerRect:BoxInterface={
-                    xMin: x * controlDisplayWidth.value,
-                    yMin: y * controlDisplayHeight.value,
-                    xMax: (x+1) * controlDisplayWidth.value -1,
-                    yMax: (y+1) * controlDisplayHeight.value -1
-                }
-                txt.center( centerRect)
+                const txt=new DrawText(x * controlDisplayWidth.value,y * controlDisplayHeight.value, fonts["Pixel-Gosub"], `${x}${y}`, new Color(128,128,128))
+                // const centerRect:BoxInterface={
+                //     xMin: x * controlDisplayWidth.value,
+                //     yMin: y * controlDisplayHeight.value,
+                //     xMax: (x+1) * controlDisplayWidth.value -1,
+                //     yMax: (y+1) * controlDisplayHeight.value -1
+                // }
+                // txt.center( centerRect)
                 box.add(txt)
 
-                blinker.run( new Pixel(centerRect.xMin+1, centerRect.yMin+1, colorYellow), box)
+                blinker.run( new Pixel(x * controlDisplayWidth.value, y * controlDisplayHeight.value, colorYellow), box)
 
 
 

@@ -76,7 +76,6 @@
 
     "freetype2": "^1.0.6",
 
-
     "glob-promise": "^6.0.5",
 
     "json-rpc-2.0": "^1.7.0",
@@ -91,12 +90,13 @@
 
     "node-abort-controller": "^3.1.1",
 
+    "node-fetch": "^3.3.2",
+
     "sharp": "^0.33.1",
 
     "skeleton-elements": "^4.0.1",
 
     "svelte": "^4.2.8",
-
 
     "upng-js": "^2.1.0"
 
@@ -111,7 +111,6 @@
     "@types/express": "^4.17.21",
 
     "@types/express-ws": "^3.0.4",
-
 
     "postcss-preset-env": "^9.3.0",
 

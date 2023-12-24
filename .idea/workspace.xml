@@ -9,14 +9,17 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7de4510b-f0e5-4402-9e95-cb9c8d6f6b3a" name="Changes" comment="fix">
+    <list default="true" id="7de4510b-f0e5-4402-9e95-cb9c8d6f6b3a" name="Changes" comment="fixed docker">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ledder/animations/ReinsCollection/RemotePictures.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/displayconf-example.js" beforeDir="false" afterPath="$PROJECT_DIR$/displayconf-example.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ledder/animations/Tests/TestGrid.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/animations/Tests/TestGrid.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ledder/server/drivers/DisplayRPI.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/server/drivers/DisplayRPI.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ledder/server/drivers/OffsetMapper.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/server/drivers/OffsetMapper.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/presets/Fires/BrainsmokeFire/Inferno.json" beforeDir="false" afterPath="$PROJECT_DIR$/presets/Fires/BrainsmokeFire/Inferno.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploaddev.sh" beforeDir="false" afterPath="$PROJECT_DIR$/uploaddev.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploadprod.sh" beforeDir="false" afterPath="$PROJECT_DIR$/uploadprod.sh" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -180,7 +183,9 @@
       <workItem from="1691167892879" duration="2770000" />
       <workItem from="1696440313962" duration="8630000" />
       <workItem from="1697047984052" duration="368000" />
-      <workItem from="1702996201858" duration="4359000" />
+      <workItem from="1702996201858" duration="5581000" />
+      <workItem from="1703423528180" duration="4033000" />
+      <workItem from="1703445396679" duration="2984000" />
     </task>
     <task id="LOCAL-00001" summary="kjh">
       <created>1673098884534</created>
@@ -462,14 +467,6 @@
       <option name="project" value="LOCAL" />
       <updated>1682761967601</updated>
     </task>
-    <task id="LOCAL-00044" summary="the scheduler can be stop temporarily to allow for external async stuff to be done. (like loading files or feeds). this is needed during preview rendering and static rendering">
-      <option name="closed" value="true" />
-      <created>1688930779949</created>
-      <option name="number" value="00044" />
-      <option name="presentableId" value="LOCAL-00044" />
-      <option name="project" value="LOCAL" />
-      <updated>1688930779949</updated>
-    </task>
     <task id="LOCAL-00045" summary="asaync fixes">
       <option name="closed" value="true" />
       <created>1688931848626</created>
@@ -534,7 +531,15 @@
       <option name="project" value="LOCAL" />
       <updated>1688936128731</updated>
     </task>
-    <option name="localTasksCounter" value="53" />
+    <task id="LOCAL-00053" summary="fixed docker">
+      <option name="closed" value="true" />
+      <created>1703000609595</created>
+      <option name="number" value="00053" />
+      <option name="presentableId" value="LOCAL-00053" />
+      <option name="project" value="LOCAL" />
+      <updated>1703000609595</updated>
+    </task>
+    <option name="localTasksCounter" value="54" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -907,7 +912,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="child animationManagers ok" />
     <MESSAGE value="rename Animation to Animator (conflicted with existing class)" />
     <MESSAGE value="rneame" />
     <MESSAGE value="moved more stuff to render class" />
@@ -932,7 +936,8 @@
     <MESSAGE value="cleanup" />
     <MESSAGE value="doc" />
     <MESSAGE value="fix" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix" />
+    <MESSAGE value="fixed docker" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixed docker" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

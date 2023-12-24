@@ -33,7 +33,15 @@ The displayconf-example.js has examples on how to configure it. (Its the Display
 
 This is even more powerfull: Run ledder on a raspberry and connect up to 16 strips to the GPIO pins. (Uses DisplayRPI)
 
-This uses [RPI-ws281x-smi](https://github.com/psy0rz/rpi-ws281x-smi)
+It depends on this module, install and test it first: [RPI-ws281x-smi](https://github.com/psy0rz/rpi-ws281x-smi)
+
+Then, from the ledder directory run:
+```console
+npm i cmake-js
+npm i ../rpi-ws281x-smi/
+```
+
+Use an example from displayconf-example.js to configure the DisplayRPI driver.
 
 ### Pixelflut
 
