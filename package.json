@@ -92,7 +92,7 @@
 
     "node-fetch": "^3.3.2",
 
-    "sharp": "^0.33.1",
+    "sharp": "^0.32",
 
     "skeleton-elements": "^4.0.1",
 
