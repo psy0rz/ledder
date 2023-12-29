@@ -1,0 +1,85 @@
+{
+ "title": "",
+ "description": "",
+ "values": {
+  "Font": {
+   "selected": "C64"
+  },
+  "Font height": {
+   "value": 0
+  },
+  "Font width": {
+   "value": 0
+  },
+  "Text": {
+   "text": "Hi, i'm a 80x32 pixel matrix with ws2812 leds. Max power: 900W :)"
+  },
+  "Text color": {
+   "r": 33,
+   "g": 255,
+   "b": 0,
+   "a": 1
+  },
+  "Stars": {
+   "Enabled": {
+    "enabled": false
+   }
+  },
+  "Star field": {
+   "Enabled": {
+    "enabled": false
+   }
+  },
+  "The Matrix": {
+   "Enabled": {
+    "enabled": false
+   }
+  },
+  "Scrolling": {
+   "Enabled": {
+    "enabled": true
+   },
+   "FPS": {
+    "value": 60
+   },
+   "Rotate interval": {
+    "value": 1
+   },
+   "Rotate interval randomizer": {
+    "value": 0
+   },
+   "Rotate X step": {
+    "value": -1
+   },
+   "Rotate Y step": {
+    "value": 0
+   },
+   "Circular": {
+    "enabled": false
+   },
+   "Show one time only": {
+    "enabled": false
+   }
+  },
+  "Flames": {
+   "Enabled": {
+    "enabled": false
+   }
+  },
+  "Twinkle": {
+   "Enabled": {
+    "enabled": false
+   }
+  },
+  "Color pattern": {
+   "Enabled": {
+    "enabled": false
+   }
+  },
+  "Cursor": {
+   "Enabled": {
+    "enabled": false
+   }
+  }
+ }
+}

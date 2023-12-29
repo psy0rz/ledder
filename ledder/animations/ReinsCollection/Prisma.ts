@@ -7,6 +7,7 @@ import Animator from "../../Animator.js"
 import DrawLine from "../../draw/DrawLine.js"
 import Pixel from "../../Pixel.js"
 import Color from "../../Color.js"
+import DrawText from "../../draw/DrawText.js"
 
 class XY 
 {
@@ -136,6 +137,7 @@ export default class Prisma extends Animator {
             prisma.update(frameNr/yspeedControl.value)
             pl.add(prisma.render(yprismaControl.value))
         })
+
 
 
        

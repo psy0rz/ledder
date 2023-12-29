@@ -1,0 +1,173 @@
+{
+ "title": "",
+ "description": "",
+ "values": {
+  "Font": {
+   "selected": "C64"
+  },
+  "Font height": {
+   "value": 0
+  },
+  "Font width": {
+   "value": 0
+  },
+  "Text": {
+   "text": "Create cool animations with github.com/psy0rz/ledder"
+  },
+  "Text color": {
+   "r": 255,
+   "g": 242,
+   "b": 0,
+   "a": 1
+  },
+  "Stars": {
+   "Enabled": {
+    "enabled": false
+   }
+  },
+  "Star field": {
+   "Enabled": {
+    "enabled": true
+   },
+   "Base speed": {
+    "value": 0.001
+   },
+   "Acceleration": {
+    "value": 0.03
+   },
+   "Star offset": {
+    "value": 0.1
+   },
+   "Creation interval": {
+    "value": 5
+   }
+  },
+  "The Matrix": {
+   "Enabled": {
+    "enabled": true
+   },
+   "Head color": {
+    "r": 128,
+    "g": 128,
+    "b": 128,
+    "a": 1
+   },
+   "Tail color": {
+    "r": 0,
+    "g": 128,
+    "b": 0,
+    "a": 1
+   },
+   "Fall interval": {
+    "value": 5
+   },
+   "Create interval": {
+    "value": 10
+   },
+   "Slow trials (percent)": {
+    "value": 10
+   },
+   "Slow fall interval": {
+    "value": 10
+   },
+   "Fade head": {
+    "Fade out time": {
+     "value": 10
+    },
+    "Fade out time randomizer": {
+     "value": 5
+    }
+   },
+   "Fade tail": {
+    "Fade out time": {
+     "value": 30
+    },
+    "Fade out time randomizer": {
+     "value": 5
+    }
+   }
+  },
+  "Scrolling": {
+   "Enabled": {
+    "enabled": true
+   },
+   "FPS": {
+    "value": 60
+   },
+   "Rotate interval": {
+    "value": 1
+   },
+   "Rotate interval randomizer": {
+    "value": 0
+   },
+   "Rotate X step": {
+    "value": -1
+   },
+   "Rotate Y step": {
+    "value": 0
+   },
+   "Circular": {
+    "enabled": false
+   },
+   "Show one time only": {
+    "enabled": false
+   }
+  },
+  "Flames": {
+   "Enabled": {
+    "enabled": true
+   },
+   "Fire density [%]": {
+    "value": 10
+   },
+   "Fire intensity [%]": {
+    "value": 100
+   },
+   "Fire depth [pixels]": {
+    "value": 5
+   },
+   "Fire wind X": {
+    "value": 0.1
+   },
+   "Fire wind Y": {
+    "value": -0.2
+   },
+   "Fire cycle": {
+    "Color cycle time": {
+     "value": 15
+    },
+    "Color cycle time randomizer": {
+     "value": 15
+    },
+    "Color cycle repeat count": {
+     "value": 1
+    },
+    "Color cycle mode": {
+     "selected": "reverse"
+    },
+    "Color cycle pattern": {
+     "selected": "Bertrik fire"
+    },
+    "Color cycle pattern range": {
+     "from": 0,
+     "to": 100
+    }
+   }
+  },
+  "Twinkle": {
+   "Enabled": {
+    "enabled": false
+   }
+  },
+  "Color pattern": {
+   "Enabled": {
+    "enabled": false
+   }
+  },
+  "Cursor": {
+   "Enabled": {
+    "enabled": false
+   }
+  }
+ }
+}

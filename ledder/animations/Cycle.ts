@@ -58,21 +58,55 @@ export default class Cycle extends Animator {
 
         const fxControls=controls.group("FX")
         while(1) {
+
+            await show("Fires/Fire", "big", 8000)
+
+            await show("ReinsCollection/Dna", "default", 8000)
+
+            await show("Memes/Nyancat", "Turbo cat", 8000)
+            // await new FxPacman(scheduler, fxControls).run(box, 0, box.height )
+            // scheduler.__clear()
+            // await new FxFlameout(scheduler, fxControls).run(box)
+
+
             await show("Logos/HSD", "default", 0)
 
+            await show("Text/Marquee", "drink", 8000)
 
-            await show("Text/BTC", "default", 8000)
+            await show("WallieOnline/RhodoneaRoseDemo", "big", 8000)
+
+            await show("ReinsCollection/Prisma", "default", 8000)
+
+            await show("ReinsCollection/Xmas", "hsnl2", 8000)
+
+
+            await show("Ledart/Rainbowsquare", "default", 2000)
+
+            await show("ReinsCollection/Cubevec3", "default", 8000)
+
+            await show("Memes/ItsFine", "default", 8000)
+
+            await show("Text/Marquee", "hsnlgroot", 8000)
+
+            await show("Logos/Hackerhotel", "default", 8000)
+
+            await show("Text/Marquee", "github", 16000)
+
+            await show("Text/Marquee", "hsnl", 8000)
+
+            await show("Logos/divd", "default", 8000)
+
+            // await show("Logos/HSD", "default", 0)
+            await show("Logos/HSD64W20H", "default", 8000)
+
+
+            // await show("Text/BTC", "default", 8000)
             // scheduler.clear()
             // await new FxFlameout(scheduler, fxControls).run(box)
 
 
-            // await show("Memes/ItsFine", "default", 5000)
             // // await new FxFlameout(scheduler, fxControls).run(box)
 
-            await show("Memes/Nyancat", "default", 3000)
-            // await new FxPacman(scheduler, fxControls).run(box, 0, box.height )
-            scheduler.__clear()
-            await new FxFlameout(scheduler, fxControls).run(box)
 
 
 

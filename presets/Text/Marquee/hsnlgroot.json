@@ -6,15 +6,15 @@
    "value": 60
   },
   "Font": {
-   "selected": "C64"
+   "selected": "IBM bios"
   },
   "Text": {
-   "text": "Hackerspace Drenthe is the best \\o/"
+   "text": "HSNL"
   },
   "Text color": {
-   "r": 229,
-   "g": 229,
-   "b": 229,
+   "r": 255,
+   "g": 141,
+   "b": 0,
    "a": 1
   },
   "Stars": {
@@ -44,28 +44,28 @@
     "enabled": true
    },
    "Whitespace": {
-    "value": 10
+    "value": 0
    },
    "Rotate interval": {
-    "value": 2
+    "value": 3
    },
    "Rotate interval randomizer": {
     "value": 0
    },
    "Rotate X step": {
-    "value": -1
-   },
-   "Rotate Y step": {
     "value": 0
    },
-   "Circular": {
-    "enabled": false
-   },
-   "Show one time only": {
-    "enabled": true
+   "Rotate Y step": {
+    "value": -1
    },
    "FPS": {
     "value": 60
+   },
+   "Circular": {
+    "enabled": true
+   },
+   "Show one time only": {
+    "enabled": false
    }
   },
   "Flames": {
@@ -85,7 +85,7 @@
     "value": 0.1
    },
    "Fire wind Y": {
-    "value": 0.2
+    "value": -0.2
    },
    "Fire cycle": {
     "Color cycle time": {
@@ -102,6 +102,10 @@
     },
     "Color cycle pattern": {
      "selected": "Bertrik fire"
+    },
+    "Color cycle pattern range": {
+     "from": 0,
+     "to": 100
     }
    }
   },
@@ -110,90 +114,69 @@
     "enabled": false
    },
    "Color": {
-    "r": 128,
-    "g": 128,
-    "b": 128,
+    "r": 255,
+    "g": 143,
+    "b": 0,
     "a": 1
    },
    "X offset": {
     "value": 2
    },
    "Y offset": {
-    "value": 1
+    "value": 5
    },
    "Height": {
-    "value": 6
+    "value": 2
    },
    "Width": {
     "value": 5
    },
    "Fade out time": {
-    "value": 10
+    "value": 3
    },
    "Fade out time randomizer": {
     "value": 0
    },
    "On time": {
-    "value": 30
+    "value": 10
    },
    "Off time": {
-    "value": 30
+    "value": 10
    }
   },
-  "Pacman": {
+  "Twinkle": {
    "Enabled": {
-    "enabled": true
+    "enabled": false
    },
    "Color": {
     "r": 255,
     "g": 255,
-    "b": 0,
+    "b": 255,
     "a": 1
    },
-   "Movie interval": {
-    "value": 4
+   "Twinkle density": {
+    "value": 3
    },
-   "Movie interval randomizer": {
+   "Create randomizer %": {
+    "value": 50
+   },
+   "Random colors": {
+    "enabled": false
+   },
+   "Fade out time": {
     "value": 0
    },
-   "Rotate interval": {
-    "value": 2
-   },
-   "Rotate interval randomizer": {
-    "value": 0
-   },
-   "Rotate X step": {
-    "value": 0
-   },
-   "Rotate Y step": {
-    "value": 0
+   "Fade out time randomizer": {
+    "value": 30
    }
   },
-  "Color": {
-   "r": 255,
-   "g": 255,
-   "b": 0,
-   "a": 1
+  "Font height": {
+   "value": 18
   },
-  "Movie interval": {
-   "value": 4
+  "Font width": {
+   "value": 8
   },
-  "Movie interval randomizer": {
-   "value": 0
-  },
-  "Rotate interval": {
-   "value": 2
-  },
-  "Rotate interval randomizer": {
-   "value": 0
-  },
-  "Rotate X step": {
-   "value": 0
-  },
-  "Rotate Y step": {
-   "value": 0
-  },
-  "Twinkle": {
+  "The Matrix": {
    "Enabled": {
     "enabled": false
    }
@@ -212,25 +195,14 @@
     "enabled": true
    },
    "Color cycle pattern": {
-    "selected": "Rainbow"
+    "selected": "Bertrik fire"
    },
    "Color cycle pattern range": {
-    "from": 81,
+    "from": 0,
     "to": 100
    },
    "Per pixel offset %": {
     "value": 1
-   }
-  },
-  "Font height": {
-   "value": 0
-  },
-  "Font width": {
-   "value": 0
-  },
-  "The Matrix": {
-   "Enabled": {
-    "enabled": false
    }
   }
  }

@@ -1,0 +1,28 @@
+{
+ "title": "",
+ "description": "",
+ "values": {
+  "Color pattern": {
+   "enabled": true
+  },
+  "Color cycle time": {
+   "value": 240
+  },
+  "Reverse": {
+   "enabled": false
+  },
+  "Ping pong": {
+   "enabled": true
+  },
+  "Color cycle pattern": {
+   "selected": "Bertrik fire"
+  },
+  "Color cycle pattern range": {
+   "from": 16,
+   "to": 100
+  },
+  "Per pixel offset %": {
+   "value": 1
+  }
+ }
+}

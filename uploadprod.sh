@@ -4,8 +4,8 @@ IP=$1
 
 [ "$IP" ] || exit 1
 
-npm run build
-STUFF="src www presets fonts ledder package.json"
+#npm run build
+STUFF="images src www presets fonts ledder package.json"
 #STUFF="src"
 
 #rsync -avx $STUFF root@$IP:ledder ||exit 1

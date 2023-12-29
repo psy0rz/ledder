@@ -1,0 +1,22 @@
+{
+ "title": "",
+ "description": "",
+ "values": {
+  "N-Value": {
+   "value": 7
+  },
+  "Amplitude": {
+   "value": 16
+  },
+  "Pixels": {
+   "value": 200
+  },
+  "Fire colors": {
+   "selected": "Doom fire"
+  },
+  "Fire colors range": {
+   "from": 0,
+   "to": 100
+  }
+ }
+}
