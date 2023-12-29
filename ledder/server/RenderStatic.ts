@@ -15,8 +15,10 @@ export class RenderStatic extends Render {
         //render frames
         let displayTime = 0
         let frameTime = 0
+        console.log(`RenderStatic: rendering ${maxFrames} frames...`)
         for (let i = 0; i < maxFrames; i++) {
 
+            // console.log(`render frame ${i}`)
             //NOTE: await is needed, to allow  microtasks to run!
             frameTime = frameTime + await this.scheduler.__step(false)
 
@@ -31,6 +33,7 @@ export class RenderStatic extends Render {
             }
         }
         this.animationManager.stop(false)
+        console.log("RenderStatic:done")
 
     }
 

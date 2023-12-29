@@ -150,7 +150,7 @@ rpc.app.get('/get/render/:id', async (req, resp) => {
 
     const renderer = new RenderStatic(display)
     await renderer.animationManager.select(deviceInfo.animation, false)
-    await renderer.render(60 * 16)
+    await renderer.render(deviceInfo.frames)
 
     resp.end()
 

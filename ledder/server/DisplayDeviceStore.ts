@@ -1,4 +1,6 @@
 // import {JSONFile} from "lowdb/lib/adapters/node/JSONFile.js"
+
+//NOTE: GUI is still WIP, but if you edit devices.json and update the timestamp it should work. :)
 import {Low} from "lowdb"
 import {JSONFile} from 'lowdb/node'
 
@@ -7,7 +9,8 @@ export type DisplayDeviceInfo =
         id?: string,
         name: string,
         timestamp: number,
-        animation: string
+        animation: string,
+        frames: number
     }
 
 export type DisplayDeviceInfoDb = Record<string, DisplayDeviceInfo>
@@ -32,6 +35,7 @@ export class DisplayDeviceStore {
     }
 
     async get(id: string): Promise<DisplayDeviceInfo> {
+        await this.db.read()
 
         if (id in this.db.data)
             return (this.db.data[id])
@@ -41,7 +45,8 @@ export class DisplayDeviceStore {
         let newDev = {
             name: id,
             timestamp: 0,
-            animation: ""
+            animation: "",
+            frames: 60*60
         }
 
         await this.write(id, newDev)

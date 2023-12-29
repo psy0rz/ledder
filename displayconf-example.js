@@ -154,6 +154,15 @@ displayList.push(new DisplayRPI(stackedMatrix, 8*32)) //1 display per channel (8
 /////////// WLED https://github.com/Aircoookie/WLED/wiki/UDP-Realtime-Control via DRGB
 // displayList.push(new DisplayWLED(37,8, false, false, '10.0.0.209'))
 
+//Offline static rendering
+//Display downloads animation one time and stores it in flash and loops it forever)
+// let matrixzigzag8x32 = new OffsetMapper(32, 8, false)
+// matrixzigzag8x32.zigZagY()
+// matrixzigzag8x32.flipY()
+// let staticDisplay=new DisplayQOISstream(matrixzigzag8x32, 256)
+// export let staticDisplayList=[ staticDisplay]
+
+
 
 //default animation and preset
 export let animation = "Tests/TestMatrix/default"

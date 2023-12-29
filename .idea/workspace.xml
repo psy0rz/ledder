@@ -10,11 +10,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7de4510b-f0e5-4402-9e95-cb9c8d6f6b3a" name="Changes" comment="fixed docker">
-      <change afterPath="$PROJECT_DIR$/ledder/animations/Logos/divd.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/displayconf-example.js" beforeDir="false" afterPath="$PROJECT_DIR$/displayconf-example.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uploadprod.sh" beforeDir="false" afterPath="$PROJECT_DIR$/uploadprod.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ledder/server/DisplayDeviceStore.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/server/DisplayDeviceStore.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ledder/server/RenderStatic.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/server/RenderStatic.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ledder/server/drivers/DisplayQOISstream.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/server/drivers/DisplayQOISstream.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ledder/server/server.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/server/server.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,26 +55,26 @@
     <option name="showExcludedFiles" value="false" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.cidr.known.project.marker": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "cf.first.check.clang-format": "false",
-    "cidr.known.project.marker": "true",
-    "git-widget-placeholder": "main",
-    "last_opened_file_path": "/home/psy/ledder/ledder/animations/Logos",
-    "node.js.detected.package.eslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "Errors",
-    "ts.external.directory.path": "/home/psy/ledder/node_modules/typescript/lib",
-    "typescript.add.unambiguous.imports.on.the.fly": "true",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
+    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/psy/ledder/ledder/animations/Logos&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;Errors&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;/home/psy/ledder/node_modules/typescript/lib&quot;,
+    &quot;typescript.add.unambiguous.imports.on.the.fly&quot;: &quot;true&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/ledder/animations/Logos" />
@@ -182,6 +183,8 @@
       <workItem from="1703423528180" duration="4033000" />
       <workItem from="1703445396679" duration="2984000" />
       <workItem from="1703704165743" duration="8655000" />
+      <workItem from="1703805034900" duration="8979000" />
+      <workItem from="1703857793448" duration="666000" />
     </task>
     <task id="LOCAL-00001" summary="kjh">
       <created>1673098884534</created>
