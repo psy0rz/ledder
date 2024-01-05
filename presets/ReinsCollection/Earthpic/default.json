@@ -1,0 +1,61 @@
+{
+ "title": "",
+ "description": "",
+ "values": {
+  "stars": {
+   "Base speed": {
+    "value": 0.001
+   },
+   "Acceleration": {
+    "value": 0.03
+   },
+   "Star offset": {
+    "value": 0.1
+   },
+   "Creation interval": {
+    "value": 5
+   }
+  },
+  "color": {
+   "r": 255,
+   "g": 216,
+   "b": 0,
+   "a": 1
+  },
+  "twinkle": {
+   "Color": {
+    "r": 255,
+    "g": 255,
+    "b": 255,
+    "a": 1
+   },
+   "Twinkle density": {
+    "value": 3
+   },
+   "Create randomizer %": {
+    "value": 50
+   },
+   "Random colors": {
+    "enabled": false
+   },
+   "Fade out time": {
+    "value": 0
+   },
+   "Fade out time randomizer": {
+    "value": 30
+   }
+  },
+  "Move interval": {
+   "value": 2
+  },
+  "Move interval randomizer": {
+   "value": 0
+  },
+  "Move X step": {
+   "value": -1
+  },
+  "Move Y step": {
+   "value": 1
+  }
+ }
+}
