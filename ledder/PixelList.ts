@@ -1,6 +1,6 @@
 import Pixel from "./Pixel.js"
 import BoxInterface from "./BoxInterface.js"
-import {random} from "./utils.js"
+import { random } from "./utils.js"
 import ColorInterface from "./ColorInterface.js"
 
 /**
@@ -22,11 +22,11 @@ export default class PixelList extends Set<Pixel | PixelList> {
     * @param data Set arbitrary datafield of new pixels to this
     */
     raster(bbox: BoxInterface,
-           color: ColorInterface,
-           YX = false,
-           xFlip = false,
-           yFlip = false,
-           copyColor = true, data?: any): Array<Array<Pixel>> {
+        color: ColorInterface,
+        YX = false,
+        xFlip = false,
+        yFlip = false,
+        copyColor = true, data?: any): Array<Array<Pixel>> {
 
         //(probably more complicated than it needs to be?)
 
@@ -235,25 +235,46 @@ export default class PixelList extends Set<Pixel | PixelList> {
     }
 
     //set all pixels in this pixel tree to this color object
-    setColor(color:ColorInterface):PixelList
-    {
-        this.forEachPixel( (p)=>
-        {
-            p.color=color
+    setColor(color: ColorInterface): PixelList {
+        this.forEachPixel((p) => {
+            p.color = color
         })
 
         return (this)
     }
 
     //replace a color in this pixel tree
-    replaceColor(find:ColorInterface, replace: ColorInterface)
-    {
-        this.forEachPixel( (p)=>
-        {
+    replaceColor(find: ColorInterface, replace: ColorInterface) {
+        this.forEachPixel((p) => {
             if (p.color.equal(find))
-                p.color=replace
+                p.color = replace
         })
 
+    }
+
+    scale(scale) {
+
+        let pl = new PixelList()
+        if (scale != 0) {
+            let xOffset = 0
+            let yOffset = 0
+            this.forEachPixel((pixel: Pixel) => {
+
+                let px = (pixel.x) * scale
+                let py = (pixel.y) * scale
+                xOffset = Math.min(xOffset, px)
+                yOffset = Math.min(yOffset, py)
+                let c = pixel.color.copy()
+                for (let s = 0; s < scale; s++) {
+                    pl.add(new Pixel(px - xOffset, py - yOffset + s, c))
+                    pl.add(new Pixel(px - xOffset + s, py - yOffset, c))
+
+                }
+                //this.lines.push(new CoordinateLine(this.points.length - 2, this.points.length - 1))
+
+            })
+        }
+        return pl
     }
 
 
@@ -289,27 +310,27 @@ export default class PixelList extends Set<Pixel | PixelList> {
 
         this.forEachPixel((p) => {
 
-                if (ret === undefined) {
-                    ret = {
-                        xMin: p.x,
-                        yMin: p.y,
-                        xMax: p.x,
-                        yMax: p.y
-                    }
-
-                } else {
-
-                    if (p.x < ret.xMin)
-                        ret.xMin = p.x
-                    else if (p.x > ret.xMax)
-                        ret.xMax = p.x
-
-                    if (p.y < ret.yMin)
-                        ret.yMin = p.y
-                    else if (p.y > ret.yMax)
-                        ret.yMax = p.y
+            if (ret === undefined) {
+                ret = {
+                    xMin: p.x,
+                    yMin: p.y,
+                    xMax: p.x,
+                    yMax: p.y
                 }
+
+            } else {
+
+                if (p.x < ret.xMin)
+                    ret.xMin = p.x
+                else if (p.x > ret.xMax)
+                    ret.xMax = p.x
+
+                if (p.y < ret.yMin)
+                    ret.yMin = p.y
+                else if (p.y > ret.yMax)
+                    ret.yMax = p.y
             }
+        }
         )
 
         //always returns a valid thing
