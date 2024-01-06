@@ -441,7 +441,7 @@ export default class LedderDemo extends Animator {
         scene3d.objects[0].setRotation(0, 0, (this.counter))
         scene3d.objects[1].setRotation(0, 0, (this.counter / 2))
         pl.add(scene3d.render(box, controls))
-        if (this.counter > 1000) { scene3d.objects[2].setTranslation(0, 0, 0); scene3d.objects[2].setRotation(0, 0, 0); this.gotoNextPart() }
+        if (this.counter > 300) { scene3d.objects[2].setTranslation(0, 0, 0); scene3d.objects[2].setRotation(0, 0, 0); this.gotoNextPart() }
         return pl
     }
 

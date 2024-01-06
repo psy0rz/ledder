@@ -100,8 +100,8 @@ export class ParalaxBackground
            let r=Math.round(Math.random()*11)
            switch(r)
            {
-             case 10:  this.bgsprites.push(new SpriteTree(x,y-6,1)); break
-             default: this.bgsprites.push(new SpriteGrass(x,y-3,1));  break;
+             case 1:  this.bgsprites.push(new SpriteTree(x,y-8,2)); break
+             default: this.bgsprites.push(new SpriteGrass(x,y-3,2));  break;
            }
         }
     }
@@ -136,7 +136,7 @@ export class ParalaxBackground
             //let sprite=this.bgsprites[x]
             let y=this.groundToHeight(x)
             let pls=this.bgsprites[x].frames[0].copy()
-            pls.move(x,y)
+            pls.move(x,y-12)
             pl.add(pls)
             
            
@@ -359,7 +359,7 @@ export class SpriteGrass extends Sprite {
     constructor(x, y, z) {
         super(x, y, z)
         let pl=new PixelList()
-        pl.add(new Pixel(0,0,new Color(0,255,0,Math.random())))
+        pl.add(new Pixel(0,0,new Color(0,0,0,0)))
         this.frames.push(pl)
     }
 
@@ -370,23 +370,24 @@ export class SpriteTree extends Sprite {
     constructor(x, y, z) {
         super(x, y, z)
         this.addFrameAsciiArtColor(new DrawAsciiArtColor(0, 0, `
-            .ggggg.
-            gyyyyyg
-            ggygygg
-            .gygyg.
-            ..ttt..
-            ..ttt..
-            .gtgtg.
+
+            ..ggggggggggggg..
+            .ggtgtgtgtgtgtgg.
+            gggtgggtgggtgggg
+            ggggtggtggtggggg
+            ggggggtgtgtgggg.
+            .ggt.gtttgg.ggg.
+            ..ggttttt..tgg..
+            .....tttt.tt....
+            ......ttttt.....
+            ......tttt......
+            ......ttt.......
+            ......ttt.......
+            ......ttt.......
+            ......ttt.......
+            .....gttgttg....
             `))
-            this.addFrameAsciiArtColor(new DrawAsciiArtColor(0, 0, `
-            .ggggg.
-            gyyyyyg
-            ggygygg
-            .gygyg.
-            ..ttt..
-            ..ttt..
-            .gtgtg.
-            `))
+           
     }
 
 }
@@ -409,16 +410,16 @@ export class SpriteDog extends Sprite {
         super(x, y, z)
     
         this.addFrameAsciiArtColor(new DrawAsciiArtColor(0, 0, `
-            .t...ttt
-            .tttttt.
-            .tttt...
-            ..t.t...
+            .w...www
+            .wwwww..
+            .wwww...
+            ..w.w...
             `))
         this.addFrameAsciiArtColor(new DrawAsciiArtColor(0, 0, `
-            .t...ttt
-            .tttttt.
-            .tttt...
-            .t...t...
+            .w...www
+            .wwwww..
+            .wwww...
+            .w...w...
             `))
     }
 
@@ -521,7 +522,7 @@ export default class Sprites extends Animator {
         sprites.add(human)
         sprites.add(dog)
         sprites.add(pacman)
-        sprites.add(sun)
+        //sprites.add(sun)
 
 
 
@@ -537,8 +538,8 @@ export default class Sprites extends Animator {
             sprites.update()
             if (frameNr == 200) { human.say("hello world") }
 
-            if (frameNr%1000==0){ human.say("ey") }
-            if (frameNr%1300==0){ pacman.say("hu") }
+            if (frameNr%1000==0){ human.say("hi") }
+            if (frameNr%1300==0){ pacman.say("ai") }
             if (frameNr%500==0){ dog.say("woof")}
 
             canvas.add(sprites.render())

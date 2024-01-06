@@ -264,14 +264,10 @@ export default class PixelList extends Set<Pixel | PixelList> {
                 let py = (pixel.y) * scale
                 xOffset = Math.min(xOffset, px)
                 yOffset = Math.min(yOffset, py)
-                let c = pixel.color.copy()
                 for (let s = 0; s < scale; s++) {
-                    pl.add(new Pixel(px - xOffset, py - yOffset + s, c))
-                    pl.add(new Pixel(px - xOffset + s, py - yOffset, c))
-
+                    pl.add(new Pixel(px - xOffset, py - yOffset + s, pixel.color))
+                    pl.add(new Pixel(px - xOffset + s, py - yOffset, pixel.color))
                 }
-                //this.lines.push(new CoordinateLine(this.points.length - 2, this.points.length - 1))
-
             })
         }
         return pl
