@@ -47,7 +47,13 @@
    },
    "Rotate Y step": {
     "value": 0
+   },
+   "delay multiplier": {
+    "value": 1
    }
+  },
+  "fit": {
+   "selected": "0"
   }
  }
 }

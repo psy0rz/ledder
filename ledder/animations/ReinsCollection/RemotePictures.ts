@@ -5,6 +5,8 @@ import Scheduler from "../../Scheduler.js"
 import ControlGroup from "../../ControlGroup.js"
 import Animator from "../../Animator.js"
 import fetch from "node-fetch"
+import { Choices } from "../../ControlSelect.js"
+import { Choice } from "../../ControlSelect.js"
 
 export default class RemotePicture extends Animator {
 
@@ -19,12 +21,14 @@ export default class RemotePicture extends Animator {
       }
 
 
-      async loadImage(imageUrl,box)
+      async loadImage(imageUrl,box,resizeOptions)
       {
         const image = await fetch(imageUrl);
         const imageBuffer = await image.arrayBuffer();
-        const sharpImg= await sharp(this.toBuffer(imageBuffer),{animated:true, pages:-1}).resize(box.width(),box.height())
-        const sharpMetaData=await sharp(this.toBuffer(imageBuffer),{animated:true,pages:-1}).resize(box.width(),box.height()).metadata()
+        let width=box.width()
+        let height=box.height()
+        const sharpImg= await sharp(this.toBuffer(imageBuffer),{animated:true, pages:-1}).resize(width,height,{fit:resizeOptions})
+        const sharpMetaData=await sharp(this.toBuffer(imageBuffer),{animated:true,pages:-1}).resize(width,height,{fit:resizeOptions}).metadata()
         let framedata=await drawAnimatedImage(box,0,0,sharpImg)
         if (sharpMetaData.delay)
         {
@@ -39,10 +43,19 @@ export default class RemotePicture extends Animator {
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) {
         let imgBox=new PixelBox(box)
         box.add(imgBox)
-        
+        //https://github.com/lovell/sharp/blob/main/docs/api-resize.md
+        let resizeOptions=[]
+        resizeOptions.push({id:0, name:"cover"})
+        resizeOptions.push({id:1, name:"contain"})
+        resizeOptions.push({id:2, name:"fill"})
+        resizeOptions.push({id:3, name:"inside"})
+        resizeOptions.push({id:4, name:"outside"})
         const imageConfig = controls.input('Image URL', "http://localhost:3000/presets/Fires/PlasmaFire/Active%202.png?1702419790623.1921",true)
+        const imageResize=controls.select("fit","cover",resizeOptions,true)
         console.log("loading ",imageConfig.text)
-        let framedata=await this.loadImage(imageConfig.text,imgBox)
+        let selectedOption='fill';
+        if (resizeOptions[imageResize.selected]) { selectedOption=resizeOptions[imageResize.selected].name}
+        let framedata=await this.loadImage(imageConfig.text,imgBox,selectedOption)
         let animationControls=controls.group("animation control")
         let delayControl=animationControls.value("delay multiplier",1,0.1,10,0.1,true)
         let frameId=0

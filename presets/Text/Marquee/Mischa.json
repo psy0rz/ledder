@@ -1,0 +1,276 @@
+{
+ "title": "",
+ "description": "",
+ "values": {
+  "FPS": {
+   "value": 60
+  },
+  "Font": {
+   "selected": "IBM bios"
+  },
+  "Text": {
+   "text": "ALL MARQUEE FX ENABLED"
+  },
+  "Text color": {
+   "r": 33,
+   "g": 255,
+   "b": 0,
+   "a": 1
+  },
+  "Stars": {
+   "Enabled": {
+    "enabled": true
+   },
+   "Star color": {
+    "r": 178,
+    "g": 235,
+    "b": 0,
+    "a": 0.86
+   },
+   "Number of stars": {
+    "value": 10
+   },
+   "Movie interval": {
+    "value": 16
+   },
+   "Movie interval randomizer": {
+    "value": 6
+   },
+   "Rotate interval": {
+    "value": 4
+   },
+   "Rotate interval randomizer": {
+    "value": 2
+   },
+   "Rotate X step": {
+    "value": -1
+   },
+   "Rotate Y step": {
+    "value": 0
+   }
+  },
+  "Star field": {
+   "Enabled": {
+    "enabled": true
+   },
+   "Base speed": {
+    "value": 0.061500000000000006
+   },
+   "Acceleration": {
+    "value": 0.015300000000000001
+   },
+   "Star offset": {
+    "value": 0.1
+   },
+   "Creation interval": {
+    "value": 2
+   }
+  },
+  "Scrolling": {
+   "Enabled": {
+    "enabled": true
+   },
+   "Whitespace": {
+    "value": 10
+   },
+   "Rotate interval": {
+    "value": 4
+   },
+   "Rotate interval randomizer": {
+    "value": 0
+   },
+   "Rotate X step": {
+    "value": -1
+   },
+   "Rotate Y step": {
+    "value": 0
+   },
+   "FPS": {
+    "value": 61
+   },
+   "Circular": {
+    "enabled": true
+   },
+   "Show one time only": {
+    "enabled": false
+   }
+  },
+  "Flames": {
+   "Enabled": {
+    "enabled": true
+   },
+   "Fire density [%]": {
+    "value": 6
+   },
+   "Fire intensity [%]": {
+    "value": 48
+   },
+   "Fire depth [pixels]": {
+    "value": 1
+   },
+   "Fire wind X": {
+    "value": 0.14
+   },
+   "Fire wind Y": {
+    "value": -0.16
+   },
+   "Fire cycle": {
+    "Color cycle time": {
+     "value": 12
+    },
+    "Color cycle time randomizer": {
+     "value": 15
+    },
+    "Color cycle repeat count": {
+     "value": 1
+    },
+    "Color cycle mode": {
+     "selected": "reverse"
+    },
+    "Color cycle pattern": {
+     "selected": "Doom fire"
+    },
+    "Color cycle pattern range": {
+     "from": 0,
+     "to": 100
+    }
+   }
+  },
+  "Cursor": {
+   "Enabled": {
+    "enabled": true
+   },
+   "Color": {
+    "r": 128,
+    "g": 128,
+    "b": 128,
+    "a": 1
+   },
+   "X offset": {
+    "value": 2
+   },
+   "Y offset": {
+    "value": 1
+   },
+   "Height": {
+    "value": 6
+   },
+   "Width": {
+    "value": 5
+   },
+   "On time": {
+    "value": 30
+   },
+   "Off time": {
+    "value": 30
+   },
+   "Fade out time": {
+    "value": 10
+   },
+   "Fade out time randomizer": {
+    "value": 0
+   }
+  },
+  "Twinkle": {
+   "Enabled": {
+    "enabled": true
+   },
+   "Color": {
+    "r": 255,
+    "g": 255,
+    "b": 255,
+    "a": 1
+   },
+   "Twinkle density": {
+    "value": 5
+   },
+   "Create randomizer %": {
+    "value": 100
+   },
+   "Random colors": {
+    "enabled": true
+   },
+   "Fade out time": {
+    "value": 100
+   },
+   "Fade out time randomizer": {
+    "value": 181
+   }
+  },
+  "Font height": {
+   "value": 0
+  },
+  "Font width": {
+   "value": 0
+  },
+  "The Matrix": {
+   "Enabled": {
+    "enabled": true
+   },
+   "Head color": {
+    "r": 15,
+    "g": 0,
+    "b": 112,
+    "a": 0.53
+   },
+   "Tail color": {
+    "r": 0,
+    "g": 10,
+    "b": 33,
+    "a": 0.49
+   },
+   "Fall interval": {
+    "value": 15.3
+   },
+   "Create interval": {
+    "value": 2
+   },
+   "Slow trials (percent)": {
+    "value": 41
+   },
+   "Slow fall interval": {
+    "value": 8
+   },
+   "Fade head": {
+    "Fade out time": {
+     "value": 41
+    },
+    "Fade out time randomizer": {
+     "value": 200
+    }
+   },
+   "Fade tail": {
+    "Fade out time": {
+     "value": 118
+    },
+    "Fade out time randomizer": {
+     "value": 220
+    }
+   }
+  },
+  "Color pattern": {
+   "Enabled": {
+    "enabled": true
+   },
+   "Color cycle time": {
+    "value": 92
+   },
+   "Reverse": {
+    "enabled": true
+   },
+   "Ping pong": {
+    "enabled": true
+   },
+   "Color cycle pattern": {
+    "selected": "Brainsmoke fire"
+   },
+   "Color cycle pattern range": {
+    "from": 0,
+    "to": 100
+   },
+   "Per pixel offset %": {
+    "value": 1
+   }
+  }
+ }
+}
