@@ -416,7 +416,7 @@ export default class LedderDemo extends Animator {
         let stars3d1 = new Random3d(box.width() / 2, box.height() / 2, 0, box.width(), box.width(), box.width(), 255, new Color(128, 128, 128, 0.7))
         let stars3d2 = new Random3d(box.width() / 2, box.height() / 2, 0, box.width(), box.width(), box.width(), 255, new Color(128, 128, 128, 0.7))
 
-        let text3d = new DrawText3d(0, 0, 0, box.width(), box.height(), textDepth, "LEDDER", myfont, new Color(128, 128, 255, 1))
+        let text3d = new DrawText3d(0, 0, 0, box.width(), box.height(), textDepth, controls.text, myfont, new Color(128, 128, 255, 1))
         scene3d.objects.push(stars3d1)
         scene3d.objects.push(stars3d2)
         scene3d.objects.push(text3d);
@@ -441,7 +441,7 @@ export default class LedderDemo extends Animator {
         scene3d.objects[0].setRotation(0, 0, (this.counter))
         scene3d.objects[1].setRotation(0, 0, (this.counter / 2))
         pl.add(scene3d.render(box, controls))
-        if (this.counter > 300) { scene3d.objects[2].setTranslation(0, 0, 0); scene3d.objects[2].setRotation(0, 0, 0); this.gotoNextPart() }
+        if (this.counter > 100) { scene3d.objects[2].setTranslation(0, 0, 0); scene3d.objects[2].setRotation(0, 0, 0); this.gotoNextPart() }
         return pl
     }
 
@@ -491,9 +491,10 @@ export default class LedderDemo extends Animator {
 
         box.add(pl)
         const intervalControl = controls.value("Clock interval", 1, 1, 10, 0.1, true)
+        const txtControl = controls.input("Text", "LEDDER", true)
         let font = fontSelect(controls, "Font", fonts.C64.name, 0)
 
-        let controlsArr = { interval: intervalControl.value, wireframe: true, perspective: 0.8, font: font }
+        let controlsArr = { interval: intervalControl.value, wireframe: true, perspective: 0.8, font: font,text:txtControl.text }
         this.init3d(box, controlsArr)
         this.counter = 0
 

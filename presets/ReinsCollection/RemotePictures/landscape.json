@@ -3,7 +3,7 @@
  "description": "",
  "values": {
   "Image URL": {
-   "text": "https://i.gifer.com/7U4.gif"
+   "text": "https://i.giphy.com/b29IZK1dP4aWs.webp"
   },
   "Fractal interval": {
    "value": 14
@@ -31,7 +31,7 @@
   },
   "animation control": {
    "Movie interval": {
-    "value": 56
+    "value": 1
    },
    "Movie interval randomizer": {
     "value": 0
@@ -47,7 +47,13 @@
    },
    "Rotate Y step": {
     "value": 0
+   },
+   "delay multiplier": {
+    "value": 1
    }
+  },
+  "fit": {
+   "selected": "cover"
   }
  }
 }

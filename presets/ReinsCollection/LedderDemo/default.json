@@ -6,13 +6,16 @@
    "value": 1
   },
   "Font": {
-   "selected": "Anarchist"
+   "selected": "Skid Row"
   },
   "Font height": {
    "value": 1
   },
   "Font width": {
    "value": 1
+  },
+  "Text": {
+   "text": "Ledder"
   }
  }
 }
