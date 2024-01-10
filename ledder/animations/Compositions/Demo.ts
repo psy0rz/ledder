@@ -73,26 +73,26 @@ export default class Cycle extends Animator {
         while(1) {
             await show("Logos/HSD", "default", 5000)
            
-            await show("Components/Clock", "default", 5000)
+            await show("ReinsCollection/Clock", "default", 5000)
             scheduler.__clear()
            
-            await show("Ledart/Rainbowsinus", "default", 30000)
+            await show("ReinsCollection/Rainbowsinus", "default", 30000)
             scheduler.__clear()
            
            
-            await show("Ledart/Rainbowcross", "default", 15000)
+            await show("ReinsCollection/Rainbowcross", "default", 15000)
             scheduler.__clear()
         
 
-            await show("Ledart/Rainbowzero", "default", 50000)
+            await show("ReinsCollection/Rainbowzero", "default", 50000)
             scheduler.__clear()
            
            
-            await show("Ledart/Rainbowsquare", "default", 30000)
+            await show("ReinsCollection/Rainbowsquare", "default", 30000)
             scheduler.__clear()
 
            
-            await show("Fractals/Julibrot", "default", 60000)
+            await show("ReinsCollection/Julibrot", "default", 60000)
             scheduler.__clear()
            
 
