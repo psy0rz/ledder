@@ -13,7 +13,7 @@
     "value": 0.99
    },
    "Draw wireframelines": {
-    "enabled": true
+    "enabled": false
    },
    "Stars": {
     "value": 511
