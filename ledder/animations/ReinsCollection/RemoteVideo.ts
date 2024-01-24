@@ -18,7 +18,7 @@ export default class RemoteVideo extends Animator {
         let frame = 0
 
         console.log("decode", url)
-        const ffmpeg = spawn('ffmpegX', [
+        const ffmpeg = spawn('ffmpeg', [
             '-i', url,
             '-r', fps,
             '-f', 'rawvideo',
