@@ -11,11 +11,8 @@
   <component name="ChangeListManager">
     <list default="true" id="7de4510b-f0e5-4402-9e95-cb9c8d6f6b3a" name="Changes" comment="fixed docker">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/displayconf-example.js" beforeDir="false" afterPath="$PROJECT_DIR$/displayconf-example.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ledder/server/DisplayDeviceStore.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/server/DisplayDeviceStore.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ledder/server/RenderStatic.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/server/RenderStatic.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ledder/server/drivers/DisplayQOISstream.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/server/drivers/DisplayQOISstream.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ledder/server/server.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/server/server.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ledder/animations/Countdown.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/animations/Countdown.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ledder/animations/Cycle.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/animations/Cycle.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -184,7 +181,8 @@
       <workItem from="1703445396679" duration="2984000" />
       <workItem from="1703704165743" duration="8655000" />
       <workItem from="1703805034900" duration="8979000" />
-      <workItem from="1703857793448" duration="666000" />
+      <workItem from="1703857793448" duration="1276000" />
+      <workItem from="1704059165074" duration="2021000" />
     </task>
     <task id="LOCAL-00001" summary="kjh">
       <created>1673098884534</created>

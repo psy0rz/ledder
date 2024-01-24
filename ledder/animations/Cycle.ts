@@ -80,7 +80,7 @@ export default class Cycle extends Animator {
             await show("ReinsCollection/Xmas", "hsnl2", 8000)
 
 
-            await show("Ledart/Rainbowsquare", "default", 2000)
+            // await show("Ledart/Rainbowsquare", "default", 2000)
 
             await show("ReinsCollection/Cubevec3", "default", 8000)
 
