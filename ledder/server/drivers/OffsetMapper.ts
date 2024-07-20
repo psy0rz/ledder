@@ -14,7 +14,8 @@ export default class OffsetMapper extends Array {
     public height: number
     public width: number
 
-    constructor(width: number, height: number, horizontal = true) {
+
+    constructor(width: number, height: number, horizontal = true, order: Array<number> = null) {
 
         super()
         this.width = width
@@ -25,7 +26,10 @@ export default class OffsetMapper extends Array {
             for (let x = 0; x < width; x++) {
                 this.push([])
                 for (let y = 0; y < height; y++) {
-                    this[x].push(x + y * width)
+                    if (order)
+                        this[x].push(x + order[y] * width)
+                    else
+                        this[x].push(x + y * width)
                 }
             }
         }
@@ -34,7 +38,10 @@ export default class OffsetMapper extends Array {
             for (let x = 0; x < this.width; x++) {
                 this.push([])
                 for (let y = 0; y < this.height; y++) {
-                    this[x].push(x * this.height + y)
+                    if (order)
+                        this[x].push(x * this.height + y)
+                    else
+                        this[x].push(order[x] * this.height + y)
                 }
             }
         }
@@ -67,6 +74,7 @@ export default class OffsetMapper extends Array {
     }
 
 
+
     //flip every odd Y line (for zigzagged ledstrips)
     zigZagY() {
         for (let x = 0; x < this.width; x = x + 2) {
@@ -87,9 +95,8 @@ export default class OffsetMapper extends Array {
     //Displaynr starts at channel 0, and each display add the  nuber of pixels that other has to the offset.
     //Usefull with ledstream.
     //NOTE: the order in which you call addGrid doesnt matter.
-    addGrid(other: OffsetMapper, gridX, gridY, displayNr)
-    {
-        this.add(other, gridX*other.width, gridY*other.height, displayNr * other.width * other.height)
+    addGrid(other: OffsetMapper, gridX, gridY, displayNr) {
+        this.add(other, gridX * other.width, gridY * other.height, displayNr * other.width * other.height)
 
     }
 

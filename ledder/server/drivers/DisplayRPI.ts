@@ -5,6 +5,8 @@ import leds from "rpi-ws281x-smi"
 import OffsetMapper from "./OffsetMapper.js"
 
 
+
+
 /**
  * Uses rpi-ws281x-smi to drive up to 8 displays in parallel.
  * All displays should be oriented from left to right, starting with channel 0.
@@ -24,10 +26,12 @@ export class DisplayRPI extends Display {
      */
     private mapper: OffsetMapper
     private pixelsPerChannel: number
+    private rgbOrder:number
 
-    constructor(mapper:OffsetMapper, pixelsPerChannel:number) {
+    constructor(mapper:OffsetMapper, pixelsPerChannel:number, rgbOrder=0) {
 
         super(mapper.width, mapper.height)
+        this.rgbOrder=rgbOrder;
 
         //width and height is the size of one strip on one channel. e.g. one display
         leds.init(pixelsPerChannel)
@@ -46,16 +50,25 @@ export class DisplayRPI extends Display {
 
         const offset = this.mapper[floor_x][floor_y]
 
-        leds.setPixel(
-            ~~(offset / this.pixelsPerChannel), // channel
-            offset % this.pixelsPerChannel, //led nr
-            this.gammaMapper[Math.round(color.r)],
-            this.gammaMapper[Math.round(color.g)],
-            this.gammaMapper[Math.round(color.b)],
-            color.a
-        )
+        if (this.rgbOrder==0)
+            leds.setPixel(
+                ~~(offset / this.pixelsPerChannel), // channel
+                offset % this.pixelsPerChannel, //led nr
+                this.gammaMapper[Math.round(color.r)],
+                this.gammaMapper[Math.round(color.g)],
+                this.gammaMapper[Math.round(color.b)],
+                color.a
+            )
+        else
+            leds.setPixel(
+                ~~(offset / this.pixelsPerChannel), // channel
+                offset % this.pixelsPerChannel, //led nr
+                this.gammaMapper[Math.round(color.g)],
+                this.gammaMapper[Math.round(color.r)],
+                this.gammaMapper[Math.round(color.b)],
+                color.a
+            )
 
-        // leds.setPixel()
 
     }
 

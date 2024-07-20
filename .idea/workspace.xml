@@ -11,8 +11,10 @@
   <component name="ChangeListManager">
     <list default="true" id="7de4510b-f0e5-4402-9e95-cb9c8d6f6b3a" name="Changes" comment="fixed docker">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ledder/animations/Countdown.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/animations/Countdown.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ledder/animations/Cycle.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/animations/Cycle.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ledder/animations/Tests/TestStrip.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/animations/Tests/TestStrip.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ledder/server/drivers/DisplayRPI.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/server/drivers/DisplayRPI.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ledder/server/drivers/OffsetMapper.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/server/drivers/OffsetMapper.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploadprod.sh" beforeDir="false" afterPath="$PROJECT_DIR$/uploadprod.sh" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -113,6 +115,13 @@
       <item itemvalue="Node.js.buildpreviews.js" />
     </list>
   </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-js-predefined-1d06a55b98c1-91d5c284f522-JavaScript-WS-241.15989.105" />
+      </set>
+    </attachedChunks>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -183,6 +192,8 @@
       <workItem from="1703805034900" duration="8979000" />
       <workItem from="1703857793448" duration="1276000" />
       <workItem from="1704059165074" duration="2021000" />
+      <workItem from="1707495347611" duration="769000" />
+      <workItem from="1721410654620" duration="4060000" />
     </task>
     <task id="LOCAL-00001" summary="kjh">
       <created>1673098884534</created>
@@ -891,6 +902,18 @@
         <option value="$PROJECT_DIR$/ledder/animations/ReinsCollection/Pixelfan.js.map" />
         <option value="$PROJECT_DIR$/ledder/animations/Logos/divd.js" />
         <option value="$PROJECT_DIR$/ledder/animations/Logos/divd.js.map" />
+        <option value="$PROJECT_DIR$/ledder/animations/Tests/TestBlack.js.map" />
+        <option value="$PROJECT_DIR$/ledder/animations/Tests/TestBlack.js" />
+        <option value="$PROJECT_DIR$/ledder/animations/ReinsCollection/Bingo.js.map" />
+        <option value="$PROJECT_DIR$/ledder/animations/ReinsCollection/Sprites.js" />
+        <option value="$PROJECT_DIR$/ledder/animations/ReinsCollection/LedderDemo.js.map" />
+        <option value="$PROJECT_DIR$/ledder/animations/ReinsCollection/Bingo.js" />
+        <option value="$PROJECT_DIR$/ledder/animations/ReinsCollection/Sprites.js.map" />
+        <option value="$PROJECT_DIR$/ledder/animations/ReinsCollection/LedderDemo.js" />
+        <option value="$PROJECT_DIR$/ledder/animations/ReinsCollection/FortuneCookie.js.map" />
+        <option value="$PROJECT_DIR$/ledder/animations/ReinsCollection/FortuneCookie.js" />
+        <option value="$PROJECT_DIR$/ledder/animations/ReinsCollection/Slotmachine.js.map" />
+        <option value="$PROJECT_DIR$/ledder/animations/ReinsCollection/Slotmachine.js" />
       </list>
     </option>
     <option name="includedJSSourcePackages">
