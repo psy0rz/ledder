@@ -21,7 +21,10 @@ I hope more people will create them so we can stack them together. :)
 
 Ingredients:
  * Raspberry Pi Zero 2
+ * Official volleybal net ( 10cm x 10cm grid size): https://sportnettenshop.nl/collections/online-volleybalnetten-bestellen-doe-je-hier-zeer-snelle-levering/products/volleybalnet-meest-eenvoudige-uitvoering
  * Led strings: https://nl.aliexpress.com/item/1005005551648167.html  (Choose transparant Big Led)
+ * 600 tierips :)
+ * Power supply. (It draws 32 A at max current)
 
 ![image](https://github.com/user-attachments/assets/5ab1ba8e-be0b-4d0d-af6c-b982f8a94093)
 
