@@ -7,9 +7,25 @@ Make cool animated pixel animations, and stream it to a led matrix display.
 
 Control in realtime via a webgui.
 
-**Documentation and code are still work in progress, come back later if you're not that adventurous. :)**
-
 LIVE DEMO: https://ledder.datux.nl
+
+# Bornhack 2024 megabanner info
+
+![PXL_20240721_153129071](https://github.com/user-attachments/assets/9eb46f0d-77c1-4d16-8ec8-41e1a7f5038f)
+
+For Bornhack we've used a volleyball net a ledstring to create a 8 x 66 pixel banner that has a size of 80cm x 660cm
+
+It can be easily rolled up to take to other camps.
+
+I hope more people will create them so we can stack them together. :)
+
+Ingredients:
+ * Raspberry Pi Zero 2
+ * Led strings: https://nl.aliexpress.com/item/1005005551648167.html  (Choose transparant Big Led)
+
+![image](https://github.com/user-attachments/assets/5ab1ba8e-be0b-4d0d-af6c-b982f8a94093)
+
+
 
 ## Hardware
 
