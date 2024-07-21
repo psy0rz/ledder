@@ -32,11 +32,11 @@ export default class Fx {
     }
 
     //stops the effect. (promise will be fullfilled after stopping)
-    async stop()
-    {
-        this.running=false
-        return (this.promise)
-    }
+    // async stop()
+    // {
+    //     this.running=false
+    //     return (this.promise)
+    // }
 
 
 }

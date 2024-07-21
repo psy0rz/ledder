@@ -1,0 +1,24 @@
+{
+ "title": "",
+ "description": "",
+ "values": {
+  "Font": {
+   "selected": "Atari regular"
+  },
+  "Font height": {
+   "value": 0
+  },
+  "Font width": {
+   "value": 0
+  },
+  "tekst": {
+   "r": 255,
+   "g": 255,
+   "b": 0,
+   "a": 1
+  },
+  "interval": {
+   "value": 5
+  }
+ }
+}

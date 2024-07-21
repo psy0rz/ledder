@@ -23,11 +23,11 @@ export default class BTC extends Animator {
         const choices=[
             {
                 id: "BTCUSDT",
-                name: "BTC$"
+                name: "BTC"
             },
             {
                 id: "ETHUSDT",
-                name: "ETH$"
+                name: "ETH"
             },
         ]
         const symbolSelect=controls.select("Symbol", "BTCUSDT", choices, true )
@@ -54,7 +54,16 @@ export default class BTC extends Animator {
         const digitCount=6
 
 
-        const label=new DrawText(x-25,y+1, fontSelect(controls), symbolSelect.selected, controls.color('Text color'))
+        let selectedText="?"
+        for (const choice of choices)
+        {
+            if (choice.id==symbolSelect.selected)
+            {
+                selectedText=choice.name
+            }
+        }
+
+        const label=new DrawText(x-23,y+1, fontSelect(controls), selectedText, controls.color('Text color'))
         box.add(label)
 
         let stopped=false

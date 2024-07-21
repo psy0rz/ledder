@@ -31,16 +31,15 @@ export default class Marquee extends Animator {
         const colorControl = control.color("Text color", 0x21, 0xff, 0, 1)
         const charPixels = new DrawText(box.xMin, box.yMin, font, input.text, colorControl)
 
-
         charPixels.centerV(box)
 
         //scroll everything thats in this container (if enabled)
-        const scrollContainer = new PixelList()
-        scrollContainer.add(charPixels)
+        const textBox = new PixelBox(box)
+        // scrollContainer.add(charPixels)
 
-        const blurredScrollContainer = new PixelList()
-        const off = new Color(0, 0, 0, 0)
-        const raster = blurredScrollContainer.raster(box, off)
+        // const blurredScrollContainer = new PixelList()
+        // const off = new Color(0, 0, 0, 0)
+        // const raster = blurredScrollContainer.raster(box, off)
 
 
         let starsGroup = control.group("Stars", false, false)
@@ -61,7 +60,7 @@ export default class Marquee extends Animator {
 
         //add on top of stars
         // box.add(blurredScrollContainer)
-        box.add(scrollContainer)
+        box.add(textBox)
 
         let scrollGroup = control.group("Scrolling")
         let rotatorPromise
@@ -72,7 +71,6 @@ export default class Marquee extends Animator {
             fpsControl.onChange(() => {
                 scheduler.setFps(fpsControl.value)
             })
-
 
             const rotator = new FxRotate(scheduler, scrollGroup)
 
@@ -97,75 +95,37 @@ export default class Marquee extends Animator {
                 }
             } else {
                 //make sure marquee starts outside of the display
-                scrollContainer.move(box.width(), 0)
+                charPixels.move(box.width(), 0)
 
                 //only show one time?
                 if (scrollGroup.switch('Show one time only', false, true).enabled)
                     waitX = charPixels.bbox().xMax - box.xMin
+
             }
-            const textBbox = scrollContainer.bbox()
-            textBbox.xMin = 0
+            const textBoundBox = charPixels.bbox()
+            textBoundBox.xMin = 0
 
-            rotatorPromise = rotator.run(scrollContainer, textBbox, waitX)
+            rotatorPromise = rotator.run(charPixels, textBoundBox, waitX, null, textBox)
+            // rotatorPromise = rotator.run(charPixels, textBbox, waitX, null)
         } else {
+            //no scrolling
             charPixels.centerH(box)
+            textBox.add(charPixels)
         }
-
-
-        // const blurcontrol = control.value('Blur factor', 1, 0, 3, 0.1)
-        //
-        //
-        // //XXX:move to seperate fx
-        // scheduler.interval(1, () => {
-        //     const index = scrollContainer.index()
-        //
-        //     const rotateInterval=scrollGroup.value('Rotate interval').value
-        //
-        //     const blurStep =(1/rotateInterval)*blurcontrol.value
-        //
-        //     blurredScrollContainer.forEachPixel((blurred) => {
-        //
-        //
-        //         let p = undefined
-        //
-        //         if (index[blurred.x] != undefined)
-        //             p = index[blurred.x][blurred.y]
-        //
-        //         if (p == undefined) {
-        //             //pixel is gone, fade out
-        //             blurred.color.a = blurred.color.a - blurStep
-        //             if (blurred.color.a < 0)
-        //                 blurred.color.a = 0
-        //
-        //         } else {
-        //             //fade is on, take over color and fade in
-        //             blurred.color.r = p.color.r
-        //             blurred.color.g = p.color.g
-        //             blurred.color.b = p.color.b
-        //
-        //             blurred.color.a = blurred.color.a + blurStep
-        //             if (blurred.color.a > 1)
-        //                 blurred.color.a = 1
-        //         }
-        //
-        //
-        //     })
-        //
-        // })
 
 
         let flameGroup = control.group("Flames", false, false)
         if (flameGroup.switch('Enabled', false).enabled) {
             const flames = new PixelList()
             box.add(flames)
-            new FxFlames(scheduler, flameGroup).run(charPixels, flames)
+            new FxFlames(scheduler, flameGroup).run(textBox, flames, box)
         }
 
         let twinkleGroup = control.group("Twinkle")
         if (twinkleGroup.switch('Enabled', false).enabled) {
             const twinkleContainer = new PixelList()
             box.add(twinkleContainer)
-            new FxTwinkle(scheduler, twinkleGroup).run(charPixels, scrollContainer)
+            new FxTwinkle(scheduler, twinkleGroup).run(textBox, box)
         }
 
 

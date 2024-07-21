@@ -11,9 +11,11 @@
   <component name="ChangeListManager">
     <list default="true" id="7de4510b-f0e5-4402-9e95-cb9c8d6f6b3a" name="Changes" comment="fixed docker">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ledder/animations/Tests/TestStrip.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/animations/Tests/TestStrip.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ledder/server/drivers/DisplayRPI.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/server/drivers/DisplayRPI.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ledder/server/drivers/OffsetMapper.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/server/drivers/OffsetMapper.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ledder/Fx.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/Fx.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ledder/animations/Cycle.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/animations/Cycle.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ledder/animations/Text/Marquee.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/animations/Text/Marquee.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ledder/fx/FxRotate.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/fx/FxRotate.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/presets/Text/Marquee/github.json" beforeDir="false" afterPath="$PROJECT_DIR$/presets/Text/Marquee/github.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/uploadprod.sh" beforeDir="false" afterPath="$PROJECT_DIR$/uploadprod.sh" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -54,32 +56,33 @@
     <option name="showExcludedFiles" value="false" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
-    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/psy/ledder/ledder/animations/Logos&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;Errors&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;/home/psy/ledder/node_modules/typescript/lib&quot;,
-    &quot;typescript.add.unambiguous.imports.on.the.fly&quot;: &quot;true&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Node.js.server.js.executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.cidr.known.project.marker": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "cf.first.check.clang-format": "false",
+    "cidr.known.project.marker": "true",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "/home/psy/ledder/ledder/fx",
+    "node.js.detected.package.eslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "Errors",
+    "ts.external.directory.path": "/home/psy/ledder/node_modules/typescript/lib",
+    "typescript.add.unambiguous.imports.on.the.fly": "true",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/ledder/fx" />
       <recent name="$PROJECT_DIR$/ledder/animations/Logos" />
       <recent name="$PROJECT_DIR$/presets/Logos" />
       <recent name="$PROJECT_DIR$/ledder/animations/Tests" />
-      <recent name="$PROJECT_DIR$/ledder/fx" />
       <recent name="$PROJECT_DIR$/ledder/draw" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
@@ -110,9 +113,9 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="Node.js.webdev" />
-      <item itemvalue="Node.js.server.js" />
       <item itemvalue="Node.js.buildpreviews.js" />
+      <item itemvalue="Node.js.server.js" />
+      <item itemvalue="Node.js.webdev" />
     </list>
   </component>
   <component name="SharedIndexes">

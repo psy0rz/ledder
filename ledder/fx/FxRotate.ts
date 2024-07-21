@@ -5,6 +5,7 @@ import PixelList from "../PixelList.js"
 import BoxInterface from "../BoxInterface.js"
 import Scheduler from "../Scheduler.js"
 import {random} from "../utils.js"
+import PixelBox from "../PixelBox.js"
 
 
 //Rotate pixels inside a box
@@ -28,7 +29,11 @@ export default class FxRotate extends Fx {
 
     //rotate pixels inside specified bbox if specified. (otherwise uses bbox() of pixelcontainer)
     //waitX and waitY will stop and resolve the promise when axis has shifted this much.
-    run(container: PixelList, bbox?: BoxInterface, waitX?: number, waitY?: number) {
+    //If target is specified, the pixels that are within the target bounds are added to it
+    run(container: PixelList, bbox?: BoxInterface, waitX?: number, waitY?: number, target?: PixelBox) {
+        if (target!==undefined && target.size)
+            throw ("Please use an empty target container")
+
         this.running = true
 
         if (bbox === undefined)
@@ -44,10 +49,15 @@ export default class FxRotate extends Fx {
             scrolledX = scrolledX + this.xStepControl.value
             scrolledY = scrolledY + this.yStepControl.value
 
+            if (target != undefined)
+                target.clear()
+
             container.forEachPixel((p) => {
                 p.x = p.x + this.xStepControl.value
                 p.y = p.y + this.yStepControl.value
                 p.wrap(bbox)
+                if (target != undefined && !p.isOutside(target))
+                    target.add(p)
 
             })
 

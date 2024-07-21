@@ -48,7 +48,7 @@
    "a": 1
   },
   "Rotate speed": {
-   "value": 0.001
+   "value": 0.0033
   },
   "Counter dim %": {
    "value": 59
@@ -80,10 +80,16 @@
    "selected": "ETHUSDT"
   },
   "Font": {
-   "selected": "Picopixel"
+   "selected": "C64"
   },
   "Counter dim steps": {
    "value": 3
+  },
+  "Font height": {
+   "value": 0
+  },
+  "Font width": {
+   "value": 0
   }
  }
 }
