@@ -11,6 +11,8 @@ LIVE DEMO: https://ledder.datux.nl
 
 # Bornhack 2024 megabanner info
 
+![PXL_20240721_200732771](https://github.com/user-attachments/assets/a7cd93f2-5696-4c3f-a943-3db96c7723bd)
+
 ![PXL_20240721_153129071](https://github.com/user-attachments/assets/9eb46f0d-77c1-4d16-8ec8-41e1a7f5038f)
 
 For Bornhack we've used a volleyball net a ledstring to create a 8 x 66 pixel banner that has a size of 80cm x 660cm
