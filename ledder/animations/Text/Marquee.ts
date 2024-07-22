@@ -16,6 +16,7 @@ import FxColorPattern from "../../fx/FxColorPattern.js"
 import TheMatrix from "../MovieFx/TheMatrix.js"
 import DrawBlur from "../../draw/DrawBlur.js"
 import Color from "../../Color.js"
+import {scheduler} from "node:timers/promises"
 
 
 export default class Marquee extends Animator {
@@ -29,18 +30,13 @@ export default class Marquee extends Animator {
         const font = fontSelect(control, 'Font')
         const input = control.input('Text', "Marquee  ", true)
         const colorControl = control.color("Text color", 0x21, 0xff, 0, 1)
-        const charPixels = new DrawText(box.xMin, box.yMin, font, input.text, colorControl)
+        const textPixels = new DrawText(box.xMin, box.yMin, font, input.text, colorControl)
 
-        charPixels.centerV(box)
 
-        //scroll everything thats in this container (if enabled)
-        const textBox = new PixelBox(box)
-        // scrollContainer.add(charPixels)
+        textPixels.centerV(box)
 
-        // const blurredScrollContainer = new PixelList()
-        // const off = new Color(0, 0, 0, 0)
-        // const raster = blurredScrollContainer.raster(box, off)
-
+        //target container for scroll-view
+        // const textBox = new PixelBox(box)
 
         let starsGroup = control.group("Stars", false, false)
         if (starsGroup.switch('Enabled', false).enabled) {
@@ -57,10 +53,8 @@ export default class Marquee extends Animator {
             new TheMatrix().run(box, scheduler, theMatrixGroup)
         }
 
-
-        //add on top of stars
-        // box.add(blurredScrollContainer)
-        box.add(textBox)
+        //add text on top of background stuff
+        box.add(textPixels)
 
         let scrollGroup = control.group("Scrolling")
         let rotatorPromise
@@ -77,40 +71,41 @@ export default class Marquee extends Animator {
             //show one time or loop?
             let waitX = 0
 
+            //circular?
             if (scrollGroup.switch('Circular', false, true).enabled) {
                 //circular display, only add whitespace
                 const whitespace = scrollGroup.value("Whitespace", 10, 0, 100, 1, true)
-                charPixels.move(whitespace.value, 0)
+                textPixels.move(whitespace.value, 0)
                 //replicate text until display is filled
-                const width = charPixels.bbox().xMax - box.xMin
-                if (charPixels.bbox().xMax > 0) {
-                    let charPixelsCopy = charPixels.copy()
-                    while (charPixels.bbox().xMax < box.xMax) {
+                const width = textPixels.bbox().xMax - box.xMin
+                if (textPixels.bbox().xMax > 0) {
+                    let charPixelsCopy = textPixels.copy()
+                    while (textPixels.bbox().xMax < box.xMax) {
                         charPixelsCopy.move(width, 0)
-                        charPixels.add(charPixelsCopy)
+                        textPixels.add(charPixelsCopy)
 
                         charPixelsCopy = charPixelsCopy.copy()
                     }
-                    charPixels.flatten()
+                    textPixels.flatten()
                 }
+
             } else {
-                //make sure marquee starts outside of the display
-                charPixels.move(box.width(), 0)
+                //non-circular, make sure marquee starts outside of the display
+                textPixels.move(box.width(), 0)
 
                 //only show one time?
                 if (scrollGroup.switch('Show one time only', false, true).enabled)
-                    waitX = charPixels.bbox().xMax - box.xMin
+                    waitX = textPixels.bbox().xMax - box.xMin
 
             }
-            const textBoundBox = charPixels.bbox()
+            const textBoundBox = textPixels.bbox()
             textBoundBox.xMin = 0
 
-            rotatorPromise = rotator.run(charPixels, textBoundBox, waitX, null, textBox)
+            rotatorPromise = rotator.run(textPixels, textBoundBox, waitX, null)
             // rotatorPromise = rotator.run(charPixels, textBbox, waitX, null)
         } else {
             //no scrolling
-            charPixels.centerH(box)
-            textBox.add(charPixels)
+            textPixels.centerH(box)
         }
 
 
@@ -118,20 +113,20 @@ export default class Marquee extends Animator {
         if (flameGroup.switch('Enabled', false).enabled) {
             const flames = new PixelList()
             box.add(flames)
-            new FxFlames(scheduler, flameGroup).run(textBox, flames, box)
+            new FxFlames(scheduler, flameGroup).run(textPixels, flames, box)
         }
 
         let twinkleGroup = control.group("Twinkle")
         if (twinkleGroup.switch('Enabled', false).enabled) {
             const twinkleContainer = new PixelList()
             box.add(twinkleContainer)
-            new FxTwinkle(scheduler, twinkleGroup).run(textBox, box)
+            new FxTwinkle(scheduler, twinkleGroup).run(textPixels, box)
         }
 
 
         let colorPatternGroup = control.group("Color pattern")
         if (colorPatternGroup.switch('Enabled', false).enabled) {
-            new FxColorPattern(scheduler, colorPatternGroup).run(charPixels)
+            new FxColorPattern(scheduler, colorPatternGroup).run(textPixels)
         }
 
         let cursorGroup = control.group("Cursor")
@@ -143,10 +138,10 @@ export default class Marquee extends Animator {
             const cursorW = cursorGroup.value("Width", 5, 0, 100, 1, true)
             const cursorOn = cursorGroup.value("On time", 30, 0, 60, 1, false)
             const cursorOff = cursorGroup.value("Off time", 30, 0, 60, 1, false)
-            const bbox = charPixels.bbox()
+            const bbox = textPixels.bbox()
             const cursor = new DrawBox(bbox.xMax + cursorX.value, bbox.yMin + cursorY.value, cursorW.value, cursorH.value, cursorColor)
             const fader = new FxFadeOut(scheduler, cursorGroup, 10)
-            charPixels.add(cursor)
+            textPixels.add(cursor)
             while (1) {
                 cursorColor.a = 1
                 await scheduler.delay(cursorOn.value)

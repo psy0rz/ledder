@@ -41,23 +41,15 @@ export default class FxFlames extends Fx {
 
         this.running = true
 
-        //collect the pixels we need
-        // const burningPixels = new PixelContainer()
         if (bbox === undefined)
             bbox = sourceContainer.bbox()
 
-        // sourceContainer.forEachPixel((p) => {
-        //     if (p.y > bbox.yMax - this.burnWidthControl.value) {
-        //         burningPixels.add(p)
-        //     }
-        // })
-
         this.promise = this.scheduler.interval(1, () => {
 
-            // const heads = new PixelSet()
-
-
             sourceContainer.forEachPixel((p) => {
+
+                if (p.isOutside(bbox))
+                    return
 
                 if (p.y >= bbox.yMax - this.burnWidthControl.value)
                     return
@@ -80,10 +72,8 @@ export default class FxFlames extends Fx {
 
                 this.flameCycle.run(flameHead.color, skip).then(() => {
                     targetContainer.delete(flameHead)
-                    // heads.delete(head)
                 })
 
-                // targetContainer.move(0,0.001)
             })
             targetContainer.move(randomFloatGaussian(0, this.windXControl.value), randomFloatGaussian(0, this.windYControl.value))
 
