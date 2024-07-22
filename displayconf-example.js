@@ -133,23 +133,23 @@ export let displayList = []
 // Each channel has one display.
 // This uses https://github.com/psy0rz/rpi-ws281x-smi
 // To figure our the displayNr order, use Tests/TestGrid/alu10x
-let matrixZigZag = new OffsetMapper(8, 32, true)
-matrixZigZag.zigZagX()
-matrixZigZag.flipX()
-matrixZigZag.flipY()
-
-let stackedMatrix = new OffsetMapper(8*10, 32, true)
-stackedMatrix.addGrid(matrixZigZag, 0,0, 6)
-stackedMatrix.addGrid(matrixZigZag, 1,0, 4)
-stackedMatrix.addGrid(matrixZigZag, 2,0, 2)
-stackedMatrix.addGrid(matrixZigZag, 3,0, 3)
-stackedMatrix.addGrid(matrixZigZag, 4,0, 0)
-stackedMatrix.addGrid(matrixZigZag, 5,0, 8)
-stackedMatrix.addGrid(matrixZigZag, 6,0, 1)
-stackedMatrix.addGrid(matrixZigZag, 7,0, 9)
-stackedMatrix.addGrid(matrixZigZag, 8,0, 7)
-stackedMatrix.addGrid(matrixZigZag, 9,0, 5)
-displayList.push(new DisplayRPI(stackedMatrix, 8*32)) //1 display per channel (8*32)
+// let matrixZigZag = new OffsetMapper(8, 32, true)
+// matrixZigZag.zigZagX()
+// matrixZigZag.flipX()
+// matrixZigZag.flipY()
+//
+// let stackedMatrix = new OffsetMapper(8*10, 32, true)
+// stackedMatrix.addGrid(matrixZigZag, 0,0, 6)
+// stackedMatrix.addGrid(matrixZigZag, 1,0, 4)
+// stackedMatrix.addGrid(matrixZigZag, 2,0, 2)
+// stackedMatrix.addGrid(matrixZigZag, 3,0, 3)
+// stackedMatrix.addGrid(matrixZigZag, 4,0, 0)
+// stackedMatrix.addGrid(matrixZigZag, 5,0, 8)
+// stackedMatrix.addGrid(matrixZigZag, 6,0, 1)
+// stackedMatrix.addGrid(matrixZigZag, 7,0, 9)
+// stackedMatrix.addGrid(matrixZigZag, 8,0, 7)
+// stackedMatrix.addGrid(matrixZigZag, 9,0, 5)
+// displayList.push(new DisplayRPI(stackedMatrix, 8*32)) //1 display per channel (8*32)
 
 /////////// WLED https://github.com/Aircoookie/WLED/wiki/UDP-Realtime-Control via DRGB
 // displayList.push(new DisplayWLED(37,8, false, false, '10.0.0.209'))
