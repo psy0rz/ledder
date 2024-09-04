@@ -1,0 +1,180 @@
+{
+ "title": "",
+ "description": "",
+ "values": {
+  "Target time": {
+   "text": "2024-09-20T16:00"
+  },
+  "Normal": {
+   "r": 0,
+   "g": 255,
+   "b": 0,
+   "a": 1
+  },
+  "Warning": {
+   "r": 255,
+   "g": 0,
+   "b": 0,
+   "a": 1
+  },
+  "Show mS": {
+   "enabled": true
+  },
+  "Warning time (min)": {
+   "value": 60
+  },
+  "Font": {
+   "Font": {
+    "selected": "C64 mono"
+   },
+   "Font height": {
+    "value": 0
+   },
+   "Font width": {
+    "value": 0
+   },
+   "X": {
+    "value": 0
+   },
+   "Y": {
+    "value": 2
+   }
+  },
+  "Marquee": {
+   "Font": {
+    "selected": "C64"
+   },
+   "Font height": {
+    "value": 0
+   },
+   "Font width": {
+    "value": 0
+   },
+   "Text": {
+    "text": "Scholenchallenge Nationaal Programma Groningen"
+   },
+   "Text color": {
+    "r": 255,
+    "g": 193,
+    "b": 0,
+    "a": 1
+   },
+   "Stars": {
+    "Enabled": {
+     "enabled": false
+    }
+   },
+   "Star field": {
+    "Enabled": {
+     "enabled": true
+    },
+    "Base speed": {
+     "value": 0.001
+    },
+    "Acceleration": {
+     "value": 0.03
+    },
+    "Star offset": {
+     "value": 0.1
+    },
+    "Creation interval": {
+     "value": 5
+    }
+   },
+   "The Matrix": {
+    "Enabled": {
+     "enabled": false
+    }
+   },
+   "Scrolling": {
+    "Enabled": {
+     "enabled": true
+    },
+    "FPS": {
+     "value": 60
+    },
+    "Rotate interval": {
+     "value": 2
+    },
+    "Rotate interval randomizer": {
+     "value": 0
+    },
+    "Rotate X step": {
+     "value": -1
+    },
+    "Rotate Y step": {
+     "value": 0
+    },
+    "Circular": {
+     "enabled": true
+    },
+    "Show one time only": {
+     "enabled": false
+    },
+    "Whitespace": {
+     "value": 34
+    }
+   },
+   "Flames": {
+    "Enabled": {
+     "enabled": false
+    }
+   },
+   "Twinkle": {
+    "Enabled": {
+     "enabled": false
+    },
+    "Color": {
+     "r": 255,
+     "g": 255,
+     "b": 255,
+     "a": 1
+    },
+    "Twinkle density": {
+     "value": 3
+    },
+    "Create randomizer %": {
+     "value": 50
+    },
+    "Random colors": {
+     "enabled": false
+    },
+    "Fade out time": {
+     "value": 0
+    },
+    "Fade out time randomizer": {
+     "value": 30
+    }
+   },
+   "Color pattern": {
+    "Enabled": {
+     "enabled": true
+    },
+    "Color cycle time": {
+     "value": 79
+    },
+    "Reverse": {
+     "enabled": false
+    },
+    "Ping pong": {
+     "enabled": true
+    },
+    "Color cycle pattern": {
+     "selected": "Bertrik fire"
+    },
+    "Color cycle pattern range": {
+     "from": 35,
+     "to": 100
+    },
+    "Per pixel offset %": {
+     "value": 18
+    }
+   },
+   "Cursor": {
+    "Enabled": {
+     "enabled": false
+    }
+   }
+  }
+ }
+}

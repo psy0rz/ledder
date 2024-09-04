@@ -14,9 +14,7 @@ import Animator from "../../Animator.js"
 import FxTwinkle from "../../fx/FxTwinkle.js"
 import FxColorPattern from "../../fx/FxColorPattern.js"
 import TheMatrix from "../MovieFx/TheMatrix.js"
-import DrawBlur from "../../draw/DrawBlur.js"
-import Color from "../../Color.js"
-import {scheduler} from "node:timers/promises"
+
 
 
 export default class Marquee extends Animator {
@@ -102,7 +100,6 @@ export default class Marquee extends Animator {
             textBoundBox.xMin = 0
 
             rotatorPromise = rotator.run(textPixels, textBoundBox, waitX, null)
-            // rotatorPromise = rotator.run(charPixels, textBbox, waitX, null)
         } else {
             //no scrolling
             textPixels.centerH(box)
