@@ -151,6 +151,12 @@ export let displayList = []
 // stackedMatrix.addGrid(matrixZigZag, 9,0, 5)
 // displayList.push(new DisplayRPI(stackedMatrix, 8*32)) //1 display per channel (8*32)
 
+//Raspberry PI with 8 ledstrings on volleyball net.
+//let mapper = new OffsetMapper(66, 8, true, [1,2,3,6,5,7,4,0])
+//mapper.flipY()
+//displayList.push(new DisplayRPI(mapper,66,1))
+
+
 /////////// WLED https://github.com/Aircoookie/WLED/wiki/UDP-Realtime-Control via DRGB
 // displayList.push(new DisplayWLED(37,8, false, false, '10.0.0.209'))
 
@@ -161,6 +167,7 @@ export let displayList = []
 // matrixzigzag8x32.flipY()
 // let staticDisplay=new DisplayQOISstream(matrixzigzag8x32, 256)
 // export let staticDisplayList=[ staticDisplay]
+
 
 
 
