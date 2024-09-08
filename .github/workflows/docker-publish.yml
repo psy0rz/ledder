@@ -22,8 +22,12 @@ jobs:
       -
         name: Build and push
         uses: docker/build-push-action@v6
+        
         with:
           push: true
+          platforms: linux/amd64,linux/arm/v7
+
           tags: psy0rz/ledder:latest
+          
 
           
