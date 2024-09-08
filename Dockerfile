@@ -1,14 +1,7 @@
 # syntax=docker/dockerfile:1
 
-#FROM node:latest
+# cacheble npm install stage that only reruns if package.json actually changes.
 FROM node:22 AS builder
-
-#build tools for alpine
-# RUN apk --no-cache add python3
-# RUN apk --no-cache add make
-# RUN apk --no-cache add gcc
-# RUN apk --no-cache add musl-dev
-# RUN apk --no-cache add g++
 
 ENV NODE_ENV=production
 
@@ -17,7 +10,7 @@ WORKDIR /app
 COPY ["package.json", "package-lock.json*", "./"]
 
 
-RUN NODE_ENV=development npm install
+RUN NODE_ENV=production npm install
 
 COPY . .
 
