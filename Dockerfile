@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:1
 
 #FROM node:latest
-FROM node:21 AS builder
+FROM node:22 AS builder
 
 #build tools for alpine
 # RUN apk --no-cache add python3
@@ -21,12 +21,12 @@ RUN NODE_ENV=development npm install
 
 COPY . .
 
-RUN npm run buildweb
+RUN npm run build
 
 RUN npm prune --production
 
 # final stage
-FROM node:21 AS final
+FROM node:22 AS final
 ENV NODE_ENV=production
 
 WORKDIR /app
