@@ -11,10 +11,13 @@
   <component name="ChangeListManager">
     <list default="true" id="7de4510b-f0e5-4402-9e95-cb9c8d6f6b3a" name="Changes" comment="fixed docker">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+<<<<<<< HEAD
       <change beforePath="$PROJECT_DIR$/ledder/animations/Countdown.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/animations/Countdown.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ledder/animations/Text/Marquee.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/animations/Text/Marquee.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ledder/fonts.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ledder/fonts.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/presets/Text/Marquee/default.json" beforeDir="false" afterPath="$PROJECT_DIR$/presets/Text/Marquee/default.json" afterDir="false" />
+=======
+>>>>>>> 416512c ()
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -199,8 +202,12 @@
       <workItem from="1721642994382" duration="1286000" />
       <workItem from="1721648923712" duration="124000" />
       <workItem from="1721649573784" duration="28000" />
+<<<<<<< HEAD
       <workItem from="1725456271221" duration="4066000" />
       <workItem from="1725481642798" duration="4832000" />
+=======
+      <workItem from="1725456271221" duration="10012000" />
+>>>>>>> 416512c ()
     </task>
     <task id="LOCAL-00001" summary="kjh">
       <created>1673098884534</created>

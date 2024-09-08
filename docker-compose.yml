@@ -2,6 +2,7 @@ version: '3.3'
 
 services:
  ledder:
+  platform: linux/arm/v7
   stop_grace_period: 0s
   build:
    context: .
@@ -14,7 +15,7 @@ services:
   #  - ./:/app
   # command: npm run debug
   volumes:
-   - ./displayconf.js:/app/displayconf.js
+   #- ./displayconf.js:/app/displayconf.js
    - ./presets:/app/presets
 
 # volumes:
