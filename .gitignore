@@ -47,3 +47,5 @@ displayconf.js
 /src/js/build.js
 /src/js/build.js.map
 
+.idea
+.vscode
