@@ -2,7 +2,6 @@ version: '3.3'
 
 services:
  ledder:
-  platform: linux/arm/v7
   stop_grace_period: 0s
   build:
    context: .
