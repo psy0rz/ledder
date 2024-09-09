@@ -15,7 +15,7 @@ export default class Scheduler {
 
     private frameNr: number
     private intervals: Set<Interval>
-    private frameTimeMicros: number
+    public __frameTimeMicros: number
     private defaultFrameTimeMicros: number
     private onCleanupCallbacks: any[]
     private childScheduler: Scheduler
@@ -108,7 +108,7 @@ export default class Scheduler {
         if (this.childScheduler)
             return await this.childScheduler.__step(realtime)
         else
-            return this.frameTimeMicros
+            return this.__frameTimeMicros
 
     }
 
@@ -147,9 +147,9 @@ export default class Scheduler {
      */
     public setFrameTimeuS(frameTimeMicros) {
         if (frameTimeMicros < this.defaultFrameTimeMicros)
-            this.frameTimeMicros = this.defaultFrameTimeMicros
+            this.__frameTimeMicros = this.defaultFrameTimeMicros
         else
-            this.frameTimeMicros = ~~frameTimeMicros
+            this.__frameTimeMicros = ~~frameTimeMicros
 
     }
 
@@ -250,7 +250,7 @@ export default class Scheduler {
 
         this.childScheduler = new Scheduler()
         this.childScheduler.__setDefaultFrameTime(this.defaultFrameTimeMicros)
-        this.childScheduler.setFrameTimeuS(this.frameTimeMicros)
+        this.childScheduler.setFrameTimeuS(this.__frameTimeMicros)
         return (this.childScheduler)
     }
 

@@ -14,7 +14,7 @@ export default abstract class Display {
      * information for the renderer:
      */
     //maximum fps this driver supports
-    minFrameTimeMicros=~~(1000000/60)
+    minFrameTimeMicros=~~(1000000/120)
 
     //default fps
     defaultFrameTimeMicros=~~(1000000/60)

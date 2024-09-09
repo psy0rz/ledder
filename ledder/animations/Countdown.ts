@@ -107,9 +107,10 @@ export default class Countdown extends Animator {
             }
 
 
+
+
             countBox.clear()
             countBox.add(new DrawText(controlX.value, controlY.value, font, text, color))
-            //countBox.center(box)
 
 
         })

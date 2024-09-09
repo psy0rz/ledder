@@ -60,7 +60,7 @@ export class WsContext {
 
 
         this.statsInterval = setInterval(() => {
-            console.log(`Stats ${this.id}: ${this.renderLoop.getStats()}`)
+            console.log(`Preview stats ${this.id}: ${this.renderLoop.getStats()}`)
         }, 3000)
 
 
