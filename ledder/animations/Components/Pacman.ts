@@ -85,12 +85,12 @@ export default class Pacman extends Animator {
         // `))
         frames.centerV(box)
 
-        let pacmanBox=new PixelBox(box)
+        let pacmanBox = new PixelBox(box)
         box.add(pacmanBox)
 
         new FxMovie(scheduler, controls, 4, 0).run(frames, pacmanBox)
 
-        new FxRotate(scheduler, controls, 1).run(frames, pacmanBox)
+        new FxRotate(scheduler, controls, 0.01).run(frames, pacmanBox)
 
 
     }

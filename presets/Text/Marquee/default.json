@@ -70,13 +70,13 @@
     "value": 60
    },
    "Rotate interval": {
-    "value": 2
+    "value": 1
    },
    "Rotate interval randomizer": {
     "value": 0
    },
    "Rotate X step": {
-    "value": -1
+    "value": 0.33
    },
    "Rotate Y step": {
     "value": 0

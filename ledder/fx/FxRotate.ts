@@ -17,13 +17,13 @@ export default class FxRotate extends Fx {
     intervalRandomizerControl: ControlValue
 
 
-    constructor(scheduler: Scheduler, controlGroup: ControlGroup, xStep = -1, yStep = 0, interval = 2, intervalRandomizer = 0) {
+    constructor(scheduler: Scheduler, controlGroup: ControlGroup, xStep = -1, yStep = 0, interval = 1, intervalRandomizer = 0) {
         super(scheduler, controlGroup)
 
         this.intervalControl = controlGroup.value('Rotate interval', interval, 1, 60, 1)
         this.intervalRandomizerControl = controlGroup.value('Rotate interval randomizer', intervalRandomizer, 0, 60, 1, true)
-        this.xStepControl = controlGroup.value('Rotate X step', xStep, -5, 5, 1)
-        this.yStepControl = controlGroup.value('Rotate Y step', yStep, -5, 5, 1)
+        this.xStepControl = controlGroup.value('Rotate X step', xStep, -5, 5, 0.01)
+        this.yStepControl = controlGroup.value('Rotate Y step', yStep, -5, 5, 0.01)
 
     }
 
@@ -31,7 +31,7 @@ export default class FxRotate extends Fx {
     //waitX and waitY will stop and resolve the promise when axis has shifted this much.
     //If target is specified, the pixels that are within the target bounds are added to it
     run(container: PixelList, bbox?: BoxInterface, waitX?: number, waitY?: number, target?: PixelBox) {
-        if (target!==undefined && target.size)
+        if (target !== undefined && target.size)
             throw ("Please use an empty target container")
 
         this.running = true
