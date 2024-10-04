@@ -39,9 +39,9 @@ export default class OffsetMapper extends Array {
                 this.push([])
                 for (let y = 0; y < this.height; y++) {
                     if (order)
-                        this[x].push(x * this.height + y)
-                    else
                         this[x].push(order[x] * this.height + y)
+                    else
+                        this[x].push(x * this.height + y)
                 }
             }
         }
