@@ -156,6 +156,12 @@ export let displayList = []
 //mapper.flipY()
 //displayList.push(new DisplayRPI(mapper,66,1))
 
+//Raspberry PI with 5 displays next to eachother in a loop, the displays are zigzag displays of 8x32 pixels
+// (standard ali express stuff)
+// let mapper = new OffsetMapper(32*5, 8, false)
+// mapper.zigZagY()
+// mapper.flipY()
+//displayList.push(new DisplayRPI(mapper, 32*8))
 
 /////////// WLED https://github.com/Aircoookie/WLED/wiki/UDP-Realtime-Control via DRGB
 // displayList.push(new DisplayWLED(37,8, false, false, '10.0.0.209'))
