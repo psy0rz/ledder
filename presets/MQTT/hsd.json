@@ -6,7 +6,7 @@
    "value": 60
   },
   "MQTT host": {
-   "text": "localhost"
+   "text": "mqtt.hackerspace-drenthe.nl"
   },
   "MQTT topic": {
    "text": "ledder"

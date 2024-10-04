@@ -45,7 +45,7 @@ export default class MQTT extends Animator {
 
         this.box = box
 
-        const mqttHost = controls.input('MQTT host', "mqtt", true)
+        const mqttHost = controls.input('MQTT host', "localhost", true)
         const mqttTopic = controls.input('MQTT topic', "ledder", true)
 
         let childControls = controls.group('Current animation')
@@ -54,9 +54,25 @@ export default class MQTT extends Animator {
 
         this.animationManager = new AnimationManager(box, scheduler.child(), childControls)
 
-        this.statusMessage(`Conn ${mqttHost.text}...`)
+        this.statusMessage(`conn ${mqttHost.text}`)
         console.log(`MQTT: Connecting ${mqttHost.text}`)
         let mqttClient = mqtt.connect("mqtt://" + mqttHost.text, {})
+
+        mqttClient.on('connect', ()=>{
+            console.log(`MQTT: ${mqttHost.text} connected`)
+            this.statusMessage("conn ok")
+        })
+
+        mqttClient.on('disconnect', ()=>{
+            console.log(`MQTT: ${mqttHost.text} disconnected`)
+            this.statusMessage("disc.")
+        })
+
+        mqttClient.on('error', (e)=>{
+            console.log(`MQTT: ${mqttHost.text} error ${e}`)
+            this.statusMessage("error")
+        })
+
 
         //recursively send all control values to mqtt
         function sendControls(topic: string, controlGroup: ControlGroup) {
