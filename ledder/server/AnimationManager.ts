@@ -145,8 +145,16 @@ export default class AnimationManager {
 
     //select an animation and preset, load it and start it
     public async select(animationAndPresetPath: string, keepControls: boolean) {
-        this.animationName = animationAndPresetPath.match(RegExp("(^.*)/"))[1]
-        this.presetName = animationAndPresetPath.match(RegExp("[^/]+$"))[0]
+
+        try {
+            this.animationName = animationAndPresetPath.match(RegExp("(^.*)/"))[1]
+            this.presetName = animationAndPresetPath.match(RegExp("[^/]+$"))[0]
+        }
+        catch (e)
+        {
+            console.error(`Invalid name: ${animationAndPresetPath}`)
+            return
+        }
 
         await this.reload(keepControls)
 

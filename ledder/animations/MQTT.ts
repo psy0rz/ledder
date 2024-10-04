@@ -61,15 +61,16 @@ export default class MQTT extends Animator {
         mqttClient.on('connect', ()=>{
             console.log(`MQTT: ${mqttHost.text} connected`)
             this.statusMessage("conn ok")
+            mqttClient.subscribe(mqttTopic.text+"/#")
         })
 
         mqttClient.on('disconnect', ()=>{
-            console.log(`MQTT: ${mqttHost.text} disconnected`)
+            console.error(`MQTT: ${mqttHost.text} disconnected`)
             this.statusMessage("disc.")
         })
 
         mqttClient.on('error', (e)=>{
-            console.log(`MQTT: ${mqttHost.text} error ${e}`)
+            console.error(`MQTT: ${mqttHost.text} error ${e}`)
             this.statusMessage("error")
         })
 
@@ -91,7 +92,7 @@ export default class MQTT extends Animator {
 
         mqttClient.on('message', async (topic, messageBuf) => {
                 let message = messageBuf.toString()
-                // console.log(`MQTT ${topic}: ${message}`)
+                console.log(`MQTT ${topic}: ${message}`)
                 this.statusMessage("")
 
                 let subTopic = topic.substring(mqttTopic.text.length + 1)
@@ -104,7 +105,9 @@ export default class MQTT extends Animator {
                         console.log(`MQTT select ${message}`)
 
                             await this.animationManager.select(message, false).catch((e) => {
+                                this.animationManager.stop(false)
                                 this.statusMessage((e.message))
+                                console.error(e.message)
 
                             })
 
