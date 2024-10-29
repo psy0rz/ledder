@@ -66,6 +66,11 @@ npm i ../rpi-ws281x-smi/
 
 Use an example from displayconf-example.js to configure the DisplayRPI driver.
 
+NOTE2: Since the pi probably doesnt have enough memory to build the vite-stuff, i usally run npm buildweb somewhere else and upload the result.
+
+We really need a prebuilt docker image for this :)
+
+
 ### Pixelflut
 
 (Currently broken, needs to be ported to new API. See DisplayPixelflut.ts)
