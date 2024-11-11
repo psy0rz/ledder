@@ -40,18 +40,29 @@ export class DisplayWebsocket extends Display {
 
     }
 
+    /*
+
+blend:
+  c = cn*a + co*(1-a)
+
+verdelen:
+  c = cn*b + co
+
+
+     */
+
     //weighted , after linear interpolation.
-    setPixelRounded(x, y, color, alpha) {
+    setPixelRounded(x, y, color, weight) {
         if (x >= 0 && x < this.width && y >= 0 && y < this.height) {
 
             const offset = x * 4 + (y) * 4 * this.width
-            const old_a = 1 - alpha
+            const old_a = 1 - weight
             // const old_a = 1
 
 
-            this.imageBuf8[offset] = (this.imageBuf8[offset] * old_a + color.r * alpha)
-            this.imageBuf8[offset + 1] = (this.imageBuf8[offset + 1] * old_a + color.g * alpha)
-            this.imageBuf8[offset + 2] = (this.imageBuf8[offset + 2] * old_a + color.b * alpha)
+            this.imageBuf8[offset] = (this.imageBuf8[offset] * old_a + color.r * weight)
+            this.imageBuf8[offset + 1] = (this.imageBuf8[offset + 1] * old_a + color.g * weight)
+            this.imageBuf8[offset + 2] = (this.imageBuf8[offset + 2] * old_a + color.b * weight)
             this.imageBuf8[offset + 3] = 255 //alpha of canvas itself
         }
     }
