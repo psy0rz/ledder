@@ -17,13 +17,13 @@ export default class FxRotate extends Fx {
     intervalRandomizerControl: ControlValue
 
 
-    constructor(scheduler: Scheduler, controlGroup: ControlGroup, xStep = -1, yStep = 0, interval = 2, intervalRandomizer = 0) {
+    constructor(scheduler: Scheduler, controlGroup: ControlGroup, xStep = -1, yStep = 0, interval = 2, intervalRandomizer = 0, minStep=1) {
         super(scheduler, controlGroup)
 
         this.intervalControl = controlGroup.value('Rotate interval', interval, 1, 60, 1)
         this.intervalRandomizerControl = controlGroup.value('Rotate interval randomizer', intervalRandomizer, 0, 60, 1, true)
-        this.xStepControl = controlGroup.value('Rotate X step', xStep, -5, 5, 1)
-        this.yStepControl = controlGroup.value('Rotate Y step', yStep, -5, 5, 1)
+        this.xStepControl = controlGroup.value('Rotate X step', xStep, -5, 5, minStep)
+        this.yStepControl = controlGroup.value('Rotate Y step', yStep, -5, 5, minStep)
 
     }
 

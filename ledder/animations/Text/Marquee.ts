@@ -14,7 +14,7 @@ import Animator from "../../Animator.js"
 import FxTwinkle from "../../fx/FxTwinkle.js"
 import FxColorPattern from "../../fx/FxColorPattern.js"
 import TheMatrix from "../MovieFx/TheMatrix.js"
-
+import FxSubpixels from "../../fx/FxSubpixels.js"
 
 
 export default class Marquee extends Animator {
@@ -33,9 +33,6 @@ export default class Marquee extends Animator {
 
         textPixels.centerV(box)
 
-        //target container for scroll-view
-        // const textBox = new PixelBox(box)
-
         let starsGroup = control.group("Stars", false, false)
         if (starsGroup.switch('Enabled', false).enabled) {
             new MovingStars().run(box, scheduler, starsGroup)
@@ -51,10 +48,9 @@ export default class Marquee extends Animator {
             new TheMatrix().run(box, scheduler, theMatrixGroup)
         }
 
-        //add text on top of background stuff
-        box.add(textPixels)
 
         let scrollGroup = control.group("Scrolling")
+
         let rotatorPromise
         if (scrollGroup.switch('Enabled', true).enabled) {
 
@@ -64,7 +60,17 @@ export default class Marquee extends Animator {
                 scheduler.setFps(fpsControl.value)
             })
 
-            const rotator = new FxRotate(scheduler, scrollGroup)
+            if (scrollGroup.switch("Subpixel filtering", false).enabled) {
+                const subpixelFilter = new FxSubpixels(scheduler, control)
+                const filteredTextPixels = new PixelBox(box)
+                box.add(filteredTextPixels)
+                subpixelFilter.run(textPixels, filteredTextPixels)
+            } else {
+                box.add(textPixels)
+            }
+
+
+            const rotator = new FxRotate(scheduler, scrollGroup, -1, 0, 1, 0, 0.01)
 
             //show one time or loop?
             let waitX = 0
@@ -100,8 +106,11 @@ export default class Marquee extends Animator {
             textBoundBox.xMin = 0
 
             rotatorPromise = rotator.run(textPixels, textBoundBox, waitX, null)
+
+
         } else {
             //no scrolling
+            box.add(textPixels)
             textPixels.centerH(box)
         }
 

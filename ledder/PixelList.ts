@@ -14,7 +14,7 @@ export default class PixelList extends Set<Pixel | PixelList> {
 
 
     /* Creates a traditional x/y raster, with seperate pixels that each get a copy of the color object.
-    * (Dont use this if you can do it on the more modern ledder-way where each pixel is an object in a container-list)
+    * Note that this can be more efficient compared to creating/destroying lost of pixel objects for every frame.
     * raster[x][y] corresponds to Pixel(x,y)
     * @param YX swap array layout so raster[y][x] corresponds to Pixel(x,y)
     * @param xFlip Flip x axis: 0,0 corresponds to Pixel(xMax,0)
