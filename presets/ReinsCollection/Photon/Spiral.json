@@ -121,6 +121,9 @@
      },
      "Show one time only": {
       "enabled": false
+     },
+     "Subpixel filtering": {
+      "enabled": false
      }
     },
     "Flames": {
@@ -187,7 +190,7 @@
     "enabled": false
    },
    "Marquee enable": {
-    "enabled": true
+    "enabled": false
    }
   }
  }

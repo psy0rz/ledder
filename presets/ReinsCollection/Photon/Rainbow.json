@@ -301,6 +301,9 @@
      },
      "Whitespace": {
       "value": 10
+     },
+     "Subpixel filtering": {
+      "enabled": false
      }
     },
     "Flames": {
@@ -350,7 +353,7 @@
     "enabled": false
    },
    "Marquee enable": {
-    "enabled": true
+    "enabled": false
    }
   }
  }
