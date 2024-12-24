@@ -29,7 +29,7 @@ export class DisplayQOISudp extends DisplayQOIS {
      * @param pixelsPerChannel Number of pixels per channel you want to use. Doesnt have to correspondent with how you compiled ledder, leds will be skipped/cropped. Or 0 to use all the leds available in the firmware.
      * @param maxFps Maximum frames per second. This depends on the total leds and leds per channel (512 leds per channel is max 58fps or less). We use 50fps to be on the safe side. Keep an eye ledstream and see if the udpbuffer keeps overflowing.
      */
-    constructor(mapper: OffsetMapper, ips, port, pixelsPerChannel = 0, maxFps=50) {
+    constructor(mapper: OffsetMapper, ips, port, pixelsPerChannel = 0, maxFps=60) {
         super(mapper, pixelsPerChannel)
 
 
@@ -91,7 +91,7 @@ export class DisplayQOISudp extends DisplayQOIS {
 
         const frameBytes = []
 
-        const maxFramesLag = 12
+        const maxFramesLag = 24
         const maxTimeLag = 250
 
         //buffer this many frames

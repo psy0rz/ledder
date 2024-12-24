@@ -7,7 +7,6 @@ import {Render} from "./Render.js"
 export class RenderRealtime extends Render {
 
     private nextTimeMicros: number
-    private lastFrameMicros: number
 
     private keepRendering: boolean
 
@@ -24,7 +23,6 @@ export class RenderRealtime extends Render {
         if (!this.keepRendering) {
             this.keepRendering = true
             this.nextTimeMicros = Date.now() * 1000
-            this.lastFrameMicros = 0
             this.lastStatUpdate=Date.now()
 
             this.lateFrames=0
@@ -47,29 +45,29 @@ export class RenderRealtime extends Render {
         this.nextTimeMicros+=  await this.scheduler.__step(true)
 
         //max 10 frames difference
-        if (Math.abs(this.nextTimeMicros-nowUS)>this.scheduler.__frameTimeMicros*10) {
+
+        let diffUS=this.nextTimeMicros-nowUS
+
+        //too slow, or other clock problem
+        if (Math.abs(this.nextTimeMicros-nowUS)>this.scheduler.__frameTimeMicros*2) {
             //reset
-            this.nextTimeMicros = nowUS+this.scheduler.__frameTimeMicros;
+            this.nextTimeMicros = nowUS+this.scheduler.__frameTimeMicros
+            this.droppedFrames++
         }
 
-        if ( nowUS-this.lastFrameMicros >= this.display.minFrameTimeMicros) {
-            try {
-                this.display.render(this.box)
-            } catch (e) {
-                console.error("Exception while rendering:", e)
-            }
-            this.display.frame(this.nextTimeMicros)
-            this.lastFrameMicros = nowUS
+        try {
+            this.display.render(this.box)
+        } catch (e) {
+            console.error("Exception while rendering:", e)
         }
-        else
-        {
-            this.droppedFrames++;
-        }
+        this.display.frame(this.nextTimeMicros)
 
         if (nowUS-this.lastStatUpdate>1000000)
         {
-
-            console.log(`RenderRealtime: ${this.lateFrames} late. ${this.droppedFrames} dropped. ${ Math.round( ( 1000-this.idleMS)/10) }% busy.`)
+            let busy=Math.round( ( 1000-this.idleMS)/10)
+            if (busy<0)
+                busy=0
+            console.log(`RenderRealtime: ${this.lateFrames} late. ${this.droppedFrames} dropped. ${ busy }% busy.`)
             this.lastStatUpdate=nowUS
             this.droppedFrames=0;
             this.lateFrames=0;
