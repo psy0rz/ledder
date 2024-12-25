@@ -89,6 +89,7 @@ export class DisplayQOISudp extends DisplayQOIS {
 
         displayTime = displayTime / 1000
 
+
         const frameBytes = []
 
         const maxFramesLag = 24

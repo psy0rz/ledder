@@ -113,7 +113,7 @@ export default abstract class Display {
     abstract setPixel(x: number, y: number, color: ColorInterface);
 
     //should send the current rendered frame buffer and clear the buffer
-    //Parameter is time in uS when the frame should be rendered.
+    //Parameter is absolute time in uS when the frame should be rendered.
     //For pre-rendeers this starts counting at 0, for live renders this is the systemtime.
     abstract frame(displayTimeMicros: number)
 

@@ -77,7 +77,7 @@ export abstract class DisplayQOIS extends Display {
     }
 
     //encodes current pixels by adding bytes to bytes array.
-    encode(bytes: Array<number>, displayTime): boolean {
+    encode(bytes: Array<number>, displayTimeMS): boolean {
         let prevPixel = colorBlack
         let run = 0
         let pixelCount = 1
@@ -92,8 +92,8 @@ export abstract class DisplayQOIS extends Display {
         bytes.push((this.pixelsPerChannel >> 8) & 0xff)
 
         //time when to display frame
-        bytes.push(displayTime & 0xff)
-        bytes.push((displayTime >> 8) & 0xff)
+        bytes.push(displayTimeMS & 0xff)
+        bytes.push((displayTimeMS >> 8) & 0xff)
 
 
         this.statsBytes -= bytes.length //substract header overhead
