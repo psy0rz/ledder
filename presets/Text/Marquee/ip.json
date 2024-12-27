@@ -12,7 +12,7 @@
    "value": 0
   },
   "Text": {
-   "text": "ip=%i"
+   "text": "try me: http://%i:3000"
   },
   "Text color": {
    "r": 33,
@@ -70,7 +70,7 @@
     "value": 60
    },
    "Rotate interval": {
-    "value": 2
+    "value": 1
    },
    "Rotate interval randomizer": {
     "value": 0

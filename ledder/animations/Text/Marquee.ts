@@ -15,6 +15,7 @@ import FxTwinkle from "../../fx/FxTwinkle.js"
 import FxColorPattern from "../../fx/FxColorPattern.js"
 import TheMatrix from "../MovieFx/TheMatrix.js"
 import FxSubpixels from "../../fx/FxSubpixels.js"
+import {interpretMacro} from "../../macros.js"
 
 
 export default class Marquee extends Animator {
@@ -27,8 +28,14 @@ export default class Marquee extends Animator {
 
         const font = fontSelect(control, 'Font')
         const input = control.input('Text', "Marquee  ", true)
+
+
+
         const colorControl = control.color("Text color", 0x21, 0xff, 0, 1)
-        const textPixels = new DrawText(box.xMin, box.yMin, font, input.text, colorControl)
+
+
+        let macroedText=interpretMacro(input.text)
+        const textPixels = new DrawText(box.xMin, box.yMin, font, macroedText, colorControl)
 
 
         textPixels.centerV(box)
