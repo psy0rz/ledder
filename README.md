@@ -9,6 +9,17 @@ Control in realtime via a webgui.
 
 LIVE DEMO: https://ledder.datux.nl
 
+# 38C3 megabanner info
+We extended the matrix, so now its 8 x 92 .
+
+![photo_6015022336098550508_y](https://github.com/user-attachments/assets/cf4434a4-1626-4e7f-85ec-732aaad85866)
+
+Its probably at: http://151.217.6.18:3000/
+
+Meet me at the HSNL for more info (the long table on the left front of the display).
+
+We can write drivers for your project!
+
 # Bornhack 2024 megabanner info
 
 ![PXL_20240721_200732771](https://github.com/user-attachments/assets/a7cd93f2-5696-4c3f-a943-3db96c7723bd)
