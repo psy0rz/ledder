@@ -100,6 +100,17 @@ export default class Color implements ColorInterface {
     }
 
 
+    // toHexRGB()
+    // {
+    //     return `${this.r.toString(16).padStart(2, '0')}${this.g.toString(16).padStart(2, '0')}${this.b.toString(16).padStart(2, '0')}`;
+    // }
+    //
+    // toHexRGBA()
+    // {
+    //     const a_255=~~(this.a*255)
+    //     return `${this.r.toString(16).padStart(2, '0')}${this.g.toString(16).padStart(2, '0')}${this.b.toString(16).padStart(2, '0')}${a_255.toString(16).padStart(2, '0')}`;
+    // }
+
 
 
 }
