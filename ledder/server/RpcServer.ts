@@ -60,7 +60,8 @@ export class RpcServer extends Rpc {
         // @ts-ignore
         this.app.ws('/ws', (ws, req) => {
             this.idCount++
-            let context = new WsContext(ws, this.server, this.idCount)
+            let context = new WsContext(ws, this.server, this.idCount, req.socket.remoteAddress)
+
 
             ws.on('message', async (msg) => {
                 // console.log("RPC request: ", msg)

@@ -12,16 +12,18 @@ export class WsContext {
     client: JSONRPCServerAndClient<WsContext, WsContext>
     renderLoop: RenderRealtime
     id: number
+    remoteAddress:string
 
     statsInterval: any
     started: boolean
 
-    constructor(ws: WebSocket, client, id) {
+    constructor(ws: WebSocket, client, id, remoteAddress) {
         this.ws = ws
         this.client = client
         this.id = id
         this.started = false
-        console.log(`WsContext: New session ${id}`)
+        this.remoteAddress=remoteAddress
+        console.log(`WsContext: New session ${id} ${remoteAddress}`)
 
 
     }
@@ -43,7 +45,7 @@ export class WsContext {
 
 
         let display = new DisplayWebsocket(width, height, this.ws)
-        this.renderLoop = new RenderRealtime(display)
+        this.renderLoop = new RenderRealtime(display, `${this.id} ${this.remoteAddress}`)
         //todo: add delay or queue
         this.renderLoop.controlGroup.__onReset(() => {
             this.request("control.reset").then(() => {
@@ -59,9 +61,9 @@ export class WsContext {
         this.renderLoop.start()
 
 
-        this.statsInterval = setInterval(() => {
-            console.log(`Preview stats ${this.id}: ${this.renderLoop.getStats()}`)
-        }, 3000)
+        // this.statsInterval = setInterval(() => {
+        //     console.log(`Preview stats ${this.id}: ${this.renderLoop.getStats()}`)
+        // }, 3000)
 
 
     }

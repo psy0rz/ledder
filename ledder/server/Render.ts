@@ -10,13 +10,17 @@ export class Render {
 
     public readonly animationManager: AnimationManager
     public readonly controlGroup: ControlGroup
+    public readonly description: string
 
     protected display: Display
     protected readonly box: PixelBox
     protected readonly scheduler: Scheduler
 
-    constructor(display: Display) {
+
+    constructor(display: Display, description='') {
         this.display = display
+
+        this.description=description
 
         this.controlGroup = new ControlGroup('root')
         this.box = new PixelBox(display)
@@ -32,7 +36,7 @@ export class Render {
         this.box.forEachPixel(() => {
             count++
         })
-        return (`${count} pixels.\n${this.scheduler.__getStats()}`)
+        return (`${this.description}: ${count} pixels.\n${this.scheduler.__getStats()}`)
     }
 
 }

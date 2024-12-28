@@ -67,7 +67,7 @@ export class RenderRealtime extends Render {
             let busy=Math.round( ( 1000-this.idleMS)/10)
             if (busy<0)
                 busy=0
-            console.log(`RenderRealtime: ${this.lateFrames} late. ${this.droppedFrames} dropped. ${ busy }% busy.`)
+            console.log(`RenderRealtime ${this.description}: ${this.lateFrames} late. ${this.droppedFrames} dropped. ${ busy }% busy.`)
             this.lastStatUpdate=nowUS
             this.droppedFrames=0;
             this.lateFrames=0;
