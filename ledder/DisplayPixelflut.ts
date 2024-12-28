@@ -9,6 +9,9 @@ const encoder = new TextEncoder()
 /*
 We pre-generate one fixed send buffer and flood that in a loop.
 Then the driver will manipulate the colors in this buffer with the new data.
+
+NOTE: it sent 125 FPS @118 MB/s with my laptop, only using 33%CPU.
+
  */
 export default class DisplayPixelflut extends Display {
     client: net.Socket
@@ -21,12 +24,24 @@ export default class DisplayPixelflut extends Display {
     statsBytesSend: number
     statsFpsSend: number
 
+    offsetX: number
+    offsetY: number
+    stepX:number
+    stepY:number
+    stepSize:number
 
-    constructor(width, height, host, port, gridSize = 15, pixelSize = 14) {
+
+    constructor(width, height, host, port, gridSize = 15, pixelSize = 15) {
         super(width, height)
 
         this.statsBytesSend = 0
         this.statsFpsSend=0
+
+        this.offsetX=0
+        this.offsetY=0
+        this.stepY=0
+        this.stepX=0
+        this.stepSize=1
 
         //create render buffer
         this.frameBuffer = []
@@ -72,7 +87,7 @@ export default class DisplayPixelflut extends Display {
 
 
         this.client.on('connect', () => {
-            this.client.write('OFFSET 1000,550\n')
+            this.client.write('OFFSET 2000,550\n')
             this.fillSendbuffer()
 
 
@@ -98,13 +113,37 @@ export default class DisplayPixelflut extends Display {
         })
     }
 
+    updateOffsets()
+    {
+        return
+        if (this.offsetX<=0)
+            this.stepX=this.stepSize
+
+        if (this.offsetX>3300)
+            this.stepX=-this.stepSize
+
+        if (this.offsetY<=0)
+            this.stepY=this.stepSize
+
+        if (this.offsetY>900)
+            this.stepY=-this.stepSize
+
+        this.offsetX=this.offsetX+this.stepX
+        this.offsetY=this.offsetY+this.stepY
+
+
+        this.client.write(`OFFSET ${this.offsetX},${this.offsetY}\n`)
+    }
+
     fillSendbuffer() {
-        this.statsBytesSend = this.statsBytesSend + this.sendBuffer.length
-        this.statsFpsSend=this.statsFpsSend+1
-        while (this.client.write(this.sendBuffer)) {
+        while (1) {
             this.statsFpsSend=this.statsFpsSend+1
             this.statsBytesSend = this.statsBytesSend + this.sendBuffer.length
 
+            this.updateOffsets()
+
+            if (!this.client.write(this.sendBuffer))
+                return
         }
 
     }
