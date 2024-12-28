@@ -26,22 +26,22 @@ export default class DisplayPixelflut extends Display {
 
     offsetX: number
     offsetY: number
-    stepX:number
-    stepY:number
-    stepSize:number
+    stepX: number
+    stepY: number
+    stepSize: number
 
 
     constructor(width, height, host, port, gridSize = 15, pixelSize = 15) {
         super(width, height)
 
         this.statsBytesSend = 0
-        this.statsFpsSend=0
+        this.statsFpsSend = 0
 
-        this.offsetX=0
-        this.offsetY=0
-        this.stepY=0
-        this.stepX=0
-        this.stepSize=1
+        this.offsetX = 0
+        this.offsetY = 0
+        this.stepY = 0
+        this.stepX = 0
+        this.stepSize = 1
 
         //create render buffer
         this.frameBuffer = []
@@ -53,24 +53,30 @@ export default class DisplayPixelflut extends Display {
             }
         }
 
+        //prepare offset array
         this.sendBufferOffsets = []
+        for (let x = 0; x < this.width; x++) {
+            const Ys = []
+            this.sendBufferOffsets.push(Ys)
+            for (let y = 0; y < this.height; y++) {
+                Ys.push([])
+
+            }
+        }
+
         //create static sendbuffer
         let buff = ""
-        for (let x = 0; x < width; x++) {
-            const yOffsets = []
-            this.sendBufferOffsets.push(yOffsets)
-            for (let y = 0; y < height; y++) {
+        for (let y = 0; y < height; y++) {
+            for (let x = 0; x < width; x++) {
                 const xScaled = ~~x * gridSize
                 const yScaled = ~~y * gridSize
 
-                const offsets = []
-                yOffsets.push(offsets)
 
                 for (let thisX = xScaled; thisX < xScaled + pixelSize; thisX++) {
                     for (let thisY = yScaled; thisY < yScaled + pixelSize; thisY++) {
 
                         buff = buff + `PX ${thisX},${thisY} ffffffff\n`
-                        offsets.push(buff.length - 9)
+                        this.sendBufferOffsets[x][y].push(buff.length - 9)
                     }
                 }
             }
@@ -83,13 +89,10 @@ export default class DisplayPixelflut extends Display {
         this.client = new net.Socket()
         this.client.setNoDelay(true)
 
-        this.client.connect(port, host)
-
 
         this.client.on('connect', () => {
-            this.client.write('OFFSET 2000,550\n')
+            this.client.write('OFFSET 500,550\n')
             this.fillSendbuffer()
-
 
         })
 
@@ -99,37 +102,44 @@ export default class DisplayPixelflut extends Display {
 
         })
 
+        this.client.connect(port, host)
         setInterval(() => {
             if (this.statsBytesSend === 0)
                 console.log('PixelFlut: idle')
             else
                 console.log(`PixelFlut: ${~~(this.statsBytesSend / 1000000)} MB/s ${this.statsFpsSend} FPS`)
             this.statsBytesSend = 0
-            this.statsFpsSend=0
+            this.statsFpsSend = 0
+
+            if (this.client.readyState == "closed") {
+                console.log("Pixelflut: Reconnecting")
+                this.client.connect(port, host)
+            }
+
         }, 1000)
+
 
         this.client.on('error', (e) => {
             console.error(`PixelFLut: ${e}`)
         })
     }
 
-    updateOffsets()
-    {
+    updateOffsets() {
         return
-        if (this.offsetX<=0)
-            this.stepX=this.stepSize
+        if (this.offsetX <= 0)
+            this.stepX = this.stepSize
 
-        if (this.offsetX>3300)
-            this.stepX=-this.stepSize
+        if (this.offsetX > 3300)
+            this.stepX = -this.stepSize
 
-        if (this.offsetY<=0)
-            this.stepY=this.stepSize
+        if (this.offsetY <= 0)
+            this.stepY = this.stepSize
 
-        if (this.offsetY>900)
-            this.stepY=-this.stepSize
+        if (this.offsetY > 900)
+            this.stepY = -this.stepSize
 
-        this.offsetX=this.offsetX+this.stepX
-        this.offsetY=this.offsetY+this.stepY
+        this.offsetX = this.offsetX + this.stepX
+        this.offsetY = this.offsetY + this.stepY
 
 
         this.client.write(`OFFSET ${this.offsetX},${this.offsetY}\n`)
@@ -137,7 +147,7 @@ export default class DisplayPixelflut extends Display {
 
     fillSendbuffer() {
         while (1) {
-            this.statsFpsSend=this.statsFpsSend+1
+            this.statsFpsSend = this.statsFpsSend + 1
             this.statsBytesSend = this.statsBytesSend + this.sendBuffer.length
 
             this.updateOffsets()
