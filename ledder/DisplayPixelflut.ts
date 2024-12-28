@@ -19,12 +19,14 @@ export default class DisplayPixelflut extends Display {
     sendBufferOffsets: Array<Array<Array<number>>>
 
     statsBytesSend: number
+    statsFpsSend: number
 
 
-    constructor(width, height, host, port, gridSize = 15, pixelSize = 15) {
+    constructor(width, height, host, port, gridSize = 15, pixelSize = 14) {
         super(width, height)
 
         this.statsBytesSend = 0
+        this.statsFpsSend=0
 
         //create render buffer
         this.frameBuffer = []
@@ -86,8 +88,9 @@ export default class DisplayPixelflut extends Display {
             if (this.statsBytesSend === 0)
                 console.log('PixelFlut: idle')
             else
-                console.log(`PixelFlut: ${~~(this.statsBytesSend / 1000000)} MB/s `)
+                console.log(`PixelFlut: ${~~(this.statsBytesSend / 1000000)} MB/s ${this.statsFpsSend} FPS`)
             this.statsBytesSend = 0
+            this.statsFpsSend=0
         }, 1000)
 
         this.client.on('error', (e) => {
@@ -97,7 +100,9 @@ export default class DisplayPixelflut extends Display {
 
     fillSendbuffer() {
         this.statsBytesSend = this.statsBytesSend + this.sendBuffer.length
+        this.statsFpsSend=this.statsFpsSend+1
         while (this.client.write(this.sendBuffer)) {
+            this.statsFpsSend=this.statsFpsSend+1
             this.statsBytesSend = this.statsBytesSend + this.sendBuffer.length
 
         }
