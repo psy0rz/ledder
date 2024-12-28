@@ -1,45 +1,67 @@
 import Display from "./Display.js"
-import ColorInterface from "./ColorInterface"
+import ColorInterface from "./ColorInterface.js"
 import * as net from "node:net"
+import Color from "./Color.js"
 
 const encoder = new TextEncoder()
 
 
+/*
+We pre-generate one fixed send buffer and flood that in a loop.
+Then the driver will manipulate the colors in this buffer with the new data.
+ */
 export default class DisplayPixelflut extends Display {
     client: net.Socket
-    pixelSize: number
-    gridSize: number
-    frameBuff: Uint8Array
 
-    bytesSend: number
+    frameBuffer: Array<Array<Color>>
+
+    sendBuffer: Uint8Array
+    sendBufferOffsets: Array<Array<Array<number>>>
+
+    statsBytesSend: number
 
 
-    constructor(width, height, host, port) {
+    constructor(width, height, host, port, gridSize = 15, pixelSize = 15) {
         super(width, height)
 
-        this.gridSize = 15
-        this.pixelSize = 10
-        this.bytesSend = 0
+        this.statsBytesSend = 0
 
-
-        //create static pixelbuffer
-        let buff = ""
-        for (let y = 0; y < height; y++) {
-            for (let x = 0; x < width; x++) {
-                const xScaled = ~~x * this.gridSize
-                const yScaled = ~~y * this.gridSize
-
-                for (let thisX = xScaled; thisX < xScaled + this.pixelSize; thisX++)
-                    for (let thisY = yScaled; thisY < yScaled + this.pixelSize; thisY++) {
-
-                        buff = buff + `PX ${thisX},${thisY} ffffff\n`
-                    }
-
+        //create render buffer
+        this.frameBuffer = []
+        for (let x = 0; x < width; x++) {
+            const Ys = []
+            this.frameBuffer.push(Ys)
+            for (let y = 0; y < height; y++) {
+                Ys.push(new Color())
             }
         }
 
-        this.frameBuff = new Uint8Array(buff.length)
-        this.frameBuff.set(encoder.encode(buff))
+        this.sendBufferOffsets = []
+        //create static sendbuffer
+        let buff = ""
+        for (let x = 0; x < width; x++) {
+            const yOffsets = []
+            this.sendBufferOffsets.push(yOffsets)
+            for (let y = 0; y < height; y++) {
+                const xScaled = ~~x * gridSize
+                const yScaled = ~~y * gridSize
+
+                const offsets = []
+                yOffsets.push(offsets)
+
+                for (let thisX = xScaled; thisX < xScaled + pixelSize; thisX++) {
+                    for (let thisY = yScaled; thisY < yScaled + pixelSize; thisY++) {
+
+                        buff = buff + `PX ${thisX},${thisY} ffffffff\n`
+                        offsets.push(buff.length - 9)
+                    }
+                }
+            }
+        }
+
+
+        this.sendBuffer = new Uint8Array(buff.length)
+        this.sendBuffer.set(encoder.encode(buff))
 
         this.client = new net.Socket()
         this.client.setNoDelay(true)
@@ -48,7 +70,7 @@ export default class DisplayPixelflut extends Display {
 
 
         this.client.on('connect', () => {
-            this.client.write('OFFSET 1600,300\n')
+            this.client.write('OFFSET 1000,550\n')
             this.fillSendbuffer()
 
 
@@ -61,22 +83,22 @@ export default class DisplayPixelflut extends Display {
         })
 
         setInterval(() => {
-            if (this.bytesSend===0)
+            if (this.statsBytesSend === 0)
                 console.log('PixelFlut: idle')
             else
-                console.log(`PixelFlut: ${~~(this.bytesSend/1000000)} MB/s `)
-            this.bytesSend = 0
+                console.log(`PixelFlut: ${~~(this.statsBytesSend / 1000000)} MB/s `)
+            this.statsBytesSend = 0
         }, 1000)
 
-        this.client.on('error', (e)=>{
+        this.client.on('error', (e) => {
             console.error(`PixelFLut: ${e}`)
         })
     }
 
     fillSendbuffer() {
-        this.bytesSend = this.bytesSend + this.frameBuff.length
-        while (this.client.write(this.frameBuff)) {
-            this.bytesSend = this.bytesSend + this.frameBuff.length
+        this.statsBytesSend = this.statsBytesSend + this.sendBuffer.length
+        while (this.client.write(this.sendBuffer)) {
+            this.statsBytesSend = this.statsBytesSend + this.sendBuffer.length
 
         }
 
@@ -84,49 +106,35 @@ export default class DisplayPixelflut extends Display {
 
     frame(displayTimeMicros: number) {
 
-        // console.log(this.client.write(this.frameBuff))
+
+        for (let x = 0; x < this.width; x++) {
+            for (let y = 0; y < this.height; y++) {
+
+                const color = this.frameBuffer[x][y]
+                const rgb = `${(~~color.r).toString(16).padStart(2, '0')}${(~~color.g).toString(16).padStart(2, '0')}${(~~color.b).toString(16).padStart(2, '0')}${(~~color.b).toString(16).padStart(2, '0')}`
+
+                const rgbArray = encoder.encode(rgb)
+
+                // console.log(this.frameBuffOffsets.length)
+                for (const offset of this.sendBufferOffsets[~~x][~~y]) {
+                    this.sendBuffer.set(rgbArray, offset)
+
+
+                }
+                color.reset()
+
+            }
+        }
 
     }
 
-    clearBuff() {
-
-        //fill with spaces
-        // this.frameOffset = 0
-        // this.frameBuff.fill(' '.charCodeAt(0))
-    }
-
-    // addBuff(stringOrNum) {
-    //     const result = encoder.encodeInto(
-    //         stringOrNum,
-    //         this.frameBuff.subarray(this.frameOffset),
-    //     )
-    //     this.frameOffset = this.frameOffset + result.written
-    //
-    //     if (this.frameOffset >= this.frameBuff.length) {
-    //         console.log("full")
-    //     }
-    // }
 
     setPixel(x: number, y: number, color: ColorInterface) {
-        // const rgb = `${(~~color.r).toString(16).padStart(2, '0')}${(~~color.g).toString(16).padStart(2, '0')}${(~~color.b).toString(16).padStart(2, '0')}`
-        //
-        // const xScaled = ~~x * this.pixelSize
-        // const yScaled = ~~y * this.pixelSize
-        //
-        // for (let thisX = xScaled; thisX < xScaled + this.pixelSize; thisX++)
-        //     for (let thisY = yScaled; thisY < yScaled + this.pixelSize; thisY++) {
-        //
-        //         this.addBuff(PX)
-        //
-        //         this.addBuff(thisX.toString())
-        //         this.frameOffset = this.frameOffset + 1
-        //
-        //         this.addBuff(thisY.toString())
-        //         this.frameOffset = this.frameOffset + 1
-        //
-        //         this.addBuff(rgb)
-        //
-        //     }
+
+        if (x >= 0 && y >= 0 && x < this.width && y < this.height) {
+
+            this.frameBuffer[~~x][~~y].blend(color)
+        }
     }
 
 }
