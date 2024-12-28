@@ -64,10 +64,23 @@ export default class DisplayPixelflut extends Display {
             }
         }
 
-        //create static sendbuffer
+        //create static sendbuffer, in random order to smooth out vsync/hsync
+
+        let sequence=[]
+        for (let x = 0; x < width; x++)
+            sequence.push(x)
+
+        const shuffeledX = sequence.sort(() => Math.random() - 0.5);
+
+        sequence=[]
+        for (let y = 0; y < height; y++)
+            sequence.push(y)
+        const shuffeledY = sequence.sort(() => Math.random() - 0.5);
+
+
         let buff = ""
-        for (let y = 0; y < height; y++) {
-            for (let x = 0; x < width; x++) {
+        for (let x of shuffeledX) {
+            for (let y of shuffeledY) {
                 const xScaled = ~~x * gridSize
                 const yScaled = ~~y * gridSize
 
