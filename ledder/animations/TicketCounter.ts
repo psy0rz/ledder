@@ -42,12 +42,24 @@ export default class Template extends Animator {
             console.log(`MQTT: ${mqttHost.text} connected`)
 
             mqttClient.subscribe(mqttTopic.text)
+            mqttClient.subscribe('why2025/ticketshop/quotas/Event Visitors/pending_orders')
         })
 
+        let paidCount=undefined
+        let pendingCount=undefined
         mqttClient.on('message', async (topic, messageBuf) => {
+
+
             let message = messageBuf.toString()
-            console.log("MQTT:", message)
-            counter.update(message)
+
+            if (topic==='why2025/ticketshop/quotas/Event Visitors/paid_orders')
+                paidCount=Number(message)
+
+            if (topic==='why2025/ticketshop/quotas/Event Visitors/pending_orders')
+                pendingCount=Number(message)
+
+            if (paidCount !==undefined && pendingCount!==undefined)
+                counter.update(paidCount+pendingCount)
         })
     }
 }
