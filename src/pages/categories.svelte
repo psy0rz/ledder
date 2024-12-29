@@ -32,7 +32,7 @@
 </script>
 
 <Page name="categories">
-    <Navbar title="Animations" subtitle={$svelteSelectedTitle}>
+    <Navbar title="Ledder" subtitle={$svelteSelectedTitle}>
         <Subnavbar inner={false}>
             <Menu>
                 <MenuItem

@@ -6,6 +6,7 @@ import ControlGroup from "../ControlGroup.js"
 import {PresetValues} from "../PresetValues.js"
 import {Values} from "../Control.js"
 import {watch} from "fs/promises"
+import CallbackManager from "../../util/CallbackManager.js"
 
 
 /*
@@ -32,10 +33,12 @@ export default class AnimationManager {
     public animationClass: typeof Animator
     private animation: Animator
 
+    public changedCallbacks:CallbackManager<(animationName:string, presetName:string)=>void>
+
     //parents
     public readonly box: PixelBox
     public readonly scheduler: Scheduler
-    private readonly controlGroup: ControlGroup
+    public readonly controlGroup: ControlGroup
 
     //childs/proxies
     private proxyScheduler: { proxy: Scheduler; revoke: () => void }
@@ -51,6 +54,8 @@ export default class AnimationManager {
         this.controlGroup = controlGroup
 
         this.createProxies()
+
+        this.changedCallbacks=new CallbackManager()
 
     }
 
@@ -98,6 +103,7 @@ export default class AnimationManager {
         this.autoreload().then((a) => {
 
         })
+        this.changedCallbacks.trigger(this.animationName, this.presetName)
     }
 
     //load only preset
@@ -105,6 +111,7 @@ export default class AnimationManager {
         this.presetName = presetName
         this.presetValues = await presetStore.load(this.animationName, this.presetName)
         this.controlGroup.load(this.presetValues.values)
+        this.changedCallbacks.trigger(this.animationName, this.presetName)
     }
 
 

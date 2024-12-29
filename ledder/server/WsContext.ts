@@ -2,6 +2,7 @@
 import {DisplayWebsocket} from "./drivers/DisplayWebsocket.js"
 import {JSONRPCServerAndClient} from "json-rpc-2.0"
 import ControlGroup from "../ControlGroup.js"
+import AnimationManager from "./AnimationManager.js"
 
 
 //Per websocket context, used to generate the preview animation that is shown in the browser.
@@ -12,9 +13,10 @@ export class WsContext {
     // renderLoop: RenderRealtime
     previewDisplay: DisplayWebsocket | undefined
 
-    controlGroup: ControlGroup | undefined
+    animationManager: AnimationManager
     resetCb: any
     addCb: any
+    changedCb: (animationName: string, presetName: string) => void
 
 
     id: number
@@ -70,42 +72,52 @@ export class WsContext {
     }
 
 
-    startControls(controlGroup: ControlGroup) {
+    startControls(animationManager: AnimationManager) {
 
-        if (this.controlGroup !== undefined)
+        if (this.animationManager !== undefined)
             this.stopControls()
 
-        this.controlGroup = controlGroup
+        this.animationManager = animationManager
 
 
         this.resetCb = () => {
             this.request("control.reset").then(() => {
-                this.request("control.set", this.controlGroup).then()
+                this.request("control.set", this.animationManager.controlGroup).then()
             })
 
         }
 
         this.addCb = () => {
-            this.request("control.set", this.controlGroup).then()
+            this.request("control.set", this.animationManager.controlGroup).then()
 
         }
 
+        this.changedCb = (animationName, presetName) => {
+            this.request("animationManager.changed", animationName, presetName)
+        }
 
-        controlGroup.__resetCallbacks.register(this.resetCb)
-        controlGroup.__addCallbacks.register(this.addCb)
+        this.animationManager.controlGroup.__resetCallbacks.register(this.resetCb)
+        this.animationManager.controlGroup.__addCallbacks.register(this.addCb)
+        this.animationManager.changedCallbacks.register(this.changedCb)
+
 
         //reset and send current controls
         this.request("control.reset").then(() => {
-            this.request("control.set", controlGroup).then()
+            this.request("control.set", this.animationManager.controlGroup).then()
         })
+        this.request("animationManager.changed", animationManager.animationName, animationManager.presetName)
+
+
     }
 
     stopControls() {
 
-        if (this.controlGroup) {
-            this.controlGroup.__resetCallbacks.unregister(this.resetCb)
-            this.controlGroup.__addCallbacks.unregister(this.addCb)
-            this.controlGroup = undefined
+        if (this.animationManager) {
+            this.animationManager.controlGroup.__resetCallbacks.unregister(this.resetCb)
+            this.animationManager.controlGroup.__addCallbacks.unregister(this.addCb)
+
+            this.animationManager.changedCallbacks.unregister(this.changedCb)
+            this.animationManager = undefined
         }
 
     }

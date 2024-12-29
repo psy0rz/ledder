@@ -1,5 +1,11 @@
 import {rpc} from "./RpcClient.js"
-import {svelteAnimations, sveltePresets, svelteLive, svelteDisplayDeviceInfoList} from "./svelteStore.js"
+import {
+    svelteAnimations,
+    sveltePresets,
+    svelteLive,
+    svelteDisplayDeviceInfoList,
+    svelteSelectedTitle
+} from "./svelteStore.js"
 import {confirmPromise, info, promptPromise} from "./util.js"
 import {DisplayCanvas} from "./DisplayCanvas.js"
 import {tick} from "svelte"
@@ -39,6 +45,11 @@ export class RunnerBrowser {
             sveltePresets.set(params[0])
         })
 
+        rpc.addMethod('animationManager.changed', ( pars)=>{
+            const [animationName, presetName]=pars
+            console.log("Server animation changed:", animationName, presetName)
+            svelteSelectedTitle.set(`${animationName}/${presetName}`)
+        })
 
     }
 

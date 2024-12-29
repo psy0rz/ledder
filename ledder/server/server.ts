@@ -47,6 +47,8 @@ for (const m of config.displayList) {
     renderLoop.start()
     renderLoop.animationManager.select(config.animation, false)
     renderLoops.push(renderLoop)
+
+
 }
 
 
@@ -74,7 +76,7 @@ rpc.addMethod("context.startPreview", async (params, context) => {
 
 
     context.startPreview(previewDisplays[0])
-    context.startControls(renderLoops[0].controlGroup)
+    context.startControls(renderLoops[0].animationManager)
 })
 
 rpc.addMethod("context.stopPreview", async (params, context) => {
