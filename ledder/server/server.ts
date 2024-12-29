@@ -27,10 +27,10 @@ for (const m of config.displayList) {
     display = m
     display.gammaMapper = gammaMapper
 
-    const displayWebview = new DisplayWebsocket(32, 8)
-    previewDisplays.push(displayWebview)
+    const displayWebsocket = new DisplayWebsocket(32, 8)
+    previewDisplays.push(displayWebsocket)
 
-    let renderLoop = new RenderRealtime([display, displayWebview])
+    let renderLoop = new RenderRealtime([display, displayWebsocket])
     renderLoop.start()
     renderLoop.animationManager.select(config.animation, false)
     renderLoops.push(renderLoop)
