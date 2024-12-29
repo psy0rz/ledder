@@ -1,6 +1,7 @@
 <script lang="ts">
     import {TreeviewItem} from "framework7-svelte"
     import {PresetListItem} from "../../ledder/AnimationLists.js"
+    import {runnerBrowser} from "@/js/web/RunnerBrowser.js"
 
     export let presetListItem: PresetListItem
     export let parentName: string
@@ -23,7 +24,7 @@
         opened={true}
         toggle={false}
         iconMaterial={icon}
-        link="/{parentName}/{presetListItem.name}"
+        on:click={runnerBrowser.run(parentName, presetListItem.name)}
 
 
 >

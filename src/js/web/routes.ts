@@ -15,12 +15,12 @@ var routes = [
     component: ControlsPage,
     // keepAlive: true
   },
-  {
-    path: '/:nameAndPreset*',
-    component: AnimationRunner,
-    viewName: 'animation-runner',
-    browserHistory: true
-  },
+  // {
+  //   path: '/:nameAndPreset*',
+  //   component: AnimationRunner,
+  //   viewName: 'animation-runner',
+  //   browserHistory: true
+  // },
   // {
   //   path: '/:animationName',
   //   component: AnimationRunner,

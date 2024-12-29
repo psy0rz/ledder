@@ -45,11 +45,11 @@
                         href="/controls"
                         title="Controls"
                 />
-                <MenuItem link
-                          iconMd="material:upload"
-                          title="Activate animation"
-                          onClick={() => runnerBrowser.send()}
-                />
+<!--                <MenuItem link-->
+<!--                          iconMd="material:upload"-->
+<!--                          title="Activate animation"-->
+<!--                          onClick={() => runnerBrowser.send()}-->
+<!--                />-->
 <!--                <MenuItem link-->
 <!--                          iconMd="material:radio_button_checked"-->
 <!--                          class={$svelteLive ? "color-yellow" : ""}-->

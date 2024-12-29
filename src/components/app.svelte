@@ -5,8 +5,8 @@
         <Categories/>
     </View>
 
-    <View  name="animation-runner" main browserHistory={true} reloadPages={true} style="display: none" >
-    </View>
+<!--    <View  name="animation-runner" main browserHistory={true} reloadPages={true} style="display: none" >-->
+<!--    </View>-->
 
 
 </App>

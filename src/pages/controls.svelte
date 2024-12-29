@@ -65,11 +65,11 @@
                     onClick={onSaveAs}
                     disabled={copyDisabled}
                 />
-                <MenuItem
-                    iconMd="material:upload"
-                    title="Activate animation"
-                    onClick={() => runnerBrowser.send()}
-                />
+<!--                <MenuItem-->
+<!--                    iconMd="material:upload"-->
+<!--                    title="Activate animation"-->
+<!--                    onClick={() => runnerBrowser.send()}-->
+<!--                />-->
             </Menu>
         </Subnavbar>
     </Navbar>

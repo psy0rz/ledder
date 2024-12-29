@@ -47,7 +47,7 @@ export class RunnerBrowser {
         // await rpc.request('context.stopPreview')
         rpc.display = new DisplayCanvas(width, height, zoom, '#ledder-display', '.ledder-display-box')
         await rpc.request('context.startPreview', width, height)
-        await this.send()
+        // await this.send()
 
     }
 
@@ -59,11 +59,11 @@ export class RunnerBrowser {
     /** Send current running animation and preset to server, and restart local animation as well
      *
      */
-    async send() {
-        if (this.animationName) {
-            await rpc.request("animationManager.select", this.animationName + "/" + this.presetName, svelteLive)
-        }
-    }
+    // async send() {
+    //     if (this.animationName) {
+    //         await rpc.request("animationManager.select", this.animationName + "/" + this.presetName, svelteLive)
+    //     }
+    // }
 
 
     /**
@@ -74,8 +74,9 @@ export class RunnerBrowser {
      */
     async run(animationName: string, presetName: string) {
 
-        this.animationName = animationName
-        this.presetName = presetName
+        // this.animationName = animationName
+        // this.presetName = presetName
+        await rpc.request("animationManager.select", animationName + "/" + presetName)
 
 
     }
