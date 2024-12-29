@@ -123,7 +123,7 @@ export default class DisplayPixelflut extends Display {
         this.client.connect(port, host)
         setInterval(() => {
             if (this.statsBytesSend === 0)
-                console.log('PixelFlut: idle')
+                console.log('PixelFlut: STALLED')
             else
                 console.log(`PixelFlut: ${~~(this.statsBytesSend / 1000000)} MB/s ${this.statsFpsSend} FPS`)
             this.statsBytesSend = 0
