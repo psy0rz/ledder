@@ -1,5 +1,6 @@
 //render base class
 //exposes the animationManager and controlGroup that may be accessed directly.
+//can render to one or more display, the first one is the "main" display that determines the size of the box and fps
 import AnimationManager from "./AnimationManager.js"
 import ControlGroup from "../ControlGroup.js"
 import Display from "../Display.js"
@@ -12,20 +13,20 @@ export class Render {
     public readonly controlGroup: ControlGroup
     public readonly description: string
 
-    protected display: Display
+    public displays: Array<Display>
     protected readonly box: PixelBox
     protected readonly scheduler: Scheduler
 
 
-    constructor(display: Display, description='') {
-        this.display = display
+    constructor(displays: Array<Display>, description='') {
+        this.displays = displays
 
         this.description=description
 
         this.controlGroup = new ControlGroup('root')
-        this.box = new PixelBox(display)
+        this.box = new PixelBox(displays[0])
         this.scheduler = new Scheduler()
-        this.scheduler.__setDefaultFrameTime(display.defaultFrameTimeMicros)
+        this.scheduler.__setDefaultFrameTime(displays[0].defaultFrameTimeMicros)
         this.animationManager = new AnimationManager(this.box, this.scheduler, this.controlGroup)
     }
 

@@ -178,6 +178,9 @@ export default class DisplayPixelflut extends Display {
 
     frame(displayTimeMicros: number) {
 
+        //dont waist resources when not connected
+        if (this.client.readyState!=='open')
+            return
 
         for (let x = 0; x < this.width; x++) {
             for (let y = 0; y < this.height; y++) {

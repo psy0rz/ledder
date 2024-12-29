@@ -25,14 +25,17 @@ export default class ControlGroup extends Control {
     private __loadedValues: Values
 
     //called when controls have been added to a controlgroup somewhere in the tree
-    private __onAddCallback: () => void
+    private __onAddCallbacks: Set<() => void>
 
     //called when all controls are removed and stuff is reset
-    private __onResetCallback: () => void
+    private __onResetCallbacks: Set<() => void>
 
 
     constructor(name: string = 'root', restartOnChange: boolean = false, collapsed = false) {
         super(name, 'controls', restartOnChange)
+
+        this.__onResetCallbacks=new Set()
+        this.__onAddCallbacks=new Set()
 
         this.meta.collapsed = collapsed
         this.__clear()
@@ -44,9 +47,8 @@ export default class ControlGroup extends Control {
         this.meta.controls = {}
         this.__loadedValues = {}
 
-        if (this.__onResetCallback) {
-            this.__onResetCallback()
-        }
+        for (const cb of this.__onResetCallbacks)
+            cb()
     }
 
 
@@ -62,14 +64,13 @@ export default class ControlGroup extends Control {
             control.load(this.__loadedValues[control.meta.name])
 
         control.__onRestartRequired(this.__onRestartRequiredCallback)
-        control.onChange((c)=>{
+        control.onChange((c) => {
             if (this.__onChangeCallback)
                 this.__onChangeCallback(c)
         })
 
-        if (this.__onAddCallback)
-            this.__onAddCallback()
-
+        for (const cb of this.__onAddCallbacks)
+            cb()
 
 
     }
@@ -113,7 +114,7 @@ export default class ControlGroup extends Control {
     /**
      * Get or create color-control with specified name
      */
-    color(name: string="Color", r: number = 128, g: number = 128, b: number = 128, a: number = 1, restartOnChange: boolean = false): ControlColor {
+    color(name: string = "Color", r: number = 128, g: number = 128, b: number = 128, a: number = 1, restartOnChange: boolean = false): ControlColor {
         if (!(name in this.meta.controls)) {
             this.__add(new ControlColor(name, r, g, b, a, restartOnChange))
         }
@@ -153,8 +154,15 @@ export default class ControlGroup extends Control {
             this.__add(controlGroup)
 
             //pass through
-            controlGroup.__onReset(this.__onResetCallback)
-            controlGroup.__onAdd(this.__onAddCallback)
+            controlGroup.__onReset(() => {
+                for (const cb of this.__onResetCallbacks)
+                    cb()
+            })
+            controlGroup.__onAdd(() => {
+                    for (const cb of this.__onAddCallbacks)
+                        cb()
+                }
+            )
 
         }
 
@@ -164,12 +172,21 @@ export default class ControlGroup extends Control {
 
 
     public __onReset(callback) {
-        this.__onResetCallback = callback
+        this.__onResetCallbacks.add(callback)
 
     }
 
+    public __onResetUnregister(callback) {
+        this.__onResetCallbacks.delete(callback)
+    }
+
     public __onAdd(callback) {
-        this.__onAddCallback = callback
+        this.__onAddCallbacks.add(callback)
+    }
+
+    public __onAddUnregister(callback) {
+        this.__onAddCallbacks.delete(callback)
+
     }
 
 
@@ -201,8 +218,8 @@ export default class ControlGroup extends Control {
 
     //return true if animation should be restarted
     updateValue(path: Array<string>, values: Values) {
-        const c=this.meta.controls[path[0]]
-        if ( c !== undefined) {
+        const c = this.meta.controls[path[0]]
+        if (c !== undefined) {
 
             c.updateValue(path.slice(1), values)
 
@@ -214,7 +231,7 @@ export default class ControlGroup extends Control {
 
     }
 
-    public  __detach() {
+    public __detach() {
         super.__detach()
         for (const [name, control] of Object.entries(this.meta.controls)) {
             control.__detach()

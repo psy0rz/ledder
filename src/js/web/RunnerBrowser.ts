@@ -31,7 +31,7 @@ export class RunnerBrowser {
             await tick()
         })
 
-        rpc.addMethod('control.add', async (params) => {
+        rpc.addMethod('control.set', async (params) => {
 
             // console.log("Add control", params[0])
 
