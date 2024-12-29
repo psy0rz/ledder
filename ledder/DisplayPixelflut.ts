@@ -66,10 +66,6 @@ export default class DisplayPixelflut extends Display {
 
         //create static sendbuffer, in random order to smooth out vsync/hsync
 
-
-        // const shuffeled = sequence.sort(() => Math.random() - 0.5)
-
-
         //we want to shuffle every pixel. create linair sequence of PX commands first:
         const sequence=[]
         for (let x = 0; x < width; x++) {
