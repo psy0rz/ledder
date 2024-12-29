@@ -49,3 +49,7 @@ displayconf.js
 
 .idea
 .vscode
+
+/util/CallbackManager.js
+/util/CallbackManager.js.map
+/devices.json

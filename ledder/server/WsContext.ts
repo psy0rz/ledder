@@ -1,9 +1,6 @@
 //context of a websocket connection
-import {RenderRealtime} from "./RenderRealtime.js"
 import {DisplayWebsocket} from "./drivers/DisplayWebsocket.js"
-import {PresetStore} from "./PresetStore.js"
 import {JSONRPCServerAndClient} from "json-rpc-2.0"
-import Display from "../Display.js"
 import ControlGroup from "../ControlGroup.js"
 
 
@@ -94,8 +91,8 @@ export class WsContext {
         }
 
 
-        controlGroup.__onReset(this.resetCb)
-        controlGroup.__onAdd(this.addCb)
+        controlGroup.__resetCallbacks.register(this.resetCb)
+        controlGroup.__addCallbacks.register(this.addCb)
 
         //reset and send current controls
         this.request("control.reset").then(() => {
@@ -106,8 +103,8 @@ export class WsContext {
     stopControls() {
 
         if (this.controlGroup) {
-            this.controlGroup.__onResetUnregister(this.resetCb)
-            this.controlGroup.__onAddUnregister(this.addCb)
+            this.controlGroup.__resetCallbacks.unregister(this.resetCb)
+            this.controlGroup.__addCallbacks.unregister(this.addCb)
             this.controlGroup = undefined
         }
 

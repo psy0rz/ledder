@@ -6,6 +6,7 @@ import ControlInput from "./ControlInput.js"
 import ControlSwitch from "./ControlSwitch.js"
 import ControlSelect, {Choices} from "./ControlSelect.js"
 import ControlRange from "./ControlRange.js"
+import CallbackManager from "../util/CallbackManager.js"
 
 
 type ControlMap = Record<string, Control>
@@ -24,18 +25,16 @@ export default class ControlGroup extends Control {
     declare meta: ControlGroupMeta
     private __loadedValues: Values
 
-    //called when controls have been added to a controlgroup somewhere in the tree
-    private __onAddCallbacks: Set<() => void>
 
-    //called when all controls are removed and stuff is reset
-    private __onResetCallbacks: Set<() => void>
+    public __addCallbacks:CallbackManager< ()=>void>
+    public __resetCallbacks:CallbackManager< ()=>void>
 
 
     constructor(name: string = 'root', restartOnChange: boolean = false, collapsed = false) {
         super(name, 'controls', restartOnChange)
 
-        this.__onResetCallbacks=new Set()
-        this.__onAddCallbacks=new Set()
+        this.__resetCallbacks=new CallbackManager()
+        this.__addCallbacks=new CallbackManager()
 
         this.meta.collapsed = collapsed
         this.__clear()
@@ -47,8 +46,7 @@ export default class ControlGroup extends Control {
         this.meta.controls = {}
         this.__loadedValues = {}
 
-        for (const cb of this.__onResetCallbacks)
-            cb()
+        this.__resetCallbacks.trigger()
     }
 
 
@@ -69,8 +67,7 @@ export default class ControlGroup extends Control {
                 this.__onChangeCallback(c)
         })
 
-        for (const cb of this.__onAddCallbacks)
-            cb()
+        this.__addCallbacks.trigger()
 
 
     }
@@ -154,15 +151,16 @@ export default class ControlGroup extends Control {
             this.__add(controlGroup)
 
             //pass through
-            controlGroup.__onReset(() => {
-                for (const cb of this.__onResetCallbacks)
-                    cb()
+            controlGroup.__resetCallbacks.register( ()=>
+            {
+                this.__resetCallbacks.trigger()
+
             })
-            controlGroup.__onAdd(() => {
-                    for (const cb of this.__onAddCallbacks)
-                        cb()
-                }
-            )
+
+            controlGroup.__addCallbacks.register( ()=>
+            {
+                this.__addCallbacks.trigger()
+            })
 
         }
 
@@ -171,23 +169,23 @@ export default class ControlGroup extends Control {
     }
 
 
-    public __onReset(callback) {
-        this.__onResetCallbacks.add(callback)
-
-    }
-
-    public __onResetUnregister(callback) {
-        this.__onResetCallbacks.delete(callback)
-    }
-
-    public __onAdd(callback) {
-        this.__onAddCallbacks.add(callback)
-    }
-
-    public __onAddUnregister(callback) {
-        this.__onAddCallbacks.delete(callback)
-
-    }
+    // public __onReset(callback) {
+    //     this.__onResetCallbacks.add(callback)
+    //
+    // }
+    //
+    // public __onResetUnregister(callback) {
+    //     this.__onResetCallbacks.delete(callback)
+    // }
+    //
+    // public __onAdd(callback) {
+    //     this.__onAddCallbacks.add(callback)
+    // }
+    //
+    // public __onAddUnregister(callback) {
+    //     this.__onAddCallbacks.delete(callback)
+    //
+    // }
 
 
     /**

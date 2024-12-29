@@ -74,13 +74,13 @@ rpc.addMethod("context.startPreview", async (params, context) => {
 
 
     context.startPreview(previewDisplays[0])
-
     context.startControls(renderLoops[0].controlGroup)
 })
 
 rpc.addMethod("context.stopPreview", async (params, context) => {
     // context.stopPreview()
     context.stopPreview()
+    context.stopControls()
 
 })
 
