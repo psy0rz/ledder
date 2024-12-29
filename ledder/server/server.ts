@@ -18,19 +18,6 @@ const settingsControl = new ControlGroup('Global settings')
 const gammaMapper = new GammaMapper(settingsControl.group("Display settings"))
 
 
-// console.log("GO")
-//  const m=new OffsetMapper(75,16)
-// //
-//  const d=new DisplayQOISfile(m)
-//  d.gammaMapper=gammaMapper
-//  const s=new RenderStatic(d)
-//  d.openFile('test.qois')
-// await s.render('Text/Marquee/HSD',60*60)
-// // await s.render('Logos/HSD', 'default',60*60*3)
-// d.closeFile()
-// console.log("ODNE")
-
-
 //create run all the displayes
 let renderLoops: Array<RenderRealtime> = []
 let previewDisplays: Array<DisplayWebsocket> = []
@@ -71,10 +58,8 @@ rpc.addMethod("animationManager.delete", async (params, context) => {
 
 
 rpc.addMethod("context.startPreview", async (params, context) => {
-    // console.log("start preview")
-    // await context.startPreview(presetStore, params[0], params[1])
 
-
+    //TODO: make displaynr selectable
     context.startPreview(previewDisplays[0])
     context.startControls(renderLoops[0].animationManager)
 })
@@ -89,29 +74,17 @@ rpc.addMethod("context.stopPreview", async (params, context) => {
 
 rpc.addMethod("animationManager.select", async (params, context) => {
 
-    // if (context.renderLoop)
-    //     await context.renderLoop.animationManager.select(params[0], false)
-
-    //live?
-    // if (params[1]) {
 
     for (const runner of renderLoops) {
         await runner.animationManager.select(params[0], false)
     }
-    // }
 })
 
 rpc.addMethod("animationManager.updateValue", async (params, context) => {
 
-    // if (context.renderLoop)
-    //     await context.renderLoop.animationManager.updateValue(params[0], params[1])
-
-    //live
-    // if (params[1]) {
     for (const runner of renderLoops) {
         await runner.animationManager.updateValue(params[0], params[1])
     }
-    // }
 })
 
 
