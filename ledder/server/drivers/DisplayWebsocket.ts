@@ -5,6 +5,9 @@ export class DisplayWebsocket extends Display {
     ws: WebSocket
 
 
+    minFrameTimeMicros=~~(1000000/60)
+
+    defaultFrameTimeMicros=~~(1000000/60)
 
     //width and height are led-display-pixels, not canvas pixels.
     constructor(width, height, ws) {
