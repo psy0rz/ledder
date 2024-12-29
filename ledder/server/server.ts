@@ -22,6 +22,9 @@ const gammaMapper = new GammaMapper(settingsControl.group("Display settings"))
 let renderLoops: Array<RenderRealtime> = []
 let previewDisplays: Array<DisplayWebsocket> = []
 
+//TODO: make selectable in gui, move this variable to wscontext
+let selectedDisplayIndex=0
+
 for (const m of config.displayList) {
     let display: Display
     display = m
@@ -47,21 +50,21 @@ rpc.addMethod("presetStore.loadAnimationPresetList", async (params) => {
 })
 
 rpc.addMethod("animationManager.save", async (params, context) => {
-    // await context.renderLoop.animationManager.save(params[0])
-    // await previewStore.render(context.renderLoop.animationManager.animationName, context.renderLoop.animationManager.presetName)
+    await renderLoops[selectedDisplayIndex].animationManager.save(params[0])
+    await previewStore.render(renderLoops[selectedDisplayIndex].animationManager.animationName, renderLoops[selectedDisplayIndex].animationManager.presetName)
 
 })
 
 rpc.addMethod("animationManager.delete", async (params, context) => {
-    // await context.renderLoop.animationManager.delete()
+    await renderLoops[selectedDisplayIndex].animationManager.delete()
 })
 
 
 rpc.addMethod("context.startPreview", async (params, context) => {
 
     //TODO: make displaynr selectable
-    context.startPreview(previewDisplays[0])
-    context.startControls(renderLoops[0].animationManager)
+    context.startPreview(previewDisplays[selectedDisplayIndex])
+    context.startControls(renderLoops[selectedDisplayIndex].animationManager)
 })
 
 rpc.addMethod("context.stopPreview", async (params, context) => {

@@ -49,6 +49,8 @@ export class RunnerBrowser {
             const [animationName, presetName]=pars
             console.log("Server animation changed:", animationName, presetName)
             svelteSelectedTitle.set(`${animationName}/${presetName}`)
+            this.animationName=animationName
+            this.presetName=presetName
         })
 
     }
