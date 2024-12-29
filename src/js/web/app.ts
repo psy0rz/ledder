@@ -32,7 +32,7 @@ rpc.init(
             target: document.getElementById('app'),
         });
 
-        console.log(await rpc.request("displayDeviceStore.list"))
+        // console.log(await rpc.request("displayDeviceStore.list"))
     },
     //disconnected
     async () => {

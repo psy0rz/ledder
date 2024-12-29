@@ -45,7 +45,7 @@ export class WsContext {
 
 
         let display = new DisplayWebsocket(width, height, this.ws)
-        this.renderLoop = new RenderRealtime(display, `${this.id} ${this.remoteAddress}`)
+        this.renderLoop = new RenderRealtime(display, `Websocket ${this.id} ${this.remoteAddress}`)
         //todo: add delay or queue
         this.renderLoop.controlGroup.__onReset(() => {
             this.request("control.reset").then(() => {

@@ -16,14 +16,16 @@ export default class Cyber extends  Animator
 
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) {
 
+        const textControl=controls.input('text', 'CYBER', true)
+
         const font = fontSelect(controls)
-        const text = new DrawText(0, 0, font, "CYBER", controls.color("tekst", 255,255,0))
+        const text = new DrawText(0, 0, font, textControl.text, controls.color("tekst", 255,255,0))
         text.center(box)
 
         const a=new PixelList()
         a.add(text)
 
-        const text2 = new DrawText(0, 0, font, "CYBER", colorBlack)
+        const text2 = new DrawText(0, 0, font, textControl.text, colorBlack)
         text2.center(box)
 
         const b=new PixelList()

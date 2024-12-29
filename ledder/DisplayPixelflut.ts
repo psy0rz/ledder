@@ -31,7 +31,7 @@ export default class DisplayPixelflut extends Display {
     stepSize: number
 
 
-    constructor(width, height, host, port, gridSize = 15, pixelSize = 15) {
+    constructor(width, height, host, port, gridSize = 25, pixelSize = 24) {
         super(width, height)
 
         this.statsBytesSend = 0
