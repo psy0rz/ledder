@@ -27,27 +27,24 @@ export default class DisplayPixelflutBinary extends Display {
     stepY: number
     stepSize: number
 
-    flood: boolean
 
     host: string
     port: number
 
     /*
-      If flood is true, it will keep sending the current frame as fast as possible. Otherwise it will be at the fps of this driver (60fps, adjustable )
       gridsize and pixelsize determine how many display pixels each ledder pixel will be. If the grid is bigger than then pixels, you will get a nice led-like rendering.
      */
-    constructor(width, height, host, port, gridSize = 1, pixelSize = 1, flood = false) {
+    constructor(width, height, host, port, gridSize = 1, pixelSize = 1, offsetX=0, offsetY=0) {
         super(width, height)
 
         this.statsBytesSend = 0
         this.statsFpsSend = 0
 
-        this.offsetX = 0
-        this.offsetY = 0
+        this.offsetX = offsetX
+        this.offsetY = offsetY
         this.stepY = 0
         this.stepX = 0
         this.stepSize = 1
-        this.flood = flood
 
 
         //create render buffer
@@ -86,8 +83,8 @@ export default class DisplayPixelflutBinary extends Display {
                         const buffer = new ArrayBuffer(7)
                         const view = new DataView(buffer)
 
-                        view.setUint16(0, thisX, true)
-                        view.setUint16(2, thisY, true)
+                        view.setUint16(0, thisX+this.offsetX, true)
+                        view.setUint16(2, thisY+this.offsetY, true)
                         view.setUint8(4, 255) //r
                         view.setUint8(5, 0)   //g
                         view.setUint8(6, 0)   //b

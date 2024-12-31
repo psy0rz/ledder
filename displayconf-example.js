@@ -175,6 +175,14 @@ export let displayList = []
 // export let staticDisplayList=[ staticDisplay]
 
 
+//PIXEL FLUT
+// let display=new DisplayPixelflut(50,8,'table.c3pixelflut.de', 1337, 12,10)
+// let display=new DisplayPixelflut(50,8,'wall.c3pixelflut.de', 1337, 12,10)
+
+// let display=new DisplayPixelflut(128,32,'tickerpi.lan.nurd.space', 5004)
+// let display=new DisplayPixelflut(64,16,'tickerpi.lan.nurd.space', 5004)
+// let display=new DisplayPixelflutBinary(128,32,'10.208.1.48', 5004)
+// displayList.push(display)
 
 
 //default animation and preset

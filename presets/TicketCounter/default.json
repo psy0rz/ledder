@@ -2,43 +2,14 @@
  "title": "",
  "description": "",
  "values": {
-  "Target time": {
-   "text": "2025-01-01T00:00"
+  "MQTT host": {
+   "text": "mqtt://mqtt.why2025.org"
   },
-  "Normal": {
-   "r": 0,
-   "g": 255,
-   "b": 0,
-   "a": 1
+  "MQTT topic": {
+   "text": "why2025/ticketshop/quotas/Event Visitors/paid_orders"
   },
-  "Warning": {
-   "r": 255,
-   "g": 0,
-   "b": 0,
-   "a": 0.8166666666666661
-  },
-  "Show mS": {
-   "enabled": true
-  },
-  "Warning time (min)": {
-   "value": 60
-  },
-  "Font": {
-   "Font": {
-    "selected": "C64 mono"
-   },
-   "Font height": {
-    "value": 0
-   },
-   "Font width": {
-    "value": 0
-   },
-   "X": {
-    "value": 0
-   },
-   "Y": {
-    "value": 0
-   }
+  "Digits": {
+   "value": 4
   },
   "Marquee": {
    "Font": {
@@ -51,7 +22,7 @@
     "value": 0
    },
    "Text": {
-    "text": ""
+    "text": "WHY2025 ticket counter dingens"
    },
    "Text color": {
     "r": 33,
@@ -81,8 +52,11 @@
     "FPS": {
      "value": 60
     },
+    "Subpixel filtering": {
+     "enabled": false
+    },
     "Rotate interval": {
-     "value": 2
+     "value": 1
     },
     "Rotate interval randomizer": {
      "value": 0
@@ -97,9 +71,6 @@
      "enabled": false
     },
     "Show one time only": {
-     "enabled": false
-    },
-    "Subpixel filtering": {
      "enabled": false
     }
    },
@@ -123,6 +94,27 @@
      "enabled": false
     }
    }
+  },
+  "Digit color": {
+   "r": 255,
+   "g": 144,
+   "b": 0,
+   "a": 1
+  },
+  "Divider color": {
+   "r": 128,
+   "g": 128,
+   "b": 128,
+   "a": 1
+  },
+  "Rotate speed": {
+   "value": 0.001
+  },
+  "Counter dim %": {
+   "value": 50
+  },
+  "Counter dim steps": {
+   "value": 3
   }
  }
 }
