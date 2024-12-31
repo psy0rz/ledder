@@ -30,8 +30,13 @@ export default class DisplayPixelflut extends Display {
     stepY: number
     stepSize: number
 
-    //NOTE: use fps 0 for max flooding
-    constructor(width, height, host, port, gridSize = 1, pixelSize = 1, fps = 60) {
+    flood: boolean
+
+    /*
+      If flood is true, it will keep sending the current frame as fast as possible. Otherwise it will be at the fps of this driver (60fps, adjustable )
+      gridsize and pixelsize determine how many display pixels each ledder pixel will be. If the grid is bigger than then pixels, you will get a nice led-like rendering.
+     */
+    constructor(width, height, host, port, gridSize = 1, pixelSize = 1, flood = false) {
         super(width, height)
 
         this.statsBytesSend = 0
@@ -42,6 +47,7 @@ export default class DisplayPixelflut extends Display {
         this.stepY = 0
         this.stepX = 0
         this.stepSize = 1
+        this.flood = flood
 
 
         //create render buffer
@@ -108,21 +114,17 @@ export default class DisplayPixelflut extends Display {
         this.client.on('connect', () => {
             // this.client.write('OFFSET 500,550\n')
 
-            if (fps != 0)
-                setInterval(() => {
 
-                    this.send()
-                }, 1000 / fps)
-            else
-            {
-                while(this.send()){}
-            }
+            if (flood)
+                while (this.send()) {
+                }
+
 
         })
 
         this.client.on('drain', () => {
 
-            if (fps == 0)
+            if (flood)
                 while (this.send()) {
                 }
 
@@ -209,6 +211,9 @@ export default class DisplayPixelflut extends Display {
 
             }
         }
+
+        if (!this.flood)
+            this.send()
 
     }
 
