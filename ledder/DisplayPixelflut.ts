@@ -30,8 +30,8 @@ export default class DisplayPixelflut extends Display {
     stepY: number
     stepSize: number
 
-
-    constructor(width, height, host, port, gridSize = 25, pixelSize = 24) {
+    //NOTE: use fps 0 for max flooding
+    constructor(width, height, host, port, gridSize = 1, pixelSize = 1, fps = 60) {
         super(width, height)
 
         this.statsBytesSend = 0
@@ -42,6 +42,7 @@ export default class DisplayPixelflut extends Display {
         this.stepY = 0
         this.stepX = 0
         this.stepSize = 1
+
 
         //create render buffer
         this.frameBuffer = []
@@ -67,7 +68,7 @@ export default class DisplayPixelflut extends Display {
         //create static sendbuffer, in random order to smooth out vsync/hsync
 
         //we want to shuffle every pixel. create linair sequence of PX commands first:
-        const sequence=[]
+        const sequence = []
         for (let x = 0; x < width; x++) {
             for (let y = 0; y < height; y++) {
                 const xScaled = ~~x * gridSize
@@ -77,20 +78,20 @@ export default class DisplayPixelflut extends Display {
                 for (let thisX = xScaled; thisX < xScaled + pixelSize; thisX++) {
                     for (let thisY = yScaled; thisY < yScaled + pixelSize; thisY++) {
 
-                        sequence.push([x,y,`PX ${thisX},${thisY} ffffffff\n`])
+                        sequence.push([x, y, `PX ${thisX} ${thisY} ffffffff\n`])
                     }
                 }
             }
         }
 
         //shuffle it
-        const shuffled = sequence.sort(() => Math.random() - 0.5);
+        const shuffled = sequence.sort(() => Math.random() - 0.5)
 
         //create the grand-string-of-shuffled-PX commands
         let buff = ""
         for (const xyPX of shuffled) {
 
-            const [x,y,px]=xyPX
+            const [x, y, px] = xyPX
 
             buff = buff + px
             this.sendBufferOffsets[x][y].push(buff.length - 9)
@@ -105,14 +106,25 @@ export default class DisplayPixelflut extends Display {
 
 
         this.client.on('connect', () => {
-            this.client.write('OFFSET 500,550\n')
-            this.fillSendbuffer()
+            // this.client.write('OFFSET 500,550\n')
+
+            if (fps != 0)
+                setInterval(() => {
+
+                    this.send()
+                }, 1000 / fps)
+            else
+            {
+                while(this.send()){}
+            }
 
         })
 
         this.client.on('drain', () => {
 
-            this.fillSendbuffer()
+            if (fps == 0)
+                while (this.send()) {
+                }
 
         })
 
@@ -159,30 +171,31 @@ export default class DisplayPixelflut extends Display {
         this.client.write(`OFFSET ${this.offsetX},${this.offsetY}\n`)
     }
 
-    fillSendbuffer() {
-        while (1) {
-            this.statsFpsSend = this.statsFpsSend + 1
-            this.statsBytesSend = this.statsBytesSend + this.sendBuffer.length
+    send() {
+        this.statsFpsSend = this.statsFpsSend + 1
+        this.statsBytesSend = this.statsBytesSend + this.sendBuffer.length
 
-            this.updateOffsets()
+        this.updateOffsets()
 
-            if (!this.client.write(this.sendBuffer))
-                return
-        }
+        return this.client.write(this.sendBuffer)
 
     }
 
     frame(displayTimeMicros: number) {
 
         //dont waist resources when not connected
-        if (this.client.readyState!=='open')
+        if (this.client.readyState !== 'open')
             return
 
         for (let x = 0; x < this.width; x++) {
             for (let y = 0; y < this.height; y++) {
 
                 const color = this.frameBuffer[x][y]
-                const rgb = `${(~~color.r).toString(16).padStart(2, '0')}${(~~color.g).toString(16).padStart(2, '0')}${(~~color.b).toString(16).padStart(2, '0')}${(~~color.b).toString(16).padStart(2, '0')}`
+                let rgb = `${(~~color.r).toString(16).padStart(2, '0')}${(~~color.g).toString(16).padStart(2, '0')}${(~~color.b).toString(16).padStart(2, '0')}`
+
+                // console.log(rgb)
+                // if (rgb=='000000')
+                //     rgb='555555'
 
                 const rgbArray = encoder.encode(rgb)
 
