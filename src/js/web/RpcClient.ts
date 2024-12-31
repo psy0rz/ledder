@@ -2,6 +2,7 @@ import {JSONRPCClient, JSONRPCServer, JSONRPCServerAndClient} from "json-rpc-2.0
 import {Rpc} from "../Rpc.js"
 import {error, progressDone, progressStart} from "./util.js"
 import {DisplayCanvas} from "./DisplayCanvas.js"
+import {svelteSelectedTitle} from "./svelteStore.js"
 
 /***
  * Browser-side rpc client that connect to server handles rpc calls to/from server.
@@ -94,8 +95,9 @@ class RpcClient extends Rpc {
                 `Connection is closed (${event.reason}).`
             )
 
-            //reconnect
-            // setTimeout(() => this.connect(ip), 1000);
+            // reconnect
+            svelteSelectedTitle.set("Reconnecting...")
+            setTimeout(() => this.connect(ip), 1000);
 
             if (this.closeHandler !== undefined)
                 this.closeHandler()

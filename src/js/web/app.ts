@@ -20,6 +20,7 @@ import '../../css/theme.css';
 // Import App Component
 import App from '../../components/app.svelte';
 import {rpc} from "./RpcClient.js";
+import {svelteSelectedTitle} from "./svelteStore.js"
 
 // Init F7 Svelte Plugin
 Framework7.use(Framework7Svelte)
@@ -40,6 +41,7 @@ rpc.init(
     })
 
 // rpc.connect('192.168.13.109')
+svelteSelectedTitle.set("Connecting...")
 rpc.connect()
 
 
