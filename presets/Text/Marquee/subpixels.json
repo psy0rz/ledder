@@ -1,0 +1,151 @@
+{
+ "title": "",
+ "description": "",
+ "values": {
+  "Font": {
+   "selected": "C64"
+  },
+  "Font height": {
+   "value": 0
+  },
+  "Font width": {
+   "value": 0
+  },
+  "Text": {
+   "text": "Ultrasmooth subpixel scrolling"
+  },
+  "Text color": {
+   "r": 33,
+   "g": 255,
+   "b": 0,
+   "a": 1
+  },
+  "Stars": {
+   "Enabled": {
+    "enabled": false
+   },
+   "Star color": {
+    "r": 255,
+    "g": 255,
+    "b": 255,
+    "a": 0.2
+   },
+   "Number of stars": {
+    "value": 10
+   },
+   "Movie interval": {
+    "value": 5
+   },
+   "Movie interval randomizer": {
+    "value": 0
+   },
+   "Rotate interval": {
+    "value": 4
+   },
+   "Rotate interval randomizer": {
+    "value": 2
+   },
+   "Rotate X step": {
+    "value": -1
+   },
+   "Rotate Y step": {
+    "value": 0
+   }
+  },
+  "Star field": {
+   "Enabled": {
+    "enabled": false
+   }
+  },
+  "The Matrix": {
+   "Enabled": {
+    "enabled": false
+   }
+  },
+  "Scrolling": {
+   "Enabled": {
+    "enabled": true
+   },
+   "FPS": {
+    "value": 60
+   },
+   "Rotate interval": {
+    "value": 1
+   },
+   "Rotate interval randomizer": {
+    "value": 0
+   },
+   "Rotate X step": {
+    "value": -0.08
+   },
+   "Rotate Y step": {
+    "value": 0
+   },
+   "Circular": {
+    "enabled": false
+   },
+   "Show one time only": {
+    "enabled": false
+   },
+   "Subpixel filtering": {
+    "enabled": true
+   }
+  },
+  "Flames": {
+   "Enabled": {
+    "enabled": false
+   },
+   "Fire density [%]": {
+    "value": 10
+   },
+   "Fire intensity [%]": {
+    "value": 100
+   },
+   "Fire depth [pixels]": {
+    "value": 2
+   },
+   "Fire wind X": {
+    "value": 0.1
+   },
+   "Fire wind Y": {
+    "value": -0.2
+   },
+   "Fire cycle": {
+    "Color cycle time": {
+     "value": 15
+    },
+    "Color cycle time randomizer": {
+     "value": 15
+    },
+    "Color cycle repeat count": {
+     "value": 1
+    },
+    "Color cycle mode": {
+     "selected": "reverse"
+    },
+    "Color cycle pattern": {
+     "selected": "Bertrik fire"
+    },
+    "Color cycle pattern range": {
+     "from": 0,
+     "to": 100
+    }
+   }
+  },
+  "Twinkle": {
+   "Enabled": {
+    "enabled": false
+   }
+  },
+  "Color pattern": {
+   "Enabled": {
+    "enabled": false
+   }
+  },
+  "Cursor": {
+   "Enabled": {
+    "enabled": false
+   }
+  }
+ }
+}
