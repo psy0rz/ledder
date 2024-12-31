@@ -12,7 +12,7 @@
    "value": 0
   },
   "Text": {
-   "text": "ip=%i"
+   "text": "Marquee"
   },
   "Text color": {
    "r": 33,
@@ -64,7 +64,7 @@
   },
   "Scrolling": {
    "Enabled": {
-    "enabled": true
+    "enabled": false
    },
    "FPS": {
     "value": 60

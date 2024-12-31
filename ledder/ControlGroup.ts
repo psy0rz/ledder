@@ -26,15 +26,15 @@ export default class ControlGroup extends Control {
     private __loadedValues: Values
 
 
-    public __addCallbacks:CallbackManager< ()=>void>
-    public __resetCallbacks:CallbackManager< ()=>void>
+    public __addCallbacks: CallbackManager<() => void>
+    public __resetCallbacks: CallbackManager<() => void>
 
 
     constructor(name: string = 'root', restartOnChange: boolean = false, collapsed = false) {
         super(name, 'controls', restartOnChange)
 
-        this.__resetCallbacks=new CallbackManager()
-        this.__addCallbacks=new CallbackManager()
+        this.__resetCallbacks = new CallbackManager()
+        this.__addCallbacks = new CallbackManager()
 
         this.meta.collapsed = collapsed
         this.__clear()
@@ -150,16 +150,17 @@ export default class ControlGroup extends Control {
             const controlGroup = new ControlGroup(name, restartOnChange, collapsed)
             this.__add(controlGroup)
 
+            const resetCallbacks=this.__resetCallbacks
+            const addCallbacks=this.__addCallbacks
+
             //pass through
-            controlGroup.__resetCallbacks.register( ()=>
-            {
-                this.__resetCallbacks.trigger()
+            controlGroup.__resetCallbacks.register(() => {
+                    resetCallbacks.trigger()
 
             })
 
-            controlGroup.__addCallbacks.register( ()=>
-            {
-                this.__addCallbacks.trigger()
+            controlGroup.__addCallbacks.register(() => {
+                    addCallbacks.trigger()
             })
 
         }

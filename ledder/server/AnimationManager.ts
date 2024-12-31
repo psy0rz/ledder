@@ -33,7 +33,7 @@ export default class AnimationManager {
     public animationClass: typeof Animator
     private animation: Animator
 
-    public changedCallbacks:CallbackManager<(animationName:string, presetName:string)=>void>
+    public changedCallbacks: CallbackManager<(animationName: string, presetName: string) => void>
 
     //parents
     public readonly box: PixelBox
@@ -55,7 +55,7 @@ export default class AnimationManager {
 
         this.createProxies()
 
-        this.changedCallbacks=new CallbackManager()
+        this.changedCallbacks = new CallbackManager()
 
     }
 
@@ -156,9 +156,7 @@ export default class AnimationManager {
         try {
             this.animationName = animationAndPresetPath.match(RegExp("(^.*)/"))[1]
             this.presetName = animationAndPresetPath.match(RegExp("[^/]+$"))[0]
-        }
-        catch (e)
-        {
+        } catch (e) {
             console.error(`Invalid name: ${animationAndPresetPath}`)
             return
         }

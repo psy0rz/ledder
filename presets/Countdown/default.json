@@ -21,7 +21,7 @@
    "enabled": true
   },
   "Warning time (min)": {
-   "value": 60
+   "value": 10
   },
   "Font": {
    "Font": {
@@ -31,7 +31,7 @@
     "value": 0
    },
    "Font width": {
-    "value": 0
+    "value": 5
    },
    "X": {
     "value": 0
@@ -51,7 +51,7 @@
     "value": 0
    },
    "Text": {
-    "text": ""
+    "text": "Glitchy 2025 countdown dinges"
    },
    "Text color": {
     "r": 33,
