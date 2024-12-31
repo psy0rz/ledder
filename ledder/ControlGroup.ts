@@ -150,6 +150,7 @@ export default class ControlGroup extends Control {
             const controlGroup = new ControlGroup(name, restartOnChange, collapsed)
             this.__add(controlGroup)
 
+            //make a copy, since "this" will be proxied and detached later
             const resetCallbacks=this.__resetCallbacks
             const addCallbacks=this.__addCallbacks
 
