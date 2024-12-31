@@ -134,7 +134,7 @@ export class PresetStore {
                 name: presetName,
                 title: preset.title,
                 description: preset.description,
-                previewFile: previewFilename + "?" + await getMtime(this.animationFilename(animationName))
+                previewFile: previewFilename + "?" + await getMtime(this.previewFilename(animationName, presetName))
             })
         }
         return (ret)
