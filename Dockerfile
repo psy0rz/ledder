@@ -1,11 +1,14 @@
 # syntax=docker/dockerfile:1
 
 # cacheble npm install stage that only reruns if package.json actually changes.
-FROM node:22 AS builder
+FROM node:22-alpine AS builder
 
 ENV NODE_ENV=production
 
 WORKDIR /app
+
+RUN apk add python3
+RUN apk add build-base
 
 COPY ["package.json", "package-lock.json*", "./"]
 
@@ -19,7 +22,7 @@ RUN npm run buildweb
 RUN npm prune --production
 
 # final stage
-FROM node:22 AS final
+FROM node:22-alpine AS final
 ENV NODE_ENV=production
 
 WORKDIR /app
