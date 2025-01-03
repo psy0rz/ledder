@@ -31,9 +31,9 @@ jobs:
           push: true
           platforms: linux/amd64,linux/arm/v7
 
-          tags:
-            - psy0rz/ledder:latest
-            - psy0rz/ledder:${{ env.GIT_TAG }}
+          tags: |
+            psy0rz/ledder:latest
+            psy0rz/ledder:${{ env.GIT_TAG }}
           
 
           
