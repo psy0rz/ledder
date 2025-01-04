@@ -10,10 +10,19 @@
     function toggleZoom() {
         if (zoom) {
             zoom = false
-            displayZoom.set(3)
+            displayZoom.set(2)
             console.log("small")
         } else {
-            displayZoom.set(8)
+            const canvas=document.querySelector(".ledder-display")
+            let autozoom=~~((window.innerWidth/2) / canvas.width)
+
+            if (autozoom<4)
+                autozoom=4
+
+            if (autozoom>8)
+                autozoom=8
+
+            displayZoom.set(autozoom)
             zoom = true
             console.log("zoomed")
         }
@@ -28,11 +37,11 @@
 
                 const boxes = document.querySelectorAll(".ledder-display-box")
                 const canvas=document.querySelector(".ledder-display")
-                    console.log( canvas.width)
                 for (const box of boxes) {
 
-                    box.style.width = canvas.width * zoom + 'px'
-                    box.style.height = canvas.height * zoom + 'px'
+
+                    box.style.width = (canvas.width * zoom )+ 'px'
+                    box.style.height = (canvas.height * zoom ) + 'px'
                 }
             })
 
@@ -69,7 +78,7 @@
     {/if}
 </svg>
 
-<div class="ledder-display-box" style="color: white; text-align:right" on:click={toggleZoom}>
+<div class="ledder-display-box" style="color: white; text-align:right; " on:click={toggleZoom}>
     {$displayWidth} x {$displayHeight}
 </div>
 
