@@ -20,3 +20,6 @@ export const svelteDisplayDeviceInfoList = writable<DisplayDeviceInfoList>([])
 
 export const svelteLive =writable(true)
 
+export const displayZoom = writable(8);
+export const displayWidth = writable(0);
+export const displayHeight = writable(0);

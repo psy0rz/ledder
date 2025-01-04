@@ -30,7 +30,7 @@ for (const m of config.displayList) {
     display = m
     display.gammaMapper = gammaMapper
 
-    const displayWebsocket = new DisplayWebsocket(32, 8)
+    const displayWebsocket = new DisplayWebsocket(display.width, display.height)
     previewDisplays.push(displayWebsocket)
 
     let renderLoop = new RenderRealtime([display, displayWebsocket])
@@ -65,6 +65,7 @@ rpc.addMethod("context.startPreview", async (params, context) => {
     //TODO: make displaynr selectable
     context.startPreview(previewDisplays[selectedDisplayIndex])
     context.startControls(renderLoops[selectedDisplayIndex].animationManager)
+    return [previewDisplays[selectedDisplayIndex].width, previewDisplays[selectedDisplayIndex].height]
 })
 
 rpc.addMethod("context.stopPreview", async (params, context) => {

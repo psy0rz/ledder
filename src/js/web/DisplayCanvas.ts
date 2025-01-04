@@ -5,14 +5,13 @@ export class DisplayCanvas {
     imageData: ImageData;
     imageBuf8: Uint8ClampedArray;
     imageBuf: ArrayBuffer;
-    boxes: NodeListOf<any>;
+    // boxes: NodeListOf<any>;
 
     //width and height are led-display-pixels, not canvas pixels.
     constructor(width, height, zoom, displayId, boxClass) {
 
         this.canvas = document.querySelector(displayId);
-        this.boxes = document.querySelectorAll(boxClass);
-
+        // this.boxes = document.querySelectorAll(boxClass);
         //scaling
         this.canvas.width = width
         this.canvas.height = height
@@ -21,11 +20,11 @@ export class DisplayCanvas {
         this.canvasContext = this.canvas.getContext('2d');
         this.imageData = this.canvasContext.getImageData(0, 0, width, height);
 
-        //zoom
-        for (const box of this.boxes) {
-            box.style.width = this.canvas.width * zoom + 'px';
-            box.style.height = this.canvas.height * zoom + 'px';
-        }
+        // //zoom
+        // for (const box of this.boxes) {
+        //     box.style.width = this.canvas.width * zoom + 'px';
+        //     box.style.height = this.canvas.height * zoom + 'px';
+        // }
 
 
 

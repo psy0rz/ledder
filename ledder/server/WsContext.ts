@@ -51,7 +51,7 @@ export class WsContext {
             this.stopPreview()
 
         this.previewDisplay = previewDisplay
-        this.previewDisplay.addWebSocket(this.ws)
+        this.previewDisplay.addWsContext(this)
 
 
     }
@@ -59,7 +59,7 @@ export class WsContext {
     stopPreview() {
         // this.started=false
         if (this.previewDisplay !== undefined) {
-            this.previewDisplay.removeWebsocket(this.ws)
+            this.previewDisplay.removeWebsocket(this)
             this.previewDisplay = undefined
         }
         // //should stop because of gc

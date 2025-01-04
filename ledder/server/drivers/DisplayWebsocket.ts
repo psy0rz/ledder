@@ -1,11 +1,12 @@
 import Display from "../../Display.js"
+import {WsContext} from "../WsContext.js"
 
 
 //a display that can send data to one or more websockets
 
 export class DisplayWebsocket extends Display {
     imageBuf8: Uint8ClampedArray
-    webSockets: Set<WebSocket>
+    wsContexts: Set<WsContext>
 
 
     minFrameTimeMicros = ~~(1000000 / 60)
@@ -16,9 +17,10 @@ export class DisplayWebsocket extends Display {
     constructor(width, height) {
         super(width, height)
 
-        this.webSockets = new Set()
+        this.wsContexts = new Set()
 
         this.imageBuf8 = new Uint8ClampedArray(height * width * 4)
+
 
     }
 
@@ -36,21 +38,30 @@ export class DisplayWebsocket extends Display {
         }
     }
 
-    addWebSocket(ws: WebSocket) {
-        this.webSockets.add(ws)
+    sendSize(wsContext:WsContext)
+    {
+        wsContext.request("display.changedSize", this.width, this.height)
+    }
+
+    addWsContext(wsContext: WsContext) {
+        this.wsContexts.add(wsContext)
+        this.sendSize(wsContext)
         this.enabled = true
 
     }
 
-    removeWebsocket(ws: WebSocket) {
-        this.webSockets.delete(ws)
-        if (this.webSockets.size == 0)
+    removeWebsocket(wsContext: WsContext) {
+        this.wsContexts.delete(wsContext)
+        if (this.wsContexts.size == 0)
             this.enabled = false
     }
 
     frame() {
-        for (const ws of this.webSockets)
-            ws.send(this.imageBuf8)
+        //NOTE: yeah we just blast raw frames over websockets.
+        // Its fine, since the browser client will check if the received message starts with '{' in which case it treats it as json :)
+
+        for (const wsContext of this.wsContexts)
+            wsContext.ws.send(this.imageBuf8)
 
         this.imageBuf8.fill(0) //alpha of all pixels will be 0, so canvas is transparent.
 

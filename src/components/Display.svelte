@@ -1,48 +1,75 @@
 <script>
-    import { onMount } from "svelte";
-    import { runnerBrowser } from "../js/web/RunnerBrowser.js";
+    import {onMount} from "svelte"
+    import {runnerBrowser} from "../js/web/RunnerBrowser.js"
 
-    import { f7ready } from "framework7-svelte";
+    import {f7ready} from "framework7-svelte"
+    import {displayHeight, displayWidth, displayZoom} from "@/js/web/svelteStore.js"
 
-    export let zoom = 8;
-    let width = 32;
-    let height = 8;
+    let zoom = true
+
+    function toggleZoom() {
+        if (zoom) {
+            zoom = false
+            displayZoom.set(3)
+            console.log("small")
+        } else {
+            displayZoom.set(8)
+            zoom = true
+            console.log("zoomed")
+        }
+    }
 
     onMount(async () => {
         f7ready(async () => {
-            await runnerBrowser.init();
-            await runnerBrowser.setSize(width, height, zoom);
-        });
-    });
+            await runnerBrowser.init()
+            await runnerBrowser.startPreview()
+
+            displayZoom.subscribe((zoom) => {
+
+                const boxes = document.querySelectorAll(".ledder-display-box")
+                const canvas=document.querySelector(".ledder-display")
+                    console.log( canvas.width)
+                for (const box of boxes) {
+
+                    box.style.width = canvas.width * zoom + 'px'
+                    box.style.height = canvas.height * zoom + 'px'
+                }
+            })
+
+        })
+    })
 </script>
 
-<canvas class="ledder-display ledder-display-box" id="ledder-display" />
+
+<canvas class="ledder-display ledder-display-box" id="ledder-display"/>
 
 <svg
-    xmlns="http://www.w3.org/2000/svg"
-    class="ledder-display-box"
-    id="ledder-grid"
+        xmlns="http://www.w3.org/2000/svg"
+        class="ledder-display-box"
+        id="ledder-grid"
 >
     <defs>
         <pattern
-            id="ledder-grid-pattern"
-            width={zoom}
-            height={zoom}
-            patternUnits="userSpaceOnUse"
+                id="ledder-grid-pattern"
+                width={$displayZoom}
+                height={$displayZoom}
+                patternUnits="userSpaceOnUse"
         >
             <path
-                d="M {zoom} 0 L 0 0 0 {zoom}"
-                fill="none"
-                stroke="black"
-                stroke-width="1"
+                    d="M {$displayZoom} 0 L 0 0 0 {$displayZoom}"
+                    fill="none"
+                    stroke="black"
+                    stroke-width="1"
             />
         </pattern>
     </defs>
 
-    <rect width="100%" height="100%" fill="url(#ledder-grid-pattern)" />
+    {#if $displayZoom >= 4}
+        <rect width="100%" height="100%" fill="url(#ledder-grid-pattern)"/>
+    {/if}
 </svg>
 
-<div class="ledder-display-box" style="color: white; text-align:right" onclick="console.log('moi');">
-    {width} x {height}
+<div class="ledder-display-box" style="color: white; text-align:right" on:click={toggleZoom}>
+    {$displayWidth} x {$displayHeight}
 </div>
 

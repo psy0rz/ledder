@@ -11,12 +11,12 @@
     image-rendering:crisp-edges;               /* CSS4 Proposed  */
     image-rendering:pixelated;                 /* CSS4 Proposed  */
     -ms-interpolation-mode:nearest-neighbor;   /* IE8+           */
-    cursor: pointer;
 
 }
 
 .ledder-display-box
 {
+    cursor: pointer;
     position: absolute;
     right: 0;
     top: 0;

@@ -9,12 +9,12 @@ import {svelteSelectedTitle} from "./svelteStore.js"
  */
 class RpcClient extends Rpc {
 
-    serverAndClient: JSONRPCServerAndClient
-    openHandler: () => void
-    closeHandler: () => void
-    url: string
-    display: DisplayCanvas
-    webSocket: WebSocket
+    private serverAndClient: JSONRPCServerAndClient
+    private openHandler: () => void
+    private closeHandler: () => void
+    private url: string
+    private display: DisplayCanvas
+    private webSocket: WebSocket
 
     constructor() {
         super()
@@ -115,6 +115,11 @@ class RpcClient extends Rpc {
 
     addMethod(name, method) {
         this.serverAndClient.addMethod(name, method)
+    }
+
+    registerDisplay(display: DisplayCanvas)
+    {
+        this.display=display
     }
 
     /**

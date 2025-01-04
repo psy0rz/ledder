@@ -2,9 +2,8 @@ import {rpc} from "./RpcClient.js"
 import {
     svelteAnimations,
     sveltePresets,
-    svelteLive,
     svelteDisplayDeviceInfoList,
-    svelteSelectedTitle
+    svelteSelectedTitle, displayWidth, displayHeight, displayZoom
 } from "./svelteStore.js"
 import {confirmPromise, info, promptPromise} from "./util.js"
 import {DisplayCanvas} from "./DisplayCanvas.js"
@@ -20,8 +19,11 @@ export class RunnerBrowser {
 
 
     presets: Record<string, any>
+    zoom: boolean
+
 
     constructor() {
+        this.zoom=false
 
     }
 
@@ -53,13 +55,21 @@ export class RunnerBrowser {
             this.presetName=presetName
         })
 
+        rpc.addMethod('display.changedSize', (pars)=>{
+            const [width, height]=pars
+            rpc.registerDisplay( new DisplayCanvas(width, height, 8, '#ledder-display', '.ledder-display-box'))
+
+            displayWidth.set(width)
+            displayHeight.set(height)
+
+        })
+
     }
 
-    async setSize(width, height, zoom) {
+    async startPreview() {
 
         // await rpc.request('context.stopPreview')
-        rpc.display = new DisplayCanvas(width, height, zoom, '#ledder-display', '.ledder-display-box')
-        await rpc.request('context.startPreview', width, height)
+        const size=await rpc.request('context.startPreview')
         // await this.send()
 
     }
@@ -148,6 +158,7 @@ export class RunnerBrowser {
     async uploadStatic() {
 
     }
+
 }
 
 export let runnerBrowser = new RunnerBrowser()
