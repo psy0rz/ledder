@@ -52,19 +52,18 @@
 
   "optionalDependencies": {
 
-
+    "rpi-ws281x-smi": "github:psy0rz/rpi-ws281x-smi"
   },
 
   "dependencies": {
-    "rpi-ws281x-smi": "github:psy0rz/rpi-ws281x-smi",
 
-    "@types/node": "^18.7.18",
+    "@types/node": "^22.10.5",
 
     "@types/sharp": "^0.32.0",
 
     "dom7": "^4.0.6",
 
-    "express": "^4.18.2",
+    "express": "^4.21.2",
 
     "express-ws": "^5.0.2",
 
@@ -76,17 +75,17 @@
 
     "freetype2": "^1.0.6",
 
-    "glob-promise": "^6.0.5",
+    "glob-promise": "^6.0.7",
 
     "json-rpc-2.0": "^1.7.0",
 
-    "lowdb": "^6.1.1",
+    "lowdb": "^7.0.1",
 
     "material-icons": "^1.13.12",
 
     "matrix_transformer": "^0.0.8",
 
-    "mqtt": "^5.3.3",
+    "mqtt": "^5.10.3",
 
     "node-abort-controller": "^3.1.1",
 
