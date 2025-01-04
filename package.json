@@ -52,11 +52,11 @@
 
   "optionalDependencies": {
 
-    "rpi-ws281x-smi": "file:../rpi-ws281x-smi"
 
   },
 
   "dependencies": {
+    "rpi-ws281x-smi": "github:psy0rz/rpi-ws281x-smi",
 
     "@types/node": "^18.7.18",
 
@@ -68,11 +68,11 @@
 
     "express-ws": "^5.0.2",
 
-    "framework7": "^7.1.5",
+    "framework7": "^8.3.4",
 
     "framework7-icons": "^5.0.5",
 
-    "framework7-svelte": "^7.1.5",
+    "framework7-svelte": "^8.3.4",
 
     "freetype2": "^1.0.6",
 

@@ -1,18 +1,8 @@
 <script>
-    import {
-        Page,
-        Navbar,
-        Treeview,
-        Block,
-        Menu,
-        MenuItem,
-        Subnavbar,
+    import {Block, Button, Navbar, Page, Subnavbar, Treeview,} from "framework7-svelte"
 
-
-    } from "framework7-svelte";
-
-    import ControlGroup from "../../ledder/ControlGroup";
-    import { rpc } from "../js/web/RpcClient.js";
+    import ControlGroup from "../../ledder/ControlGroup"
+    import {rpc} from "../js/web/RpcClient.js"
     import ControlGroupUI from "../components/ControlGroupUI.svelte"
 
     let saveDisabled, copyDisabled, deleteDisabled;
@@ -39,20 +29,20 @@
     }}
 >
     <Navbar title="Settings" backLink="Back">
-        <Subnavbar>
-            <Menu class="color-theme-red">
-                <MenuItem
-                    iconMd="material:save"
-                    onClick={onSave}
-                    disabled={saveDisabled}
-                />
-                <MenuItem
-                    iconMd="material:undo"
-                    onClick={onDelete}
-                    disabled={deleteDisabled}
-                />
-            </Menu>
-        </Subnavbar>
+<!--        <Subnavbar>-->
+<!--                <Button-->
+<!--                    iconMd="material:save"-->
+<!--                    onClick={onSave}-->
+<!--                    disabled={saveDisabled}-->
+<!--                    tonal-->
+<!--                />-->
+<!--                <Button-->
+<!--                    iconMd="material:undo"-->
+<!--                    onClick={onDelete}-->
+<!--                    disabled={deleteDisabled}-->
+<!--                    tonal-->
+<!--                />-->
+<!--        </Subnavbar>-->
     </Navbar>
     <Block strong>
         <Treeview>

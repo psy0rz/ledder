@@ -1,24 +1,10 @@
 <script>
-    import {
-        Page,
-        Navbar,
-        Treeview,
-        Block,
-        Menu,
-        MenuItem,
-        Subnavbar,
+    import {Block, Button, Navbar, Page, Subnavbar, Treeview,} from "framework7-svelte"
 
-
-    } from "framework7-svelte";
-
-    import {
-        sveltePresets,
-        svelteSelectedTitle,
-        svelteLive,
-    } from "../js/web/svelteStore.js";
-    import { runnerBrowser } from "../js/web/RunnerBrowser.js";
-    import ControlGroup from "../components/ControlGroupUI.svelte";
-    import {rpc} from "../js/web/RpcClient.js";
+    import {svelteLive, sveltePresets, svelteSelectedTitle,} from "../js/web/svelteStore.js"
+    import {runnerBrowser} from "../js/web/RunnerBrowser.js"
+    import ControlGroup from "../components/ControlGroupUI.svelte"
+    import {rpc} from "../js/web/RpcClient.js"
 
 
     // let presets = []
@@ -48,29 +34,25 @@
 
 <Page name="controls" on:pageMounted={() => {}}>
     <Navbar title="Controls" subtitle={$svelteSelectedTitle} backLink="Back">
-        <Subnavbar>
-            <Menu class="color-theme-red">
-                <MenuItem
+        <Subnavbar class="justify-content-left" inner={false}>
+                <Button
                     iconMd="material:save"
                     onClick={onSave}
+                    tonal
                     disabled={saveDisabled}
                 />
-                <MenuItem
+                <Button
                     iconMd="material:delete"
                     onClick={onDelete}
                     disabled={deleteDisabled}
+                    tonal
                 />
-                <MenuItem
+                <Button
                     iconMd="material:file_copy"
                     onClick={onSaveAs}
                     disabled={copyDisabled}
+                    tonal
                 />
-<!--                <MenuItem-->
-<!--                    iconMd="material:upload"-->
-<!--                    title="Activate animation"-->
-<!--                    onClick={() => runnerBrowser.send()}-->
-<!--                />-->
-            </Menu>
         </Subnavbar>
     </Navbar>
     <Block strong>
