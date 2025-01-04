@@ -1,9 +1,11 @@
 /* Your app custom styles here */
 .ledder-display {
     background: black;
-    border-style: solid;
-    border-color: gray;
-    border-width: 0px;
+    border-style:none;
+    border-left-style: solid;
+    border-left-width: 2px;
+    border-bottom-style: solid;
+    border-bottom-width: 2px;
     image-rendering:-moz-crisp-edges;          /* Firefox        */
     image-rendering:-o-crisp-edges;            /* Opera          */
     image-rendering:-webkit-optimize-contrast; /* Safari         */
