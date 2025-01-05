@@ -2,7 +2,6 @@ import {rpc} from "./RpcClient.js"
 import {
     svelteAnimations,
     sveltePresets,
-    svelteDisplayDeviceInfoList,
     svelteSelectedTitle, displayWidth, displayHeight, displayZoom
 } from "./svelteStore.js"
 import {confirmPromise, info, promptPromise} from "./util.js"
@@ -107,10 +106,10 @@ export class RunnerBrowser {
         svelteAnimations.set(list)
     }
 
-    async refreshDisplayDeviceInfoList() {
-        const list = await rpc.request("displayDeviceStore.list")
-        svelteDisplayDeviceInfoList.set(list)
-    }
+    // async refreshDisplayDeviceInfoList() {
+    //     const list = await rpc.request("displayDeviceStore.list")
+    //     svelteDisplayDeviceInfoList.set(list)
+    // }
 
 
     /** Save current preset to server, and create preview

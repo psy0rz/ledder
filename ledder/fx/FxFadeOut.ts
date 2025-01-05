@@ -1,4 +1,4 @@
-import ColorInterface from "../ColorInterface.js";
+import type ColorInterface from "../ColorInterface.js";
 import {randomGaussian} from "../utils.js";
 import Fx from "../Fx.js";
 import ControlGroup from "../ControlGroup.js";

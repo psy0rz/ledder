@@ -12,8 +12,6 @@ import {colorBlue, colorGreen, colorRed, colorYellow} from "../../Colors.js"
 import DrawRectangle from "../../draw/DrawRectangle.js"
 import DrawText from "../../draw/DrawText.js"
 import {fonts} from "../../fonts.js"
-import BoxInterface from "../../BoxInterface.js"
-import FxBlinkAlpha from "../../fx/FxBlinkAlpha.js"
 
 
 export default class TestGrid extends Animator {

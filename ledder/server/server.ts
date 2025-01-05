@@ -3,17 +3,20 @@ import {RenderRealtime} from "./RenderRealtime.js"
 import ControlGroup from "../ControlGroup.js"
 import Display from "../Display.js"
 import GammaMapper from "./drivers/GammaMapper.js"
-import {config} from "./config.js"
 import {presetStore} from "./PresetStore.js"
 import {previewStore} from "./PreviewStore.js"
 import {RenderStream} from "./RenderStream.js"
 import {DisplayQOISbuffer} from "./drivers/DisplayQOISbuffer.js"
-import {displayDeviceStore} from "./DisplayDeviceStore.js"
+// import {displayDeviceStore} from "./DisplayDeviceStore.js"
 import OffsetMapper from "./drivers/OffsetMapper.js"
 import {DisplayWebsocket} from "./drivers/DisplayWebsocket.js"
+import {config, load} from "./config.js"
 
 
 const settingsControl = new ControlGroup('Global settings')
+
+await load()
+
 
 const gammaMapper = new GammaMapper(settingsControl.group("Display settings"))
 
@@ -109,25 +112,25 @@ rpc.addMethod("settings.updateValue", async (params, context) => {
 
 })
 
-rpc.addMethod("displayDeviceStore.list", async (params, context) => {
-    return displayDeviceStore.list()
-
-})
+// rpc.addMethod("displayDeviceStore.list", async (params, context) => {
+//     return displayDeviceStore.list()
+//
+// })
 
 //display device stuff (regular http GET requests)
-rpc.app.get('/get/status/:id', async (req, resp) => {
-    console.log(`Seen display device ${req.params.id}`)
-
-    resp.send(
-        await displayDeviceStore.get(req.params.id).catch((e) => {
-            console.error(e)
-            resp.status(500).send(e)
-
-        })
-    )
-
-
-})
+// rpc.app.get('/get/status/:id', async (req, resp) => {
+//     console.log(`Seen display device ${req.params.id}`)
+//
+//     resp.send(
+//         await displayDeviceStore.get(req.params.id).catch((e) => {
+//             console.error(e)
+//             resp.status(500).send(e)
+//
+//         })
+//     )
+//
+//
+// })
 
 //work in progress
 //Stream QOIS frames via a http get request.
@@ -135,7 +138,7 @@ rpc.app.get('/get/status/:id', async (req, resp) => {
 //Client display decides how much data is buffered and consumed.
 rpc.app.get('/get/stream/:id', async (req, resp) => {
 
-    let deviceInfo = await displayDeviceStore.get(req.params.id)
+    // let deviceInfo = await displayDeviceStore.get(req.params.id)
 
     let matrixzigzag8x32 = new OffsetMapper(32, 8, false)
     matrixzigzag8x32.zigZagY()

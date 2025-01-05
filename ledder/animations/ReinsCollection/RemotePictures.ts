@@ -1,12 +1,10 @@
 import PixelBox from "../../PixelBox.js"
-import sharp, { Sharp } from "sharp"
+import sharp, { type Sharp } from "sharp"
 import drawAnimatedImage from "../../draw/DrawAnimatedImage.js"
 import Scheduler from "../../Scheduler.js"
 import ControlGroup from "../../ControlGroup.js"
 import Animator from "../../Animator.js"
 import fetch from "node-fetch"
-import { Choices } from "../../ControlSelect.js"
-import { Choice } from "../../ControlSelect.js"
 
 export default class RemotePicture extends Animator {
 

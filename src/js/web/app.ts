@@ -21,6 +21,7 @@ import '../../css/theme.css';
 import App from '../../components/app.svelte';
 import {rpc} from "./RpcClient.js";
 import {svelteSelectedTitle} from "./svelteStore.js"
+import {mount} from "svelte"
 
 // Init F7 Svelte Plugin
 Framework7.use(Framework7Svelte)
@@ -29,9 +30,10 @@ rpc.init(
     //rpc connected
     async () => {
         // Mount Svelte App
-        const app = new App({
+        const app = mount(App,{
             target: document.getElementById('app'),
         });
+
 
         // console.log(await rpc.request("displayDeviceStore.list"))
     },

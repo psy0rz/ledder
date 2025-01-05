@@ -5,7 +5,7 @@ import PixelList from "../PixelList.js";
 import Scheduler from "../Scheduler.js";
 import { random, randomFloatGaussian} from "../utils.js";
 import ControlSwitch from "../ControlSwitch.js";
-import BoxInterface from "../BoxInterface.js"
+import type BoxInterface from "../BoxInterface.js"
 import controls from "../../src/pages/controls.svelte"
 
 

@@ -3,7 +3,7 @@
 import IntervalControlled from "./IntervalControlled.js"
 import IntervalStatic from "./IntervalStatic.js"
 import Interval from "./Interval.js"
-import ValueInterface from "./ValueInterface.js"
+import type ValueInterface from "./ValueInterface.js"
 import IntervalOnce from "./IntervalOnce.js"
 import PublicPromise from "./PublicPromise.js"
 import {clearTimeout} from "timers"

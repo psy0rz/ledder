@@ -1,5 +1,5 @@
 import Display from "../../Display.js"
-import ColorInterface from "../../ColorInterface.js"
+import type ColorInterface from "../../ColorInterface.js"
 
 //driver for an array of displays that have the same width/height
 export class DisplayMulti extends Display {

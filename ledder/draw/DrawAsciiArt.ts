@@ -1,6 +1,6 @@
 import Draw from "../Draw.js";
 import Pixel from "../Pixel.js";
-import ColorInterface from "../ColorInterface.js";
+import type ColorInterface from "../ColorInterface.js";
 
 //draw pixels via ascii art. x,y are top left coordinate
 // - whitespace is ignored

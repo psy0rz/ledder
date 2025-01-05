@@ -1,4 +1,4 @@
-import ColorInterface from "../ColorInterface.js"
+import type ColorInterface from "../ColorInterface.js"
 import Pixel from "../Pixel.js"
 import Font from "../Font.js"
 import Draw from "../Draw.js"

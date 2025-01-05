@@ -1,5 +1,5 @@
 import PixelList from "./PixelList.js"
-import ColorInterface from "./ColorInterface.js"
+import type ColorInterface from "./ColorInterface.js"
 import Pixel from "./Pixel.js"
 import GammaMapper from "./server/drivers/GammaMapper.js"
 

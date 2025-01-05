@@ -1,7 +1,7 @@
 /** Actual preset-values
  * (jsonable)
  */
-import {Values} from "./Control.js";
+import {type Values} from "./Control.js";
 
 
 export type PresetValues ={

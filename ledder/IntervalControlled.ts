@@ -1,5 +1,5 @@
 import Interval from "./Interval.js";
-import ValueInterface from "./ValueInterface.js";
+import type ValueInterface from "./ValueInterface.js";
 
 /**
  * Interval that can be modified by a controller

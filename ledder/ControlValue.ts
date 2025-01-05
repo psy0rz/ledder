@@ -1,4 +1,4 @@
-import {Control, ControlMeta} from "./Control.js";
+import {Control, type ControlMeta} from "./Control.js";
 import {numberCheck} from "./utils.js";
 
 

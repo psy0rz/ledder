@@ -1,7 +1,7 @@
  import Draw from "../Draw.js";
  import Pixel from "../Pixel.js";
  import PixelList from "../PixelList.js";
- import ColorInterface from "../ColorInterface.js";
+ import type ColorInterface from "../ColorInterface.js";
  import Color from "../Color.js";
 
 

@@ -1,4 +1,4 @@
-import express, {Express} from "express"
+import express, {type Express} from "express"
 import expressWs from "express-ws";
 
 import {JSONRPCClient, JSONRPCServer, JSONRPCServerAndClient} from "json-rpc-2.0";

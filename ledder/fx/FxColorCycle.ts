@@ -3,7 +3,7 @@ import ControlValue from "../ControlValue.js";
 import ControlGroup from "../ControlGroup.js";
 import Color from "../Color.js";
 import Scheduler from "../Scheduler.js";
-import ColorInterface from "../ColorInterface.js";
+import type ColorInterface from "../ColorInterface.js";
 
 import {randomGaussian} from "../utils.js";
 import {patternSelect} from "../ColorPatterns.js";

@@ -1,5 +1,5 @@
 import Display from "./Display.js"
-import ColorInterface from "./ColorInterface.js"
+import type ColorInterface from "./ColorInterface.js"
 import * as net from "node:net"
 import Color from "./Color.js"
 import dgram from "dgram"

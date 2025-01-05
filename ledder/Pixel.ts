@@ -1,6 +1,6 @@
-import PixelInterface from "./PixelInterface.js"
-import ColorInterface from "./ColorInterface.js"
-import BoxInterface from "./BoxInterface.js"
+import type PixelInterface from "./PixelInterface.js"
+import type ColorInterface from "./ColorInterface.js"
+import type BoxInterface from "./BoxInterface.js"
 
 
 //basic pixel.

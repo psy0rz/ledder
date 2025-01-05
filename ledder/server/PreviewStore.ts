@@ -1,5 +1,5 @@
 import {DisplayApng} from "./drivers/DisplayApng.js"
-import {AnimationList} from "../AnimationLists.js"
+import {type AnimationList} from "../AnimationLists.js"
 import {presetStore} from "./PresetStore.js"
 import {RenderPreview} from "./RenderPreview.js"
 

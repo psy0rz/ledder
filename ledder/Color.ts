@@ -1,4 +1,4 @@
-import ColorInterface from "./ColorInterface.js"
+import type ColorInterface from "./ColorInterface.js"
 
 export default class Color implements ColorInterface {
     r: number

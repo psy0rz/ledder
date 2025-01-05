@@ -1,5 +1,5 @@
 import PixelList from "./PixelList.js"
-import BoxInterface from "./BoxInterface.js"
+import type BoxInterface from "./BoxInterface.js"
 
 //a pixel box is just a pixelcontainer with a size (like a display)
 export default class PixelBox extends PixelList {

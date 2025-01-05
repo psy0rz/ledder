@@ -1,4 +1,4 @@
-import ValueInterface from "./ValueInterface.js";
+import type ValueInterface from "./ValueInterface.js";
 
 export  default class Value implements ValueInterface {
     value: number

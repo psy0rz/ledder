@@ -1,42 +1,39 @@
 
 import path from 'path';
-import { svelte } from '@sveltejs/vite-plugin-svelte';
-import autoPreprocess from 'svelte-preprocess';
-
-const SRC_DIR = path.resolve('./src');
-const PUBLIC_DIR = path.resolve( './public');
-const BUILD_DIR = path.resolve('./www',);
-
-export default {
-  plugins: [
-    svelte({
-      preprocess: autoPreprocess()
-    }),
+import {vitePreprocess} from "@sveltejs/vite-plugin-svelte"
+import {sveltePreprocess} from "svelte-preprocess"
 
 
-  ],
-  root: SRC_DIR,
-  base: '',
-  publicDir: PUBLIC_DIR,
 
-  build: {
+const SRC_DIR = path.resolve(__dirname, './src');
+const PUBLIC_DIR = path.resolve(__dirname, './public');
+const BUILD_DIR = path.resolve(__dirname, './www',);
+export default async () => {
+  const { svelte } = await import('@sveltejs/vite-plugin-svelte');
+  return  {
+    plugins: [
+      svelte({preprocess: sveltePreprocess()}),
 
-    outDir: BUILD_DIR,
-    assetsInlineLimit: 0,
-    emptyOutDir: true,
-    rollupOptions: {
-      treeshake: false,
+    ],
+    root: SRC_DIR,
+    base: '',
+    publicDir: PUBLIC_DIR,
+    build: {
+      outDir: BUILD_DIR,
+      assetsInlineLimit: 0,
+      emptyOutDir: true,
+      rollupOptions: {
+        treeshake: false,
+      },
     },
-  },
-  resolve: {
-
-    alias: {
-      '@': SRC_DIR,
+    resolve: {
+      alias: {
+        '@': SRC_DIR,
+      },
     },
-  },
-  server: {
-    host: true,
-    force: true
-  },
+    server: {
+      host: true,
+    },
 
-};
+  };
+}

@@ -1,6 +1,6 @@
 import Draw from "../Draw.js";
 import Pixel from "../Pixel.js";
-import ColorInterface from "../ColorInterface.js";
+import type ColorInterface from "../ColorInterface.js";
 
 //draw a circle x0,y0 are center coordinates.
 export default class DrawCircle extends Draw {

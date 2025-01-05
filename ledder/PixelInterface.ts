@@ -1,4 +1,4 @@
-import ColorInterface from "./ColorInterface.js";
+import type ColorInterface from "./ColorInterface.js";
 
 export default interface PixelInterface {
     x: number;

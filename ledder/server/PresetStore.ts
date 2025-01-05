@@ -5,9 +5,9 @@
 import * as path from "path"
 import {mkdir, readdir, readFile, rm, stat, writeFile} from "fs/promises"
 import glob from "glob-promise"
-import {PresetValues} from "../PresetValues.js"
+import {type PresetValues} from "../PresetValues.js"
 import Animator from "../Animator.js"
-import {AnimationList, AnimationListDir, AnimationListItem, PresetList, PresetListItem} from "../AnimationLists.js"
+import {type AnimationList, type AnimationListDir, type AnimationListItem, type PresetList,type  PresetListItem} from "../AnimationLists.js"
 import {createParentDir, getMtime} from "./utils.js"
 
 

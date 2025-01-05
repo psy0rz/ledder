@@ -1,6 +1,6 @@
 //NOTE: controls are used by browser side as well, so dont import server-only stuff!
 import {Control} from "./Control.js"
-import ColorInterface from "./ColorInterface.js"
+import type ColorInterface from "./ColorInterface.js"
 import Color from "./Color.js"
 
 

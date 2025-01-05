@@ -1,10 +1,10 @@
 //NOTE: controls are used by browser side as well, so dont import server-only stuff!
-import {Control, ControlMeta, Values} from "./Control.js"
+import {Control, type ControlMeta, type Values} from "./Control.js"
 import ControlValue from "./ControlValue.js"
 import ControlColor from "./ControlColor.js"
 import ControlInput from "./ControlInput.js"
 import ControlSwitch from "./ControlSwitch.js"
-import ControlSelect, {Choices} from "./ControlSelect.js"
+import ControlSelect, {type Choices} from "./ControlSelect.js"
 import ControlRange from "./ControlRange.js"
 import CallbackManager from "../util/CallbackManager.js"
 

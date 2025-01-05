@@ -6,6 +6,8 @@
     "moduleResolution": "Node",
     "allowSyntheticDefaultImports": true,
     "skipLibCheck": true,
+    "verbatimModuleSyntax": true
+
   },
 
 
