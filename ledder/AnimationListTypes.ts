@@ -1,7 +1,7 @@
 
 //animation and preset tree structure
 
-export type PresetListItem =
+export type PresetListItemType =
     {
         name: string,
         title: string,
@@ -9,21 +9,21 @@ export type PresetListItem =
         previewFile: string
     }
 
-export type PresetList = Array<PresetListItem>
+export type PresetListType = Array<PresetListItemType>
 
-export type AnimationListItem = {
+export type AnimationListItemType = {
     name: string,
     title: string,
     description: string,
-    presets: PresetList,
+    presets: PresetListType,
 }
 
 //subdirectory with animations
-export type AnimationListDir =
+export type AnimationListDirType =
     {
         name: string,
-        animationList: AnimationList
+        animationList: AnimationListType
     }
 
 //list with animations, recursive. this is the root of a tree element as well.
-export type AnimationList = Array<AnimationListItem | AnimationListDir>
+export type AnimationListType = Array<AnimationListItemType | AnimationListDirType>

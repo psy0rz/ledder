@@ -1,5 +1,5 @@
 <script>
-    import {Block, Button, Navbar, Page, Subnavbar, Treeview,} from "framework7-svelte"
+    import {Block, Navbar, Page, Treeview,} from "framework7-svelte"
 
     import ControlGroup from "../../ledder/ControlGroup"
     import {rpc} from "../js/web/RpcClient.js"

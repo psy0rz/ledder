@@ -1,9 +1,9 @@
 <script lang="ts">
     import {TreeviewItem} from "framework7-svelte"
-    import {type PresetListItem} from "../../ledder/AnimationLists.js"
+    import {type PresetListItemType} from "../../ledder/AnimationListTypes.js"
     import {runnerBrowser} from "@/js/web/RunnerBrowser.js"
 
-    export let presetListItem: PresetListItem
+    export let presetListItem: PresetListItemType
     export let parentName: string
 
     let label=parentName.replace(RegExp(".*/"),"")

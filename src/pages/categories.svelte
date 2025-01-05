@@ -1,18 +1,19 @@
 <script>
     import {
-        Block, Button,
-        f7ready, Link,
+        Block,
+        Button,
+        f7ready,
+        Link,
         Message,
         Navbar,
         Page,
         Preloader,
-        Searchbar, Segmented,
         Subnavbar,
         Treeview
     } from "framework7-svelte"
 
 
-    import {svelteAnimations, svelteLive, svelteSelectedTitle} from "../js/web/svelteStore.js"
+    import {svelteAnimations, svelteSelectedTitle} from "../js/web/svelteStore.js"
     import {runnerBrowser} from "../js/web/RunnerBrowser.js"
     import {onMount} from "svelte"
     import AnimationListUI from "@/components/AnimationListUI.svelte"

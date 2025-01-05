@@ -1,5 +1,5 @@
 import {DisplayApng} from "./drivers/DisplayApng.js"
-import {type AnimationList} from "../AnimationLists.js"
+import {type AnimationListType} from "../AnimationListTypes.js"
 import {presetStore} from "./PresetStore.js"
 import {RenderPreview} from "./RenderPreview.js"
 
@@ -27,7 +27,7 @@ export class PreviewStore {
         this.display.clear()
     }
 
-    async renderAll(animationList: AnimationList, force: boolean) {
+    async renderAll(animationList: AnimationListType, force: boolean) {
         console.log("Rendering previews...")
 
         await presetStore.forEachPreset(animationList, async (animation, preset) => {

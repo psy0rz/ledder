@@ -7,7 +7,7 @@ import {mkdir, readdir, readFile, rm, stat, writeFile} from "fs/promises"
 import glob from "glob-promise"
 import {type PresetValues} from "../PresetValues.js"
 import Animator from "../Animator.js"
-import {type AnimationList, type AnimationListDir, type AnimationListItem, type PresetList,type  PresetListItem} from "../AnimationLists.js"
+import {type AnimationListType, type AnimationListDirType, type AnimationListItemType, type PresetListType,type  PresetListItemType} from "../AnimationListTypes.js"
 import {createParentDir, getMtime} from "./utils.js"
 
 
@@ -123,8 +123,8 @@ export class PresetStore {
     }
 
     // Gets stripped list of all presets for animation, and adds previewUrl
-    async buildPresetList(animationClass: typeof Animator, animationName: string): Promise<PresetList> {
-        let ret: PresetList = []
+    async buildPresetList(animationClass: typeof Animator, animationName: string): Promise<PresetListType> {
+        let ret: PresetListType = []
         const presetNames = await this.scanPresetNames(animationName)
         for (const presetName of presetNames) {
             const preset = await this.load(animationName, presetName)
@@ -142,8 +142,8 @@ export class PresetStore {
 
 
     // scans and loads all animations and returns the grand preset list
-    async buildAnimationPresetList(dir: string = ""): Promise<AnimationList> {
-        let ret: AnimationList = []
+    async buildAnimationPresetList(dir: string = ""): Promise<AnimationListType> {
+        let ret: AnimationListType = []
 
 
         const startPath = path.join(this.animationPath, dir)
@@ -206,11 +206,11 @@ export class PresetStore {
 
     //calls back for every animation,preset item.
     //e.g. traverse the whole list recursively.
-    async forEachPreset(animationList:AnimationList, callback: (animationListItem:AnimationListItem, presetListItem:PresetListItem)=>void) {
+    async forEachPreset(animationList:AnimationListType, callback: (animationListItem:AnimationListItemType, presetListItem:PresetListItemType)=>void) {
 
         for (const item of animationList) {
-            const animationListItem = item as AnimationListItem
-            const animationListDir = item as AnimationListDir
+            const animationListItem = item as AnimationListItemType
+            const animationListDir = item as AnimationListDirType
             if (animationListDir.animationList) {
                 await this.forEachPreset(animationListDir.animationList, callback)
             } else {

@@ -1,9 +1,9 @@
 <script lang="ts">
-    import {type AnimationList} from "../../ledder/AnimationLists.js"
+    import {type AnimationListType} from "../../ledder/AnimationListTypes.js"
     import PresetListItem from "./PresetListItem.svelte"
     import {TreeviewItem} from "framework7-svelte"
 
-    export let animationList: AnimationList
+    export let animationList: AnimationListType
 
 </script>
 
