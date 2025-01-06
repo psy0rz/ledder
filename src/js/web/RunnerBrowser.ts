@@ -65,14 +65,14 @@ export class RunnerBrowser {
 
     }
 
-    async startPreview() {
+    async startMonitoring() {
 
-        const size=await rpc.request('context.startPreview')
+        const size=await rpc.request('context.startMonitoring')
 
     }
 
-    async stopPreview() {
-        await rpc.request('context.stopPreview')
+    async stopMonitoring() {
+        await rpc.request('context.stopMonitoring')
 
     }
 

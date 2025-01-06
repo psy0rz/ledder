@@ -1,17 +1,16 @@
 //context of a websocket connection
 import {DisplayWebsocket} from "./drivers/DisplayWebsocket.js"
 import {JSONRPCServerAndClient} from "json-rpc-2.0"
-import ControlGroup from "../ControlGroup.js"
 import AnimationManager from "./AnimationManager.js"
 
 
-//Per websocket context, used to generate the preview animation that is shown in the browser.
+//Per websocket context, used to generate the monitoring display that is shown in the browser.
 //Also handles passing through controls to browser and saving presets
 export class WsContext {
     ws: WebSocket
     client: JSONRPCServerAndClient<WsContext, WsContext>
     // renderLoop: RenderRealtime
-    previewDisplay: DisplayWebsocket | undefined
+    monitorDisplay: DisplayWebsocket | undefined
 
     animationManager: AnimationManager
     resetCb: any
@@ -45,30 +44,22 @@ export class WsContext {
         }
     }
 
-    startPreview(previewDisplay: DisplayWebsocket) {
+    startMonitoring(monitorDisplay: DisplayWebsocket) {
 
-        if (this.previewDisplay !== undefined)
-            this.stopPreview()
+        if (this.monitorDisplay !== undefined)
+            this.stopMonitoring()
 
-        this.previewDisplay = previewDisplay
-        this.previewDisplay.addWsContext(this)
+        this.monitorDisplay = monitorDisplay
+        this.monitorDisplay.addWsContext(this)
 
 
     }
 
-    stopPreview() {
-        // this.started=false
-        if (this.previewDisplay !== undefined) {
-            this.previewDisplay.removeWebsocket(this)
-            this.previewDisplay = undefined
+    stopMonitoring() {
+        if (this.monitorDisplay !== undefined) {
+            this.monitorDisplay.removeWebsocket(this)
+            this.monitorDisplay = undefined
         }
-        // //should stop because of gc
-        // if (this.renderLoop) {
-        //     this.started = false
-        //     this.renderLoop.stop()
-        //     this.renderLoop = undefined
-        //     clearInterval(this.statsInterval)
-        // }
     }
 
 
@@ -125,7 +116,7 @@ export class WsContext {
     //websocket closed
     closed() {
         console.log(`WsContext: Stopping ${this.id}`)
-        this.stopPreview()
+        this.stopMonitoring()
         this.stopControls()
     }
 

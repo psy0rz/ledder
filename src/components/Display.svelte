@@ -44,7 +44,7 @@
     onMount(async () => {
         f7ready(async () => {
             await runnerBrowser.init()
-            await runnerBrowser.startPreview()
+            await runnerBrowser.startMonitoring()
 
             displayZoom.subscribe((zoom) => {
 

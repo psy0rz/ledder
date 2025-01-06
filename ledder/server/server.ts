@@ -63,17 +63,17 @@ rpc.addMethod("animationManager.delete", async (params, context) => {
 })
 
 
-rpc.addMethod("context.startPreview", async (params, context) => {
+rpc.addMethod("context.startMonitoring", async (params, context) => {
 
     //TODO: make displaynr selectable
-    context.startPreview(previewDisplays[selectedDisplayIndex])
+    context.startMonitoring(previewDisplays[selectedDisplayIndex])
     context.startControls(renderLoops[selectedDisplayIndex].animationManager)
     return [previewDisplays[selectedDisplayIndex].width, previewDisplays[selectedDisplayIndex].height]
 })
 
-rpc.addMethod("context.stopPreview", async (params, context) => {
+rpc.addMethod("context.stopMonitoring", async (params, context) => {
     // context.stopPreview()
-    context.stopPreview()
+    context.stopMonitoring()
     context.stopControls()
 
 })
