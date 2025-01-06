@@ -23,7 +23,7 @@ const gammaMapper = new GammaMapper(settingsControl.group("Display settings"))
 
 //create run all the displayes
 let renderLoops: Array<RenderRealtime> = []
-let previewDisplays: Array<DisplayWebsocket> = []
+let monitoringDisplays: Array<DisplayWebsocket> = []
 
 //TODO: make selectable in gui, move this variable to wscontext
 let selectedDisplayIndex=0
@@ -34,7 +34,7 @@ for (const m of config.displayList) {
     display.gammaMapper = gammaMapper
 
     const displayWebsocket = new DisplayWebsocket(display.width, display.height)
-    previewDisplays.push(displayWebsocket)
+    monitoringDisplays.push(displayWebsocket)
 
     let renderLoop = new RenderRealtime([display, displayWebsocket])
     renderLoop.start()
@@ -66,13 +66,12 @@ rpc.addMethod("animationManager.delete", async (params, context) => {
 rpc.addMethod("context.startMonitoring", async (params, context) => {
 
     //TODO: make displaynr selectable
-    context.startMonitoring(previewDisplays[selectedDisplayIndex])
+    context.startMonitoring(monitoringDisplays[selectedDisplayIndex])
     context.startControls(renderLoops[selectedDisplayIndex].animationManager)
-    return [previewDisplays[selectedDisplayIndex].width, previewDisplays[selectedDisplayIndex].height]
+    return [monitoringDisplays[selectedDisplayIndex].width, monitoringDisplays[selectedDisplayIndex].height]
 })
 
 rpc.addMethod("context.stopMonitoring", async (params, context) => {
-    // context.stopPreview()
     context.stopMonitoring()
     context.stopControls()
 
