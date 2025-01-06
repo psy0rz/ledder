@@ -1,0 +1,27 @@
+{
+ "title": "",
+ "description": "",
+ "values": {
+  "Font": {
+   "selected": "C64"
+  },
+  "Font height": {
+   "value": 0
+  },
+  "Font width": {
+   "value": 0
+  },
+  "tekst": {
+   "r": 255,
+   "g": 56,
+   "b": 32,
+   "a": 1
+  },
+  "interval": {
+   "value": 30
+  },
+  "text": {
+   "text": "ON AIR"
+  }
+ }
+}

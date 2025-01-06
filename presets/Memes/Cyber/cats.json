@@ -1,0 +1,27 @@
+{
+ "title": "",
+ "description": "",
+ "values": {
+  "Font": {
+   "selected": "Computer"
+  },
+  "Font height": {
+   "value": 0
+  },
+  "Font width": {
+   "value": 0
+  },
+  "tekst": {
+   "r": 251,
+   "g": 0,
+   "b": 255,
+   "a": 1
+  },
+  "interval": {
+   "value": 19
+  },
+  "text": {
+   "text": "CATS"
+  }
+ }
+}
