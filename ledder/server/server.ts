@@ -26,24 +26,29 @@ let renderLoops: Array<RenderRealtime> = []
 let monitoringDisplays: Array<DisplayWebsocket> = []
 
 //TODO: make selectable in gui, move this variable to wscontext
-let selectedDisplayIndex=0
-
-for (const m of config.displayList) {
-    let display: Display
-    display = m
+let selectedDisplayIndex = 0
+let displayNr = 0
+for (const displayNr in config.displayList) {
+    const display = config.displayList[displayNr]
+    //FIXME, should be one confirable per display instead of global.
     display.gammaMapper = gammaMapper
 
-    const displayWebsocket = new DisplayWebsocket(display.width, display.height)
-    monitoringDisplays.push(displayWebsocket)
+    const monitoringDisplay = new DisplayWebsocket(display.width, display.height)
+    monitoringDisplays.push(monitoringDisplay)
 
-    let renderLoop = new RenderRealtime([display, displayWebsocket])
+    let renderLoop = new RenderRealtime([display, monitoringDisplay], `Display ${displayNr}`)
     renderLoop.start()
     renderLoop.animationManager.select(config.animation, false)
     renderLoops.push(renderLoop)
 
-
 }
 
+//preview renderer
+const monitoringDisplay = new DisplayWebsocket(32, 8)
+monitoringDisplays.push(monitoringDisplay)
+let previewRenderLoop = new RenderRealtime([monitoringDisplay], `Preview`)
+previewRenderLoop.animationManager.select(config.animation, false)
+renderLoops.push(previewRenderLoop)
 
 //RPC bindings
 let rpc = new RpcServer()
@@ -68,12 +73,22 @@ rpc.addMethod("context.startMonitoring", async (params, context) => {
     //TODO: make displaynr selectable
     context.startMonitoring(monitoringDisplays[selectedDisplayIndex])
     context.startControls(renderLoops[selectedDisplayIndex].animationManager)
+
+    //only start the preview renderer if someone is actually watching.
+    //also for performance reasons there is only one shared preview renderer for everyone.
+    if (renderLoops[selectedDisplayIndex]===previewRenderLoop)
+        previewRenderLoop.start()
+
+
     return [monitoringDisplays[selectedDisplayIndex].width, monitoringDisplays[selectedDisplayIndex].height]
+
+
 })
 
 rpc.addMethod("context.stopMonitoring", async (params, context) => {
     context.stopMonitoring()
     context.stopControls()
+
 
 })
 

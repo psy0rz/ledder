@@ -28,14 +28,20 @@ export class RenderRealtime extends Render {
             this.idleMS = 0
             this.droppedFrames = 0
 
-
+            this.animationManager.run()
             this.renderInterval()
+            console.log(`RenderRealtime ${this.description} started.`)
         }
     }
 
     //the main step-render-send loop
 
     async renderInterval() {
+
+        //stop rendering if primary display is disabled
+        if (!this.displays[0].enabled)
+            this.stop()
+
         if (!this.keepRendering)
             return
 
@@ -89,6 +95,7 @@ export class RenderRealtime extends Render {
     stop() {
         this.keepRendering = false
         this.animationManager.stop(false)
+        console.log(`RenderRealtime ${this.description} stopped.`)
     }
 
 
