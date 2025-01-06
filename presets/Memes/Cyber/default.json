@@ -19,6 +19,9 @@
   },
   "interval": {
    "value": 5
+  },
+  "text": {
+   "text": "CYBER"
   }
  }
 }
