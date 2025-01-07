@@ -24,7 +24,7 @@
         opened={true}
         toggle={false}
         iconMaterial={icon}
-        on:click={runnerBrowser.run(parentName, presetListItem.name)}
+        on:click={()=>{runnerBrowser.run(parentName, presetListItem.name)}}
 
 
 >
