@@ -39,8 +39,8 @@ export class RenderRealtime extends Render {
     async renderInterval() {
 
         //stop rendering if primary display is disabled
-        if (!this.displays[0].enabled)
-            this.stop()
+        // if (!this.displays[0].enabled)
+        //     this.stop()
 
         if (!this.keepRendering)
             return

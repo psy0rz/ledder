@@ -46,14 +46,14 @@ export class DisplayWebsocket extends Display {
     addWsContext(wsContext: WsContext) {
         this.wsContexts.add(wsContext)
         this.sendSize(wsContext)
-        this.enabled = true
+        // this.enabled = true
 
     }
 
-    removeWebsocket(wsContext: WsContext) {
+    removeWsContext(wsContext: WsContext) {
         this.wsContexts.delete(wsContext)
-        if (this.wsContexts.size == 0)
-            this.enabled = false
+        // if (this.wsContexts.size == 0)
+        //     this.enabled = false
     }
 
     frame() {

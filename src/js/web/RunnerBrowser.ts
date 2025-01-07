@@ -31,6 +31,7 @@ export class RunnerBrowser {
         this.presets = {}
         sveltePresets.set(new ControlGroup())
 
+
         rpc.addMethod('control.reset', async () => {
             // console.log("Reset controls")
             this.presets = {}
@@ -38,24 +39,24 @@ export class RunnerBrowser {
             await tick()
         })
 
-        rpc.addMethod('control.set', async (params) => {
+        rpc.addMethod('control.set', async (controlGroup) => {
 
-            // console.log("Add control", params[0])
+            // console.log("Add control", controlGroup)
 
 
-            sveltePresets.set(params[0])
+            sveltePresets.set(controlGroup)
         })
 
-        rpc.addMethod('animationManager.changed', ( pars)=>{
-            const [animationName, presetName]=pars
+        rpc.addMethod('animationManager.changed', ( animationName, presetName)=>{
+            // const [animationName, presetName]=pars
             console.log("Server animation changed:", animationName, presetName)
             svelteSelectedTitle.set(`${animationName}/${presetName}`)
             this.animationName=animationName
             this.presetName=presetName
         })
 
-        rpc.addMethod('display.changedSize', (pars)=>{
-            const [width, height]=pars
+        rpc.addMethod('display.changedSize', (width, height)=>{
+            // const [width, height]=pars
             rpc.registerDisplay( new DisplayCanvas(width, height, 8, '#ledder-display', '.ledder-display-box'))
 
             svelteDisplayWidth.set(width)

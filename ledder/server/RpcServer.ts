@@ -20,7 +20,6 @@ export class RpcServer extends Rpc {
     public app: Express
 
 
-
     constructor() {
         super();
 
@@ -30,7 +29,7 @@ export class RpcServer extends Rpc {
 
         const port = 3000
 
-        this.idCount=0
+        this.idCount = 0
 
         // use vite's connect instance as middleware, when in dev mode
         if (process.env.NODE_ENV == 'development') {
@@ -73,8 +72,7 @@ export class RpcServer extends Rpc {
 
             })
 
-            ws.on('close', ()=>
-            {
+            ws.on('close', () => {
                 context.closed()
             })
 
@@ -95,15 +93,12 @@ export class RpcServer extends Rpc {
 
     }
 
-    addMethod(name, method
-        :
-        (params: any[], context: WsContext) => void
-    ) {
+    addMethod(name, method: (params: any[], context: WsContext) => void) {
         this.server.addMethod(name, method);
     }
 
     request(name, ...params) {
-        throw("Use wsContext.request to send request to the proper client.")
+        throw ("Use wsContext.request to send request to the proper client.")
     }
 }
 

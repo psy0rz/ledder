@@ -114,7 +114,9 @@ class RpcClient extends Rpc {
     }
 
     addMethod(name, method) {
-        this.serverAndClient.addMethod(name, method)
+        this.serverAndClient.addMethod(name, (pars)=>{
+            method(...pars)
+        })
     }
 
     registerDisplay(display: DisplayCanvas)
