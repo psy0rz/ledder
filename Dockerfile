@@ -1,5 +1,7 @@
 # syntax=docker/dockerfile:1
 
+#NOTE: when using alpine it seems building on arm via github actions hangs forever
+
 # cacheble npm install stage that only reruns if package.json actually changes.
 FROM node:22 AS builder
 
@@ -7,8 +9,6 @@ ENV NODE_ENV=production
 
 WORKDIR /app
 
-RUN apk add python3
-RUN apk add build-base
 
 COPY ["package.json", "package-lock.json*", "./"]
 
