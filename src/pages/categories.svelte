@@ -5,7 +5,7 @@
         f7ready,
         Link,
         Message,
-        Navbar,
+        Navbar, NavLeft, NavTitle, NavTitleLarge,
         Page,
         Preloader,
         Subnavbar,
@@ -30,32 +30,35 @@
 </script>
 
 <Page name="categories">
-    <Navbar title="Ledder" subtitle={$svelteSelectedTitle}>
-        <Subnavbar inner={false} class="justify-content-left">
-                <Button
-                        iconMd="material:settings"
-                        href="/settings"
-                        title="Settings"
-                        tonal
+    <Navbar>
 
-                />
-                <Button
-                        iconMd="material:tune"
-                        href="/controls"
-                        title="Controls"
-                        tonal
-                />
+        <!--            <Searchbar-->
+        <!--                    bind:value={search}-->
+        <!--                    searchContainer=".search-list"-->
+        <!--                    searchIn=".item-title"-->
+        <!--            />-->
+        <NavLeft>
 
-            <!--            <Searchbar-->
-            <!--                    bind:value={search}-->
-            <!--                    searchContainer=".search-list"-->
-            <!--                    searchIn=".item-title"-->
-            <!--            />-->
-        </Subnavbar>
+            <Button
+                    iconMd="material:settings"
+                    href="/settings"
+                    title="Settings"
+                    tonal
+
+            />
+            <Button
+                    iconMd="material:tune"
+                    href="/controls"
+                    title="Controls"
+                    tonal
+
+            />
+        </NavLeft>
+        <NavTitle title="{$svelteSelectedTitle}" subtitle="Display 1 - 30 fps - %cpu "></NavTitle>
     </Navbar>
     <Block>
-        Welcome to Ledder. Click on the second icon to view per animation control. More info at <Link href="https://github.com/psy0rz/ledder" external>Github</Link>
-
+        Welcome to Ledder. Click on the second icon to view per animation control. More info at
+        <Link href="https://github.com/psy0rz/ledder" external>Github</Link>
     </Block>
 
 
@@ -67,4 +70,6 @@
             <AnimationListUI animationList={$svelteAnimations}></AnimationListUI>
         </Treeview>
     {/if}
+
+
 </Page>

@@ -3,7 +3,7 @@
     import {runnerBrowser} from "../js/web/RunnerBrowser.js"
 
     import {f7ready} from "framework7-svelte"
-    import {displayHeight, displayWidth, displayZoom} from "@/js/web/svelteStore.js"
+    import {svelteDisplayHeight, svelteDisplayWidth, svelteDisplayZoom} from "@/js/web/svelteStore.js"
 
     let zoom = true
 
@@ -11,7 +11,7 @@
     function autoZoom() {
 
         if (zoom) {
-            displayZoom.set(2)
+            svelteDisplayZoom.set(2)
         } else {
 
 
@@ -24,7 +24,7 @@
             if (autozoom > 8)
                 autozoom = 8
 
-            displayZoom.set(autozoom)
+            svelteDisplayZoom.set(autozoom)
         }
     }
 
@@ -46,7 +46,7 @@
             await runnerBrowser.init()
             await runnerBrowser.startMonitoring()
 
-            displayZoom.subscribe((zoom) => {
+            svelteDisplayZoom.subscribe((zoom) => {
 
                 const boxes = document.querySelectorAll(".ledder-display-box")
                 const canvas = document.querySelector(".ledder-display")
@@ -74,12 +74,12 @@
     <defs>
         <pattern
                 id="ledder-grid-pattern"
-                width={$displayZoom}
-                height={$displayZoom}
+                width={$svelteDisplayZoom}
+                height={$svelteDisplayZoom}
                 patternUnits="userSpaceOnUse"
         >
             <path
-                    d="M {$displayZoom} 0 L 0 0 0 {$displayZoom}"
+                    d="M {$svelteDisplayZoom} 0 L 0 0 0 {$svelteDisplayZoom}"
                     fill="none"
                     stroke="black"
                     stroke-width="1"
@@ -87,12 +87,12 @@
         </pattern>
     </defs>
 
-    {#if $displayZoom >= 4}
+    {#if $svelteDisplayZoom >= 4}
         <rect width="100%" height="100%" fill="url(#ledder-grid-pattern)"/>
     {/if}
 </svg>
 
 <div class="ledder-display-box" style="color: white; text-align:right; " on:click={toggleZoom}>
-    {$displayWidth} x {$displayHeight}
+    {$svelteDisplayWidth} x {$svelteDisplayHeight}
 </div>
 

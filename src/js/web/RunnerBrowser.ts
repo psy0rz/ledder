@@ -2,7 +2,7 @@ import {rpc} from "./RpcClient.js"
 import {
     svelteAnimations,
     sveltePresets,
-    svelteSelectedTitle, displayWidth, displayHeight, displayZoom
+    svelteSelectedTitle, svelteDisplayWidth, svelteDisplayHeight, svelteDisplayZoom
 } from "./svelteStore.js"
 import {confirmPromise, info, promptPromise} from "./util.js"
 import {DisplayCanvas} from "./DisplayCanvas.js"
@@ -58,8 +58,8 @@ export class RunnerBrowser {
             const [width, height]=pars
             rpc.registerDisplay( new DisplayCanvas(width, height, 8, '#ledder-display', '.ledder-display-box'))
 
-            displayWidth.set(width)
-            displayHeight.set(height)
+            svelteDisplayWidth.set(width)
+            svelteDisplayHeight.set(height)
 
         })
 

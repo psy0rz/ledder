@@ -20,6 +20,7 @@ export const svelteAnimations = writable<AnimationListType>([])
 
 export const svelteLive =writable(true)
 
-export const displayZoom = writable(8);
-export const displayWidth = writable(0);
-export const displayHeight = writable(0);
+export const svelteDisplayZoom = writable(8);
+export const svelteDisplayWidth = writable(0);
+export const svelteDisplayHeight = writable(0);
+
