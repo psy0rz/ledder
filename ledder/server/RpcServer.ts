@@ -93,8 +93,10 @@ export class RpcServer extends Rpc {
 
     }
 
-    addMethod(name, method: (params: any[], context: WsContext) => void) {
-        this.server.addMethod(name, method);
+    addMethod(name, method) {
+        this.server.addMethod(name, (params: Array<any>, wsContext) => {
+            return method(wsContext, ...params)
+        });
     }
 
     request(name, ...params) {

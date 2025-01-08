@@ -115,7 +115,7 @@ class RpcClient extends Rpc {
 
     addMethod(name, method) {
         this.serverAndClient.addMethod(name, (pars)=>{
-            method(...pars)
+            return method(...pars)
         })
     }
 

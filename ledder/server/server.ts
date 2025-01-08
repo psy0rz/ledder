@@ -53,7 +53,7 @@ renderMonitors.push(new RenderMonitor(previewRenderLoop, monitoringDisplay))
 //RPC bindings
 let rpc = new RpcServer()
 
-rpc.addMethod("presetStore.loadAnimationPresetList", async (params) => {
+rpc.addMethod("presetStore.loadAnimationPresetList", async () => {
     return await presetStore.loadAnimationPresetList()
 })
 
@@ -68,7 +68,7 @@ rpc.addMethod("presetStore.loadAnimationPresetList", async (params) => {
 // })
 
 
-rpc.addMethod("context.startMonitoring", async (params, context) => {
+rpc.addMethod("context.startMonitoring", async (context) => {
 
     renderMonitors[selectedDisplayIndex].addWsContext(context)
 
@@ -87,7 +87,7 @@ rpc.addMethod("context.startMonitoring", async (params, context) => {
 
 })
 
-rpc.addMethod("context.stopMonitoring", async (params, context) => {
+rpc.addMethod("context.stopMonitoring", async ( context) => {
     renderMonitors[selectedDisplayIndex].removeWsContext(context)
     // context.stopMonitoring()
     // context.stopControls()
@@ -97,19 +97,19 @@ rpc.addMethod("context.stopMonitoring", async (params, context) => {
 })
 
 
-rpc.addMethod("animationManager.select", async (params, context) => {
+rpc.addMethod("animationManager.select", async ( context, animationAndPresetPath) => {
 
 
-    await renderMonitors[selectedDisplayIndex].renderer.animationManager.select(params[0], false)
+    await renderMonitors[selectedDisplayIndex].renderer.animationManager.select(animationAndPresetPath, false)
 
     // for (const runner of renderLoops) {
     //     await runner.animationManager.select(params[0], false)
     // }
 })
 
-rpc.addMethod("animationManager.updateValue", async (params, context) => {
+rpc.addMethod("animationManager.updateValue", async (context, path, values) => {
 
-    await renderMonitors[selectedDisplayIndex].renderer.animationManager.updateValue(params[0], params[1])
+    await renderMonitors[selectedDisplayIndex].renderer.animationManager.updateValue(path,values)
 
     // for (const runner of renderLoops) {
     //     await runner.animationManager.updateValue(params[0], params[1])
@@ -117,17 +117,17 @@ rpc.addMethod("animationManager.updateValue", async (params, context) => {
 })
 
 
-rpc.addMethod("settings.get", async (params, context) => {
+rpc.addMethod("settings.get", async () => {
     return settingsControl
 
 })
 
 
-rpc.addMethod("settings.updateValue", async (params, context) => {
+rpc.addMethod("settings.updateValue", async (context, path, values) => {
 
     try {
 
-        settingsControl.updateValue(params[0], params[1])
+        settingsControl.updateValue(path, values)
     } catch (e) {
         console.error("Error while updating settings value:", e)
     }
