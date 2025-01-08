@@ -57,15 +57,15 @@ rpc.addMethod("presetStore.loadAnimationPresetList", async () => {
     return await presetStore.loadAnimationPresetList()
 })
 
-// rpc.addMethod("animationManager.save", async (params, context) => {
-//     await renderLoops[selectedDisplayIndex].animationManager.save(params[0])
-//     await previewStore.render(renderLoops[selectedDisplayIndex].animationManager.animationName, renderLoops[selectedDisplayIndex].animationManager.presetName)
-//
-// })
-//
-// rpc.addMethod("animationManager.delete", async (params, context) => {
-//     await renderLoops[selectedDisplayIndex].animationManager.delete()
-// })
+rpc.addMethod("animationManager.save", async (params, context) => {
+    await renderMonitors[selectedDisplayIndex].renderer.animationManager.save(params[0])
+    await previewStore.render(renderMonitors[selectedDisplayIndex].renderer.animationManager.animationName, renderMonitors[selectedDisplayIndex].renderer.animationManager.presetName)
+
+})
+
+rpc.addMethod("animationManager.delete", async (params, context) => {
+    await renderMonitors[selectedDisplayIndex].renderer.animationManager.delete()
+})
 
 
 rpc.addMethod("context.startMonitoring", async (context) => {
