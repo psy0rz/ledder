@@ -11,6 +11,7 @@ import OffsetMapper from "./drivers/OffsetMapper.js"
 import {DisplayWebsocket} from "./drivers/DisplayWebsocket.js"
 import {config, load} from "./config.js"
 import RenderMonitor from "./RenderMonitor.js";
+import type {WsContext} from "./WsContext.js";
 
 
 const settingsControl = new ControlGroup('Global settings')
@@ -25,7 +26,6 @@ const gammaMapper = new GammaMapper(settingsControl.group("Display settings"))
 let renderMonitors: Array<RenderMonitor> = []
 
 //TODO: make selectable in gui, m
-let selectedDisplayIndex = 0
 for (const displayNr in config.displayList) {
     const display = config.displayList[displayNr]
     //FIXME, should be one confirable per display instead of global.
@@ -57,63 +57,43 @@ rpc.addMethod("presetStore.loadAnimationPresetList", async () => {
     return await presetStore.loadAnimationPresetList()
 })
 
-rpc.addMethod("animationManager.save", async (params, context) => {
-    await renderMonitors[selectedDisplayIndex].renderer.animationManager.save(params[0])
-    await previewStore.render(renderMonitors[selectedDisplayIndex].renderer.animationManager.animationName, renderMonitors[selectedDisplayIndex].renderer.animationManager.presetName)
+rpc.addMethod("animationManager.save", async (context:WsContext, presetName) => {
+    await context.renderMonitor.renderer.animationManager.save(presetName)
+    await previewStore.render(context.renderMonitor.renderer.animationManager.animationName, context.renderMonitor.renderer.animationManager.presetName)
 
 })
 
-rpc.addMethod("animationManager.delete", async (params, context) => {
-    await renderMonitors[selectedDisplayIndex].renderer.animationManager.delete()
+rpc.addMethod("animationManager.delete", async (context:WsContext, presetName) => {
+    await context.renderMonitor.renderer.animationManager.delete()
 })
 
 
-rpc.addMethod("context.startMonitoring", async (context) => {
+rpc.addMethod("context.startMonitoring", async (context:WsContext, rendererId) => {
 
-    renderMonitors[selectedDisplayIndex].addWsContext(context)
-
-
-
-    // context.startMonitoring(monitoringDisplays[selectedDisplayIndex])
-    // context.startControls(renderLoops[selectedDisplayIndex].animationManager)
-    //
-    //only start the preview renderer if someone is actually watching.
-    //also for performance reasons there is only one shared preview renderer for everyone.
-    // if (renderLoops[selectedDisplayIndex]===previewRenderLoop)
-    //     previewRenderLoop.start()
-
-    // return [monitoringDisplays[selectedDisplayIndex].width, monitoringDisplays[selectedDisplayIndex].height]
+    renderMonitors[rendererId].addWsContext(context)
 
 
 })
 
-rpc.addMethod("context.stopMonitoring", async ( context) => {
-    renderMonitors[selectedDisplayIndex].removeWsContext(context)
-    // context.stopMonitoring()
-    // context.stopControls()
-
+rpc.addMethod("context.stopMonitoring", async ( context:WsContext) => {
+    context.renderMonitor.removeWsContext(context)
 
 
 })
 
 
-rpc.addMethod("animationManager.select", async ( context, animationAndPresetPath) => {
+rpc.addMethod("animationManager.select", async ( context:WsContext, animationAndPresetPath) => {
 
 
-    await renderMonitors[selectedDisplayIndex].renderer.animationManager.select(animationAndPresetPath, false)
+    await context.renderMonitor.renderer.animationManager.select(animationAndPresetPath, false)
 
-    // for (const runner of renderLoops) {
-    //     await runner.animationManager.select(params[0], false)
     // }
 })
 
 rpc.addMethod("animationManager.updateValue", async (context, path, values) => {
 
-    await renderMonitors[selectedDisplayIndex].renderer.animationManager.updateValue(path,values)
+    await context.renderMonitor.renderer.animationManager.updateValue(path,values)
 
-    // for (const runner of renderLoops) {
-    //     await runner.animationManager.updateValue(params[0], params[1])
-    // }
 })
 
 
