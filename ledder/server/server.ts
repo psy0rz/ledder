@@ -53,6 +53,14 @@ let rpc = new RpcServer()
 
 rpc.addMethod("refresh", async (context: WsContext) => {
     context.notify("animationList", presetStore.animationPresetList)
+
+
+    let displayList=[]
+    for (let renderMonitor of renderMonitors) {
+        displayList.push(renderMonitor.renderer.description)
+    }
+
+    context.notify("displayList", displayList)
 })
 
 rpc.addMethod("save", async (context: WsContext, presetName) => {
@@ -81,7 +89,6 @@ rpc.addMethod("startMonitoring", async (context: WsContext, rendererId) => {
 
     renderMonitors[rendererId].addWsContext(context)
 
-
 })
 
 rpc.addMethod("stopMonitoring", async (context: WsContext) => {
@@ -104,6 +111,8 @@ rpc.addMethod("updateValue", async (context, path, values) => {
     await context.renderMonitor.renderer.animationManager.updateValue(path, values)
 
 })
+
+
 
 
 rpc.addMethod("getSettings", async () => {

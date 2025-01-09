@@ -20,6 +20,11 @@ export default class RenderMonitor {
 
     addWsContext(wsContext: WsContext) {
 
+        //already monitoring something?
+        if (wsContext.renderMonitor!==undefined) {
+            wsContext.renderMonitor.removeWsContext(wsContext)
+        }
+
         //create monitoring display and add to renderer
         if (this.monitoringDisplay === undefined) {
 

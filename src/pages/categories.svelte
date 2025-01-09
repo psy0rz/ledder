@@ -1,15 +1,15 @@
 <script>
     import {
-        Block,
+        Block, BlockTitle,
         Button,
         f7ready,
-        Link,
+        Link, List, ListItem,
         Message,
         Navbar, NavLeft, NavTitle, NavTitleLarge,
-        Page,
+        Page, Panel,
         Preloader,
         Subnavbar,
-        Treeview
+        Treeview, TreeviewItem
     } from "framework7-svelte"
 
 
@@ -17,6 +17,7 @@
     import {runnerBrowser} from "../js/web/RunnerBrowser.js"
     import {onMount} from "svelte"
     import AnimationListUI from "@/components/AnimationListUI.svelte"
+    import {svelteDisplayList} from "@/js/web/svelteStore.js";
 
     let search = ""
 
@@ -32,12 +33,11 @@
 <Page name="categories">
     <Navbar>
 
-        <!--            <Searchbar-->
-        <!--                    bind:value={search}-->
-        <!--                    searchContainer=".search-list"-->
-        <!--                    searchIn=".item-title"-->
-        <!--            />-->
         <NavLeft>
+
+            <Button iconMd="material:menu"
+                    panelOpen="left"/>
+
 
             <Button
                     iconMd="material:settings"
@@ -56,6 +56,21 @@
         </NavLeft>
         <NavTitle title="{$svelteSelectedTitle}" subtitle="Display 1 - 30 fps - %cpu "></NavTitle>
     </Navbar>
+    <Panel containerEl="#categories" clos>
+        <BlockTitle>Displays</BlockTitle>
+        <List menuList>
+            {#each $svelteDisplayList as display, displayNr}
+                <ListItem
+                        panelClose="left"
+                        link
+                        on:click={()=>{runnerBrowser.startMonitoring(displayNr)}}>
+                    {display}
+                </ListItem>
+            {/each}
+        </List>
+
+    </Panel>
+
     <Block>
         Welcome to Ledder. Click on the second icon to view per animation control. More info at
         <Link href="https://github.com/psy0rz/ledder" external>Github</Link>

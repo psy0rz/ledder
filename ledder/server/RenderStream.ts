@@ -23,14 +23,14 @@ export class RenderStream extends Render {
 
             console.log("FILLING")
             do {
-                //NOTE: await is needed, to allow  microtasks to run!
-                frameTime = frameTime + await _this.scheduler.__step(false)
-
-                frameTime = ~~(frameTime / _this.display.frameRoundingMicros) * _this.display.frameRoundingMicros
-
-                encodedFrame.length = 0
-                _this.display.render(_this.box)
-                _this.display.frame(frameTime)
+                // //NOTE: await is needed, to allow  microtasks to run!
+                // frameTime = frameTime + await _this.scheduler.__step(false)
+                //
+                // frameTime = ~~(frameTime / _this.display.frameRoundingMicros) * _this.display.frameRoundingMicros
+                //
+                // encodedFrame.length = 0
+                // _this.display.render(_this.box)
+                // _this.display.frame(frameTime)
             } while (fh.write(new Uint8Array(encodedFrame)))
             console.log("FULL")
         }

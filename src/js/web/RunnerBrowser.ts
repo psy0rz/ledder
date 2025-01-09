@@ -2,7 +2,7 @@ import {rpc} from "./RpcClient.js"
 import {
     svelteAnimations,
     sveltePresets,
-    svelteSelectedTitle, svelteDisplayWidth, svelteDisplayHeight, svelteDisplayZoom
+    svelteSelectedTitle, svelteDisplayWidth, svelteDisplayHeight, svelteDisplayZoom, svelteDisplayList
 } from "./svelteStore.js"
 import {confirmPromise, info, promptPromise} from "./util.js"
 import {DisplayCanvas} from "./DisplayCanvas.js"
@@ -59,8 +59,10 @@ export class RunnerBrowser {
             // const [width, height]=pars
             rpc.registerDisplay(new DisplayCanvas(width, height, 8, '#ledder-display', '.ledder-display-box'))
 
+            console.log("got size", width, height)
             svelteDisplayWidth.set(width)
             svelteDisplayHeight.set(height)
+
 
         })
 
@@ -70,17 +72,19 @@ export class RunnerBrowser {
             }
         )
 
+        rpc.addMethod("displayList", (list) => {
+            svelteDisplayList.set(list)
+        })
+
     }
 
-    async startMonitoring() {
-
-
-        const size = await rpc.request('startMonitoring', 0)
+    async startMonitoring(displayNr) {
+        rpc.notify('startMonitoring', displayNr)
 
     }
 
     async stopMonitoring() {
-        await rpc.request('stopMonitoring')
+        rpc.notify('stopMonitoring')
 
     }
 

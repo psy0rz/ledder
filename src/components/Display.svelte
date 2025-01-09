@@ -10,19 +10,19 @@
     //zoom the preview to a reasoanble level for the screensize
     function autoZoom() {
 
-        if (zoom) {
+        if (!zoom) {
             svelteDisplayZoom.set(2)
         } else {
 
-
-            const canvas = document.querySelector(".ledder-display")
-            let autozoom = ~~((window.innerWidth / 2) / canvas.width)
+            // const canvas = document.querySelector(".ledder-display")
+            let autozoom = ~~((window.innerWidth / 2) / $svelteDisplayWidth)
 
             if (autozoom < 4)
                 autozoom = 4
 
             if (autozoom > 8)
                 autozoom = 8
+
 
             svelteDisplayZoom.set(autozoom)
         }
@@ -37,30 +37,32 @@
         autoZoom()
     }
 
-    window.addEventListener('resize', function(event) {
+    window.addEventListener('resize', function (event) {
         autoZoom()
     })
 
     onMount(async () => {
         f7ready(async () => {
             await runnerBrowser.init()
-            await runnerBrowser.startMonitoring()
-
-            svelteDisplayZoom.subscribe((zoom) => {
-
-                const boxes = document.querySelectorAll(".ledder-display-box")
-                const canvas = document.querySelector(".ledder-display")
-                for (const box of boxes) {
+            await runnerBrowser.startMonitoring(0)
 
 
-                    box.style.width = (canvas.width * zoom) + 'px'
-                    box.style.height = (canvas.height * zoom) + 'px'
-                }
-            })
-
-            toggleZoom()
         })
     })
+
+
+    $:{
+        autoZoom()
+        for (let box of document.querySelectorAll(".ledder-display-box")) {
+
+            box.style.width = ($svelteDisplayWidth * $svelteDisplayZoom) + 'px'
+            box.style.height = ($svelteDisplayHeight * $svelteDisplayZoom) + 'px'
+
+        }
+
+    }
+
+
 </script>
 
 
@@ -92,7 +94,7 @@
     {/if}
 </svg>
 
-<div class="ledder-display-box" style="color: white; text-align:right; " on:click={toggleZoom}>
+<div class="ledder-display-box" style="color: white; text-align:right;  " on:click={toggleZoom}>
     {$svelteDisplayWidth} x {$svelteDisplayHeight}
 </div>
 

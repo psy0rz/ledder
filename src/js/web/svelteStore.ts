@@ -24,3 +24,5 @@ export const svelteDisplayZoom = writable(8);
 export const svelteDisplayWidth = writable(0);
 export const svelteDisplayHeight = writable(0);
 
+
+export const svelteDisplayList=writable([])

@@ -40,7 +40,7 @@ export class DisplayWebsocket extends Display {
 
     sendSize(wsContext:WsContext)
     {
-        wsContext.request("displaySize", this.width, this.height)
+        wsContext.notify("displaySize", this.width, this.height)
     }
 
     addWsContext(wsContext: WsContext) {
