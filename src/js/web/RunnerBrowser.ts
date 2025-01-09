@@ -2,7 +2,12 @@ import {rpc} from "./RpcClient.js"
 import {
     svelteAnimations,
     sveltePresets,
-    svelteSelectedTitle, svelteDisplayWidth, svelteDisplayHeight, svelteDisplayZoom, svelteDisplayList
+    svelteSelectedTitle,
+    svelteDisplayWidth,
+    svelteDisplayHeight,
+    svelteDisplayZoom,
+    svelteDisplayList,
+    svelteSelectedDisplayNr
 } from "./svelteStore.js"
 import {confirmPromise, info, promptPromise} from "./util.js"
 import {DisplayCanvas} from "./DisplayCanvas.js"
@@ -76,9 +81,18 @@ export class RunnerBrowser {
             svelteDisplayList.set(list)
         })
 
+
+        rpc.addMethod("monitoring", (displayNr)=>{
+            svelteSelectedDisplayNr.set(displayNr)
+        })
+
+        await this.startMonitoring(localStorage.getItem('selectedDisplayNr'))
+
+
     }
 
     async startMonitoring(displayNr) {
+        localStorage.setItem('selectedDisplayNr', displayNr)
         rpc.notify('startMonitoring', displayNr)
 
     }

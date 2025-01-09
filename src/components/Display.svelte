@@ -44,7 +44,6 @@
     onMount(async () => {
         f7ready(async () => {
             await runnerBrowser.init()
-            await runnerBrowser.startMonitoring(0)
 
 
         })

@@ -55,7 +55,7 @@ rpc.addMethod("refresh", async (context: WsContext) => {
     context.notify("animationList", presetStore.animationPresetList)
 
 
-    let displayList=[]
+    let displayList = []
     for (let renderMonitor of renderMonitors) {
         displayList.push(renderMonitor.renderer.description)
     }
@@ -75,7 +75,7 @@ rpc.addMethod("save", async (context: WsContext, presetName) => {
 
 rpc.addMethod("delete", async (context: WsContext) => {
 
-    await context.renderMonitor.delete(    )
+    await context.renderMonitor.delete()
 
     //inform everyone of the new list
     for (let renderMonitor of renderMonitors) {
@@ -87,7 +87,11 @@ rpc.addMethod("delete", async (context: WsContext) => {
 
 rpc.addMethod("startMonitoring", async (context: WsContext, rendererId) => {
 
+    if (renderMonitors[rendererId] === undefined)
+        rendererId=0
+
     renderMonitors[rendererId].addWsContext(context)
+    context.notify("monitoring", rendererId)
 
 })
 
@@ -111,8 +115,6 @@ rpc.addMethod("updateValue", async (context, path, values) => {
     await context.renderMonitor.renderer.animationManager.updateValue(path, values)
 
 })
-
-
 
 
 rpc.addMethod("getSettings", async () => {
