@@ -41,5 +41,13 @@ export class Render {
     }
 
 
+    start()
+    {
+
+    }
+
+    stop(){
+
+    }
 
 }

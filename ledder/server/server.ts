@@ -31,14 +31,14 @@ for (const displayNr in config.displayList) {
     //FIXME, should be one confirable per display instead of global.
     display.gammaMapper = gammaMapper
 
-    const monitoringDisplay = new DisplayWebsocket(display.width, display.height)
+    // const monitoringDisplay = new DisplayWebsocket(display.width, display.height)
     // monitoringDisplays.push(monitoringDisplay)
 
-    let renderer = new RenderRealtime([display, monitoringDisplay], `Display ${displayNr}`)
+    let renderer = new RenderRealtime([display], `Display ${displayNr}`)
     renderer.start()
     renderer.animationManager.select(config.animation, false)
 
-    renderMonitors.push(new RenderMonitor(renderer, monitoringDisplay))
+    renderMonitors.push(new RenderMonitor(renderer))
 
 }
 
@@ -48,7 +48,7 @@ const monitoringDisplay = new DisplayWebsocket(32, 8)
 let previewRenderLoop = new RenderRealtime([monitoringDisplay], `Preview`)
 previewRenderLoop.animationManager.select(config.animation, false)
 previewRenderLoop.start()
-renderMonitors.push(new RenderMonitor(previewRenderLoop, monitoringDisplay))
+renderMonitors.push(new RenderMonitor(previewRenderLoop))
 
 //RPC bindings
 let rpc = new RpcServer()

@@ -60,6 +60,7 @@ export class DisplayWebsocket extends Display {
         //NOTE: yeah we just blast raw frames over websockets.
         // Its fine, since the browser client will check if the received message starts with '{' in which case it treats it as json :)
 
+
         for (const wsContext of this.wsContexts)
             wsContext.ws.send(this.imageBuf8)
 

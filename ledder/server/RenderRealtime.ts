@@ -61,15 +61,13 @@ export class RenderRealtime extends Render {
         }
 
         for (const display of this.displays) {
-            if (display.enabled) {
-                try {
+            try {
 
-                    display.render(this.box)
-                } catch (e) {
-                    console.error("Exception while rendering:", e)
-                }
-                display.frame(this.nextTimeMicros)
+                display.render(this.box)
+            } catch (e) {
+                console.error("Exception while rendering:", e)
             }
+            display.frame(this.nextTimeMicros)
         }
 
         if (nowUS - this.lastStatUpdate > 1000000) {

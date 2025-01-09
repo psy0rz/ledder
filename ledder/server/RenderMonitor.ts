@@ -1,6 +1,6 @@
 import type {WsContext} from "./WsContext";
 import type {Render} from "./Render";
-import type {DisplayWebsocket} from "./drivers/DisplayWebsocket.js";
+import  {DisplayWebsocket} from "./drivers/DisplayWebsocket.js";
 import {previewStore} from "./PreviewStore.js";
 import {presetStore} from "./PresetStore.js";
 
@@ -10,19 +10,28 @@ export default class RenderMonitor {
     wsContexts: Set<WsContext>
     renderer: Render
     monitoringDisplay: DisplayWebsocket
+    autostop: boolean
 
-    constructor(renderer: Render, monitoringDisplay: DisplayWebsocket) {
+    constructor(renderer: Render) {
         this.renderer = renderer
-        this.monitoringDisplay = monitoringDisplay
+        this.monitoringDisplay = undefined
         this.wsContexts = new Set()
         this.registerCallbacks()
     }
 
     addWsContext(wsContext: WsContext) {
+
+        //create monitoring display and add to renderer
+        if (this.monitoringDisplay===undefined) {
+            const primaryDisplay=this.renderer.displays[0]
+            this.monitoringDisplay = new DisplayWebsocket(primaryDisplay.width, primaryDisplay.height)
+            this.renderer.displays.push(this.monitoringDisplay)
+            this.renderer.start()
+        }
+
         this.wsContexts.add(wsContext)
         this.monitoringDisplay.addWsContext(wsContext)
         wsContext.renderMonitor = this
-
 
         //tell new client of the current animation name and controls
         wsContext.notify("selected", this.renderer.animationManager.animationName, this.renderer.animationManager.presetName)
@@ -35,6 +44,18 @@ export default class RenderMonitor {
         this.wsContexts.delete(wsContext)
         this.monitoringDisplay.removeWsContext(wsContext)
         wsContext.renderMonitor = undefined
+
+        if (this.wsContexts.size === 0) {
+            //if no one is watching, remove monitoring display from renderer
+            this.renderer.displays.length=this.renderer.displays.length-1
+            this.monitoringDisplay=undefined
+
+            //if renderer has no displays left, stop it
+            if (this.renderer.displays.length==0 )
+            {
+                this.renderer.stop()
+            }
+        }
     }
 
 

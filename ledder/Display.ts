@@ -39,7 +39,6 @@ export default abstract class Display {
     //set in server.ts
     gammaMapper: GammaMapper
 
-    enabled: boolean
 
     protected constructor(width, height) {
 
@@ -51,7 +50,6 @@ export default abstract class Display {
         this.xMax = width - 1
         this.yMax = height - 1
 
-        this.enabled=true
         // this.setFps(this.defaultFps)
 
         // this.colors=new Set()
