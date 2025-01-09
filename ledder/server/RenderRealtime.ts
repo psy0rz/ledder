@@ -91,9 +91,11 @@ export class RenderRealtime extends Render {
     }
 
     stop() {
-        this.keepRendering = false
-        this.animationManager.stop(false)
-        console.log(`RenderRealtime ${this.description} stopped.`)
+        if (this.keepRendering) {
+            this.keepRendering = false
+            this.animationManager.stop(false)
+            console.log(`RenderRealtime ${this.description} stopped.`)
+        }
     }
 
 

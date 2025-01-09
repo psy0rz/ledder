@@ -13,7 +13,8 @@ export class PreviewStore {
     constructor() {
 
         this.display = new DisplayApng(40, 8)
-        this.renderer=new RenderPreview([this.display])
+        this.renderer=new RenderPreview()
+        this.renderer.addDisplay(this.display)
     }
 
 

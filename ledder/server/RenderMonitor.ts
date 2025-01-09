@@ -1,6 +1,6 @@
 import type {WsContext} from "./WsContext";
 import type {Render} from "./Render";
-import  {DisplayWebsocket} from "./drivers/DisplayWebsocket.js";
+import {DisplayWebsocket} from "./drivers/DisplayWebsocket.js";
 import {previewStore} from "./PreviewStore.js";
 import {presetStore} from "./PresetStore.js";
 
@@ -10,7 +10,6 @@ export default class RenderMonitor {
     wsContexts: Set<WsContext>
     renderer: Render
     monitoringDisplay: DisplayWebsocket
-    autostop: boolean
 
     constructor(renderer: Render) {
         this.renderer = renderer
@@ -22,11 +21,10 @@ export default class RenderMonitor {
     addWsContext(wsContext: WsContext) {
 
         //create monitoring display and add to renderer
-        if (this.monitoringDisplay===undefined) {
-            const primaryDisplay=this.renderer.displays[0]
-            this.monitoringDisplay = new DisplayWebsocket(primaryDisplay.width, primaryDisplay.height)
-            this.renderer.displays.push(this.monitoringDisplay)
-            this.renderer.start()
+        if (this.monitoringDisplay === undefined) {
+
+            this.monitoringDisplay = new DisplayWebsocket(this.renderer.box.width(), this.renderer.box.height())
+            this.renderer.addDisplay(this.monitoringDisplay)
         }
 
         this.wsContexts.add(wsContext)
@@ -45,16 +43,11 @@ export default class RenderMonitor {
         this.monitoringDisplay.removeWsContext(wsContext)
         wsContext.renderMonitor = undefined
 
+        //if no one is watching this display, remove it from the renderer. (which in turn will stop if there are no displays left)
         if (this.wsContexts.size === 0) {
-            //if no one is watching, remove monitoring display from renderer
-            this.renderer.displays.length=this.renderer.displays.length-1
+            this.renderer.removeDisplay(this.monitoringDisplay)
             this.monitoringDisplay=undefined
 
-            //if renderer has no displays left, stop it
-            if (this.renderer.displays.length==0 )
-            {
-                this.renderer.stop()
-            }
         }
     }
 

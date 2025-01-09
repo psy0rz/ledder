@@ -34,8 +34,9 @@ for (const displayNr in config.displayList) {
     // const monitoringDisplay = new DisplayWebsocket(display.width, display.height)
     // monitoringDisplays.push(monitoringDisplay)
 
-    let renderer = new RenderRealtime([display], `Display ${displayNr}`)
-    renderer.start()
+    let renderer = new RenderRealtime(`Display ${displayNr}`)
+    renderer.addDisplay(display)
+
     renderer.animationManager.select(config.animation, false)
 
     renderMonitors.push(new RenderMonitor(renderer))
@@ -43,11 +44,8 @@ for (const displayNr in config.displayList) {
 }
 
 //preview renderer
-const monitoringDisplay = new DisplayWebsocket(32, 8)
-// monitoringDisplays.push(monitoringDisplay)
-let previewRenderLoop = new RenderRealtime([monitoringDisplay], `Preview`)
+let previewRenderLoop = new RenderRealtime(`Preview`)
 previewRenderLoop.animationManager.select(config.animation, false)
-previewRenderLoop.start()
 renderMonitors.push(new RenderMonitor(previewRenderLoop))
 
 //RPC bindings
@@ -149,6 +147,7 @@ rpc.addMethod("updateSetting", async (context, path, values) => {
 //Stream QOIS frames via a http get request.
 //Rendering is as fast as possible, to fill buffers up.
 //Client display decides how much data is buffered and consumed.
+//FIXME
 rpc.app.get('/get/stream/:id', async (req, resp) => {
 
     // let deviceInfo = await displayDeviceStore.get(req.params.id)
@@ -162,7 +161,7 @@ rpc.app.get('/get/stream/:id', async (req, resp) => {
     const display = new DisplayQOISbuffer(encodedFrameBuffer, matrixzigzag8x32, 256)
     display.gammaMapper = gammaMapper
 
-    const renderer = new RenderStream([display])
+    const renderer = new RenderStream()
     await renderer.animationManager.select("Tests/TestMatrix/default", false)
 
 

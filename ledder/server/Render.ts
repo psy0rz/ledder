@@ -13,21 +13,43 @@ export class Render {
     public readonly controlGroup: ControlGroup
     public readonly description: string
 
-    public displays: Array<Display>
-    protected readonly box: PixelBox
+    protected displays: Set<Display>
+    public readonly box: PixelBox
     protected readonly scheduler: Scheduler
 
 
-    constructor(displays: Array<Display>, description='') {
-        this.displays = displays
+    constructor( description='') {
+        this.displays = new Set()
 
         this.description=description
 
         this.controlGroup = new ControlGroup('root')
-        this.box = new PixelBox(displays[0])
         this.scheduler = new Scheduler()
-        this.scheduler.__setDefaultFrameTime(displays[0].defaultFrameTimeMicros)
+
+        this.box = new PixelBox({xMin:0,xMax:32,yMin:0,yMax:8})
+        this.scheduler.__setDefaultFrameTime(60/1000000)
         this.animationManager = new AnimationManager(this.box, this.scheduler, this.controlGroup)
+    }
+
+    addDisplay( display : Display ) {
+        this.displays.add(display)
+        //primary/first display?
+        if (this.displays.size===1) {
+            this.box.xMin=display.xMin
+            this.box.yMin=display.yMin
+            this.box.yMax=display.yMax
+            this.box.xMax=display.xMax
+            this.scheduler.__setDefaultFrameTime(display.defaultFrameTimeMicros)
+            this.start()
+        }
+    }
+
+    removeDisplay(display : Display) {
+        this.displays.delete(display)
+        if (this.displays.size===0) {
+            //"If a tree falls in a forest and no one is around to hear it, does it make a sound?"
+            this.stop()
+         }
     }
 
     getStats() {
