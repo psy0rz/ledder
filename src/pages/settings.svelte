@@ -25,7 +25,7 @@
 <Page
     name="settings"
     on:pageAfterIn={async () => {
-        settings = await rpc.request("settings.get");
+        settings = await rpc.request("getSettings");
     }}
 >
     <Navbar title="Settings" backLink="Back">
@@ -49,7 +49,7 @@
             <ControlGroupUI
                 controlGroup={settings}
                 onChanged={(path, values) => {
-                    rpc.notify("settings.updateValue", path, values);
+                    rpc.notify("updateSetting", path, values);
                 }}
             />
         </Treeview>

@@ -60,7 +60,7 @@
             <ControlGroup
                 controlGroup={$sveltePresets}
                 onChanged={(path, values) => {
-                    rpc.notify("animationManager.updateValue", path, values, $svelteLive);
+                    rpc.notify("updateValue", path, values, $svelteLive);
                 }}
             />
         </Treeview>

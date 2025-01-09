@@ -53,36 +53,36 @@ renderMonitors.push(new RenderMonitor(previewRenderLoop, monitoringDisplay))
 //RPC bindings
 let rpc = new RpcServer()
 
-rpc.addMethod("presetStore.loadAnimationPresetList", async () => {
+rpc.addMethod("refresh", async () => {
     return await presetStore.loadAnimationPresetList()
 })
 
-rpc.addMethod("animationManager.save", async (context:WsContext, presetName) => {
+rpc.addMethod("save", async (context:WsContext, presetName) => {
     await context.renderMonitor.renderer.animationManager.save(presetName)
     await previewStore.render(context.renderMonitor.renderer.animationManager.animationName, context.renderMonitor.renderer.animationManager.presetName)
 
 })
 
-rpc.addMethod("animationManager.delete", async (context:WsContext, presetName) => {
+rpc.addMethod("delete", async (context:WsContext, presetName) => {
     await context.renderMonitor.renderer.animationManager.delete()
 })
 
 
-rpc.addMethod("context.startMonitoring", async (context:WsContext, rendererId) => {
+rpc.addMethod("startMonitoring", async (context:WsContext, rendererId) => {
 
     renderMonitors[rendererId].addWsContext(context)
 
 
 })
 
-rpc.addMethod("context.stopMonitoring", async ( context:WsContext) => {
+rpc.addMethod("stopMonitoring", async ( context:WsContext) => {
     context.renderMonitor.removeWsContext(context)
 
 
 })
 
 
-rpc.addMethod("animationManager.select", async ( context:WsContext, animationAndPresetPath) => {
+rpc.addMethod("select", async ( context:WsContext, animationAndPresetPath) => {
 
 
     await context.renderMonitor.renderer.animationManager.select(animationAndPresetPath, false)
@@ -90,20 +90,20 @@ rpc.addMethod("animationManager.select", async ( context:WsContext, animationAnd
     // }
 })
 
-rpc.addMethod("animationManager.updateValue", async (context, path, values) => {
+rpc.addMethod("updateValue", async (context, path, values) => {
 
     await context.renderMonitor.renderer.animationManager.updateValue(path,values)
 
 })
 
 
-rpc.addMethod("settings.get", async () => {
+rpc.addMethod("getSettings", async () => {
     return settingsControl
 
 })
 
 
-rpc.addMethod("settings.updateValue", async (context, path, values) => {
+rpc.addMethod("updateSetting", async (context, path, values) => {
 
     try {
 

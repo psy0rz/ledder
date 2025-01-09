@@ -23,9 +23,9 @@ export default class RenderMonitor {
 
 
         //tell new client of the current animation name and controls
-        wsContext.notify("animationManager.changed", this.renderer.animationManager.animationName, this.renderer.animationManager.presetName)
-        wsContext.notify("control.reset")
-        wsContext.notify("control.set", this.renderer.animationManager.controlGroup)
+        wsContext.notify("selected", this.renderer.animationManager.animationName, this.renderer.animationManager.presetName)
+        wsContext.notify("resetControls")
+        wsContext.notify("setControls", this.renderer.animationManager.controlGroup)
 
     }
 
@@ -47,16 +47,16 @@ export default class RenderMonitor {
     registerCallbacks() {
 
         this.renderer.animationManager.controlGroup.__resetCallbacks.register(() => {
-            this.notifyAll("control.reset")
-            this.notifyAll("control.set", this.renderer.animationManager.controlGroup)
+            this.notifyAll("resetControls")
+            this.notifyAll("setControls", this.renderer.animationManager.controlGroup)
         })
 
         this.renderer.animationManager.controlGroup.__addCallbacks.register(() => {
-            this.notifyAll("control.set", this.renderer.animationManager.controlGroup)
+            this.notifyAll("setControls", this.renderer.animationManager.controlGroup)
         })
 
-        this.renderer.animationManager.changedCallbacks.register((animationName, presetName) => {
-            this.notifyAll("animationManager.changed", animationName, presetName)
+        this.renderer.animationManager.selectedCallbacks.register((animationName, presetName) => {
+            this.notifyAll("selected", animationName, presetName)
 
         })
 

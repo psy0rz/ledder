@@ -32,14 +32,14 @@ export class RunnerBrowser {
         sveltePresets.set(new ControlGroup())
 
 
-        rpc.addMethod('control.reset', async () => {
+        rpc.addMethod('resetControls', async () => {
             // console.log("Reset controls")
             this.presets = {}
             sveltePresets.set(new ControlGroup())
             await tick()
         })
 
-        rpc.addMethod('control.set', async (controlGroup) => {
+        rpc.addMethod('setControls', async (controlGroup) => {
 
             // console.log("Add control", controlGroup)
 
@@ -47,7 +47,7 @@ export class RunnerBrowser {
             sveltePresets.set(controlGroup)
         })
 
-        rpc.addMethod('animationManager.changed', ( animationName, presetName)=>{
+        rpc.addMethod('selected', ( animationName, presetName)=>{
             // const [animationName, presetName]=pars
             console.log("Server animation changed:", animationName, presetName)
             svelteSelectedTitle.set(`${animationName}/${presetName}`)
@@ -55,7 +55,7 @@ export class RunnerBrowser {
             this.presetName=presetName
         })
 
-        rpc.addMethod('display.changedSize', (width, height)=>{
+        rpc.addMethod('displaySize', (width, height)=>{
             // const [width, height]=pars
             rpc.registerDisplay( new DisplayCanvas(width, height, 8, '#ledder-display', '.ledder-display-box'))
 
@@ -69,12 +69,12 @@ export class RunnerBrowser {
     async startMonitoring() {
 
 
-        const size=await rpc.request('context.startMonitoring', 0)
+        const size=await rpc.request('startMonitoring', 0)
 
     }
 
     async stopMonitoring() {
-        await rpc.request('context.stopMonitoring')
+        await rpc.request('stopMonitoring')
 
     }
 
@@ -98,13 +98,13 @@ export class RunnerBrowser {
 
         // this.animationName = animationName
         // this.presetName = presetName
-        await rpc.request("animationManager.select", animationName + "/" + presetName)
+        await rpc.request("select", animationName + "/" + presetName)
 
 
     }
 
     async refreshAnimationList() {
-        const list = await rpc.request("presetStore.loadAnimationPresetList")
+        const list = await rpc.request("refresh")
         svelteAnimations.set(list)
     }
 
@@ -127,7 +127,7 @@ export class RunnerBrowser {
 
         // await rpc.request("presetStore.save", this.animationClass.presetDir, this.presetName, values);
         // await rpc.request("presetStore.createPreview", this.animationName, this.presetName, values);
-        await rpc.request("animationManager.save", this.presetName)
+        await rpc.request("save", this.presetName)
         await this.refreshAnimationList()
 
         await this.run(this.animationName, this.presetName)
@@ -143,7 +143,7 @@ export class RunnerBrowser {
 
         await confirmPromise('Delete preset', 'Do you want to delete preset: ' + this.presetName)
 
-        await rpc.request("animationManager.delete")
+        await rpc.request("delete")
         info("Deleted preset " + this.presetName, "", 2000)
 
         this.presetName = ""

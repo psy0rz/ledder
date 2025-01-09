@@ -33,7 +33,7 @@ export default class AnimationManager {
     public animationClass: typeof Animator
     private animation: Animator
 
-    public changedCallbacks: CallbackManager<(animationName: string, presetName: string) => void>
+    public selectedCallbacks: CallbackManager<(animationName: string, presetName: string) => void>
 
     //parents
     public readonly box: PixelBox
@@ -55,7 +55,7 @@ export default class AnimationManager {
 
         this.createProxies()
 
-        this.changedCallbacks = new CallbackManager()
+        this.selectedCallbacks = new CallbackManager()
 
     }
 
@@ -106,7 +106,7 @@ export default class AnimationManager {
         this.autoreload().then((a) => {
 
         })
-        this.changedCallbacks.trigger(this.animationName, this.presetName)
+        this.selectedCallbacks.trigger(this.animationName, this.presetName)
     }
 
     //load only preset
@@ -114,7 +114,7 @@ export default class AnimationManager {
         this.presetName = presetName
         this.presetValues = await presetStore.load(this.animationName, this.presetName)
         this.controlGroup.load(this.presetValues.values)
-        this.changedCallbacks.trigger(this.animationName, this.presetName)
+        this.selectedCallbacks.trigger(this.animationName, this.presetName)
     }
 
 
