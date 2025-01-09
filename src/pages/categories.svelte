@@ -22,7 +22,7 @@
 
     onMount(() => {
         f7ready(() => {
-            runnerBrowser.refreshAnimationList()
+            runnerBrowser.refresh()
         })
     })
 

@@ -15,10 +15,14 @@ import {createParentDir, getMtime} from "./utils.js"
 export class PresetStore {
     presetPath: string
     animationPath: string
+    animationPresetList: AnimationListType
+
+
 
     constructor(animationPath: string = "ledder/animations", presetPath: string = "presets") {
         this.presetPath = presetPath
         this.animationPath = animationPath
+        this.animationPresetList=[]
 
 
     }
@@ -108,7 +112,6 @@ export class PresetStore {
             presetFileName,
             JSON.stringify(preset, undefined, ' '), 'utf8'
         )
-        // await this.updateAnimationPresetList()
     }
 
 
@@ -188,17 +191,17 @@ export class PresetStore {
     }
 
     //load animation preset list from disk (cached)
-    async loadAnimationPresetList() {
-        //TODO:cache
-        return JSON.parse(await readFile(path.join(this.presetPath, 'index.json'), 'utf8'))
+    async reloadAnimationPresetList() {
+        this.animationPresetList= JSON.parse(await readFile(path.join(this.presetPath, 'index.json'), 'utf8'))
     }
 
     //update stored animation preset list
     async storeAnimationPresetList() {
         console.log("Creating animation preset list...")
+        this.animationPresetList=await this.buildAnimationPresetList("")
         await writeFile(
             path.join(this.presetPath, 'index.json'),
-            JSON.stringify(await this.buildAnimationPresetList(""), undefined, ' '), 'utf8'
+            JSON.stringify(this.animationPresetList, undefined, ' '), 'utf8'
         )
         console.log("Completed animation list.")
     }
@@ -225,3 +228,6 @@ export class PresetStore {
 
 
 export let presetStore=new PresetStore()
+
+
+await presetStore.reloadAnimationPresetList()

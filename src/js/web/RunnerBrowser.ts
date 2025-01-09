@@ -22,7 +22,7 @@ export class RunnerBrowser {
 
 
     constructor() {
-        this.zoom=false
+        this.zoom = false
 
     }
 
@@ -47,29 +47,35 @@ export class RunnerBrowser {
             sveltePresets.set(controlGroup)
         })
 
-        rpc.addMethod('selected', ( animationName, presetName)=>{
+        rpc.addMethod('selected', (animationName, presetName) => {
             // const [animationName, presetName]=pars
             console.log("Server animation changed:", animationName, presetName)
             svelteSelectedTitle.set(`${animationName}/${presetName}`)
-            this.animationName=animationName
-            this.presetName=presetName
+            this.animationName = animationName
+            this.presetName = presetName
         })
 
-        rpc.addMethod('displaySize', (width, height)=>{
+        rpc.addMethod('displaySize', (width, height) => {
             // const [width, height]=pars
-            rpc.registerDisplay( new DisplayCanvas(width, height, 8, '#ledder-display', '.ledder-display-box'))
+            rpc.registerDisplay(new DisplayCanvas(width, height, 8, '#ledder-display', '.ledder-display-box'))
 
             svelteDisplayWidth.set(width)
             svelteDisplayHeight.set(height)
 
         })
 
+        rpc.addMethod("animationList", (list) => {
+                svelteAnimations.set(list)
+
+            }
+        )
+
     }
 
     async startMonitoring() {
 
 
-        const size=await rpc.request('startMonitoring', 0)
+        const size = await rpc.request('startMonitoring', 0)
 
     }
 
@@ -103,9 +109,8 @@ export class RunnerBrowser {
 
     }
 
-    async refreshAnimationList() {
-        const list = await rpc.request("refresh")
-        svelteAnimations.set(list)
+    async refresh() {
+        rpc.notify("refresh")
     }
 
     // async refreshDisplayDeviceInfoList() {
@@ -128,8 +133,6 @@ export class RunnerBrowser {
         // await rpc.request("presetStore.save", this.animationClass.presetDir, this.presetName, values);
         // await rpc.request("presetStore.createPreview", this.animationName, this.presetName, values);
         await rpc.request("save", this.presetName)
-        await this.refreshAnimationList()
-
         await this.run(this.animationName, this.presetName)
 
         info("Saved preset " + this.presetName, "", 1000)
@@ -149,7 +152,6 @@ export class RunnerBrowser {
         this.presetName = ""
         // await this.run(this.animationName, this.presetName)
 
-        await this.refreshAnimationList()
 
     }
 

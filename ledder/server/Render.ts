@@ -6,7 +6,6 @@ import ControlGroup from "../ControlGroup.js"
 import Display from "../Display.js"
 import PixelBox from "../PixelBox.js"
 import Scheduler from "../Scheduler.js"
-import type {WsContext} from "./WsContext";
 
 export class Render {
 

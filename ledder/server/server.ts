@@ -3,7 +3,6 @@ import {RenderRealtime} from "./RenderRealtime.js"
 import ControlGroup from "../ControlGroup.js"
 import GammaMapper from "./drivers/GammaMapper.js"
 import {presetStore} from "./PresetStore.js"
-import {previewStore} from "./PreviewStore.js"
 import {RenderStream} from "./RenderStream.js"
 import {DisplayQOISbuffer} from "./drivers/DisplayQOISbuffer.js"
 // import {displayDeviceStore} from "./DisplayDeviceStore.js"
@@ -12,6 +11,7 @@ import {DisplayWebsocket} from "./drivers/DisplayWebsocket.js"
 import {config, load} from "./config.js"
 import RenderMonitor from "./RenderMonitor.js";
 import type {WsContext} from "./WsContext.js";
+import {previewStore} from "./PreviewStore.js";
 
 
 const settingsControl = new ControlGroup('Global settings')
@@ -53,36 +53,47 @@ renderMonitors.push(new RenderMonitor(previewRenderLoop, monitoringDisplay))
 //RPC bindings
 let rpc = new RpcServer()
 
-rpc.addMethod("refresh", async () => {
-    return await presetStore.loadAnimationPresetList()
+rpc.addMethod("refresh", async (context: WsContext) => {
+    context.notify("animationList", presetStore.animationPresetList)
 })
 
-rpc.addMethod("save", async (context:WsContext, presetName) => {
-    await context.renderMonitor.renderer.animationManager.save(presetName)
-    await previewStore.render(context.renderMonitor.renderer.animationManager.animationName, context.renderMonitor.renderer.animationManager.presetName)
+rpc.addMethod("save", async (context: WsContext, presetName) => {
+    await context.renderMonitor.save(presetName)
+
+    //inform everyone of the new list and preview
+    for (let renderMonitor of renderMonitors) {
+        renderMonitor.notifyAll("animationList", presetStore.animationPresetList)
+    }
 
 })
 
-rpc.addMethod("delete", async (context:WsContext, presetName) => {
-    await context.renderMonitor.renderer.animationManager.delete()
+rpc.addMethod("delete", async (context: WsContext) => {
+
+    await context.renderMonitor.delete(    )
+
+    //inform everyone of the new list
+    for (let renderMonitor of renderMonitors) {
+        renderMonitor.notifyAll("animationList", presetStore.animationPresetList)
+    }
+
 })
 
 
-rpc.addMethod("startMonitoring", async (context:WsContext, rendererId) => {
+rpc.addMethod("startMonitoring", async (context: WsContext, rendererId) => {
 
     renderMonitors[rendererId].addWsContext(context)
 
 
 })
 
-rpc.addMethod("stopMonitoring", async ( context:WsContext) => {
+rpc.addMethod("stopMonitoring", async (context: WsContext) => {
     context.renderMonitor.removeWsContext(context)
 
 
 })
 
 
-rpc.addMethod("select", async ( context:WsContext, animationAndPresetPath) => {
+rpc.addMethod("select", async (context: WsContext, animationAndPresetPath) => {
 
 
     await context.renderMonitor.renderer.animationManager.select(animationAndPresetPath, false)
@@ -92,7 +103,7 @@ rpc.addMethod("select", async ( context:WsContext, animationAndPresetPath) => {
 
 rpc.addMethod("updateValue", async (context, path, values) => {
 
-    await context.renderMonitor.renderer.animationManager.updateValue(path,values)
+    await context.renderMonitor.renderer.animationManager.updateValue(path, values)
 
 })
 

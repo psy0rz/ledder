@@ -1,4 +1,3 @@
-import Display from "./Display.js"
 import Scheduler from "./Scheduler.js"
 import ControlGroup from "./ControlGroup.js"
 import PixelBox from "./PixelBox.js"

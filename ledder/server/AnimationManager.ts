@@ -226,15 +226,12 @@ export default class AnimationManager {
 
         this.presetValues.values = this.controlGroup.save()
         await presetStore.save(this.animationName, this.presetName, this.presetValues)
-        await presetStore.storeAnimationPresetList()
-
     }
 
     //delete current running animation preset
     async delete() {
         if (this.presetName !== undefined) {
             await presetStore.delete(this.animationName, this.presetName)
-            await presetStore.storeAnimationPresetList()
             this.presetName = undefined
         }
     }

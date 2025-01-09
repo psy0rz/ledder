@@ -6,7 +6,6 @@ import Scheduler from "../Scheduler.js";
 import { random, randomFloatGaussian} from "../utils.js";
 import ControlSwitch from "../ControlSwitch.js";
 import type BoxInterface from "../BoxInterface.js"
-import controls from "../../src/pages/controls.svelte"
 
 
 //Move pixels in a random direction/speed.
