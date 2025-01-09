@@ -17,7 +17,7 @@
     import {runnerBrowser} from "../js/web/RunnerBrowser.js"
     import {onMount} from "svelte"
     import AnimationListUI from "@/components/AnimationListUI.svelte"
-    import {svelteDisplayList} from "@/js/web/svelteStore.js";
+    import {svelteDisplayList, svelteSelectedDisplayNr} from "@/js/web/svelteStore.js";
 
     let search = ""
 
@@ -63,7 +63,9 @@
                 <ListItem
                         panelClose="left"
                         link
-                        on:click={()=>{runnerBrowser.startMonitoring(displayNr)}}>
+                        on:click={()=>{runnerBrowser.startMonitoring(displayNr)}}
+                        selected={ $svelteSelectedDisplayNr===displayNr }
+                        >
                     {display}
                 </ListItem>
             {/each}

@@ -83,6 +83,7 @@ export class RunnerBrowser {
 
 
         rpc.addMethod("monitoring", (displayNr)=>{
+            displayNr=Number(displayNr)
             svelteSelectedDisplayNr.set(displayNr)
         })
 
