@@ -5,6 +5,7 @@
     import {runnerBrowser} from "../js/web/RunnerBrowser.js"
     import ControlGroup from "../components/ControlGroupUI.svelte"
     import {rpc} from "../js/web/RpcClient.js"
+    import {svelteStats} from "@/js/web/svelteStore.js";
 
 
     // let presets = []
@@ -58,7 +59,7 @@
                     tonal
             />
         </NavLeft>
-        <NavTitle title="Controls - {$svelteSelectedTitle}" subtitle="Display 1 - 30 fps - %cpu "></NavTitle>
+        <NavTitle title="Controls - {$svelteSelectedTitle}" subtitle="{$svelteStats}"></NavTitle>
     </Navbar>
     <Block strong>
         <Treeview>

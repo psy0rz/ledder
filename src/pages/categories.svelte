@@ -14,7 +14,7 @@
     } from "framework7-svelte"
 
 
-    import {svelteAnimations, svelteSelectedTitle} from "../js/web/svelteStore.js"
+    import {svelteAnimations, svelteSelectedTitle, svelteStats} from "../js/web/svelteStore.js"
     import {runnerBrowser} from "../js/web/RunnerBrowser.js"
     import {onMount} from "svelte"
     import AnimationListUI from "@/components/AnimationListUI.svelte"
@@ -55,7 +55,7 @@
 
             />
         </NavLeft>
-        <NavTitle title="{$svelteSelectedTitle}" subtitle="Display 1 - 30 fps - %cpu "></NavTitle>
+        <NavTitle title="{$svelteSelectedTitle}" subtitle="{$svelteStats}"></NavTitle>
     </Navbar>
 
     <Block>

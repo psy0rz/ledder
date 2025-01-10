@@ -84,19 +84,15 @@ export class Render {
     }
 
     getStats() {
-        // let count = 0
-        //
-        //
-        // this.box.forEachPixel(() => {
-        //     count++
-        // })
-        // return (`${this.description}: ${count} pixels.\n${this.scheduler.__getStats()}`)
 
         const deltaS=(Date.now()-this.statsLastTimestampMs)/1000
         const fps=~~(this.statsFrames/deltaS)
         const kbps =~~(this.statsBytes/deltaS/1000)
 
-        const busyPerc= ~~(100-((deltaS/ (this.statsIdleMs/1000))*100))
+        let busyPerc= ~~(100-(((this.statsIdleMs/1000)/deltaS )*100))
+        if (busyPerc<0)
+            busyPerc=0
+
         const statStr= (`${fps} fps (${this.statsLateFrames} late, ${this.statsDroppedFrames} dropped), ${kbps} KB/s, ${busyPerc}% busy`)
         this.resetStats()
         return statStr

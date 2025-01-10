@@ -7,7 +7,7 @@ import {
     svelteDisplayHeight,
     svelteDisplayZoom,
     svelteDisplayList,
-    svelteSelectedDisplayNr
+    svelteSelectedDisplayNr, svelteStats
 } from "./svelteStore.js"
 import {confirmPromise, info, promptPromise} from "./util.js"
 import {DisplayCanvas} from "./DisplayCanvas.js"
@@ -85,6 +85,10 @@ export class RunnerBrowser {
             svelteSelectedDisplayNr.set(displayNr)
             localStorage.setItem('selectedDisplayNr', displayNr)
 
+        })
+
+        rpc.addMethod( "stats", (stats)=>{
+            svelteStats.set(stats)
         })
 
         //start monitoring the same display as last time

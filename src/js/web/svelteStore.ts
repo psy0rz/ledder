@@ -10,6 +10,7 @@ export const sveltePresets = writable<ControlGroup>( )
 
 //human readable title for selected animation/preset combo
 export const svelteSelectedTitle =writable("")
+export const svelteStats = writable("")
 
 // export const svelteSelectedAnimationName =writable("")
 
