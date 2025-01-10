@@ -95,7 +95,6 @@ export default class AnimationManager {
         if (this.animationClass!==undefined)
         {
             this.animation = new this.animationClass()
-            console.log("run met", this.childBox)
             return this.animation.run(this.childBox, this.proxyScheduler.proxy, this.proxyControlGroup.proxy)
         }
     }

@@ -83,6 +83,8 @@ export class RunnerBrowser {
         rpc.addMethod("monitoring", (displayNr) => {
             displayNr = Number(displayNr)
             svelteSelectedDisplayNr.set(displayNr)
+            localStorage.setItem('selectedDisplayNr', displayNr)
+
         })
 
         //start monitoring the same display as last time
@@ -92,7 +94,6 @@ export class RunnerBrowser {
     }
 
     async startMonitoring(displayNr) {
-        localStorage.setItem('selectedDisplayNr', displayNr)
         rpc.notify('startMonitoring', displayNr)
 
     }
