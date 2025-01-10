@@ -63,7 +63,6 @@ export default class RenderMonitor {
     //you can only use this on the preview renderer monitor!
     async changePreviewSize(width, height) {
 
-        console.log('removeing')
 
         //change size first!
         this.renderer.box.xMax = width-1
@@ -80,13 +79,10 @@ export default class RenderMonitor {
         //Still we need to call it again, in case the already were no displays in it
         this.renderer.animationManager.stop(true)
 
-        console.log('addoinmg')
-
         //re-add. should recreate everything
         for (let wsContext of removedContexts) {
             await this.addWsContext(wsContext)
         }
-        console.log('done')
 
     }
 
