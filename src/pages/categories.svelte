@@ -27,6 +27,14 @@
         })
     })
 
+    const previewFormats=[
+        [ 32,8],
+        [ 32,16],
+        [ 64,8],
+        [ 64,16],
+        [ 64,32]
+    ]
+
 
 </script>
 
@@ -57,6 +65,7 @@
         <NavTitle title="{$svelteSelectedTitle}" subtitle="Display 1 - 30 fps - %cpu "></NavTitle>
     </Navbar>
     <Panel containerEl="#categories" clos>
+
         <BlockTitle>Displays</BlockTitle>
         <List menuList>
             {#each $svelteDisplayList as display, displayNr}
@@ -65,12 +74,25 @@
                         link
                         on:click={()=>{runnerBrowser.startMonitoring(displayNr)}}
                         selected={ $svelteSelectedDisplayNr===displayNr }
-                        >
+                >
                     {display}
                 </ListItem>
             {/each}
         </List>
 
+        <BlockTitle>Preview format</BlockTitle>
+        <List menuList class="no-padding">
+            {#each previewFormats as previewFormat}
+                <ListItem
+                        panelClose="left"
+                        link
+                        on:click={()=>{ runnerBrowser.set}}
+                >
+                    {previewFormat[0]} x {previewFormat[1]}
+                </ListItem>
+            {/each}
+
+        </List>
     </Panel>
 
     <Block>
