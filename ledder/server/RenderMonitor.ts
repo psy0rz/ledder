@@ -63,8 +63,8 @@ export default class RenderMonitor {
         console.log('removeing')
 
         //change size first!
-        this.renderer.box.xMax = width
-        this.renderer.box.yMax = height
+        this.renderer.box.xMax = width-1
+        this.renderer.box.yMax = height-1
 
         //remove all wscontexts
         let removedContexts = new Set<WsContext>()

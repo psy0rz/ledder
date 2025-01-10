@@ -152,6 +152,7 @@ export class RunnerBrowser {
 
     changePreviewSize(width, height)
     {
+        console.log("change", width,height)
         rpc.notify("changePreviewSize", width, height)
     }
 

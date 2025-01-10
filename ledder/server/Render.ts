@@ -28,7 +28,7 @@ export class Render {
         this.controlGroup = new ControlGroup('root')
         this.scheduler = new Scheduler()
 
-        this.box = new PixelBox({xMin:0,xMax:32,yMin:0,yMax:8})
+        this.box = new PixelBox({xMin:0,xMax:31,yMin:0,yMax:7})
         this.scheduler.__setDefaultFrameTime(60/1000000)
         this.animationManager = new AnimationManager(this.box, this.scheduler, this.controlGroup)
     }

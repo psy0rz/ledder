@@ -1,7 +1,7 @@
 <script>
 
     import {
-        App, BlockTitle, List, ListItem, Panel, View,
+        App, BlockTitle, f7, List, ListItem, Panel, View,
     } from 'framework7-svelte'
 
 
@@ -10,7 +10,7 @@
     import routes from '../js/web/routes.js';
     import Categories from '../pages/categories.svelte'
     import {runnerBrowser} from "@/js/web/RunnerBrowser.js";
-    import {svelteDisplayList, svelteSelectedDisplayNr} from "@/js/web/svelteStore.js";
+    import {svelteDisplayWidth, svelteDisplayHeight, svelteDisplayList, svelteSelectedDisplayNr} from "@/js/web/svelteStore.js";
 
     // Framework7 Parameters
     let f7params = {
@@ -36,7 +36,7 @@
 <App { ...f7params }>
     <Display/>
 
-    <Panel containerEl="#categories" opened side="left"  style="overflow: auto">
+    <Panel containerEl="#categories"  side="left"  style="overflow: auto">
 
         <BlockTitle>Displays</BlockTitle>
         <List >
@@ -47,7 +47,7 @@
                         title={display}
                         on:click={()=>{
                             runnerBrowser.startMonitoring(displayNr)
-                            // f7.panel.close("left")
+                            f7.panel.close("left")
                         }}
                 />
 
@@ -60,6 +60,8 @@
                 <ListItem
                         radio
                         title="{previewFormat[0]} x {previewFormat[1]}"
+                        checked={previewFormat[0]===$svelteDisplayWidth && previewFormat[1]===$svelteDisplayHeight}
+
                         on:click={()=>{
                             runnerBrowser.changePreviewSize(previewFormat[0], previewFormat[1])
                             // f7.panel.close("left")
