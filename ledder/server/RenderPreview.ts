@@ -32,14 +32,14 @@ export class RenderPreview extends Render {
                 frameTime = frameTime + await this.scheduler.__step(false)
             }
 
-            frameTime = ~~(frameTime / this.displays[0].frameRoundingMicros) * this.displays[0].frameRoundingMicros
+            frameTime = ~~(frameTime / this.primaryDisplay.frameRoundingMicros) * this.primaryDisplay.frameRoundingMicros
 
             //skip frames until frameTime is more than minimum allowed
-            if (frameTime >= this.displays[0].minFrameTimeMicros) {
+            if (frameTime >= this.primaryDisplay.minFrameTimeMicros) {
                 displayTime += frameTime
                 frameTime = 0
-                this.displays[0].render(this.box)
-                this.displays[0].frame(displayTime)
+                this.primaryDisplay.render(this.box)
+                this.primaryDisplay.frame(displayTime)
             }
         }
         this.animationManager.stop(false)

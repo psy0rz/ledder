@@ -14,6 +14,8 @@ export class Render {
     public readonly description: string
 
     protected displays: Set<Display>
+    protected primaryDisplay: Display
+
     public readonly box: PixelBox
     protected readonly scheduler: Scheduler
 
@@ -31,24 +33,26 @@ export class Render {
         this.animationManager = new AnimationManager(this.box, this.scheduler, this.controlGroup)
     }
 
-    addDisplay( display : Display ) {
+    async addDisplay( display : Display ) {
         this.displays.add(display)
         //primary/first display?
         if (this.displays.size===1) {
+            this.primaryDisplay=display
             this.box.xMin=display.xMin
             this.box.yMin=display.yMin
             this.box.yMax=display.yMax
             this.box.xMax=display.xMax
             this.scheduler.__setDefaultFrameTime(display.defaultFrameTimeMicros)
-            this.start()
+            await this.start()
         }
     }
 
-    removeDisplay(display : Display) {
+    async removeDisplay(display : Display) {
         this.displays.delete(display)
         if (this.displays.size===0) {
             //"If a tree falls in a forest and no one is around to hear it, does it make a sound?"
-            this.stop()
+            await this.stop()
+            this.primaryDisplay=undefined
          }
     }
 
@@ -63,12 +67,12 @@ export class Render {
     }
 
 
-    start()
+    async start()
     {
 
     }
 
-    stop(){
+    async stop(){
 
     }
 

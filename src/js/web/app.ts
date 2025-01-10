@@ -30,7 +30,7 @@ rpc.init(
     //rpc connected
     async () => {
         // Mount Svelte App
-        const app = mount(App,{
+       mount(App,{
             target: document.getElementById('app'),
         });
 

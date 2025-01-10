@@ -8,7 +8,6 @@ export class RenderRealtime extends Render {
 
     private nextTimeMicros: number
 
-    private keepRendering: boolean
 
     //statistics
     private lastStatUpdate: number
@@ -17,10 +16,11 @@ export class RenderRealtime extends Render {
     //frames that are TOO early for the hardware's max update speed:
     private droppedFrames: number
 
+    private timer: NodeJS.Timeout
 
-    start() {
-        if (!this.keepRendering) {
-            this.keepRendering = true
+
+    async start() {
+        if (this.timer===undefined) {
             this.nextTimeMicros = Date.now() * 1000
             this.lastStatUpdate = Date.now()
 
@@ -28,22 +28,20 @@ export class RenderRealtime extends Render {
             this.idleMS = 0
             this.droppedFrames = 0
 
-            this.animationManager.run()
-            this.renderInterval()
+            this.animationManager.restart(false)
+            await this.renderInterval()
             console.log(`RenderRealtime ${this.description} started.`)
         }
     }
 
     //the main step-render-send loop
 
-    async renderInterval() {
+     async renderInterval() {
 
         //stop rendering if primary display is disabled
         // if (!this.displays[0].enabled)
         //     this.stop()
 
-        if (!this.keepRendering)
-            return
 
         let nowUS = Date.now() * 1000
 
@@ -86,18 +84,19 @@ export class RenderRealtime extends Render {
         if (intervalmS <= 0)
             this.lateFrames++
         // console.log(intervalmS)
-        setTimeout(() => this.renderInterval(), intervalmS)
+
+        this.timer=setTimeout(() => this.renderInterval(), intervalmS)
 
     }
 
-    stop() {
-        if (this.keepRendering) {
-            this.keepRendering = false
+    async stop() {
+        if (this.timer!==undefined) {
+            clearTimeout(this.timer)
+            this.timer=undefined
             this.animationManager.stop(false)
             console.log(`RenderRealtime ${this.description} stopped.`)
         }
     }
-
 
 }
 

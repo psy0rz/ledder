@@ -1,15 +1,21 @@
 <script>
     import {
-        Block, BlockTitle,
+        Block,
+        BlockTitle,
         Button,
+        f7,
         f7ready,
-        Link, List, ListItem,
+        Link,
+        List,
+        ListItem,
         Message,
-        Navbar, NavLeft, NavTitle, NavTitleLarge,
-        Page, Panel,
+        Navbar,
+        NavLeft,
+        NavTitle,
+        Page,
+        Panel,
         Preloader,
-        Subnavbar,
-        Treeview, TreeviewItem
+        Treeview
     } from "framework7-svelte"
 
 
@@ -27,12 +33,12 @@
         })
     })
 
-    const previewFormats=[
-        [ 32,8],
-        [ 32,16],
-        [ 64,8],
-        [ 64,16],
-        [ 64,32]
+    const previewFormats = [
+        [32, 8],
+        [32, 16],
+        [64, 8],
+        [64, 16],
+        [64, 32]
     ]
 
 
@@ -64,32 +70,35 @@
         </NavLeft>
         <NavTitle title="{$svelteSelectedTitle}" subtitle="Display 1 - 30 fps - %cpu "></NavTitle>
     </Navbar>
-    <Panel containerEl="#categories" clos>
+    <Panel containerEl="#categories" opened side="left">
 
         <BlockTitle>Displays</BlockTitle>
-        <List menuList>
+        <List>
             {#each $svelteDisplayList as display, displayNr}
                 <ListItem
-                        panelClose="left"
-                        link
-                        on:click={()=>{runnerBrowser.startMonitoring(displayNr)}}
-                        selected={ $svelteSelectedDisplayNr===displayNr }
-                >
-                    {display}
-                </ListItem>
+                        checked={ $svelteSelectedDisplayNr===displayNr }
+                        radio
+                        title={display}
+                        on:click={()=>{
+                            runnerBrowser.startMonitoring(displayNr)
+                            // f7.panel.close("left")
+                        }}
+                />
+
             {/each}
         </List>
 
         <BlockTitle>Preview format</BlockTitle>
-        <List menuList class="no-padding">
+        <List>
             {#each previewFormats as previewFormat}
                 <ListItem
-                        panelClose="left"
-                        link
-                        on:click={()=>{ runnerBrowser.set}}
-                >
-                    {previewFormat[0]} x {previewFormat[1]}
-                </ListItem>
+                        radio
+                        title="{previewFormat[0]} x {previewFormat[1]}"
+                        on:click={()=>{
+                            runnerBrowser.changePreviewSize(previewFormat[0], previewFormat[1])
+                            // f7.panel.close("left")
+                        }}
+                />
             {/each}
 
         </List>

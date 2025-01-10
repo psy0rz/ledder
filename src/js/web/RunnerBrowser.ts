@@ -46,8 +46,6 @@ export class RunnerBrowser {
 
         rpc.addMethod('setControls', async (controlGroup) => {
 
-            // console.log("Add control", controlGroup)
-
 
             sveltePresets.set(controlGroup)
         })
@@ -82,11 +80,12 @@ export class RunnerBrowser {
         })
 
 
-        rpc.addMethod("monitoring", (displayNr)=>{
-            displayNr=Number(displayNr)
+        rpc.addMethod("monitoring", (displayNr) => {
+            displayNr = Number(displayNr)
             svelteSelectedDisplayNr.set(displayNr)
         })
 
+        //start monitoring the same display as last time
         await this.startMonitoring(localStorage.getItem('selectedDisplayNr'))
 
 
@@ -103,26 +102,8 @@ export class RunnerBrowser {
 
     }
 
-    /** Send current running animation and preset to server, and restart local animation as well
-     *
-     */
-    // async send() {
-    //     if (this.animationName) {
-    //         await rpc.request("animationManager.select", this.animationName + "/" + this.presetName, svelteLive)
-    //     }
-    // }
 
-
-    /**
-     * Runs specified animation with specified preset
-     *
-     * @param animationName
-     * @param presetName
-     */
     async run(animationName: string, presetName: string) {
-
-        // this.animationName = animationName
-        // this.presetName = presetName
         await rpc.request("select", animationName + "/" + presetName)
 
 
@@ -131,11 +112,6 @@ export class RunnerBrowser {
     async refresh() {
         rpc.notify("refresh")
     }
-
-    // async refreshDisplayDeviceInfoList() {
-    //     const list = await rpc.request("displayDeviceStore.list")
-    //     svelteDisplayDeviceInfoList.set(list)
-    // }
 
 
     /** Save current preset to server, and create preview
@@ -174,9 +150,9 @@ export class RunnerBrowser {
 
     }
 
-    //staticly render animation on server and stream it to browser via regular HTTP, while uploading it to ESP via regular HTTP :)
-    async uploadStatic() {
-
+    changePreviewSize(width, height)
+    {
+        rpc.notify("changePreviewSize", width, height)
     }
 
 }

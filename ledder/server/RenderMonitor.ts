@@ -18,18 +18,18 @@ export default class RenderMonitor {
         this.registerCallbacks()
     }
 
-    addWsContext(wsContext: WsContext) {
+    async addWsContext(wsContext: WsContext) {
 
         //already monitoring something?
-        if (wsContext.renderMonitor!==undefined) {
-            wsContext.renderMonitor.removeWsContext(wsContext)
+        if (wsContext.renderMonitor !== undefined) {
+            await wsContext.renderMonitor.removeWsContext(wsContext)
         }
 
         //create monitoring display and add to renderer
         if (this.monitoringDisplay === undefined) {
 
             this.monitoringDisplay = new DisplayWebsocket(this.renderer.box.width(), this.renderer.box.height())
-            this.renderer.addDisplay(this.monitoringDisplay)
+            await this.renderer.addDisplay(this.monitoringDisplay)
         }
 
         this.wsContexts.add(wsContext)
@@ -43,17 +43,44 @@ export default class RenderMonitor {
 
     }
 
-    removeWsContext(wsContext: WsContext) {
+    async removeWsContext(wsContext: WsContext) {
         this.wsContexts.delete(wsContext)
         this.monitoringDisplay.removeWsContext(wsContext)
         wsContext.renderMonitor = undefined
 
         //if no one is watching this display, remove it from the renderer. (which in turn will stop if there are no displays left)
         if (this.wsContexts.size === 0) {
-            this.renderer.removeDisplay(this.monitoringDisplay)
-            this.monitoringDisplay=undefined
+            await this.renderer.removeDisplay(this.monitoringDisplay)
+            this.monitoringDisplay = undefined
 
         }
+    }
+
+    //resize the display.
+    //you can only use this on the preview renderer monitor!
+    async changePreviewSize(width, height) {
+
+        console.log('removeing')
+        //remove all wscontexts
+        let removedContexts = new Set<WsContext>()
+        for (let wsContext of this.wsContexts) {
+            await this.removeWsContext(wsContext)
+            removedContexts.add(wsContext)
+        }
+        //(removing all wscontexts, will remove the display, which will stop renderer/animation)
+
+        //change size
+        this.renderer.box.xMax = width
+        this.renderer.box.yMax = height
+
+        console.log('addoinmg')
+
+        //re-add. should recreate everything
+        for (let wsContext of removedContexts) {
+            await this.addWsContext(wsContext)
+        }
+        console.log('done')
+
     }
 
 

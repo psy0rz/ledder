@@ -7,11 +7,9 @@ import {RenderStream} from "./RenderStream.js"
 import {DisplayQOISbuffer} from "./drivers/DisplayQOISbuffer.js"
 // import {displayDeviceStore} from "./DisplayDeviceStore.js"
 import OffsetMapper from "./drivers/OffsetMapper.js"
-import {DisplayWebsocket} from "./drivers/DisplayWebsocket.js"
 import {config, load} from "./config.js"
 import RenderMonitor from "./RenderMonitor.js";
 import type {WsContext} from "./WsContext.js";
-import {previewStore} from "./PreviewStore.js";
 
 
 const settingsControl = new ControlGroup('Global settings')
@@ -25,7 +23,6 @@ const gammaMapper = new GammaMapper(settingsControl.group("Display settings"))
 //create run all the displayes
 let renderMonitors: Array<RenderMonitor> = []
 
-//TODO: make selectable in gui, m
 for (const displayNr in config.displayList) {
     const display = config.displayList[displayNr]
     //FIXME, should be one confirable per display instead of global.
@@ -35,18 +32,17 @@ for (const displayNr in config.displayList) {
     // monitoringDisplays.push(monitoringDisplay)
 
     let renderer = new RenderRealtime(`Display ${displayNr}`)
-    renderer.addDisplay(display)
-
-    renderer.animationManager.select(config.animation, false)
-
+    await renderer.addDisplay(display)
+    await renderer.animationManager.select(config.animation, false)
     renderMonitors.push(new RenderMonitor(renderer))
 
 }
 
 //preview renderer
-let previewRenderLoop = new RenderRealtime(`Preview`)
-previewRenderLoop.animationManager.select(config.animation, false)
-renderMonitors.push(new RenderMonitor(previewRenderLoop))
+let renderer = new RenderRealtime(`Preview`)
+await renderer.animationManager.select(config.animation, false)
+const previewRenderMonitor=new RenderMonitor(renderer)
+renderMonitors.push(previewRenderMonitor)
 
 //RPC bindings
 let rpc = new RpcServer()
@@ -90,13 +86,13 @@ rpc.addMethod("startMonitoring", async (context: WsContext, rendererId) => {
     if (renderMonitors[rendererId] === undefined)
         rendererId=0
 
-    renderMonitors[rendererId].addWsContext(context)
+    await renderMonitors[rendererId].addWsContext(context)
     context.notify("monitoring", rendererId)
 
 })
 
 rpc.addMethod("stopMonitoring", async (context: WsContext) => {
-    context.renderMonitor.removeWsContext(context)
+    await context.renderMonitor.removeWsContext(context)
 
 
 })
@@ -134,25 +130,12 @@ rpc.addMethod("updateSetting", async (context, path, values) => {
 
 })
 
-// rpc.addMethod("displayDeviceStore.list", async (params, context) => {
-//     return displayDeviceStore.list()
-//
-// })
+rpc.addMethod("changePreviewSize", async (context:WsContext, width, height)=>{
+    await context.renderMonitor.changePreviewSize(width, height)
 
-//display device stuff (regular http GET requests)
-// rpc.app.get('/get/status/:id', async (req, resp) => {
-//     console.log(`Seen display device ${req.params.id}`)
-//
-//     resp.send(
-//         await displayDeviceStore.get(req.params.id).catch((e) => {
-//             console.error(e)
-//             resp.status(500).send(e)
-//
-//         })
-//     )
-//
-//
-// })
+
+})
+
 
 //work in progress
 //Stream QOIS frames via a http get request.
