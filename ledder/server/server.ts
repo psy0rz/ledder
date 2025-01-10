@@ -20,9 +20,16 @@ await load()
 const gammaMapper = new GammaMapper(settingsControl.group("Display settings"))
 
 
-//create run all the displayes
 let renderMonitors: Array<RenderMonitor> = []
 
+
+//create preview renderer
+let renderer = new RenderRealtime(`Preview`)
+await renderer.animationManager.select(config.animation, false)
+const previewRenderMonitor=new RenderMonitor(renderer)
+renderMonitors.push(previewRenderMonitor)
+
+//create actual displays
 for (const displayNr in config.displayList) {
     const display = config.displayList[displayNr]
     //FIXME, should be one confirable per display instead of global.
@@ -38,11 +45,6 @@ for (const displayNr in config.displayList) {
 
 }
 
-//preview renderer
-let renderer = new RenderRealtime(`Preview`)
-await renderer.animationManager.select(config.animation, false)
-const previewRenderMonitor=new RenderMonitor(renderer)
-renderMonitors.push(previewRenderMonitor)
 
 //RPC bindings
 let rpc = new RpcServer()
@@ -86,8 +88,9 @@ rpc.addMethod("startMonitoring", async (context: WsContext, rendererId) => {
     if (renderMonitors[rendererId] === undefined)
         rendererId=0
 
-    await renderMonitors[rendererId].addWsContext(context)
     context.notify("monitoring", rendererId)
+    await renderMonitors[rendererId].addWsContext(context)
+
 
 })
 
@@ -133,6 +136,10 @@ rpc.addMethod("updateSetting", async (context, path, values) => {
 rpc.addMethod("changePreviewSize", async (context:WsContext, width, height)=>{
 
     await previewRenderMonitor.changePreviewSize(width, height)
+
+    //also switch the context to the preview display, if it wasnt already
+    context.notify("monitoring", 0)
+    previewRenderMonitor.addWsContext(context)
 
 
 })

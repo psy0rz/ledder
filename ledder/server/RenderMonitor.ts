@@ -20,6 +20,9 @@ export default class RenderMonitor {
 
     async addWsContext(wsContext: WsContext) {
 
+        if (this.wsContexts.has(wsContext))
+            return
+
         //already monitoring something?
         if (wsContext.renderMonitor !== undefined) {
             await wsContext.renderMonitor.removeWsContext(wsContext)
