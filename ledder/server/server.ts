@@ -131,7 +131,8 @@ rpc.addMethod("updateSetting", async (context, path, values) => {
 })
 
 rpc.addMethod("changePreviewSize", async (context:WsContext, width, height)=>{
-    await context.renderMonitor.changePreviewSize(width, height)
+
+    await previewRenderMonitor.changePreviewSize(width, height)
 
 
 })

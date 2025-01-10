@@ -23,7 +23,6 @@
     import {runnerBrowser} from "../js/web/RunnerBrowser.js"
     import {onMount} from "svelte"
     import AnimationListUI from "@/components/AnimationListUI.svelte"
-    import {svelteDisplayList, svelteSelectedDisplayNr} from "@/js/web/svelteStore.js";
 
     let search = ""
 
@@ -33,13 +32,6 @@
         })
     })
 
-    const previewFormats = [
-        [32, 8],
-        [32, 16],
-        [64, 8],
-        [64, 16],
-        [64, 32]
-    ]
 
 
 </script>
@@ -70,39 +62,6 @@
         </NavLeft>
         <NavTitle title="{$svelteSelectedTitle}" subtitle="Display 1 - 30 fps - %cpu "></NavTitle>
     </Navbar>
-    <Panel containerEl="#categories" opened side="left">
-
-        <BlockTitle>Displays</BlockTitle>
-        <List>
-            {#each $svelteDisplayList as display, displayNr}
-                <ListItem
-                        checked={ $svelteSelectedDisplayNr===displayNr }
-                        radio
-                        title={display}
-                        on:click={()=>{
-                            runnerBrowser.startMonitoring(displayNr)
-                            // f7.panel.close("left")
-                        }}
-                />
-
-            {/each}
-        </List>
-
-        <BlockTitle>Preview format</BlockTitle>
-        <List>
-            {#each previewFormats as previewFormat}
-                <ListItem
-                        radio
-                        title="{previewFormat[0]} x {previewFormat[1]}"
-                        on:click={()=>{
-                            runnerBrowser.changePreviewSize(previewFormat[0], previewFormat[1])
-                            // f7.panel.close("left")
-                        }}
-                />
-            {/each}
-
-        </List>
-    </Panel>
 
     <Block>
         Welcome to Ledder. Click on the second icon to view per animation control. More info at

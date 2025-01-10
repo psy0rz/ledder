@@ -74,6 +74,8 @@ export default class RenderMonitor {
         }
         //Rremoving all wscontexts, will remove the display, which will stop renderer/animation.
         //It will also trigger animationmanager.stop(), which will recreate proxys, including the box we've changed above
+        //Still we need to call it again, in case the already were no displays in it
+        this.renderer.animationManager.stop(true)
 
         console.log('addoinmg')
 

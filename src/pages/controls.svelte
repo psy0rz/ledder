@@ -1,5 +1,5 @@
 <script>
-    import {Block, Button, Navbar, Page, Subnavbar, Treeview,} from "framework7-svelte"
+    import {Block, Button, Navbar, NavLeft, NavTitle, Page, Subnavbar, Treeview,} from "framework7-svelte"
 
     import {svelteLive, sveltePresets, svelteSelectedTitle,} from "../js/web/svelteStore.js"
     import {runnerBrowser} from "../js/web/RunnerBrowser.js"
@@ -33,33 +33,38 @@
 </script>
 
 <Page name="controls" on:pageMounted={() => {}}>
-    <Navbar title="Controls" subtitle={$svelteSelectedTitle} backLink="Back">
-        <Subnavbar class="justify-content-left" inner={false}>
-                <Button
+    <Navbar backLink="Back">
+        <NavLeft>
+
+            <Button iconMd="material:menu"
+                    panelOpen="left"/>
+
+            <Button
                     iconMd="material:save"
                     onClick={onSave}
                     tonal
                     disabled={saveDisabled}
-                />
-                <Button
+            />
+            <Button
                     iconMd="material:delete"
                     onClick={onDelete}
                     disabled={deleteDisabled}
                     tonal
-                />
-                <Button
+            />
+            <Button
                     iconMd="material:file_copy"
                     onClick={onSaveAs}
                     disabled={copyDisabled}
                     tonal
-                />
-        </Subnavbar>
+            />
+        </NavLeft>
+        <NavTitle title="Controls - {$svelteSelectedTitle}" subtitle="Display 1 - 30 fps - %cpu "></NavTitle>
     </Navbar>
     <Block strong>
         <Treeview>
             <ControlGroup
-                controlGroup={$sveltePresets}
-                onChanged={(path, values) => {
+                    controlGroup={$sveltePresets}
+                    onChanged={(path, values) => {
                     rpc.notify("updateValue", path, values, $svelteLive);
                 }}
             />
