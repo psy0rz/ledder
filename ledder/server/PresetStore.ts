@@ -7,9 +7,14 @@ import {mkdir, readdir, readFile, rm, stat, writeFile} from "fs/promises"
 import glob from "glob-promise"
 import {type PresetValues} from "../PresetValues.js"
 import Animator from "../Animator.js"
-import {type AnimationListType, type AnimationListDirType, type AnimationListItemType, type PresetListType,type  PresetListItemType} from "../AnimationListTypes.js"
+import {
+    type AnimationListType,
+    type AnimationListDirType,
+    type AnimationListItemType,
+    type PresetListType,
+    type  PresetListItemType
+} from "../AnimationListTypes.js"
 import {createParentDir, getMtime} from "./utils.js"
-
 
 
 export class PresetStore {
@@ -18,11 +23,10 @@ export class PresetStore {
     animationPresetList: AnimationListType
 
 
-
     constructor(animationPath: string = "ledder/animations", presetPath: string = "presets") {
         this.presetPath = presetPath
         this.animationPath = animationPath
-        this.animationPresetList=[]
+        this.animationPresetList = []
 
 
     }
@@ -38,7 +42,6 @@ export class PresetStore {
     public animationFilename(animationName: string) {
         return path.join(this.animationPath, animationName + ".js")
     }
-
 
 
     //dynamicly loads an animation class from disk and returns the Class
@@ -82,7 +85,7 @@ export class PresetStore {
         } catch (e) {
             //default doesnt have to exist
             if (presetName !== "default")
-                throw(e)
+                throw (e)
 
             return {
                 title: "",
@@ -113,8 +116,6 @@ export class PresetStore {
             JSON.stringify(preset, undefined, ' '), 'utf8'
         )
     }
-
-
 
 
     async previewOutdated(animationName: string, presetName: string) {
@@ -178,7 +179,7 @@ export class PresetStore {
                         //     throw(e)
                         // }
                         // else
-                            console.error(`${animationName}: `, e)
+                        console.error(`${animationName}: `, e)
                     }
                 }
             }
@@ -192,13 +193,18 @@ export class PresetStore {
 
     //load animation preset list from disk (cached)
     async reloadAnimationPresetList() {
-        this.animationPresetList= JSON.parse(await readFile(path.join(this.presetPath, 'index.json'), 'utf8'))
+        try {
+            this.animationPresetList = JSON.parse(await readFile(path.join(this.presetPath, 'index.json'), 'utf8'))
+        }
+        catch(e){
+            console.error(e)
+        }
     }
 
     //update stored animation preset list
     async storeAnimationPresetList() {
         console.log("Creating animation preset list...")
-        this.animationPresetList=await this.buildAnimationPresetList("")
+        this.animationPresetList = await this.buildAnimationPresetList("")
         await writeFile(
             path.join(this.presetPath, 'index.json'),
             JSON.stringify(this.animationPresetList, undefined, ' '), 'utf8'
@@ -209,7 +215,7 @@ export class PresetStore {
 
     //calls back for every animation,preset item.
     //e.g. traverse the whole list recursively.
-    async forEachPreset(animationList:AnimationListType, callback: (animationListItem:AnimationListItemType, presetListItem:PresetListItemType)=>void) {
+    async forEachPreset(animationList: AnimationListType, callback: (animationListItem: AnimationListItemType, presetListItem: PresetListItemType) => void) {
 
         for (const item of animationList) {
             const animationListItem = item as AnimationListItemType
@@ -226,8 +232,7 @@ export class PresetStore {
 }
 
 
-
-export let presetStore=new PresetStore()
+export let presetStore = new PresetStore()
 
 
 await presetStore.reloadAnimationPresetList()
