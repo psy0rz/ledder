@@ -22,6 +22,8 @@
     };
 
     const previewFormats = [
+        [8, 8],
+        [16, 16],
         [32, 8],
         [32, 16],
         [64, 8],
@@ -34,10 +36,10 @@
 <App { ...f7params }>
     <Display/>
 
-    <Panel containerEl="#categories" opened side="left">
+    <Panel containerEl="#categories" opened side="left"  style="overflow: auto">
 
         <BlockTitle>Displays</BlockTitle>
-        <List>
+        <List >
             {#each $svelteDisplayList as display, displayNr}
                 <ListItem
                         checked={ $svelteSelectedDisplayNr===displayNr }
