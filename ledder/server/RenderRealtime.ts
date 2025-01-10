@@ -9,12 +9,6 @@ export class RenderRealtime extends Render {
     private nextTimeMicros: number
 
 
-    //statistics
-    private lastStatUpdate: number
-    private lateFrames: number
-    private idleMS: number
-    //frames that are TOO early for the hardware's max update speed:
-    private droppedFrames: number
 
     private timer: NodeJS.Timeout
 
@@ -22,11 +16,8 @@ export class RenderRealtime extends Render {
     async start() {
         if (this.timer===undefined) {
             this.nextTimeMicros = Date.now() * 1000
-            this.lastStatUpdate = Date.now()
+            this.resetStats()
 
-            this.lateFrames = 0
-            this.idleMS = 0
-            this.droppedFrames = 0
 
             this.animationManager.run()
             await this.renderInterval()
@@ -38,24 +29,19 @@ export class RenderRealtime extends Render {
 
      async renderInterval() {
 
-        //stop rendering if primary display is disabled
-        // if (!this.displays[0].enabled)
-        //     this.stop()
-
+        this.statsFrames++
 
         let nowUS = Date.now() * 1000
 
         this.nextTimeMicros += await this.scheduler.__step(true)
 
-        //max 10 frames difference
 
-        let diffUS = this.nextTimeMicros - nowUS
 
         //too slow, or other clock problem
         if (Math.abs(this.nextTimeMicros - nowUS) > this.scheduler.__frameTimeMicros * 2) {
             //reset
             this.nextTimeMicros = nowUS + this.scheduler.__frameTimeMicros
-            this.droppedFrames++
+            this.statsDroppedFrames++
         }
 
         for (const display of this.displays) {
@@ -65,25 +51,17 @@ export class RenderRealtime extends Render {
             } catch (e) {
                 console.error("Exception while rendering:", e)
             }
-            display.frame(this.nextTimeMicros)
-        }
 
-        if (nowUS - this.lastStatUpdate > 1000000) {
-            let busy = Math.round((1000 - this.idleMS) / 10)
-            if (busy < 0)
-                busy = 0
-            console.log(`RenderRealtime ${this.description}: ${this.lateFrames} late. ${this.droppedFrames} dropped. ${busy}% busy.`)
-            this.lastStatUpdate = nowUS
-            this.droppedFrames = 0
-            this.lateFrames = 0
-            this.idleMS = 0
+            if (display===this.primaryDisplay)
+                this.statsBytes=this.statsBytes+display.frame(this.nextTimeMicros)
+            else
+                display.frame(this.nextTimeMicros)
         }
 
         const intervalmS = (this.nextTimeMicros / 1000) - Date.now()
-        this.idleMS = this.idleMS + intervalmS
+        this.statsIdleMs = this.statsIdleMs + intervalmS
         if (intervalmS <= 0)
-            this.lateFrames++
-        // console.log(intervalmS)
+            this.statsLateFrames++
 
         this.timer=setTimeout(() => this.renderInterval(), intervalmS)
 
@@ -97,6 +75,8 @@ export class RenderRealtime extends Render {
             console.log(`RenderRealtime ${this.description} stopped.`)
         }
     }
+
+
 
 }
 

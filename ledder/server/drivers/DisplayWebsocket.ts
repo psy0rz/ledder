@@ -61,10 +61,17 @@ export class DisplayWebsocket extends Display {
         // Its fine, since the browser client will check if the received message starts with '{' in which case it treats it as json :)
 
 
+        let sentBytes=0
+
         for (const wsContext of this.wsContexts)
+        {
+            sentBytes=sentBytes+this.imageBuf8.byteLength
             wsContext.ws.send(this.imageBuf8)
+        }
+
 
         this.imageBuf8.fill(0) //alpha of all pixels will be 0, so canvas is transparent.
 
+        return sentBytes
     }
 }

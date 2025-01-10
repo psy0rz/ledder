@@ -116,7 +116,8 @@ export default abstract class Display {
     //should send the current rendered frame buffer and clear the buffer
     //Parameter is absolute time in uS when the frame should be rendered.
     //For pre-rendeers this starts counting at 0, for live renders this is the systemtime.
-    abstract frame(displayTimeMicros: number)
+    //Should return the number of bytes processed (for stats)
+    abstract frame(displayTimeMicros: number):number
 
 }
 

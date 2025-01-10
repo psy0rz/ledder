@@ -140,5 +140,11 @@ export default class RenderMonitor {
         }
     }
 
+    sendStats()
+    {
+        const statsStr=`${this.renderer.description} [${this.renderer.getStats()}]`
+        console.log(statsStr)
+        this.notifyAll("stats", statsStr)
+    }
 }
 

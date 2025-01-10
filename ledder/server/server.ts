@@ -46,6 +46,13 @@ for (const displayNr in config.displayList) {
 }
 
 
+setInterval(()=>{
+    for (let renderMonitor of renderMonitors) {
+        renderMonitor.sendStats()
+    }
+}, 1000)
+
+
 //RPC bindings
 let rpc = new RpcServer()
 

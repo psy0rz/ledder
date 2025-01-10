@@ -20,6 +20,15 @@ export class Render {
     protected readonly scheduler: Scheduler
 
 
+    protected statsLastTimestampMs:number
+    protected statsIdleMs:number
+    protected statsLateFrames: number
+    protected statsDroppedFrames: number
+    protected statsFrames: number
+    protected statsBytes: number
+
+
+
     constructor( description='') {
         this.displays = new Set()
 
@@ -31,7 +40,25 @@ export class Render {
         this.box = new PixelBox({xMin:0,xMax:31,yMin:0,yMax:7})
         this.scheduler.__setDefaultFrameTime(60/1000000)
         this.animationManager = new AnimationManager(this.box, this.scheduler, this.controlGroup)
+
+
+        this.resetStats()
+
+
     }
+
+    resetStats() {
+        this.statsLateFrames = 0
+        this.statsDroppedFrames = 0
+        this.statsBytes = 0
+        this.statsIdleMs = 0
+        this.statsFrames=0
+        this.statsLastTimestampMs=Date.now()
+
+    }
+
+
+
 
     async addDisplay( display : Display ) {
         this.displays.add(display)
@@ -57,13 +84,23 @@ export class Render {
     }
 
     getStats() {
-        let count = 0
+        // let count = 0
+        //
+        //
+        // this.box.forEachPixel(() => {
+        //     count++
+        // })
+        // return (`${this.description}: ${count} pixels.\n${this.scheduler.__getStats()}`)
 
+        const deltaS=(Date.now()-this.statsLastTimestampMs)/1000
+        const fps=~~(this.statsFrames/deltaS)
+        const kbps =~~(this.statsBytes/deltaS/1000)
 
-        this.box.forEachPixel(() => {
-            count++
-        })
-        return (`${this.description}: ${count} pixels.\n${this.scheduler.__getStats()}`)
+        const busyPerc= ~~(100-((deltaS/ (this.statsIdleMs/1000))*100))
+        const statStr= (`${fps} fps (${this.statsLateFrames} late, ${this.statsDroppedFrames} dropped), ${kbps} KB/s, ${busyPerc}% busy`)
+        this.resetStats()
+        return statStr
+
     }
 
 

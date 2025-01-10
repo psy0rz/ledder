@@ -1,19 +1,14 @@
 <script>
     import {
         Block,
-        BlockTitle,
         Button,
-        f7,
         f7ready,
         Link,
-        List,
-        ListItem,
         Message,
         Navbar,
         NavLeft,
         NavTitle,
         Page,
-        Panel,
         Preloader,
         Treeview
     } from "framework7-svelte"
