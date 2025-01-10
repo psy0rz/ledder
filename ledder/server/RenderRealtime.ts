@@ -28,7 +28,7 @@ export class RenderRealtime extends Render {
             this.idleMS = 0
             this.droppedFrames = 0
 
-            this.animationManager.restart(false)
+            this.animationManager.run()
             await this.renderInterval()
             console.log(`RenderRealtime ${this.description} started.`)
         }
@@ -93,7 +93,7 @@ export class RenderRealtime extends Render {
         if (this.timer!==undefined) {
             clearTimeout(this.timer)
             this.timer=undefined
-            this.animationManager.stop(false)
+            this.animationManager.stop(true)
             console.log(`RenderRealtime ${this.description} stopped.`)
         }
     }

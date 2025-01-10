@@ -61,17 +61,19 @@ export default class RenderMonitor {
     async changePreviewSize(width, height) {
 
         console.log('removeing')
+
+        //change size first!
+        this.renderer.box.xMax = width
+        this.renderer.box.yMax = height
+
         //remove all wscontexts
         let removedContexts = new Set<WsContext>()
         for (let wsContext of this.wsContexts) {
             await this.removeWsContext(wsContext)
             removedContexts.add(wsContext)
         }
-        //(removing all wscontexts, will remove the display, which will stop renderer/animation)
-
-        //change size
-        this.renderer.box.xMax = width
-        this.renderer.box.yMax = height
+        //Rremoving all wscontexts, will remove the display, which will stop renderer/animation.
+        //It will also trigger animationmanager.stop(), which will recreate proxys, including the box we've changed above
 
         console.log('addoinmg')
 

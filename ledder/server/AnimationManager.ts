@@ -95,6 +95,7 @@ export default class AnimationManager {
         if (this.animationClass!==undefined)
         {
             this.animation = new this.animationClass()
+            console.log("run met", this.childBox)
             return this.animation.run(this.childBox, this.proxyScheduler.proxy, this.proxyControlGroup.proxy)
         }
     }
@@ -149,7 +150,8 @@ export default class AnimationManager {
     public async reload(keepControls: boolean) {
         this.stop(keepControls)
         await this.loadAnimation(this.animationName)
-        await this.loadPreset(this.presetName)
+        if (!keepControls)
+            await this.loadPreset(this.presetName)
         this.run()
     }
 
