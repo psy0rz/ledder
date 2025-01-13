@@ -95,6 +95,8 @@ export class DisplayQOISudp extends DisplayQOIS {
         const maxFramesLag = 24
         const maxTimeLag = 250
 
+        let statsBytes=0
+
         //buffer this many frames
         const lag = Math.min(maxTimeLag, maxFramesLag * this.defaultFrameTimeMicros / 1000)
         // console.log("Max lag", lag)
@@ -154,6 +156,8 @@ export class DisplayQOISudp extends DisplayQOIS {
                 this.nextSyncOffset = this.nextSyncOffset - payload.length
 
                 const p = Uint8Array.from(packet)
+                statsBytes=statsBytes+p.length
+
                 for (const s of this.sockets) {
                     try {
                         s.send(p)
@@ -173,5 +177,6 @@ export class DisplayQOISudp extends DisplayQOIS {
             //     console.error("bug: sync offset not 0??")
             // }
         }
+        return statsBytes
     }
 }
