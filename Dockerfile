@@ -28,6 +28,6 @@ ENV NODE_ENV=production
 WORKDIR /app
 COPY --from=builder /app /app
 
+RUN npm run buildpreviews
 
-
-CMD [ "npm", "run", "docker" ]
+CMD [ "node" , "ledder/server/server.js" ]
