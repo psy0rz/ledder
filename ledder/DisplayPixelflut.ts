@@ -135,20 +135,20 @@ export default class DisplayPixelflut extends Display {
         })
 
         this.client.connect(port, host)
-        setInterval(() => {
-            if (this.statsBytesSend === 0)
-                console.log('PixelFlut: STALLED')
-            else
-                console.log(`PixelFlut: ${~~(this.statsBytesSend / 1000000)} MB/s ${this.statsFpsSend} FPS`)
-            this.statsBytesSend = 0
-            this.statsFpsSend = 0
-
-            if (this.client.readyState == "closed") {
-                console.log("Pixelflut: Reconnecting")
-                this.client.connect(port, host)
-            }
-
-        }, 1000)
+        // setInterval(() => {
+        //     if (this.statsBytesSend === 0)
+        //         console.log('PixelFlut: STALLED')
+        //     else
+        //         console.log(`PixelFlut: ${~~(this.statsBytesSend / 1000000)} MB/s ${this.statsFpsSend} FPS`)
+        //     this.statsBytesSend = 0
+        //     this.statsFpsSend = 0
+        //
+        //     if (this.client.readyState == "closed") {
+        //         console.log("Pixelflut: Reconnecting")
+        //         this.client.connect(port, host)
+        //     }
+        //
+        // }, 1000)
 
 
         this.client.on('error', (e) => {
@@ -218,6 +218,10 @@ export default class DisplayPixelflut extends Display {
 
         if (!this.flood)
             this.send()
+
+        const b=this.statsBytesSend
+        this.statsBytesSend=0
+        return b
 
     }
 

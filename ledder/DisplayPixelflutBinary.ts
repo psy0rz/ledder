@@ -176,6 +176,8 @@ export default class DisplayPixelflutBinary extends Display {
 
         this.send()
 
+        return this.sendBuffer.length
+
     }
 
 

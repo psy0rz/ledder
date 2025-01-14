@@ -66,6 +66,8 @@ export class DisplayApng extends Display {
         this.lastTime=displayTimeMicros
         this.clearFrame()
 
+        return(this.images.length)
+
     }
 
     /**

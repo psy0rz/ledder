@@ -85,6 +85,7 @@ export class DisplayWLED extends Display {
 
     //we want the sending to be timed exactly, so do that first:
     let sendBuffer=new Uint8Array(2 + this.height * this.width*3);
+    let statsBytes=0
 
     sendBuffer[0]=2;//DRGB protocol
     sendBuffer[1]=1; //timeout
@@ -97,6 +98,7 @@ export class DisplayWLED extends Display {
 
     try {
       this.socket.send(sendBuffer)
+      statsBytes=statsBytes+sendBuffer.length
     }
     catch(e)
     {
@@ -106,6 +108,7 @@ export class DisplayWLED extends Display {
     //clear
     this.buffer=new Uint8ClampedArray(this.width * this.height * 3);
 
+    return statsBytes
   }
 
 

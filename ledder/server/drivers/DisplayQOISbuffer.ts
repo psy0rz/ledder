@@ -29,7 +29,11 @@ export class DisplayQOISbuffer extends DisplayQOIS {
         displayTime = displayTime / 1000
 
 
+        const beforeLength=this.buffer.length
+
         this.encode(this.buffer, displayTime)
+
+        return (this.buffer.length-beforeLength)
 
 
     }

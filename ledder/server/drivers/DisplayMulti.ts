@@ -1,5 +1,6 @@
 import Display from "../../Display.js"
 import type ColorInterface from "../../ColorInterface.js"
+import {stat} from "fs/promises";
 
 //driver for an array of displays that have the same width/height
 export class DisplayMulti extends Display {
@@ -24,10 +25,12 @@ export class DisplayMulti extends Display {
 
     frame(displayTime: number) {
         // this.displays[0][0].frame(displayTime)
+        let statsBytes=0
         for (const displays of this.displays)
             for (const display of displays) {
-                display.frame(displayTime)
+                statsBytes=statsBytes+display.frame(displayTime)
             }
+        return statsBytes
     }
 
     setPixel(x: number, y: number, color: ColorInterface) {

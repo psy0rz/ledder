@@ -79,6 +79,7 @@ export class DisplayRPI extends Display {
 
         leds.clear()
 
+        return 0
     }
 
 
