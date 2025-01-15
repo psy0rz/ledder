@@ -33,10 +33,12 @@ CMD [ "node","ledder/server/server.js" ]
 FROM --platform=linux/arm/v7 node:22 AS ledder-armv7
 ENV NODE_ENV=production
 
+RUN apt update && apt install -y build-essential cmake
+COPY entrypoint.sh /
+
 WORKDIR /app
 COPY --from=builder /app /app
 
-RUN apt update && apt install -y build-essential cmake
 
 #rebuilds stuff for arm if needed
 RUN npm rebuild --verbose
@@ -44,7 +46,6 @@ RUN npm rebuild --verbose
 # compile and add rpi led ws8212 driver
 RUN npm install 'github:psy0rz/rpi-ws281x-smi#v0.1'
 
-COPY entrypoint.sh /
 
 CMD [ "/entrypoint.sh" ]
 
