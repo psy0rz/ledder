@@ -1,7 +1,7 @@
-import Display from "./Display.js"
-import type ColorInterface from "./ColorInterface.js"
 import * as net from "node:net"
-import Color from "./Color.js"
+import Display from "../../Display.js";
+import Color from "../../Color.js";
+import type ColorInterface from "../../ColorInterface.js";
 
 const encoder = new TextEncoder()
 
