@@ -2,32 +2,48 @@
 
 #NOTE: when using alpine it seems building on arm via github actions hangs forever
 
-# cacheble npm install stage that only reruns if package.json actually changes.
-FROM node:22 AS builder
-
-ENV NODE_ENV=production
+#### builder
+FROM --platform=linux/amd64 node:22 AS builder
 
 WORKDIR /app
 
-
 COPY ["package.json", "package-lock.json*", "./"]
 
+
 #will later be pruned
-RUN NODE_ENV=development npm install
+RUN npm install
 
 COPY . .
 
-RUN npm run buildweb
-
+RUN npm run build
 RUN npm prune --production
 
-# final stage
-FROM node:22 AS final
+
+### final stage amd64
+FROM --platform=linux/amd64 node:22 AS ledder-amd64
 ENV NODE_ENV=production
 
 WORKDIR /app
 COPY --from=builder /app /app
 
-RUN npm run buildpreviews
+CMD [ "node","ledder/server/server.js" ]
 
-CMD [ "node" , "ledder/server/server.js" ]
+
+### final stage armv7 (for raspberry)
+FROM --platform=linux/arm/v7 node:22 AS ledder-armv7
+ENV NODE_ENV=production
+
+WORKDIR /app
+COPY --from=builder /app /app
+
+RUN apt update && apt install -y build-essential cmake
+
+#rebuilds stuff for arm if needed
+RUN npm rebuild --verbose
+
+# compile and add rpi led ws8212 driver
+RUN npm install github:psy0rz/rpi-ws281x-smi
+
+CMD [ "node","ledder/server/server.js" ]
+
+
