@@ -50,10 +50,6 @@
 
   ],
 
-  "optionalDependencies": {
-
-    "rpi-ws281x-smi": "github:psy0rz/rpi-ws281x-smi"
-  },
 
   "dependencies": {
 
