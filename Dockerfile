@@ -3,7 +3,7 @@
 #NOTE: when using alpine it seems building on arm via github actions hangs forever
 
 #### builder
-FROM --platform=linux/amd64 node:22 AS builder
+FROM --platform=linux/amd64 node:22-slim AS builder
 
 WORKDIR /app
 
@@ -20,7 +20,7 @@ RUN npm prune --production
 
 
 ### final stage amd64
-FROM --platform=linux/amd64 node:22 AS ledder-amd64
+FROM --platform=linux/amd64 node:22-slim AS ledder-amd64
 ENV NODE_ENV=production
 
 WORKDIR /app
@@ -30,7 +30,7 @@ ENTRYPOINT [ "node","ledder/server/server.js" ]
 
 
 ### builder forarmv7 (for raspberry). resuses most of amd64 builder for performance (qemu issues)
-FROM --platform=linux/arm/v7 node:22 AS ledder-armv7-builder
+FROM --platform=linux/arm/v7 node:22-slim AS ledder-armv7-builder
 ENV NODE_ENV=production
 
 RUN apt update && apt install -y build-essential cmake
