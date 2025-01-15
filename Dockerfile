@@ -16,7 +16,6 @@ RUN npm install
 COPY . .
 
 RUN npm run build
-
 RUN npm prune --production
 
 
@@ -37,9 +36,12 @@ ENV NODE_ENV=production
 WORKDIR /app
 COPY --from=builder /app /app
 
+RUN apt update && apt install -y build-essential cmake
+
 #rebuilds stuff for arm if needed
 RUN npm rebuild --verbose
 
+# compile and add rpi led ws8212 driver
 RUN npm install github:psy0rz/rpi-ws281x-smi
 
 CMD [ "node","ledder/server/server.js" ]
