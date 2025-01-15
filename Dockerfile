@@ -26,11 +26,11 @@ ENV NODE_ENV=production
 WORKDIR /app
 COPY --from=builder /app /app
 
-CMD [ "node","ledder/server/server.js" ]
+ENTRYPOINT [ "node","ledder/server/server.js" ]
 
 
-### final stage armv7 (for raspberry)
-FROM --platform=linux/arm/v7 node:22 AS ledder-armv7
+### builder forarmv7 (for raspberry). resuses most of amd64 builder for performance (qemu issues)
+FROM --platform=linux/arm/v7 node:22 AS ledder-armv7-builder
 ENV NODE_ENV=production
 
 RUN apt update && apt install -y build-essential cmake
@@ -39,7 +39,6 @@ COPY entrypoint.sh /
 WORKDIR /app
 COPY --from=builder /app /app
 
-
 #rebuilds stuff for arm if needed
 RUN npm rebuild --verbose
 
@@ -47,6 +46,6 @@ RUN npm rebuild --verbose
 RUN npm install 'github:psy0rz/rpi-ws281x-smi#v0.1'
 
 
-CMD [ "/entrypoint.sh" ]
+ENTRYPOINT [ "/entrypoint.sh" ]
 
 
