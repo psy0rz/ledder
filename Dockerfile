@@ -42,8 +42,10 @@ RUN apt update && apt install -y build-essential cmake
 RUN npm rebuild --verbose
 
 # compile and add rpi led ws8212 driver
-RUN npm install github:psy0rz/rpi-ws281x-smi
+RUN npm install 'github:psy0rz/rpi-ws281x-smi#v0.1'
 
-CMD [ "node","ledder/server/server.js" ]
+COPY entrypoint.sh /
+
+CMD [ "/entrypoint.sh" ]
 
 
