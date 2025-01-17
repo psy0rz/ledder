@@ -28,11 +28,14 @@ ENV NODE_ENV=production
 WORKDIR /app
 COPY --from=builder /app /app
 
+STOPSIGNAL SIGKILL
+
 ENTRYPOINT [ "node","ledder/server/server.js" ]
 
 
-### builder forarmv7 (for raspberry). resuses most of amd64 builder for performance (qemu issues)
-FROM --platform=linux/arm/v7 node:22 AS ledder-armv7-builder
+### final stage for armv7 (for raspberry). 
+# (resuses most of amd64 builder for performance (qemu issues))
+FROM --platform=linux/arm/v7 node:22 AS ledder-armv7
 ENV NODE_ENV=production
 
 RUN apt update && apt install -y build-essential cmake
@@ -44,6 +47,7 @@ COPY --from=builder /app /app
 #rebuilds stuff for arm if needed
 RUN npm rebuild --verbose
 
+STOPSIGNAL SIGKILL
 
 ENTRYPOINT [ "/entrypoint.sh" ]
 
