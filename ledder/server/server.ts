@@ -156,22 +156,21 @@ rpc.addMethod("changePreviewSize", async (context:WsContext, width, height)=>{
 //Stream QOIS frames via a http get request.
 //Rendering is as fast as possible, to fill buffers up.
 //Client display decides how much data is buffered and consumed.
-//FIXME
 rpc.app.get('/get/stream/:id', async (req, resp) => {
 
     // let deviceInfo = await displayDeviceStore.get(req.params.id)
 
-    let matrixzigzag8x32 = new OffsetMapper(32, 8, false)
-    matrixzigzag8x32.zigZagY()
-    matrixzigzag8x32.flipY()
+    let matrixzigzag8x32 = new OffsetMapper(64, 32, true)
 
 
     const encodedFrameBuffer = []
-    const display = new DisplayQOISbuffer(encodedFrameBuffer, matrixzigzag8x32, 256)
+    const display = new DisplayQOISbuffer(encodedFrameBuffer,
+        matrixzigzag8x32, 256)
     display.gammaMapper = gammaMapper
 
     const renderer = new RenderStream()
-    await renderer.animationManager.select("Tests/TestMatrix/default", false)
+    await renderer.addDisplay(display)
+    await renderer.animationManager.select("Tests/TestNoise/default", false)
 
 
     await renderer.render(resp, encodedFrameBuffer)
