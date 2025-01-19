@@ -178,10 +178,58 @@ rpc.addMethod("changePreviewSize", async (context: WsContext, width, height) => 
 //Client display decides how much data is buffered and consumed.
 rpc.app.get('/get/stream/:id', async (req, resp) => {
 
+    // esp5.4, wifi core 1, contentlength speicifeed: 60-70kbs
+     //  esp4.4.8,   "                                :200-400kbs!
+
+    // AMPDU van 6 naar 12
+    // WIFI SLP IRAM opt aan
+    // WIFI CSI aan                                    360kbs+
+
+//     console.log("CONNECT")
+//     const d=new Uint8Array(10000)
+//
+//         resp.set('Content-Type', 'application/octet-stream'); // or whatever MIME type suits your data
+//     //
+//     // // Set Content-Length header
+//     resp.set('Content-Length', '10000000');
+//
+//
+//         console.log(d.length)
+//
+//     let bytes=0
+//
+// setInterval(()=>{
+//     console.log("kBps", ~~(bytes/1000))
+//     bytes=0
+// }, 1000)
+//
+//     function flood() {
+//         resp.write(d, flood)
+//         bytes=bytes+d.length
+//     }
+//
+//     flood()
+
     // const id = Number(req.params.id)
     let id=0;
 
+
+    //matrixtest decode + double buf: 111fps/ 30-60kbs
+    //matrixtest decode zonder leds: ongeveer zelfde
+    //buffersize op 1024 : zelfde ongever
+    //iramattr stream/decode byte: zelfde
+    //omgebwoud naar Cpp zonder class: misschien iets sneller
+    //omgebouwd naar functie die datablock accepteerd, geen verschil!
+    //aha: zonder ledssetnextpixel en show is hij nu 220kb/400fps
+
+
     console.log("JOOOOOOOOOO")
+
+    resp.set('Content-Type', 'application/octet-stream'); // or whatever MIME type suits your data
+
+    // Set Content-Length header
+    resp.set('Content-Length', '10000000');
+
 
     const renderer = streamingRenderers[id]
     const display = httpDisplays[id]
@@ -191,40 +239,37 @@ rpc.app.get('/get/stream/:id', async (req, resp) => {
         throw ("Display not found")
     }
 
-    async function fill() {
-        while (display.ready) {
-            await renderer.render()
-        }
-    }
-
-    display.registerReadyCb(async () => {
-        await fill()
-    })
+    // async function fill() {
+    //
+    //     // setTimeout(renderer.render.bind(renderer), 15)
+    //     await renderer.render()
+    // }
+    //
+    //
+    //
+    // display.registerReadyCb(async () => {
+    //     await fill()
+    // })
 
     //primary?
     if (display.addFh(resp)) {
+    //     await fill()
 
-        await fill()
+        setInterval(async ()=>
+        {
+            if (display.ready)
+                await renderer.render()
+
+
+        }, ~~(1000/60))
+    //
     }
+
 
     resp.on('close', () => {
         display.removeFh(resp)
     })
 
-    // let matrixzigzag8x32 = new OffsetMapper(64, 32, true)
-    //
-    //
-    // const encodedFrameBuffer = []
-    // const display = new DisplayQOIShttp(encodedFrameBuffer,
-    //     matrixzigzag8x32, 256)
-    // display.gammaMapper = gammaMapper
-    //
-    // const renderer = new RenderStream()
-    // await renderer.addDisplay(display)
-    // await renderer.animationManager.select("Tests/TestNoise/default", false)
-    //
-    //
-    // await renderer.render(resp, encodedFrameBuffer)
 
 
 })

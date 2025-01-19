@@ -37,9 +37,12 @@ export class DisplayQOIShttp extends DisplayQOIS {
 
         this.encode(buffer, displayTime)
 
+
         let bytes = 0
         for (let fh of this.fhs) {
-            const ready = fh.write(new Uint8Array(buffer))
+
+            const ready = fh.write(new Uint8Array(buffer), this.readyEvent.bind(this))
+
             if (fh === this.primaryFh)
                 this.ready = ready
             bytes = bytes + buffer.length
@@ -66,7 +69,7 @@ export class DisplayQOIShttp extends DisplayQOIS {
 
         if (this.primaryFh === undefined) {
             this.primaryFh = fh
-            fh.on('drain', this.readyEvent.bind(this))
+            // fh.on('drain', this.readyEvent.bind(this))
             this.ready = true
             return true
         }
@@ -78,7 +81,7 @@ export class DisplayQOIShttp extends DisplayQOIS {
         this.fhs.delete(fh)
         if (fh === this.primaryFh) {
             this.primaryFh = undefined
-            fh.off('drain', this.readyEvent)
+            // fh.off('drain', this.readyEvent)
             this.ready = true
             return true
         }
