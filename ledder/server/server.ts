@@ -4,7 +4,7 @@ import ControlGroup from "../ControlGroup.js"
 import GammaMapper from "./drivers/GammaMapper.js"
 import {presetStore} from "./PresetStore.js"
 import {RenderStream} from "./RenderStream.js"
-import {DisplayQOISbuffer} from "./drivers/DisplayQOISbuffer.js"
+import {DisplayQOIShttp} from "./drivers/DisplayQOIShttp.js"
 // import {displayDeviceStore} from "./DisplayDeviceStore.js"
 import OffsetMapper from "./drivers/OffsetMapper.js"
 import {config, load} from "./config.js"
@@ -21,15 +21,16 @@ const gammaMapper = new GammaMapper(settingsControl.group("Display settings"))
 
 
 let renderMonitors: Array<RenderMonitor> = []
-
+let streamingRenderers: Array<RenderStream> = []
+let httpDisplays: Array<DisplayQOIShttp> = []
 
 //create preview renderer
 let renderer = new RenderRealtime(`Preview`)
 await renderer.animationManager.select(config.animation, false)
-const previewRenderMonitor=new RenderMonitor(renderer)
+const previewRenderMonitor = new RenderMonitor(renderer)
 renderMonitors.push(previewRenderMonitor)
 
-//create actual displays
+//create actual realtime displays
 for (const displayNr in config.displayList) {
     const display = config.displayList[displayNr]
     //FIXME, should be one confirable per display instead of global.
@@ -45,8 +46,27 @@ for (const displayNr in config.displayList) {
 
 }
 
+//create actual streaming displays
+for (const displayNr in config.streamList) {
+    const display = config.streamList[displayNr]
+    //FIXME, should be one confirable per display instead of global.
+    display.gammaMapper = gammaMapper
 
-setInterval(()=>{
+    // const monitoringDisplay = new DisplayWebsocket(display.width, display.height)
+    // monitoringDisplays.push(monitoringDisplay)
+
+    let renderer = new RenderStream(`Stream ${displayNr}`)
+    await renderer.addDisplay(display)
+    httpDisplays.push(display)
+    await renderer.animationManager.select(config.animation, false)
+    const monitor = new RenderMonitor(renderer)
+    renderMonitors.push(monitor)
+    streamingRenderers.push(renderer)
+
+}
+
+
+setInterval(() => {
     for (let renderMonitor of renderMonitors) {
         renderMonitor.sendStats()
     }
@@ -93,7 +113,7 @@ rpc.addMethod("delete", async (context: WsContext) => {
 rpc.addMethod("startMonitoring", async (context: WsContext, rendererId) => {
 
     if (renderMonitors[rendererId] === undefined)
-        rendererId=0
+        rendererId = 0
 
     context.notify("monitoring", rendererId)
     await renderMonitors[rendererId].addWsContext(context)
@@ -140,7 +160,7 @@ rpc.addMethod("updateSetting", async (context, path, values) => {
 
 })
 
-rpc.addMethod("changePreviewSize", async (context:WsContext, width, height)=>{
+rpc.addMethod("changePreviewSize", async (context: WsContext, width, height) => {
 
     await previewRenderMonitor.changePreviewSize(width, height)
 
@@ -158,22 +178,53 @@ rpc.addMethod("changePreviewSize", async (context:WsContext, width, height)=>{
 //Client display decides how much data is buffered and consumed.
 rpc.app.get('/get/stream/:id', async (req, resp) => {
 
-    // let deviceInfo = await displayDeviceStore.get(req.params.id)
+    // const id = Number(req.params.id)
+    let id=0;
 
-    let matrixzigzag8x32 = new OffsetMapper(64, 32, true)
+    console.log("JOOOOOOOOOO")
 
+    const renderer = streamingRenderers[id]
+    const display = httpDisplays[id]
 
-    const encodedFrameBuffer = []
-    const display = new DisplayQOISbuffer(encodedFrameBuffer,
-        matrixzigzag8x32, 256)
-    display.gammaMapper = gammaMapper
+    if (renderer === undefined || display === undefined) {
+        resp.sendStatus(500)
+        throw ("Display not found")
+    }
 
-    const renderer = new RenderStream()
-    await renderer.addDisplay(display)
-    await renderer.animationManager.select("Tests/TestNoise/default", false)
+    async function fill() {
+        while (display.ready) {
+            await renderer.render()
+        }
+    }
 
+    display.registerReadyCb(async () => {
+        await fill()
+    })
 
-    await renderer.render(resp, encodedFrameBuffer)
+    //primary?
+    if (display.addFh(resp)) {
+
+        await fill()
+    }
+
+    resp.on('close', () => {
+        display.removeFh(resp)
+    })
+
+    // let matrixzigzag8x32 = new OffsetMapper(64, 32, true)
+    //
+    //
+    // const encodedFrameBuffer = []
+    // const display = new DisplayQOIShttp(encodedFrameBuffer,
+    //     matrixzigzag8x32, 256)
+    // display.gammaMapper = gammaMapper
+    //
+    // const renderer = new RenderStream()
+    // await renderer.addDisplay(display)
+    // await renderer.animationManager.select("Tests/TestNoise/default", false)
+    //
+    //
+    // await renderer.render(resp, encodedFrameBuffer)
 
 
 })

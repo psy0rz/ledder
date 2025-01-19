@@ -72,8 +72,8 @@ export class RpcServer extends Rpc {
 
             })
 
-            ws.on('close', () => {
-                context.closed()
+            ws.on('close', async () => {
+                await context.closed()
             })
 
 

@@ -7,6 +7,13 @@ import Display from "../Display.js"
 import PixelBox from "../PixelBox.js"
 import Scheduler from "../Scheduler.js"
 
+
+//A renderer can have multiple displays
+//The first one is the primary display and determines box-size and framerate.
+//Displays can be added/removed on the fly
+//Adding/removing the first display will also start/stop the renderer.
+
+
 export class Render {
 
     public readonly animationManager: AnimationManager

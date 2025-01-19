@@ -79,6 +79,7 @@ class RpcClient extends Rpc {
 
         this.webSocket.onmessage = async (event) => {
             if (event.data[0] == "{")
+
                 this.serverAndClient.receiveAndSend(JSON.parse(event.data.toString()))
             else {
                 if (this.display)

@@ -65,8 +65,12 @@ export class DisplayWebsocket extends Display {
 
         for (const wsContext of this.wsContexts)
         {
-            sentBytes=sentBytes+this.imageBuf8.byteLength
-            wsContext.ws.send(this.imageBuf8)
+            //just drop frames instead of buffering
+            if (wsContext.ws.bufferedAmount===0) {
+
+                sentBytes = sentBytes + this.imageBuf8.byteLength
+                wsContext.ws.send(this.imageBuf8)
+            }
         }
 
 

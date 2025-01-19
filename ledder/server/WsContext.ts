@@ -8,13 +8,6 @@ import type RenderMonitor from "./RenderMonitor.js";
 export class WsContext {
     ws: WebSocket
     client: JSONRPCServerAndClient<WsContext, WsContext>
-    // renderLoop: RenderRealtime
-    // monitorDisplay: DisplayWebsocket | undefined
-
-    // animationManager: AnimationManager
-    // resetCb: any
-    // addCb: any
-    // changedCb: (animationName: string, presetName: string) => void
 
 
     id: number
@@ -54,84 +47,16 @@ export class WsContext {
         }
     }
 
-    // startMonitoring(monitorDisplay: DisplayWebsocket) {
-    //
-    //     if (this.monitorDisplay !== undefined)
-    //         this.stopMonitoring()
-    //
-    //     this.monitorDisplay = monitorDisplay
-    //     this.monitorDisplay.addWsContext(this)
-    //
-    //
-    // }
-    //
-    // stopMonitoring() {
-    //     if (this.monitorDisplay !== undefined) {
-    //         this.monitorDisplay.removeWsContext(this)
-    //         this.monitorDisplay = undefined
-    //     }
-    // }
-    //
-    //
-    // startControls(animationManager: AnimationManager) {
-    //
-    //     if (this.animationManager !== undefined)
-    //         this.stopControls()
-    //
-    //     this.animationManager = animationManager
-    //
-    //
-    //     this.resetCb = () => {
-    //         this.request("control.reset").then(() => {
-    //             this.request("control.set", this.animationManager.controlGroup).then()
-    //         })
-    //
-    //     }
-    //
-    //     this.addCb = () => {
-    //         this.request("control.set", this.animationManager.controlGroup).then()
-    //
-    //     }
-    //
-    //     this.changedCb = (animationName, presetName) => {
-    //         this.request("animationManager.changed", animationName, presetName)
-    //     }
-    //
-    //     this.animationManager.controlGroup.__resetCallbacks.register(this.resetCb)
-    //     this.animationManager.controlGroup.__addCallbacks.register(this.addCb)
-    //     this.animationManager.changedCallbacks.register(this.changedCb)
-    //
-    //
-    //     //reset and send current controls
-    //     this.request("control.reset").then(() => {
-    //         this.request("control.set", this.animationManager.controlGroup).then()
-    //     })
-    //     this.request("animationManager.changed", animationManager.animationName, animationManager.presetName)
-    //
-    //
-    // }
-    //
-    // stopControls() {
-    //
-    //     if (this.animationManager) {
-    //         this.animationManager.controlGroup.__resetCallbacks.unregister(this.resetCb)
-    //         this.animationManager.controlGroup.__addCallbacks.unregister(this.addCb)
-    //
-    //         this.animationManager.changedCallbacks.unregister(this.changedCb)
-    //         this.animationManager = undefined
-    //     }
-    //
-    // }
 
     //websocket closed
-    closed() {
+    async closed() {
         console.log(`WsContext: Stopping ${this.id}`)
         // this.stopMonitoring()
         // this.stopControls()
 
         if (this.renderMonitor!==undefined)
         {
-            this.renderMonitor.removeWsContext(this)
+            await this.renderMonitor.removeWsContext(this)
         }
     }
 
