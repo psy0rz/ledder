@@ -1,6 +1,4 @@
 import {Render} from "./Render.js"
-import {Writable} from "node:stream"
-import {stat} from "fs/promises";
 
 /** Non-realtime rendering , for use in tcp streaming for example.
  * This renders as fast as the display driver allows, letting the driver/client handle the fps rates.

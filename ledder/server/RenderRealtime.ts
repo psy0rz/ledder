@@ -9,12 +9,11 @@ export class RenderRealtime extends Render {
     private nextTimeMicros: number
 
 
-
     private timer: NodeJS.Timeout
 
 
     async start() {
-        if (this.timer===undefined) {
+        if (this.timer === undefined) {
             this.nextTimeMicros = Date.now() * 1000
             this.resetStats()
 
@@ -26,56 +25,69 @@ export class RenderRealtime extends Render {
     }
 
     //the main step-render-send loop
+    async renderInterval() {
 
-     async renderInterval() {
+        //If a display is not ready, we dont do an anmation step and render/send
+        //So in that case we pause the animation, but drop a frame in timing.
+        //This is usefull for streaming displays that can get full buffers (DisplayQoisHTTP)
 
-        this.statsFrames++
+        if (this.primaryDisplay.ready) {
+            let nowUS = Date.now() * 1000
+            this.statsFrames++
 
-        let nowUS = Date.now() * 1000
+            //do THE step that runs all the animations
+            this.nextTimeMicros += await this.scheduler.__step(true)
 
-        this.nextTimeMicros += await this.scheduler.__step(true)
-
-
-
-        //too slow, or other clock problem
-        if (Math.abs(this.nextTimeMicros - nowUS) > this.scheduler.__frameTimeMicros * 2) {
-            //reset
-            this.nextTimeMicros = nowUS + this.scheduler.__frameTimeMicros
-            this.statsDroppedFrames++
-        }
-
-        for (const display of this.displays) {
-            try {
-
-                display.render(this.box)
-            } catch (e) {
-                console.error("Exception while rendering:", e)
+            //too slow, or other clock problem
+            if (Math.abs(this.nextTimeMicros - nowUS) > this.scheduler.__frameTimeMicros * 2) {
+                //reset
+                this.nextTimeMicros = nowUS + this.scheduler.__frameTimeMicros
+                this.statsDroppedFrames++
             }
 
-            if (display===this.primaryDisplay)
-                this.statsBytes=this.statsBytes+display.frame(this.nextTimeMicros)
-            else
-                display.frame(this.nextTimeMicros)
+            //render to all displays
+            for (const display of this.displays) {
+                if (display.ready) {
+                    try {
+
+                        display.render(this.box)
+                    } catch (e) {
+                        console.error("Exception while rendering:", e)
+                    }
+
+                    if (display === this.primaryDisplay)
+                        this.statsBytes = this.statsBytes + display.frame(this.nextTimeMicros)
+                    else
+                        display.frame(this.nextTimeMicros)
+                }
+
+
+            }
+
+            //set next time
+            const intervalmS = (this.nextTimeMicros / 1000) - Date.now()
+            this.statsIdleMs = this.statsIdleMs + intervalmS
+            if (intervalmS <= 0)
+                this.statsLateFrames++
+
+            this.timer = setTimeout(() => this.renderInterval(), intervalmS)
+        } else {
+            //droppped frame, just set timeout to try again
+            this.statsDroppedFrames++
+            this.timer = setTimeout(() => this.renderInterval(), this.scheduler.__frameTimeMicros/1000)
         }
 
-        const intervalmS = (this.nextTimeMicros / 1000) - Date.now()
-        this.statsIdleMs = this.statsIdleMs + intervalmS
-        if (intervalmS <= 0)
-            this.statsLateFrames++
-
-        this.timer=setTimeout(() => this.renderInterval(), intervalmS)
 
     }
 
     async stop() {
-        if (this.timer!==undefined) {
+        if (this.timer !== undefined) {
             clearTimeout(this.timer)
-            this.timer=undefined
+            this.timer = undefined
             this.animationManager.stop(true)
             console.log(`RenderRealtime ${this.description} stopped.`)
         }
     }
-
 
 
 }

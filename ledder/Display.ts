@@ -39,6 +39,10 @@ export default abstract class Display {
     //set in server.ts
     gammaMapper: GammaMapper
 
+    //indicdates the display is ready for the next frame.
+    //The renderer will pause until its ready. (only for primary displays)
+    ready: boolean
+
 
     protected constructor(width, height) {
 
@@ -50,34 +54,9 @@ export default abstract class Display {
         this.xMax = width - 1
         this.yMax = height - 1
 
-        // this.setFps(this.defaultFps)
+        this.ready=true
 
-        // this.colors=new Set()
     }
-
-    //set display fps (usually controlled externally by FPS control)
-    // setFps(fps: number) {
-    //
-    //     //limit
-    //     if (fps > this.maxFps)
-    //         fps = this.maxFps
-    //
-    //     if (this.roundFrametime) {
-    //         //make sure we have a rounded framedelay. (needed for LedStream)
-    //         this.frameMs = ~~(1000 / fps)
-    //         //readjust fps to account for the rounded framedelay.
-    //         this.fps = 1000 / this.frameMs
-    //     } else {
-    //         //no rounding
-    //         this.frameMs = (1000 / fps)
-    //         this.fps = fps
-    //     }
-    // }
-
-    //calculate time to number of frames (can be a float!)
-    // seconds2frames(seconds: number): number {
-    //     return (seconds * 1000 / this.frameMs)
-    // }
 
     //bbox of a display is the whole screen
     bbox() {

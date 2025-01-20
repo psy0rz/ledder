@@ -21,7 +21,7 @@ const gammaMapper = new GammaMapper(settingsControl.group("Display settings"))
 
 
 let renderMonitors: Array<RenderMonitor> = []
-let streamingRenderers: Array<RenderStream> = []
+let streamingRenderers: Array<RenderRealtime> = []
 let httpDisplays: Array<DisplayQOIShttp> = []
 
 //create preview renderer
@@ -55,7 +55,7 @@ for (const displayNr in config.streamList) {
     // const monitoringDisplay = new DisplayWebsocket(display.width, display.height)
     // monitoringDisplays.push(monitoringDisplay)
 
-    let renderer = new RenderStream(`Stream ${displayNr}`)
+    let renderer = new RenderRealtime(`Stream ${displayNr}`)
     await renderer.addDisplay(display)
     httpDisplays.push(display)
     await renderer.animationManager.select(config.animation, false)
@@ -179,58 +179,19 @@ rpc.addMethod("changePreviewSize", async (context: WsContext, width, height) => 
 rpc.app.get('/get/stream/:id', async (req, resp) => {
 
     // esp5.4, wifi core 1, contentlength speicifeed: 60-70kbs
-     //  esp4.4.8,   "                                :200-400kbs!
+    //  esp4.4.8,   "                                :200-400kbs!
 
     // AMPDU van 6 naar 12
     // WIFI SLP IRAM opt aan
     // WIFI CSI aan                                    360kbs+
 
-//     console.log("CONNECT")
-//     const d=new Uint8Array(10000)
-//
-//         resp.set('Content-Type', 'application/octet-stream'); // or whatever MIME type suits your data
-//     //
-//     // // Set Content-Length header
-//     resp.set('Content-Length', '10000000');
-//
-//
-//         console.log(d.length)
-//
-//     let bytes=0
-//
-// setInterval(()=>{
-//     console.log("kBps", ~~(bytes/1000))
-//     bytes=0
-// }, 1000)
-//
-//     function flood() {
-//         resp.write(d, flood)
-//         bytes=bytes+d.length
-//     }
-//
-//     flood()
-
-    // const id = Number(req.params.id)
-    let id=0;
-
-
-    //matrixtest decode + double buf: 111fps/ 30-60kbs
-    //matrixtest decode zonder leds: ongeveer zelfde
-    //buffersize op 1024 : zelfde ongever
-    //iramattr stream/decode byte: zelfde
-    //omgebwoud naar Cpp zonder class: misschien iets sneller
-    //omgebouwd naar functie die datablock accepteerd, geen verschil!
-    //aha: zonder ledssetnextpixel en show is hij nu 220kb/400fps
-
-
-    console.log("JOOOOOOOOOO")
+    console.log(`Display http connect: ${req.ip}`)
 
     resp.set('Content-Type', 'application/octet-stream'); // or whatever MIME type suits your data
-
-    // Set Content-Length header
     resp.set('Content-Length', '10000000');
 
 
+    const id = 0
     const renderer = streamingRenderers[id]
     const display = httpDisplays[id]
 
@@ -239,37 +200,12 @@ rpc.app.get('/get/stream/:id', async (req, resp) => {
         throw ("Display not found")
     }
 
-    // async function fill() {
-    //
-    //     // setTimeout(renderer.render.bind(renderer), 15)
-    //     await renderer.render()
-    // }
-    //
-    //
-    //
-    // display.registerReadyCb(async () => {
-    //     await fill()
-    // })
-
-    //primary?
-    if (display.addFh(resp)) {
-    //     await fill()
-
-        setInterval(async ()=>
-        {
-            if (display.ready)
-                await renderer.render()
-
-
-        }, ~~(1000/60))
-    //
-    }
-
+    display.addFh(resp)
 
     resp.on('close', () => {
+    console.log(`Display http disconnected: ${req.ip}`)
         display.removeFh(resp)
     })
-
 
 
 })

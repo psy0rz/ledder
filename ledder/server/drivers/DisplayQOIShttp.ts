@@ -37,53 +37,54 @@ export class DisplayQOIShttp extends DisplayQOIS {
 
         this.encode(buffer, displayTime)
 
+        const abuffer = new Uint8Array(buffer)
 
         let bytes = 0
         for (let fh of this.fhs) {
 
-            const ready = fh.write(new Uint8Array(buffer), this.readyEvent.bind(this))
+            if (fh.writable) {
 
-            if (fh === this.primaryFh)
-                this.ready = ready
-            bytes = bytes + buffer.length
+                if (fh === this.primaryFh)
+                    this.ready = fh.write(abuffer,() => {
+                        this.ready = true
+                    })
+                else
+                    fh.write(abuffer)
+                bytes = bytes + abuffer.length
+            }
+            // else
+            // {
+            //     console.log(`DisplayQOIShttp: Dropped frame`)
+            // }
         }
 
         return bytes
 
     }
 
-    registerReadyCb(readyCb: () => void) {
-        this.readyCb = readyCb
-    }
-
-    async readyEvent() {
-        this.ready = true
-        if (this.readyCb !== undefined)
-            return this.readyCb()
-
-
-    }
+    // async readyEvent() {
+    //     this.ready = true
+    //     if (this.readyCb !== undefined)
+    //         return this.readyCb()
+    //
+    //
+    // }
 
     addFh(fh: Writable) {
         this.fhs.add(fh)
 
         if (this.primaryFh === undefined) {
             this.primaryFh = fh
-            // fh.on('drain', this.readyEvent.bind(this))
             this.ready = true
-            return true
         }
 
-        return false
     }
 
     removeFh(fh: Writable) {
         this.fhs.delete(fh)
         if (fh === this.primaryFh) {
             this.primaryFh = undefined
-            // fh.off('drain', this.readyEvent)
-            this.ready = true
-            return true
+            this.ready = false
         }
         return false
     }
