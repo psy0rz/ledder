@@ -1,13 +1,14 @@
 import {DisplayQOIS} from "../DisplayQOIS.js"
 import OffsetMapper from "./OffsetMapper.js"
-import type {Writable} from "node:stream";
+
+import {type Response} from 'express';
 
 
 export class DisplayQOIShttp extends DisplayQOIS {
 
 
-    private fhs: Set<Writable>
-    private primaryFh: Writable
+    // private fhs: Set<Writable>
+    private response: Response
     private readyCb: () => void
 
 
@@ -20,8 +21,7 @@ export class DisplayQOIShttp extends DisplayQOIS {
         this.minFrameTimeMicros = ~~(1000000 / maxFps)
         this.defaultFrameTimeMicros = this.minFrameTimeMicros
 
-        this.fhs = new Set()
-        this.primaryFh = undefined
+        this.response = undefined
         this.ready = false
 
 
@@ -39,54 +39,46 @@ export class DisplayQOIShttp extends DisplayQOIS {
 
         const abuffer = new Uint8Array(buffer)
 
-        let bytes = 0
-        for (let fh of this.fhs) {
 
-            if (fh.writable) {
+        if (this.response.writable) {
 
-                if (fh === this.primaryFh)
-                    this.ready = fh.write(abuffer,() => {
-                        this.ready = true
-                    })
-                else
-                    fh.write(abuffer)
-                bytes = bytes + abuffer.length
+            this.ready = this.response.write(abuffer, () => {
+                this.ready = true
+            })
+            return abuffer.length
+        }
+
+        return 0
+
+    }
+
+    //set new response handler, close previious one
+    setResponseHandler(response: Response) {
+
+        if (this.response !== undefined) {
+            this.response.socket.destroy()
+        }
+
+        this.response = response
+        this.ready = true
+
+        response.on('close', () => {
+            //we're still the responder?
+            if (this.response === response) {
+                this.ready = false
+                this.response = undefined
             }
-            // else
-            // {
-            //     console.log(`DisplayQOIShttp: Dropped frame`)
-            // }
-        }
+        })
 
-        return bytes
 
     }
 
-    // async readyEvent() {
-    //     this.ready = true
-    //     if (this.readyCb !== undefined)
-    //         return this.readyCb()
-    //
-    //
+    // //remove a response handler
+    // removeResponseHandler(response: Response) {
+    //     if (response === this.response) {
+    //         this.response = undefined
+    //         this.ready = false
+    //     }
     // }
-
-    addFh(fh: Writable) {
-        this.fhs.add(fh)
-
-        if (this.primaryFh === undefined) {
-            this.primaryFh = fh
-            this.ready = true
-        }
-
-    }
-
-    removeFh(fh: Writable) {
-        this.fhs.delete(fh)
-        if (fh === this.primaryFh) {
-            this.primaryFh = undefined
-            this.ready = false
-        }
-        return false
-    }
 
 }

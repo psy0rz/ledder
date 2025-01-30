@@ -200,12 +200,9 @@ rpc.app.get('/get/stream/:id', async (req, resp) => {
         throw ("Display not found")
     }
 
-    display.addFh(resp)
 
-    resp.on('close', () => {
-    console.log(`Display http disconnected: ${req.ip}`)
-        display.removeFh(resp)
-    })
+    display.setResponseHandler(resp)
+
 
 
 })
