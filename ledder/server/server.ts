@@ -3,22 +3,18 @@ import {RenderRealtime} from "./RenderRealtime.js"
 import ControlGroup from "../ControlGroup.js"
 import GammaMapper from "./drivers/GammaMapper.js"
 import {presetStore} from "./PresetStore.js"
-import {RenderStream} from "./RenderStream.js"
 import {DisplayQOIShttp} from "./drivers/DisplayQOIShttp.js"
 // import {displayDeviceStore} from "./DisplayDeviceStore.js"
 import OffsetMapper from "./drivers/OffsetMapper.js"
 import {config, load} from "./config.js"
 import RenderMonitor from "./RenderMonitor.js";
 import type {WsContext} from "./WsContext.js";
-import path from "path";
 import * as fs from "node:fs";
-import {log} from "node:util";
 
 
 const settingsControl = new ControlGroup('Global settings')
 
 await load()
-
 
 const gammaMapper = new GammaMapper(settingsControl.group("Display settings"))
 
@@ -234,9 +230,7 @@ rpc.app.get('/stream/:id', async (req, resp) => {
         throw ("Display not found")
     }
 
-
     display.setResponseHandler(resp)
-
 
 
 })

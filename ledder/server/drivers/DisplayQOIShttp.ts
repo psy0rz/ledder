@@ -6,13 +6,10 @@ import {type Response} from 'express';
 
 export class DisplayQOIShttp extends DisplayQOIS {
 
-
-    // private fhs: Set<Writable>
     private response: Response
-    private readyCb: () => void
 
 
-    public ready: boolean
+    private flash: boolean
 
 
     constructor(mapper: OffsetMapper, maxFps = 60) {
@@ -23,6 +20,7 @@ export class DisplayQOIShttp extends DisplayQOIS {
 
         this.response = undefined
         this.ready = false
+        this.flash = false
 
 
     }
@@ -52,12 +50,19 @@ export class DisplayQOIShttp extends DisplayQOIS {
 
     }
 
+
+    abortConnection() {
+        if (this.response !== undefined) {
+            this.response.socket.destroy()
+            this.response = undefined
+        }
+
+    }
+
     //set new response handler, close previious one
     setResponseHandler(response: Response) {
 
-        if (this.response !== undefined) {
-            this.response.socket.destroy()
-        }
+        this.abortConnection()
 
         this.response = response
         this.ready = true
@@ -70,15 +75,19 @@ export class DisplayQOIShttp extends DisplayQOIS {
             }
         })
 
+        response.set('flash')
+        this.flash = false
+
 
     }
 
-    // //remove a response handler
-    // removeResponseHandler(response: Response) {
-    //     if (response === this.response) {
-    //         this.response = undefined
-    //         this.ready = false
-    //     }
-    // }
+
+    upload() {
+        this.flash = true
+        //make it reconnect
+        this.abortConnection()
+
+    }
+
 
 }
