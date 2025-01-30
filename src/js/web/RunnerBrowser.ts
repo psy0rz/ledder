@@ -161,6 +161,11 @@ export class RunnerBrowser {
         rpc.notify("changePreviewSize", width, height)
     }
 
+    storeStrream()
+    {
+        rpc.notify("storeStream")
+    }
+
 }
 
 export let runnerBrowser = new RunnerBrowser()

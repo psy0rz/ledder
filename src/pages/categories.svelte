@@ -19,7 +19,6 @@
     import {onMount} from "svelte"
     import AnimationListUI from "@/components/AnimationListUI.svelte"
 
-    let search = ""
 
     onMount(() => {
         f7ready(() => {
@@ -51,6 +50,13 @@
                     iconMd="material:tune"
                     href="/controls"
                     title="Controls"
+                    tonal
+
+            />
+            <Button
+                    iconMd="material:upload"
+                    on:click={runnerBrowser.storeStrream}
+                    title="Upload"
                     tonal
 
             />

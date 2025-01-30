@@ -4,8 +4,6 @@ import ControlGroup from "../ControlGroup.js"
 import GammaMapper from "./drivers/GammaMapper.js"
 import {presetStore} from "./PresetStore.js"
 import {DisplayQOIShttp} from "./drivers/DisplayQOIShttp.js"
-// import {displayDeviceStore} from "./DisplayDeviceStore.js"
-import OffsetMapper from "./drivers/OffsetMapper.js"
 import {config, load} from "./config.js"
 import RenderMonitor from "./RenderMonitor.js";
 import type {WsContext} from "./WsContext.js";
@@ -203,6 +201,11 @@ rpc.app.get('/update/esp32s3.bin', async (req,res)=>{
         res.sendStatus(500);
     });
 });
+
+rpc.addMethod("storeStream", async (context:WsContext) => {
+    context.renderMonitor.renderer.getPrimaryDisplay().storeStream()
+
+})
 
 
 //Stream QOIS frames via a http get request.

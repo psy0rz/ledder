@@ -24,7 +24,7 @@ export class PreviewStore {
     async render(animationName: string, presetName: string) {
 
         await this.renderer.render(animationName, presetName)
-        await this.display.store(presetStore.previewFilename(animationName, presetName), 128)
+        await this.display.storeStream(presetStore.previewFilename(animationName, presetName), 128)
         this.display.clear()
     }
 

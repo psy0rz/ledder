@@ -87,6 +87,18 @@ export default abstract class Display {
     }
 
 
+    //make the display driver store the animation to flash for example (like DisplayQOIShttp)
+    storeStream()
+    {
+
+    }
+
+    //display is currently storing
+    storing()
+    {
+        return false
+    }
+
     //implemed in driver subclass:
 
     //set a pixel with specified color, called for all pixels by render()

@@ -9,7 +9,7 @@ export class DisplayQOIShttp extends DisplayQOIS {
     private response: Response
 
 
-    private flash: boolean
+    private setFlash: boolean
 
 
     constructor(mapper: OffsetMapper, maxFps = 60) {
@@ -20,7 +20,7 @@ export class DisplayQOIShttp extends DisplayQOIS {
 
         this.response = undefined
         this.ready = false
-        this.flash = false
+        this.setFlash = false
 
 
     }
@@ -75,18 +75,23 @@ export class DisplayQOIShttp extends DisplayQOIS {
             }
         })
 
-        response.set('flash')
-        this.flash = false
+        response.set('Flash', this.setFlash?'1':'0')
+        this.setFlash = false
 
 
     }
 
 
-    upload() {
-        this.flash = true
+    storeStream() {
+        this.setFlash = true
         //make it reconnect
         this.abortConnection()
 
+    }
+
+    storing()
+    {
+        return this.setFlash
     }
 
 

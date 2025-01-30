@@ -65,6 +65,10 @@ export class Render {
     }
 
 
+    getPrimaryDisplay()
+    {
+        return this.primaryDisplay
+    }
 
 
     async addDisplay( display : Display ) {
@@ -100,7 +104,12 @@ export class Render {
         if (busyPerc<0)
             busyPerc=0
 
-        const statStr= (`${fps} fps (${this.statsLateFrames} late, ${this.statsDroppedFrames} dropped), ${kbps} KB/s, ${busyPerc}% busy`)
+        let storing=""
+
+        if (this.primaryDisplay!==undefined && this.primaryDisplay.storing())
+            storing="STORING"
+
+        const statStr= (`${fps} fps (${this.statsLateFrames} late, ${this.statsDroppedFrames} dropped), ${kbps} KB/s, ${busyPerc}% busy ${storing}`)
         this.resetStats()
         return statStr
 
