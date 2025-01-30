@@ -172,11 +172,19 @@ rpc.addMethod("changePreviewSize", async (context: WsContext, width, height) => 
 })
 
 
-//work in progress
+rpc.app.get('/update/esp32s3.bin', async (req,resp)=>{
+    console.log(`Sending update firmware to ${req.ip}`)
+    resp.sendFile("/home/psy/ledstream/build-esp32s3/ledstream.bin", (e)=>
+    {
+        console.log(`Sending update to ${req.ip} done: `,e)
+
+    })
+
+})
+
+
 //Stream QOIS frames via a http get request.
-//Rendering is as fast as possible, to fill buffers up.
-//Client display decides how much data is buffered and consumed.
-rpc.app.get('/get/stream/:id', async (req, resp) => {
+rpc.app.get('/stream/:id', async (req, resp) => {
 
     // esp5.4, wifi core 1, contentlength speicifeed: 60-70kbs
     //  esp4.4.8,   "                                :200-400kbs!
@@ -188,7 +196,7 @@ rpc.app.get('/get/stream/:id', async (req, resp) => {
     console.log(`Display http connect: ${req.ip}`)
 
     resp.set('Content-Type', 'application/octet-stream'); // or whatever MIME type suits your data
-    resp.set('Content-Length', '10000000');
+    resp.set('Content-Length', '100000000');
 
 
     const id = 0
