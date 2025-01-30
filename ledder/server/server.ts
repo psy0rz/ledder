@@ -10,6 +10,9 @@ import OffsetMapper from "./drivers/OffsetMapper.js"
 import {config, load} from "./config.js"
 import RenderMonitor from "./RenderMonitor.js";
 import type {WsContext} from "./WsContext.js";
+import path from "path";
+import * as fs from "node:fs";
+import {log} from "node:util";
 
 
 const settingsControl = new ControlGroup('Global settings')
@@ -172,15 +175,38 @@ rpc.addMethod("changePreviewSize", async (context: WsContext, width, height) => 
 })
 
 
-rpc.app.get('/update/esp32s3.bin', async (req,resp)=>{
-    console.log(`Sending update firmware to ${req.ip}`)
-    resp.sendFile("/home/psy/ledstream/build-esp32s3/ledstream.bin", (e)=>
-    {
-        console.log(`Sending update to ${req.ip} done: `,e)
+rpc.app.get('/update/esp32s3.bin', async (req,res)=>{
+    const logPrefix=`Firmware update ${req.ip}: `
+    console.log(logPrefix+"starting")
 
-    })
 
-})
+
+    const filePath = "/home/psy/ledstream/build-esp32s3/ledstream.bin"
+    const stat = fs.statSync(filePath); // Get file size
+    const totalSize = stat.size;
+    let transmittedBytes = 0;
+
+    res.setHeader('Content-Length', totalSize);
+    res.setHeader('Content-Disposition', 'attachment; filename="firmware.bin"');
+
+    const readStream = fs.createReadStream(filePath);
+
+    readStream.on('data', (chunk) => {
+        transmittedBytes += chunk.length;
+        console.log(`${logPrefix}Progress: ${((transmittedBytes / totalSize) * 100).toFixed(0)}%`);
+    });
+
+    readStream.pipe(res);
+
+    readStream.on('end', () => {
+        console.log(`${logPrefix}File transfer complete.`);
+    });
+
+    readStream.on('error', (err) => {
+        console.error(`${logPrefix}File streaming error:`, err);
+        res.sendStatus(500);
+    });
+});
 
 
 //Stream QOIS frames via a http get request.
