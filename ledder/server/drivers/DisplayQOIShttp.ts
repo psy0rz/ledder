@@ -75,7 +75,9 @@ export class DisplayQOIShttp extends DisplayQOIS {
             }
         })
 
-        response.set('Flash', this.setFlash?'1':'0')
+        response.set('Content-Type', 'application/octet-stream'); // or whatever MIME type suits your data
+        response.set('Content-Length', '100000000');
+        response.set('Flash', this.setFlash ? '1' : '0')
         this.setFlash = false
 
 
@@ -89,8 +91,7 @@ export class DisplayQOIShttp extends DisplayQOIS {
 
     }
 
-    storing()
-    {
+    storing() {
         return this.setFlash
     }
 

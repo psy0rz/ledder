@@ -85,7 +85,7 @@ export class DisplayApng extends Display {
     Create apng file from currently stored images
     Quality: 0 lossless,  1-225  from bad to good.
      */
-    async storeStream(filename:string, quality:number)
+    async storeImage(filename:string, quality:number)
     {
         //generate and store APNG
         let imageData = this.get(quality)

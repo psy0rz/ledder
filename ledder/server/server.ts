@@ -220,8 +220,6 @@ rpc.app.get('/stream/:id', async (req, resp) => {
 
     console.log(`Display http connect: ${req.ip}`)
 
-    resp.set('Content-Type', 'application/octet-stream'); // or whatever MIME type suits your data
-    resp.set('Content-Length', '100000000');
 
 
     const id = 0
