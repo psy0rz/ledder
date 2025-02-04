@@ -38,12 +38,17 @@ export class DisplayQOIShttp extends DisplayQOIS {
         const abuffer = new Uint8Array(buffer)
 
 
-        if (this.response.writable) {
+        try {
+            if ( this.response.writable) {
 
-            this.ready = this.response.write(abuffer, () => {
-                this.ready = true
-            })
-            return abuffer.length
+                this.ready = this.response.write(abuffer, () => {
+                    this.ready = true
+                })
+                return abuffer.length
+            }
+        } catch (e) {
+            console.error(e)
+            return 0
         }
 
         return 0
@@ -55,6 +60,7 @@ export class DisplayQOIShttp extends DisplayQOIS {
         if (this.response !== undefined) {
             this.response.socket.destroy()
             this.response = undefined
+            this.ready=false
         }
 
     }
@@ -78,6 +84,7 @@ export class DisplayQOIShttp extends DisplayQOIS {
         response.set('Content-Type', 'application/octet-stream'); // or whatever MIME type suits your data
         response.set('Content-Length', '100000000');
         response.set('Flash', this.setFlash ? '1' : '0')
+
         this.setFlash = false
 
 
