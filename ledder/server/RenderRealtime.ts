@@ -3,10 +3,14 @@ import {Render} from "./Render.js"
 /**
  * Main realtime renderer. Will create an AnimationManager that manages an Animation, and renders it to specified Display
  * To be used with display drivers that control hardware.
+ *
+ * Note that the time passed to frame() is "synthetic": its aways increased by the frame-time, regardless of the actual local time.
+ * This helpts smooth playback on wifi devices with buffering.
  */
 export class RenderRealtime extends Render {
 
-    private nextTimeMicros: number
+    private displayNextTimeMicros: number
+    private localNextTimeMicros: number
 
 
     private timer: NodeJS.Timeout
@@ -14,7 +18,9 @@ export class RenderRealtime extends Render {
 
     async start() {
         if (this.timer === undefined) {
-            this.nextTimeMicros = Date.now() * 1000
+            this.displayNextTimeMicros = 0;
+            this.localNextTimeMicros=Date.now() * 1000
+
             this.resetStats()
 
 
@@ -36,13 +42,14 @@ export class RenderRealtime extends Render {
             this.statsFrames++
 
             //do THE step that runs all the animations
-            this.nextTimeMicros += await this.scheduler.__step(true)
+            let step=await this.scheduler.__step(true)
+            this.displayNextTimeMicros += step
+            this.localNextTimeMicros+=step
 
             //too slow, or other clock problem
-            if (Math.abs(this.nextTimeMicros - nowUS) > this.scheduler.__frameTimeMicros * 2) {
+            if (Math.abs(this.localNextTimeMicros - nowUS) > this.scheduler.__frameTimeMicros * 2) {
                 //reset
-                this.nextTimeMicros = nowUS + this.scheduler.__frameTimeMicros
-                this.statsDroppedFrames++
+                this.localNextTimeMicros = nowUS + this.scheduler.__frameTimeMicros
             }
 
             //render to all displays
@@ -56,16 +63,16 @@ export class RenderRealtime extends Render {
                     }
 
                     if (display === this.primaryDisplay)
-                        this.statsBytes = this.statsBytes + display.frame(this.nextTimeMicros)
+                        this.statsBytes = this.statsBytes + display.frame(this.displayNextTimeMicros)
                     else
-                        display.frame(this.nextTimeMicros)
+                        display.frame(this.displayNextTimeMicros)
                 }
 
 
             }
 
             //set next time
-            const intervalmS = (this.nextTimeMicros / 1000) - Date.now()
+            const intervalmS = (this.localNextTimeMicros / 1000) - Date.now()
             this.statsIdleMs = this.statsIdleMs + intervalmS
             if (intervalmS <= 0)
                 this.statsLateFrames++
@@ -82,7 +89,7 @@ export class RenderRealtime extends Render {
 
     async stop() {
         if (this.timer !== undefined) {
-            clearTimeout(this.timer)
+            clearInterval(this.timer)
             this.timer = undefined
             this.animationManager.stop(true)
             console.log(`RenderRealtime ${this.description} stopped.`)
