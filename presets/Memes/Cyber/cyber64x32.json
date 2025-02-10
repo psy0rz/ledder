@@ -1,0 +1,27 @@
+{
+ "title": "",
+ "description": "",
+ "values": {
+  "Font": {
+   "selected": "Atari regular"
+  },
+  "Font height": {
+   "value": 15
+  },
+  "Font width": {
+   "value": 4
+  },
+  "tekst": {
+   "r": 255,
+   "g": 255,
+   "b": 0,
+   "a": 1
+  },
+  "interval": {
+   "value": 5
+  },
+  "text": {
+   "text": "CYBER"
+  }
+ }
+}

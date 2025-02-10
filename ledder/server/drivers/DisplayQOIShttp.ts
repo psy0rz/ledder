@@ -91,16 +91,18 @@ export class DisplayQOIShttp extends DisplayQOIS {
     }
 
 
-    storeStream() {
+    storeStreamStart() {
         this.setFlash = true
         //make it reconnect
         this.abortConnection()
 
     }
 
-    storing() {
-        return this.setFlash
-    }
 
+
+    storeStreamStop() {
+        this.setFlash = false
+        this.abortConnection()
+    }
 
 }

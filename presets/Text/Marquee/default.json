@@ -64,13 +64,13 @@
   },
   "Scrolling": {
    "Enabled": {
-    "enabled": false
+    "enabled": true
    },
    "FPS": {
     "value": 60
    },
    "Rotate interval": {
-    "value": 2
+    "value": 1
    },
    "Rotate interval randomizer": {
     "value": 0

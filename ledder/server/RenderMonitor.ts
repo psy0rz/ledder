@@ -3,6 +3,7 @@ import type {Render} from "./Render";
 import {DisplayWebsocket} from "./drivers/DisplayWebsocket.js";
 import {previewStore} from "./PreviewStore.js";
 import {presetStore} from "./PresetStore.js";
+import {DisplayQOIShttp} from "./drivers/DisplayQOIShttp.js";
 
 //this is used to monitor an active renderer with a browser client.
 //event broadcasting to all clients is done here as well
@@ -141,6 +142,21 @@ export default class RenderMonitor {
         const statsStr=`${this.renderer.description} [${this.renderer.getStats()}]`
         console.log(statsStr)
         this.notifyAll("stats", statsStr)
+    }
+
+    storeStreamStart()
+    {
+        const display=this.renderer.getPrimaryDisplay() as DisplayQOIShttp
+        display.storeStreamStart()
+
+
+    }
+
+    storeStreamStop()
+    {
+        const display=this.renderer.getPrimaryDisplay() as DisplayQOIShttp
+        display.storeStreamStop()
+
     }
 }
 

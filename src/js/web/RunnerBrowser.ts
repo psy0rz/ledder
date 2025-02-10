@@ -7,7 +7,7 @@ import {
     svelteDisplayHeight,
     svelteDisplayZoom,
     svelteDisplayList,
-    svelteSelectedDisplayNr, svelteStats
+    svelteSelectedDisplayNr, svelteStats, svelteStoring
 } from "./svelteStore.js"
 import {confirmPromise, info, promptPromise} from "./util.js"
 import {DisplayCanvas} from "./DisplayCanvas.js"
@@ -159,12 +159,23 @@ export class RunnerBrowser {
     {
         console.log("change", width,height)
         rpc.notify("changePreviewSize", width, height)
+        console.log("ja")
     }
 
-    storeStrream()
+    storeStreamStart()
     {
-        rpc.notify("storeStream")
+        rpc.notify("storeStreamStart")
+        svelteStoring.set(true)
     }
+
+    storeStreamStop()
+    {
+        rpc.notify("storeStreamStop")
+
+        svelteStoring.set(false)
+
+    }
+
 
 }
 

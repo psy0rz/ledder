@@ -104,12 +104,9 @@ export class Render {
         if (busyPerc<0)
             busyPerc=0
 
-        let storing=""
 
-        if (this.primaryDisplay!==undefined && this.primaryDisplay.storing())
-            storing="STORING"
 
-        const statStr= (`${fps} fps (${this.statsLateFrames} late, ${this.statsDroppedFrames} dropped), ${kbps} KB/s, ${busyPerc}% busy ${storing}`)
+        const statStr= (`${fps} fps (${this.statsLateFrames} late, ${this.statsDroppedFrames} dropped), ${kbps} KB/s, ${busyPerc}% busy`)
         this.resetStats()
         return statStr
 

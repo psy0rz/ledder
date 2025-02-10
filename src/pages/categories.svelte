@@ -18,6 +18,7 @@
     import {runnerBrowser} from "../js/web/RunnerBrowser.js"
     import {onMount} from "svelte"
     import AnimationListUI from "@/components/AnimationListUI.svelte"
+    import {svelteStoring} from "@/js/web/svelteStore.js";
 
 
     onMount(() => {
@@ -55,9 +56,10 @@
             />
             <Button
                     iconMd="material:upload"
-                    on:click={runnerBrowser.storeStrream}
+                    on:click={ ()=> {$svelteStoring?runnerBrowser.storeStreamStop():runnerBrowser.storeStreamStart()}}
                     title="Upload"
                     tonal
+                    color={$svelteStoring?'red':''}
 
             />
         </NavLeft>
