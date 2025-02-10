@@ -144,19 +144,13 @@ export default class RenderMonitor {
         this.notifyAll("stats", statsStr)
     }
 
-    storeStreamStart()
+    setStreamMode(mode:number)
     {
         const display=this.renderer.getPrimaryDisplay() as DisplayQOIShttp
-        display.storeStreamStart()
+        display.setStreamMode(mode)
 
 
     }
 
-    storeStreamStop()
-    {
-        const display=this.renderer.getPrimaryDisplay() as DisplayQOIShttp
-        display.storeStreamStop()
-
-    }
 }
 

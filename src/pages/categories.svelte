@@ -14,11 +14,10 @@
     } from "framework7-svelte"
 
 
-    import {svelteAnimations, svelteSelectedTitle, svelteStats} from "../js/web/svelteStore.js"
+    import {svelteAnimations, svelteSelectedTitle, svelteStats, svelteStreamMode} from "../js/web/svelteStore.js"
     import {runnerBrowser} from "../js/web/RunnerBrowser.js"
     import {onMount} from "svelte"
     import AnimationListUI from "@/components/AnimationListUI.svelte"
-    import {svelteStoring} from "@/js/web/svelteStore.js";
 
 
     onMount(() => {
@@ -37,29 +36,38 @@
         <NavLeft>
 
             <Button iconMd="material:menu"
-                    panelOpen="left"/>
 
+                    panelOpen="left"/>
 
             <Button
                     iconMd="material:settings"
                     href="/settings"
                     title="Settings"
-                    tonal
+
 
             />
             <Button
                     iconMd="material:tune"
                     href="/controls"
                     title="Controls"
-                    tonal
 
             />
             <Button
                     iconMd="material:upload"
-                    on:click={ ()=> {$svelteStoring?runnerBrowser.storeStreamStop():runnerBrowser.storeStreamStart()}}
-                    title="Upload"
-                    tonal
-                    color={$svelteStoring?'red':''}
+                    on:click={ ()=> {($svelteStreamMode===1)?runnerBrowser.setStreamMode(2):runnerBrowser.setStreamMode(1)}}
+                    title="Store to flash"
+
+                    color={($svelteStreamMode===1)?'red':''}
+                    fill={$svelteStreamMode===1}
+
+            />
+            <Button
+                    iconMd="material:loop"
+                    on:click={ ()=> {($svelteStreamMode===2)?runnerBrowser.setStreamMode(0):runnerBrowser.setStreamMode(2)}}
+                    title="Replay"
+
+                    color={($svelteStreamMode===2)?'green':''}
+                    fill={$svelteStreamMode===2}
 
             />
         </NavLeft>

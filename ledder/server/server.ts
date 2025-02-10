@@ -202,15 +202,11 @@ rpc.app.get('/update/esp32s3.bin', async (req,res)=>{
     });
 });
 
-rpc.addMethod("storeStreamStart", async (context:WsContext) => {
-    context.renderMonitor.storeStreamStart()
+rpc.addMethod("setStreamMode", async (context:WsContext, mode:number) => {
+    context.renderMonitor.setStreamMode(Number(mode))
 
 })
 
-rpc.addMethod("storeStreamStop", async (context:WsContext) => {
-    context.renderMonitor.storeStreamStop()
-
-})
 
 //Stream QOIS frames via a http get request.
 rpc.app.get('/stream/:id', async (req, resp) => {

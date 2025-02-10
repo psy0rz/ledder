@@ -7,7 +7,7 @@ import {
     svelteDisplayHeight,
     svelteDisplayZoom,
     svelteDisplayList,
-    svelteSelectedDisplayNr, svelteStats, svelteStoring
+    svelteSelectedDisplayNr, svelteStats, svelteStreamMode
 } from "./svelteStore.js"
 import {confirmPromise, info, promptPromise} from "./util.js"
 import {DisplayCanvas} from "./DisplayCanvas.js"
@@ -87,7 +87,7 @@ export class RunnerBrowser {
 
         })
 
-        rpc.addMethod( "stats", (stats)=>{
+        rpc.addMethod("stats", (stats) => {
             svelteStats.set(stats)
         })
 
@@ -155,27 +155,16 @@ export class RunnerBrowser {
 
     }
 
-    changePreviewSize(width, height)
-    {
-        console.log("change", width,height)
+    changePreviewSize(width, height) {
+        console.log("change", width, height)
         rpc.notify("changePreviewSize", width, height)
         console.log("ja")
     }
 
-    storeStreamStart()
-    {
-        rpc.notify("storeStreamStart")
-        svelteStoring.set(true)
+    setStreamMode(mode:number) {
+        rpc.notify("setStreamMode", mode)
+        svelteStreamMode.set(mode)
     }
-
-    storeStreamStop()
-    {
-        rpc.notify("storeStreamStop")
-
-        svelteStoring.set(false)
-
-    }
-
 
 }
 

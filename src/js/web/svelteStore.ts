@@ -29,5 +29,4 @@ export const svelteDisplayHeight = writable(0);
 export const svelteDisplayList=writable([])
 export const svelteSelectedDisplayNr=writable(0)
 
-export const svelteStoring=writable(false)
-
+export const svelteStreamMode=writable(0)

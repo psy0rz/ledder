@@ -4,12 +4,16 @@ import OffsetMapper from "./OffsetMapper.js"
 import {type Response} from 'express';
 
 
+const STREAM_LIVE = 0
+const STREAM_RECORD = 1
+const STREAM_REPLAY = 2
+
 export class DisplayQOIShttp extends DisplayQOIS {
 
     private response: Response
 
 
-    private setFlash: boolean
+    private streamMode: number
 
 
     constructor(mapper: OffsetMapper, maxFps = 60) {
@@ -20,7 +24,8 @@ export class DisplayQOIShttp extends DisplayQOIS {
 
         this.response = undefined
         this.ready = false
-        this.setFlash = false
+
+        this.streamMode = STREAM_LIVE
 
 
     }
@@ -39,12 +44,17 @@ export class DisplayQOIShttp extends DisplayQOIS {
 
 
         try {
-            if ( this.response.writable) {
+            if (this.streamMode !== STREAM_REPLAY) {
+                if (this.response.writable) {
 
-                this.ready = this.response.write(abuffer, () => {
-                    this.ready = true
-                })
-                return abuffer.length
+                    this.ready = this.response.write(abuffer, () => {
+                        this.ready = true
+                    })
+                    return abuffer.length
+                }
+            } else {
+
+                this.ready = false;
             }
         } catch (e) {
             console.error(e)
@@ -60,7 +70,7 @@ export class DisplayQOIShttp extends DisplayQOIS {
         if (this.response !== undefined) {
             this.response.socket.destroy()
             this.response = undefined
-            this.ready=false
+            this.ready = false
         }
 
     }
@@ -73,36 +83,31 @@ export class DisplayQOIShttp extends DisplayQOIS {
         this.response = response
         this.ready = true
 
+
         response.on('close', () => {
             //we're still the responder?
             if (this.response === response) {
                 this.ready = false
                 this.response = undefined
             }
+
         })
 
         response.set('Content-Type', 'application/octet-stream'); // or whatever MIME type suits your data
         response.set('Content-Length', '100000000');
-        response.set('Flash', this.setFlash ? '1' : '0')
+        response.set('Mode', this.streamMode.toString())
 
-        this.setFlash = false
 
+        response.flushHeaders()
 
     }
 
 
-    storeStreamStart() {
-        this.setFlash = true
-        //make it reconnect
+    setStreamMode(mode: number) {
+        this.streamMode = mode
         this.abortConnection()
 
     }
 
-
-
-    storeStreamStop() {
-        this.setFlash = false
-        this.abortConnection()
-    }
 
 }
