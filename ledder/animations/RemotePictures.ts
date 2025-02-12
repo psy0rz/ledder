@@ -1,9 +1,9 @@
-import PixelBox from "../../PixelBox.js"
+import PixelBox from "../PixelBox.js"
 import sharp, {type Sharp} from "sharp"
-import drawAnimatedImage from "../../draw/DrawAnimatedImage.js"
-import Scheduler from "../../Scheduler.js"
-import ControlGroup from "../../ControlGroup.js"
-import Animator from "../../Animator.js"
+import drawAnimatedImage from "../draw/DrawAnimatedImage.js"
+import Scheduler from "../Scheduler.js"
+import ControlGroup from "../ControlGroup.js"
+import Animator from "../Animator.js"
 import fetch from "node-fetch"
 
 export default class RemotePicture extends Animator {
