@@ -3,7 +3,7 @@
  "description": "",
  "values": {
   "FPS": {
-   "value": 17
+   "value": 60
   }
  }
 }

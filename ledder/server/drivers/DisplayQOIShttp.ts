@@ -46,7 +46,7 @@ export class DisplayQOIShttp extends DisplayQOIS {
 
         try {
             if (this.streamMode !== STREAM_REPLAY) {
-                if (this.response.writable) {
+                if (this.response!==undefined && this.response.writable) {
 
                     this.ready = this.response.write(abuffer, () => {
                         this.ready = true
