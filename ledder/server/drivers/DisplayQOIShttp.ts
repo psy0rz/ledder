@@ -25,7 +25,8 @@ export class DisplayQOIShttp extends DisplayQOIS {
         this.response = undefined
         this.ready = false
 
-        this.streamMode = STREAM_LIVE
+
+        this.streamMode = STREAM_REPLAY
 
 
     }
@@ -109,5 +110,9 @@ export class DisplayQOIShttp extends DisplayQOIS {
 
     }
 
+
+    getStreamMode() {
+        return this.streamMode
+    }
 
 }

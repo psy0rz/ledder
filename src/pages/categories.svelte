@@ -64,7 +64,7 @@
             <Button
                     iconMd="material:loop"
                     on:click={ ()=> {($svelteStreamMode===2)?runnerBrowser.setStreamMode(0):runnerBrowser.setStreamMode(2)}}
-                    title="Replay"
+                    title="Replay from flash (no preview!)"
 
                     color={($svelteStreamMode===2)?'green':''}
                     fill={$svelteStreamMode===2}

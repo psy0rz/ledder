@@ -91,8 +91,15 @@ export class RunnerBrowser {
             svelteStats.set(stats)
         })
 
+        rpc.addMethod("streamMode", (mode) => {
+            svelteStreamMode.set(mode)
+        })
+
+
         //start monitoring the same display as last time
         await this.startMonitoring(localStorage.getItem('selectedDisplayNr'))
+
+
 
 
     }

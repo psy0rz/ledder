@@ -45,6 +45,22 @@ export default class RenderMonitor {
         wsContext.notify("resetControls")
         wsContext.notify("setControls", this.renderer.animationManager.controlGroup)
 
+
+        if (this.renderer.getPrimaryDisplay() instanceof DisplayQOIShttp) {
+
+            const display = this.renderer.getPrimaryDisplay() as DisplayQOIShttp
+
+            wsContext.notify("streamMode", display.getStreamMode())
+        }
+        else
+        {
+            //display only supports live streaming, not store/replay
+            wsContext.notify("streamMode", 0)
+
+
+        }
+
+
     }
 
     async removeWsContext(wsContext: WsContext) {
@@ -66,8 +82,8 @@ export default class RenderMonitor {
 
 
         //change size first!
-        this.renderer.box.xMax = width-1
-        this.renderer.box.yMax = height-1
+        this.renderer.box.xMax = width - 1
+        this.renderer.box.yMax = height - 1
 
         //remove all wscontexts
         let removedContexts = new Set<WsContext>()
@@ -137,17 +153,16 @@ export default class RenderMonitor {
         }
     }
 
-    sendStats()
-    {
-        const statsStr=`${this.renderer.description} [${this.renderer.getStats()}]`
+    sendStats() {
+        const statsStr = `${this.renderer.description} [${this.renderer.getStats()}]`
         console.log(statsStr)
         this.notifyAll("stats", statsStr)
     }
 
-    setStreamMode(mode:number)
-    {
-        const display=this.renderer.getPrimaryDisplay() as DisplayQOIShttp
+    setStreamMode(mode: number) {
+        const display = this.renderer.getPrimaryDisplay() as DisplayQOIShttp
         display.setStreamMode(mode)
+        this.notifyAll("streamMode", display.getStreamMode())
 
 
     }

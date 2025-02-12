@@ -20,11 +20,16 @@ export default class Hackerhotel extends Animator {
 
         //load image and determine colors
         const image = await sharp('images/hackerhotel.png')
+
+
+
+
         const imageLetterColor=new Color(255, 216, 0)
         const imageTraceStartColor=new Color(128,128,128)
         const imageTraceColor=new Color(38,127,0)
 
         const logo = await drawImage(0, 0, image)
+        logo.center(box)
 
         //get letters:
         const letterColorControl=controls.color('Text color', imageLetterColor.r, imageLetterColor.g, imageLetterColor.b)
