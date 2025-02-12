@@ -43,6 +43,9 @@ export default abstract class Display {
     //The renderer will pause until its ready. (only for primary displays)
     ready: boolean
 
+    id: string
+    description: string
+
 
     protected constructor(width, height) {
 
@@ -55,6 +58,9 @@ export default abstract class Display {
         this.yMax = height - 1
 
         this.ready=true
+
+        this.id=""
+        this.description=""
 
     }
 

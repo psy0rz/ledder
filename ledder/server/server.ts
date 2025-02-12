@@ -18,8 +18,6 @@ const gammaMapper = new GammaMapper(settingsControl.group("Display settings"))
 
 
 let renderMonitors: Array<RenderMonitor> = []
-let streamingRenderers: Array<RenderRealtime> = []
-let httpDisplays: Array<DisplayQOIShttp> = []
 
 //create preview renderer
 let renderer = new RenderRealtime(`Preview`)
@@ -33,32 +31,17 @@ for (const displayNr in config.displayList) {
     //FIXME, should be one confirable per display instead of global.
     display.gammaMapper = gammaMapper
 
-    // const monitoringDisplay = new DisplayWebsocket(display.width, display.height)
-    // monitoringDisplays.push(monitoringDisplay)
 
-    let renderer = new RenderRealtime(`Display ${displayNr}`)
+    let desc = ""
+    if (display.id)
+        desc = `${display.description} (${display.id})`
+    else
+        `Display ${displayNr} ${display.description}`
+
+    let renderer = new RenderRealtime(desc)
     await renderer.addDisplay(display)
     await renderer.animationManager.select(config.animation, false)
     renderMonitors.push(new RenderMonitor(renderer))
-
-}
-
-//create actual streaming displays
-for (const displayNr in config.streamList) {
-    const display = config.streamList[displayNr]
-    //FIXME, should be one confirable per display instead of global.
-    display.gammaMapper = gammaMapper
-
-    // const monitoringDisplay = new DisplayWebsocket(display.width, display.height)
-    // monitoringDisplays.push(monitoringDisplay)
-
-    let renderer = new RenderRealtime(`Stream ${displayNr}`)
-    await renderer.addDisplay(display)
-    httpDisplays.push(display)
-    await renderer.animationManager.select(config.animation, false)
-    const monitor = new RenderMonitor(renderer)
-    renderMonitors.push(monitor)
-    streamingRenderers.push(renderer)
 
 }
 
@@ -169,10 +152,9 @@ rpc.addMethod("changePreviewSize", async (context: WsContext, width, height) => 
 })
 
 
-rpc.app.get('/update/esp32s3.bin', async (req,res)=>{
-    const logPrefix=`Firmware update ${req.ip}: `
-    console.log(logPrefix+"starting")
-
+rpc.app.get('/update/esp32s3.bin', async (req, res) => {
+    const logPrefix = `Firmware update ${req.ip}: `
+    console.log(logPrefix + "starting")
 
 
     const filePath = "/home/psy/ledstream/build-esp32s3/ledstream.bin"
@@ -202,7 +184,7 @@ rpc.app.get('/update/esp32s3.bin', async (req,res)=>{
     });
 });
 
-rpc.addMethod("setStreamMode", async (context:WsContext, mode:number) => {
+rpc.addMethod("setStreamMode", async (context: WsContext, mode: number) => {
     context.renderMonitor.setStreamMode(Number(mode))
 
 })
@@ -218,20 +200,19 @@ rpc.app.get('/stream/:id', async (req, resp) => {
     // WIFI SLP IRAM opt aan
     // WIFI CSI aan                                    360kbs+
 
-    console.log(`Display http connect: ${req.ip}`)
+    console.log(`Display http connect: ${req.params.id} (${req.ip})`)
 
 
-
-    const id = 0
-    const renderer = streamingRenderers[id]
-    const display = httpDisplays[id]
-
-    if (renderer === undefined || display === undefined) {
-        resp.sendStatus(500)
-        throw ("Display not found")
+    for (let renderMonitor of renderMonitors) {
+        const display = renderMonitor.renderer.getPrimaryDisplay() as DisplayQOIShttp
+        if (display !== undefined && display.id == req.params.id) {
+            display.setResponseHandler(resp)
+            return
+        }
     }
 
-    display.setResponseHandler(resp)
+    resp.sendStatus(500)
+    console.error(`No display found with ID: ${(req.params.id)}`)
 
 
 })
