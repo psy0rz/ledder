@@ -3,7 +3,7 @@
  "description": "",
  "values": {
   "Image URL": {
-   "text": ""
+   "text": "https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExYnA4c2RxY3pnaGcyemxmMXBhcW9mdWIxb3ZhMzcwZ3lyMHdnc3NtMCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/VRKheDy4DkBMrQm66p/giphy.gif"
   },
   "Fractal interval": {
    "value": 14
@@ -49,7 +49,7 @@
     "value": 0
    },
    "delay multiplier": {
-    "value": 1
+    "value": 0.7000000000000001
    }
   },
   "fit": {

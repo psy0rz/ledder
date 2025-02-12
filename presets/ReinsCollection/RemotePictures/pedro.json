@@ -3,7 +3,7 @@
  "description": "",
  "values": {
   "Image URL": {
-   "text": ""
+   "text": "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExOG4zbHJmanF3OGEyZXg0dnZoNzJldTAxOHFqcjUyazNqMDN2eXNlcSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/WRuBiZKB6xgsS9DrFA/giphy.gif"
   },
   "Fractal interval": {
    "value": 14
@@ -53,7 +53,7 @@
    }
   },
   "fit": {
-   "selected": "cover"
+   "selected": "fill"
   }
  }
 }

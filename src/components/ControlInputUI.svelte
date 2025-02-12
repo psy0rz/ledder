@@ -10,6 +10,7 @@
 <Input
     type="textarea"
     value={control.text}
+    resizable=true
     on:input={(e) => {
         control.text = e.detail[0].target.value;
 
