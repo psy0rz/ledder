@@ -103,6 +103,11 @@ export class DisplayQOIShttp extends DisplayQOIS {
 
     }
 
+    isOnline()
+    {
+        return this.response!==undefined
+    }
+
 
     setStreamMode(mode: number) {
         this.streamMode = mode

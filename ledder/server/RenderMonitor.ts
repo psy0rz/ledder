@@ -131,7 +131,7 @@ export default class RenderMonitor {
     }
 
 
-    async save(presetName: string) {
+    async savePreset(presetName: string) {
         await this.renderer.animationManager.save(presetName)
 
         //store, render preview and restore list (since preview has new timestamp now)
@@ -141,7 +141,7 @@ export default class RenderMonitor {
 
     }
 
-    async delete() {
+    async deletePreset() {
         const presetName = this.renderer.animationManager.presetName
         await this.renderer.animationManager.delete()
         await presetStore.storeAnimationPresetList()

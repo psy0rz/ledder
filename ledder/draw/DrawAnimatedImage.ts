@@ -74,10 +74,8 @@ export class ImgAnimationFrames
 
 export default async function drawAnimatedImage(box:PixelBox,xOffset: number, yOffset: number, image: sharp.Sharp): Promise<ImgAnimationFrames> {
 
-    const pl=new PixelList()
     const {data, info} = await image.raw().toBuffer({resolveWithObject: true})
     const colorCache=new ColorCache()
-    const frameCount=Math.trunc(info.height/box.height())
     const canvasHeight=info.height
     const imageHeight=box.height()
     const imageFrameCount=Math.round(canvasHeight/imageHeight)

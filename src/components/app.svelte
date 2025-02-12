@@ -44,13 +44,15 @@
                 <ListItem
                         checked={ $svelteSelectedDisplayNr===displayNr }
                         radio
-                        title={display}
+                        title={display.description}
                         on:click={()=>{
                             runnerBrowser.startMonitoring(displayNr)
                             f7.panel.close("left")
                         }}
-                />
+                >
+                                        <i slot="media" class="icon material-icons icon-wifi-off" ></i>
 
+                </ListItem>
             {/each}
         </List>
 

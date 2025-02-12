@@ -77,7 +77,6 @@ export class RunnerBrowser {
 
         rpc.addMethod("displayList", (list) => {
             svelteDisplayList.set(list)
-            console.log(list)
         })
 
 

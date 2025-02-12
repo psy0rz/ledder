@@ -60,16 +60,25 @@ rpc.addMethod("refresh", async (context: WsContext) => {
     context.notify("animationList", presetStore.animationPresetList)
 
 
-    let displayList = []
+    let displays = []
     for (let renderMonitor of renderMonitors) {
-        displayList.push(renderMonitor.renderer.description)
+
+        let online=true;
+        const display=renderMonitor.renderer.getPrimaryDisplay() as DisplayQOIShttp
+        if (display!=undefined && display.isOnline !=undefined)
+            online=display.isOnline()
+
+        displays.push({
+            description: renderMonitor.renderer.description,
+            online: online,
+        })
     }
 
-    context.notify("displayList", displayList)
+    context.notify("displayList", displays)
 })
 
 rpc.addMethod("save", async (context: WsContext, presetName) => {
-    await context.renderMonitor.save(presetName)
+    await context.renderMonitor.savePreset(presetName)
 
     //inform everyone of the new list and preview
     for (let renderMonitor of renderMonitors) {
@@ -80,7 +89,7 @@ rpc.addMethod("save", async (context: WsContext, presetName) => {
 
 rpc.addMethod("delete", async (context: WsContext) => {
 
-    await context.renderMonitor.delete()
+    await context.renderMonitor.deletePreset()
 
     //inform everyone of the new list
     for (let renderMonitor of renderMonitors) {

@@ -9,8 +9,6 @@ import PublicPromise from "./PublicPromise.js"
 import {clearTimeout} from "timers"
 
 
-
-
 export default class Scheduler {
 
     private frameNr: number
@@ -28,12 +26,11 @@ export default class Scheduler {
         this.childScheduler = undefined
         this.intervals = new Set()
         this.onCleanupCallbacks = []
-        this.stopCount=0
-        this.__resumePromise=new PublicPromise<boolean>()
+        this.stopCount = 0
+        this.__resumePromise = new PublicPromise<boolean>()
         this.__clear()
 
     }
-
 
 
     //clear all intervals and detach childs
@@ -57,7 +54,7 @@ export default class Scheduler {
             this.childScheduler.__clear()
         this.childScheduler = undefined
 
-        this.stopCount=0
+        this.stopCount = 0
 
 
     }
@@ -78,12 +75,14 @@ export default class Scheduler {
     //called by renderloop on every frame.
     //Dont call this directly!
     //Returns time in uS until next frame should be rendered.
-    public async __step(realtime:boolean) {
+    public async __step(realtime: boolean) {
 
-        if (!realtime && this.stopCount!==0) {
-            let timeout=setTimeout( ()=>{
-                console.warn("Warning: scheduler is paused for a long time, did you forget to call scheduler.resume() ?")
-            },1000)
+        if (!realtime && this.stopCount !== 0) {
+            let timeout = setTimeout(() => {
+                console.warn("Warning: scheduler is paused for a long time, resuming forcefully.")
+                this.__resumePromise.resolve(false)
+                this.stopCount=0;
+            }, 5000)
             await this.__resumePromise.promise
             clearTimeout(timeout)
         }
@@ -133,7 +132,6 @@ export default class Scheduler {
     //
     //     return true
     // }
-
 
 
     /*******************************************************
@@ -212,11 +210,10 @@ export default class Scheduler {
     /** Temporary stop the scheduler. Use when you do external async stuff. (like loading a file)
      * Can be called multiple times. Resume has to called the same amount of times.
      */
-    public stop()
-    {
+    public stop() {
         //start with fresh promise
-        if (this.stopCount===0)
-            this.__resumePromise=new PublicPromise<boolean>()
+        if (this.stopCount === 0)
+            this.__resumePromise = new PublicPromise<boolean>()
 
         this.stopCount++
         // console.log("STOP", this.stopCount)
@@ -225,16 +222,13 @@ export default class Scheduler {
     /** Resume the scheduler
      *
      */
-    public resume()
-    {
-        if (this.stopCount>0) {
+    public resume() {
+        if (this.stopCount > 0) {
             this.stopCount--
-        // console.log("RESUME", this.stopCount)
-            if (this.stopCount===0)
+            // console.log("RESUME", this.stopCount)
+            if (this.stopCount === 0)
                 this.__resumePromise.resolve(true)
-        }
-        else
-        {
+        } else {
             console.warn("Called Scheduler.resume() too many times!")
         }
     }
