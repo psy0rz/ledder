@@ -63,10 +63,10 @@ rpc.addMethod("refresh", async (context: WsContext) => {
     let displays = []
     for (let renderMonitor of renderMonitors) {
 
-        let online=true;
-        const display=renderMonitor.renderer.getPrimaryDisplay() as DisplayQOIShttp
-        if (display!=undefined && display.isOnline !=undefined)
-            online=display.isOnline()
+        let online = true;
+        const display = renderMonitor.renderer.getPrimaryDisplay() as DisplayQOIShttp
+        if (display != undefined && display.isOnline != undefined)
+            online = display.isOnline()
 
         displays.push({
             description: renderMonitor.renderer.description,
@@ -162,35 +162,49 @@ rpc.addMethod("changePreviewSize", async (context: WsContext, width, height) => 
 
 
 rpc.app.get('/update/esp32s3.bin', async (req, res) => {
+
     const logPrefix = `Firmware update ${req.ip}: `
-    console.log(logPrefix + "starting")
+    if (!config.firmwareFile) {
+        console.log(logPrefix + "(no firmwareFile conifgured)")
+
+    } else {
+        console.log(logPrefix + "check")
 
 
-    const filePath = "/home/psy/ledstream/build-esp32s3/ledstream.bin"
-    const stat = fs.statSync(filePath); // Get file size
-    const totalSize = stat.size;
-    let transmittedBytes = 0;
+        const stat = fs.statSync(config.firmwareFile); // Get file size
+        const totalSize = stat.size;
+        let transmittedBytes = 0;
 
-    res.setHeader('Content-Length', totalSize);
-    res.setHeader('Content-Disposition', 'attachment; filename="firmware.bin"');
+        res.setHeader('Content-Length', totalSize);
+        res.setHeader('Content-Disposition', 'attachment; filename="firmware.bin"');
 
-    const readStream = fs.createReadStream(filePath);
+        const readStream = fs.createReadStream(config.firmwareFile);
 
-    readStream.on('data', (chunk) => {
-        transmittedBytes += chunk.length;
-        console.log(`${logPrefix}Progress: ${((transmittedBytes / totalSize) * 100).toFixed(0)}%`);
-    });
+        let blocks = 0
+        readStream.on('data', (chunk) => {
+            blocks = blocks + 1
+            transmittedBytes += chunk.length;
+            if (blocks > 2)
+                console.log(`${logPrefix}Progress: ${((transmittedBytes / totalSize) * 100).toFixed(0)}%`);
+        });
 
-    readStream.pipe(res);
+        req.on("error", () => {
+            readStream.close()
+        });
 
-    readStream.on('end', () => {
-        console.log(`${logPrefix}File transfer complete.`);
-    });
 
-    readStream.on('error', (err) => {
-        console.error(`${logPrefix}File streaming error:`, err);
-        res.sendStatus(500);
-    });
+        readStream.pipe(res);
+
+        readStream.on('end', () => {
+            console.log(`${logPrefix}Update complete, rebooting.`);
+        });
+
+        readStream.on('error', (err) => {
+            console.error(`${logPrefix}File streaming error:`, err);
+            res.sendStatus(500);
+        });
+    }
+
 });
 
 rpc.addMethod("setStreamMode", async (context: WsContext, mode: number) => {
