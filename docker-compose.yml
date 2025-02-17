@@ -5,13 +5,15 @@ services:
   stop_grace_period: 0s
   build:
    context: .
+   dockerfile: Dockerfile-local
+
 
   ports:
-   - 3000:3000
+   - 40000:3000
   environment:
    - NODE_ENV=production
-  # volumes:
-  #  - ./:/app
+  volumes:
+   - ./:/app
   # command: npm run debug
   #volumes:
    #- ./displayconf.js:/app/displayconf.js

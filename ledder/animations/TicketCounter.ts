@@ -14,6 +14,10 @@ import {colorBlack, colorRed} from "../Colors.js"
 export default class Template extends Animator {
 
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) {
+            const fpsControl = controls.value("FPS", 60, 1, 120, 1)
+            fpsControl.onChange(() => {
+                scheduler.setFps(fpsControl.value)
+            })
 
         const mqttHost = controls.input('MQTT host', 'mqtt://mqtt.why2025.org')
         const mqttTopic = controls.input('MQTT topic', 'why2025/ticketshop/quotas/Event Visitors/paid_orders')
@@ -21,7 +25,10 @@ export default class Template extends Animator {
 
         const xPad=8
         const marquee=new Marquee()
-        const counterX=box.xMax-(digitCount.value*7)-5
+        const counterX=box.width()/2 - (7*2)
+
+
+
 
         let marqueeBox=new PixelBox(box)
         box.add(marqueeBox)
@@ -29,11 +36,11 @@ export default class Template extends Animator {
         marquee.run(marqueeBox, scheduler, controls.group("Marquee"))
 
 
-        box.add(new DrawBox(counterX-3, 0, box.xMax-counterX+xPad, box.height(), colorBlack ))
+        // box.add(new DrawBox(counterX-3, 0, box.xMax-counterX+xPad, box.height(), colorBlack ))
 
 
         let counter = new DrawCounter()
-        counter.run(scheduler, controls,counterX , 0, 4, 0.001)
+        counter.run(scheduler, controls,counterX , (box.height()/2)-12, 4, 0.001)
         box.add(counter)
 
         const mqttClient = mqtt.connect(mqttHost.text)

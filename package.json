@@ -50,7 +50,6 @@
 
   ],
 
-
   "dependencies": {
 
     "@types/node": "^22.10.5",
@@ -62,6 +61,8 @@
     "express": "^4.21.2",
 
     "express-ws": "^5.0.2",
+
+    "fast-xml-parser": "^4.5.1",
 
     "framework7": "^8.3.4",
 
