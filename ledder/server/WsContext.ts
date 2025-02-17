@@ -1,6 +1,6 @@
 //context of a websocket connection
 import {JSONRPCServerAndClient} from "json-rpc-2.0"
-import type RenderMonitor from "./RenderMonitor.js";
+import type RenderControl from "./RenderControl.js";
 
 
 //Per websocket context, used to generate the monitoring display that is shown in the browser.
@@ -13,7 +13,7 @@ export class WsContext {
     id: number
     remoteAddress: string
 
-    renderMonitor: RenderMonitor
+    renderMonitor: RenderControl
 
     // statsInterval: any
     // started: boolean

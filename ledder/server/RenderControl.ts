@@ -5,9 +5,9 @@ import {previewStore} from "./PreviewStore.js";
 import {presetStore} from "./PresetStore.js";
 import {DisplayQOIShttp} from "./drivers/DisplayQOIShttp.js";
 
-//this is used to monitor an active renderer with a browser client.
+//this is used to monitor and control an active renderer with a browser client.
 //event broadcasting to all clients is done here as well
-export default class RenderMonitor {
+export default class RenderControl {
     wsContexts: Set<WsContext>
     renderer: Render
     monitoringDisplay: DisplayWebsocket

@@ -5,7 +5,7 @@ import GammaMapper from "./drivers/GammaMapper.js"
 import {presetStore} from "./PresetStore.js"
 import {DisplayQOIShttp} from "./drivers/DisplayQOIShttp.js"
 import {config, load} from "./config.js"
-import RenderMonitor from "./RenderMonitor.js";
+import RenderControl from "./RenderControl.js";
 import type {WsContext} from "./WsContext.js";
 import * as fs from "node:fs";
 
@@ -17,13 +17,13 @@ await load()
 const gammaMapper = new GammaMapper(settingsControl.group("Display settings"))
 
 
-let renderMonitors: Array<RenderMonitor> = []
+let renderControllers: Array<RenderControl> = []
 
 //create preview renderer
 let renderer = new RenderRealtime(`Preview`)
 await renderer.animationManager.select(config.animation, false)
-const previewRenderMonitor = new RenderMonitor(renderer)
-renderMonitors.push(previewRenderMonitor)
+const previewRenderControl = new RenderControl(renderer)
+renderControllers.push(previewRenderControl)
 
 //create actual realtime displays
 for (const displayNr in config.displayList) {
@@ -41,13 +41,13 @@ for (const displayNr in config.displayList) {
     let renderer = new RenderRealtime(desc)
     await renderer.addDisplay(display)
     await renderer.animationManager.select(config.animation, false)
-    renderMonitors.push(new RenderMonitor(renderer))
+    renderControllers.push(new RenderControl(renderer))
 
 }
 
 
 setInterval(() => {
-    for (let renderMonitor of renderMonitors) {
+    for (let renderMonitor of renderControllers) {
         renderMonitor.sendStats()
     }
 }, 1000)
@@ -61,7 +61,7 @@ rpc.addMethod("refresh", async (context: WsContext) => {
 
 
     let displays = []
-    for (let renderMonitor of renderMonitors) {
+    for (let renderMonitor of renderControllers) {
 
         let online = true;
         const display = renderMonitor.renderer.getPrimaryDisplay() as DisplayQOIShttp
@@ -81,7 +81,7 @@ rpc.addMethod("save", async (context: WsContext, presetName) => {
     await context.renderMonitor.savePreset(presetName)
 
     //inform everyone of the new list and preview
-    for (let renderMonitor of renderMonitors) {
+    for (let renderMonitor of renderControllers) {
         renderMonitor.notifyAll("animationList", presetStore.animationPresetList)
     }
 
@@ -92,7 +92,7 @@ rpc.addMethod("delete", async (context: WsContext) => {
     await context.renderMonitor.deletePreset()
 
     //inform everyone of the new list
-    for (let renderMonitor of renderMonitors) {
+    for (let renderMonitor of renderControllers) {
         renderMonitor.notifyAll("animationList", presetStore.animationPresetList)
     }
 
@@ -101,11 +101,11 @@ rpc.addMethod("delete", async (context: WsContext) => {
 
 rpc.addMethod("startMonitoring", async (context: WsContext, rendererId) => {
 
-    if (renderMonitors[rendererId] === undefined)
+    if (renderControllers[rendererId] === undefined)
         rendererId = 0
 
     context.notify("monitoring", rendererId)
-    await renderMonitors[rendererId].addWsContext(context)
+    await renderControllers[rendererId].addWsContext(context)
 
 
 })
@@ -151,11 +151,11 @@ rpc.addMethod("updateSetting", async (context, path, values) => {
 
 rpc.addMethod("changePreviewSize", async (context: WsContext, width, height) => {
 
-    await previewRenderMonitor.changePreviewSize(width, height)
+    await previewRenderControl.changePreviewSize(width, height)
 
     //also switch the context to the preview display, if it wasnt already
     context.notify("monitoring", 0)
-    previewRenderMonitor.addWsContext(context)
+    previewRenderControl.addWsContext(context)
 
 
 })
@@ -216,17 +216,9 @@ rpc.addMethod("setStreamMode", async (context: WsContext, mode: number) => {
 //Stream QOIS frames via a http get request.
 rpc.app.get('/stream/:id', async (req, resp) => {
 
-    // esp5.4, wifi core 1, contentlength speicifeed: 60-70kbs
-    //  esp4.4.8,   "                                :200-400kbs!
-
-    // AMPDU van 6 naar 12
-    // WIFI SLP IRAM opt aan
-    // WIFI CSI aan                                    360kbs+
-
     console.log(`Display http connect: ${req.params.id} (${req.ip})`)
 
-
-    for (let renderMonitor of renderMonitors) {
+    for (let renderMonitor of renderControllers) {
         const display = renderMonitor.renderer.getPrimaryDisplay() as DisplayQOIShttp
         if (display !== undefined && display.id == req.params.id) {
             display.setResponseHandler(resp)
