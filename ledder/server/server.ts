@@ -61,15 +61,15 @@ rpc.addMethod("refresh", async (context: WsContext) => {
 
 
     let displays = []
-    for (let renderMonitor of renderControllers) {
+    for (let renderControl of renderControllers) {
 
         let online = true;
-        const display = renderMonitor.renderer.getPrimaryDisplay() as DisplayQOIShttp
+        const display = renderControl.getPrimaryDisplay() as DisplayQOIShttp
         if (display != undefined && display.isOnline != undefined)
             online = display.isOnline()
 
         displays.push({
-            description: renderMonitor.renderer.description,
+            description:renderControl.getDescription(),
             online: online,
         })
     }
@@ -120,7 +120,7 @@ rpc.addMethod("stopMonitoring", async (context: WsContext) => {
 rpc.addMethod("select", async (context: WsContext, animationAndPresetPath) => {
 
 
-    await context.renderMonitor.renderer.animationManager.select(animationAndPresetPath, false)
+    await context.renderMonitor.select(animationAndPresetPath, false)
 
     // }
 })
@@ -219,7 +219,7 @@ rpc.app.get('/stream/:id', async (req, resp) => {
     console.log(`Display http connect: ${req.params.id} (${req.ip})`)
 
     for (let renderMonitor of renderControllers) {
-        const display = renderMonitor.renderer.getPrimaryDisplay() as DisplayQOIShttp
+        const display = renderMonitor.getPrimaryDisplay() as DisplayQOIShttp
         if (display !== undefined && display.id == req.params.id) {
             display.setResponseHandler(resp)
             return

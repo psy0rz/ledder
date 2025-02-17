@@ -8,9 +8,9 @@ import {DisplayQOIShttp} from "./drivers/DisplayQOIShttp.js";
 //this is used to monitor and control an active renderer with a browser client.
 //event broadcasting to all clients is done here as well
 export default class RenderControl {
-    wsContexts: Set<WsContext>
-    renderer: Render
-    monitoringDisplay: DisplayWebsocket
+    private wsContexts: Set<WsContext>
+    private renderer: Render
+    private monitoringDisplay: DisplayWebsocket
 
     constructor(renderer: Render) {
         this.renderer = renderer
@@ -167,5 +167,17 @@ export default class RenderControl {
 
     }
 
+    getPrimaryDisplay() {
+        return this.renderer.getPrimaryDisplay()
+    }
+
+    async select(animationAndPresetPath:string, keepControls:boolean) {
+        return this.renderer.animationManager.select(animationAndPresetPath, keepControls)
+
+    }
+
+    getDescription() {
+        return this.renderer.description
+    }
 }
 
