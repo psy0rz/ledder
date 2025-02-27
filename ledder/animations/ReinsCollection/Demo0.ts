@@ -54,6 +54,7 @@ export default class Eighties extends Animator {
         return n
     }
 
+    
 
     drawBackground(box:PixelBox, xOffset:number, yOffset:number,horizonHf:number,animationHeight)
     { 
@@ -70,6 +71,8 @@ export default class Eighties extends Animator {
 
           //stars
           pl.add(this.getStars(box,xOffset,horizonH/3));
+
+          pl.add(this.getGalaxy(box,xOffset,yOffset,horizonH))
 
 
         //create sky
@@ -93,9 +96,12 @@ export default class Eighties extends Animator {
         let nyOffset=yOffset%(earthVh);
 
       
+
+      
         //create earth
 
          //draw buildings
+         pl.add(this.getSkyline(0,horizonH))
          pl.add(this.getPolder(box,xOffset,horizonH));
         
        
@@ -112,6 +118,8 @@ export default class Eighties extends Animator {
                 pl.add(new DrawLine(earthVline-nxOffset,horizonH,transX-nxOffset,box.height(),gridColorFar,gridColorClose));
             }
 
+           
+
        
         return pl;
 
@@ -120,7 +128,7 @@ export default class Eighties extends Animator {
     getSun(box:PixelBox,x,horizonY)
     {
         let pl=new PixelList();
-        let radius=20+(Math.sin(horizonY/10)*10);
+        let radius=(box.height()*0.8)
         let cx=box.width()/2;
         let cy=horizonY;
     
@@ -134,6 +142,80 @@ export default class Eighties extends Animator {
             }
         }
         return pl;
+    }
+
+    getGalaxy(box:PixelBox,x,y,horizonY)
+    {
+      
+        let pl=new PixelList();
+        let radius=(box.width()*0.5)
+        let cx=(box.width()/2);
+        let cy=(horizonY*0.8)-(y%box.height());
+        for (let p=0;p<10;p++)
+        {
+                let planetRadius=12+(Math.sin(p/100)*6)
+                let planetDistance=Math.abs(Math.cos(p)*(radius/2))+(radius/2)
+                let planetX=Math.sin((x/20)+(p*30))*planetDistance+(box.width()/2)
+                let planetY=Math.sin((x/20+30)+(p*30))*planetDistance+(box.height()/2)
+                let planetXc=Math.sin((x/20)+(p*30))*(planetDistance/p)+(box.width()/2)
+                let planetYc=Math.sin((x/20+20)+(p*30))*(planetDistance/p)+(box.height()/2)
+                let planetXr=Math.sin((x/20)+(p*30))*(planetDistance+p)+(box.width()/2)
+                let planetYr=Math.sin((x/20+20)+(p*30))*(planetDistance+p)+(box.height()/2)
+                for (let a=0;a<10;a++)
+                {
+                    let px=(Math.sin(a)*planetRadius)+planetX
+                    let py=(Math.cos(a)*planetRadius)+planetY
+                    let pxc=(Math.sin(a)*planetRadius)+planetXc
+                    let pyc=(Math.cos(a)*planetRadius)+planetYc
+                    let pxr=(Math.sin(a)*planetRadius)+planetXr
+                    let pyr=(Math.cos(a)*planetRadius)+planetYr
+                    if (py<cy)
+                    {
+                        pl.add(new DrawLine(planetX,planetY,px,py,new Color(0,0,255,0.3),new Color(0,0,0,0.1)))
+                        pl.add(new DrawLine(box.width()-planetX,planetY,box.width()-px,py,new Color(0,0,200,0.2),new Color(0,0,0,0.1)))
+                        pl.add(new DrawLine(planetXc,planetYc,pxc,pyc,new Color(0,0,255,0.5),new Color(0,0,0,0.1)))
+                        pl.add(new DrawLine(planetXr,planetYr,pxr,pyr,new Color(0,0,255,0.5),new Color(0,0,0,0.1)))
+                    }
+                }
+        }
+        return pl;
+    }
+
+
+
+    getExplosion(box:PixelBox,x,horizonY)
+    {
+        let pl=new PixelList();
+        let radius=Math.sin(horizonY)*(horizonY/2)+(horizonY/2);
+        let cx=box.width()/2;
+        let cy=horizonY;
+    
+        for (let a=0;a<360;a++)
+        {
+            let px=(Math.sin(a)*radius)+cx
+            let py=(Math.cos(a)*radius)+cy
+            if (py<cy)
+            {
+            pl.add(new DrawLine(cx,cy,px,py,new Color(255,255,0,0.6),new Color(255,0,0,0.1)))
+            }
+        }
+        return pl;
+    }
+
+    getSkyline(x,y)
+    {
+        let pl=new PixelList();
+        pl.add(new DrawAsciiArtColor(x, y-6, `
+            ........g....ggg...g....r.......g..............5555..............g....gggg....ggggg....g.........
+            .......ggg..ggggg.ggg...g......ggg.....555.555.55r5...555.......ggg..gggggg..ggggggg..ggg........
+            .......go....gog.ggoggrggg....ggogg..555r5r55r5rr55...55r55....ggggg.gggggg...ggggg...gggg..gg...
+            .....gggog.g.go.gg.o.ggggggg.gg.o....55555gg55gg55555.55555......o.....oo.......o......o...gggg..
+            ...ggggggggggggggggggggggggg.............ggggggggggggggggggggggggggggg......gggggggggggggggggg...
+            ggggggggggggggggbbgggggggggggggggggbggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
+            gggggggggggbbbbbbbbggggggggggggggggbbbbgggggggggbbbbbgggggbgbbgggggggggbbggbggggggggbgggggggggggg
+            `));
+           
+            return pl
     }
 
     getStars(box:PixelBox,x,horizonY)
@@ -159,7 +241,7 @@ export default class Eighties extends Animator {
     {
         
         let pl=new PixelList();
-        let mountainHeight=10;
+        let mountainHeight=8;
         let mountTopColor=new Color(255,255,255,0.6);
         let mountMidColor=new Color(100,100,100,0.5)
         let mountBotColor=new Color(0,100,200,0.1);
@@ -169,16 +251,16 @@ export default class Eighties extends Animator {
             height=Math.abs(height);
 
             let midHeight=mountainHeight/2;
-            pl.add(new DrawLine(px,horizonY,px,horizonY-height,mountBotColor,mountTopColor));
+            pl.add(new DrawLine(px,horizonY-3,px,horizonY-3-height,mountBotColor,mountTopColor));
             if (height<midHeight)
             {
-                pl.add(new DrawLine(px,horizonY,px,horizonY-height,mountBotColor,mountMidColor));
+                pl.add(new DrawLine(px,horizonY-3,px,horizonY-3-height,mountBotColor,mountMidColor));
                
             }
             else
             {
-                pl.add(new DrawLine(px,horizonY,px,horizonY-midHeight,mountBotColor,mountMidColor));
-                pl.add(new DrawLine(px,horizonY-midHeight,px,horizonY-height,mountMidColor,mountTopColor));  
+                pl.add(new DrawLine(px,horizonY-3,px,horizonY-3-midHeight,mountBotColor,mountMidColor));
+                pl.add(new DrawLine(px,horizonY-3-midHeight,px,horizonY-3-height,mountMidColor,mountTopColor));  
             }
 
         }
@@ -190,7 +272,7 @@ export default class Eighties extends Animator {
     {
         
         let pl=new PixelList();
-        let mountainHeight=15;
+        let mountainHeight=30;
         let mountTopColor=new Color(0,255,0,0.7);
         let mountMidColor=new Color(0,255,255,0.6)
         let mountBotColor=new Color(0,0,255,0.5);
@@ -211,6 +293,7 @@ export default class Eighties extends Animator {
                 pl.add(new DrawLine(px,horizonY,px,horizonY+midHeight,mountBotColor,mountMidColor));
                 pl.add(new DrawLine(px,horizonY+midHeight,px,horizonY+height,mountMidColor,mountTopColor));  
             }
+            pl.add(new DrawLine(px,horizonY+height,px,horizonY*2,new Color(0,0,255,0.4),new Color(0,0,255,0.8)));
 
         }
         return pl;
@@ -218,18 +301,35 @@ export default class Eighties extends Animator {
    
 
 
-    getSpaceinvader(x,y)
+    getSpaceinvader(index,x,y)
     {
-        const invader1 =`
-        r...r
-        ry.yr
-        ..r..
-        `
+        const frames=[]
+         frames.push(new DrawAsciiArtColor(x, y, `
+        .r...r.
+        .ry.yr.
+        ...r...
+        `));
+
+        frames.push(new DrawAsciiArtColor(x, y, `
+            .......
+            rry.yrr
+            ...r...
+            `));
+
+            
+            frames.push(new DrawAsciiArtColor(x, y, `
+                .......
+                .ry.yr.
+                r..r..r
+                `));
+        
+
+       
+
 
       
-            let pl=new PixelList();
-           pl.add(new DrawAsciiArtColor(x,y, invader1))
-            return pl
+                let framenum=(index>>2)%frames.length;
+                return frames[framenum];
     }
     getGhost(index,x,y)
     {
@@ -402,11 +502,11 @@ export default class Eighties extends Animator {
                     }
                 }
             }
-            if (horizonFactor>0.5)
+            if (horizonFactor>0.2)
             {
                 pacmanX=(box.width()/2)+(Math.sin(frameNr/100)*(box.width()/2));
-                pacmanY=1;
-                sprites.add(this.getSpaceinvader(pacmanX,pacmanY));
+                pacmanY=Math.abs(box.width()/2)*horizonFactor;
+                sprites.add(this.getSpaceinvader(frameNr/8,pacmanX,pacmanY));
                 sprites.add(new Pixel(pacmanX+4,pacmanY+4+((frameNr/10)%animationHeight),new Color(255,255,255,1)))
             }
             
