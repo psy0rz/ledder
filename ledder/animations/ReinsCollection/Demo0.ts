@@ -26,9 +26,9 @@ export default class Eighties extends Animator {
     static category = "Basic"
     static title = "80s"
     static description = "retro style for why25"
-    static max_iteration=32
+   static max_iteration=32
     
-    mandelbrot(c,px:number,py:number,width:number,height:number,zoom:number) {
+    mandelbrot(c,px:number,py:number,width:number,height:number,zoom:number,max_iterations) {
 
         let REAL_SET = { start:c.cx-zoom , end:c.cx+zoom }
         let IMAGINARY_SET = { start: c.cy-zoom, end: c.cy+zoom }
@@ -50,7 +50,7 @@ export default class Eighties extends Animator {
             };
             d = Math.sqrt(Math.pow(z.x, 2) + Math.pow(z.y, 2));
             n += 1;
-        } while (d <= 2 && n < this.max_iterations);
+        } while (d <= 2 && n < max_iterations);
         return n
     }
 
