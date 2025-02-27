@@ -15,6 +15,7 @@ import DrawText from "../../draw/DrawText.js"
 import DrawLine from "../../draw/DrawLine.js"
 import Pacman from "../Components/Pacman.js"
 import DrawBox from "../../draw/DrawBox.js"
+import DrawCircle from "../../draw/DrawCircle.js"
 
 
 
@@ -101,7 +102,7 @@ export default class Eighties extends Animator {
         //create earth
 
          //draw buildings
-         pl.add(this.getSkyline(0,horizonH))
+         pl.add(this.getSkyline(box,0,horizonH))
          pl.add(this.getPolder(box,xOffset,horizonH));
         
        
@@ -159,8 +160,8 @@ export default class Eighties extends Animator {
                 let planetY=Math.sin((x/20+30)+(p*30))*planetDistance+(box.height()/2)
                 let planetXc=Math.sin((x/20)+(p*30))*(planetDistance/p)+(box.width()/2)
                 let planetYc=Math.sin((x/20+20)+(p*30))*(planetDistance/p)+(box.height()/2)
-                let planetXr=Math.sin((x/20)+(p*30))*(planetDistance+p)+(box.width()/2)
-                let planetYr=Math.sin((x/20+20)+(p*30))*(planetDistance+p)+(box.height()/2)
+                let planetXr=Math.sin((x/20)+(p*30))*(radius)+(box.width()/2)
+                let planetYr=Math.sin((x/20+20)+(p*30))*(radius)+(box.height()/2)
                 for (let a=0;a<10;a++)
                 {
                     let px=(Math.sin(a)*planetRadius)+planetX
@@ -174,7 +175,7 @@ export default class Eighties extends Animator {
                         pl.add(new DrawLine(planetX,planetY,px,py,new Color(0,0,255,0.3),new Color(0,0,0,0.1)))
                         pl.add(new DrawLine(box.width()-planetX,planetY,box.width()-px,py,new Color(0,0,200,0.2),new Color(0,0,0,0.1)))
                         pl.add(new DrawLine(planetXc,planetYc,pxc,pyc,new Color(0,0,255,0.5),new Color(0,0,0,0.1)))
-                        pl.add(new DrawLine(planetXr,planetYr,pxr,pyr,new Color(0,0,255,0.5),new Color(0,0,0,0.1)))
+                        pl.add(new DrawCircle(planetXr,planetYr,5,new Color(0,0,255,0.5)))
                     }
                 }
         }
@@ -202,17 +203,18 @@ export default class Eighties extends Animator {
         return pl;
     }
 
-    getSkyline(x,y)
+    getSkyline(box,x,y)
     {
         let pl=new PixelList();
-        pl.add(new DrawAsciiArtColor(x, y-6, `
-            ........g....ggg...g....r.......g..............5555..............g....gggg....ggggg....g.........
-            .......ggg..ggggg.ggg...g......ggg.....555.555.55r5...555.......ggg..gggggg..ggggggg..ggg........
-            .......go....gog.ggoggrggg....ggogg..555r5r55r5rr55...55r55....ggggg.gggggg...ggggg...gggg..gg...
-            .....gggog.g.go.gg.o.ggggggg.gg.o....55555gg55gg55555.55555......o.....oo.......o......o...gggg..
-            ...ggggggggggggggggggggggggg.............ggggggggggggggggggggggggggggg......gggggggggggggggggg...
-            ggggggggggggggggbbgggggggggggggggggbggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
-            gggggggggggbbbbbbbbggggggggggggggggbbbbgggggggggbbbbbgggggbgbbgggggggggbbggbggggggggbgggggggggggg
+        pl.add(new DrawAsciiArtColor(x+(box.width()/2)-4, y-7, `
+           rr.rr.rr
+  rr.rr.rr
+  .rrrrrr.
+  .rrrrrr.
+  .rrrrrr.
+  .rr00rr.
+  .rr00rr.
+  rrr00rrr
             `));
            
             return pl
