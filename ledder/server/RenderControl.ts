@@ -16,6 +16,8 @@ export default class RenderControl {
         this.renderer = renderer
         this.monitoringDisplay = undefined
         this.wsContexts = new Set()
+
+
         this.registerCallbacks()
     }
 
@@ -25,8 +27,8 @@ export default class RenderControl {
             return
 
         //already monitoring something?
-        if (wsContext.renderMonitor !== undefined) {
-            await wsContext.renderMonitor.removeWsContext(wsContext)
+        if (wsContext.renderControl !== undefined) {
+            await wsContext.renderControl.removeWsContext(wsContext)
         }
 
         //create monitoring display and add to renderer
@@ -38,7 +40,7 @@ export default class RenderControl {
 
         this.wsContexts.add(wsContext)
         this.monitoringDisplay.addWsContext(wsContext)
-        wsContext.renderMonitor = this
+        wsContext.renderControl = this
 
         //tell new client of the current animation name and controls
         wsContext.notify("selected", this.renderer.animationManager.animationName, this.renderer.animationManager.presetName)
@@ -66,7 +68,7 @@ export default class RenderControl {
     async removeWsContext(wsContext: WsContext) {
         this.wsContexts.delete(wsContext)
         this.monitoringDisplay.removeWsContext(wsContext)
-        wsContext.renderMonitor = undefined
+        wsContext.renderControl = undefined
 
         //if no one is watching this display, remove it from the renderer. (which in turn will stop if there are no displays left)
         if (this.wsContexts.size === 0) {

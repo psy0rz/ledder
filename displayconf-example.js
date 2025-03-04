@@ -1,8 +1,9 @@
 import OffsetMapper from "./ledder/server/drivers/OffsetMapper.js"
 
-//import {DisplayQOISudp} from "./ledder/server/drivers/DisplayQOISudp.js"
+import {DisplayQOISudp} from "./ledder/server/drivers/DisplayQOISudp.js"
 //import {DisplayRPI} from "./ledder/server/drivers/DisplayRPI.js"
-//import {DisplayWLED} from "./ledder/server/drivers/DisplayWLED.js"
+import {DisplayWLED} from "./ledder/server/drivers/DisplayWLED.js"
+import {DisplayQOIShttp} from "./ledder/server/drivers/DisplayQOIShttp.js";
 
 export let displayList = []
 
@@ -175,7 +176,7 @@ export let displayList = []
 // export let staticDisplayList=[ staticDisplay]
 
 
-//PIXEL FLUT
+////////////// PIXEL FLUT
 // let display=new DisplayPixelflut(50,8,'table.c3pixelflut.de', 1337, 12,10)
 // let display=new DisplayPixelflut(50,8,'wall.c3pixelflut.de', 1337, 12,10)
 
@@ -183,6 +184,16 @@ export let displayList = []
 // let display=new DisplayPixelflut(64,16,'tickerpi.lan.nurd.space', 5004)
 // let display=new DisplayPixelflutBinary(128,32,'10.208.1.48', 5004)
 // displayList.push(display)
+
+// ////////////// ledstream via http
+// let mapper = new OffsetMapper(64, 32, true)
+// let display;
+//
+// display=new DisplayQOIShttp(mapper )
+// display.id="983DAEEDA39C"
+// display.description="display 1"
+// displayList.push(display)
+
 
 
 //default animation and preset

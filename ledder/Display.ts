@@ -2,6 +2,8 @@ import PixelList from "./PixelList.js"
 import type ColorInterface from "./ColorInterface.js"
 import Pixel from "./Pixel.js"
 import GammaMapper from "./server/drivers/GammaMapper.js"
+import ControlGroup from "./ControlGroup.js";
+import type ControlInput from "./ControlInput.js";
 
 /**
  * The display renders a pixelcontainer to an actual display.
@@ -36,16 +38,16 @@ export default abstract class Display {
     yMax: number
     // private colors: Set<ColorInterface>;
 
-    //set in server.ts
-    gammaMapper: GammaMapper
 
     //indicdates the display is ready for the next frame.
     //The renderer will pause until its ready. (only for primary displays)
     ready: boolean
 
     id: string
-    description: string
 
+    public descriptionControl: ControlInput
+    public settingsControl: ControlGroup
+    protected gammaMapper: GammaMapper
 
     protected constructor(width, height) {
 
@@ -60,7 +62,11 @@ export default abstract class Display {
         this.ready=true
 
         this.id=""
-        this.description=""
+
+        this.settingsControl = new ControlGroup('Display settings')
+        this.descriptionControl = this.settingsControl.input('Description', '')
+        this.gammaMapper = new GammaMapper(this.settingsControl)
+
 
     }
 
