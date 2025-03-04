@@ -5,7 +5,7 @@
 
 
 #### builder
-FROM --platform=linux/amd64 node:22 AS builder
+FROM --platform=linux/amd64 node:23 AS builder
 
 WORKDIR /app
 
@@ -22,7 +22,7 @@ RUN npm prune --production
 
 
 ### final stage multiarch 
-FROM --platform=linux/arm64 node:22 AS ledder
+FROM node:23 AS ledder
 ENV NODE_ENV=production
 
 RUN apt update && apt install -y build-essential cmake
