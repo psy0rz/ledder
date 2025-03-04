@@ -52,6 +52,8 @@
 
   "dependencies": {
 
+    "@julusian/freetype2": "^1.2.0",
+
     "@types/node": "^22.10.5",
 
     "@types/sharp": "^0.32.0",
@@ -69,8 +71,6 @@
     "framework7-icons": "^5.0.5",
 
     "framework7-svelte": "^8.3.4",
-
-    "freetype2": "^1.0.6",
 
     "glob-promise": "^6.0.7",
 

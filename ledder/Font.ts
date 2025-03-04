@@ -1,4 +1,4 @@
-import freetype, {type FontFace, type Glyph} from "freetype2";
+import freetype, {type FontFace, type Glyph} from "@julusian/freetype2"
 
 //freetype2 wrapper, specially for low resolution display displays and pixelly fonts
 //usually these fonts have one optimum height/width setting
