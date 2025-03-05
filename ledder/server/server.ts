@@ -18,7 +18,7 @@ await load()
 let renderControllers: Array<RenderControl> = []
 
 //create preview renderer
-let renderer = new RenderRealtime(`Preview`)
+let renderer = new RenderRealtime()
 await renderer.animationManager.select(config.animation, false)
 const previewRenderControl = new RenderControl(renderer)
 renderControllers.push(previewRenderControl)
@@ -27,13 +27,7 @@ renderControllers.push(previewRenderControl)
 for (const displayNr in config.displayList) {
     const display = config.displayList[displayNr]
 
-    let desc = ""
-    if (display.id)
-        desc = `${display.description} (${display.id})`
-    else
-        desc=`Display ${displayNr} ${display.description}`
-
-    let renderer = new RenderRealtime(desc)
+    let renderer = new RenderRealtime()
     await renderer.animationManager.select(config.animation, false)
     renderControllers.push(new RenderControl(renderer))
     await renderer.addDisplay(display)
@@ -51,25 +45,41 @@ setInterval(() => {
 //RPC bindings
 let rpc = new RpcServer()
 
-rpc.addMethod("refresh", async (context: WsContext) => {
-    context.notify("animationList", presetStore.animationPresetList)
+//notify all websockets on all render controllers
+function notifyAll(method: string, ...params) {
+    for (let renderControl of renderControllers) {
+        renderControl.notifyAll(method, ...params)
+    }
+}
 
-
+//display list suitable for webclients
+function getDisplayList()
+{
     let displays = []
     for (let renderControl of renderControllers) {
 
         let online = true;
         const display = renderControl.getPrimaryDisplay() as DisplayQOIShttp
-        if (display != undefined && display.isOnline != undefined)
-            online = display.isOnline()
 
-        displays.push({
-            description:renderControl.getDescription(),
-            online: online,
-        })
+        if (display!==undefined) {
+            if ( display.isOnline != undefined)
+                online = display.isOnline()
+
+            displays.push({
+                description: renderControl.getPrimaryDisplay().descriptionControl.text,
+                online: online,
+            })
+        }
     }
 
-    context.notify("displayList", displays)
+    return displays
+
+}
+
+
+rpc.addMethod("refresh", async (context: WsContext) => {
+    context.notify("animationList", presetStore.animationPresetList)
+    context.notify("displayList", getDisplayList())
 })
 
 rpc.addMethod("save", async (context: WsContext, presetName) => {
@@ -147,9 +157,11 @@ rpc.addMethod("changePreviewSize", async (context: WsContext, width, height) => 
 
     await previewRenderControl.changePreviewSize(width, height)
 
+
     //also switch the context to the preview display, if it wasnt already
     context.notify("monitoring", 0)
     previewRenderControl.addWsContext(context)
+
 
 
 })

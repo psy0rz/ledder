@@ -26,7 +26,7 @@ export class RenderRealtime extends Render {
 
             this.animationManager.run()
             await this.renderInterval()
-            console.log(`RenderRealtime ${this.description} started.`)
+            console.log(`RenderRealtime ${this.getPrimaryDisplay().descriptionControl.text} started.`)
         }
     }
 
@@ -92,7 +92,7 @@ export class RenderRealtime extends Render {
             clearInterval(this.timer)
             this.timer = undefined
             this.animationManager.stop(true)
-            console.log(`RenderRealtime ${this.description} stopped.`)
+            console.log(`RenderRealtime ${this.getPrimaryDisplay().descriptionControl.text} stopped.`)
         }
     }
 

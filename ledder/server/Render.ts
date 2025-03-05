@@ -18,7 +18,6 @@ export class Render {
 
     public readonly animationManager: AnimationManager
     public readonly controlGroup: ControlGroup
-    public readonly description: string
 
     protected displays: Set<Display>
     protected primaryDisplay: Display
@@ -36,10 +35,9 @@ export class Render {
 
 
 
-    constructor( description='') {
+    constructor( ) {
         this.displays = new Set()
 
-        this.description=description
 
         this.controlGroup = new ControlGroup('root')
         this.scheduler = new Scheduler()
@@ -72,6 +70,10 @@ export class Render {
 
 
     async addDisplay( display : Display ) {
+
+        if (this.displays.has(display))
+            return
+
         this.displays.add(display)
         //primary/first display?
         if (this.displays.size===1) {

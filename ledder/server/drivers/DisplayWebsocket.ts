@@ -22,13 +22,22 @@ export class DisplayWebsocket extends Display {
         this.imageBuf8 = new Uint8ClampedArray(height * width * 4)
 
         this.id="Websocket"
-        this.descriptionControl.text=`Websocket ${width}x${height}`
+        this.descriptionControl.text=`Preview ${width}x${height}`
 
         //normal screens have gamma 1 instead of the default 2.8
         this.gammaMapper.gammaControl.value=1
         this.gammaMapper.setGamma()
 
 
+    }
+
+    resize(width, height) {
+        this.imageBuf8 = new Uint8ClampedArray(height * width * 4)
+        this.descriptionControl.text = `Preview`
+        this.width = width
+        this.height = height
+        this.xMax = width - 1
+        this.yMax = height - 1
     }
 
     //sets a pixel in the render buffer (called from Draw-classes render() functions)

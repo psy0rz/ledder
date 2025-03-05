@@ -14,7 +14,7 @@ export default class RenderControl {
 
     constructor(renderer: Render) {
         this.renderer = renderer
-        this.monitoringDisplay = undefined
+        this.monitoringDisplay = new DisplayWebsocket(this.renderer.box.width(), this.renderer.box.height())
         this.wsContexts = new Set()
 
 
@@ -31,12 +31,10 @@ export default class RenderControl {
             await wsContext.renderControl.removeWsContext(wsContext)
         }
 
-        //create monitoring display and add to renderer
-        if (this.monitoringDisplay === undefined) {
+        //resize existing display
+        this.monitoringDisplay.resize(this.renderer.box.width(), this.renderer.box.height())
 
-            this.monitoringDisplay = new DisplayWebsocket(this.renderer.box.width(), this.renderer.box.height())
-            await this.renderer.addDisplay(this.monitoringDisplay)
-        }
+        await this.renderer.addDisplay(this.monitoringDisplay)
 
         this.wsContexts.add(wsContext)
         this.monitoringDisplay.addWsContext(wsContext)
@@ -73,7 +71,6 @@ export default class RenderControl {
         //if no one is watching this display, remove it from the renderer. (which in turn will stop if there are no displays left)
         if (this.wsContexts.size === 0) {
             await this.renderer.removeDisplay(this.monitoringDisplay)
-            this.monitoringDisplay = undefined
 
         }
     }
@@ -156,7 +153,9 @@ export default class RenderControl {
     }
 
     sendStats() {
-        const statsStr = `${this.renderer.description} [${this.renderer.getStats()}]`
+
+
+        const statsStr = `${this.getPrimaryDisplay().descriptionControl.text} [${this.renderer.getStats()}]`
         // console.log(statsStr)
         this.notifyAll("stats", statsStr)
     }
@@ -170,7 +169,12 @@ export default class RenderControl {
     }
 
     getPrimaryDisplay() {
-        return this.renderer.getPrimaryDisplay()
+        const display = this.renderer.getPrimaryDisplay()
+
+        if (display===undefined)
+            return this.monitoringDisplay
+        else
+            return display
     }
 
     async select(animationAndPresetPath:string, keepControls:boolean) {
@@ -178,8 +182,5 @@ export default class RenderControl {
 
     }
 
-    getDescription() {
-        return this.renderer.description
-    }
 }
 
