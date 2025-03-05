@@ -7,7 +7,7 @@ import {
     svelteDisplayHeight,
     svelteDisplayZoom,
     svelteDisplayList,
-    svelteSelectedDisplayNr, svelteStats, svelteStreamMode
+    svelteSelectedDisplayNr, svelteStats, svelteStreamMode, svelteSelectedDisplayId
 } from "./svelteStore.js"
 import {confirmPromise, info, promptPromise} from "./util.js"
 import {DisplayCanvas} from "./DisplayCanvas.js"
@@ -80,9 +80,10 @@ export class RunnerBrowser {
         })
 
 
-        rpc.addMethod("monitoring", (displayNr) => {
+        rpc.addMethod("monitoring", (displayNr, id) => {
             displayNr = Number(displayNr)
             svelteSelectedDisplayNr.set(displayNr)
+            svelteSelectedDisplayId.set(id)
             localStorage.setItem('selectedDisplayNr', displayNr)
 
         })

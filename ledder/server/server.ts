@@ -109,7 +109,7 @@ rpc.addMethod("startMonitoring", async (context: WsContext, rendererId) => {
     if (renderControllers[rendererId] === undefined)
         rendererId = 0
 
-    context.notify("monitoring", rendererId)
+    context.notify("monitoring", rendererId, renderControllers[rendererId].getPrimaryDisplay().id)
     await renderControllers[rendererId].addWsContext(context)
 
 
@@ -147,6 +147,10 @@ rpc.addMethod("updateSetting", async (context:WsContext, path, values) => {
 
     try {
         context.renderControl.getPrimaryDisplay().settingsControl.updateValue(path, values)
+        if (path[0] ==="Description")
+        {
+            notifyAll("displayList", getDisplayList())
+        }
     } catch (e) {
         console.error("Error while updating settings value:", e)
     }
@@ -159,7 +163,7 @@ rpc.addMethod("changePreviewSize", async (context: WsContext, width, height) => 
 
 
     //also switch the context to the preview display, if it wasnt already
-    context.notify("monitoring", 0)
+    context.notify("monitoring", 0, previewRenderControl.getPrimaryDisplay().id)
     previewRenderControl.addWsContext(context)
 
 

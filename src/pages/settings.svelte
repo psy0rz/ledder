@@ -1,9 +1,10 @@
 <script>
-    import {Block, Navbar, Page, Treeview,} from "framework7-svelte"
+    import {Block, Navbar, NavTitle, Page, Treeview,} from "framework7-svelte"
 
     import ControlGroup from "../../ledder/ControlGroup"
     import {rpc} from "../js/web/RpcClient.js"
     import ControlGroupUI from "../components/ControlGroupUI.svelte"
+    import {svelteSelectedDisplayId} from "@/js/web/svelteStore.js";
 
     let saveDisabled, copyDisabled, deleteDisabled;
     export let settings = new ControlGroup();
@@ -25,11 +26,11 @@
 
 <Page
     name="settings"
-    on:pageAfterIn={async () => {
+    on:pageBeforeIn={async () => {
         settings = await rpc.request("getSettings");
     }}
 >
-    <Navbar title="Settings" backLink="Back">
+    <Navbar backLink="Back">
 <!--        <Subnavbar>-->
 <!--                <Button-->
 <!--                    iconMd="material:save"-->
@@ -44,6 +45,9 @@
 <!--                    tonal-->
 <!--                />-->
 <!--        </Subnavbar>-->
+        <NavTitle title="Display settings" subtitle="id={$svelteSelectedDisplayId}"></NavTitle>
+
+
     </Navbar>
     <Block strong>
         <Treeview>

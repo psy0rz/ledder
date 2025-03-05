@@ -21,8 +21,8 @@ export class DisplayWebsocket extends Display {
 
         this.imageBuf8 = new Uint8ClampedArray(height * width * 4)
 
-        this.id="Websocket"
-        this.descriptionControl.text=`Preview ${width}x${height}`
+        this.id="Preview"
+        this.descriptionControl.text=`Preview`
 
         //normal screens have gamma 1 instead of the default 2.8
         this.gammaMapper.gammaControl.value=1
