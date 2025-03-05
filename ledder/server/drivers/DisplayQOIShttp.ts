@@ -4,9 +4,9 @@ import OffsetMapper from "./OffsetMapper.js"
 import {type Response} from 'express';
 
 
-const STREAM_LIVE = 0
-const STREAM_RECORD = 1
-const STREAM_REPLAY = 2
+export const STREAM_LIVE = 0
+export const STREAM_RECORD = 1
+export const STREAM_REPLAY = 2
 
 export class DisplayQOIShttp extends DisplayQOIS {
 

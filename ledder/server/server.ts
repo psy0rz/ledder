@@ -217,6 +217,7 @@ rpc.app.get('/update/esp32s3.bin', async (req, res) => {
 
 rpc.addMethod("setStreamMode", async (context: WsContext, mode: number) => {
     context.renderControl.setStreamMode(Number(mode))
+    saveSettingsDelayed(renderControllers)
 
 })
 

@@ -3,6 +3,7 @@ import * as path from 'path';
 import type ControlGroup from "../ControlGroup.js";
 import type RenderControl from "./RenderControl.js";
 import type {Values} from "../Control.js";
+import {DisplayQOIShttp, STREAM_LIVE, STREAM_RECORD, STREAM_REPLAY} from "./drivers/DisplayQOIShttp.js";
 
 const filePath = 'settings.json';
 
@@ -10,6 +11,7 @@ export interface DisplaySettingsI {
     [key: string]: {
         'animationAndPresetPath': string,
         'settingsControl': Values,
+        'streamMode': number
     }
 }
 
@@ -28,9 +30,20 @@ export function saveSettingsDelayed(renderControllers: Array<RenderControl>) {
 export async function saveSettings(renderControllers: Array<RenderControl>) {
     let settings: DisplaySettingsI = {}
     for (let renderControl of renderControllers) {
+
+        let streamMode=STREAM_LIVE;
+
+        const display=renderControl.getPrimaryDisplay()
+
+        if (display instanceof DisplayQOIShttp)
+        {
+            streamMode=display.getStreamMode();
+        }
+
         settings[renderControl.getPrimaryDisplay().id] = {
             'animationAndPresetPath': renderControl.selected(),
             'settingsControl': renderControl.getPrimaryDisplay().settingsControl.save(),
+            'streamMode': streamMode
         }
     }
     await writeObjectToFile(settings)
@@ -40,10 +53,20 @@ export async function loadSettings(renderControllers: Array<RenderControl>) {
     const settings = await readObjectFromFile()
     if (settings) {
         for (let renderControl of renderControllers) {
-            if (settings[renderControl.getPrimaryDisplay().id] !== undefined) {
-                const displaySettings = settings[renderControl.getPrimaryDisplay().id]
+           const display=renderControl.getPrimaryDisplay()
+            if (settings[display.id] !== undefined) {
+
+                const displaySettings = settings[display.id]
                 await renderControl.select(displaySettings.animationAndPresetPath, false)
-                renderControl.getPrimaryDisplay().settingsControl.load(displaySettings.settingsControl)
+                display.settingsControl.load(displaySettings.settingsControl)
+                if (display instanceof DisplayQOIShttp)
+                {
+                    //dont restart recording
+                    if (displaySettings.streamMode==STREAM_RECORD)
+                        displaySettings.streamMode=STREAM_REPLAY
+
+                    display.setStreamMode(displaySettings.streamMode);
+                }
             }
         }
     }
