@@ -16,8 +16,11 @@ export class DisplayQOIShttp extends DisplayQOIS {
     private streamMode: number
 
 
-    constructor(mapper: OffsetMapper, maxFps = 60) {
+    constructor(mapper: OffsetMapper, id, maxFps = 60) {
         super(mapper, 0)
+
+        this.id=id
+        this.descriptionControl.text=`HTTP ${id}`
 
         this.minFrameTimeMicros = ~~(1000000 / maxFps)
         this.defaultFrameTimeMicros = this.minFrameTimeMicros

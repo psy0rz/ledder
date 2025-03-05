@@ -61,10 +61,10 @@ export default abstract class Display {
 
         this.ready=true
 
-        this.id=""
+        this.id="unknown"
 
         this.settingsControl = new ControlGroup('Display settings')
-        this.descriptionControl = this.settingsControl.input('Description', '')
+        this.descriptionControl = this.settingsControl.input('Description', 'Display')
         this.gammaMapper = new GammaMapper(this.settingsControl)
 
 
