@@ -33,6 +33,10 @@ export class DisplayRPI extends Display {
         super(mapper.width, mapper.height)
         this.rgbOrder=rgbOrder;
 
+        this.id=`RPI`
+        this.descriptionControl.text=`RPI`
+
+
         //width and height is the size of one strip on one channel. e.g. one display
         leds.init(pixelsPerChannel)
         this.mapper = mapper

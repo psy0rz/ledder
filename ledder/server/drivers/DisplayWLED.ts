@@ -33,6 +33,10 @@ export class DisplayWLED extends Display {
     this.ip=ip;
     this.port=port;
 
+    this.id=`${ip}:${port}`
+    this.descriptionControl.text=`WLED ${this.id}`
+
+
     this.buffer=new Uint8ClampedArray(this.width * this.height * 3);
 
     this.socket = dgram.createSocket('udp4');

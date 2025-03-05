@@ -52,6 +52,9 @@ export default class DisplayPixelflut extends Display {
         this.stepSize = 1
         this.flood = flood
 
+        this.id=`${host}:${port}`
+        this.descriptionControl.text=`Flut ${this.id}`
+
 
         //create render buffer
         this.frameBuffer = []

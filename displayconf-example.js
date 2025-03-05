@@ -4,6 +4,8 @@ import {DisplayQOISudp} from "./ledder/server/drivers/DisplayQOISudp.js"
 //import {DisplayRPI} from "./ledder/server/drivers/DisplayRPI.js"
 import {DisplayWLED} from "./ledder/server/drivers/DisplayWLED.js"
 import {DisplayQOIShttp} from "./ledder/server/drivers/DisplayQOIShttp.js";
+import DisplayPixelflut from "./ledder/server/drivers/DisplayPixelflut.js";
+import DisplayPixelflutBinary from "./ledder/server/drivers/DisplayPixelflutBinary.js";
 
 export let displayList = []
 
@@ -187,17 +189,11 @@ export let displayList = []
 
 // ////////////// ledstream via http
 // let mapper = new OffsetMapper(64, 32, true)
-// let display;
-//
-// display=new DisplayQOIShttp(mapper )
-// display.id="983DAEEDA39C"
-// display.description="display 1"
-// displayList.push(display)
+// displayList.push(new DisplayQOIShttp(mapper, "983DAEEDA39C" ))
+// displayList.push(new DisplayQOIShttp(mapper, "AB43DE321453" ))
 
 
 
 //default animation and preset
 export let animation = "Tests/TestMatrix/default"
 
-export let brightness = 255
-export let gamma = 2.8

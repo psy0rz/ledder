@@ -36,6 +36,9 @@ export default class DisplayPixelflutBinary extends Display {
     constructor(width, height, host, port, gridSize = 1, pixelSize = 1, offsetX=0, offsetY=0) {
         super(width, height)
 
+        this.id=`${host}:${port}`
+        this.descriptionControl.text=`BinFlut ${this.id}`
+
         this.statsBytesSend = 0
         this.statsFpsSend = 0
 
