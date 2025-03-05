@@ -1,6 +1,6 @@
+//stores and reloads display setting and selected animations
+
 import {promises as fs} from 'fs';
-import * as path from 'path';
-import type ControlGroup from "../ControlGroup.js";
 import type RenderControl from "./RenderControl.js";
 import type {Values} from "../Control.js";
 import {DisplayQOIShttp, STREAM_LIVE, STREAM_RECORD, STREAM_REPLAY} from "./drivers/DisplayQOIShttp.js";
