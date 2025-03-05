@@ -6,7 +6,7 @@ const conf_file_example = 'displayconf-example.js'
 
 export let config:any = {}
 
-export async function load() {
+export async function loadDisplayconf() {
 
     //creat default config
     await access(conf_file).catch(async () => {

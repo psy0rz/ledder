@@ -52,4 +52,5 @@ displayconf.js
 
 /util/CallbackManager.js
 /util/CallbackManager.js.map
-/devices.json
+
+/settings.json

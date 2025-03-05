@@ -76,8 +76,6 @@
 
     "json-rpc-2.0": "^1.7.0",
 
-    "lowdb": "^7.0.1",
-
     "material-icons": "^1.13.12",
 
     "matrix_transformer": "^0.0.8",

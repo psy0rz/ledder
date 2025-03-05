@@ -169,6 +169,11 @@ export default class AnimationManager {
 
     }
 
+    public selected()
+    {
+        return this.animationName + "/" + this.presetName
+    }
+
     autoreloadStop() {
         if (this.autoreloadWatchAbort !== undefined)
             this.autoreloadWatchAbort.abort()

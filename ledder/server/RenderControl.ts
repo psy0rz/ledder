@@ -182,5 +182,10 @@ export default class RenderControl {
 
     }
 
+    selected()
+    {
+        return this.renderer.animationManager.selected()
+    }
+
 }
 

@@ -4,15 +4,14 @@ import ControlGroup from "../ControlGroup.js"
 import GammaMapper from "./drivers/GammaMapper.js"
 import {presetStore} from "./PresetStore.js"
 import {DisplayQOIShttp} from "./drivers/DisplayQOIShttp.js"
-import {config, load} from "./config.js"
+import {config, loadDisplayconf} from "./config.js"
 import RenderControl from "./RenderControl.js";
 import type {WsContext} from "./WsContext.js";
 import * as fs from "node:fs";
+import {loadSettings, saveSettings, saveSettingsDelayed} from "./DisplaySettings.js";
 
 
-
-await load()
-
+await loadDisplayconf()
 
 
 let renderControllers: Array<RenderControl> = []
@@ -34,6 +33,8 @@ for (const displayNr in config.displayList) {
 
 }
 
+//load display settings
+await loadSettings(renderControllers)
 
 setInterval(() => {
     for (let renderMonitor of renderControllers) {
@@ -53,16 +54,15 @@ function notifyAll(method: string, ...params) {
 }
 
 //display list suitable for webclients
-function getDisplayList()
-{
+function getDisplayList() {
     let displays = []
     for (let renderControl of renderControllers) {
 
         let online = true;
         const display = renderControl.getPrimaryDisplay() as DisplayQOIShttp
 
-        if (display!==undefined) {
-            if ( display.isOnline != undefined)
+        if (display !== undefined) {
+            if (display.isOnline != undefined)
                 online = display.isOnline()
 
             displays.push({
@@ -126,8 +126,7 @@ rpc.addMethod("select", async (context: WsContext, animationAndPresetPath) => {
 
 
     await context.renderControl.select(animationAndPresetPath, false)
-
-    // }
+    saveSettingsDelayed(renderControllers)
 })
 
 rpc.addMethod("updateValue", async (context, path, values) => {
@@ -137,20 +136,20 @@ rpc.addMethod("updateValue", async (context, path, values) => {
 })
 
 
-rpc.addMethod("getSettings", async (context:WsContext) => {
+rpc.addMethod("getSettings", async (context: WsContext) => {
     return context.renderControl.getPrimaryDisplay().settingsControl
 
 })
 
 
-rpc.addMethod("updateSetting", async (context:WsContext, path, values) => {
+rpc.addMethod("updateSetting", async (context: WsContext, path, values) => {
 
     try {
         context.renderControl.getPrimaryDisplay().settingsControl.updateValue(path, values)
-        if (path[0] ==="Description")
-        {
+        if (path[0] === "Description") {
             notifyAll("displayList", getDisplayList())
         }
+        saveSettingsDelayed(renderControllers)
     } catch (e) {
         console.error("Error while updating settings value:", e)
     }
@@ -165,7 +164,6 @@ rpc.addMethod("changePreviewSize", async (context: WsContext, width, height) => 
     //also switch the context to the preview display, if it wasnt already
     context.notify("monitoring", 0, previewRenderControl.getPrimaryDisplay().id)
     previewRenderControl.addWsContext(context)
-
 
 
 })
