@@ -4,7 +4,6 @@ import expressWs from "express-ws";
 import {JSONRPCClient, JSONRPCServer, JSONRPCServerAndClient} from "json-rpc-2.0";
 import {Rpc} from "../../src/js/Rpc.js";
 import {WsContext} from "./WsContext.js";
-import * as http from "node:http";
 
 let vite
 if (process.env.NODE_ENV == 'development')
@@ -84,7 +83,12 @@ export class RpcServer extends Rpc {
 
 
         //allow acces to presets dir to get preview-files
-        this.app.use("/presets", express.static("presets"));
+
+        this.app.use("/presets", express.static("presets", {
+            setHeaders: (res, path) => {
+                res.setHeader('Cache-Control', 'public, max-age=31536000'); // Cache for 1 year
+            }
+        }));
 
         if (process.env.NODE_ENV != 'development')
             this.app.use(express.static("www"));

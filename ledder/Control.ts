@@ -32,6 +32,7 @@ export class Control {
             restartOnChange: restartOnChange
         }
 
+
     }
 
     //Is called when user changes something via the controls.
