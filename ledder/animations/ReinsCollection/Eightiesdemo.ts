@@ -179,7 +179,7 @@ export default class Eightiesdemo extends Animator {
             let py=(Math.cos(a)*radius)+cy
             if (py<cy)
             {
-            pl.add(new DrawLine(cx,cy,px,py,new Color(255,255,0,0.6),new Color(255,0,0,0.1)))
+            pl.add(new DrawLine(cx,cy,px,py,new Color(255,255,0,1),new Color(255,0,0,0.1)))
             }
         }
         return pl;
@@ -340,6 +340,8 @@ export default class Eightiesdemo extends Animator {
         return pl;
     }
 
+    
+
 
 
     getExplosion(box:PixelBox,x,horizonY)
@@ -364,15 +366,15 @@ export default class Eightiesdemo extends Animator {
     getSkyline(box,x,y)
     {
         let pl=new PixelList();
-        pl.add(new DrawAsciiArtColor(x+(box.width()/2)-4, y-8, `
-            rr.rr.rr
-            rr.rr.rr
-            .rrrrrr.
-            .rrrrrr.
-            .rrrrrr.
-            .rr00rr.
-            .rr00rr.
-            rrr00rrr
+        pl.add(new DrawAsciiArtColor(x+(box.width()/2)-6, y-8, `
+            ..rr.rr.rr..
+            ..rr.rr.rr..
+            ...rrrrrr...
+            ...rrrrrr...
+            ...rrrrrr...
+            ...rr00rr...
+            ...rr00rr...
+            ..rrr00rrr..
             `));
            
             return pl
@@ -382,24 +384,44 @@ export default class Eightiesdemo extends Animator {
     getTent(box,x,y)
     {
         let pl=new PixelList();
-        /*pl.add(new DrawAsciiArtColor(x, y, `
-            ........wwwwww........
-            .....wwww...wwww......
-            ....ww.........ww.....
-            ...wy...y.y.y.y.yw....
-            ..w.y.y.y.y.y.y.y.w...
-            .w..y.y.y.yyy.yyy..w..
-            w...y.y.y.y.y..y....w.
-            www.yyyyy.y.y..y..www.
-            w..bbb.bbb.bbb.bbb..w.
-            w....b.b.b...b.b....w.
-            .w.bbb.b.b.bbb.bbb.w..
-            ..wb...b.b.b.....bw...
-            ...wbb.bbb.bbb.bbw....
-            ....ww.........ww.....
-            ......wwww..wwww.......
-            .........wwww..........
-           `));*/
+        pl.add(new DrawAsciiArtColor(x, y, `
+           ........................ggg.........................................................................................................
+           ....gggggg............ggggggg.......................................................................................................
+           ..ggooggoggg.......gggoggoogggg................................g....................................................................
+           .g.g.ggo.og.g.....g.g.g.ogogoggg..............................ggg...................................................................
+           ..g.g.gg.g.g.......gg.gg.gg.g.g...............................ggg...................................................................
+           .....ooo.gg........gg...ogo..g........g..g...................ggggg......r.....b.....y...............................................
+           .....ooo................ooo..........gogggg.......w..w...... ggggg.....rrr...bbb...yyy..............................................
+           .....ooo................ooo.........gogogoog......wwww......gggoggg...rrrrr.bbbbb.yyyyy.............................................    
+           gggggoooggggggggggggggggoooggggggggggogogoggggggr.w..w.rgggggggogggggggggggggggggggggggggggg..................................gggggg
+           gggggoooggggggggggggggggooogggggggggggggggggggggr.wwww.rgggggggoggggggggggggggggggggggggggggggggggggggg.......gggggggggggggggggggggg
+           ggggggggggggggggggggggggggggggggggggggggggggggggr.w..w.rgggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
+           oooooooooooooooooooooooooooooooooooooooooooooooor.wwww.roooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
+           rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr.w..w.rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr
+           ..................................................wwww..............................................................................
+           ..................................................w..w..............................................................................
+           ..................................................wwww..............................................................................
+           ..................................................w..w..............................................................................
+           ....................................................................................................................................
+           ....................................................................................................................................
+           ....................................................................................................................................
+           rrrrrrr......rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr.....rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr
+           oooooor......rooooooooooooooooooooooooooooooooooooooooooooooooooooor.....roooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
+           ttttttr......rtttttttttttttttttttttttttttttttttttttttttttttttttttttr.....rtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
+           rrrrrrr......rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr.....rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr
+           rr.rr.rr......................................................................rr.rr.rr..............................................
+           rr.rr.rr..w...w.wwwww.wwwww.w..w..wwwww.wwwww.wwwww.wwwww.wwwww.wwwww.wwwww...rr.rr.rr...www...wwwww.wwwww.wwwww.wwwww.w...w.wwwww..
+           .rrrrrr...w...w.w...w.w.....w.w...w.....w...w.w.....w...w.w...w.w.....w........rrrrrr....w..w..w...w.w.....w...w...w...w...w.w......
+           .rrrrrr...wwwww.wwwww.w.....ww....wwww..wwwww.wwwww.wwwww.wwwww.w.....wwww.....rrrrrr....w...w.wwwww.wwww..w...w...w...wwwww.wwww...
+           .rrrrrr...w...w.w...w.w.....w.w...w.....w.w.......w.w.....w...w.w.....w........rrrrrr....w...w.w.w...w.....w...w...w...w...w.w......
+           .rr..rr...w...w.w...w.w.....w..w..w.....w..w......w.w.....w...w.w.....w........rr..rr....w...w.w..w..w.....w...w...w...w...w.w......
+           rrr..rrr..w...w.w...w.wwwww.w...w.wwwww.w...w.wwwww.w.....w...w.wwwww.wwwww...rrr..rrr...wwwww.w...w.wwwww.w...w...w...w...w.wwwww..
+           rrr..rrr......................................................................rrr..rrr..............................................
+           ....................................................................................................................................
+           rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr
+
+
+           `));
            
             return pl
     }
@@ -420,7 +442,7 @@ export default class Eightiesdemo extends Animator {
                    
                 
         } 
-        //pl.add(new DrawLine(0,starsOffset,box.width(),starsOffset,new Color(255,255,255,1),new Color(255,255,255,1)))
+        //pl.add(new DrawLine(0,starsOffset,box.width(),starsOffset,new Color(0,0,0,1),new Color(0,0,0,1)))
         return pl;
     }
 
@@ -710,7 +732,7 @@ export default class Eightiesdemo extends Animator {
             if (horizonFactor<0.53){ 
                 if (true)
                 {
-                    pacmanX=(pacmanSeq/15)%(box.width()*1.5);
+                    pacmanX=(pacmanSeq/8)%(box.width()*1.5);
                     pacmanY=animationHeight*(horizonFactor+1)+8;
                     sprites.add(this.getPacman(pacmanSeq,pacmanX,pacmanY-5))
                     let ghost:PixelList=this.getGhost(pacmanSeq,(pacmanX-12)%box.width(),pacmanY-5);
@@ -730,18 +752,23 @@ export default class Eightiesdemo extends Animator {
             }
             if (horizonFactor>0.2)
             {
-                pacmanX=(box.width()/2)+(Math.sin(frameNr/100)*(box.width()/2));
+                pacmanX=(box.width()/2)+(Math.sin(frameNr/100)*(box.width()/3));
                 pacmanY=Math.abs(box.width()/2)*horizonFactor;
                 sprites.add(this.getSpaceinvader(frameNr/8,pacmanX,pacmanY));
                 sprites.add(new Pixel(pacmanX+4,pacmanY+4+((frameNr/10)%animationHeight),new Color(255,255,255,1)))
             }
-
             if (horizonFactor<0.53)
-            {
-                        let fireY=box.height()*horizonFactor;
-                        sprites.add(this.getFire(box,box.width()-15,fireY,8,horizonFactor*20,frameNr))
-                        sprites.add(this.getTent(box,box.width()/6,(fireY*horizonFactor)))
-            }
+                {
+                            let fireY=box.height()*horizonFactor;
+                            sprites.add(this.getFire(box,box.width()-15,fireY,8,horizonFactor*box.height(),frameNr))
+                            sprites.add(this.getTent(box,pacmanX,box.height()*0.6+horizonFactor*box.height()))
+                            sprites.add(this.getTent(box,pacmanX-134,box.height()*0.6+horizonFactor*box.height()))
+
+                            sprites.add(this.getTent(box,pacmanX+134,box.height()*0.6+horizonFactor*box.height()))
+                }
+
+
+            
 
             canvas.crop(box)
             
