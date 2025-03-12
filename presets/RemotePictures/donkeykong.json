@@ -1,0 +1,59 @@
+{
+ "title": "",
+ "description": "",
+ "values": {
+  "Image URL": {
+   "text": "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExcjdzMmhvYjJlenRrenNscnU3aTkyZjd0aXRqZG5yanJ4dnloOGVrNCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/i3EpCXJC4reyA/giphy.gif"
+  },
+  "Fractal interval": {
+   "value": 14
+  },
+  "Preset": {
+   "selected": "3"
+  },
+  "Movie interval": {
+   "value": 4
+  },
+  "Movie interval randomizer": {
+   "value": 0
+  },
+  "Rotate interval": {
+   "value": 2
+  },
+  "Rotate interval randomizer": {
+   "value": 0
+  },
+  "Rotate X step": {
+   "value": 0
+  },
+  "Rotate Y step": {
+   "value": 0
+  },
+  "animation control": {
+   "Movie interval": {
+    "value": 1
+   },
+   "Movie interval randomizer": {
+    "value": 0
+   },
+   "Rotate interval": {
+    "value": 3
+   },
+   "Rotate interval randomizer": {
+    "value": 9
+   },
+   "Rotate X step": {
+    "value": 0
+   },
+   "Rotate Y step": {
+    "value": 0
+   },
+   "delay multiplier": {
+    "value": 1
+   }
+  },
+  "fit": {
+   "selected": "cover"
+  }
+ }
+}
