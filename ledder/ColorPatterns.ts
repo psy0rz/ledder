@@ -192,13 +192,36 @@ export const dimmedreinbow = calculateDimmedReinbow()
 
 
 
+
+function calculateReingalaxy() 
+{
+    let numColors=360
+    let ret = []
+    let n = numColors;
+    for(var i = 0; i< numColors; i++)
+    {
+        //generate hex string:
+        
+        
+        let intensityr=Math.round(Math.sin(i/180)+1)*127;
+        let intensityg=Math.round(Math.cos(i/180)+1)*127;
+        let intensityb=Math.round(Math.sin(i/30)+1)*127;
+        let c=new Color(Math.round(intensityr),Math.round(intensityg),Math.round(intensityb),intensityb/256)
+        ret.push(c)
+    }
+    return ret;
+}
+export const reinGalaxy = calculateReingalaxy()
+
+
 const patterns = {
     'Doom fire': fireColorsDoom,
     'Bertrik fire': fireColorsBertrik,
     'Brainsmoke fire': fireColorsBrainsmoke,
     'Rainbow': rainbow,
     'Reinbow': reinbow,
-    'DimmedReinbow': dimmedreinbow
+    'DimmedReinbow': dimmedreinbow,
+    'ReinGalaxy': reinGalaxy
 }
 
 //helper to make it easier to let the user select a color pattern
