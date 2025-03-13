@@ -4,25 +4,25 @@
  "values": {
   "80s theme": {
    "Delay (seconds)": {
-    "value": 32
+    "value": 9
    },
    "Font": {
     "selected": "Pixel-Gosub"
    },
    "Font height": {
-    "value": 12
+    "value": 32
    },
    "Font width": {
-    "value": 8
+    "value": 16
    },
    "Text": {
-    "text": "A long time ago in a galaxy far away                                                                                                                    "
+    "text": "A long time ago in a galaxy far away                                                                                                                   "
    },
    "Text color": {
     "r": 255,
     "g": 255,
     "b": 255,
-    "a": 0.82
+    "a": 0.15
    },
    "Stars": {
     "Enabled": {
@@ -129,7 +129,7 @@
      "enabled": false
     },
     "Rotate interval": {
-     "value": 1
+     "value": 5
     },
     "Rotate interval randomizer": {
      "value": 0
@@ -141,10 +141,13 @@
      "value": 0
     },
     "Circular": {
-     "enabled": false
+     "enabled": true
     },
     "Show one time only": {
      "enabled": false
+    },
+    "Whitespace": {
+     "value": 10
     }
    },
    "Flames": {
