@@ -17,6 +17,346 @@ import Pacman from "../Components/Pacman.js"
 import DrawBox from "../../draw/DrawBox.js"
 import DrawCircle from "../../draw/DrawCircle.js"
 import { reinGalaxy } from "../../ColorPatterns.js"
+import Matrix from "matrix_transformer"
+
+export class scene3D {
+    points=[]
+    objects=[]
+
+    constructor()
+    {
+        this.points=[]
+        this.objects=[]
+    }
+
+    render(box,controlSettings)
+    {
+        let pl=new PixelList()
+        for (let o=0; o<this.objects.length;o++)
+        {
+            pl.add(this.objects[o].render(box,controlSettings))
+        }
+        return pl
+    }
+
+}
+
+export class Vec3 extends Matrix {
+   
+    constructor(x:number,y:number,z:number)
+    {
+        super({x:x,y:y,z:z})
+    }
+
+   
+}
+
+
+export class Vec3Color extends Matrix {
+   
+    color:Color
+    constructor(x:number,y:number,z:number,color:Color)
+    {
+        super({x:x,y:y,z:z})
+        this.color=color
+    }
+
+   
+}
+
+export class CoordinateLine {
+    p1:number
+    p2:number
+
+    constructor(p1:number,p2:number)
+    {
+        this.p1=p1
+        this.p2=p2
+    }
+
+}
+
+export class Transformation3D
+{
+
+    rotate
+    translate
+    scale
+
+    constructor()
+    {
+        this.rotate={x:0,y:0,z:0}
+        this.translate=new Matrix({x:0,y:0,z:0})
+        this.scale={x:1.0,y:1.0,z:1.0}
+    }
+
+}
+
+
+//3D cube model. xyz is in the center of the object
+export class Object3d {
+    transformation: Transformation3D
+    width:number
+    height:number
+    depth:number
+    scale:number
+
+    points
+    lines
+    color:Color
+
+    constructor(x:number,y:number,z:number, width:number,height:number,depth:number,color:Color)
+    {
+        this.points=[]
+        this.lines=[]
+       
+        this.transformation=new Transformation3D()
+        this.transformation.translate=new Matrix({x:x,y:y,z:z})
+        this.color=color
+        this.width=width
+        this.height=height
+        this.depth=depth
+    }
+
+    setRotation(x:number,y:number,z:number)
+    {
+        this.transformation.rotate={x:x,y:y,z:z}
+    }
+
+    getZProjectionlimits(pointsArr)
+    {
+        let minDepth=1000
+        let maxDepth=-1000
+        for (let p=0;p<pointsArr.length;p++)
+        {
+            let z=this.points[p].z
+            if (z < minDepth) { minDepth=z}
+            if (z > maxDepth) { maxDepth=z}
+        }
+        let alphaPerZ=1/(maxDepth-minDepth)
+        return {zMin:minDepth,zMax:maxDepth, zRange:maxDepth-minDepth, alphaPerZ:alphaPerZ}
+    }
+
+    render(box: PixelBox,gameControls)
+    {
+        let pl=new PixelList()
+        //pointbuffer is a copy of the basic points with aded transformation and stuff
+        //it is calculated before every render to prevent rounding error accumulations 
+        let pointBuffer=[]
+        let perspectiveBuffer=[]
+
+        //transform points and put all transformed points into an new array (dont mess with the originals)
+        for (let p=0;p<this.points.length;p++)
+        {
+            let newpoint=this.points[p].rotateX(this.transformation.rotate.x).rotateY(this.transformation.rotate.y).rotateZ(this.transformation.rotate.z)
+            newpoint.color=this.points[p].color
+            pointBuffer.push(newpoint)
+        }
+
+        let depthLimits=this.getZProjectionlimits(pointBuffer)
+        let centerX=box.width()/2
+        let centerY=box.height()/2
+        //draw points
+        for (let p=0;p<pointBuffer.length;p++)
+        {  
+           
+    
+            let x=pointBuffer[p].x+this.transformation.translate.x
+            let y=pointBuffer[p].y+this.transformation.translate.y
+            let z=pointBuffer[p].z+this.transformation.translate.z
+            let c=this.color
+            if (this.points[p].color) { c=this.points[p].color } else {}
+
+            //depth correction (perspective)
+            let xDiff=x-centerX
+            let yDiff=y-centerY
+            let depthFactor=Math.pow(gameControls.perspective,z)
+            x=centerX+(xDiff*depthFactor)
+            y=centerY+(yDiff*depthFactor)
+            
+
+            //color (more distance is less alpha)
+            let depthcolor=c.copy()
+            depthcolor.a=1-Math.max(0.1,(pointBuffer[p].z)*depthLimits.alphaPerZ)
+            perspectiveBuffer.push({x:x,y:y,z:z,a:depthcolor.a})
+   
+            //draw point
+            pl.add(new Pixel(x,y,depthcolor))
+        }
+
+        
+        if (gameControls.wireframe)
+        {
+            //drawlines
+            for (let l=0;l<this.lines.length;l++)
+            {
+                let p1=this.lines[l].p1
+                let p2=this.lines[l].p2
+                let x1=perspectiveBuffer[p1].x
+                let y1=perspectiveBuffer[p1].y
+               
+                let c1=pointBuffer[p1].color.copy()
+                c1.a=perspectiveBuffer[p1].a
+
+                let x2=perspectiveBuffer[p2].x
+                let y2=perspectiveBuffer[p2].y
+              
+                let c2=pointBuffer[p2].color.copy()
+                c2.a=perspectiveBuffer[p2].a
+
+                pl.add(new DrawLine(x1,y1,x2,y2,c1,c2))
+            }
+        }
+        
+      
+        return pl
+    }
+
+
+
+}
+
+export class Axis3d extends Object3d {
+   
+
+    constructor(x:number,y:number,z:number, width:number,height:number,depth:number,color:Color)
+    {
+        super(x,y,z,width,height,depth,color)
+
+        this.points.push(new Vec3Color(-1*width/2,0,0,new Color(62,0,0,1)))
+        this.points.push(new Vec3Color(1*width/2,0,0,new Color(62,0,0,1)))
+        this.lines.push(new CoordinateLine(0,1))
+
+        this.points.push(new Vec3Color(0,-1*height/2,0,new Color(0,62,0,1)))
+        this.points.push(new Vec3Color(0,1*height/2,0,new Color(0,62,0,1)))
+        this.lines.push(new CoordinateLine(2,3))
+
+        this.points.push(new Vec3Color(0,0,-1*depth/2,new Color(0,0,62,1)))
+        this.points.push(new Vec3Color(0,0,1*depth/2,new Color(0,0,62,1)))
+        this.lines.push(new CoordinateLine(4,5))
+
+    }
+}
+
+
+export class Line3d extends Object3d {
+    constructor(x1:number,y1:number,z1:number, x2:number,y2:number,z2:number,color:Color)
+    {
+        let width=Math.abs(x2-x1)
+        let height=Math.abs(y2-y1)
+        let depth=Math.abs(z2-z1)
+
+        super(x1,y1,z1,width,height,depth,color)
+        let halfWidth=width/2
+        let halfHeight=height/2
+        let halfDepth=depth/2
+
+        this.points.push(new Vec3Color(x1,y1,z1,color)) //top-left-far
+        this.points.push(new Vec3Color(x2,y2,z2,color)) //top-right-far
+        this.lines.push(new CoordinateLine(0,1))
+    }
+}
+
+export class Cube3d extends Object3d {
+    constructor(x:number,y:number,z:number, width:number,height:number,depth:number,color:Color)
+    {
+        super(x,y,z,width,height,depth,color)
+        let halfWidth=width/2
+        let halfHeight=height/2
+        let halfDepth=depth/2
+
+        this.points.push(new Vec3Color(-1*halfWidth,1*halfHeight,-1*halfDepth,color)) //top-left-far
+        this.points.push(new Vec3Color(1*halfWidth,1*halfHeight,-1*halfDepth,color)) //top-right-far
+        this.points.push(new Vec3Color(-1*halfWidth,1*halfHeight,1*halfDepth,color)) //top-left-close
+        this.points.push(new Vec3Color(1*halfWidth,1*halfHeight,1*halfDepth,color)) //top-right-close
+
+        this.points.push(new Vec3Color(-1*halfWidth,-1*halfHeight,-1*halfDepth,color)) //bot-left-far
+        this.points.push(new Vec3Color(1*halfWidth,-1*halfHeight,-1*halfDepth,color)) //bot-right-far
+        this.points.push(new Vec3Color(-1*halfWidth,-1*halfHeight,1*halfDepth,color)) //bot-left-close
+        this.points.push(new Vec3Color(1*halfWidth,-1*halfHeight,1*halfDepth,color)) //bot-right-close
+
+        this.points.push(new Vec3Color(0,0,0,color)) //center
+
+
+        this.lines.push(new CoordinateLine(0,1))
+        this.lines.push(new CoordinateLine(1,3))
+        this.lines.push(new CoordinateLine(3,2))
+        this.lines.push(new CoordinateLine(2,0))
+
+        this.lines.push(new CoordinateLine(4,5))
+        this.lines.push(new CoordinateLine(5,7))
+        this.lines.push(new CoordinateLine(7,6))
+        this.lines.push(new CoordinateLine(6,4))
+
+        this.lines.push(new CoordinateLine(0,4))
+        this.lines.push(new CoordinateLine(1,5))
+        this.lines.push(new CoordinateLine(3,7))
+        this.lines.push(new CoordinateLine(2,6))
+    }
+}
+
+
+
+
+
+export class Sphere3d extends Object3d {
+    constructor(x:number,y:number,z:number, radius:number,color:Color)
+    {
+        
+        let width=radius*2
+        let height=radius*2
+        let depth=radius*2
+        super(x,y,z,width,height,depth,color)
+        let halfRadius=radius/2
+        let segments=8
+        this.points.push(new Vec3(0,0,0)) //center
+      
+            for (let p=0;p<360+(360/segments);p=p+(360/segments))
+            {
+                let px=Math.sin(p * (Math.PI / 180) ) * halfRadius
+                let py=Math.cos(p * (Math.PI / 180) ) * halfRadius
+                this.points.push(new Vec3Color(px,py,0,color)) //top-left-far
+                this.points.push(new Vec3Color(0,py,px,color)) //top-left-far
+                this.points.push(new Vec3Color(px,0,py,color)) //top-left-far
+               
+                let ll=this.points.length
+                if (ll>7)
+                {
+                    this.lines.push(new CoordinateLine(ll-1,ll-4))
+                    this.lines.push(new CoordinateLine(ll-2,ll-5))
+                    this.lines.push(new CoordinateLine(ll-3,ll-6))
+                }
+            }
+    }
+}
+
+
+
+
+export class Random3d extends Object3d{
+    constructor(x:number,y:number,z:number, width,height,depth,particlecount, color:Color)
+    {
+        
+       
+        super(x,y,z,width,height,depth,color)
+        this.points.push(new Vec3Color(0,0,0,new Color(255,255,255,1))) //top-left-far
+      
+        for (let p=0;p<particlecount;p++)
+        {
+            
+            let px=random(0,width)-(width/2)
+            let py=random(0,height)-(height/2)
+            let pz=random(0,depth)-(depth/2)
+            this.points.push(new Vec3Color(px,py,pz,new Color(0,0,random(0,255),Math.random()))) //top-left-far
+            //this.lines.push(new CoordinateLine(this.points.length-1,0))
+                
+           
+        }
+    }
+}
+
+
+
 
 
 
@@ -27,7 +367,7 @@ export default class Eightiesdemo extends Animator {
 
     static category = "Demo"
     static title = "Eighties demo"
-    static description = "retro style demo inspired by the why2025 design"
+    static description = "retro style demo inspired by the 80s "
    static max_iteration=512
     
     mandelbrot(c,px:number,py:number,width:number,height:number,zoom:number,max_iterations) {
@@ -81,6 +421,12 @@ export default class Eightiesdemo extends Animator {
          return n
     }
 
+
+    initScene3D(box,)
+    {
+        
+                
+    }
     
 
     drawBackground(box:PixelBox, xOffset:number, yOffset:number,horizonHf:number,animationHeight,frameNr)
@@ -109,6 +455,7 @@ export default class Eightiesdemo extends Animator {
             pl.add(new DrawLine(skyX,0,skyX,horizonH,skyTopColor,skyBottomColor));
         }
 
+        pl.add(this.getStars(box,yOffset,horizonH))
         if (horizonH>box.height())
         {
             pl.add(this.getSpaceShip(xOffset,Math.sin(horizonH/box.width())*box.width()/2,Math.cos(horizonH/box.height()/2)*box.width()/2))
@@ -135,7 +482,7 @@ export default class Eightiesdemo extends Animator {
         //create earth
 
          //draw buildings
-         pl.add(this.getSkyline(box,0,horizonH))
+         pl.add(this.getDrentheCastle(box,0,horizonH))
          pl.add(this.getPolder(box,xOffset,horizonH));
         
        
@@ -152,6 +499,8 @@ export default class Eightiesdemo extends Animator {
                 pl.add(new DrawLine(earthVline-nxOffset,horizonH,transX-nxOffset,box.height(),gridColorFar,gridColorClose));
             }
 
+
+            //add wandelaar
             if (horizonH<box.width() && horizonH>0)
                 {
                     pl.add(this.getWandelaar(frameNr/5,xOffset,horizonH+6))
@@ -165,6 +514,27 @@ export default class Eightiesdemo extends Animator {
 
     } 
 
+    getStars(box:PixelBox,yOffset,horizonY)
+    {
+        let pl=new PixelList();
+        let stars=[]
+        let cx=box.width()/2
+        let cy=box.height()/2
+        for (let s=0;s<100;s++)
+        {
+            let x=Math.sin(s+horizonY/10)*(cx-s)+cx
+            let y=Math.cos(s+horizonY/10)*(cy-s)+(cy/2)
+
+            stars.push([x,y])
+            if (y<horizonY)
+            {
+                pl.add(new Pixel(x,y,new Color(255,255,255,y/horizonY)))
+            }
+        }
+        return pl;        
+
+    }
+
     getSun(box:PixelBox,x,horizonY)
     {
         let pl=new PixelList();
@@ -177,7 +547,7 @@ export default class Eightiesdemo extends Animator {
         {
             let px=(Math.sin(a)*radius)+cx
             let py=(Math.cos(a)*radius)+cy
-            if (py<cy)
+            if (py-1<cy)
             {
             pl.add(new DrawLine(cx,cy,px,py,new Color(255,255,0,1),new Color(255,0,0,0.1)))
             }
@@ -321,7 +691,7 @@ export default class Eightiesdemo extends Animator {
             { cx:-1.0657340413104,  cy:-0.25412076186408,   maxz:9},
             { cx:-1.1780691868827,  cy:0.30014031883977,    maxz:9}
         ] 
-        let fIndex=Math.round(frameNr/1000) %(hotspots.length)
+        let fIndex=Math.round(frameNr/100) %(hotspots.length)
         //pl.add(new DrawText(10,10,fonts.C64,fIndex.toString(),new Color(255,255,0,1)))
     
         let complex1=hotspots[fIndex]
@@ -330,9 +700,11 @@ export default class Eightiesdemo extends Animator {
         for (let px=0;px<box.width();px++){
             for (let py=0;py<horizonY; py++)
             {
+               let distanceFromCenter=Math.round(Math.sqrt(Math.pow(box.width()/2-px,2)+Math.pow(box.height()/2-py,2)))
+               let maxDistance=Math.round(Math.sqrt(Math.pow(box.width()/2,2)+Math.pow(box.height()/2,2)))              
                let colorindex1=this.julia(complex1,px,py,box.width(),box.height(),(Math.cos(frameNr/500))*(px+1),512)
-               let color1=colorPalette[(((colorindex1+Math.round(frameNr/4))))%colorPalette.length].copy()
-               color1.a=1-(py/horizonY)
+               let color1=colorPalette[((Math.round(colorindex1+distanceFromCenter+frameNr/8)))%colorPalette.length].copy()
+               color1.a=1-(distanceFromCenter/maxDistance)
                 pl.add(new Pixel(px,py,color1))
             }
         }
@@ -363,7 +735,7 @@ export default class Eightiesdemo extends Animator {
         return pl;
     }
 
-    getSkyline(box,x,y)
+    getDrentheCastle(box,x,y)
     {
         let pl=new PixelList();
         pl.add(new DrawAsciiArtColor(x+(box.width()/2)-6, y-8, `
@@ -380,46 +752,12 @@ export default class Eightiesdemo extends Animator {
             return pl
     }
 
+    
 
     getTent(box,x,y)
     {
         let pl=new PixelList();
         pl.add(new DrawAsciiArtColor(x, y, `
-           ........................ggg.........................................................................................................
-           ....gggggg............ggggggg.......................................................................................................
-           ..ggooggoggg.......gggoggoogggg................................g....................................................................
-           .g.g.ggo.og.g.....g.g.g.ogogoggg..............................ggg...................................................................
-           ..g.g.gg.g.g.......gg.gg.gg.g.g...............................ggg...................................................................
-           .....ooo.gg........gg...ogo..g........g..g...................ggggg......r.....b.....y...............................................
-           .....ooo................ooo..........gogggg.......w..w...... ggggg.....rrr...bbb...yyy..............................................
-           .....ooo................ooo.........gogogoog......wwww......gggoggg...rrrrr.bbbbb.yyyyy.............................................    
-           gggggoooggggggggggggggggoooggggggggggogogoggggggr.w..w.rgggggggogggggggggggggggggggggggggggg..................................gggggg
-           gggggoooggggggggggggggggooogggggggggggggggggggggr.wwww.rgggggggoggggggggggggggggggggggggggggggggggggggg.......gggggggggggggggggggggg
-           ggggggggggggggggggggggggggggggggggggggggggggggggr.w..w.rgggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
-           oooooooooooooooooooooooooooooooooooooooooooooooor.wwww.roooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
-           rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr.w..w.rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr
-           ..................................................wwww..............................................................................
-           ..................................................w..w..............................................................................
-           ..................................................wwww..............................................................................
-           ..................................................w..w..............................................................................
-           ....................................................................................................................................
-           ....................................................................................................................................
-           ....................................................................................................................................
-           rrrrrrr......rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr.....rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr
-           oooooor......rooooooooooooooooooooooooooooooooooooooooooooooooooooor.....roooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
-           ttttttr......rtttttttttttttttttttttttttttttttttttttttttttttttttttttr.....rtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
-           rrrrrrr......rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr.....rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr
-           rr.rr.rr......................................................................rr.rr.rr..............................................
-           rr.rr.rr..w...w.wwwww.wwwww.w..w..wwwww.wwwww.wwwww.wwwww.wwwww.wwwww.wwwww...rr.rr.rr...www...wwwww.wwwww.wwwww.wwwww.w...w.wwwww..
-           .rrrrrr...w...w.w...w.w.....w.w...w.....w...w.w.....w...w.w...w.w.....w........rrrrrr....w..w..w...w.w.....w...w...w...w...w.w......
-           .rrrrrr...wwwww.wwwww.w.....ww....wwww..wwwww.wwwww.wwwww.wwwww.w.....wwww.....rrrrrr....w...w.wwwww.wwww..w...w...w...wwwww.wwww...
-           .rrrrrr...w...w.w...w.w.....w.w...w.....w.w.......w.w.....w...w.w.....w........rrrrrr....w...w.w.w...w.....w...w...w...w...w.w......
-           .rr..rr...w...w.w...w.w.....w..w..w.....w..w......w.w.....w...w.w.....w........rr..rr....w...w.w..w..w.....w...w...w...w...w.w......
-           rrr..rrr..w...w.w...w.wwwww.w...w.wwwww.w...w.wwwww.w.....w...w.wwwww.wwwww...rrr..rrr...wwwww.w...w.wwwww.w...w...w...w...w.wwwww..
-           rrr..rrr......................................................................rrr..rrr..............................................
-           ....................................................................................................................................
-           rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr
-
 
            `));
            
@@ -435,8 +773,8 @@ export default class Eightiesdemo extends Animator {
             {
 
                     let intensity=Math.abs(Math.cos(x+c/10))/2;
-                    let b=Math.abs(Math.cos(x)*127)+(127)
-                    let color=new Color(0,0,b,intensity)
+                    let b=Math.abs(Math.cos(x+180)*127)+(127)
+                    let color=new Color(0,0,0,intensity)
 
                     pl.add(new DrawLine(0,c,box.width(),c,color,color))
                    
@@ -451,12 +789,12 @@ export default class Eightiesdemo extends Animator {
         
         let pl=new PixelList();
         let mountainHeight=8;
-        let mountTopColor=new Color(255,255,255,0.6);
-        let mountMidColor=new Color(100,100,100,0.5)
+        let mountTopColor=new Color(255,255,255,0.4);
+        let mountMidColor=new Color(100,100,100,0.2)
         let mountBotColor=new Color(100,100,200,0.1);
         for (let px=0;px<box.width();px++)
         {
-            let height=(Math.sin(x+px/4)+Math.cos(box.width()-(px/6)))*(mountainHeight/2)+(mountainHeight/2)
+            let height=(Math.sin((x*5)+px/4)+Math.cos(box.width()-(px/6)))*(mountainHeight/2)+(mountainHeight/2)
             height=Math.abs(height);
 
             let midHeight=mountainHeight/2;
@@ -517,7 +855,7 @@ export default class Eightiesdemo extends Animator {
         let mountTopColor=new Color(0,0,255,0.4);
         let mountMidColor=new Color(255,0,0,0.4)
         let mountBotColor=new Color(0,255,0,0.4);
-        let mountBottestColor=new Color(0,255,0,0.2);
+        let mountBottestColor=new Color(0,233,0,0.5);
 
         for (let px=0;px<box.width();px++)
         {
@@ -537,7 +875,7 @@ export default class Eightiesdemo extends Animator {
                 pl.add(new DrawLine(px,horizonY,px,horizonY+midHeight,mountBotColor,mountMidColor));
                 pl.add(new DrawLine(px,horizonY+midHeight,px,horizonY+height,mountMidColor,mountTopColor));  
             }
-            pl.add(new DrawLine(px,horizonY+height,px,box.height(),mountTopColor,mountBottestColor));
+            pl.add(new DrawLine(px,horizonY+height,px,box.height()+1,mountTopColor,mountBottestColor));
 
         }
         return pl;
@@ -708,24 +1046,40 @@ export default class Eightiesdemo extends Animator {
         const canvas=new PixelList();
         const sprites=new PixelList();
         const overlay=new PixelList();
+        const canvas3d=new PixelList();
         box.add(canvas);
+        box.add(canvas3d);
         box.add(sprites);
+       
         box.add(overlay);
        let animationNum=0;
       let font=fonts["Pixel-Gosub"];
       font.load();
        let pacmanSeq=0;
       //scheduler.setFrameTimeuS(100000)
+      let scene3d=new scene3D()
+      let cube=new Cube3d(box.width()/2,box.height()*3,20, box.width()/2,box.width()/2,box.width()/2, new Color(255,255,0,1))
+      let stars=new Random3d(box.width()/2,box.height()*3,20, box.width()-4,box.width()-4,box.width()-4,400,new Color(0,0,128,0.5))
+      
+      scene3d.objects.push(stars)
+      scene3d.objects.push(cube)
+      let rotation3d=0
+      let  controlSettings={rotation:1,wireframe:true,perspective:0.98,stars:100}
+       
        scheduler.interval(1, (frameNr) => {
        
             canvas.clear();
             
-            let xOffset=(frameNr/20);
+            let xOffset=Math.cos(90-frameNr/2000)*(box.width()/2)+(box.width()/2);
             let yOffset=(frameNr/animationHeight);
             horizonFactor=Math.sin(frameNr/(box.height()*30))
-          
+            let date=new Date()
+           let datetext=date.toLocaleDateString("NL")
+           let timetext=date.toLocaleTimeString("NL")
+           let txtx=(frameNr/8)%(timetext.length*(font.width+8))
             canvas.add(this.drawBackground(box,xOffset,yOffset,horizonFactor,animationHeight,frameNr));
-            canvas.add(new DrawText(0,box.height()-5,font,horizonFactor.toFixed(3),new Color(128,128,128,1)))
+            canvas.add(new DrawText(0,yOffset,font,datetext,new Color(0,0,0,0.3)))
+            canvas.add(new DrawText(box.width()-26,yOffset,font,timetext,new Color(255,255,255,0.3)))
             sprites.clear()
             let pacmanX=0;
             let pacmanY=0;
@@ -750,7 +1104,7 @@ export default class Eightiesdemo extends Animator {
                     }
                 }
             }
-            if (horizonFactor>0.2)
+            if (horizonFactor>0)
             {
                 pacmanX=(box.width()/2)+(Math.sin(frameNr/100)*(box.width()/3));
                 pacmanY=Math.abs(box.width()/2)*horizonFactor;
@@ -766,6 +1120,26 @@ export default class Eightiesdemo extends Animator {
 
                             sprites.add(this.getTent(box,pacmanX+134,box.height()*0.6+horizonFactor*box.height()))
                 }
+
+
+                //3d scene
+               
+                canvas3d.clear()
+
+           
+            scene3d.objects[0].transformation.translate.y=(1.8+horizonFactor)*box.height()+5
+            scene3d.objects[1].transformation.translate.y=(1.8+horizonFactor)*box.height()+5
+            scene3d.objects[0].transformation.translate.z=(xOffset)/2
+            scene3d.objects[1].transformation.translate.z=(xOffset)/2
+            rotation3d=frameNr
+            //scene3d.objects[1].setRotation(0,0,rotate*4)
+            scene3d.objects[0].setRotation(rotation3d,rotation3d,0)
+            scene3d.objects[1].setRotation(rotation3d,rotation3d,0)
+            //scene3d.objects[2].setRotation(rotate,rotate,0)
+            //scene3d.objects[3].setRotation(rotate,rotate,0)
+         
+           
+            canvas3d.add(scene3d.render(box, controlSettings))
 
 
             
