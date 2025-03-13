@@ -1,0 +1,278 @@
+{
+ "title": "",
+ "description": "",
+ "values": {
+  "80s theme": {
+   "Delay (seconds)": {
+    "value": 32
+   },
+   "Font": {
+    "selected": "Pixel-Gosub"
+   },
+   "Font height": {
+    "value": 12
+   },
+   "Font width": {
+    "value": 8
+   },
+   "Text": {
+    "text": "A long time ago in a galaxy far away                                                                                                                    "
+   },
+   "Text color": {
+    "r": 255,
+    "g": 255,
+    "b": 255,
+    "a": 0.82
+   },
+   "Stars": {
+    "Enabled": {
+     "enabled": false
+    },
+    "Star color": {
+     "r": 255,
+     "g": 255,
+     "b": 255,
+     "a": 0.2
+    },
+    "Number of stars": {
+     "value": 10
+    },
+    "Movie interval": {
+     "value": 5
+    },
+    "Movie interval randomizer": {
+     "value": 0
+    },
+    "Rotate interval": {
+     "value": 4
+    },
+    "Rotate interval randomizer": {
+     "value": 2
+    },
+    "Rotate X step": {
+     "value": -1
+    },
+    "Rotate Y step": {
+     "value": 0
+    }
+   },
+   "Star field": {
+    "Enabled": {
+     "enabled": false
+    },
+    "Base speed": {
+     "value": 0.001
+    },
+    "Acceleration": {
+     "value": 0.03
+    },
+    "Star offset": {
+     "value": 0.1
+    },
+    "Creation interval": {
+     "value": 5
+    }
+   },
+   "The Matrix": {
+    "Enabled": {
+     "enabled": false
+    },
+    "Head color": {
+     "r": 128,
+     "g": 128,
+     "b": 128,
+     "a": 1
+    },
+    "Tail color": {
+     "r": 0,
+     "g": 128,
+     "b": 0,
+     "a": 1
+    },
+    "Fall interval": {
+     "value": 5
+    },
+    "Create interval": {
+     "value": 10
+    },
+    "Slow trials (percent)": {
+     "value": 10
+    },
+    "Slow fall interval": {
+     "value": 10
+    },
+    "Fade head": {
+     "Fade out time": {
+      "value": 10
+     },
+     "Fade out time randomizer": {
+      "value": 5
+     }
+    },
+    "Fade tail": {
+     "Fade out time": {
+      "value": 30
+     },
+     "Fade out time randomizer": {
+      "value": 5
+     }
+    }
+   },
+   "Scrolling": {
+    "Enabled": {
+     "enabled": true
+    },
+    "FPS": {
+     "value": 60
+    },
+    "Subpixel filtering": {
+     "enabled": false
+    },
+    "Rotate interval": {
+     "value": 1
+    },
+    "Rotate interval randomizer": {
+     "value": 0
+    },
+    "Rotate X step": {
+     "value": -1
+    },
+    "Rotate Y step": {
+     "value": 0
+    },
+    "Circular": {
+     "enabled": false
+    },
+    "Show one time only": {
+     "enabled": false
+    }
+   },
+   "Flames": {
+    "Enabled": {
+     "enabled": false
+    },
+    "Fire density [%]": {
+     "value": 10
+    },
+    "Fire intensity [%]": {
+     "value": 100
+    },
+    "Fire depth [pixels]": {
+     "value": 2
+    },
+    "Fire wind X": {
+     "value": 0.1
+    },
+    "Fire wind Y": {
+     "value": -0.2
+    },
+    "Fire cycle": {
+     "Color cycle time": {
+      "value": 15
+     },
+     "Color cycle time randomizer": {
+      "value": 15
+     },
+     "Color cycle repeat count": {
+      "value": 1
+     },
+     "Color cycle mode": {
+      "selected": "reverse"
+     },
+     "Color cycle pattern": {
+      "selected": "Bertrik fire"
+     },
+     "Color cycle pattern range": {
+      "from": 0,
+      "to": 100
+     }
+    }
+   },
+   "Twinkle": {
+    "Enabled": {
+     "enabled": false
+    },
+    "Color": {
+     "r": 255,
+     "g": 255,
+     "b": 255,
+     "a": 1
+    },
+    "Twinkle density": {
+     "value": 3
+    },
+    "Create randomizer %": {
+     "value": 50
+    },
+    "Random colors": {
+     "enabled": false
+    },
+    "Fade out time": {
+     "value": 0
+    },
+    "Fade out time randomizer": {
+     "value": 30
+    }
+   },
+   "Color pattern": {
+    "Enabled": {
+     "enabled": false
+    },
+    "Color cycle time": {
+     "value": 240
+    },
+    "Reverse": {
+     "enabled": false
+    },
+    "Ping pong": {
+     "enabled": false
+    },
+    "Color cycle pattern": {
+     "selected": "Doom fire"
+    },
+    "Color cycle pattern range": {
+     "from": 0,
+     "to": 100
+    },
+    "Per pixel offset %": {
+     "value": 1.1
+    }
+   },
+   "Cursor": {
+    "Enabled": {
+     "enabled": false
+    },
+    "Color": {
+     "r": 128,
+     "g": 128,
+     "b": 128,
+     "a": 1
+    },
+    "X offset": {
+     "value": 2
+    },
+    "Y offset": {
+     "value": 1
+    },
+    "Height": {
+     "value": 6
+    },
+    "Width": {
+     "value": 5
+    },
+    "On time": {
+     "value": 30
+    },
+    "Off time": {
+     "value": 30
+    },
+    "Fade out time": {
+     "value": 10
+    },
+    "Fade out time randomizer": {
+     "value": 0
+    }
+   }
+  }
+ }
+}

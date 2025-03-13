@@ -18,6 +18,7 @@ import DrawBox from "../../draw/DrawBox.js"
 import DrawCircle from "../../draw/DrawCircle.js"
 import { reinGalaxy } from "../../ColorPatterns.js"
 import Matrix from "matrix_transformer"
+import Marquee from "../Text/Marquee.js"
 
 export class scene3D {
     points=[]
@@ -1059,13 +1060,14 @@ export default class Eightiesdemo extends Animator {
       //scheduler.setFrameTimeuS(100000)
       let scene3d=new scene3D()
       let cube=new Cube3d(box.width()/2,box.height()*3,20, box.width()/2,box.width()/2,box.width()/2, new Color(255,255,0,1))
-      let stars=new Random3d(box.width()/2,box.height()*3,20, box.width()-4,box.width()-4,box.width()-4,400,new Color(0,0,128,0.5))
+      let stars=new Random3d(box.width()/2,box.height()*3,20, box.width()/2,box.width()/2,box.width()/2,400,new Color(0,0,128,0.5))
       
       scene3d.objects.push(stars)
       scene3d.objects.push(cube)
       let rotation3d=0
       let  controlSettings={rotation:1,wireframe:true,perspective:0.98,stars:100}
-       
+       let textscroller=new Marquee()
+       textscroller.run(box,scheduler,appControl);
        scheduler.interval(1, (frameNr) => {
        
             canvas.clear();
@@ -1078,8 +1080,8 @@ export default class Eightiesdemo extends Animator {
            let timetext=date.toLocaleTimeString("NL")
            let txtx=(frameNr/8)%(timetext.length*(font.width+8))
             canvas.add(this.drawBackground(box,xOffset,yOffset,horizonFactor,animationHeight,frameNr));
-            canvas.add(new DrawText(0,yOffset,font,datetext,new Color(0,0,0,0.3)))
-            canvas.add(new DrawText(box.width()-26,yOffset,font,timetext,new Color(255,255,255,0.3)))
+            //canvas.add(new DrawText(0,yOffset,font,datetext,new Color(0,0,0,0.3)))
+            //canvas.add(new DrawText(box.width()-26,yOffset,font,timetext,new Color(255,255,255,0.3)))
             sprites.clear()
             let pacmanX=0;
             let pacmanY=0;
