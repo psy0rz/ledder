@@ -11,6 +11,9 @@ Control in realtime via a webgui.
 
 LIVE DEMO: https://ledder.datux.nl
 
+<img width="974" alt="image" src="https://github.com/user-attachments/assets/9ee2360f-804b-4347-aad5-07fc43c55c9b" />
+
+
 # 38C3 megabanner info
 We extended the matrix, so now its 8 x 92 .
 
