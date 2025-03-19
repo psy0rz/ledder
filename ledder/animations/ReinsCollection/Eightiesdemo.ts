@@ -19,6 +19,7 @@ import DrawCircle from "../../draw/DrawCircle.js"
 import { reinGalaxy } from "../../ColorPatterns.js"
 import Matrix from "matrix_transformer"
 import Marquee from "../Text/Marquee.js"
+import Fire from "../Fires/Fire.js"
 
 export class scene3D {
     points=[]
@@ -430,7 +431,7 @@ export default class Eightiesdemo extends Animator {
     }
     
 
-    drawBackground(box:PixelBox, xOffset:number, yOffset:number,horizonHf:number,animationHeight,frameNr)
+    drawBackground(box:PixelBox, xOffset:number, yOffset:number,horizonHf:number,animationHeight,frameNr, settings)
     { 
         let horizonColor=new Color(255,0,255,0.7);
         let skyTopColor=new Color(255,0,0,0);
@@ -446,8 +447,8 @@ export default class Eightiesdemo extends Animator {
           //stars
           //pl.add(this.getSkyGradient(box,xOffset,horizonH));
 
-          pl.add(this.getFractalGalaxy(box,xOffset,yOffset,horizonH,frameNr))
-          pl.add(this.getSkyGradient(box,xOffset,horizonH));
+          pl.add(this.getFractalGalaxy(box,xOffset,yOffset,horizonH,frameNr,settings))
+          pl.add(this.getSkyGradient(box,xOffset,horizonH,settings));
 
 
         //create sky
@@ -456,7 +457,7 @@ export default class Eightiesdemo extends Animator {
             pl.add(new DrawLine(skyX,0,skyX,horizonH,skyTopColor,skyBottomColor));
         }
 
-        pl.add(this.getStars(box,yOffset,horizonH))
+        pl.add(this.getStars(box,yOffset,horizonH,settings))
         if (horizonH>box.height())
         {
             pl.add(this.getSpaceShip(xOffset,Math.sin(horizonH/box.width())*box.width()/2,Math.cos(horizonH/box.height()/2)*box.width()/2))
@@ -464,10 +465,10 @@ export default class Eightiesdemo extends Animator {
 
       
         //sun
-        pl.add(this.getSun(box,xOffset,horizonH))
+        pl.add(this.getSun(box,xOffset,horizonH,frameNr,settings))
 
           //create clouds
-          pl.add(this.getClouds(box,xOffset,horizonH))
+          pl.add(this.getClouds(box,xOffset,horizonH,settings))
 
 
         //create horizon
@@ -493,7 +494,7 @@ export default class Eightiesdemo extends Animator {
             pl.add(new DrawLine(0,earthHline+horizonH+nyOffset,box.width(),earthHline+horizonH+nyOffset,nGridCol,nGridCol));
         }
         
-        for (let earthVline=0; earthVline<box.width();earthVline+=(box.width()/12))
+        for (let earthVline=0; earthVline<box.width();earthVline+=(box.width()/(settings.grid.gridVlines.value)))
             {
                 let perspectiveF=2;
                 let transX=((earthVline-(box.width()/2))*perspectiveF)+(box.width()/2);
@@ -515,7 +516,7 @@ export default class Eightiesdemo extends Animator {
 
     } 
 
-    getStars(box:PixelBox,yOffset,horizonY)
+    getStars(box:PixelBox,yOffset,horizonY,settings)
     {
         let pl=new PixelList();
         let stars=[]
@@ -536,21 +537,21 @@ export default class Eightiesdemo extends Animator {
 
     }
 
-    getSun(box:PixelBox,x,horizonY)
+    getSun(box:PixelBox,x,horizonY,frameNr,settings)
     {
         let pl=new PixelList();
-        let radius=(box.height()*0.8)
+        let radius=settings.sun.sunRadius.value
         let cx=box.width()/2;
         let cy=horizonY;
         
     
-        for (let a=0;a<360;a++)
+        for (let a=0;a<settings.sun.sunBeams.value;a++)
         {
-            let px=(Math.sin(a)*radius)+cx
-            let py=(Math.cos(a)*radius)+cy
+            let px=(Math.sin(a+frameNr)*radius)+cx
+            let py=(Math.cos(a+frameNr)*radius)+cy
             if (py-1<cy)
             {
-            pl.add(new DrawLine(cx,cy,px,py,new Color(255,255,0,1),new Color(255,0,0,0.1)))
+            pl.add(new DrawLine(cx,cy,px,py,settings.sun.sunInnerColor.copy(),settings.sun.sunOuterColor.copy()))
             }
         }
         return pl;
@@ -672,9 +673,9 @@ export default class Eightiesdemo extends Animator {
                 return frames[framenum];
     }
 
-    getFractalGalaxy(box:PixelBox,x,y,horizonY,frameNr)
+    getFractalGalaxy(box:PixelBox,x,y,horizonY,frameNr,settings)
     {
-      
+        let changeFrequency:number=settings.sky.fractalChange.value
         let pl=new PixelList();
         let radius=(box.width()*0.3)
         let hotspots=[
@@ -692,7 +693,7 @@ export default class Eightiesdemo extends Animator {
             { cx:-1.0657340413104,  cy:-0.25412076186408,   maxz:9},
             { cx:-1.1780691868827,  cy:0.30014031883977,    maxz:9}
         ] 
-        let fIndex=Math.round(frameNr/100) %(hotspots.length)
+        let fIndex=Math.round(frameNr*changeFrequency) %(hotspots.length)
         //pl.add(new DrawText(10,10,fonts.C64,fIndex.toString(),new Color(255,255,0,1)))
     
         let complex1=hotspots[fIndex]
@@ -765,7 +766,7 @@ export default class Eightiesdemo extends Animator {
             return pl
     }
 
-    getSkyGradient(box:PixelBox,x,horizonY)
+    getSkyGradient(box:PixelBox,x,horizonY,settings)
     {
         let pl=new PixelList();
         let starsOffset=(horizonY)-2;
@@ -773,9 +774,10 @@ export default class Eightiesdemo extends Animator {
         for (let c=0;c<starsOffset;c++)
             {
 
-                    let intensity=Math.abs(Math.cos(x+c/10))/2;
+                    let intensity=Math.abs(Math.cos(x+c/10));
                     let b=Math.abs(Math.cos(x+180)*127)+(127)
-                    let color=new Color(0,0,0,intensity)
+                    let color=settings.sky.colorShading.copy()
+                    color.a=intensity
 
                     pl.add(new DrawLine(0,c,box.width(),c,color,color))
                    
@@ -785,11 +787,11 @@ export default class Eightiesdemo extends Animator {
         return pl;
     }
 
-    getClouds(box:PixelBox,x,horizonY)
+    getClouds(box:PixelBox,x,horizonY,settings)
     {
         
         let pl=new PixelList();
-        let mountainHeight=8;
+        let mountainHeight=settings.clouds.cloudAmplitude.value;
         let mountTopColor=new Color(255,255,255,0.4);
         let mountMidColor=new Color(100,100,100,0.2)
         let mountBotColor=new Color(100,100,200,0.1);
@@ -1038,16 +1040,73 @@ export default class Eightiesdemo extends Animator {
 
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) {
 
-        const appControl=controls.group("80s theme",true)
-        const secondsBetweenNumbers = appControl.value("Delay (seconds)",30, 1, 120, 1)
-        const animationHeight=box.height()*2;
+       
+        const appControl=controls.group("Eighties demo",true);
+        const animationHeight=appControl.value("Scene height",box.height()*2, box.height(), 255, 1,true)
+        
+        const skyControl=appControl.group("Fractal Sky",false)
+        const skyTopColor=skyControl.color("Top color",0,0,100,0.2)
+        const skyBotColor=skyControl.color("Bottom color",0,0,255,0.5)
+        const fractalDelay=skyControl.value("Zoom speed",1,1,100,1,true)
+        const fractalChange=skyControl.value("Change speed",0.0001,0.00001,1.0,0.0001,true)
+        const colorShading=skyControl.color("Colorshading",0,0,0,1,true)
+        const skySettings={fractaldelay:fractalDelay, skyTopColor:skyTopColor,skyBotColor:skyBotColor,fractalChange:fractalChange, colorShading:colorShading}
+        
+        const sunControl=appControl.group("Sun",false)
+        const sunRadius=sunControl.value("Radius",box.height(),0,64,1,true)
+        const sunBeams=sunControl.value("Beams",90,0,360,1,true)
+        const sunInnerColor=sunControl.color("Inner color",255,255,100,1)
+        const sunOuterColor=sunControl.color("Outer color",255,0,0,0.1)
+        const sunSettings={sunRadius:sunRadius,sunBeams:sunBeams,sunInnerColor:sunInnerColor, sunOuterColor:sunOuterColor}
+        
+        const cloudControl=appControl.group("Clouds",false)
+        const cloudEnabled=cloudControl.switch("Clouds",true,true)
+        const cloudDelay=cloudControl.value("Zoom speed",1,1,100,1,true)
+        const cloudAmplitude=cloudControl.value("Amplitude",1,1,100,1,true)
+        const cloudSettings={cloudEnabled:cloudEnabled,clouddelay:cloudDelay,cloudAmplitude:cloudAmplitude}
+
+        const gridControl=appControl.group("Grid",false)
+        const gridHLineControl=gridControl.value("Horizontal line",12,1,512,1,true)
+        const gridHTopColor=gridControl.color("Hline top color",1,1,100,1,true)
+        const gridHBotColor=gridControl.color("Hline top color",1,1,100,1,true)
+        const gridVLineControl=gridControl.value("Vertical line",12,1,512,1,true)
+        const gridVTopColor=gridControl.color("Hline top color",1,1,100,1,true)
+        const gridVBotColor=gridControl.color("Hline top color",1,1,100,1,true)
+        const gridSettings={gridHlines:gridHLineControl,gridVlines:gridVLineControl}
+
+ 
+      
+        
+        const spritesControl=appControl.group("Sprites",false)
+        const wandelaarControl=spritesControl.switch("Johny Walker",true)
+        const pacmanControl=spritesControl.switch("Pacman",true)
+        const ghostControl=spritesControl.switch("Ghost",true)
+        const pacmanfoodControl=spritesControl.switch("Food",true)
+        const birdControl=spritesControl.switch("Bird",true)
+        const birdpoopControl=spritesControl.switch("Bird poop",true)
+        const rocketControl=spritesControl.switch("Rocket",true)
+        const fireControl=spritesControl.switch("Fire",true)
+        
+        const cube3dControl=appControl.group("3D cube",false)
+        const cube3dEnabledControl=cube3dControl.switch("Show 3D rotating cube",true)
+        const cube3dSizeControls=cube3dControl.value("Size",10,1,512,1,true)
+
+        const datetimeControl=appControl.group("Date/Time",false)
+        const dateControl=datetimeControl.switch("Show date",true)
+        const timeControl=datetimeControl.switch("Show time",true)
+
+        const settings={sky:skySettings,sun:sunSettings,clouds:cloudSettings,grid:gridSettings}
+
+
         let horizonFactor=0;
         let horizonIncrement=0.001
        
         const canvas=new PixelList();
         const sprites=new PixelList();
+        const firebox=new PixelBox(box);
         const overlay=new PixelList();
         const canvas3d=new PixelList();
+        box.add(firebox);
         box.add(canvas);
         box.add(canvas3d);
         box.add(sprites);
@@ -1059,29 +1118,40 @@ export default class Eightiesdemo extends Animator {
        let pacmanSeq=0;
       //scheduler.setFrameTimeuS(100000)
       let scene3d=new scene3D()
-      let cube=new Cube3d(box.width()/2,box.height()*3,20, box.width()/2,box.width()/2,box.width()/2, new Color(255,255,0,1))
-      let stars=new Random3d(box.width()/2,box.height()*3,20, box.width()/2,box.width()/2,box.width()/2,400,new Color(0,0,128,0.5))
+      let cube=new Cube3d(box.width()/2,box.height()*3,20, cube3dSizeControls.value,cube3dSizeControls.value,cube3dSizeControls.value, new Color(255,255,0,1))
+      let stars=new Random3d(box.width()/2,box.height()*3,20, cube3dSizeControls.value,cube3dSizeControls.value,cube3dSizeControls.value,400,new Color(0,0,128,0.5))
       
       scene3d.objects.push(stars)
       scene3d.objects.push(cube)
       let rotation3d=0
       let  controlSettings={rotation:1,wireframe:true,perspective:0.98,stars:100}
        let textscroller=new Marquee()
+       let horizonDir=0.001;
+       let yOffset=0;
        textscroller.run(box,scheduler,appControl);
+       let fire=new Fire();
+       fire.run(firebox,scheduler,appControl);
        scheduler.interval(1, (frameNr) => {
        
             canvas.clear();
             
+            if (horizonFactor>1) { horizonDir=-0.0001;}
+            if (horizonFactor<-1) { horizonDir=0.0001;}
             let xOffset=Math.cos(90-frameNr/2000)*(box.width()/2)+(box.width()/2);
-            let yOffset=(frameNr/animationHeight);
-            horizonFactor=Math.sin(frameNr/(box.height()*30))
+            let yOffset=(frameNr/animationHeight.value);
+            horizonFactor=horizonFactor+horizonDir
             let date=new Date()
            let datetext=date.toLocaleDateString("NL")
            let timetext=date.toLocaleTimeString("NL")
            let txtx=(frameNr/8)%(timetext.length*(font.width+8))
-            canvas.add(this.drawBackground(box,xOffset,yOffset,horizonFactor,animationHeight,frameNr));
-            //canvas.add(new DrawText(0,yOffset,font,datetext,new Color(0,0,0,0.3)))
-            //canvas.add(new DrawText(box.width()-26,yOffset,font,timetext,new Color(255,255,255,0.3)))
+            canvas.add(this.drawBackground(box,xOffset,yOffset,horizonFactor,animationHeight.value,frameNr,settings));
+            if (dateControl.enabled){
+            canvas.add(new DrawText(0,yOffset,font,datetext,new Color(0,0,0,0.3)))
+            }
+            if (timeControl.enabled)
+            {
+              canvas.add(new DrawText(box.width()-26,yOffset,font,timetext,new Color(255,255,255,0.3)))
+            }
             sprites.clear()
             let pacmanX=0;
             let pacmanY=0;
@@ -1089,15 +1159,18 @@ export default class Eightiesdemo extends Animator {
                 if (true)
                 {
                     pacmanX=(pacmanSeq/8)%(box.width()*1.5);
-                    pacmanY=animationHeight*(horizonFactor+1)+8;
-                    sprites.add(this.getPacman(pacmanSeq,pacmanX,pacmanY-5))
+                    pacmanY=animationHeight.value*(horizonFactor+1)+8;
+                    if (pacmanControl.enabled){ sprites.add(this.getPacman(pacmanSeq,pacmanX,pacmanY-5))}
                     let ghost:PixelList=this.getGhost(pacmanSeq,(pacmanX-12)%box.width(),pacmanY-5);
                     ghost.replaceColor(new Color(255,255,255,1),new Color(255,255,255,((Math.sin(frameNr/10)+1)/2)))
-                    sprites.add(ghost);
+                    if (ghostControl.enabled){sprites.add(ghost);}
                 
-                    for (let tx=box.width();tx>(pacmanX+4);tx=tx-4)
-                    {
-                        sprites.add(new Pixel(tx,pacmanY,new Color(255,255,255,0.8)))
+                   if (pacmanfoodControl.enabled){
+
+                        for (let tx=box.width();tx>(pacmanX+4);tx=tx-4)
+                        {
+                            sprites.add(new Pixel(tx,pacmanY,new Color(255,255,255,0.8)))
+                        }
                     }
                     pacmanSeq++;
                     if (pacmanX>box.width()-1)
@@ -1110,40 +1183,43 @@ export default class Eightiesdemo extends Animator {
             {
                 pacmanX=(box.width()/2)+(Math.sin(frameNr/100)*(box.width()/3));
                 pacmanY=Math.abs(box.width()/2)*horizonFactor;
-                sprites.add(this.getSpaceinvader(frameNr/8,pacmanX,pacmanY));
-                sprites.add(new Pixel(pacmanX+4,pacmanY+4+((frameNr/10)%animationHeight),new Color(255,255,255,1)))
+                if (birdControl.enabled) { sprites.add(this.getSpaceinvader(frameNr/8,pacmanX,pacmanY));}
+                if (birdpoopControl.enabled ){ sprites.add(new Pixel(pacmanX+4,pacmanY+4+((frameNr/10)%animationHeight.value),new Color(255,255,255,1)))}
             }
             if (horizonFactor<0.53)
                 {
                             let fireY=box.height()*horizonFactor;
+                            if (fireControl.enabled){
                             sprites.add(this.getFire(box,box.width()-15,fireY,8,horizonFactor*box.height(),frameNr))
                             sprites.add(this.getTent(box,pacmanX,box.height()*0.6+horizonFactor*box.height()))
                             sprites.add(this.getTent(box,pacmanX-134,box.height()*0.6+horizonFactor*box.height()))
 
                             sprites.add(this.getTent(box,pacmanX+134,box.height()*0.6+horizonFactor*box.height()))
+                
+                        }
                 }
-
 
                 //3d scene
                
                 canvas3d.clear()
+        if (cube3dEnabledControl.enabled)
+        {
+                
+                    scene3d.objects[0].transformation.translate.y=(1.8+horizonFactor)*box.height()+5
+                    scene3d.objects[1].transformation.translate.y=(1.8+horizonFactor)*box.height()+5
+                    scene3d.objects[0].transformation.translate.z=(xOffset)/2
+                    scene3d.objects[1].transformation.translate.z=(xOffset)/2
+                    rotation3d=frameNr
+                    //scene3d.objects[1].setRotation(0,0,rotate*4)
+                    scene3d.objects[0].setRotation(rotation3d,rotation3d,0)
+                    scene3d.objects[1].setRotation(rotation3d,rotation3d,0)
+                    //scene3d.objects[2].setRotation(rotate,rotate,0)
+                    //scene3d.objects[3].setRotation(rotate,rotate,0)
+                
+                
+                    canvas3d.add(scene3d.render(box, controlSettings))
 
-           
-            scene3d.objects[0].transformation.translate.y=(1.8+horizonFactor)*box.height()+5
-            scene3d.objects[1].transformation.translate.y=(1.8+horizonFactor)*box.height()+5
-            scene3d.objects[0].transformation.translate.z=(xOffset)/2
-            scene3d.objects[1].transformation.translate.z=(xOffset)/2
-            rotation3d=frameNr
-            //scene3d.objects[1].setRotation(0,0,rotate*4)
-            scene3d.objects[0].setRotation(rotation3d,rotation3d,0)
-            scene3d.objects[1].setRotation(rotation3d,rotation3d,0)
-            //scene3d.objects[2].setRotation(rotate,rotate,0)
-            //scene3d.objects[3].setRotation(rotate,rotate,0)
-         
-           
-            canvas3d.add(scene3d.render(box, controlSettings))
-
-
+        }
             
 
             canvas.crop(box)

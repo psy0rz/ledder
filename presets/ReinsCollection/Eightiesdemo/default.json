@@ -276,6 +276,206 @@
      "value": 0
     }
    }
+  },
+  "Eighties demo": {
+   "Scene height": {
+    "value": 32
+   },
+   "Fractal Sky": {
+    "Top color": {
+     "r": 0,
+     "g": 0,
+     "b": 100,
+     "a": 0.2
+    },
+    "Bottom color": {
+     "r": 0,
+     "g": 0,
+     "b": 255,
+     "a": 0.5
+    },
+    "Zoom speed": {
+     "value": 1
+    },
+    "Change speed": {
+     "value": 0.0001
+    },
+    "Colorshading": {
+     "r": 0,
+     "g": 0,
+     "b": 0,
+     "a": 1
+    }
+   },
+   "Sun": {
+    "Radius": {
+     "value": 61
+    },
+    "Beams": {
+     "value": 90
+    },
+    "Inner color": {
+     "r": 255,
+     "g": 255,
+     "b": 255,
+     "a": 1
+    },
+    "Outer color": {
+     "r": 255,
+     "g": 0,
+     "b": 0,
+     "a": 0.1
+    }
+   },
+   "Clouds": {
+    "Clouds": {
+     "enabled": true
+    },
+    "Zoom speed": {
+     "value": 1
+    },
+    "Amplitude": {
+     "value": 1
+    }
+   },
+   "Grid": {
+    "Horizontal line": {
+     "value": 12
+    },
+    "Hline top color": {
+     "r": 1,
+     "g": 1,
+     "b": 100,
+     "a": 1
+    },
+    "Vertical line": {
+     "value": 12
+    }
+   },
+   "Sprites": {
+    "Johny Walker": {
+     "enabled": true
+    },
+    "Pacman": {
+     "enabled": true
+    },
+    "Ghost": {
+     "enabled": true
+    },
+    "Food": {
+     "enabled": true
+    },
+    "Bird": {
+     "enabled": true
+    },
+    "Bird poop": {
+     "enabled": true
+    },
+    "Rocket": {
+     "enabled": true
+    },
+    "Fire": {
+     "enabled": true
+    }
+   },
+   "3D cube": {
+    "Show 3D rotating cube": {
+     "enabled": true
+    }
+   },
+   "Size": {
+    "value": 10
+   },
+   "Date/Time": {
+    "Show date": {
+     "enabled": true
+    },
+    "Show time": {
+     "enabled": true
+    }
+   },
+   "Font": {
+    "selected": "C64"
+   },
+   "Font height": {
+    "value": 0
+   },
+   "Font width": {
+    "value": 0
+   },
+   "Text": {
+    "text": "Marquee  "
+   },
+   "Text color": {
+    "r": 33,
+    "g": 255,
+    "b": 0,
+    "a": 1
+   },
+   "Stars": {
+    "Enabled": {
+     "enabled": false
+    }
+   },
+   "Star field": {
+    "Enabled": {
+     "enabled": false
+    }
+   },
+   "The Matrix": {
+    "Enabled": {
+     "enabled": false
+    }
+   },
+   "Scrolling": {
+    "Enabled": {
+     "enabled": true
+    },
+    "FPS": {
+     "value": 60
+    },
+    "Subpixel filtering": {
+     "enabled": false
+    },
+    "Rotate interval": {
+     "value": 1
+    },
+    "Rotate interval randomizer": {
+     "value": 0
+    },
+    "Rotate X step": {
+     "value": -1
+    },
+    "Rotate Y step": {
+     "value": 0
+    },
+    "Circular": {
+     "enabled": false
+    },
+    "Show one time only": {
+     "enabled": false
+    }
+   },
+   "Flames": {
+    "Enabled": {
+     "enabled": false
+    }
+   },
+   "Twinkle": {
+    "Enabled": {
+     "enabled": false
+    }
+   },
+   "Color pattern": {
+    "Enabled": {
+     "enabled": false
+    }
+   },
+   "Cursor": {
+    "Enabled": {
+     "enabled": false
+    }
+   }
   }
  }
 }
