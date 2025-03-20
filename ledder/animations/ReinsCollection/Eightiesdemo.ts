@@ -447,8 +447,14 @@ export default class Eightiesdemo extends Animator {
           //stars
           //pl.add(this.getSkyGradient(box,xOffset,horizonH));
 
+          if (settings.sky.fractalEnabled.enabled)
+          {
           pl.add(this.getFractalGalaxy(box,xOffset,yOffset,horizonH,frameNr,settings))
+          }
+          if (settings.sky.colorShadingEnabled.enabled)
+          {
           pl.add(this.getSkyGradient(box,xOffset,horizonH,settings));
+          }
 
 
         //create sky
@@ -457,7 +463,10 @@ export default class Eightiesdemo extends Animator {
             pl.add(new DrawLine(skyX,0,skyX,horizonH,skyTopColor,skyBottomColor));
         }
 
-        pl.add(this.getStars(box,yOffset,horizonH,settings))
+        if (settings.sky.starsEnabled.enabled)
+        {
+            pl.add(this.getStars(box,yOffset,horizonH,settings))
+        }
         if (horizonH>box.height())
         {
             pl.add(this.getSpaceShip(xOffset,Math.sin(horizonH/box.width())*box.width()/2,Math.cos(horizonH/box.height()/2)*box.width()/2))
@@ -465,14 +474,19 @@ export default class Eightiesdemo extends Animator {
 
       
         //sun
+        if (settings.sun.sunEnabled.enabled)
+        {
         pl.add(this.getSun(box,xOffset,horizonH,frameNr,settings))
+        }
 
+        if (settings.clouds.cloudEnabled.enabled)
+        {
           //create clouds
           pl.add(this.getClouds(box,xOffset,horizonH,settings))
-
+        }
 
         //create horizon
-         pl.add(new DrawLine(0,horizonH,box.width(),horizonH,horizonColor,horizonColor));
+         //pl.add(new DrawLine(0,horizonH,box.width(),horizonH,horizonColor,horizonColor));
        
         let earthVh=(box.height()-horizonH)/(box.height()/3);
         let nxOffset=xOffset%(box.width()/8);
@@ -484,23 +498,28 @@ export default class Eightiesdemo extends Animator {
         //create earth
 
          //draw buildings
-         pl.add(this.getDrentheCastle(box,0,horizonH))
-         pl.add(this.getPolder(box,xOffset,horizonH));
-        
-       
-        for (let earthHline=0; earthHline<(box.height()-horizonH);earthHline+=earthVh)
-        {
-            let nGridCol=new Color(82,52,191,(earthHline/(box.height()-horizonH)));
-            pl.add(new DrawLine(0,earthHline+horizonH+nyOffset,box.width(),earthHline+horizonH+nyOffset,nGridCol,nGridCol));
-        }
-        
-        for (let earthVline=0; earthVline<box.width();earthVline+=(box.width()/(settings.grid.gridVlines.value)))
-            {
-                let perspectiveF=2;
-                let transX=((earthVline-(box.width()/2))*perspectiveF)+(box.width()/2);
-                pl.add(new DrawLine(earthVline-nxOffset,horizonH,transX-nxOffset,box.height(),gridColorFar,gridColorClose));
-            }
+         pl.add(this.getDrentheCastle(box,0,horizonH+1))
 
+         if (settings.ground.groundEnabled)
+         {
+            pl.add(this.getPolder(box,xOffset,horizonH));
+         }
+        
+       if (settings.grid.gridEnabled.enabled)
+       {
+                for (let earthHline=0; earthHline<(box.height()-horizonH);earthHline+=earthVh)
+                {
+                    let nGridCol=new Color(82,52,191,(earthHline/(box.height()-horizonH)));
+                    pl.add(new DrawLine(0,earthHline+horizonH+nyOffset,box.width(),earthHline+horizonH+nyOffset,nGridCol,nGridCol));
+                }
+                
+                for (let earthVline=0; earthVline<box.width();earthVline+=(box.width()/(settings.grid.gridVlines.value)))
+                    {
+                        let perspectiveF=2;
+                        let transX=((earthVline-(box.width()/2))*perspectiveF)+(box.width()/2);
+                        pl.add(new DrawLine(earthVline-nxOffset,horizonH,transX-nxOffset,box.height(),gridColorFar,gridColorClose));
+                    }
+        }
 
             //add wandelaar
             if (horizonH<box.width() && horizonH>0)
@@ -1043,21 +1062,26 @@ export default class Eightiesdemo extends Animator {
        
         const appControl=controls.group("Eighties demo",true);
         const animationHeight=appControl.value("Scene height",box.height()*2, box.height(), 255, 1,true)
-        
+        const verticalScrollSpeed=appControl.value("Vertical scroll speed",0.0001, 0, 0.1, .0001,true)
         const skyControl=appControl.group("Fractal Sky",false)
         const skyTopColor=skyControl.color("Top color",0,0,100,0.2)
         const skyBotColor=skyControl.color("Bottom color",0,0,255,0.5)
+        const fractalEnabled=skyControl.switch("Fractal galaxy enabled",true)
+       
         const fractalDelay=skyControl.value("Zoom speed",1,1,100,1,true)
         const fractalChange=skyControl.value("Change speed",0.0001,0.00001,1.0,0.0001,true)
+        const starsEnabled=skyControl.switch("Stars enabled",true)
+        const colorShadingEnabled=skyControl.switch("Colorshading enabled",true)
         const colorShading=skyControl.color("Colorshading",0,0,0,1,true)
-        const skySettings={fractaldelay:fractalDelay, skyTopColor:skyTopColor,skyBotColor:skyBotColor,fractalChange:fractalChange, colorShading:colorShading}
+        const skySettings={starsEnabled:starsEnabled,colorShadingEnabled:colorShadingEnabled,fractaldelay:fractalDelay, fractalEnabled:fractalEnabled,skyTopColor:skyTopColor,skyBotColor:skyBotColor,fractalChange:fractalChange, colorShading:colorShading}
         
         const sunControl=appControl.group("Sun",false)
+        const sunEnabled=sunControl.switch("Sun enabled",true,true)
         const sunRadius=sunControl.value("Radius",box.height(),0,64,1,true)
         const sunBeams=sunControl.value("Beams",90,0,360,1,true)
         const sunInnerColor=sunControl.color("Inner color",255,255,100,1)
         const sunOuterColor=sunControl.color("Outer color",255,0,0,0.1)
-        const sunSettings={sunRadius:sunRadius,sunBeams:sunBeams,sunInnerColor:sunInnerColor, sunOuterColor:sunOuterColor}
+        const sunSettings={sunEnabled:sunEnabled,sunRadius:sunRadius,sunBeams:sunBeams,sunInnerColor:sunInnerColor, sunOuterColor:sunOuterColor}
         
         const cloudControl=appControl.group("Clouds",false)
         const cloudEnabled=cloudControl.switch("Clouds",true,true)
@@ -1065,19 +1089,20 @@ export default class Eightiesdemo extends Animator {
         const cloudAmplitude=cloudControl.value("Amplitude",1,1,100,1,true)
         const cloudSettings={cloudEnabled:cloudEnabled,clouddelay:cloudDelay,cloudAmplitude:cloudAmplitude}
 
-        const gridControl=appControl.group("Grid",false)
+        const gridControl=appControl.group("Grid",true)
+        const gridEnabled=sunControl.switch("Grid enabled",true)
         const gridHLineControl=gridControl.value("Horizontal line",12,1,512,1,true)
         const gridHTopColor=gridControl.color("Hline top color",1,1,100,1,true)
         const gridHBotColor=gridControl.color("Hline top color",1,1,100,1,true)
         const gridVLineControl=gridControl.value("Vertical line",12,1,512,1,true)
         const gridVTopColor=gridControl.color("Hline top color",1,1,100,1,true)
         const gridVBotColor=gridControl.color("Hline top color",1,1,100,1,true)
-        const gridSettings={gridHlines:gridHLineControl,gridVlines:gridVLineControl}
-
- 
-      
+        const gridSettings={gridEnabled:gridEnabled,gridHlines:gridHLineControl,gridVlines:gridVLineControl}
         
-        const spritesControl=appControl.group("Sprites",false)
+
+        const groundControl=appControl.group("Ground sinus",true)
+        const groundEnabled=groundControl.switch("Groundsinus enabled",true,true)
+        const spritesControl=appControl.group("Sprites",true)
         const wandelaarControl=spritesControl.switch("Johny Walker",true)
         const pacmanControl=spritesControl.switch("Pacman",true)
         const ghostControl=spritesControl.switch("Ghost",true)
@@ -1088,18 +1113,26 @@ export default class Eightiesdemo extends Animator {
         const fireControl=spritesControl.switch("Fire",true)
         
         const cube3dControl=appControl.group("3D cube",false)
-        const cube3dEnabledControl=cube3dControl.switch("Show 3D rotating cube",true)
-        const cube3dSizeControls=cube3dControl.value("Size",10,1,512,1,true)
+        const cube3dEnabled=cube3dControl.switch("Show 3D rotating cube",true)
+        const cube3dSize=cube3dControl.value("Size",10,1,512,1,true)
+        const cubeColor=cube3dControl.color("Cube color",255,255,0,1,true)
+        const cubematterColor=cube3dControl.color("Matter color",255,0,0,1,true)
+        const cube3dSettings={cube3dEnabled:cube3dEnabled,cube3dSize:cube3dSize,cubeColor:cubeColor,cubematterColor:cubematterColor}
 
         const datetimeControl=appControl.group("Date/Time",false)
         const dateControl=datetimeControl.switch("Show date",true)
         const timeControl=datetimeControl.switch("Show time",true)
 
-        const settings={sky:skySettings,sun:sunSettings,clouds:cloudSettings,grid:gridSettings}
+        const extMarqueeControl=appControl.group("Marquee",false)
+        const extfireControl=appControl.group("Flames",false)
+
+
+
+        const settings={ground:groundControl,sky:skySettings,sun:sunSettings,clouds:cloudSettings,grid:gridSettings,cube3d:cube3dSettings}
 
 
         let horizonFactor=0;
-        let horizonIncrement=0.001
+        let horizonIncrement=verticalScrollSpeed
        
         const canvas=new PixelList();
         const sprites=new PixelList();
@@ -1118,27 +1151,29 @@ export default class Eightiesdemo extends Animator {
        let pacmanSeq=0;
       //scheduler.setFrameTimeuS(100000)
       let scene3d=new scene3D()
-      let cube=new Cube3d(box.width()/2,box.height()*3,20, cube3dSizeControls.value,cube3dSizeControls.value,cube3dSizeControls.value, new Color(255,255,0,1))
-      let stars=new Random3d(box.width()/2,box.height()*3,20, cube3dSizeControls.value,cube3dSizeControls.value,cube3dSizeControls.value,400,new Color(0,0,128,0.5))
+      let cubeCol=new Color(cubeColor.r,cubeColor.g,cubeColor.b,cubeColor.a);
+      let matterCol=new Color(cubeColor.r,cubeColor.g,cubeColor.b,cubeColor.a);
+      let cube=new Cube3d(box.width()/2,box.height()*3,20, cube3dSize.value,cube3dSize.value,cube3dSize.value, cubeCol)
+      let stars=new Random3d(box.width()/2,box.height()*3,20, cube3dSize.value,cube3dSize.value,cube3dSize.value,400,matterCol)
       
       scene3d.objects.push(stars)
       scene3d.objects.push(cube)
       let rotation3d=0
       let  controlSettings={rotation:1,wireframe:true,perspective:0.98,stars:100}
        let textscroller=new Marquee()
-       let horizonDir=0.001;
+       let horizonDir=verticalScrollSpeed.value;
        let yOffset=0;
-       textscroller.run(box,scheduler,appControl);
+       textscroller.run(box,scheduler,extMarqueeControl);
        let fire=new Fire();
-       fire.run(firebox,scheduler,appControl);
+       fire.run(firebox,scheduler,extfireControl);
        scheduler.interval(1, (frameNr) => {
        
             canvas.clear();
             
-            if (horizonFactor>1) { horizonDir=-0.0001;}
-            if (horizonFactor<-1) { horizonDir=0.0001;}
+            if (horizonFactor>1) { horizonDir=-1* verticalScrollSpeed.value}
+            if (horizonFactor<-1) { horizonDir=verticalScrollSpeed.value}
             let xOffset=Math.cos(90-frameNr/2000)*(box.width()/2)+(box.width()/2);
-            let yOffset=(frameNr/animationHeight.value);
+            let yOffset=0; //(frameNr/animationHeight.value);
             horizonFactor=horizonFactor+horizonDir
             let date=new Date()
            let datetext=date.toLocaleDateString("NL")
@@ -1146,11 +1181,11 @@ export default class Eightiesdemo extends Animator {
            let txtx=(frameNr/8)%(timetext.length*(font.width+8))
             canvas.add(this.drawBackground(box,xOffset,yOffset,horizonFactor,animationHeight.value,frameNr,settings));
             if (dateControl.enabled){
-            canvas.add(new DrawText(0,yOffset,font,datetext,new Color(0,0,0,0.3)))
+            canvas.add(new DrawText(0,0,font,datetext,new Color(0,0,0,0.3)))
             }
             if (timeControl.enabled)
             {
-              canvas.add(new DrawText(box.width()-26,yOffset,font,timetext,new Color(255,255,255,0.3)))
+              canvas.add(new DrawText(box.width()-26,0,font,timetext,new Color(255,255,255,0.3)))
             }
             sprites.clear()
             let pacmanX=0;
@@ -1202,7 +1237,7 @@ export default class Eightiesdemo extends Animator {
                 //3d scene
                
                 canvas3d.clear()
-        if (cube3dEnabledControl.enabled)
+        if (cube3dEnabled.enabled)
         {
                 
                     scene3d.objects[0].transformation.translate.y=(1.8+horizonFactor)*box.height()+5
