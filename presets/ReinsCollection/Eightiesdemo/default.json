@@ -279,7 +279,7 @@
   },
   "Eighties demo": {
    "Scene height": {
-    "value": 81
+    "value": 59
    },
    "Fractal Sky": {
     "Top color": {
@@ -295,7 +295,7 @@
      "a": 0.5
     },
     "Zoom speed": {
-     "value": 1
+     "value": 50
     },
     "Change speed": {
      "value": 0.0001
@@ -305,11 +305,20 @@
      "g": 0,
      "b": 0,
      "a": 1
+    },
+    "Fractal galaxy enabled": {
+     "enabled": true
+    },
+    "Stars enabled": {
+     "enabled": false
+    },
+    "Colorshading enabled": {
+     "enabled": true
     }
    },
    "Sun": {
     "Radius": {
-     "value": 37
+     "value": 16
     },
     "Beams": {
      "value": 200
@@ -325,6 +334,9 @@
      "g": 255,
      "b": 0,
      "a": 0.03
+    },
+    "Sun enabled": {
+     "enabled": true
     }
    },
    "Clouds": {
@@ -350,6 +362,9 @@
     },
     "Vertical line": {
      "value": 12
+    },
+    "Grid enabled": {
+     "enabled": true
     }
    },
    "Sprites": {
@@ -375,7 +390,7 @@
      "enabled": true
     },
     "Fire": {
-     "enabled": true
+     "enabled": false
     }
    },
    "3D cube": {
@@ -384,6 +399,18 @@
     },
     "Size": {
      "value": 31
+    },
+    "Cube color": {
+     "r": 255,
+     "g": 255,
+     "b": 0,
+     "a": 1
+    },
+    "Matter color": {
+     "r": 255,
+     "g": 0,
+     "b": 0,
+     "a": 1
     }
    },
    "Size": {
@@ -553,6 +580,36 @@
       "from": 0,
       "to": 100
      }
+    },
+    "Fire colors": {
+     "selected": "Bertrik fire"
+    },
+    "Fire colors range": {
+     "from": 0,
+     "to": 100
+    },
+    "Fire interval": {
+     "value": 1
+    },
+    "Fire intensity %": {
+     "from": 0,
+     "to": 100
+    },
+    "Fire wildness %": {
+     "value": 10
+    },
+    "Fire decay %": {
+     "value": 10
+    },
+    "Fire sintel factor": {
+     "value": 0
+    },
+    "Fire speed": {
+     "value": 1
+    },
+    "Fire X range %": {
+     "from": 0,
+     "to": 100
     }
    },
    "Twinkle": {
@@ -618,6 +675,98 @@
    "Fire X range %": {
     "from": 0,
     "to": 100
+   },
+   "Vertical scroll speed": {
+    "value": 0.0013000000000000002
+   },
+   "Ground sinus": {
+    "Groundsinus enabled": {
+     "enabled": true
+    }
+   },
+   "Marquee": {
+    "Font": {
+     "selected": "C64"
+    },
+    "Font height": {
+     "value": 0
+    },
+    "Font width": {
+     "value": 0
+    },
+    "Text": {
+     "text": "Marquee  "
+    },
+    "Text color": {
+     "r": 33,
+     "g": 255,
+     "b": 0,
+     "a": 1
+    },
+    "Stars": {
+     "Enabled": {
+      "enabled": false
+     }
+    },
+    "Star field": {
+     "Enabled": {
+      "enabled": false
+     }
+    },
+    "The Matrix": {
+     "Enabled": {
+      "enabled": false
+     }
+    },
+    "Scrolling": {
+     "Enabled": {
+      "enabled": true
+     },
+     "FPS": {
+      "value": 60
+     },
+     "Subpixel filtering": {
+      "enabled": false
+     },
+     "Rotate interval": {
+      "value": 1
+     },
+     "Rotate interval randomizer": {
+      "value": 0
+     },
+     "Rotate X step": {
+      "value": -1
+     },
+     "Rotate Y step": {
+      "value": 0
+     },
+     "Circular": {
+      "enabled": false
+     },
+     "Show one time only": {
+      "enabled": false
+     }
+    },
+    "Flames": {
+     "Enabled": {
+      "enabled": false
+     }
+    },
+    "Twinkle": {
+     "Enabled": {
+      "enabled": false
+     }
+    },
+    "Color pattern": {
+     "Enabled": {
+      "enabled": false
+     }
+    },
+    "Cursor": {
+     "Enabled": {
+      "enabled": false
+     }
+    }
    }
   }
  }

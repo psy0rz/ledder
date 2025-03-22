@@ -500,7 +500,7 @@ export default class Eightiesdemo extends Animator {
          //draw buildings
          pl.add(this.getDrentheCastle(box,0,horizonH+1))
 
-         if (settings.ground.groundEnabled)
+         if (settings.ground.groundEnabled.enabled)
          {
             pl.add(this.getPolder(box,xOffset,horizonH));
          }
@@ -1090,7 +1090,7 @@ export default class Eightiesdemo extends Animator {
         const cloudSettings={cloudEnabled:cloudEnabled,clouddelay:cloudDelay,cloudAmplitude:cloudAmplitude}
 
         const gridControl=appControl.group("Grid",true)
-        const gridEnabled=sunControl.switch("Grid enabled",true)
+        const gridEnabled=gridControl.switch("Grid enabled",true)
         const gridHLineControl=gridControl.value("Horizontal line",12,1,512,1,true)
         const gridHTopColor=gridControl.color("Hline top color",1,1,100,1,true)
         const gridHBotColor=gridControl.color("Hline top color",1,1,100,1,true)
@@ -1102,6 +1102,8 @@ export default class Eightiesdemo extends Animator {
 
         const groundControl=appControl.group("Ground sinus",true)
         const groundEnabled=groundControl.switch("Groundsinus enabled",true,true)
+        const groundSettings={groundEnabled:groundEnabled}
+
         const spritesControl=appControl.group("Sprites",true)
         const wandelaarControl=spritesControl.switch("Johny Walker",true)
         const pacmanControl=spritesControl.switch("Pacman",true)
@@ -1128,7 +1130,7 @@ export default class Eightiesdemo extends Animator {
 
 
 
-        const settings={ground:groundControl,sky:skySettings,sun:sunSettings,clouds:cloudSettings,grid:gridSettings,cube3d:cube3dSettings}
+        const settings={ground:groundSettings,sky:skySettings,sun:sunSettings,clouds:cloudSettings,grid:gridSettings,cube3d:cube3dSettings}
 
 
         let horizonFactor=0;
