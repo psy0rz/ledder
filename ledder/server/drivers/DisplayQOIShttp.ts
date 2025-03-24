@@ -4,9 +4,9 @@ import OffsetMapper from "./OffsetMapper.js"
 import {type Response} from 'express';
 
 
-const STREAM_LIVE = 0
-const STREAM_RECORD = 1
-const STREAM_REPLAY = 2
+export const STREAM_LIVE = 0
+export const STREAM_RECORD = 1
+export const STREAM_REPLAY = 2
 
 export class DisplayQOIShttp extends DisplayQOIS {
 
@@ -16,8 +16,11 @@ export class DisplayQOIShttp extends DisplayQOIS {
     private streamMode: number
 
 
-    constructor(mapper: OffsetMapper, maxFps = 60) {
+    constructor(mapper: OffsetMapper, id, maxFps = 60) {
         super(mapper, 0)
+
+        this.id=id
+        this.descriptionControl.text=`HTTP ${id}`
 
         this.minFrameTimeMicros = ~~(1000000 / maxFps)
         this.defaultFrameTimeMicros = this.minFrameTimeMicros

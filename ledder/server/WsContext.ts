@@ -13,7 +13,7 @@ export class WsContext {
     id: number
     remoteAddress: string
 
-    renderMonitor: RenderControl
+    renderControl: RenderControl
 
     // statsInterval: any
     // started: boolean
@@ -54,9 +54,9 @@ export class WsContext {
         // this.stopMonitoring()
         // this.stopControls()
 
-        if (this.renderMonitor!==undefined)
+        if (this.renderControl!==undefined)
         {
-            await this.renderMonitor.removeWsContext(this)
+            await this.renderControl.removeWsContext(this)
         }
     }
 

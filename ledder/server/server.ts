@@ -4,23 +4,20 @@ import ControlGroup from "../ControlGroup.js"
 import GammaMapper from "./drivers/GammaMapper.js"
 import {presetStore} from "./PresetStore.js"
 import {DisplayQOIShttp} from "./drivers/DisplayQOIShttp.js"
-import {config, load} from "./config.js"
+import {config, loadDisplayconf} from "./config.js"
 import RenderControl from "./RenderControl.js";
 import type {WsContext} from "./WsContext.js";
 import * as fs from "node:fs";
+import {loadSettings, saveSettings, saveSettingsDelayed} from "./DisplaySettings.js";
 
 
-const settingsControl = new ControlGroup('Global settings')
-
-await load()
-
-const gammaMapper = new GammaMapper(settingsControl.group("Display settings"))
+await loadDisplayconf()
 
 
 let renderControllers: Array<RenderControl> = []
 
 //create preview renderer
-let renderer = new RenderRealtime(`Preview`)
+let renderer = new RenderRealtime()
 await renderer.animationManager.select(config.animation, false)
 const previewRenderControl = new RenderControl(renderer)
 renderControllers.push(previewRenderControl)
@@ -28,23 +25,16 @@ renderControllers.push(previewRenderControl)
 //create actual realtime displays
 for (const displayNr in config.displayList) {
     const display = config.displayList[displayNr]
-    //FIXME, should be one confirable per display instead of global.
-    display.gammaMapper = gammaMapper
 
-
-    let desc = ""
-    if (display.id)
-        desc = `${display.description} (${display.id})`
-    else
-        `Display ${displayNr} ${display.description}`
-
-    let renderer = new RenderRealtime(desc)
-    await renderer.addDisplay(display)
+    let renderer = new RenderRealtime()
     await renderer.animationManager.select(config.animation, false)
     renderControllers.push(new RenderControl(renderer))
+    await renderer.addDisplay(display)
 
 }
 
+//load display settings
+await loadSettings(renderControllers)
 
 setInterval(() => {
     for (let renderMonitor of renderControllers) {
@@ -56,29 +46,44 @@ setInterval(() => {
 //RPC bindings
 let rpc = new RpcServer()
 
-rpc.addMethod("refresh", async (context: WsContext) => {
-    context.notify("animationList", presetStore.animationPresetList)
+//notify all websockets on all render controllers
+function notifyAll(method: string, ...params) {
+    for (let renderControl of renderControllers) {
+        renderControl.notifyAll(method, ...params)
+    }
+}
 
-
+//display list suitable for webclients
+function getDisplayList() {
     let displays = []
     for (let renderControl of renderControllers) {
 
         let online = true;
         const display = renderControl.getPrimaryDisplay() as DisplayQOIShttp
-        if (display != undefined && display.isOnline != undefined)
-            online = display.isOnline()
 
-        displays.push({
-            description:renderControl.getDescription(),
-            online: online,
-        })
+        if (display !== undefined) {
+            if (display.isOnline != undefined)
+                online = display.isOnline()
+
+            displays.push({
+                description: renderControl.getPrimaryDisplay().descriptionControl.text,
+                online: online,
+            })
+        }
     }
 
-    context.notify("displayList", displays)
+    return displays
+
+}
+
+
+rpc.addMethod("refresh", async (context: WsContext) => {
+    context.notify("animationList", presetStore.animationPresetList)
+    context.notify("displayList", getDisplayList())
 })
 
 rpc.addMethod("save", async (context: WsContext, presetName) => {
-    await context.renderMonitor.savePreset(presetName)
+    await context.renderControl.savePreset(presetName)
 
     //inform everyone of the new list and preview
     for (let renderMonitor of renderControllers) {
@@ -89,7 +94,7 @@ rpc.addMethod("save", async (context: WsContext, presetName) => {
 
 rpc.addMethod("delete", async (context: WsContext) => {
 
-    await context.renderMonitor.deletePreset()
+    await context.renderControl.deletePreset()
 
     //inform everyone of the new list
     for (let renderMonitor of renderControllers) {
@@ -104,14 +109,14 @@ rpc.addMethod("startMonitoring", async (context: WsContext, rendererId) => {
     if (renderControllers[rendererId] === undefined)
         rendererId = 0
 
-    context.notify("monitoring", rendererId)
+    context.notify("monitoring", rendererId, renderControllers[rendererId].getPrimaryDisplay().id)
     await renderControllers[rendererId].addWsContext(context)
 
 
 })
 
 rpc.addMethod("stopMonitoring", async (context: WsContext) => {
-    await context.renderMonitor.removeWsContext(context)
+    await context.renderControl.removeWsContext(context)
 
 
 })
@@ -120,9 +125,8 @@ rpc.addMethod("stopMonitoring", async (context: WsContext) => {
 rpc.addMethod("select", async (context: WsContext, animationAndPresetPath) => {
 
 
-    await context.renderMonitor.select(animationAndPresetPath, false)
-
-    // }
+    await context.renderControl.select(animationAndPresetPath, false)
+    saveSettingsDelayed(renderControllers)
 })
 
 rpc.addMethod("updateValue", async (context, path, values) => {
@@ -132,17 +136,20 @@ rpc.addMethod("updateValue", async (context, path, values) => {
 })
 
 
-rpc.addMethod("getSettings", async () => {
-    return settingsControl
+rpc.addMethod("getSettings", async (context: WsContext) => {
+    return context.renderControl.getPrimaryDisplay().settingsControl
 
 })
 
 
-rpc.addMethod("updateSetting", async (context, path, values) => {
+rpc.addMethod("updateSetting", async (context: WsContext, path, values) => {
 
     try {
-
-        settingsControl.updateValue(path, values)
+        context.renderControl.getPrimaryDisplay().settingsControl.updateValue(path, values)
+        if (path[0] === "Description") {
+            notifyAll("displayList", getDisplayList())
+        }
+        saveSettingsDelayed(renderControllers)
     } catch (e) {
         console.error("Error while updating settings value:", e)
     }
@@ -153,8 +160,9 @@ rpc.addMethod("changePreviewSize", async (context: WsContext, width, height) => 
 
     await previewRenderControl.changePreviewSize(width, height)
 
+
     //also switch the context to the preview display, if it wasnt already
-    context.notify("monitoring", 0)
+    context.notify("monitoring", 0, previewRenderControl.getPrimaryDisplay().id)
     previewRenderControl.addWsContext(context)
 
 
@@ -208,12 +216,14 @@ rpc.app.get('/update/esp32s3.bin', async (req, res) => {
 });
 
 rpc.addMethod("setStreamMode", async (context: WsContext, mode: number) => {
-    context.renderMonitor.setStreamMode(Number(mode))
+    context.renderControl.setStreamMode(Number(mode))
+    saveSettingsDelayed(renderControllers)
 
 })
 
 
 //Stream QOIS frames via a http get request.
+//
 rpc.app.get('/stream/:id', async (req, resp) => {
 
     console.log(`Display http connect: ${req.params.id} (${req.ip})`)

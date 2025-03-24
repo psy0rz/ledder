@@ -21,7 +21,23 @@ export class DisplayWebsocket extends Display {
 
         this.imageBuf8 = new Uint8ClampedArray(height * width * 4)
 
+        this.id="Preview"
+        this.descriptionControl.text=`Preview`
 
+        //normal screens have gamma 1 instead of the default 2.8
+        this.gammaMapper.gammaControl.value=1
+        this.gammaMapper.setGamma()
+
+
+    }
+
+    resize(width, height) {
+        this.imageBuf8 = new Uint8ClampedArray(height * width * 4)
+        this.descriptionControl.text = `Preview`
+        this.width = width
+        this.height = height
+        this.xMax = width - 1
+        this.yMax = height - 1
     }
 
     //sets a pixel in the render buffer (called from Draw-classes render() functions)
@@ -62,6 +78,19 @@ export class DisplayWebsocket extends Display {
 
 
         let sentBytes=0
+
+        //do gamma mapping?
+        if (this.gammaMapper.gammaControl.value!=1 || this.gammaMapper.brightnessControl.value!=255)
+        {
+            for(let i=0; i<this.imageBuf8.length; i=i+4)
+            {
+                this.imageBuf8[i]=this.gammaMapper[this.imageBuf8[i]]
+                this.imageBuf8[i+1]=this.gammaMapper[this.imageBuf8[i+1]]
+                this.imageBuf8[i+2]=this.gammaMapper[this.imageBuf8[i+2]]
+            }
+
+
+        }
 
         for (const wsContext of this.wsContexts)
         {

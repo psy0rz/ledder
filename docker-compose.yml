@@ -9,11 +9,11 @@ services:
 
 
   ports:
-   - 40000:3000
+   - 3000:3000
   environment:
    - NODE_ENV=production
-  volumes:
-   - ./:/app
+  #volumes:
+  # - ./:/app
   # command: npm run debug
   #volumes:
    #- ./displayconf.js:/app/displayconf.js

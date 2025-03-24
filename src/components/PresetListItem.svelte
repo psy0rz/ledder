@@ -30,6 +30,6 @@
 >
 
 
-    <img class="ledder-preview-image" alt="{presetListItem.name}" slot="media" src="{presetListItem.previewFile}"/>
+    <img class="ledder-preview-image" alt="{presetListItem.name}" slot="media" loading="lazy" decoding="async" src="{presetListItem.previewFile}"/>
 
 </TreeviewItem>

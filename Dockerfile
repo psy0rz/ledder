@@ -5,7 +5,7 @@
 
 
 #### builder
-FROM --platform=linux/amd64 node:22 AS builder
+FROM --platform=linux/amd64 node:23 AS builder
 
 WORKDIR /app
 
@@ -21,21 +21,8 @@ RUN npm run build
 RUN npm prune --production
 
 
-### final stage amd64
-FROM --platform=linux/amd64 node:22 AS ledder-amd64
-ENV NODE_ENV=production
-
-WORKDIR /app
-COPY --from=builder /app /app
-
-STOPSIGNAL SIGKILL
-
-ENTRYPOINT [ "node","ledder/server/server.js" ]
-
-
-### final stage for armv7 (for raspberry). 
-# (resuses most of amd64 builder for performance (qemu issues))
-FROM --platform=linux/arm/v7 node:22 AS ledder-armv7
+### final stage multiarch 
+FROM node:23 AS ledder
 ENV NODE_ENV=production
 
 RUN apt update && apt install -y build-essential cmake
@@ -44,11 +31,10 @@ COPY entrypoint.sh /
 WORKDIR /app
 COPY --from=builder /app /app
 
-#rebuilds stuff for arm if needed
+#rebuilds stuff for specific arch if needed
 RUN npm rebuild --verbose
 
 STOPSIGNAL SIGKILL
 
 ENTRYPOINT [ "/entrypoint.sh" ]
-
 

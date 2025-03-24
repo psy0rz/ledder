@@ -42,6 +42,10 @@ export class DisplayQOISudp extends DisplayQOIS {
         this.minFrameTimeMicros = ~~(1000000 / maxFps)
         this.defaultFrameTimeMicros = this.minFrameTimeMicros
 
+        this.id=`${ips[0]}:${port}`
+        this.descriptionControl.text=`UDP ${this.id}`
+
+
         this.ips = ips
         this.port = port
         this.byteStream = []
