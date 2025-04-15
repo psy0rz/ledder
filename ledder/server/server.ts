@@ -37,8 +37,8 @@ for (const displayNr in config.displayList) {
 await loadSettings(renderControllers)
 
 setInterval(() => {
-    for (let renderMonitor of renderControllers) {
-        renderMonitor.sendStats()
+    for (let renderControl of renderControllers) {
+        renderControl.sendStats()
     }
 }, 1000)
 
@@ -129,9 +129,9 @@ rpc.addMethod("select", async (context: WsContext, animationAndPresetPath) => {
     saveSettingsDelayed(renderControllers)
 })
 
-rpc.addMethod("updateValue", async (context, path, values) => {
+rpc.addMethod("updateValue", async (context: WsContext, path, values) => {
 
-    await context.renderMonitor.renderer.animationManager.updateValue(path, values)
+    await context.renderControl.renderer.animationManager.updateValue(path, values)
 
 })
 
@@ -228,8 +228,8 @@ rpc.app.get('/stream/:id', async (req, resp) => {
 
     console.log(`Display http connect: ${req.params.id} (${req.ip})`)
 
-    for (let renderMonitor of renderControllers) {
-        const display = renderMonitor.getPrimaryDisplay() as DisplayQOIShttp
+    for (let renderControl of renderControllers) {
+        const display = renderControl.getPrimaryDisplay() as DisplayQOIShttp
         if (display !== undefined && display.id == req.params.id) {
             display.setResponseHandler(resp)
             return
