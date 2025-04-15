@@ -9,7 +9,7 @@ import {DisplayQOIShttp} from "./drivers/DisplayQOIShttp.js";
 //event broadcasting to all clients is done here as well
 export default class RenderControl {
     private wsContexts: Set<WsContext>
-    private renderer: Render
+    public renderer: Render
     private monitoringDisplay: DisplayWebsocket
 
     constructor(renderer: Render) {
