@@ -10,6 +10,8 @@ import Pixel from "../../Pixel.js";
 import Color from "../../Color.js";
 
 import DrawLine from "../../draw/DrawLine.js";
+import FxColorPattern from "../../fx/FxColorPattern.js";
+import FxColorCycle from "../../fx/FxColorCycle.js";
 
 export default class Arrow extends  Animator
 {
@@ -49,7 +51,7 @@ export default class Arrow extends  Animator
         let startX=0
         let startY=0
 
-        //end is where the array head is
+        //end is where the arrow head is
         let endX=0
         let endY=0
 
@@ -71,11 +73,16 @@ export default class Arrow extends  Animator
         }
 
         //main line
+        // box.add(new DrawLine(startX, startY, endX, endY, colorControl))
         box.add(new DrawLine(startX, startY, endX, endY, colorControl))
 
         //arrow flanks
-        box.add(new DrawLine(endX, endY, flank1X, flank1Y, colorControl))
-        box.add(new DrawLine(endX, endY, flank2X, flank2Y, colorControl))
+        box.add(new DrawLine( flank1X, flank1Y,endX, endY, colorControl))
+        box.add(new DrawLine( flank2X, flank2Y,endX, endY, colorControl))
+
+        let pat=new FxColorPattern(scheduler, controls)
+        pat.run(box)
+
 
 
     }
