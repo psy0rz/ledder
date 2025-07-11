@@ -7,31 +7,32 @@
 
  //draw a simple line .
  export default class DrawLine extends Draw {
-     constructor(x1: number, y1: number, x2: number, y2: number, color1: ColorInterface,color2: ColorInterface) {
+     constructor(x1: number, y1: number, x2: number, y2: number, color1: ColorInterface,color2?: ColorInterface) {
        
          super();
          let pixel1=new Pixel(x1,y1,color1)
          let pixel2=new Pixel(x2,y2,color2)
         
          
-         let line=new PixelList()
          let xDiff=(pixel2.x-pixel1.x)
          let yDiff=(pixel2.y-pixel1.y)
          let distance=Math.sqrt(Math.pow(xDiff,2)+Math.pow(yDiff,2))
  
-
          if (distance>0)
          {
             let x=pixel1.x
             let y=pixel1.y
-            for (let i=0; i<=distance; i++)
+            for (let i=0; i<distance+1; i++)
             {
-                let weight=i/distance
-                line.add(new Pixel(x,y,this.interpolateColor(color1,color2,Math.abs(weight))))
+                if (color2!==undefined) {
+                    let weight=i/distance
+                    this.add(new Pixel(x, y, this.interpolateColor(color1, color2, Math.abs(weight))))
+                }
+                else
+                    this.add(new Pixel(x,y,color1))
                 x=x+(xDiff/distance)
                 y=y+(yDiff/distance)
             }
-            this.add(line)
          }
 
      }
