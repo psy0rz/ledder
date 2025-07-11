@@ -7,7 +7,12 @@ import RenderControl from "./RenderControl.js";
 import type {WsContext} from "./WsContext.js";
 import * as fs from "node:fs";
 import {loadSettings, saveSettingsDelayed} from "./DisplaySettings.js";
+import {previewStore} from "./PreviewStore.js";
 
+if (process.env.NODE_ENV == 'development') {
+    await presetStore.storeAnimationPresetList()
+    await previewStore.renderAll(presetStore.animationPresetList, false)
+}
 
 await loadDisplayconf()
 
