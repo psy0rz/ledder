@@ -7,6 +7,7 @@ import ControlSwitch from "./ControlSwitch.js"
 import ControlSelect, {type Choices} from "./ControlSelect.js"
 import ControlRange from "./ControlRange.js"
 import CallbackManager from "../util/CallbackManager.js"
+import type BoxInterface from "./BoxInterface.js";
 
 
 type ControlMap = Record<string, Control>
@@ -120,6 +121,9 @@ export default class ControlGroup extends Control {
         return this.meta.controls[name] as ControlColor
     }
 
+    /** Text input control
+     *
+     */
     input(name: string, text: string, restartOnChange: boolean = false): ControlInput {
         if (!(name in this.meta.controls)) {
             this.__add(new ControlInput(name, text, restartOnChange))
@@ -128,6 +132,8 @@ export default class ControlGroup extends Control {
         return this.meta.controls[name] as ControlInput
     }
 
+    /** Enable/disable switch control
+     */
     switch(name: string, enabled: boolean, restartOnChange: boolean = true): ControlSwitch {
         if (!(name in this.meta.controls)) {
             this.__add(new ControlSwitch(name, enabled, restartOnChange))
@@ -136,12 +142,47 @@ export default class ControlGroup extends Control {
         return this.meta.controls[name] as ControlSwitch
     }
 
+    /** Select control with predefined choices
+     */
     select(name: string, selected: string, choices: Choices, restartOnChange: boolean = false): ControlSelect {
         if (!(name in this.meta.controls)) {
             this.__add(new ControlSelect(name, selected, choices, restartOnChange))
         }
 
         return this.meta.controls[name] as ControlSelect
+    }
+
+    /** Relative position control
+     */
+    position(name: string, box:BoxInterface, origin="top-left", xOffset=0, yOffset=0, restartOnChange=true): ControlGroup {
+        let group=this.group(name, restartOnChange)
+        group.select("Origin", "top-left",[
+            {
+                "id":"top-left",
+                "name":"Top Left",
+            },
+            {
+                "id":"top-right",
+                "name":"Top Right",
+            },
+            {
+                "id":"bottom-left",
+                "name":"Bottom Left",
+            },
+            {
+                "id":"bottom-right",
+                "name":"Bottom Right",
+            },
+            {
+                "id":"center",
+                "name":"Center",
+            }
+        ])
+
+        group.value("X Offset", 0, 0, box.xMax-box.xMin)
+        group.value("Y Offset", 0, 0 , box.yMax-box.yMin)
+        return group
+
     }
 
     //sub Controls group instance.

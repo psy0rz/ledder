@@ -187,6 +187,7 @@ export default class AnimationManager {
 
         this.autoreloadStop()
         if (this.animationName) {
+            console.log(`Enabling autoreload for animation ${this.animationName}`)
 
             const filename = presetStore.animationFilename(this.animationName)
             this.autoreloadWatchAbort = new AbortController()
