@@ -1,14 +1,12 @@
 import {RpcServer} from "./RpcServer.js"
 import {RenderRealtime} from "./RenderRealtime.js"
-import ControlGroup from "../ControlGroup.js"
-import GammaMapper from "./drivers/GammaMapper.js"
 import {presetStore} from "./PresetStore.js"
 import {DisplayQOIShttp} from "./drivers/DisplayQOIShttp.js"
 import {config, loadDisplayconf} from "./config.js"
 import RenderControl from "./RenderControl.js";
 import type {WsContext} from "./WsContext.js";
 import * as fs from "node:fs";
-import {loadSettings, saveSettings, saveSettingsDelayed} from "./DisplaySettings.js";
+import {loadSettings, saveSettingsDelayed} from "./DisplaySettings.js";
 
 
 await loadDisplayconf()
@@ -20,6 +18,7 @@ let renderControllers: Array<RenderControl> = []
 let renderer = new RenderRealtime()
 await renderer.animationManager.select(config.animation, false)
 const previewRenderControl = new RenderControl(renderer)
+previewRenderControl.changePreviewSize(config.previewWidth??64, config.previewHeight??32)
 renderControllers.push(previewRenderControl)
 
 //create actual realtime displays
