@@ -104,39 +104,3 @@ export function mapRange(value:number, inRangeStart:number, inRangeEnd:number, o
 
 
 
-//step from 0 to max (excluded), in reverse, forward or pingpong mode.
-//stepsize can be a float, and next() will always return a positive int.
-//Used for things like colorcycling,
-export class Stepper {
-    public step: number
-    public max: number
-    public value: number
-    private reverse: boolean
-    private pingpong: boolean
-
-    constructor(max: number, step: number, reverse: boolean, pingpong: boolean) {
-        this.step = step
-        this.max = max
-        this.reverse = reverse
-        this.pingpong=pingpong
-
-        //this makes sure that the first call to next() will return the first value
-        this.value = this.max
-    }
-
-
-    next() {
-
-        if (this.pingpong && this.value+this.step>=this.max)
-            this.reverse=!this.reverse
-
-        this.value = (this.value + this.step) % this.max
-
-        if (this.reverse)
-            return this.max-1-~~this.value
-        else
-            return ~~this.value
-    }
-}
-
-

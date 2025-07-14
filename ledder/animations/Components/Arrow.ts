@@ -72,16 +72,24 @@ export default class Arrow extends  Animator
             flank1Y=flank2Y=endY+size.value
         }
 
+        let pat=new FxColorPattern(scheduler, controls.group("Color pattern"))
+
+
         //main line
         // box.add(new DrawLine(startX, startY, endX, endY, colorControl))
-        box.add(new DrawLine(startX, startY, endX, endY, colorControl))
+        let mainLine=new DrawLine(startX, startY, endX, endY, colorControl)
+        box.add(mainLine)
+        pat.run(mainLine)
 
         //arrow flanks
-        box.add(new DrawLine( flank1X, flank1Y,endX, endY, colorControl))
-        box.add(new DrawLine( flank2X, flank2Y,endX, endY, colorControl))
+        let flank1=new DrawLine( flank1X, flank1Y,endX, endY, colorControl)
+        box.add(flank1)
+        pat.run(flank1)
 
-        let pat=new FxColorPattern(scheduler, controls)
-        pat.run(box)
+        let flank2=new DrawLine( flank2X, flank2Y,endX, endY, colorControl)
+        box.add(flank2)
+        pat.run(flank2)
+
 
 
 
