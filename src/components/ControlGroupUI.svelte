@@ -18,11 +18,13 @@
 
 {#each Object.values(controlGroup.meta.controls) as control, i (control.meta.name)}
     {#if control.meta.type === "controls"}
+        <!-- Recruse into a nested ControlGroup -->
         <TreeviewItem
                 label={control.meta.name}
                 opened={!control.meta.collapsed}
                 toggle={true}
                 itemToggle
+                class="{control.meta.enabled?'':'disabled'}"
                 iconMaterial="folder"
         >
             <svelte:self
@@ -32,9 +34,9 @@
             />
         </TreeviewItem>
     {:else}
-        <TreeviewItem opened toggle={false}>
+        <TreeviewItem opened toggle={false} class="{control.meta.enabled?'':'disabled'}" >
             <span slot="content" class="padding-bottom">
-                <BlockHeader class="">{control.meta.name}:</BlockHeader>
+                <BlockHeader   >{control.meta.name}:</BlockHeader>
                 {#if control.meta.type === "value"}
                     <ControlValueUI
                             control={control}

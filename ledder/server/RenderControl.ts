@@ -11,11 +11,13 @@ export default class RenderControl {
     private wsContexts: Set<WsContext>
     public renderer: Render
     private monitoringDisplay: DisplayWebsocket
+    private setControlsTimer: NodeJS.Timeout | null = null;
 
     constructor(renderer: Render) {
         this.renderer = renderer
         this.monitoringDisplay = new DisplayWebsocket(this.renderer.box.width(), this.renderer.box.height())
         this.wsContexts = new Set()
+        this.setControlsTimer=null
 
 
         this.registerCallbacks()
@@ -110,16 +112,32 @@ export default class RenderControl {
         }
     }
 
+    delayedSetControls()
+    {
+            if (this.setControlsTimer !== null) {
+                clearTimeout(this.setControlsTimer)
+                this.setControlsTimer = null
+            }
+
+            this.setControlsTimer=setTimeout(() => {
+                this.notifyAll("setControls", this.renderer.animationManager.controlGroup)
+                this.setControlsTimer = null
+
+            },100)
+
+    }
 
     registerCallbacks() {
 
+
+
         this.renderer.animationManager.controlGroup.__resetCallbacks.register(() => {
             this.notifyAll("resetControls")
-            this.notifyAll("setControls", this.renderer.animationManager.controlGroup)
+            this.delayedSetControls()
         })
 
-        this.renderer.animationManager.controlGroup.__addCallbacks.register(() => {
-            this.notifyAll("setControls", this.renderer.animationManager.controlGroup)
+        this.renderer.animationManager.controlGroup.__updateMetaCallbacks.register(() => {
+            this.delayedSetControls()
         })
 
         this.renderer.animationManager.selectedCallbacks.register((animationName, presetName) => {

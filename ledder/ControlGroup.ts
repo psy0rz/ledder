@@ -27,7 +27,7 @@ export default class ControlGroup extends Control {
     private __loadedValues: Values
 
 
-    public __addCallbacks: CallbackManager<() => void>
+    public __updateMetaCallbacks: CallbackManager<() => void>
     public __resetCallbacks: CallbackManager<() => void>
 
 
@@ -35,7 +35,7 @@ export default class ControlGroup extends Control {
         super(name, 'controls', restartOnChange)
 
         this.__resetCallbacks = new CallbackManager()
-        this.__addCallbacks = new CallbackManager()
+        this.__updateMetaCallbacks = new CallbackManager()
 
         this.meta.collapsed = collapsed
         this.__clear()
@@ -62,15 +62,57 @@ export default class ControlGroup extends Control {
         if (control.meta.name in this.__loadedValues)
             control.load(this.__loadedValues[control.meta.name])
 
+        //pass through callbacks
         control.__onRestartRequired(this.__onRestartRequiredCallback)
         control.onChange((c) => {
             if (this.__onChangeCallback)
                 this.__onChangeCallback(c)
         })
 
-        this.__addCallbacks.trigger()
+        this.__updateMetaCallbacks.trigger()
 
+    }
 
+    /** Delete control from set **/
+    public remove(control:string|Control)
+    {
+        if (typeof control === 'string') {
+            delete this.meta.controls[control]
+        }
+        if (control instanceof Control) {
+            delete this.meta.controls[control.meta.name]
+        }
+        this.__updateMetaCallbacks.trigger()
+    }
+
+    public disable(control:string|Control)
+    {
+        if (typeof control === 'string') {
+            if (control in this.meta.controls)
+            {
+                this.meta.controls[control].meta.enabled=false
+            }
+        }
+        else
+        {
+            control.meta.enabled=false
+        }
+        this.__updateMetaCallbacks.trigger()
+    }
+
+    public enable(control:string|Control)
+    {
+        if (typeof control === 'string') {
+            if (control in this.meta.controls)
+            {
+                this.meta.controls[control].meta.enabled=true
+            }
+        }
+        else
+        {
+            control.meta.enabled=true
+        }
+        this.__updateMetaCallbacks.trigger()
     }
 
 
@@ -142,6 +184,7 @@ export default class ControlGroup extends Control {
         return this.meta.controls[name] as ControlSwitch
     }
 
+
     /** Select control with predefined choices
      */
     select(name: string, selected: string, choices: Choices, restartOnChange: boolean = false): ControlSelect {
@@ -193,7 +236,7 @@ export default class ControlGroup extends Control {
 
             //make a copy, since "this" will be proxied and detached later
             const resetCallbacks=this.__resetCallbacks
-            const addCallbacks=this.__addCallbacks
+            const addCallbacks=this.__updateMetaCallbacks
 
             //pass through
             controlGroup.__resetCallbacks.register(() => {
@@ -201,7 +244,7 @@ export default class ControlGroup extends Control {
 
             })
 
-            controlGroup.__addCallbacks.register(() => {
+            controlGroup.__updateMetaCallbacks.register(() => {
                     addCallbacks.trigger()
             })
 
@@ -212,23 +255,6 @@ export default class ControlGroup extends Control {
     }
 
 
-    // public __onReset(callback) {
-    //     this.__onResetCallbacks.add(callback)
-    //
-    // }
-    //
-    // public __onResetUnregister(callback) {
-    //     this.__onResetCallbacks.delete(callback)
-    // }
-    //
-    // public __onAdd(callback) {
-    //     this.__onAddCallbacks.add(callback)
-    // }
-    //
-    // public __onAddUnregister(callback) {
-    //     this.__onAddCallbacks.delete(callback)
-    //
-    // }
 
 
     /**

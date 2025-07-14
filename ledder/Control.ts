@@ -11,6 +11,7 @@ export interface ControlMeta {
     name: string
     type: string
     restartOnChange: boolean
+    enabled: boolean
 }
 
 //meta contains all the meta data, all other properties are values that can be accessed/changed by the user and program.
@@ -29,11 +30,13 @@ export class Control {
         this.meta = {
             name: name,
             type: type,
-            restartOnChange: restartOnChange
+            restartOnChange: restartOnChange,
+            enabled: true
         }
 
 
     }
+
 
     //Is called when user changes something via the controls.
     //Can be used by user.
