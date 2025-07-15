@@ -107,24 +107,32 @@ export default class ControlGroup extends Control {
     public disable(control: string | Control) {
         if (typeof control === 'string') {
             if (control in this.meta.controls) {
-                this.meta.controls[control].meta.enabled = false
+                control = this.meta.controls[control]
+            } else {
+                return
             }
-        } else {
-            control.meta.enabled = false
         }
-        this.__updateMetaCallbacks.trigger()
+
+        if (control.meta.enabled) {
+            control.meta.enabled = false
+            this.__updateMetaCallbacks.trigger()
+        }
+
     }
 
     /** Re-enable grayed out control **/
     public enable(control: string | Control) {
         if (typeof control === 'string') {
             if (control in this.meta.controls) {
-                this.meta.controls[control].meta.enabled = true
+                control = this.meta.controls[control]
+            } else {
+                return
             }
-        } else {
-            control.meta.enabled = true
         }
-        this.__updateMetaCallbacks.trigger()
+        if (!control.meta.enabled) {
+            control.meta.enabled = true
+            this.__updateMetaCallbacks.trigger()
+        }
     }
 
 
