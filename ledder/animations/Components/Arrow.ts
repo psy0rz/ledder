@@ -20,7 +20,7 @@ export default class Arrow extends Animator {
 
         let colorControl = controls.color()
 
-        let patGroup = controls.group("Color pattern")
+        let patGroup = controls.group("Color pattern", true,false,true)
         // controls.disable(patGroup)
         let pat = new FxColorPattern(scheduler, patGroup, 240, 10, false, true, 'Bertrik fire')
 
@@ -89,9 +89,8 @@ export default class Arrow extends Animator {
         let flank2 = new DrawLine(flank2X, flank2Y, endX, endY, colorControl)
         box.add(flank2)
 
-        if (patGroup.switch("Color pattern", false).enabled) {
+        if (patGroup.enabled) {
             controls.disable(colorControl)
-            controls.enable(patGroup)
             pat.run(mainLine)
             pat.run(flank1)
             pat.run(flank2)
