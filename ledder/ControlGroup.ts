@@ -249,9 +249,9 @@ export default class ControlGroup extends Control {
     }
 
     //sub Controls group instance.
-    group(name: string, restartOnChange: boolean = false, collapsed = false, switchable = false, enabled=false): ControlGroup {
+    group(name: string, restartOnChange: boolean = false, collapsed = false, switchable = false, enabled = false): ControlGroup {
         if (!(name in this.meta.controls)) {
-            const controlGroup = new ControlGroup(name, restartOnChange, collapsed, switchable,enabled)
+            const controlGroup = new ControlGroup(name, restartOnChange, collapsed, switchable, enabled)
             this.__add(controlGroup)
 
             //make a copy, since "this" will be proxied and detached later
@@ -303,37 +303,42 @@ export default class ControlGroup extends Control {
             if (name in this.__loadedValues)
                 control.load(this.__loadedValues[name])
         }
+        if ('Enabled' in this.__loadedValues) {
 
-        this.enabled = this.__loadedValues['Enabled'].enabled
+            this.enabled = this.__loadedValues['Enabled'].enabled
+        } else {
+            this.enabled = true
+        }
     }
 
     //return true if animation should be restarted
     updateValue(path: Array<string>, values: Values) {
-        console.log("ControlGroup.updateValue path", path)
-        console.log("ControlGroup.updateValue values", values)
         //its for ourself
         if (path.length === 0) {
-            this.enabled = values.enabled
-            if (this.meta.restartOnChange) {
-                if (this.__onRestartRequiredCallback)
-                    this.__onRestartRequiredCallback()
+            if (values === undefined || this.enabled !== values.enabled) {
+
+                this.enabled = values.enabled ?? true
+                if (this.meta.restartOnChange) {
+                    if (this.__onRestartRequiredCallback)
+                        this.__onRestartRequiredCallback()
+                }
+                this.__updateMetaCallbacks.trigger()
             }
-            return
+        } else {
+
+            //pass through to sub control
+            const c = this.meta.controls[path[0]]
+            if (c !== undefined) {
+
+
+                c.updateValue(path.slice(1), values)
+
+                if (!c.meta.restartOnChange && this.meta.restartOnChange)
+                    if (this.__onRestartRequiredCallback)
+                        this.__onRestartRequiredCallback()
+
+            }
         }
-
-        //pass through to sub control
-        const c = this.meta.controls[path[0]]
-        if (c !== undefined) {
-
-
-            c.updateValue(path.slice(1), values)
-
-            if (!c.meta.restartOnChange && this.meta.restartOnChange)
-                if (this.__onRestartRequiredCallback)
-                    this.__onRestartRequiredCallback()
-
-        }
-
     }
 
     public __detach() {
