@@ -8,6 +8,9 @@
    },
    "Fade out time randomizer": {
     "value": 4
+   },
+   "Enabled": {
+    "enabled": true
    }
   },
   "Fire": {
@@ -32,6 +35,9 @@
    "Color cycle pattern range": {
     "from": 0,
     "to": 100
+   },
+   "Enabled": {
+    "enabled": false
    }
   },
   "Stars": {
@@ -61,6 +67,9 @@
    },
    "Rotate Y step": {
     "value": 0
+   },
+   "Enabled": {
+    "enabled": true
    }
   },
   "Move": {
@@ -75,6 +84,9 @@
    },
    "Rotate Y step": {
     "value": 0
+   },
+   "Enabled": {
+    "enabled": true
    }
   },
   "Wobble body": {
@@ -89,6 +101,9 @@
    },
    "Wobble Y amount": {
     "value": -1
+   },
+   "Enabled": {
+    "enabled": true
    }
   },
   "Wobble head x": {
@@ -103,6 +118,9 @@
    },
    "Wobble Y amount": {
     "value": 0
+   },
+   "Enabled": {
+    "enabled": true
    }
   },
   "Wobble head y": {
@@ -117,7 +135,13 @@
    },
    "Wobble Y amount": {
     "value": 1
+   },
+   "Enabled": {
+    "enabled": true
    }
+  },
+  "Enabled": {
+   "enabled": true
   }
  }
 }

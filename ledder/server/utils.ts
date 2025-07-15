@@ -103,7 +103,7 @@ export async function createParentDir(fileName: string) {
 
 //Run an animation, optionally loading a preset.
 //Use this to run an Animation from withint another Animation.
-//However, if you want to safely stop and cleanup an animation, it might be better to use a fully fledged AnimationManager instance.
+//However, if you also want to be able to stop and cleanup an animation, you need to use a fully fledged AnimationManager instance.
 export async function animationRun(box: PixelBox, scheduler: Scheduler, controls: ControlGroup, animationName, presetName?: string) {
 
     scheduler.stop() //we are going to do external async stuff

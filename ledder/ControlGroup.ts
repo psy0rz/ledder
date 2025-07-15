@@ -249,9 +249,9 @@ export default class ControlGroup extends Control {
     }
 
     //sub Controls group instance.
-    group(name: string, restartOnChange: boolean = false, collapsed = false, switchable = false): ControlGroup {
+    group(name: string, restartOnChange: boolean = false, collapsed = false, switchable = false, enabled=false): ControlGroup {
         if (!(name in this.meta.controls)) {
-            const controlGroup = new ControlGroup(name, restartOnChange, collapsed, switchable)
+            const controlGroup = new ControlGroup(name, restartOnChange, collapsed, switchable,enabled)
             this.__add(controlGroup)
 
             //make a copy, since "this" will be proxied and detached later
@@ -284,7 +284,9 @@ export default class ControlGroup extends Control {
             this.__loadedValues[name] = control.save()
         }
 
-        this.__loadedValues['Enabled'] = this.enabled
+        this.__loadedValues['Enabled'] = {
+            'enabled': this.enabled
+        }
 
         return this.__loadedValues
     }
@@ -302,7 +304,7 @@ export default class ControlGroup extends Control {
                 control.load(this.__loadedValues[name])
         }
 
-        this.enabled = this.__loadedValues['Enabled']
+        this.enabled = this.__loadedValues['Enabled'].enabled
     }
 
     //return true if animation should be restarted

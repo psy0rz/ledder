@@ -30,7 +30,7 @@ export default class Nyancat extends Animator {
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) {
 
         controls.group("Rainbow")
-        controls.group("Fire")
+        let fireGroup=controls.group("Fire", true,true,true)
 
         //start with the stars in the background
         let stars = new MovingStars();
@@ -86,14 +86,13 @@ export default class Nyancat extends Animator {
 
         //draw rainbow or fire
         let fadeFx = new FxFadeOut(scheduler, controls.group("Rainbow"), 40, 4)
-        const fireControl = controls.group("Fire").switch("Use fire", false, false)
         let cycleFx = new FxColorCycle(scheduler, controls.group("Fire"), "reverse", 50, 4, 1)
 
         const xStepControl = controls.group('Move').value('Rotate X step')
         scheduler.intervalControlled(controls.group('Move').value('Rotate interval'), () => {
             x = (x + xStepControl.value) % box.width();
 
-            if (fireControl.enabled) {
+            if (fireGroup.enabled) {
 
                 let intensity=[
                     50,

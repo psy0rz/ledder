@@ -21,7 +21,7 @@ process.on('unhandledRejection', (err) => {
 
 /**
  * Manages livecycle of an animation. (Loading/Starting/Restarting/Stopping/Cleaning up)
- * Also: This should be used from an Animation to manage sub-animations.
+ * Also: This can be used from an Animation to manage sub-animations.
  *
  */
 export default class AnimationManager {

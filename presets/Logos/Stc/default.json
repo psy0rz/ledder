@@ -12,7 +12,7 @@
    "value": 0
   },
   "Text": {
-   "text": "Marquee  "
+   "text": ""
   },
   "Text color": {
    "r": 57,
@@ -137,6 +137,9 @@
     "enabled": false
    },
    "Show one time only": {
+    "enabled": false
+   },
+   "Subpixel filtering": {
     "enabled": false
    }
   },

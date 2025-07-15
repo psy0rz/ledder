@@ -52,10 +52,16 @@ export default class Hackerhotel extends Animator {
         const traceColorControl=controls.color('Trace color', imageTraceColor.r, imageTraceColor.g, imageTraceColor.b)
         box.replaceColor(imageTraceColor, traceColorControl)
 
-        const patternGroup=controls.group('Color pattern')
-        if (patternGroup.switch('Color pattern fx', false).enabled)
+        const patternGroup=controls.group('Color pattern', true,false,true)
+        if (patternGroup.enabled) {
             new FxColorPattern(scheduler, patternGroup
             ).run(letters)
+            controls.disable(letterColorControl)
+        }
+        else
+        {
+            controls.enable(letterColorControl)
+        }
 
         // new FxMove(scheduler,controls).run(box)
         // new FxRotate(scheduler, controls).run(box)

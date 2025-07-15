@@ -90,14 +90,14 @@ export default class Arrow extends Animator {
         box.add(flank2)
 
         if (patGroup.enabled) {
-            controls.disable(colorControl)
+           controls.disable(colorControl)
             pat.run(mainLine)
             pat.run(flank1)
             pat.run(flank2)
         }
         else
         {
-            controls.enable(colorControl)
+           controls.enable(colorControl)
         }
 
 

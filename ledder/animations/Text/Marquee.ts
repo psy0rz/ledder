@@ -40,26 +40,26 @@ export default class Marquee extends Animator {
 
         textPixels.centerV(box)
 
-        let starsGroup = control.group("Stars", false, false)
-        if (starsGroup.switch('Enabled', false).enabled) {
+        let starsGroup = control.group("Stars", true, true, true)
+        if (starsGroup.enabled) {
             new MovingStars().run(box, scheduler, starsGroup)
         }
 
-        let starFieldGroup = control.group("Star field", false, false)
-        if (starFieldGroup.switch('Enabled', false).enabled) {
+        let starFieldGroup = control.group("Star field", true, true,true)
+        if (starFieldGroup.enabled) {
             new Starfield().run(box, scheduler, starFieldGroup)
         }
 
-        let theMatrixGroup = control.group("The Matrix", false, false)
-        if (theMatrixGroup.switch('Enabled', false).enabled) {
+        let theMatrixGroup = control.group("The Matrix", true, true,true)
+        if (theMatrixGroup.enabled) {
             new TheMatrix().run(box, scheduler, theMatrixGroup)
         }
 
 
-        let scrollGroup = control.group("Scrolling")
+        let scrollGroup = control.group("Scrolling", true, true, true)
 
         let rotatorPromise
-        if (scrollGroup.switch('Enabled', true).enabled) {
+        if (scrollGroup.enabled) {
 
             //allow finetuning via actual FPS
             const fpsControl = scrollGroup.value("FPS", 60, 1, 120, 1)
@@ -122,28 +122,28 @@ export default class Marquee extends Animator {
         }
 
 
-        let flameGroup = control.group("Flames", false, false)
-        if (flameGroup.switch('Enabled', false).enabled) {
+        let flameGroup = control.group("Flames", true,true,true)
+        if (flameGroup.enabled) {
             const flames = new PixelList()
             box.add(flames)
             new FxFlames(scheduler, flameGroup).run(textPixels, flames, box)
         }
 
-        let twinkleGroup = control.group("Twinkle")
-        if (twinkleGroup.switch('Enabled', false).enabled) {
+        let twinkleGroup = control.group("Twinkle", true,true,true)
+        if (twinkleGroup.enabled) {
             const twinkleContainer = new PixelList()
             box.add(twinkleContainer)
             new FxTwinkle(scheduler, twinkleGroup).run(textPixels, box)
         }
 
 
-        let colorPatternGroup = control.group("Color pattern")
-        if (colorPatternGroup.switch('Enabled', false).enabled) {
+        let colorPatternGroup = control.group("Color pattern", true,true,true)
+        if (colorPatternGroup.enabled) {
             new FxColorPattern(scheduler, colorPatternGroup).run(textPixels)
         }
 
-        let cursorGroup = control.group("Cursor")
-        if (cursorGroup.switch('Enabled', false).enabled) {
+        let cursorGroup = control.group("Cursor",true,true,true)
+        if (cursorGroup.enabled) {
             const cursorColor = cursorGroup.color("Color", 128, 128, 128, 1, true).copy()
             const cursorX = cursorGroup.value("X offset", 2, 0, 100, 1, true)
             const cursorY = cursorGroup.value("Y offset", 1, 0, 100, 1, true)

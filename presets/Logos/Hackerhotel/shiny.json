@@ -62,7 +62,13 @@
    },
    "Per pixel offset %": {
     "value": 10.3
+   },
+   "Enabled": {
+    "enabled": true
    }
+  },
+  "Enabled": {
+   "enabled": true
   }
  }
 }
