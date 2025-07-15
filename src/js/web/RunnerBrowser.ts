@@ -45,7 +45,7 @@ export class RunnerBrowser {
         })
 
         rpc.addMethod('setControls', async (controlGroup) => {
-
+//console.log("ControlGroup.setcontrol values", controlGroup)
 
             sveltePresets.set(controlGroup)
         })

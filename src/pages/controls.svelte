@@ -66,6 +66,7 @@
             <ControlGroup
                     controlGroup={$sveltePresets}
                     onChanged={(path, values) => {
+               //         console.log(path, values)
                     rpc.notify("updateValue", path, values, $svelteLive);
                 }}
             />

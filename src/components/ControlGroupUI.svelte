@@ -1,6 +1,6 @@
 <script lang="ts">
     import ControlValueUI from "./ControlValueUI.svelte"
-    import {BlockHeader, TreeviewItem} from "framework7-svelte"
+    import {BlockHeader, Checkbox, Toggle, TreeviewItem} from "framework7-svelte"
     import ControlGroup from "../../ledder/ControlGroup.js"
     import ControlColorUI from "./ControlColorUI.svelte"
     import ControlInputUI from "./ControlInputUI.svelte"
@@ -24,9 +24,20 @@
                 opened={!control.meta.collapsed}
                 toggle={true}
                 itemToggle
-                class="{control.meta.enabled?'':'disabled'}"
-                iconMaterial="folder"
+                class="{control.meta.enabled ?'':'disabled'}"
+                iconMaterial="{control.meta.switchable?'':'folder'}"
+
         >
+            <span slot="content-start">
+                {#if control.meta.switchable}
+                    <ControlSwitchUI
+                            control={control}
+                            path={[...path, control.meta.name]}
+                            onChanged={onChanged}
+                    />
+                {/if}
+            </span>
+
             <svelte:self
                     controlGroup={control}
                     path={[...path, control.meta.name]}
@@ -34,9 +45,9 @@
             />
         </TreeviewItem>
     {:else}
-        <TreeviewItem opened toggle={false} class="{control.meta.enabled?'':'disabled'}" >
+        <TreeviewItem opened toggle={false} class="{control.meta.enabled&&controlGroup.enabled!==false?'':'disabled'}">
             <span slot="content" class="padding-bottom">
-                <BlockHeader   >{control.meta.name}:</BlockHeader>
+                <BlockHeader>{control.meta.name}:</BlockHeader>
                 {#if control.meta.type === "value"}
                     <ControlValueUI
                             control={control}

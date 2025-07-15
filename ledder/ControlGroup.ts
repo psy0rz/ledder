@@ -16,6 +16,7 @@ type ControlMap = Record<string, Control>
 interface ControlGroupMeta extends ControlMeta {
     controls: ControlMap
     collapsed: boolean
+    switchable: boolean
 }
 
 /**
@@ -26,19 +27,37 @@ export default class ControlGroup extends Control {
     declare meta: ControlGroupMeta
     private __loadedValues: Values
 
+    //this is used in case of a switchable controlgroup: it then has a switch to enable/disable the group.
+    //NOTE: this is an actual user controllable value , instead of the control.meta.enabled which is user to programmically enable/disable controls.
+    //Its basically the same as a ControlSwitch
+    enabled: boolean;
+
 
     public __updateMetaCallbacks: CallbackManager<() => void>
     public __resetCallbacks: CallbackManager<() => void>
 
+    toJSON(): any {
+        return {
+            meta: this.meta,
+            enabled: this.enabled
+        }
+    }
 
-    constructor(name: string = 'root', restartOnChange: boolean = false, collapsed = false) {
+    constructor(name: string = 'root', restartOnChange: boolean = false, collapsed = false, switchable = false, enabled = false) {
         super(name, 'controls', restartOnChange)
 
         this.__resetCallbacks = new CallbackManager()
         this.__updateMetaCallbacks = new CallbackManager()
 
         this.meta.collapsed = collapsed
+        this.meta.switchable = switchable
         this.__clear()
+
+        if (switchable)
+            this.enabled = enabled
+        else
+            this.enabled = true
+
 
     }
 
@@ -74,8 +93,7 @@ export default class ControlGroup extends Control {
     }
 
     /** Delete control from set **/
-    public remove(control:string|Control)
-    {
+    public remove(control: string | Control) {
         if (typeof control === 'string') {
             delete this.meta.controls[control]
         }
@@ -85,32 +103,26 @@ export default class ControlGroup extends Control {
         this.__updateMetaCallbacks.trigger()
     }
 
-    public disable(control:string|Control)
-    {
+    /** Disable a control by graying it out **/
+    public disable(control: string | Control) {
         if (typeof control === 'string') {
-            if (control in this.meta.controls)
-            {
-                this.meta.controls[control].meta.enabled=false
+            if (control in this.meta.controls) {
+                this.meta.controls[control].meta.enabled = false
             }
-        }
-        else
-        {
-            control.meta.enabled=false
+        } else {
+            control.meta.enabled = false
         }
         this.__updateMetaCallbacks.trigger()
     }
 
-    public enable(control:string|Control)
-    {
+    /** Re-enable grayed out control **/
+    public enable(control: string | Control) {
         if (typeof control === 'string') {
-            if (control in this.meta.controls)
-            {
-                this.meta.controls[control].meta.enabled=true
+            if (control in this.meta.controls) {
+                this.meta.controls[control].meta.enabled = true
             }
-        }
-        else
-        {
-            control.meta.enabled=true
+        } else {
+            control.meta.enabled = true
         }
         this.__updateMetaCallbacks.trigger()
     }
@@ -197,55 +209,55 @@ export default class ControlGroup extends Control {
 
     /** Relative position control
      */
-    position(name: string, box:BoxInterface, origin="top-left", xOffset=0, yOffset=0, restartOnChange=true): ControlGroup {
-        let group=this.group(name, restartOnChange)
-        group.select("Origin", "top-left",[
+    position(name: string, box: BoxInterface, origin = "top-left", xOffset = 0, yOffset = 0, restartOnChange = true): ControlGroup {
+        let group = this.group(name, restartOnChange)
+        group.select("Origin", "top-left", [
             {
-                "id":"top-left",
-                "name":"Top Left",
+                "id": "top-left",
+                "name": "Top Left",
             },
             {
-                "id":"top-right",
-                "name":"Top Right",
+                "id": "top-right",
+                "name": "Top Right",
             },
             {
-                "id":"bottom-left",
-                "name":"Bottom Left",
+                "id": "bottom-left",
+                "name": "Bottom Left",
             },
             {
-                "id":"bottom-right",
-                "name":"Bottom Right",
+                "id": "bottom-right",
+                "name": "Bottom Right",
             },
             {
-                "id":"center",
-                "name":"Center",
+                "id": "center",
+                "name": "Center",
             }
         ])
 
-        group.value("X Offset", 0, 0, box.xMax-box.xMin)
-        group.value("Y Offset", 0, 0 , box.yMax-box.yMin)
+        group.value("X Offset", 0, 0, box.xMax - box.xMin)
+        group.value("Y Offset", 0, 0, box.yMax - box.yMin)
         return group
 
     }
 
     //sub Controls group instance.
-    group(name: string, restartOnChange: boolean = false, collapsed = false): ControlGroup {
+    group(name: string, restartOnChange: boolean = false, collapsed = false, switchable = false): ControlGroup {
         if (!(name in this.meta.controls)) {
-            const controlGroup = new ControlGroup(name, restartOnChange, collapsed)
+            const controlGroup = new ControlGroup(name, restartOnChange, collapsed, switchable)
             this.__add(controlGroup)
 
             //make a copy, since "this" will be proxied and detached later
-            const resetCallbacks=this.__resetCallbacks
-            const addCallbacks=this.__updateMetaCallbacks
+            const resetCallbacks = this.__resetCallbacks
+            const addCallbacks = this.__updateMetaCallbacks
 
             //pass through
             controlGroup.__resetCallbacks.register(() => {
-                    resetCallbacks.trigger()
+                resetCallbacks.trigger()
 
             })
 
             controlGroup.__updateMetaCallbacks.register(() => {
-                    addCallbacks.trigger()
+                addCallbacks.trigger()
             })
 
         }
@@ -253,8 +265,6 @@ export default class ControlGroup extends Control {
         return this.meta.controls[name] as ControlGroup
 
     }
-
-
 
 
     /**
@@ -265,6 +275,8 @@ export default class ControlGroup extends Control {
         for (const [name, control] of Object.entries(this.meta.controls)) {
             this.__loadedValues[name] = control.save()
         }
+
+        this.__loadedValues['Enabled'] = this.enabled
 
         return this.__loadedValues
     }
@@ -281,12 +293,28 @@ export default class ControlGroup extends Control {
             if (name in this.__loadedValues)
                 control.load(this.__loadedValues[name])
         }
+
+        this.enabled = this.__loadedValues['Enabled']
     }
 
     //return true if animation should be restarted
     updateValue(path: Array<string>, values: Values) {
+        console.log("ControlGroup.updateValue path", path)
+        console.log("ControlGroup.updateValue values", values)
+        //its for ourself
+        if (path.length === 0) {
+            this.enabled = values.enabled
+            if (this.meta.restartOnChange) {
+                if (this.__onRestartRequiredCallback)
+                    this.__onRestartRequiredCallback()
+            }
+            return
+        }
+
+        //pass through to sub control
         const c = this.meta.controls[path[0]]
         if (c !== undefined) {
+
 
             c.updateValue(path.slice(1), values)
 
