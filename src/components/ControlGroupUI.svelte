@@ -13,7 +13,7 @@
     export let onChanged: (path: Array<string>, values: {}) => void
 
 
-    //TODO: like this? https://svelte.dev/tutorial/svelte-component
+    // let subControlGroup:ControlGroup=undefined;
 </script>
 
 {#each Object.values(controlGroup.meta.controls) as control, i (control.meta.name)}
@@ -21,7 +21,7 @@
         <!-- Recruse into a nested ControlGroup -->
         <TreeviewItem
                 label={control.meta.name}
-                opened={!control.meta.collapsed}
+                opened={true || !control.meta.collapsed /* buggy, if its closed some widgets like sliders ddo not work properly */}
                 toggle={true}
                 itemToggle
                 class="{control.meta.enabled ?'':'disabled'}"
@@ -86,8 +86,7 @@
                     />
                 {:else}
                     <b
-                    >Unknown control type: {control.meta.name} has type '{control
-                        .meta.type}' !</b>
+                    >Unknown control type: {control.meta.name} has type '{control.meta.type}' !</b>
                 {/if}
             </span>
         </TreeviewItem>
