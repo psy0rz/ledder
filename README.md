@@ -388,7 +388,7 @@ However, another goal of ledder is to make reusable components: Classes to draw 
 
 In the draw-folder you'll find classes to "draw".
 
-These are just PixelLists that fill themselfs with pixels.
+These are just PixelLists that fill themselves with pixels.
 
 E.g. to draw a rectangle:
 
