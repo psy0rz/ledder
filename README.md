@@ -1,7 +1,7 @@
 
 # Ledder
 
-NOTE: We're currenly processing the feedback from 38C3, so the project is going through a lot of changes and improvements right now.
+NOTE: We're currently processing the feedback from 38C3, so the project is going through a lot of changes and improvements right now.
 
 ![ledder](./doc/2022-12-30_23-25.png)
 
@@ -44,7 +44,7 @@ I hope more people will create them so we can stack them together. :)
 Ingredients:
  * Raspberry Pi Zero 2
  * Official volleybal net ( 10cm x 10cm grid size): https://sportnettenshop.nl/collections/online-volleybalnetten-bestellen-doe-je-hier-zeer-snelle-levering/products/volleybalnet-meest-eenvoudige-uitvoering
- * Led strings: https://nl.aliexpress.com/item/1005005551648167.html  (Choose transparant Big Led)
+ * Led strings: https://nl.aliexpress.com/item/1005005551648167.html  (Choose transparent Big Led)
  * 600 tierips :)
  * Power supply. (It draws 32 A at max current)
 
@@ -64,7 +64,7 @@ In WLED you can configure the 2D matrix config to configure the display layout.
 
 ### Advanced via Ledstream
 
-If you want to control many ws2812 leds in realtime, the DRGB protocol isnt powerfull enough. Also WLED doesnt support updating multiple WS2812 ledstrips in parallel, and its sentitive to network jittering.
+If you want to control many ws2812 leds in realtime, the DRGB protocol isnt powerful enough. Also WLED doesnt support updating multiple WS2812 ledstrips in parallel, and its sentitive to network jittering.
 
 This is why we created [Ledsteam](https://github.com/psy0rz/ledstream) . 
 
@@ -72,11 +72,11 @@ The displayconf-example.js has examples on how to configure it. (Its the Display
 
 ### Advanced via raspberry
 
-This is even more powerfull: Run ledder on a raspberry and connect up to 16 strips to the GPIO pins. (Uses DisplayRPI)
+This is even more powerful: Run ledder on a raspberry and connect up to 16 strips to the GPIO pins. (Uses DisplayRPI)
 
 It depends on this module, install and test it first: [RPI-ws281x-smi](https://github.com/psy0rz/rpi-ws281x-smi)
 
-NOTE: That module only works with a 32-bit OS! I'm using Rapsberry PI OS Lite 32-bit. (Debian bookworm/12)
+NOTE: That module only works with a 32-bit OS! I'm using Raspberry PI OS Lite 32-bit. (Debian bookworm/12)
 
 Then, from the ledder directory run:
 ```console
@@ -86,7 +86,7 @@ npm i ../rpi-ws281x-smi/
 
 Use an example from displayconf-example.js to configure the DisplayRPI driver.
 
-NOTE2: Since the pi probably doesnt have enough memory to build the vite-stuff, i usally run npm buildweb somewhere else and upload the result.
+NOTE2: Since the pi probably doesnt have enough memory to build the vite-stuff, i usually run npm buildweb somewhere else and upload the result.
 
 We really need a prebuilt docker image for this :)
 
@@ -254,7 +254,7 @@ To create an actual copy you can use the copy() function on most objects.
 
 ## Animators
 
-(Note: Before you start its usefull to have a good editor. I prefer Webstorm, but vscode works as well.) 
+(Note: Before you start its useful to have a good editor. I prefer Webstorm, but vscode works as well.) 
 
 To actually do stuff you need to create an Animator class.
 
@@ -364,7 +364,7 @@ Some controls are realtime, while others will restart the animation if you chang
 
 #### Control types
 
-Controls are very powerfull and are recursive as well. 
+Controls are very powerful and are recursive as well. 
 Look at the other animations how to use them optimally.
 
 * control.value(): Just a number, with a minimum, maximum and step size.
@@ -388,7 +388,7 @@ However, another goal of ledder is to make reusable components: Classes to draw 
 
 In the draw-folder you'll find classes to "draw".
 
-These are just PixelLists that fill themselfs with pixels.
+These are just PixelLists that fill themselves with pixels.
 
 E.g. to draw a rectangle:
 
