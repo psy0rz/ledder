@@ -76,7 +76,7 @@ This is even more powerful: Run ledder on a raspberry and connect up to 16 strip
 
 It depends on this module, install and test it first: [RPI-ws281x-smi](https://github.com/psy0rz/rpi-ws281x-smi)
 
-NOTE: That module only works with a 32-bit OS! I'm using Rapsberry PI OS Lite 32-bit. (Debian bookworm/12)
+NOTE: That module only works with a 32-bit OS! I'm using Raspberry PI OS Lite 32-bit. (Debian bookworm/12)
 
 Then, from the ledder directory run:
 ```console
