@@ -72,7 +72,7 @@ The displayconf-example.js has examples on how to configure it. (Its the Display
 
 ### Advanced via raspberry
 
-This is even more powerfull: Run ledder on a raspberry and connect up to 16 strips to the GPIO pins. (Uses DisplayRPI)
+This is even more powerful: Run ledder on a raspberry and connect up to 16 strips to the GPIO pins. (Uses DisplayRPI)
 
 It depends on this module, install and test it first: [RPI-ws281x-smi](https://github.com/psy0rz/rpi-ws281x-smi)
 
