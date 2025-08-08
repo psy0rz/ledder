@@ -254,7 +254,7 @@ To create an actual copy you can use the copy() function on most objects.
 
 ## Animators
 
-(Note: Before you start its usefull to have a good editor. I prefer Webstorm, but vscode works as well.) 
+(Note: Before you start its useful to have a good editor. I prefer Webstorm, but vscode works as well.) 
 
 To actually do stuff you need to create an Animator class.
 
