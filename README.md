@@ -1,7 +1,7 @@
 
 # Ledder
 
-NOTE: We're currenly processing the feedback from 38C3, so the project is going through a lot of changes and improvements right now.
+NOTE: We're currently processing the feedback from 38C3, so the project is going through a lot of changes and improvements right now.
 
 ![ledder](./doc/2022-12-30_23-25.png)
 
