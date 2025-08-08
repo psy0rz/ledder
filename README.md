@@ -364,7 +364,7 @@ Some controls are realtime, while others will restart the animation if you chang
 
 #### Control types
 
-Controls are very powerfull and are recursive as well. 
+Controls are very powerful and are recursive as well. 
 Look at the other animations how to use them optimally.
 
 * control.value(): Just a number, with a minimum, maximum and step size.
