@@ -57,4 +57,4 @@ You can use this code for your own animations under the condition that you (try 
 
 ## TEXT DISPLAY
 * Headlines - Display a RSS feed with background effects
-* Photon - Marquee with multiple colorfull background animations and effects
+* Photon - Marquee with multiple colorful background animations and effects
