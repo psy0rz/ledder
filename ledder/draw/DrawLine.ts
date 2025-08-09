@@ -9,6 +9,12 @@ export default class DrawLine extends Draw {
     constructor(x1: number, y1: number, x2: number, y2: number, color1: ColorInterface, color2?: ColorInterface) {
         super();
 
+        x1=~~x1
+        y1=~~y1
+        x2=~~x2
+        y2=~~y2
+
+
         let dx = Math.abs(x2 - x1);
         let dy = Math.abs(y2 - y1);
         let sx = x1 < x2 ? 1 : -1;
