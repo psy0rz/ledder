@@ -15,9 +15,9 @@ services:
   #volumes:
   # - ./:/app
   # command: npm run debug
-  #volumes:
-   #- ./displayconf.js:/app/displayconf.js
-   #- ./presets:/app/presets
+  volumes:
+   - ./displayconf.js:/app/displayconf.js
+   - ./presets:/app/presets
 
 # volumes:
 #  mongodb:
