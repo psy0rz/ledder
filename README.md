@@ -15,53 +15,9 @@ Ledder can control leds in multiple ways:
 
 <img width="974" alt="image" src="https://github.com/user-attachments/assets/9ee2360f-804b-4347-aad5-07fc43c55c9b" />
 
-
-
 Look at the [Wiki](https://github.com/psy0rz/ledder/wiki) for more info
 
 
-## Hardware
-
-### Easy, with WLED
-
-You can just use the [WLED](https://kno.wled.ge/) project. (Ledder uses [DRGB mode](https://github.com/Aircoookie/WLED/wiki/UDP-Realtime-Control) )
-
-Look in display display-example.js how to configure WLED. (Its the DisplayWLED driver)
-
-In WLED you can configure the 2D matrix config to configure the display layout. 
-
-### Advanced via Ledstream
-
-If you want to control many ws2812 leds in realtime, the DRGB protocol isnt powerful enough. Also WLED doesnt support updating multiple WS2812 ledstrips in parallel, and its sentitive to network jittering.
-
-This is why we created [Ledsteam](https://github.com/psy0rz/ledstream) . 
-
-The displayconf-example.js has examples on how to configure it. (Its the DisplayQOISudp driver)
-
-### Advanced via raspberry
-
-This is even more powerful: Run ledder on a raspberry and connect up to 16 strips to the GPIO pins. (Uses DisplayRPI)
-
-It depends on this module, install and test it first: [RPI-ws281x-smi](https://github.com/psy0rz/rpi-ws281x-smi)
-
-NOTE: That module only works with a 32-bit OS! I'm using Raspberry PI OS Lite 32-bit. (Debian bookworm/12)
-
-Then, from the ledder directory run:
-```console
-npm i cmake-js
-npm i ../rpi-ws281x-smi/
-```
-
-Use an example from displayconf-example.js to configure the DisplayRPI driver.
-
-NOTE2: Since the pi probably doesnt have enough memory to build the vite-stuff, i usually run npm buildweb somewhere else and upload the result.
-
-We really need a prebuilt docker image for this :)
-
-
-### Pixelflut
-
-(Currently broken, needs to be ported to new API. See DisplayPixelflut.ts)
 
 ## Quick start, without docker
 
