@@ -1,8 +1,6 @@
 
 # Ledder
 
-NOTE: We're currently processing the feedback from 38C3, so the project is going through a lot of changes and improvements right now.
-
 ![ledder](./doc/2022-12-30_23-25.png)
 
 Make cool animated pixel animations, and stream it to a led matrix display.
@@ -19,6 +17,7 @@ Ledder can control leds in multiple ways:
 
 
 
+Look at the [Wiki](https://github.com/psy0rz/ledder/wiki) for more info
 
 
 ## Hardware
