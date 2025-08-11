@@ -18,37 +18,6 @@ Ledder can control leds in multiple ways:
 <img width="974" alt="image" src="https://github.com/user-attachments/assets/9ee2360f-804b-4347-aad5-07fc43c55c9b" />
 
 
-# 38C3 megabanner info
-We extended the matrix, so now its 8 x 92 .
-
-![photo_6015022336098550508_y](https://github.com/user-attachments/assets/cf4434a4-1626-4e7f-85ec-732aaad85866)
-
-Its probably at: http://151.217.6.18:3000/
-
-Meet me at the HSNL for more info (the long table on the left front of the display).
-
-We can write drivers for your project!
-
-# Bornhack 2024 megabanner info
-
-![PXL_20240721_200732771](https://github.com/user-attachments/assets/a7cd93f2-5696-4c3f-a943-3db96c7723bd)
-
-![PXL_20240721_153129071](https://github.com/user-attachments/assets/9eb46f0d-77c1-4d16-8ec8-41e1a7f5038f)
-
-For Bornhack we've used a volleyball net a ledstring to create a 8 x 66 pixel banner that has a size of 80cm x 660cm
-
-It can be easily rolled up to take to other camps.
-
-I hope more people will create them so we can stack them together. :)
-
-Ingredients:
- * Raspberry Pi Zero 2
- * Official volleybal net ( 10cm x 10cm grid size): https://sportnettenshop.nl/collections/online-volleybalnetten-bestellen-doe-je-hier-zeer-snelle-levering/products/volleybalnet-meest-eenvoudige-uitvoering
- * Led strings: https://nl.aliexpress.com/item/1005005551648167.html  (Choose transparent Big Led)
- * 600 tierips :)
- * Power supply. (It draws 32 A at max current)
-
-![image](https://github.com/user-attachments/assets/5ab1ba8e-be0b-4d0d-af6c-b982f8a94093)
 
 
 
