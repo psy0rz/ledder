@@ -26,3 +26,5 @@ Go to the [Wiki](https://github.com/psy0rz/ledder/wiki) for more info
 <img width="745" alt="image" src="https://github.com/user-attachments/assets/26f0e116-590c-4e43-bc70-fcb4ff08fcb8" />
 
 ![photo_6015022336098550508_y](https://github.com/user-attachments/assets/cf4434a4-1626-4e7f-85ec-732aaad85866)
+
+Go to the [Wiki](https://github.com/psy0rz/ledder/wiki) for more info
