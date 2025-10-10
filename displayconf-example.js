@@ -6,6 +6,7 @@ import {DisplayWLED} from "./ledder/server/drivers/DisplayWLED.js"
 import {DisplayQOIShttp} from "./ledder/server/drivers/DisplayQOIShttp.js";
 import DisplayPixelflut from "./ledder/server/drivers/DisplayPixelflut.js";
 import DisplayPixelflutBinary from "./ledder/server/drivers/DisplayPixelflutBinary.js";
+import Display5A75B from "./ledder/server/drivers/Display5A75B.js";
 
 export let displayList = []
 
@@ -191,6 +192,16 @@ export let displayList = []
 // let mapper = new OffsetMapper(64, 32, true)
 // displayList.push(new DisplayQOIShttp(mapper, "983DAEEDA39C" ))
 // displayList.push(new DisplayQOIShttp(mapper, "AB43DE321453" ))
+
+////////////// Colorlight 5A-75B HUB75 LED Panel Driver
+// Single 64x32 HUB75 panel via 5A-75B card
+// displayList.push(new Display5A75B(64, 32, "192.168.1.45", 5568))
+//
+// Multiple panels configuration (128x64 total - 2x2 arrangement)
+// displayList.push(new Display5A75B(128, 64, "192.168.1.45", 5568))
+//
+// See HUB75_5A75B/examples/ for complete configuration examples
+// See HUB75_5A75B/README.md for setup instructions
 
 
 
