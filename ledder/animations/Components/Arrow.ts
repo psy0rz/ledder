@@ -15,9 +15,9 @@ export default class Arrow extends Animator {
         let angle = controls.value("Angle", 0, 0, 360, 1, true);
 
         // Arrow and flank lengths
-        let arrowLength = controls.value("Arrow length", 10, 1, Math.max(box.xMax - box.xMin, box.yMax - box.yMin), 1, true);
-        let flankLength = controls.value("Flank length", 5, 1, 20, 1, true);
-        let flankAngle = controls.value("Flank angle", 35, 5, 85, 1, true); // degrees from main line
+        let arrowLength = controls.value("Arrow length", 12, 1, Math.max(box.xMax - box.xMin, box.yMax - box.yMin), 1, true);
+        let flankLength = controls.value("Flank length", 6, 1, 20, 1, true);
+        let flankAngle = controls.value("Flank angle", 30, 5, 85, 1, true); // degrees from main line
 
         // Wobble controls
         let wobbleGroup = controls.group("Wobble", true, true, true, true);
