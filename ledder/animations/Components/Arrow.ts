@@ -13,8 +13,8 @@ export default class Arrow extends Animator {
         let pat = new FxColorPattern(scheduler, patGroup, 40, 14, true, false, 'Brainsmoke fire');
 
         // Controls for tip position
-        let tipX = controls.value("Tip X", Math.round(box.middleX(), box.xMin, box.xMax, 1, true);
-        let tipY = controls.value("Tip Y", Math.round(box.middleY(), box.yMin, box.yMax, 1, true);
+        let tipX = controls.value("Tip X", Math.round(box.middleX()), box.xMin, box.xMax, 1, true);
+        let tipY = controls.value("Tip Y", Math.round(box.middleY()), box.yMin, box.yMax, 1, true);
         let angle = controls.value("Angle", 0, 0, 360, 1, true);
 
         // Arrow and flank lengths
@@ -22,38 +22,57 @@ export default class Arrow extends Animator {
         let flankLength = controls.value("Flank length", 5, 1, 20, 1, true);
         let flankAngle = controls.value("Flank angle", 35, 5, 85, 1, true); // degrees from main line
 
-        // Convert angles to radians
-        let theta = angle.value * Math.PI / 180;
-        let flankTheta1 = (angle.value + flankAngle.value) * Math.PI / 180;
-        let flankTheta2 = (angle.value - flankAngle.value) * Math.PI / 180;
+        // Wobble controls
+        let wobbleGroup = controls.group("Wobble", false, true, true, true);
+        let wobbleAmplitude = controls.value("Wobble amplitude (px)", 10, 0, 50, 1, true);
+        let wobbleSpeed = controls.value("Wobble speed (Hz)", 1, 0.1, 10, 0.1, true);
 
-        // Calculate base of arrow (start of main line)
-        let baseX = Math.round(tipX.value - Math.cos(theta) * arrowLength.value);
-        let baseY = Math.round(tipY.value - Math.sin(theta) * arrowLength.value);
+        // Calculate animated tip position if wobble is enabled
+        await scheduler.interval(1, ()=>{
+            box.clear()
+            let animatedTipX = tipX.value;
+            let animatedTipY = tipY.value;
+            let theta = angle.value * Math.PI / 180;
+            if (wobbleGroup.enabled && wobbleAmplitude.value > 0 && wobbleSpeed.value > 0) {
+                // Time in seconds
+                let t = Date.now() / 1000;
+                let offset = Math.sin(2 * Math.PI * wobbleSpeed.value * t) * wobbleAmplitude.value;
+                // Move tip along the arrow's direction
+                animatedTipX = ~~(tipX.value + Math.cos(theta) * offset);
+                animatedTipY = ~~(tipY.value + Math.sin(theta) * offset);
+            }
 
-        // Calculate flank endpoints
-        let flank1X = Math.round(tipX.value - Math.cos(flankTheta1) * flankLength.value);
-        let flank1Y = Math.round(tipY.value - Math.sin(flankTheta1) * flankLength.value);
-        let flank2X = Math.round(tipX.value - Math.cos(flankTheta2) * flankLength.value);
-        let flank2Y = Math.round(tipY.value - Math.sin(flankTheta2) * flankLength.value);
+            // Convert flank angles to radians
+            let flankTheta1 = (angle.value + flankAngle.value) * Math.PI / 180;
+            let flankTheta2 = (angle.value - flankAngle.value) * Math.PI / 180;
 
-        // Draw main arrow line (from base to tip)
-        let mainLine = new DrawLine(tipX.value, tipY.value,baseX, baseY,  colorControl);
-        box.add(mainLine);
-        // Draw flanks (from tip to each flank endpoint)
-        let flank1 = new DrawLine(tipX.value, tipY.value, flank1X, flank1Y, colorControl);
-        box.add(flank1);
-        let flank2 = new DrawLine(tipX.value, tipY.value, flank2X, flank2Y, colorControl);
-        box.add(flank2);
+            // Calculate base of arrow (start of main line)
+            let baseX = Math.round(animatedTipX - Math.cos(theta) * arrowLength.value);
+            let baseY = Math.round(animatedTipY - Math.sin(theta) * arrowLength.value);
 
-        if (patGroup.enabled) {
-            controls.disable(colorControl);
-            pat.run(mainLine);
-            pat.run(flank1);
-            pat.run(flank2);
-        } else {
-            controls.enable(colorControl);
-        }
+            // Calculate flank endpoints
+            let flank1X = Math.round(animatedTipX - Math.cos(flankTheta1) * flankLength.value);
+            let flank1Y = Math.round(animatedTipY - Math.sin(flankTheta1) * flankLength.value);
+            let flank2X = Math.round(animatedTipX - Math.cos(flankTheta2) * flankLength.value);
+            let flank2Y = Math.round(animatedTipY - Math.sin(flankTheta2) * flankLength.value);
 
+            // Draw main arrow line (from tip to base)
+            let mainLine = new DrawLine(animatedTipX, animatedTipY, baseX, baseY, colorControl);
+            box.add(mainLine);
+            // Draw flanks (from tip to each flank endpoint)
+            let flank1 = new DrawLine(animatedTipX, animatedTipY, flank1X, flank1Y, colorControl);
+            box.add(flank1);
+            let flank2 = new DrawLine(animatedTipX, animatedTipY, flank2X, flank2Y, colorControl);
+            box.add(flank2);
+
+            if (patGroup.enabled) {
+                controls.disable(colorControl);
+                pat.run(mainLine);
+                pat.run(flank1);
+                pat.run(flank2);
+            } else {
+                controls.enable(colorControl);
+            }
+        })
     }
 }
