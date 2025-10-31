@@ -3,14 +3,11 @@ import Scheduler from "../../Scheduler.js"
 import ControlGroup from "../../ControlGroup.js"
 import Animator from "../../Animator.js"
 import DrawLine from "../../draw/DrawLine.js";
-import FxColorPattern from "../../fx/FxColorPattern.js";
 
 export default class Arrow extends Animator {
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) {
         // User specifies tip (x, y), angle, arrow length, flank length, flank angle
         let colorControl = controls.color('Color', 255,255,0,1);
-        let patGroup = controls.group("Color pattern", true, false, true);
-        let pat = new FxColorPattern(scheduler, patGroup, 40, 14, true, false, 'Brainsmoke fire');
 
         // Controls for tip position
         let tipX = controls.value("Tip X", Math.round(box.middleX()), box.xMin, box.xMax, 1, true);
@@ -23,23 +20,23 @@ export default class Arrow extends Animator {
         let flankAngle = controls.value("Flank angle", 35, 5, 85, 1, true); // degrees from main line
 
         // Wobble controls
-        let wobbleGroup = controls.group("Wobble", false, true, true, true);
-        let wobbleAmplitude = controls.value("Wobble amplitude (px)", 10, 0, 50, 1, true);
+        let wobbleGroup = controls.group("Wobble", true, true, true, true);
+        let wobbleAmplitude = controls.value("Wobble amplitude (px)", 2, 0, 50, 1, true);
         let wobbleSpeed = controls.value("Wobble speed (Hz)", 1, 0.1, 10, 0.1, true);
 
         // Calculate animated tip position if wobble is enabled
-        await scheduler.interval(1, ()=>{
+        await scheduler.interval(1, (frameNr)=>{
             box.clear()
             let animatedTipX = tipX.value;
             let animatedTipY = tipY.value;
             let theta = angle.value * Math.PI / 180;
             if (wobbleGroup.enabled && wobbleAmplitude.value > 0 && wobbleSpeed.value > 0) {
                 // Time in seconds
-                let t = Date.now() / 1000;
+                let t = frameNr/60;
                 let offset = Math.sin(2 * Math.PI * wobbleSpeed.value * t) * wobbleAmplitude.value;
                 // Move tip along the arrow's direction
-                animatedTipX = ~~(tipX.value + Math.cos(theta) * offset);
-                animatedTipY = ~~(tipY.value + Math.sin(theta) * offset);
+                animatedTipX = Math.round(tipX.value + Math.cos(theta) * offset);
+                animatedTipY = Math.round(tipY.value + Math.sin(theta) * offset);
             }
 
             // Convert flank angles to radians
@@ -65,14 +62,9 @@ export default class Arrow extends Animator {
             let flank2 = new DrawLine(animatedTipX, animatedTipY, flank2X, flank2Y, colorControl);
             box.add(flank2);
 
-            if (patGroup.enabled) {
-                controls.disable(colorControl);
-                pat.run(mainLine);
-                pat.run(flank1);
-                pat.run(flank2);
-            } else {
-                controls.enable(colorControl);
-            }
+            //stop animating if wobble is disabled
+            if (!wobbleGroup.enabled)
+                return false
         })
     }
 }
