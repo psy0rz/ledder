@@ -10,12 +10,13 @@ export default class Arrow extends Animator {
         // User specifies tip (x, y), angle, arrow length, flank length, flank angle
         let colorControl = controls.color('Color', 255,255,0,1);
         let patGroup = controls.group("Color pattern", true, false, true);
-        let pat = new FxColorPattern(scheduler, patGroup, 240, 10, false, true, 'Bertrik fire');
+        let pat = new FxColorPattern(scheduler, patGroup, 40, 14, true, false, 'Brainsmoke fire');
 
         // Controls for tip position
-        let tipX = controls.value("Tip X", Math.round((box.xMin + box.xMax) / 2), box.xMin, box.xMax, 1, true);
-        let tipY = controls.value("Tip Y", Math.round((box.yMin + box.yMax) / 2), box.yMin, box.yMax, 1, true);
+        let tipX = controls.value("Tip X", Math.round(box.middleX(), box.xMin, box.xMax, 1, true);
+        let tipY = controls.value("Tip Y", Math.round(box.middleY(), box.yMin, box.yMax, 1, true);
         let angle = controls.value("Angle", 0, 0, 360, 1, true);
+
         // Arrow and flank lengths
         let arrowLength = controls.value("Arrow length", 10, 1, Math.max(box.xMax - box.xMin, box.yMax - box.yMin), 1, true);
         let flankLength = controls.value("Flank length", 5, 1, 20, 1, true);
@@ -37,7 +38,7 @@ export default class Arrow extends Animator {
         let flank2Y = Math.round(tipY.value - Math.sin(flankTheta2) * flankLength.value);
 
         // Draw main arrow line (from base to tip)
-        let mainLine = new DrawLine(baseX, baseY, tipX.value, tipY.value, colorControl);
+        let mainLine = new DrawLine(tipX.value, tipY.value,baseX, baseY,  colorControl);
         box.add(mainLine);
         // Draw flanks (from tip to each flank endpoint)
         let flank1 = new DrawLine(tipX.value, tipY.value, flank1X, flank1Y, colorControl);
@@ -53,5 +54,6 @@ export default class Arrow extends Animator {
         } else {
             controls.enable(colorControl);
         }
+
     }
 }
