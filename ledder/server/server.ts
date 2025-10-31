@@ -11,7 +11,7 @@ import {previewStore} from "./PreviewStore.js";
 
 if (process.env.NODE_ENV == 'development') {
     await presetStore.storeAnimationPresetList()
-    await previewStore.renderAll(presetStore.animationPresetList, false)
+    // await previewStore.renderAll(presetStore.animationPresetList, false)
 }
 
 await loadDisplayconf()

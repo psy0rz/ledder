@@ -5,8 +5,8 @@ import Animator from "../Animator.js"
 import ControlGroup from "../ControlGroup.js"
 import {type PresetValues} from "../PresetValues.js"
 import {type Values} from "../Control.js"
-import {watch} from "fs/promises"
 import CallbackManager from "../../util/CallbackManager.js"
+import chokidar from 'chokidar'
 
 
 /*
@@ -44,8 +44,8 @@ export default class AnimationManager {
     private proxyScheduler: { proxy: Scheduler; revoke: () => void }
     private proxyControlGroup: { proxy: ControlGroup; revoke: () => void }
     private childBox: PixelBox //NOTE: we cant use a Proxy since its a subclass of a native Set()
-    private autoreloadWatchAbort: AbortController
     private autoreloadTimeout: NodeJS.Timeout
+    private autoreloadWatcher: any
 
     constructor(box: PixelBox, scheduler: Scheduler, controlGroup: ControlGroup) {
 
@@ -102,10 +102,10 @@ export default class AnimationManager {
     //load only animation
     public async loadAnimation(animationName: string) {
         this.animationName = animationName
-        this.animationClass = await presetStore.loadAnimation(this.animationName)
-        this.autoreload().then((a) => {
+        this.autoreload().then(() => {
 
         })
+        this.animationClass = await presetStore.loadAnimation(this.animationName)
         this.selectedCallbacks.trigger(this.animationName, this.presetName)
     }
 
@@ -175,11 +175,13 @@ export default class AnimationManager {
     }
 
     autoreloadStop() {
-        if (this.autoreloadWatchAbort !== undefined)
-            this.autoreloadWatchAbort.abort()
         if (this.autoreloadTimeout !== undefined)
             clearTimeout(this.autoreloadTimeout)
 
+        if (this.autoreloadWatcher !== undefined) {
+            this.autoreloadWatcher.close()
+            this.autoreloadWatcher = undefined
+        }
     }
 
     //enable automaticly reloading animation file on change to make development easier.
@@ -187,29 +189,26 @@ export default class AnimationManager {
 
         this.autoreloadStop()
         if (this.animationName) {
-            console.log(`Enabling autoreload for animation ${this.animationName}`)
 
             const filename = presetStore.animationFilename(this.animationName)
-            this.autoreloadWatchAbort = new AbortController()
+            console.log(`Enabling autoreload for animation ${filename}`)
 
-            const watcher = watch(filename, {
-                signal: this.autoreloadWatchAbort.signal
+            const watcher = chokidar.watch(filename, {
+                persistent: true,
+                ignoreInitial: true,
+                // awaitWriteFinish: true, // Wait for writes to finish
             })
 
-            try {
-                for await (const event of watcher) {
-                    if (this.autoreloadTimeout !== undefined)
-                        clearTimeout(this.autoreloadTimeout)
-                    this.autoreloadTimeout = setTimeout(async () => {
-                        console.log(`${filename} changed, auto reloading animation`)
-                        await this.reload(false)
-                    }, 100)
-                }
-            } catch (e) {
-                if (e.name === 'AbortError')
-                    return
-                throw e
-            }
+            watcher.on('change', () => {
+                if (this.autoreloadTimeout !== undefined) clearTimeout(this.autoreloadTimeout)
+                this.autoreloadTimeout = setTimeout(async () => {
+                    console.log(`${filename} changed, auto reloading animation`)
+                    await this.reload(false)
+                }, 100)
+            })
+
+            this.autoreloadWatcher = watcher
+
         }
 
     }
