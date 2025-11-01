@@ -26,8 +26,8 @@ export default class Arrow extends Animator {
 
 
 
-        let animatedTipX = tipXY.value;
-        let animatedTipY = tipY.value;
+        let animatedTipX = tipXY.x;
+        let animatedTipY = tipXY.y;
         let theta = angle.value * Math.PI / 180;
 
         // Convert flank angles to radians
