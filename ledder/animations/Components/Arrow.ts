@@ -60,7 +60,7 @@ export default class Arrow extends Animator {
         // Wobble
         let wobbleGroup = controls.group("Wobble", true, true, true, true);
         if (wobbleGroup.enabled) {
-            const wobbleFx = new FxWobble(scheduler, wobbleGroup)
+            const wobbleFx = new FxWobble(scheduler, wobbleGroup, 1,5,1,0)
             wobbleFx.run(arrowContainer)
         }
 
