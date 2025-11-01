@@ -191,7 +191,7 @@ export default class AnimationManager {
         if (this.animationName) {
 
             const filename = presetStore.animationFilename(this.animationName)
-            console.log(`Enabling autoreload for animation ${filename}`)
+            // console.log(`Enabling autoreload for animation ${filename}`)
 
             const watcher = chokidar.watch(filename, {
                 persistent: true,
