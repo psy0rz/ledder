@@ -16,6 +16,7 @@ import FxColorPattern from "../../fx/FxColorPattern.js"
 import TheMatrix from "../MovieFx/TheMatrix.js"
 import FxSubpixels from "../../fx/FxSubpixels.js"
 import {interpretMacro} from "../../macros.js"
+import FxWobble from "../../fx/FxWobble.js";
 
 
 export default class Marquee extends Animator {
@@ -39,6 +40,12 @@ export default class Marquee extends Animator {
 
 
         textPixels.centerV(box)
+
+        let wobbleGroup=control.group("Wobble", true,false, true)
+        if (wobbleGroup.enabled) {
+            let wobble = new FxWobble(scheduler, wobbleGroup)
+            wobble.run(textPixels)
+        }
 
         let starsGroup = control.group("Stars", true, true, true)
         if (starsGroup.enabled) {
@@ -111,6 +118,8 @@ export default class Marquee extends Animator {
             }
             const textBoundBox = textPixels.bbox()
             textBoundBox.xMin = 0
+            textBoundBox.yMin=box.yMin
+            textBoundBox.yMax=box.yMax
 
             rotatorPromise = rotator.run(textPixels, textBoundBox, waitX, null)
 
