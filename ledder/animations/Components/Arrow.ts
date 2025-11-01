@@ -12,8 +12,9 @@ export default class Arrow extends Animator {
         let colorControl = controls.color('Color', 255,255,0,1);
 
         // Controls for tip position
-        let tipX = controls.value("Tip X", Math.round(box.middleX()), box.xMin, box.xMax, 1, true);
-        let tipY = controls.value("Tip Y", Math.round(box.middleY()), box.yMin, box.yMax, 1, true);
+        let tipXY = controls.position('Tip position' , box)
+
+
         let angle = controls.value("Angle", 0, 0, 360, 1, true);
 
         // Arrow and flank lengths
@@ -25,7 +26,7 @@ export default class Arrow extends Animator {
 
 
 
-        let animatedTipX = tipX.value;
+        let animatedTipX = tipXY.value;
         let animatedTipY = tipY.value;
         let theta = angle.value * Math.PI / 180;
 

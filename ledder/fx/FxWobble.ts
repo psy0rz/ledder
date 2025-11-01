@@ -17,7 +17,7 @@ export default class FxWobble extends Fx {
     yOffset: number
 
 
-    constructor(scheduler: Scheduler, controlGroup: ControlGroup, xFreq:number=1, xAmplitude:number=5, yFreq:number=1, yAmplitude:number=5, phaseShift:number=0) {
+    constructor(scheduler: Scheduler, controlGroup: ControlGroup, xFreq:number=1, xAmplitude:number=0, yFreq:number=1, yAmplitude:number=5, phaseShift:number=0) {
         super(scheduler, controlGroup);
 
         this.xOffset=0
