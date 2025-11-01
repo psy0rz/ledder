@@ -6,47 +6,65 @@ import Scheduler from "../Scheduler.js";
 
 export default class FxWobble extends Fx {
 
-    intervalControl: ControlValue
-    xControl: ControlValue
-    yControl: ControlValue
-    offsetControl: ControlValue
+    xFreq: ControlValue
+    xAmplitude: ControlValue
+    yFreq: ControlValue
+    yAmplitude: ControlValue
+    phaseShift: ControlValue
+
+    //actual moving offsets, can be read from outside and used
+    xOffset: number
+    yOffset: number
 
 
-    constructor(scheduler: Scheduler, controlGroup: ControlGroup, xAmount: number, yAmount: number, interval: number, offset = 0) {
+    constructor(scheduler: Scheduler, controlGroup: ControlGroup, xFreq:number=1, xAmplitude:number=5, yFreq:number=1, yAmplitude:number=5, phaseShift:number=0) {
         super(scheduler, controlGroup);
 
-        this.intervalControl = controlGroup.value("Wobble interval", interval, 1, 60, 1);
-        this.offsetControl = controlGroup.value("Wobble interval offset", offset, 0, 60, 1, true);
-        this.xControl = controlGroup.value("Wobble X amount", xAmount, -10, 10, 1, true)
-        this.yControl = controlGroup.value("Wobble Y amount", yAmount, -10, 10, 1, true)
+        this.xOffset=0
+        this.yOffset=0
+
+
+        this.xFreq =    controlGroup.value("X frequency (hz)", xFreq, 0, 5, 0.1, true);
+        this.xAmplitude = controlGroup.value("X amplitude", xAmplitude, -10, 10, 1, true);
+        this.yFreq = controlGroup.value("Y frequency (hz)", yFreq, 0, 5, 0.1, true);
+        this.yAmplitude = controlGroup.value("Y amplitude", yAmplitude, -10, 10, 1, true);
+        this.phaseShift=controlGroup.value("Phase shift", phaseShift, -360, 360, 1, true);
 
     }
 
-    run(container: PixelList) {
+    async run(container: PixelList) {
 
         this.running = true
 
-        let inverter = 1;
-        this.promise = this.scheduler.intervalControlled(this.intervalControl, (frameNr) => {
+        this.scheduler.interval(1, (frameNr) => {
 
-                inverter = inverter * -1
+            //current number of radians in our cycle (2pi per second)
+            let xRadians=frameNr/60*Math.PI*2*this.xFreq.value;
+            let yRadians=frameNr/60*Math.PI*2*this.yFreq.value;
 
-                const xStep = this.xControl.value * inverter;
-                const yStep = this.yControl.value * inverter;
-                // for (let i = 0, n = pixelContainer.pixels.length; i < n; ++i) {
+            //apply phase shift
+            yRadians+=this.phaseShift.value * Math.PI / 180;
 
-                container.forEachPixel( (p)=>{
-                    p.x += xStep;
-                    p.y += yStep;
+            //offset the pixels should have
+            let xOffsetWanted=Math.round(Math.sin(xRadians)*this.xAmplitude.value)
+            let yOffsetWanted=Math.round(Math.sin(yRadians)*this.yAmplitude.value)
+
+            //NOTE: work with intergers to prevent acculating rounding errors
+            let xDelta=xOffsetWanted-this.xOffset
+            let yDelta=yOffsetWanted-this.yOffset
+
+            if (xDelta!=0 || yDelta!=0)
+            {
+                container.forEachPixel((p) => {
+                    p.x += xDelta
+                    p.y += yDelta
                 })
+                this.xOffset=xOffsetWanted
+                this.yOffset=yOffsetWanted
 
+            }
 
-                return this.running
-
-            }, this.offsetControl.value
-        )
-
-        return (this.promise)
-
+           return this.running
+        })
     }
 }
