@@ -246,9 +246,9 @@ export default class ControlGroup extends Control {
 
     /** Relative position control
      */
-    position(name: string, box: BoxInterface, restartOnChange=true): ControlPosition {
+    position(name: string, box: BoxInterface, restartOnChange=true, xOrigin, xOffset, yOrigin,yOffset): ControlPosition {
 
-        return new ControlPosition(name, this, box, restartOnChange)
+        return new ControlPosition(name, this, box, restartOnChange, xOrigin, xOffset, yOrigin, yOffset)
 
     }
 

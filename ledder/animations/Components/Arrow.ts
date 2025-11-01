@@ -12,7 +12,7 @@ export default class Arrow extends Animator {
         let colorControl = controls.color('Color', 255,255,0,1);
 
         // Controls for tip position
-        let tipXY = controls.position('Tip position' , box)
+        let tipXY = controls.position('Tip position' , box, true, 'center',0,'middle', 0)
 
 
         let angle = controls.value("Angle", 0, 0, 360, 1, true);

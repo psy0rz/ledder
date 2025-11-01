@@ -6,15 +6,16 @@ import type BoxInterface from "./BoxInterface.js";
 // ControlPosition allows user to select a position within a box with offsets.
 export default class ControlPosition  {
 
+    //the actual calculated x,y position
     x: number
     y: number
 
-    constructor(name: string = 'root', parent: ControlGroup,box:BoxInterface, restartOnChange) {
+    constructor(name: string = 'root', parent: ControlGroup,box:BoxInterface, restartOnChange:boolean, xOrigin="left", xOffset=0, yOrigin="top", yOffset=0) {
 
         let group = parent.group(name, restartOnChange, false, false, true)
 
         ///////////// X
-        let xOrigin=group.select("X origin", "left", [
+        let xOriginControl=group.select("X origin", xOrigin, [
             {
                 "id": "left",
                 "name": "Left",
@@ -30,10 +31,10 @@ export default class ControlPosition  {
         ])
 
         let xMax=box.xMax-box.xMin
-        let xOffset=group.value("X offset", 0, -xMax, +xMax)
+        let xOffsetControl=group.value("X offset", xOffset, -xMax, +xMax)
 
         //////////// Y
-        let yOrigin=group.select("Y origin", "top", [
+        let yOriginControl=group.select("Y origin", yOrigin, [
             {
                 "id": "top",
                 "name": "Top",
@@ -49,28 +50,28 @@ export default class ControlPosition  {
         ])
 
         let yMax=box.yMax-box.yMin
-        let yOffset=group.value("Y offset", 0, -yMax, +yMax)
+        let yOffsetControl=group.value("Y offset", yOffset, -yMax, +yMax)
 
         group.onChange( ()=>
         {
-            if (xOrigin.selected=="center")
-                this.x=box.xMin+(Math.floor(xMax/2))+xOffset.value
+            if (xOriginControl.selected=="center")
+                this.x=box.xMin+(Math.floor(xMax/2))+xOffsetControl.value
 
-            if (xOrigin.selected=="left")
-                this.x=box.xMin+xOffset.value
+            if (xOriginControl.selected=="left")
+                this.x=box.xMin+xOffsetControl.value
 
-            if (xOrigin.selected=="right")
-                this.x=box.xMax+xOffset.value
+            if (xOriginControl.selected=="right")
+                this.x=box.xMax+xOffsetControl.value
 
 
-            if (yOrigin.selected=="middle")
-                this.y=box.yMin+(Math.floor(yMax/2))+yOffset.value
+            if (yOriginControl.selected=="middle")
+                this.y=box.yMin+(Math.floor(yMax/2))+yOffsetControl.value
 
-            if (yOrigin.selected=="top")
-                this.y=box.yMin+yOffset.value
+            if (yOriginControl.selected=="top")
+                this.y=box.yMin+yOffsetControl.value
 
-            if (yOrigin.selected=="bottom")
-                this.y=box.yMax+yOffset.value
+            if (yOriginControl.selected=="bottom")
+                this.y=box.yMax+yOffsetControl.value
 
 
         })
