@@ -1,0 +1,87 @@
+{
+ "title": "",
+ "description": "",
+ "values": {
+  "Font": {
+   "selected": "C64"
+  },
+  "Font height": {
+   "value": 0
+  },
+  "Font width": {
+   "value": 0
+  },
+  "Text": {
+   "text": "Wobble"
+  },
+  "Text color": {
+   "r": 33,
+   "g": 255,
+   "b": 0,
+   "a": 1
+  },
+  "Wobble": {
+   "X frequency (hz)": {
+    "value": 1
+   },
+   "X amplitude": {
+    "value": 0
+   },
+   "Y frequency (hz)": {
+    "value": 1
+   },
+   "Y amplitude": {
+    "value": 1
+   },
+   "Phase shift": {
+    "value": 0
+   },
+   "Enabled": {
+    "enabled": true
+   }
+  },
+  "Stars": {
+   "Enabled": {
+    "enabled": false
+   }
+  },
+  "Star field": {
+   "Enabled": {
+    "enabled": false
+   }
+  },
+  "The Matrix": {
+   "Enabled": {
+    "enabled": false
+   }
+  },
+  "Scrolling": {
+   "Enabled": {
+    "enabled": false
+   }
+  },
+  "Flames": {
+   "Enabled": {
+    "enabled": false
+   }
+  },
+  "Twinkle": {
+   "Enabled": {
+    "enabled": false
+   }
+  },
+  "Color pattern": {
+   "Enabled": {
+    "enabled": false
+   }
+  },
+  "Cursor": {
+   "Enabled": {
+    "enabled": false
+   }
+  },
+  "Enabled": {
+   "enabled": true
+  }
+ }
+}

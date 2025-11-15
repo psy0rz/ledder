@@ -54,7 +54,8 @@ export default class Nyancat extends Animator {
           0fpffpfff0
           .00000000.
         `)
-        new FxWobble(scheduler, controls.group("Wobble body", false, true), 0, -1, 15).run(body)
+        let wobbleBoxyFx=new FxWobble(scheduler, controls.group("Wobble body", false, true), 0,0,2,1)
+        wobbleBoxyFx.run(body)
         cat.add(body)
 
 
@@ -68,8 +69,7 @@ export default class Nyancat extends Animator {
           .0555550.
           ..00000..
         `)
-        new FxWobble(scheduler, controls.group("Wobble head x", false, true), 1, 0, 15, 5).run(head)
-        new FxWobble(scheduler, controls.group("Wobble head y", false, true), 0, 1, 15, 10).run(head)
+        new FxWobble(scheduler, controls.group("Wobble head", false, true), 2, 1, 2, 1, -90).run(head)
         cat.add(head)
 
 
@@ -78,11 +78,6 @@ export default class Nyancat extends Animator {
         let y = 2;
 
 
-        //wobble rainbow creation position (get value from wobble body)
-        scheduler.intervalControlled(controls.group('Wobble body').value('Wobble interval'), () => {
-            y = (y + 1) % 2;
-            return true
-        })
 
         //draw rainbow or fire
         let fadeFx = new FxFadeOut(scheduler, controls.group("Rainbow"), 40, 4)
@@ -105,7 +100,7 @@ export default class Nyancat extends Animator {
 
                 for (let c = 0; c < 6; c++) {
 
-                    const p = new Pixel(x, c + y + 1,  new Color())
+                    const p = new Pixel(x+wobbleBoxyFx.xOffset, c + y - 1+wobbleBoxyFx.yOffset,  new Color())
                     rainbowContainer.add(p)
                     cycleFx.run( p.color, intensity[c])
                         .then(() => {
@@ -135,7 +130,7 @@ export default class Nyancat extends Animator {
 
                 for (let c = 0; c < 6; c++) {
 
-                    const p = new Pixel(x, c + y + 1, colors[c])
+                    const p = new Pixel(x+wobbleBoxyFx.xOffset, c + y -1+wobbleBoxyFx.yOffset, colors[c])
                     rainbowContainer.add(p)
                     fadeFx.run(colors[c], fadeTimes[c])
                         .then(() => {

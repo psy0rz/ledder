@@ -12,7 +12,7 @@
    "value": 0
   },
   "Text": {
-   "text": "Ultrasmooth subpixel scrolling"
+   "text": "Smooth scrolling"
   },
   "Text color": {
    "r": 33,
@@ -146,6 +146,14 @@
    "Enabled": {
     "enabled": false
    }
+  },
+  "Wobble": {
+   "Enabled": {
+    "enabled": false
+   }
+  },
+  "Enabled": {
+   "enabled": true
   }
  }
 }
