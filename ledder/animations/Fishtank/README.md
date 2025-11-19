@@ -1,253 +1,165 @@
-# Fishtank Sprite Framework
+# Fishtank - Modular Sprite Animation
 
-A modular sprite-based animation framework for the Ledder Fishtank animations. You can put fish and plants in the fishtank and/or everything else that fits ;-)
+A comprehensive, fully-configurable sprite-based animation system for creating aquarium scenes and environments. Features fish, plants, weather effects, and complete user control over all elements.
 
-## Architecture
+## 🎯 Quick Start
 
-The framework consists of several key components:
+The Fishtank animation provides:
+- **5 fish types** with configurable distribution and bidirectional movement
+- **12 plant varieties** including trees, bushes, flowers, and aquatic plants
+- **9 environment effects** (bubbles, clouds, sun, moon, stars, rain, snow, thunder, rainbow)
+- **3-layer depth system** for realistic rain and snow parallax
+- **Complete user controls** with organized groups and enable/disable switches
+- **Background image support** with URL loading and fit modes
+
+All elements are fully configurable through an intuitive control panel.
+
+## 🎮 User Controls
+
+See **[CONTROLS-GUIDE.md](./CONTROLS-GUIDE.md)** for complete control documentation.
+
+### Control Groups Overview
+
+#### 🐠 Fish (Enable/Disable)
+- Large fish count & speed
+- 5 fish types with percentage distribution (Tropical, Goldfish, Clownfish, Angelfish, Neon Tetra)
+- Tiny fish school with formation behavior
+
+#### 🌿 Plants & Vegetation (Enable/Disable)
+- Total plant count
+- 8 plant type percentages (Tall, Short, Bushes, Grass, Flowers, Ferns, Trees, Cactus)
+- Weighted pool distribution system
+
+#### 🌈 Environment Effects (Enable/Disable)
+- **Bubbles:** Count + rise speed
+- **Clouds:** Count + drift speed (3 sizes)
+- **Celestial:** Sun, Moon, Stars, Rainbow
+- **Rain:** Count + speed + 3-layer depth distribution (far/mid/near %)
+- **Snow:** Count + speed + 3-layer depth distribution (far/mid/near %)
+- **Thunder:** Lightning flash count
+
+#### 🖼️ Background
+- Image URL loading
+- Fit modes (cover/contain/fill)
+- Opacity control
+
+---
+
+## 🏗️ Architecture
+
+### Core Framework Components
+
+### Core Framework Components
 
 ### 1. **SpriteAnimator** (Base Class)
-The foundation for all sprites. Provides:
-- Sprite rendering using ASCII art
+Foundation class for all sprites providing:
+- ASCII art sprite rendering with color codes
 - Position and velocity management
-- Constraint system (boundaries, bouncing)
+- Boundary constraints (bouncing, wrapping)
+- Horizontal sprite flipping for directional movement
+- Protected state management
 - Automatic dimension calculation
-- State management
 
-```typescript
-import SpriteAnimator from "./SpriteAnimator.js"
-import type { SpriteState } from "./SpriteAnimator.js"
-
-const mySprite = `
-.rrr.
-r...r
-.rrr.
-`;
-
-class MySprite extends SpriteAnimator {
-    constructor(x: number, y: number) {
-        const initialState: SpriteState = {
-            x,
-            y,
-            velocityX: 1,
-            velocityY: 0.5
-        };
-
-        super(mySprite, initialState, {
-            bounceOnEdges: true,
-            minX: 0,
-            minY: 0
-        });
-    }
-
-    update(frameNr: number, boxWidth: number, boxHeight: number) {
-        super.update(frameNr, boxWidth, boxHeight);
-        // Add custom behavior here
-    }
-}
-```
-
-### 2. **Sprite Collections**
-
-#### FishSprites.ts
-Contains all fish sprite classes:
-- `TropicalFishSprite` - Orange/yellow fish with random vertical movement
-- `GoldfishSprite` - Yellow goldfish with gentle swimming
-- `ClownfishSprite` - Orange/white striped fish with darting behavior
-- `AngelfishSprite` - Tall angelfish with graceful movement
-- `NeonTetraSprite` - Small schooling fish with quick movements
-
-Each fish has unique movement patterns and behaviors.
-
-#### PlantSprites.ts
-Contains plant sprite classes:
-- `TallPlantSprite` - Tall seaweed that sways in water
-- `ShortPlantSprite` - Short plant with gentle sway
-
-Plants use a swaying animation based on sine waves.
-
-#### EnvironmentSprites.ts
-Contains environmental sprites:
-- `BubbleSprite` - Rising bubbles with wobble effect
-
-#### BackgroundSprites.ts
-Contains background animations:
-- `SandyBottom` - Sandy aquarium floor with repeating tile pattern
-- `RockyBottom` - Rocky aquarium floor with pebbles
-- `ImageBackground` - User-defined external image/media as background (supports URLs, animated GIFs, static images)
-
-These are full Animator classes that can be used as backgrounds. ImageBackground uses the same technology as RemotePictures to load and display external images with configurable fit options (cover, contain, fill, inside, outside).
-Manages collections of sprites:
-- Add/remove sprites
+### 2. **SpriteManager** (Collection Manager)
+Manages sprite collections:
+- Add/remove sprites dynamically
 - Update all sprites in one call
-- Render all sprites to a PixelList
-- Query sprite collections
+- Render all sprites to PixelList
+- Layered rendering support
+
+### 3. **Sprite Collections**
+
+#### **FishSprites.ts** - 6 Fish Types
+- `TropicalFish` - Colorful, medium speed (base 0.08/0.02)
+- `Goldfish` - Orange, gentle swimming (base 0.06/0.03)
+- `Clownfish` - Orange/white, darting behavior (base 0.1/0.03)
+- `Angelfish` - Tall, graceful movement (base 0.05/0.02)
+- `NeonTetra` - Small, quick movements (base 0.12/0.04)
+- `TinyFishSchool` - Schooling formation with 4-frame animation (base 0.1/0.03)
+
+**Features:**
+- Bidirectional movement (50% spawn left-facing)
+- Automatic horizontal flipping based on direction
+- Water flow effects that preserve direction
+- Edge wrapping behavior
+- Frame-based smooth animation
+
+#### **PlantSprites.ts** - 12 Plant Varieties
+- `TallPlant`, `ShortPlant` - Aquatic plants with sway
+- `Bush`, `SmallBush` - Round bushes in two sizes
+- `PineTree`, `SmallPine` - Static pine trees
+- `OakTree`, `SmallOak` - Static oak trees
+- `Grass` - Short grass tufts with sway
+- `Flower` - Decorative flowers with sway
+- `Cactus` - Static desert cactus
+- `Fern` - Leafy fern with sway
+
+**Features:**
+- Trees are static (no movement)
+- Other plants use sine-wave swaying
+- Varying speeds and sway amounts
+- Bottom-anchored positioning
+
+#### **EnvironmentSprites.ts** - 9 Environment Types
+- `Bubble` - Rising bubbles with wobble and vertical wrapping
+- `Cloud` - Drifting clouds in 3 sizes (small/medium/large) with horizontal wrapping
+- `Sun` - Static sun with gentle pulsing
+- `Moon` - Static moon sprite
+- `Star` - Twinkling stars with random offsets
+- `Raindrop` - 3 depth variants (far: gray/slow, mid: blue/medium, near: blue/fast)
+- `Snowflake` - 3 depth variants with frames, sway, and varying speeds
+- `Thunder` - Random flashing lightning bolts
+- `Rainbow` - Static rainbow arc
+
+**Features:**
+- Depth-based parallax (rain/snow)
+- Custom wrapping behavior per sprite type
+- Speed multiplier support for rain/snow
+- Random timing offsets for stars/thunder
+
+#### **BackgroundSprites.ts**
+- `ImageBackground` - External image loading with sharp/fetch
+  - URL-based image loading
+  - Fit modes: cover, contain, fill
+  - Opacity control
+  - Async image processing
+
+---
+
+## 🚀 Using the Framework
+
+### Basic Usage Example
 
 ```typescript
 import SpriteManager from "./SpriteManager.js"
 import { FishSprites } from "./FishSprites.js"
+import { PlantSprites } from "./PlantSprites.js"
 
+// Create managers
 const fishManager = new SpriteManager();
+const plantManager = new SpriteManager();
 
-// Add fish
-const fish1 = new FishSprites.TropicalFish(10, 10, 0.5, 0.2);
-const fish2 = new FishSprites.Goldfish(20, 15, 0.3, 0.1);
-fishManager.addSprite(fish1);
-fishManager.addSprite(fish2);
+// Add sprites
+const fish = new FishSprites.TropicalFish(10, 10, 0.08, 0.02);
+const plant = new PlantSprites.TallPlant(5, boxHeight - 10);
+fishManager.addSprite(fish);
+plantManager.addSprite(plant);
 
 // In animation loop
-fishManager.update(frameNr, boxWidth, boxHeight);
-box.add(fishManager.render());
-```
-
-## Adding New Sprites
-
-### Step 1: Create the Sprite Class
-
-Create a new file in the `Fishtank` folder or add to an existing sprite collection file:
-
-```typescript
-// NewFishSprite.ts or add to FishSprites.ts
-import SpriteAnimator from "./SpriteAnimator.js"
-import type { SpriteState } from "./SpriteAnimator.js"
-
-const piranhaSprite = `
-..rrrr..
-.rrrrrr.
-rrr00rrr
-.rrrrrr.
-..rrrr..
-`;
-
-export class PiranhaSprite extends SpriteAnimator {
-    constructor(x: number, y: number, speedX: number = 1.0, speedY: number = 0.4) {
-        const initialState: SpriteState = {
-            x,
-            y,
-            velocityX: speedX,
-            velocityY: speedY
-        };
-
-        super(piranhaSprite, initialState, {
-            bounceOnEdges: true,
-            minX: 0,
-            minY: 2
-        });
-    }
-
-    update(frameNr: number, boxWidth: number, boxHeight: number) {
-        super.update(frameNr, boxWidth, boxHeight);
-        
-        // Custom behavior: aggressive speed changes
-        if (Math.random() > 0.90) {
-            this.state.velocityX = (Math.random() - 0.5) * 2.5;
-            this.state.velocityY = (Math.random() - 0.5) * 1.0;
-        }
-    }
-}
-```
-
-### Step 2: Export in Collection
-
-If adding to an existing collection file, add to the export:
-
-```typescript
-export const FishSprites = {
-    TropicalFish: TropicalFishSprite,
-    Goldfish: GoldfishSprite,
-    Clownfish: ClownfishSprite,
-    Angelfish: AngelfishSprite,
-    NeonTetra: NeonTetraSprite,
-    Piranha: PiranhaSprite  // Add new sprite
-};
-```
-
-### Step 3: Use in Fishtank Composition
-
-Update `Components/Fishtank.ts` to include the new sprite:
-
-```typescript
-const fishTypes = [
-    FishSprites.TropicalFish,
-    FishSprites.Goldfish,
-    FishSprites.Clownfish,
-    FishSprites.Angelfish,
-    FishSprites.NeonTetra,
-    FishSprites.Piranha  // Add here
-];
-```
-
-That's it! The sprite will now be randomly assigned to fish in the tank.
-
-## Sprite Features
-
-### Movement Patterns
-- **Velocity-based**: Set `velocityX` and `velocityY` in state
-- **Custom**: Override `update()` method for complex patterns
-- **Constrained**: Use `bounceOnEdges` to keep sprites in bounds
-
-### Constraints
-```typescript
-{
-    bounceOnEdges: true,    // Reverse velocity at boundaries
-    minX: 0,                // Left boundary
-    maxX: width,            // Right boundary
-    minY: 0,                // Top boundary
-    maxY: height            // Bottom boundary
-}
-```
-
-### State Management
-Store custom data in sprite state:
-```typescript
-const initialState: SpriteState = {
-    x: 10,
-    y: 10,
-    velocityX: 1,
-    velocityY: 0.5,
-    // Custom properties
-    hunger: 100,
-    color: "red",
-    animation: "swim"
-};
-```
-
-Access in `update()`:
-```typescript
-update(frameNr: number, boxWidth: number, boxHeight: number) {
-    super.update(frameNr, boxWidth, boxHeight);
+scheduler.intervalControlled(1).do((frameNr) => {
+    fishManager.update(frameNr, boxWidth, boxHeight);
+    plantManager.update(frameNr, boxWidth, boxHeight);
     
-    // Access custom state
-    if (this.state.hunger < 50) {
-        // Change behavior when hungry
-    }
-}
+    box.add(plantManager.render());  // Render plants first (background)
+    box.add(fishManager.render());   // Render fish on top
+});
 ```
 
-## Color Codes
+---
 
-Available colors in ASCII art sprites:
-- `r` - red
-- `b` - blue
-- `y` - yellow
-- `w` - white
-- `m` - magenta/orange
-- `g` - green
-- `o` - orange/tan
-- `5` - gray/green
-- `.` - transparent (no pixel)
+## 🎨 Creating Custom Sprites
 
-Avoid `0` (black) as it's invisible on black backgrounds.
-
-## Best Practices
-
-1. **Sprite Size**: Keep sprites between 4x4 and 16x16 pixels
-2. **Side View**: Fish should face sideways (head-body-tail orientation)
-3. **Readable**: Make sprites recognizable at small sizes
-4. **Unique Behavior**: Give each sprite type distinctive movement
-5. **Performance**: Don't create too many sprites (limit controlled by user)
-
-## Example: Complete Custom Sprite
+### Step 1: Define Sprite Class
 
 ```typescript
 import SpriteAnimator from "./SpriteAnimator.js"
@@ -257,54 +169,274 @@ const jellyfishSprite = `
 ..www..
 .wwwww.
 wwwwwww
-.wwwww.
-..w.w..
+.w.w.w.
 ..w.w..
 `;
 
 export class JellyfishSprite extends SpriteAnimator {
+    private pulsePhase: number;
+
     constructor(x: number, y: number) {
         const initialState: SpriteState = {
             x,
             y,
-            velocityX: 0,
-            velocityY: 0,
-            pulsePhase: Math.random() * Math.PI * 2,
-            driftPhase: Math.random() * Math.PI * 2
+            velocityX: 0.1,
+            velocityY: 0
         };
 
         super(jellyfishSprite, initialState, {
-            bounceOnEdges: false,  // Jellyfish drift gently
-            minY: 2
+            bounceOnEdges: false,
+            wrapAround: true
         });
+
+        this.pulsePhase = Math.random() * Math.PI * 2;
     }
 
     update(frameNr: number, boxWidth: number, boxHeight: number) {
         // Pulsing vertical movement
-        const pulse = Math.sin(frameNr / 10 + (this.state.pulsePhase || 0)) * 0.3;
+        const pulse = Math.sin(frameNr / 10 + this.pulsePhase) * 0.3;
         this.state.velocityY = pulse;
         
-        // Gentle horizontal drift
-        const drift = Math.sin(frameNr / 30 + (this.state.driftPhase || 0)) * 0.2;
-        this.state.velocityX = drift;
-        
         super.update(frameNr, boxWidth, boxHeight);
-        
-        // Wrap around horizontally instead of bouncing
-        if (this.state.x < -this.spriteWidth) {
-            this.state.x = boxWidth;
-        } else if (this.state.x > boxWidth) {
-            this.state.x = -this.spriteWidth;
-        }
     }
 }
 ```
 
-## Framework Benefits
+### Step 2: Add to Collection
 
-✅ **Modular** - Each sprite is independent and reusable
-✅ **Extensible** - Easy to add new sprite types
-✅ **Maintainable** - Clear separation of concerns
-✅ **Type-safe** - Full TypeScript support
-✅ **Performant** - Efficient rendering and updates
-✅ **Flexible** - Support for complex behaviors and animations
+```typescript
+// In FishSprites.ts or create NewSprites.ts
+export const AquaticSprites = {
+    Jellyfish: JellyfishSprite,
+    // ... other sprites
+};
+```
+
+### Step 3: Use in Fishtank
+
+```typescript
+// In Fishtank.ts
+import { AquaticSprites } from "./AquaticSprites.js"
+
+// Add to sprite pool
+const jellyfish = new AquaticSprites.Jellyfish(x, y);
+fishManager.addSprite(jellyfish);
+```
+
+---
+
+## 🎭 Advanced Features
+
+### Sprite Flipping
+Fish automatically flip horizontally based on movement direction:
+```typescript
+// Handled automatically in SpriteAnimator
+if (this.state.velocityX < 0) {
+    // Sprite is flipped when rendering
+}
+```
+
+### Wrapping Behavior
+```typescript
+// Horizontal wrapping
+{
+    wrapAround: true,
+    minX: 0,
+    maxX: boxWidth
+}
+
+// Custom vertical wrapping (for rain/snow)
+if (this.state.y >= boxHeight) {
+    this.state.y = 0;
+    this.state.x = Math.random() * boxWidth;
+}
+```
+
+### Depth Layers
+Create parallax effects with multiple depth variants:
+```typescript
+const depthSettings = {
+    far: { speed: 0.4, color: '5' },   // Slow, gray
+    mid: { speed: 0.8, color: 'b' },   // Medium, blue
+    near: { speed: 1.4, color: 'b' }   // Fast, bright
+};
+```
+
+### Frame-Based Animation
+```typescript
+const frames = ['w', '5', 'w', '.'];
+
+update(frameNr: number, boxWidth: number, boxHeight: number) {
+    const currentFrame = Math.floor(frameNr / 8) % frames.length;
+    this.sprite = frames[currentFrame];
+    // Update dimensions
+    const lines = this.sprite.trim().split('\n');
+    this.spriteHeight = lines.length;
+    this.spriteWidth = lines[0]?.length || 1;
+}
+```
+
+### Weighted Distribution
+```typescript
+// Build weighted pool from percentages
+const fishTypePool = [];
+if (fishTropical > 0) {
+    for (let i = 0; i < fishTropical; i++) {
+        fishTypePool.push(FishSprites.TropicalFish);
+    }
+}
+// ... add other types
+
+// Select random from pool
+const FishClass = fishTypePool[Math.floor(Math.random() * fishTypePool.length)];
+```
+
+---
+
+## 📊 Technical Details
+
+### Color Codes
+Available in ASCII art sprites:
+- `r` - Red
+- `o` - Orange
+- `y` - Yellow
+- `g` - Green
+- `b` - Blue
+- `m` - Magenta
+- `w` - White
+- `5` - Gray
+- `.` - Transparent (no pixel)
+
+**Note:** Avoid `0` (black) - invisible on dark backgrounds.
+
+### Performance Considerations
+- Keep sprites 4x4 to 16x16 pixels
+- Limit total sprite count (user-configurable)
+- Use frame-based updates (`frameNr % N`) instead of every-frame
+- Avoid expensive calculations in `update()`
+
+### State Management
+```typescript
+interface SpriteState {
+    x: number;
+    y: number;
+    velocityX?: number;
+    velocityY?: number;
+    // Custom properties allowed
+    [key: string]: any;
+}
+```
+
+### Constraint Options
+```typescript
+interface SpriteConstraints {
+    bounceOnEdges?: boolean;  // Reverse velocity at boundaries
+    wrapAround?: boolean;     // Wrap to opposite side
+    minX?: number;            // Left boundary
+    maxX?: number;            // Right boundary  
+    minY?: number;            // Top boundary
+    maxY?: number;            // Bottom boundary
+}
+```
+
+---
+
+## 📁 File Structure
+
+```
+Fishtank/
+├── Fishtank.ts              # Main animation with user controls
+├── SpriteAnimator.ts        # Base class for all sprites
+├── SpriteManager.ts         # Collection manager
+├── FishSprites.ts           # 6 fish types
+├── PlantSprites.ts          # 12 plant varieties
+├── EnvironmentSprites.ts    # 9 environment effects
+├── BackgroundSprites.ts     # Image background loader
+├── README.md                # This file
+└── CONTROLS-GUIDE.md        # Complete user controls documentation
+```
+
+---
+
+## 💡 Best Practices
+
+1. **Sprite Design**
+   - Face sideways for fish (left/right orientation)
+   - Keep recognizable at small sizes
+   - Use contrasting colors for visibility
+
+2. **Movement Patterns**
+   - Slow speeds for calm scenes (0.05-0.15)
+   - Fast speeds for action (0.5-2.0)
+   - Use sine waves for natural motion
+
+3. **Layering**
+   - Render background first
+   - Then plants
+   - Then fish/effects
+   - Depth creates visual richness
+
+4. **User Experience**
+   - Provide enable/disable switches for groups
+   - Use percentage-based distribution
+   - Include speed multipliers
+   - Organize controls logically
+
+5. **Performance**
+   - Limit sprite counts via user controls
+   - Use frame-based timing
+   - Avoid redundant calculations
+   - Keep update logic simple
+
+---
+
+## 🌟 Features Showcase
+
+✅ **Modular** - Each sprite is independent and reusable  
+✅ **Extensible** - Easy to add new sprite types  
+✅ **Configurable** - Complete user control over all parameters  
+✅ **Type-safe** - Full TypeScript support  
+✅ **Performant** - Efficient rendering and updates  
+✅ **Visual** - Depth layers, parallax, and animations  
+✅ **Flexible** - Support for complex behaviors  
+✅ **Organized** - Logical control grouping with enable/disable
+
+---
+
+## 🎓 Examples
+
+### Classic Aquarium
+- 8 large fish (all types enabled)
+- 10 bubbles
+- 6 aquatic plants
+- Ocean background at 50% opacity
+
+### Winter Scene
+- No fish
+- 5 trees (100% tree distribution)
+- 30 snowflakes (3-layer depth)
+- Moon + 20 stars
+- Night sky background
+
+### Stormy Weather
+- 3 slow fish
+- 10 plants
+- 40 raindrops (fast speed)
+- 5 clouds
+- 2 thunder bolts
+- Stormy sky background
+
+### Underwater Paradise
+- 12 fish (mixed types)
+- 15 tiny fish school
+- 12 plants (no trees)
+- 15 bubbles
+- Rainbow
+- Coral reef background
+
+---
+
+**Version:** 2.0  
+**Framework:** Modular Sprite System  
+**TypeScript:** Full support  
+**License:** See main repository

@@ -197,12 +197,12 @@ const raindropNearSprite = `b`;     // Close - blue (will use double height)
 export class RaindropSprite extends SpriteAnimator {
     private depth: number;
     
-    constructor(x: number, y: number, depth: 'far' | 'mid' | 'near' = 'mid') {
+    constructor(x: number, y: number, depth: 'far' | 'mid' | 'near' = 'mid', speedMultiplier: number = 1.0) {
         // Depth determines speed and sprite
         const depthSettings = {
-            far: { sprite: raindropFarSprite, speed: 0.4 },    // Slow, gray
-            mid: { sprite: raindropMidSprite, speed: 0.8 },    // Medium
-            near: { sprite: raindropNearSprite, speed: 1.4 }   // Fast, visible
+            far: { sprite: raindropFarSprite, speed: 0.4 * speedMultiplier },
+            mid: { sprite: raindropMidSprite, speed: 0.8 * speedMultiplier },
+            near: { sprite: raindropNearSprite, speed: 1.4 * speedMultiplier }
         };
         
         const settings = depthSettings[depth];
@@ -245,12 +245,12 @@ export class SnowflakeSprite extends SpriteAnimator {
     private frames: string[];
     private depth: number;
 
-    constructor(x: number, y: number, depth: 'far' | 'mid' | 'near' = 'mid') {
+    constructor(x: number, y: number, depth: 'far' | 'mid' | 'near' = 'mid', speedMultiplier: number = 1.0) {
         // Depth determines speed and frames
         const depthSettings = {
-            far: { frames: snowflakeFarFrames, speed: 0.08, sway: 0.3 },    // Slow, faint
-            mid: { frames: snowflakeMidFrames, speed: 0.15, sway: 0.5 },    // Medium
-            near: { frames: snowflakeNearFrames, speed: 0.25, sway: 0.8 }   // Fast, bright
+            far: { frames: snowflakeFarFrames, speed: 0.08 * speedMultiplier, sway: 0.3 },
+            mid: { frames: snowflakeMidFrames, speed: 0.15 * speedMultiplier, sway: 0.5 },
+            near: { frames: snowflakeNearFrames, speed: 0.25 * speedMultiplier, sway: 0.8 }
         };
         
         const settings = depthSettings[depth];

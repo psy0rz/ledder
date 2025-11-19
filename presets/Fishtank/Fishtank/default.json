@@ -78,12 +78,150 @@
     "text": "https://www.shutterstock.com/shutterstock/videos/7818271/thumb/1.jpg"
    },
    "Fit Mode": {
-    "selected": "cover"
+    "selected": "fill"
    },
    "Opacity": {
     "value": 0.5
    },
    "Enabled": {
+    "enabled": true
+   },
+   "Use Image": {
+    "enabled": true
+   }
+  },
+  "Fish": {
+   "Large fish count": {
+    "value": 2
+   },
+   "Speed multiplier": {
+    "value": 1.5
+   },
+   "Tropical %": {
+    "value": 20
+   },
+   "Goldfish %": {
+    "value": 20
+   },
+   "Clownfish %": {
+    "value": 20
+   },
+   "Angelfish %": {
+    "value": 20
+   },
+   "Neon Tetra %": {
+    "value": 20
+   },
+   "Tiny fish school size": {
+    "value": 27
+   },
+   "School speed multiplier": {
+    "value": 2.2
+   },
+   "Enabled": {
+    "enabled": true
+   },
+   "Enable Fish": {
+    "enabled": true
+   }
+  },
+  "Plants & Vegetation": {
+   "Total plants": {
+    "value": 14
+   },
+   "Tall plants %": {
+    "value": 0
+   },
+   "Short plants %": {
+    "value": 0
+   },
+   "Bushes %": {
+    "value": 0
+   },
+   "Grass %": {
+    "value": 0
+   },
+   "Flowers %": {
+    "value": 0
+   },
+   "Ferns %": {
+    "value": 0
+   },
+   "Trees %": {
+    "value": 0
+   },
+   "Cactus %": {
+    "value": 10
+   },
+   "Enabled": {
+    "enabled": true
+   },
+   "Enable Plants": {
+    "enabled": false
+   }
+  },
+  "Environment Effects": {
+   "Bubbles count": {
+    "value": 1
+   },
+   "Bubble rise speed": {
+    "value": 0.2
+   },
+   "Clouds count": {
+    "value": 0
+   },
+   "Cloud drift speed": {
+    "value": 0.05
+   },
+   "Show Sun": {
+    "enabled": false
+   },
+   "Show Moon": {
+    "enabled": false
+   },
+   "Stars count": {
+    "value": 0
+   },
+   "Show Rainbow": {
+    "enabled": false
+   },
+   "Rain count": {
+    "value": 0
+   },
+   "Rain speed multiplier": {
+    "value": 1
+   },
+   "Rain far layer %": {
+    "value": 40
+   },
+   "Rain mid layer %": {
+    "value": 40
+   },
+   "Rain near layer %": {
+    "value": 20
+   },
+   "Snow count": {
+    "value": 0
+   },
+   "Snow speed multiplier": {
+    "value": 1
+   },
+   "Snow far layer %": {
+    "value": 40
+   },
+   "Snow mid layer %": {
+    "value": 40
+   },
+   "Snow near layer %": {
+    "value": 20
+   },
+   "Lightning bolts": {
+    "value": 0
+   },
+   "Enabled": {
+    "enabled": true
+   },
+   "Enable Effects": {
     "enabled": true
    }
   }
