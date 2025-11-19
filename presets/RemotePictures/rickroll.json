@@ -50,10 +50,16 @@
    },
    "delay multiplier": {
     "value": 1
+   },
+   "Enabled": {
+    "enabled": true
    }
   },
   "fit": {
-   "selected": "cover"
+   "selected": "inside"
+  },
+  "Enabled": {
+   "enabled": true
   }
  }
 }
