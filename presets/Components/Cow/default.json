@@ -1,0 +1,27 @@
+{
+ "title": "",
+ "description": "",
+ "values": {
+  "Movie interval": {
+   "value": 4
+  },
+  "Movie interval randomizer": {
+   "value": 0
+  },
+  "Rotate interval": {
+   "value": 2
+  },
+  "Rotate interval randomizer": {
+   "value": 0
+  },
+  "Rotate X step": {
+   "value": -1
+  },
+  "Rotate Y step": {
+   "value": 0
+  },
+  "Enabled": {
+   "enabled": true
+  }
+ }
+}
