@@ -30,7 +30,13 @@ See **[CONTROLS-GUIDE.md](./CONTROLS-GUIDE.md)** for complete control documentat
 - 8 plant type percentages (Tall, Short, Bushes, Grass, Flowers, Ferns, Trees, Cactus)
 - Weighted pool distribution system
 
-#### 🌈 Environment Effects (Enable/Disable)
+#### � Buildings (Enable/Disable)
+- Building type selection (8 types: Factory, School, Windmill, Liberty Statue, Eiffel Tower, Castle, Church, Tower)
+- X/Y position controls (0-100)
+- Show/hide switch
+- Animated elements (smoke, blades, flags, lights)
+
+#### �🌈 Environment Effects (Enable/Disable)
 - **Bubbles:** Count + rise speed
 - **Clouds:** Count + drift speed (3 sizes)
 - **Celestial:** Sun, Moon, Stars, Rainbow
@@ -99,6 +105,25 @@ Manages sprite collections:
 - Other plants use sine-wave swaying
 - Varying speeds and sway amounts
 - Bottom-anchored positioning
+
+#### **BuildingSprites.ts** - 8 Large Animated Buildings
+- `Factory` - Factory with animated smoking chimney (3 frames)
+- `School` - School building with windows and yellow roof
+- `Windmill` - Windmill with rotating blades (4 frames)
+- `LibertyStatue` - Statue of Liberty with torch
+- `EiffelTower` - Eiffel Tower with gentle sway in wind
+- `Castle` - Castle with waving flags (2 frames)
+- `Church` - Church with bell tower (bell animation)
+- `Tower` - Tower with blinking red/yellow light (3 frames)
+
+**Features:**
+- User-positionable with X/Y controls
+- Animated elements (smoke, blades, flags, lights)
+- Large sprites (10x11 to 14x15 pixels)
+- Enable/disable switch
+- Selectable building type
+- Static positioning (no automatic movement)
+- Rendered after background, before plants
 
 #### **EnvironmentSprites.ts** - 9 Environment Types
 - `Bubble` - Rising bubbles with wobble and vertical wrapping
@@ -350,6 +375,7 @@ Fishtank/
 ├── SpriteManager.ts         # Collection manager
 ├── FishSprites.ts           # 6 fish types
 ├── PlantSprites.ts          # 12 plant varieties
+├── BuildingSprites.ts       # 8 large animated buildings
 ├── EnvironmentSprites.ts    # 9 environment effects
 ├── BackgroundSprites.ts     # Image background loader
 ├── README.md                # This file
@@ -372,6 +398,7 @@ Fishtank/
 
 3. **Layering**
    - Render background first
+   - Then buildings (large static objects)
    - Then plants
    - Then fish/effects
    - Depth creates visual richness
@@ -381,12 +408,14 @@ Fishtank/
    - Use percentage-based distribution
    - Include speed multipliers
    - Organize controls logically
+   - Position buildings with X/Y controls
 
 5. **Performance**
    - Limit sprite counts via user controls
    - Use frame-based timing
    - Avoid redundant calculations
    - Keep update logic simple
+   - Buildings are static (no movement overhead)
 
 ---
 
@@ -418,12 +447,29 @@ Fishtank/
 - Moon + 20 stars
 - Night sky background
 
+### City Skyline
+- No fish
+- Factory at X=10, Y=5
+- Eiffel Tower at X=40, Y=3
+- 5 clouds drifting
+- Moon + 15 stars
+- City background image
+
+### Castle Scene
+- No fish
+- Castle at X=20, Y=10
+- 5 trees nearby
+- 3 clouds
+- Sun showing
+- Medieval landscape background
+
 ### Stormy Weather
 - 3 slow fish
 - 10 plants
 - 40 raindrops (fast speed)
 - 5 clouds
 - 2 thunder bolts
+- Windmill at X=60, Y=8
 - Stormy sky background
 
 ### Underwater Paradise
@@ -432,6 +478,7 @@ Fishtank/
 - 12 plants (no trees)
 - 15 bubbles
 - Rainbow
+- Liberty Statue at X=70, Y=5 (underwater landmark)
 - Coral reef background
 
 ---
