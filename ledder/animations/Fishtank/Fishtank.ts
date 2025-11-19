@@ -10,6 +10,7 @@ import { FishSprites } from "./FishSprites.js"
 import { PlantSprites } from "./PlantSprites.js"
 import { EnvironmentSprites } from "./EnvironmentSprites.js"
 import { BackgroundSprites } from "./BackgroundSprites.js"
+import { BuildingSprites } from "./BuildingSprites.js"
 
 export default class Fishtank extends Animator {
     static category = "Aquarium"
@@ -86,6 +87,28 @@ export default class Fishtank extends Animator {
         // Thunder
         const numThunder = enableEnvironment ? envGroup.value("Lightning bolts", 0, 0, 5, 1).value : 0;
         
+        // === BUILDING CONTROLS ===
+        const buildingGroup = controls.group("Buildings");
+        const enableBuildings = buildingGroup.switch("Enable Buildings", false).enabled;
+        
+        // Building type selection
+        const buildingChoices = [
+            {id: "factory", name: "Factory"},
+            {id: "school", name: "School"},
+            {id: "windmill", name: "Windmill"},
+            {id: "liberty", name: "Statue of Liberty"},
+            {id: "eiffel", name: "Eiffel Tower"},
+            {id: "castle", name: "Castle"},
+            {id: "church", name: "Church"},
+            {id: "tower", name: "Tower"}
+        ];
+        const buildingType = buildingGroup.select("Building Type", "factory", buildingChoices);
+        
+        // Building positioning
+        const buildingX = enableBuildings ? buildingGroup.value("X Position", 10, 0, 100, 1).value : 0;
+        const buildingY = enableBuildings ? buildingGroup.value("Y Position", 10, 0, 100, 1).value : 0;
+        const showBuilding = buildingGroup.switch("Show Building", false).enabled;
+        
         // === BACKGROUND CONTROLS ===
         const bgGroup = controls.group("Background");
         const useBackground = bgGroup.switch("Use Image", true);
@@ -100,6 +123,7 @@ export default class Fishtank extends Animator {
 
         // Create sprite managers
         const backgroundManager = new SpriteManager();
+        const buildingManager = new SpriteManager();
         const fishManager = new SpriteManager();
         const plantManager = new SpriteManager();
         const environmentManager = new SpriteManager();
@@ -113,6 +137,40 @@ export default class Fishtank extends Animator {
             // Load image asynchronously without blocking sprite creation
             background.loadImageData(imageUrl.text, imageFit.selected, imageOpacity.value)
                 .catch(err => console.error("Background load failed:", err));
+        }
+
+        // Add building sprite if enabled
+        if (enableBuildings && showBuilding) {
+            let building;
+            switch (buildingType.selected) {
+                case "factory":
+                    building = new BuildingSprites.Factory(buildingX, buildingY);
+                    break;
+                case "school":
+                    building = new BuildingSprites.School(buildingX, buildingY);
+                    break;
+                case "windmill":
+                    building = new BuildingSprites.Windmill(buildingX, buildingY);
+                    break;
+                case "liberty":
+                    building = new BuildingSprites.LibertyStatue(buildingX, buildingY);
+                    break;
+                case "eiffel":
+                    building = new BuildingSprites.EiffelTower(buildingX, buildingY);
+                    break;
+                case "castle":
+                    building = new BuildingSprites.Castle(buildingX, buildingY);
+                    break;
+                case "church":
+                    building = new BuildingSprites.Church(buildingX, buildingY);
+                    break;
+                case "tower":
+                    building = new BuildingSprites.Tower(buildingX, buildingY);
+                    break;
+                default:
+                    building = new BuildingSprites.Factory(buildingX, buildingY);
+            }
+            buildingManager.addSprite(building);
         }
 
         // Add plants at bottom - build weighted pool based on percentages
@@ -325,10 +383,13 @@ export default class Fishtank extends Animator {
         scheduler.intervalControlled(controls.value("Speed", 1, 0.1, 5, 0.1), (frameNr) => {
             box.clear();
 
-            // Render all sprites in order (background first, then plants, fish, school, bubbles)
+            // Render all sprites in order (background first, buildings, plants, fish, school, environment)
             backgroundManager.update(frameNr, box.width(), box.height());
             const bgPixels = backgroundManager.render();
             box.add(bgPixels);
+
+            buildingManager.update(frameNr, box.width(), box.height());
+            box.add(buildingManager.render());
 
             plantManager.update(frameNr, box.width(), box.height());
             box.add(plantManager.render());

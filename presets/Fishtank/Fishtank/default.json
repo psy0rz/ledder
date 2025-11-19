@@ -92,10 +92,10 @@
   },
   "Fish": {
    "Large fish count": {
-    "value": 2
+    "value": 3
    },
    "Speed multiplier": {
-    "value": 1.5
+    "value": 0.8
    },
    "Tropical %": {
     "value": 20
@@ -110,7 +110,7 @@
     "value": 20
    },
    "Neon Tetra %": {
-    "value": 20
+    "value": 30
    },
    "Tiny fish school size": {
     "value": 27
@@ -127,7 +127,7 @@
   },
   "Plants & Vegetation": {
    "Total plants": {
-    "value": 14
+    "value": 15
    },
    "Tall plants %": {
     "value": 0
@@ -136,22 +136,22 @@
     "value": 0
    },
    "Bushes %": {
-    "value": 0
+    "value": 80
    },
    "Grass %": {
     "value": 0
    },
    "Flowers %": {
-    "value": 0
+    "value": 65
    },
    "Ferns %": {
-    "value": 0
+    "value": 20
    },
    "Trees %": {
     "value": 0
    },
    "Cactus %": {
-    "value": 10
+    "value": 35
    },
    "Enabled": {
     "enabled": true
@@ -180,7 +180,7 @@
     "enabled": false
    },
    "Stars count": {
-    "value": 0
+    "value": 47
    },
    "Show Rainbow": {
     "enabled": false
@@ -222,6 +222,26 @@
     "enabled": true
    },
    "Enable Effects": {
+    "enabled": false
+   }
+  },
+  "Buildings": {
+   "Enable Buildings": {
+    "enabled": true
+   },
+   "Building Type": {
+    "selected": "school"
+   },
+   "Show Building": {
+    "enabled": true
+   },
+   "X Position": {
+    "value": 10
+   },
+   "Y Position": {
+    "value": 27
+   },
+   "Enabled": {
     "enabled": true
    }
   }
