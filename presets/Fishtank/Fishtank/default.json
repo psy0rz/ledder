@@ -1,0 +1,91 @@
+{
+ "title": "",
+ "description": "",
+ "values": {
+  "Number of fish": {
+   "value": 4
+  },
+  "Number of plants": {
+   "value": 1
+  },
+  "Number of bubbles": {
+   "value": 1
+  },
+  "Background Image URL": {
+   "text": "https://www.shutterstock.com/shutterstock/videos/7818271/thumb/1.jpg"
+  },
+  "Fit Mode": {
+   "selected": "fill"
+  },
+  "Opacity": {
+   "value": 1
+  },
+  "Enabled": {
+   "enabled": true
+  },
+  "Use Background Image": {
+   "enabled": true
+  },
+  "Speed": {
+   "value": 1
+  },
+  "Tiny fish school size": {
+   "value": 19
+  },
+  "Environment": {
+   "Environment Type": {
+    "selected": "snow"
+   },
+   "Amount": {
+    "value": 5
+   },
+   "Enabled": {
+    "enabled": true
+   },
+   "Bubbles": {
+    "value": 0
+   },
+   "Clouds": {
+    "value": 0
+   },
+   "Sun": {
+    "enabled": false
+   },
+   "Stars": {
+    "value": 0
+   },
+   "Moon": {
+    "enabled": false
+   },
+   "Raindrops": {
+    "value": 15
+   },
+   "Snowflakes": {
+    "value": 15
+   },
+   "Lightning bolts": {
+    "value": 0
+   },
+   "Rainbow": {
+    "enabled": false
+   }
+  },
+  "Background": {
+   "Use Background Image": {
+    "enabled": true
+   },
+   "Image URL": {
+    "text": "https://www.shutterstock.com/shutterstock/videos/7818271/thumb/1.jpg"
+   },
+   "Fit Mode": {
+    "selected": "cover"
+   },
+   "Opacity": {
+    "value": 0.5
+   },
+   "Enabled": {
+    "enabled": true
+   }
+  }
+ }
+}
