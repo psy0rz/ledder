@@ -2,100 +2,15 @@
  "title": "",
  "description": "",
  "values": {
-  "Number of fish": {
-   "value": 4
-  },
-  "Number of plants": {
-   "value": 1
-  },
-  "Number of bubbles": {
-   "value": 1
-  },
-  "Background Image URL": {
-   "text": "https://www.shutterstock.com/shutterstock/videos/7818271/thumb/1.jpg"
-  },
-  "Fit Mode": {
-   "selected": "fill"
-  },
-  "Opacity": {
-   "value": 1
-  },
-  "Enabled": {
-   "enabled": true
-  },
-  "Use Background Image": {
-   "enabled": true
-  },
-  "Speed": {
-   "value": 1
-  },
-  "Tiny fish school size": {
-   "value": 19
-  },
-  "Environment": {
-   "Environment Type": {
-    "selected": "snow"
+  "Fish": {
+   "Enable Fish": {
+    "enabled": true
    },
-   "Amount": {
+   "Large fish count": {
     "value": 5
    },
-   "Enabled": {
-    "enabled": true
-   },
-   "Bubbles": {
-    "value": 0
-   },
-   "Clouds": {
-    "value": 0
-   },
-   "Sun": {
-    "enabled": false
-   },
-   "Stars": {
-    "value": 0
-   },
-   "Moon": {
-    "enabled": false
-   },
-   "Raindrops": {
-    "value": 15
-   },
-   "Snowflakes": {
-    "value": 15
-   },
-   "Lightning bolts": {
-    "value": 0
-   },
-   "Rainbow": {
-    "enabled": false
-   }
-  },
-  "Background": {
-   "Use Background Image": {
-    "enabled": true
-   },
-   "Image URL": {
-    "text": "https://www.shutterstock.com/shutterstock/videos/7818271/thumb/1.jpg"
-   },
-   "Fit Mode": {
-    "selected": "fill"
-   },
-   "Opacity": {
-    "value": 0.5
-   },
-   "Enabled": {
-    "enabled": true
-   },
-   "Use Image": {
-    "enabled": true
-   }
-  },
-  "Fish": {
-   "Large fish count": {
-    "value": 3
-   },
    "Speed multiplier": {
-    "value": 0.8
+    "value": 1
    },
    "Tropical %": {
     "value": 20
@@ -110,62 +25,62 @@
     "value": 20
    },
    "Neon Tetra %": {
-    "value": 30
+    "value": 20
    },
    "Tiny fish school size": {
-    "value": 27
+    "value": 8
    },
    "School speed multiplier": {
-    "value": 2.2
+    "value": 1
    },
    "Enabled": {
-    "enabled": true
-   },
-   "Enable Fish": {
     "enabled": true
    }
   },
   "Plants & Vegetation": {
+   "Enable Plants": {
+    "enabled": true
+   },
    "Total plants": {
-    "value": 15
+    "value": 0
    },
    "Tall plants %": {
     "value": 0
    },
    "Short plants %": {
-    "value": 0
+    "value": 10
    },
    "Bushes %": {
-    "value": 80
+    "value": 15
    },
    "Grass %": {
-    "value": 0
-   },
-   "Flowers %": {
-    "value": 65
-   },
-   "Ferns %": {
     "value": 20
    },
+   "Flowers %": {
+    "value": 15
+   },
+   "Ferns %": {
+    "value": 10
+   },
    "Trees %": {
-    "value": 0
+    "value": 10
    },
    "Cactus %": {
-    "value": 35
+    "value": 10
    },
    "Enabled": {
     "enabled": true
-   },
-   "Enable Plants": {
-    "enabled": false
    }
   },
   "Environment Effects": {
+   "Enable Effects": {
+    "enabled": true
+   },
    "Bubbles count": {
-    "value": 1
+    "value": 0
    },
    "Bubble rise speed": {
-    "value": 0.2
+    "value": 0.4
    },
    "Clouds count": {
     "value": 0
@@ -180,7 +95,7 @@
     "enabled": false
    },
    "Stars count": {
-    "value": 47
+    "value": 0
    },
    "Show Rainbow": {
     "enabled": false
@@ -220,30 +135,44 @@
    },
    "Enabled": {
     "enabled": true
-   },
-   "Enable Effects": {
-    "enabled": false
    }
   },
   "Buildings": {
    "Enable Buildings": {
-    "enabled": true
+    "enabled": false
    },
    "Building Type": {
-    "selected": "school"
+    "selected": "factory"
    },
    "Show Building": {
-    "enabled": true
-   },
-   "X Position": {
-    "value": 10
-   },
-   "Y Position": {
-    "value": 27
+    "enabled": false
    },
    "Enabled": {
     "enabled": true
    }
+  },
+  "Background": {
+   "Use Image": {
+    "enabled": true
+   },
+   "Image URL": {
+    "text": "https://github.com/psy0rz/ledder/raw/main/doc/2022-12-30_23-25.png"
+   },
+   "Fit Mode": {
+    "selected": "fill"
+   },
+   "Opacity": {
+    "value": 0.5
+   },
+   "Enabled": {
+    "enabled": true
+   }
+  },
+  "Speed": {
+   "value": 1
+  },
+  "Enabled": {
+   "enabled": true
   }
  }
 }
