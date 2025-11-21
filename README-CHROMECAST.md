@@ -1,4 +1,4 @@
-# Chromecast Display Driver for Ledger
+# Chromecast Display Driver for Ledder
 
 Stream Ledger animations to your Chromecast device!
 
