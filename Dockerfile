@@ -25,7 +25,14 @@ RUN npm prune --production
 FROM node:23 AS ledder
 ENV NODE_ENV=production
 
-RUN apt update && apt install -y build-essential cmake
+RUN apt update && apt install -y build-essential cmake \
+  libcairo2-dev \
+  libpango1.0-dev \
+  libjpeg-dev \
+  libgif-dev \
+  librsvg2-dev \
+  pkg-config
+
 COPY entrypoint.sh /
 
 WORKDIR /app
