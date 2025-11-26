@@ -11,6 +11,8 @@ import { PlantSprites } from "./PlantSprites.js"
 import { EnvironmentSprites } from "./EnvironmentSprites.js"
 import { BackgroundSprites } from "./BackgroundSprites.js"
 import { BuildingSprites } from "./BuildingSprites.js"
+import { TextSprite, DynamicTextSprite, TextAnimationType, TextSourceType } from "./TextSprites.js"
+import { fonts } from "../../fonts.js"
 
 export default class Fishtank extends Animator {
     static category = "Aquarium"
@@ -57,35 +59,41 @@ export default class Fishtank extends Animator {
         const enableEnvironment = envGroup.switch("Enable Effects", true).enabled;
         
         // Bubbles
-        const numBubbles = enableEnvironment ? envGroup.value("Bubbles count", 5, 0, 30, 1).value : 0;
+        const enableBubbles = enableEnvironment && envGroup.switch("Enable Bubbles", false).enabled;
+        const numBubbles = enableBubbles ? envGroup.value("Bubbles count", 5, 0, 30, 1).value : 0;
         const bubbleSpeed = envGroup.value("Bubble rise speed", 0.4, 0.1, 2.0, 0.1).value;
         
         // Clouds
-        const numClouds = enableEnvironment ? envGroup.value("Clouds count", 0, 0, 10, 1).value : 0;
+        const enableClouds = enableEnvironment && envGroup.switch("Enable Clouds", false).enabled;
+        const numClouds = enableClouds ? envGroup.value("Clouds count", 3, 0, 10, 1).value : 0;
         const cloudSpeed = envGroup.value("Cloud drift speed", 0.05, 0.01, 0.5, 0.01).value;
         
         // Celestial
         const showSun = enableEnvironment && envGroup.switch("Show Sun", false).enabled;
         const showMoon = enableEnvironment && envGroup.switch("Show Moon", false).enabled;
-        const numStars = enableEnvironment ? envGroup.value("Stars count", 0, 0, 50, 1).value : 0;
+        const enableStars = enableEnvironment && envGroup.switch("Enable Stars", false).enabled;
+        const numStars = enableStars ? envGroup.value("Stars count", 10, 0, 50, 1).value : 0;
         const showRainbow = enableEnvironment && envGroup.switch("Show Rainbow", false).enabled;
         
         // Rain
-        const numRain = enableEnvironment ? envGroup.value("Rain count", 0, 0, 50, 1).value : 0;
+        const enableRain = enableEnvironment && envGroup.switch("Enable Rain", false).enabled;
+        const numRain = enableRain ? envGroup.value("Rain count", 20, 0, 50, 1).value : 0;
         const rainSpeedMultiplier = envGroup.value("Rain speed multiplier", 1.0, 0.1, 3.0, 0.1).value;
         const rainFarPercent = envGroup.value("Rain far layer %", 40, 0, 100, 5).value;
         const rainMidPercent = envGroup.value("Rain mid layer %", 40, 0, 100, 5).value;
         const rainNearPercent = envGroup.value("Rain near layer %", 20, 0, 100, 5).value;
         
         // Snow
-        const numSnow = enableEnvironment ? envGroup.value("Snow count", 0, 0, 50, 1).value : 0;
+        const enableSnow = enableEnvironment && envGroup.switch("Enable Snow", false).enabled;
+        const numSnow = enableSnow ? envGroup.value("Snow count", 20, 0, 50, 1).value : 0;
         const snowSpeedMultiplier = envGroup.value("Snow speed multiplier", 1.0, 0.1, 3.0, 0.1).value;
         const snowFarPercent = envGroup.value("Snow far layer %", 40, 0, 100, 5).value;
         const snowMidPercent = envGroup.value("Snow mid layer %", 40, 0, 100, 5).value;
         const snowNearPercent = envGroup.value("Snow near layer %", 20, 0, 100, 5).value;
         
         // Thunder
-        const numThunder = enableEnvironment ? envGroup.value("Lightning bolts", 0, 0, 5, 1).value : 0;
+        const enableThunder = enableEnvironment && envGroup.switch("Enable Lightning", false).enabled;
+        const numThunder = enableThunder ? envGroup.value("Lightning bolts", 2, 0, 5, 1).value : 0;
         
         // === BUILDING CONTROLS ===
         const buildingGroup = controls.group("Buildings");
@@ -121,11 +129,77 @@ export default class Fishtank extends Animator {
         const imageFit = bgGroup.select("Fit Mode", "cover", imageFitChoices);
         const imageOpacity = bgGroup.value("Opacity", 0.5, 0, 1, 0.1);
 
+        // === TEXT CONTROLS ===
+        const textGroup = controls.group("Text Display");
+        const enableText = textGroup.switch("Enable Text", true).enabled;
+        
+        // Font selection
+        const fontChoices = [
+            {id: "C64", name: "C64"},
+            {id: "C64 mono", name: "C64 Mono"},
+            {id: "Atari regular", name: "Atari"},
+            {id: "IBM bios", name: "IBM BIOS"},
+            {id: "MSX", name: "MSX"},
+            {id: "ZX Sierra Quest", name: "ZX Sierra Quest"},
+            {id: "Anarchist", name: "Anarchist"},
+            {id: "Skid Row", name: "Skid Row"},
+            {id: "Quasar", name: "Quasar"},
+            {id: "Computer", name: "Computer"},
+            {id: "Picopixel", name: "Picopixel"},
+            {id: "ORG v01", name: "ORG v01"},
+            {id: "Tiny 3x3", name: "Tiny 3x3"},
+            {id: "Pixel-Gosub", name: "Pixel-Gosub"}
+        ];
+        const selectedFont = textGroup.select("Font", "C64", fontChoices);
+        
+        // Text content
+        const textContent = textGroup.input("Text", "Hello World!");
+        const maxTextWidth = textGroup.value("Max Width %", 90, 10, 100, 5).value;
+        
+        // Text animation
+        const animationChoices = [
+            {id: "static", name: "Static"},
+            {id: "scroll-horizontal", name: "Scroll Horizontal"},
+            {id: "scroll-vertical", name: "Scroll Vertical"},
+            {id: "starwars", name: "Star Wars Intro"},
+            {id: "typewriter", name: "Typewriter"},
+            {id: "fade", name: "Fade In/Out"},
+            {id: "wave", name: "Wave"},
+            {id: "bounce", name: "Bounce"}
+        ];
+        const animationType = textGroup.select("Animation", "static", animationChoices);
+        const animationSpeed = textGroup.value("Animation Speed", 1.0, 0.1, 5.0, 0.1).value;
+        
+        // Text alignment
+        const hAlignChoices = [
+            {id: "left", name: "Left"},
+            {id: "center", name: "Center"},
+            {id: "right", name: "Right"}
+        ];
+        const textHAlign = textGroup.select("Horizontal Align", "left", hAlignChoices);
+        
+        const vAlignChoices = [
+            {id: "top", name: "Top"},
+            {id: "center", name: "Center"},
+            {id: "bottom", name: "Bottom"}
+        ];
+        const textVAlign = textGroup.select("Vertical Align", "top", vAlignChoices);
+        
+        // Text positioning (percentage-based for display size optimization)
+        // Position represents the alignment anchor point
+        // E.g., 0%,0% with left/top = top-left corner, 50%,50% with center/center = center, etc.
+        const textXPercent = textGroup.value("X Position %", 0, 0, 100, 1).value;
+        const textYPercent = textGroup.value("Y Position %", 0, 0, 100, 1).value;
+        
+        // Text color
+        const textColor = textGroup.color("Color", 255, 255, 255);
+
         // Create sprite managers
         const backgroundManager = new SpriteManager();
         const buildingManager = new SpriteManager();
         const fishManager = new SpriteManager();
         const plantManager = new SpriteManager();
+        const textManager = new SpriteManager();
         const environmentManager = new SpriteManager();
         const schoolManager = new SpriteManager();
 
@@ -378,12 +452,67 @@ export default class Fishtank extends Animator {
             environmentManager.addSprite(new EnvironmentSprites.Rainbow(rainbowX, rainbowY));
         }
 
+        // === TEXT SPRITES ===
+        if (enableText) {
+            // Get selected font
+            const font = fonts[selectedFont.selected];
+            
+            // Calculate actual positions based on display size and alignment
+            // X/Y position represents the alignment anchor point
+            let textX = Math.floor((textXPercent / 100) * box.width());
+            let textY = Math.floor((textYPercent / 100) * box.height());
+            const actualMaxWidth = Math.floor((maxTextWidth / 100) * box.width());
+            
+            // Convert animation type string to enum
+            let textAnimationEnum: TextAnimationType;
+            switch (animationType.selected) {
+                case "scroll-horizontal":
+                    textAnimationEnum = TextAnimationType.ScrollHorizontal;
+                    break;
+                case "scroll-vertical":
+                    textAnimationEnum = TextAnimationType.ScrollVertical;
+                    break;
+                case "starwars":
+                    textAnimationEnum = TextAnimationType.StarWarsIntro;
+                    break;
+                case "typewriter":
+                    textAnimationEnum = TextAnimationType.Typewriter;
+                    break;
+                case "fade":
+                    textAnimationEnum = TextAnimationType.Fade;
+                    break;
+                case "wave":
+                    textAnimationEnum = TextAnimationType.Wave;
+                    break;
+                case "bounce":
+                    textAnimationEnum = TextAnimationType.Bounce;
+                    break;
+                default:
+                    textAnimationEnum = TextAnimationType.Static;
+            }
+            
+            // Create text sprite
+            const textSprite = new TextSprite(
+                textX,
+                textY,
+                font,
+                textContent.text,
+                textColor,
+                textAnimationEnum,
+                animationSpeed,
+                actualMaxWidth,
+                textHAlign.selected as 'left' | 'center' | 'right',
+                textVAlign.selected as 'top' | 'center' | 'bottom'
+            );
+            textManager.addSprite(textSprite);
+        }
+
 
         // Main animation loop
         scheduler.intervalControlled(controls.value("Speed", 1, 0.1, 5, 0.1), (frameNr) => {
             box.clear();
 
-            // Render all sprites in order (background first, buildings, plants, fish, school, environment)
+            // Render all sprites in order (background first, buildings, plants, fish, school, environment, text)
             backgroundManager.update(frameNr, box.width(), box.height());
             const bgPixels = backgroundManager.render();
             box.add(bgPixels);
@@ -402,6 +531,9 @@ export default class Fishtank extends Animator {
 
             environmentManager.update(frameNr, box.width(), box.height());
             box.add(environmentManager.render());
+
+            textManager.update(frameNr, box.width(), box.height());
+            box.add(textManager.render());
         });
         
         } catch (error) {

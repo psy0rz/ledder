@@ -16,12 +16,13 @@ const tallPlantSprite = `
 
 export class TallPlantSprite extends SpriteAnimator {
     private baseX: number;
+    private swaySpeed: number = 15;
+    private phaseOffset: number;
 
     constructor(x: number, y: number, swayAmount: number = 1.5) {
         const initialState: SpriteState = {
             x,
             y,
-            phase: Math.random() * Math.PI * 2,
             swayAmount
         };
 
@@ -30,14 +31,12 @@ export class TallPlantSprite extends SpriteAnimator {
         });
 
         this.baseX = x;
+        this.phaseOffset = Math.random() * 6.28; // 2*PI pre-calculated
     }
 
     update(frameNr: number, boxWidth: number, boxHeight: number) {
-        // Plants don't move, they sway
-        const sway = Math.sin(frameNr / 15 + (this.state.phase || 0)) * (this.state.swayAmount || 1.5);
-        this.state.x = this.baseX + sway;
-        
-        // No need to call super.update() as we're handling position manually
+        // Plants don't move, they sway (optimized calculation)
+        this.state.x = this.baseX + Math.sin(frameNr / this.swaySpeed + this.phaseOffset) * (this.state.swayAmount || 1.5);
     }
 }
 
@@ -52,12 +51,13 @@ ggggg
 
 export class ShortPlantSprite extends SpriteAnimator {
     private baseX: number;
+    private swaySpeed: number = 20;
+    private phaseOffset: number;
 
     constructor(x: number, y: number, swayAmount: number = 1.0) {
         const initialState: SpriteState = {
             x,
             y,
-            phase: Math.random() * Math.PI * 2,
             swayAmount
         };
 
@@ -66,14 +66,12 @@ export class ShortPlantSprite extends SpriteAnimator {
         });
 
         this.baseX = x;
+        this.phaseOffset = Math.random() * 6.28;
     }
 
     update(frameNr: number, boxWidth: number, boxHeight: number) {
-        // Plants don't move, they sway
-        const sway = Math.sin(frameNr / 20 + (this.state.phase || 0)) * (this.state.swayAmount || 1.0);
-        this.state.x = this.baseX + sway;
-        
-        // No need to call super.update() as we're handling position manually
+        // Plants don't move, they sway (optimized)
+        this.state.x = this.baseX + Math.sin(frameNr / this.swaySpeed + this.phaseOffset) * (this.state.swayAmount || 1.0);
     }
 }
 
@@ -89,12 +87,13 @@ ggggggg
 
 export class BushSprite extends SpriteAnimator {
     private baseX: number;
+    private swaySpeed: number = 25;
+    private phaseOffset: number;
 
     constructor(x: number, y: number, swayAmount: number = 0.5) {
         const initialState: SpriteState = {
             x,
             y,
-            phase: Math.random() * Math.PI * 2,
             swayAmount
         };
 
@@ -103,12 +102,12 @@ export class BushSprite extends SpriteAnimator {
         });
 
         this.baseX = x;
+        this.phaseOffset = Math.random() * 6.28;
     }
 
     update(frameNr: number, boxWidth: number, boxHeight: number) {
-        // Gentle sway
-        const sway = Math.sin(frameNr / 25 + (this.state.phase || 0)) * (this.state.swayAmount || 0.5);
-        this.state.x = this.baseX + sway;
+        // Gentle sway (optimized)
+        this.state.x = this.baseX + Math.sin(frameNr / this.swaySpeed + this.phaseOffset) * (this.state.swayAmount || 0.5);
     }
 }
 
@@ -121,12 +120,13 @@ ggggg
 
 export class SmallBushSprite extends SpriteAnimator {
     private baseX: number;
+    private swaySpeed: number = 30;
+    private phaseOffset: number;
 
     constructor(x: number, y: number, swayAmount: number = 0.3) {
         const initialState: SpriteState = {
             x,
             y,
-            phase: Math.random() * Math.PI * 2,
             swayAmount
         };
 
@@ -135,11 +135,12 @@ export class SmallBushSprite extends SpriteAnimator {
         });
 
         this.baseX = x;
+        this.phaseOffset = Math.random() * 6.28;
     }
 
     update(frameNr: number, boxWidth: number, boxHeight: number) {
-        const sway = Math.sin(frameNr / 30 + (this.state.phase || 0)) * (this.state.swayAmount || 0.3);
-        this.state.x = this.baseX + sway;
+        // Gentle sway (optimized)
+        this.state.x = this.baseX + Math.sin(frameNr / this.swaySpeed + this.phaseOffset) * (this.state.swayAmount || 0.3);
     }
 }
 
@@ -265,12 +266,13 @@ gggg.
 
 export class GrassSprite extends SpriteAnimator {
     private baseX: number;
+    private swaySpeed: number = 10;
+    private phaseOffset: number;
 
     constructor(x: number, y: number, swayAmount: number = 0.8) {
         const initialState: SpriteState = {
             x,
             y,
-            phase: Math.random() * Math.PI * 2,
             swayAmount
         };
 
@@ -279,12 +281,12 @@ export class GrassSprite extends SpriteAnimator {
         });
 
         this.baseX = x;
+        this.phaseOffset = Math.random() * 6.28;
     }
 
     update(frameNr: number, boxWidth: number, boxHeight: number) {
-        // Grass sways more quickly
-        const sway = Math.sin(frameNr / 10 + (this.state.phase || 0)) * (this.state.swayAmount || 0.8);
-        this.state.x = this.baseX + sway;
+        // Grass sways more quickly (optimized)
+        this.state.x = this.baseX + Math.sin(frameNr / this.swaySpeed + this.phaseOffset) * (this.state.swayAmount || 0.8);
     }
 }
 
@@ -298,12 +300,13 @@ rrr
 
 export class FlowerSprite extends SpriteAnimator {
     private baseX: number;
+    private swaySpeed: number = 18;
+    private phaseOffset: number;
 
     constructor(x: number, y: number, swayAmount: number = 0.5) {
         const initialState: SpriteState = {
             x,
             y,
-            phase: Math.random() * Math.PI * 2,
             swayAmount
         };
 
@@ -312,11 +315,12 @@ export class FlowerSprite extends SpriteAnimator {
         });
 
         this.baseX = x;
+        this.phaseOffset = Math.random() * 6.28;
     }
 
     update(frameNr: number, boxWidth: number, boxHeight: number) {
-        const sway = Math.sin(frameNr / 18 + (this.state.phase || 0)) * (this.state.swayAmount || 0.5);
-        this.state.x = this.baseX + sway;
+        // Optimized sway calculation
+        this.state.x = this.baseX + Math.sin(frameNr / this.swaySpeed + this.phaseOffset) * (this.state.swayAmount || 0.5);
     }
 }
 
@@ -358,12 +362,13 @@ gggggg.
 
 export class FernSprite extends SpriteAnimator {
     private baseX: number;
+    private swaySpeed: number = 12;
+    private phaseOffset: number;
 
     constructor(x: number, y: number, swayAmount: number = 1.2) {
         const initialState: SpriteState = {
             x,
             y,
-            phase: Math.random() * Math.PI * 2,
             swayAmount
         };
 
@@ -372,12 +377,12 @@ export class FernSprite extends SpriteAnimator {
         });
 
         this.baseX = x;
+        this.phaseOffset = Math.random() * 6.28;
     }
 
     update(frameNr: number, boxWidth: number, boxHeight: number) {
-        // Ferns sway more
-        const sway = Math.sin(frameNr / 12 + (this.state.phase || 0)) * (this.state.swayAmount || 1.2);
-        this.state.x = this.baseX + sway;
+        // Ferns sway more (optimized)
+        this.state.x = this.baseX + Math.sin(frameNr / this.swaySpeed + this.phaseOffset) * (this.state.swayAmount || 1.2);
     }
 }
 

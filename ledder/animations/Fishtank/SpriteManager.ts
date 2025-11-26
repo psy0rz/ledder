@@ -39,21 +39,25 @@ export default class SpriteManager {
     }
 
     /**
-     * Update all sprites
+     * Update all sprites (optimized loop)
      */
     update(frameNr: number, boxWidth: number, boxHeight: number) {
-        for (const sprite of this.sprites) {
-            sprite.update(frameNr, boxWidth, boxHeight);
+        const sprites = this.sprites;
+        const len = sprites.length;
+        for (let i = 0; i < len; i++) {
+            sprites[i].update(frameNr, boxWidth, boxHeight);
         }
     }
 
     /**
-     * Render all sprites to a PixelList
+     * Render all sprites to a PixelList (optimized loop)
      */
     render(): PixelList {
         const pixelList = new PixelList();
-        for (const sprite of this.sprites) {
-            pixelList.add(sprite.render());
+        const sprites = this.sprites;
+        const len = sprites.length;
+        for (let i = 0; i < len; i++) {
+            pixelList.add(sprites[i].render());
         }
         return pixelList;
     }

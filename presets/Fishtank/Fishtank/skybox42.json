@@ -7,7 +7,7 @@
     "enabled": true
    },
    "Large fish count": {
-    "value": 2
+    "value": 0
    },
    "Speed multiplier": {
     "value": 1
@@ -28,7 +28,7 @@
     "value": 20
    },
    "Tiny fish school size": {
-    "value": 30
+    "value": 4
    },
    "School speed multiplier": {
     "value": 2.3000000000000003
@@ -74,22 +74,22 @@
   },
   "Environment Effects": {
    "Enable Effects": {
-    "enabled": false
+    "enabled": true
    },
    "Bubbles count": {
     "value": 1
    },
    "Bubble rise speed": {
-    "value": 1
+    "value": 0.1
    },
    "Clouds count": {
-    "value": 0
+    "value": 3
    },
    "Cloud drift speed": {
     "value": 0.05
    },
    "Show Sun": {
-    "enabled": false
+    "enabled": true
    },
    "Show Moon": {
     "enabled": false
@@ -116,7 +116,7 @@
     "value": 20
    },
    "Snow count": {
-    "value": 0
+    "value": 7
    },
    "Snow speed multiplier": {
     "value": 1
@@ -131,24 +131,48 @@
     "value": 20
    },
    "Lightning bolts": {
-    "value": 0
+    "value": 1
    },
    "Enabled": {
     "enabled": true
+   },
+   "Enable Bubbles": {
+    "enabled": false
+   },
+   "Enable Clouds": {
+    "enabled": false
+   },
+   "Enable Stars": {
+    "enabled": false
+   },
+   "Enable Rain": {
+    "enabled": false
+   },
+   "Enable Snow": {
+    "enabled": false
+   },
+   "Enable Lightning": {
+    "enabled": false
    }
   },
   "Buildings": {
    "Enable Buildings": {
-    "enabled": false
+    "enabled": true
    },
    "Building Type": {
-    "selected": "factory"
+    "selected": "tower"
    },
    "Show Building": {
-    "enabled": false
+    "enabled": true
    },
    "Enabled": {
     "enabled": true
+   },
+   "X Position": {
+    "value": 10
+   },
+   "Y Position": {
+    "value": 17
    }
   },
   "Background": {
@@ -156,7 +180,7 @@
     "enabled": true
    },
    "Image URL": {
-    "text": "https://github.com/psy0rz/ledder/raw/main/doc/2022-12-30_23-25.png"
+    "text": "https://images.pexels.com/photos/440731/pexels-photo-440731.jpeg"
    },
    "Fit Mode": {
     "selected": "fill"
@@ -182,7 +206,7 @@
     "selected": "manual"
    },
    "Text Content": {
-    "text": "Fishtank"
+    "text": "Far out in the uncharted backwaters of the unfashionable end of the Western Spiral Arm of the Galaxy lies a small unregarded yellow sun.\n\nOrbiting this at a distance of roughly ninety-two million miles is an utterly insignificant little blue-green planet whose ape-descended life forms are so amazingly primitive that they still think digital watches are a pretty neat idea.\n\nThis planet has – or rather had – a problem, which was this: most of the people living on it were unhappy for pretty much of the time. Many solutions were suggested for this problem, but most of these were largely concerned with the movements of small green pieces of paper, which is odd because on the whole it wasn't the small green pieces of paper that were unhappy.\n\nAnd so the problem remained; lots of the people were mean, and most of them were miserable, even the ones with digital watches."
    },
    "RSS/JSON URL": {
     "text": ""
@@ -206,16 +230,16 @@
     "a": 1
    },
    "Animation Type": {
-    "selected": "wave"
+    "selected": "scroll-vertical"
    },
    "Animation Speed": {
-    "value": 0.7000000000000001
+    "value": 0.1
    },
    "Enabled": {
     "enabled": true
    },
    "X Position": {
-    "value": 0
+    "value": 24
    },
    "Y Position": {
     "value": 0
@@ -227,7 +251,7 @@
     "selected": "center"
    },
    "Text Scale": {
-    "value": 1
+    "value": 4.2
    },
    "Anti-aliasing": {
     "enabled": true
@@ -241,13 +265,13 @@
     "selected": "C64"
    },
    "Text": {
-    "text": "Hello World!"
+    "text": "Far out in the uncharted backwaters of the unfashionable end of the Western Spiral Arm of the Galaxy lies a small unregarded yellow sun.\n\nOrbiting this at a distance of roughly ninety-two million miles is an utterly insignificant little blue-green planet whose ape-descended life forms are so amazingly primitive that they still think digital watches are a pretty neat idea.\n\nThis planet has – or rather had – a problem, which was this: most of the people living on it were unhappy for pretty much of the time. Many solutions were suggested for this problem, but most of these were largely concerned with the movements of small green pieces of paper, which is odd because on the whole it wasn't the small green pieces of paper that were unhappy.\n\nAnd so the problem remained; lots of the people were mean, and most of them were miserable, even the ones with digital watches."
    },
-   "Max Width %": {
-    "value": 90
+   "Max Width": {
+    "value": 64
    },
    "Animation": {
-    "selected": "fade"
+    "selected": "scroll-horizontal"
    },
    "Animation Speed": {
     "value": 1
@@ -256,13 +280,13 @@
     "selected": "center"
    },
    "Vertical Align": {
-    "selected": "center"
+    "selected": "top"
    },
-   "X Position %": {
-    "value": 50
+   "X Position": {
+    "value": 0
    },
-   "Y Position %": {
-    "value": 50
+   "Y Position": {
+    "value": 32
    },
    "Color": {
     "r": 255,
@@ -272,6 +296,15 @@
    },
    "Enabled": {
     "enabled": true
+   },
+   "Max Width %": {
+    "value": 100
+   },
+   "X Position %": {
+    "value": 1
+   },
+   "Y Position %": {
+    "value": 50
    }
   }
  }

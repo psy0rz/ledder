@@ -50,6 +50,8 @@ const factoryFrames = [
 export class FactorySprite extends SpriteAnimator {
     private currentFrame: number = 0;
     private frames: string[];
+    private frameCount: number;
+    private animSpeed: number = 8;
 
     constructor(x: number, y: number) {
         const initialState: SpriteState = {
@@ -64,16 +66,20 @@ export class FactorySprite extends SpriteAnimator {
         });
 
         this.frames = factoryFrames;
+        this.frameCount = factoryFrames.length;
     }
 
     update(frameNr: number, boxWidth: number, boxHeight: number) {
-        // Animate smoke
-        this.currentFrame = Math.floor(frameNr / 8) % this.frames.length;
-        this.sprite = this.frames[this.currentFrame];
-
-        const lines = this.sprite.trim().split('\n');
-        this.spriteHeight = lines.length;
-        this.spriteWidth = lines[0]?.length || 1;
+        // Animate smoke (optimized frame selection)
+        const newFrame = ((frameNr / this.animSpeed) | 0) % this.frameCount;
+        if (newFrame !== this.currentFrame) {
+            this.currentFrame = newFrame;
+            this.sprite = this.frames[this.currentFrame];
+            // Only recalculate dimensions when frame changes
+            const lines = this.sprite.trim().split('\n');
+            this.spriteHeight = lines.length;
+            this.spriteWidth = lines[0]?.length || 1;
+        }
 
         super.update(frameNr, boxWidth, boxHeight);
     }

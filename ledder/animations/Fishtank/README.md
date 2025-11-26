@@ -8,6 +8,8 @@ The Fishtank animation provides:
 - **5 fish types** with configurable distribution and bidirectional movement
 - **12 plant varieties** including trees, bushes, flowers, and aquatic plants
 - **9 environment effects** (bubbles, clouds, sun, moon, stars, rain, snow, thunder, rainbow)
+- **8 animated buildings** (Factory, School, Windmill, Liberty Statue, Eiffel Tower, Castle, Church, Tower)
+- **Text display system** with 8 animation types and dynamic content sources
 - **3-layer depth system** for realistic rain and snow parallax
 - **Complete user controls** with organized groups and enable/disable switches
 - **Background image support** with URL loading and fit modes
@@ -48,6 +50,15 @@ See **[CONTROLS-GUIDE.md](./CONTROLS-GUIDE.md)** for complete control documentat
 - Image URL loading
 - Fit modes (cover/contain/fill)
 - Opacity control
+
+#### 📝 Text (Enable/Disable)
+- **Text Source:** Manual input, RSS feed, or JSON URL
+- **Animation Types:** 8 styles (Static, Horizontal Scroll, Vertical Scroll, Star Wars Intro, Typewriter, Fade, Wave, Bounce)
+- **Font Selection:** All available fonts
+- **Color Control:** RGBA color picker
+- **Position Control:** X/Y positioning (0-100%)
+- **Animation Speed:** Adjustable speed multiplier
+- **Dynamic Updates:** Auto-refresh for RSS/JSON sources
 
 ---
 
@@ -148,6 +159,37 @@ Manages sprite collections:
   - Fit modes: cover, contain, fill
   - Opacity control
   - Async image processing
+
+#### **TextSprites.ts** - Text Display System
+- `TextSprite` - Static and animated text rendering
+- `DynamicTextSprite` - Text from RSS feeds or JSON APIs
+
+**Animation Types:**
+- `Static` - No animation, fixed position
+- `ScrollHorizontal` - Text scrolls left to right
+- `ScrollVertical` - Text scrolls bottom to top
+- `StarWarsIntro` - Scrolling with perspective effect
+- `Typewriter` - Characters appear one by one
+- `Fade` - Fade in and out cycling
+- `Wave` - Sine wave vertical motion per character
+- `Bounce` - Bouncing text motion
+
+**Text Sources:**
+- `Manual` - User-defined text input
+- `RSS` - Fetch from RSS feed URL (auto-updates)
+- `JSON` - Fetch from JSON endpoint (auto-updates)
+
+**Features:**
+- Multi-line text support (newline separated)
+- **Automatic word wrapping** - Text intelligently wraps to fit display width
+- **Word-boundary breaking** - Wraps at spaces when possible
+- **Smart long-word handling** - Splits words longer than display width
+- Font selection (all available fonts)
+- RGBA color control
+- Position control (percentage-based)
+- Animation speed control
+- Auto-refresh for dynamic sources
+- Display-optimized formatting
 
 ---
 
@@ -481,9 +523,110 @@ Fishtank/
 - Liberty Statue at X=70, Y=5 (underwater landmark)
 - Coral reef background
 
+### Scrolling News Display
+- No fish, plants, or effects
+- Text enabled with RSS feed
+- Animation: Horizontal Scroll
+- Font: C64
+- White text color
+- Auto-updates every 5 minutes
+- News background image
+
+### Aquarium with Title
+- 8 mixed fish
+- 10 plants at bottom
+- 12 bubbles rising
+- Text enabled: "MY AQUARIUM"
+- Animation: Wave
+- Font: Pixel-Gosub
+- Cyan text color
+- Position: Top center
+- Ocean background
+
 ---
 
-**Version:** 2.0  
+## 📝 Text Feature Details
+
+### Animation Types
+
+#### Static
+Fixed text display at specified position. No animation.
+
+#### Scroll Horizontal
+Text scrolls from right to left continuously. When text scrolls off the left edge, it wraps around to the right side. Perfect for news tickers and continuous messages.
+
+#### Scroll Vertical
+Text scrolls from bottom to top. Multi-line text supported. Each line scrolls upward independently. When all text scrolls off the top, it wraps to the bottom.
+
+#### Star Wars Intro
+Text scrolls upward with perspective effect - lines appear smaller as they get further away (toward the top). Creates a 3D depth illusion similar to the Star Wars opening crawl.
+
+#### Typewriter
+Characters appear one at a time from left to right, creating a typing effect. Supports multi-line text with natural line breaks.
+
+#### Fade In/Out
+Text smoothly fades in from transparent to opaque, then fades out again in a continuous cycle.
+
+#### Wave
+Each character moves up and down in a sine wave pattern, creating a wavy text effect. The wave travels through the text over time.
+
+#### Bounce
+Entire text bounces up and down smoothly using sine wave motion.
+
+### Text Sources
+
+#### Manual Input
+User types text directly in the "Text Content" field. Supports multi-line text (use line breaks). Best for static messages, titles, and labels.
+
+#### RSS Feed
+Fetches text from an RSS feed URL. Automatically updates at the specified interval. Displays the first `<title>` tag found in the RSS feed. Perfect for news headlines, blog updates, or weather reports.
+
+**Example RSS URLs:**
+- `https://feeds.bbci.co.uk/news/rss.xml` (BBC News)
+- `https://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml` (NY Times)
+
+#### JSON URL
+Fetches text from a JSON endpoint. Expects JSON with a `text` or `message` field. Auto-updates at the specified interval. Ideal for custom data sources, API integrations, or dynamic content.
+
+**Example JSON format:**
+```json
+{
+  "text": "Your message here",
+  "timestamp": "2025-11-26T12:00:00Z"
+}
+```
+
+### Position Control
+
+Text position is specified as percentages (0-100) of the display dimensions:
+- **X Position:** 0 = left edge, 50 = center, 100 = right edge
+- **Y Position:** 0 = top edge, 50 = middle, 100 = bottom edge
+
+For scrolling animations, the position determines the starting point of the text.
+
+### Font Selection
+
+All available fonts from the ledder font system can be used:
+- `C64` - Classic Commodore 64 style
+- `Picopixel` - Tiny, minimal font
+- `Tiny 3x3` - Extremely compact
+- `Pixel-Gosub` - Retro pixel font
+- And more...
+
+Different fonts have different dimensions, which affects text size and readability. Choose fonts based on your display resolution and desired visual style.
+
+### Usage Tips
+
+1. **For news tickers:** Use Horizontal Scroll with RSS source
+2. **For titles:** Use Static or Wave with manual input
+3. **For credits:** Use Vertical Scroll or Star Wars Intro
+4. **For announcements:** Use Typewriter with manual input
+5. **For atmosphere:** Use Fade with slow animation speed
+6. **For dynamic content:** Use JSON source with auto-refresh
+
+---
+
+**Version:** 2.1  
 **Framework:** Modular Sprite System  
 **TypeScript:** Full support  
 **License:** See main repository

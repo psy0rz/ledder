@@ -10,14 +10,14 @@ w..w
 
 export class BubbleSprite extends SpriteAnimator {
     private baseX: number;
+    private wobbleSpeed: number = 10;
+    private riseSpeedCache: number;
+    private wobbleAmountCache: number;
 
     constructor(x: number, y: number, riseSpeed: number = 0.4, wobbleAmount: number = 0.3) {
         const initialState: SpriteState = {
             x,
-            y,
-            riseSpeed,
-            wobbleAmount,
-            originalY: y // Store for reset
+            y
         };
 
         super(bubbleSprite, initialState, {
@@ -25,15 +25,16 @@ export class BubbleSprite extends SpriteAnimator {
         });
 
         this.baseX = x;
+        this.riseSpeedCache = riseSpeed;
+        this.wobbleAmountCache = wobbleAmount;
     }
 
     update(frameNr: number, boxWidth: number, boxHeight: number) {
-        // Bubbles rise upward
-        this.state.y -= this.state.riseSpeed || 0.4;
+        // Bubbles rise upward (cached value)
+        this.state.y -= this.riseSpeedCache;
 
-        // Add wobble effect
-        const wobble = Math.sin(frameNr / 10) * (this.state.wobbleAmount || 0.3);
-        this.state.x = this.baseX + wobble;
+        // Add wobble effect (cached wobble amount)
+        this.state.x = this.baseX + Math.sin(frameNr / this.wobbleSpeed) * this.wobbleAmountCache;
 
         // Wrap at bottom when reaching top
         if (this.state.y < 0) {

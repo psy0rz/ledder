@@ -28,28 +28,35 @@ export default class SpriteAnimator {
     protected constraints: SpriteConstraints;
     protected spriteWidth: number;
     protected spriteHeight: number;
+    private flippedSprite: string | null = null;
+    private lastVelocitySign: number = 1;
+    private isStatic: boolean = false; // Optimization flag for static sprites
 
     constructor(sprite: string, initialState: SpriteState, constraints: SpriteConstraints = {}) {
         this.sprite = sprite;
         this.state = initialState;
         this.constraints = constraints;
         
-        // Calculate sprite dimensions from the sprite string
+        // Calculate sprite dimensions from the sprite string (done once)
         const lines = sprite.trim().split('\n');
         this.spriteHeight = lines.length;
         this.spriteWidth = lines[0]?.length || 0;
+        
+        // Detect if sprite is static (no velocity)
+        this.isStatic = (initialState.velocityX === 0 || initialState.velocityX === undefined) &&
+                        (initialState.velocityY === 0 || initialState.velocityY === undefined);
     }
 
     /**
-     * Update sprite position based on velocity
+     * Update sprite position based on velocity (optimized with static check)
      */
     updatePosition() {
-        if (this.state.velocityX !== undefined) {
-            this.state.x += this.state.velocityX;
-        }
-        if (this.state.velocityY !== undefined) {
-            this.state.y += this.state.velocityY;
-        }
+        if (this.isStatic) return; // Fast path for static sprites
+        
+        const vx = this.state.velocityX;
+        const vy = this.state.velocityY;
+        if (vx !== undefined) this.state.x += vx;
+        if (vy !== undefined) this.state.y += vy;
     }
 
     /**
@@ -62,37 +69,50 @@ export default class SpriteAnimator {
         const maxY = this.constraints.maxY ?? (boxHeight - this.spriteHeight);
 
         if (this.constraints.wrapAround) {
-            // Wrap around horizontally
-            if (this.state.x >= maxX) {
+            // Wrap around horizontally (optimized checks)
+            const x = this.state.x;
+            if (x >= maxX) {
                 this.state.x = minX - this.spriteWidth;
-            } else if (this.state.x < minX - this.spriteWidth) {
+            } else if (x < minX - this.spriteWidth) {
                 this.state.x = maxX;
             }
 
-            // Clamp vertical position
-            this.state.y = Math.max(minY, Math.min(maxY, this.state.y));
+            // Clamp vertical position (single operation)
+            const y = this.state.y;
+            if (y < minY) this.state.y = minY;
+            else if (y > maxY) this.state.y = maxY;
         } else if (this.constraints.bounceOnEdges) {
             // Bounce on horizontal edges
-            if (this.state.x <= minX || this.state.x >= maxX - this.spriteWidth) {
+            const x = this.state.x;
+            const maxXBound = maxX - this.spriteWidth;
+            if (x <= minX || x >= maxXBound) {
                 if (this.state.velocityX !== undefined) {
-                    this.state.velocityX *= -1;
+                    this.state.velocityX = -this.state.velocityX;
                 }
                 // Clamp to prevent getting stuck outside bounds
-                this.state.x = Math.max(minX, Math.min(maxX - this.spriteWidth, this.state.x));
+                this.state.x = x < minX ? minX : (x > maxXBound ? maxXBound : x);
             }
 
             // Bounce on vertical edges
-            if (this.state.y <= minY || this.state.y >= maxY) {
+            const y = this.state.y;
+            if (y <= minY || y >= maxY) {
                 if (this.state.velocityY !== undefined) {
-                    this.state.velocityY *= -1;
+                    this.state.velocityY = -this.state.velocityY;
                 }
                 // Clamp to prevent getting stuck outside bounds
-                this.state.y = Math.max(minY, Math.min(maxY, this.state.y));
+                this.state.y = y < minY ? minY : (y > maxY ? maxY : y);
             }
         } else {
-            // Just clamp position
-            this.state.x = Math.max(minX, Math.min(maxX - this.spriteWidth, this.state.x));
-            this.state.y = Math.max(minY, Math.min(maxY, this.state.y));
+            // Just clamp position (optimized)
+            const x = this.state.x;
+            const y = this.state.y;
+            const maxXBound = maxX - this.spriteWidth;
+            
+            if (x < minX) this.state.x = minX;
+            else if (x > maxXBound) this.state.x = maxXBound;
+            
+            if (y < minY) this.state.y = minY;
+            else if (y > maxY) this.state.y = maxY;
         }
     }
 
@@ -118,18 +138,28 @@ export default class SpriteAnimator {
     /**
      * Render the sprite using DrawAsciiArtColor
      * Automatically flips sprite horizontally when moving left
+     * Uses cached flipped sprite for better performance
      */
     render() {
         let spriteToRender = this.sprite;
         
-        // Flip sprite if moving left
+        // Flip sprite if moving left (with caching)
         if (this.state.velocityX !== undefined && this.state.velocityX < 0) {
-            spriteToRender = this.flipSpriteHorizontally(this.sprite);
+            // Only recalculate if direction changed or no cache
+            const currentSign = this.state.velocityX < 0 ? -1 : 1;
+            if (currentSign !== this.lastVelocitySign || this.flippedSprite === null) {
+                this.flippedSprite = this.flipSpriteHorizontally(this.sprite);
+                this.lastVelocitySign = currentSign;
+            }
+            spriteToRender = this.flippedSprite;
+        } else {
+            this.lastVelocitySign = 1;
         }
         
+        // Use bitwise OR for faster rounding
         return new DrawAsciiArtColor(
-            Math.round(this.state.x),
-            Math.round(this.state.y),
+            (this.state.x + 0.5) | 0,
+            (this.state.y + 0.5) | 0,
             spriteToRender
         );
     }

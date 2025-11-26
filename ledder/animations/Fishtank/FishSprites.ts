@@ -26,18 +26,22 @@ export class TropicalFishSprite extends SpriteAnimator {
     }
 
     update(frameNr: number, boxWidth: number, boxHeight: number) {
-        // Add gentle water flow effect (preserve direction)
-        if (this.state.velocityX !== undefined) {
-            const direction = this.state.velocityX >= 0 ? 1 : -1;
-            this.state.velocityX = Math.abs(this.state.velocityX) * 0.3 + 0.05 * direction;
+        // Add gentle water flow effect (preserve direction) - optimized
+        const vx = this.state.velocityX;
+        if (vx !== undefined) {
+            const absVx = vx < 0 ? -vx : vx;
+            this.state.velocityX = absVx * 0.3 + (vx < 0 ? -0.05 : 0.05);
         }
 
         super.update(frameNr, boxWidth, boxHeight);
 
-        // Add smooth, very gentle vertical movement variation
-        if (frameNr % 80 === 0 && this.state.velocityY !== undefined) {
-            this.state.velocityY += (Math.random() - 0.5) * 0.04;
-            this.state.velocityY = Math.max(-0.1, Math.min(0.1, this.state.velocityY));
+        // Add smooth, very gentle vertical movement variation (reduced checks)
+        if ((frameNr & 79) === 0) { // Bitwise AND is faster than modulo
+            const vy = this.state.velocityY;
+            if (vy !== undefined) {
+                const newVy = vy + (Math.random() - 0.5) * 0.04;
+                this.state.velocityY = newVy < -0.1 ? -0.1 : (newVy > 0.1 ? 0.1 : newVy);
+            }
         }
     }
 }
@@ -67,18 +71,22 @@ export class GoldfishSprite extends SpriteAnimator {
     }
 
     update(frameNr: number, boxWidth: number, boxHeight: number) {
-        // Add gentle water flow effect (preserve direction)
-        if (this.state.velocityX !== undefined) {
-            const direction = this.state.velocityX >= 0 ? 1 : -1;
-            this.state.velocityX = Math.abs(this.state.velocityX) * 0.25 + 0.04 * direction;
+        // Add gentle water flow effect (optimized)
+        const vx = this.state.velocityX;
+        if (vx !== undefined) {
+            const absVx = vx < 0 ? -vx : vx;
+            this.state.velocityX = absVx * 0.25 + (vx < 0 ? -0.04 : 0.04);
         }
 
         super.update(frameNr, boxWidth, boxHeight);
 
-        // Gentle swimming pattern
-        if (frameNr % 100 === 0 && this.state.velocityY !== undefined) {
-            this.state.velocityY += (Math.random() - 0.5) * 0.03;
-            this.state.velocityY = Math.max(-0.08, Math.min(0.08, this.state.velocityY));
+        // Gentle swimming pattern (optimized)
+        if ((frameNr % 100) === 0) {
+            const vy = this.state.velocityY;
+            if (vy !== undefined) {
+                const newVy = vy + (Math.random() - 0.5) * 0.03;
+                this.state.velocityY = newVy < -0.08 ? -0.08 : (newVy > 0.08 ? 0.08 : newVy);
+            }
         }
     }
 }
