@@ -61,7 +61,7 @@ export class DisplayApng extends Display {
 
 
         //store
-        this.images.push(this.imageBuf8.buffer)
+        this.images.push(this.imageBuf8.buffer as ArrayBuffer)
         this.delays.push(~~(displayTimeMicros-this.lastTime)/1000)
         this.lastTime=displayTimeMicros
         this.clearFrame()
