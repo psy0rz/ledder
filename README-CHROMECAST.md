@@ -1,4 +1,4 @@
-# Chromecast Display Driver for Ledger
+# Chromecast Display Driver for Ledder
 
 Stream Ledger animations to your Chromecast device!
 
@@ -18,7 +18,7 @@ Stream Ledger animations to your Chromecast device!
 
 ## Installation
 
-Dependencies are already installed if you ran `npm install` in the ledger directory.
+Dependencies are already installed if you ran `npm install` in the ledder directory.
 
 Required packages:
 - `canvas` - For frame rendering
@@ -62,8 +62,8 @@ const display = new DisplayChromecast(
 
 ### Parameters
 
-- **width** (default: 64): Display width in Ledger pixels
-- **height** (default: 64): Display height in Ledger pixels
+- **width** (default: 64): Display width in Ledder pixels
+- **height** (default: 64): Display height in Ledder pixels
 - **deviceName** (default: ""): Chromecast device name to connect to
   - Leave empty to connect to first discovered device
   - Use partial name matching (e.g., "Living" matches "Living Room TV")
@@ -73,7 +73,7 @@ const display = new DisplayChromecast(
 
 ### Runtime Controls
 
-The driver provides several controls accessible through the Ledger web interface:
+The driver provides several controls accessible through the Ledder web interface:
 
 - **Device Name**: Change which Chromecast to connect to
 - **Target FPS**: Adjust frame rate (1-60, default: 10)
