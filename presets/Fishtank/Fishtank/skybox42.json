@@ -98,7 +98,7 @@
     "value": 0
    },
    "Show Rainbow": {
-    "enabled": false
+    "enabled": true
    },
    "Rain count": {
     "value": 1
@@ -116,7 +116,7 @@
     "value": 20
    },
    "Snow count": {
-    "value": 7
+    "value": 25
    },
    "Snow speed multiplier": {
     "value": 1
@@ -140,7 +140,7 @@
     "enabled": false
    },
    "Enable Clouds": {
-    "enabled": false
+    "enabled": true
    },
    "Enable Stars": {
     "enabled": false
@@ -149,7 +149,7 @@
     "enabled": false
    },
    "Enable Snow": {
-    "enabled": false
+    "enabled": true
    },
    "Enable Lightning": {
     "enabled": false
@@ -157,7 +157,7 @@
   },
   "Buildings": {
    "Enable Buildings": {
-    "enabled": true
+    "enabled": false
    },
    "Building Type": {
     "selected": "tower"
@@ -265,7 +265,7 @@
     "selected": "C64"
    },
    "Text": {
-    "text": "Far out in the uncharted backwaters of the unfashionable end of the Western Spiral Arm of the Galaxy lies a small unregarded yellow sun.\n\nOrbiting this at a distance of roughly ninety-two million miles is an utterly insignificant little blue-green planet whose ape-descended life forms are so amazingly primitive that they still think digital watches are a pretty neat idea.\n\nThis planet has – or rather had – a problem, which was this: most of the people living on it were unhappy for pretty much of the time. Many solutions were suggested for this problem, but most of these were largely concerned with the movements of small green pieces of paper, which is odd because on the whole it wasn't the small green pieces of paper that were unhappy.\n\nAnd so the problem remained; lots of the people were mean, and most of them were miserable, even the ones with digital watches."
+    "text": "Far out in the uncharted backwaters of the unfashionable end of the Western Spiral Arm of the Galaxy lies a small unregarded yellow sun.\n\nOrbiting this at a distance of roughly ninety-two million miles is an utterly insignificant little blue-green planet whose ape-descended life forms are so amazingly primitive that they still think digital watches are a pretty neat idea.\n\nThis planet has – or rather had – a problem, which was this: most of the people living on it were unhappy for pretty much of the time. Many solutions were suggested for this problem, but most of these were largely concerned with the movements of small green pieces of paper, which is odd because on the whole it wasn't the small green pieces of paper that were unhappy.\n\nAnd so the problem remained; lots of the people were mean, and most of them were miserable, even the ones with digital watches.\n\n==\nThe opening of 'The Hitchhiker's Guide to the Galaxy' by Douglas Adams"
    },
    "Max Width": {
     "value": 64
@@ -274,7 +274,7 @@
     "selected": "scroll-horizontal"
    },
    "Animation Speed": {
-    "value": 1
+    "value": 5
    },
    "Horizontal Align": {
     "selected": "center"

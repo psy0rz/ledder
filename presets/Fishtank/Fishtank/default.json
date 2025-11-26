@@ -241,13 +241,13 @@
     "selected": "C64"
    },
    "Text": {
-    "text": "Hello World!"
+    "text": "FISHTANK"
    },
    "Max Width %": {
     "value": 90
    },
    "Animation": {
-    "selected": "fade"
+    "selected": "wave"
    },
    "Animation Speed": {
     "value": 1

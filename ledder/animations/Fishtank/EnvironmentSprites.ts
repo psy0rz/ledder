@@ -1,5 +1,8 @@
 import SpriteAnimator from "./SpriteAnimator.js"
 import type { SpriteState } from "./SpriteAnimator.js"
+import PixelList from "../../PixelList.js"
+import Pixel from "../../Pixel.js"
+import Color from "../../Color.js"
 
 const bubbleSprite = `
 .ww.
@@ -360,29 +363,58 @@ export class ThunderSprite extends SpriteAnimator {
     }
 }
 
-// Rainbow sprite
-const rainbowSprite = `
-rrrrrrrr
-oooooooo
-yyyyyyyy
-gggggggg
-bbbbbbbb
-`;
-
+// Rainbow sprite - transparent arc covering the display
 export class RainbowSprite extends SpriteAnimator {
+    private displayWidth: number = 0;
+    
     constructor(x: number, y: number) {
         const initialState: SpriteState = {
             x,
             y
         };
 
-        super(rainbowSprite, initialState, {
+        // Start with a minimal sprite, we'll render dynamically
+        super(".", initialState, {
             bounceOnEdges: false
         });
     }
 
     update(frameNr: number, boxWidth: number, boxHeight: number) {
+        this.displayWidth = boxWidth;
         super.update(frameNr, boxWidth, boxHeight);
+    }
+    
+    render() {
+        if (this.displayWidth === 0) return super.render();
+        
+        const pixels = new PixelList();
+        
+        // Rainbow colors with transparency (RGB + alpha)
+        const rainbowColors = [
+            {r: 255, g: 0, b: 0, a: 0.3},     // Red
+            {r: 255, g: 127, b: 0, a: 0.3},   // Orange
+            {r: 255, g: 255, b: 0, a: 0.3},   // Yellow
+            {r: 0, g: 255, b: 0, a: 0.3},     // Green
+            {r: 0, g: 0, b: 255, a: 0.3},     // Blue
+            {r: 75, g: 0, b: 130, a: 0.3},    // Indigo
+            {r: 148, g: 0, b: 211, a: 0.3}    // Violet
+        ];
+        
+        // Draw rainbow bands across the full width
+        for (let colorIdx = 0; colorIdx < rainbowColors.length; colorIdx++) {
+            const color = rainbowColors[colorIdx];
+            const y = this.state.y + colorIdx;
+            
+            for (let x = 0; x < this.displayWidth; x++) {
+                pixels.add(new Pixel(
+                    x,
+                    y,
+                    new Color(color.r, color.g, color.b, color.a)
+                ));
+            }
+        }
+        
+        return pixels;
     }
 }
 
