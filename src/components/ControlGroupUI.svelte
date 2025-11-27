@@ -21,7 +21,7 @@
         <!-- Recruse into a nested ControlGroup -->
         <TreeviewItem
                 label={control.meta.name}
-                opened={true || !control.meta.collapsed /* buggy, if its closed some widgets like sliders ddo not work properly */}
+                opened={!(control as ControlGroup).meta.collapsed}
                 toggle={true}
                 itemToggle
                 class="{control.meta.enabled ?'':'disabled'}"
