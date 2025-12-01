@@ -445,15 +445,17 @@ export class SnowGroundSprite extends SpriteAnimator {
 
     render() {
         const pixels = new PixelList();
-        const white = new Color(255, 255, 255);
-        const lightGray = new Color(200, 200, 200);
 
-        // Draw snow ground layer
+        // Draw snow ground layer with gradient from transparent (top) to opaque (bottom)
         for (let dy = 0; dy < this.groundHeight; dy++) {
             const y = this.state.y + dy;
+            // Calculate alpha: 0 at top, 1 at bottom
+            const alpha = (dy + 1) / this.groundHeight;
+            
             for (let x = 0; x < this.displayWidth; x++) {
                 // Alternate between white and light gray for texture
-                const color = (x + dy) % 2 === 0 ? white : lightGray;
+                const baseColor = (x + dy) % 2 === 0 ? 255 : 200;
+                const color = new Color(baseColor, baseColor, baseColor, alpha);
                 pixels.add(new Pixel(x, y, color));
             }
         }

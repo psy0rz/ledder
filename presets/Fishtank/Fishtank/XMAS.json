@@ -388,6 +388,15 @@
     },
     "Enabled": {
      "enabled": true
+    },
+    "Ground layer": {
+     "enabled": true
+    },
+    "Ground height (px)": {
+     "value": 4
+    },
+    "Ground Y position %": {
+     "value": 88
     }
    },
    "Lightning": {
@@ -722,7 +731,7 @@
    },
    "Reindeer": {
     "Count (0=lights only)": {
-     "value": 3
+     "value": 2
     },
     "Enabled": {
      "enabled": true
