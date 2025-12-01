@@ -418,6 +418,50 @@ export class RainbowSprite extends SpriteAnimator {
     }
 }
 
+// Snow ground layer
+export class SnowGroundSprite extends SpriteAnimator {
+    private displayWidth: number;
+    private groundHeight: number;
+
+    constructor(y: number, displayWidth: number, heightPixels: number = 2) {
+        const initialState: SpriteState = {
+            x: 0,
+            y: y
+        };
+
+        super('.', initialState, {
+            bounceOnEdges: false,
+            wrapAround: false
+        });
+
+        this.displayWidth = displayWidth;
+        this.groundHeight = heightPixels;
+    }
+
+    update(frameNr: number, boxWidth: number, boxHeight: number) {
+        this.displayWidth = boxWidth;
+        super.update(frameNr, boxWidth, boxHeight);
+    }
+
+    render() {
+        const pixels = new PixelList();
+        const white = new Color(255, 255, 255);
+        const lightGray = new Color(200, 200, 200);
+
+        // Draw snow ground layer
+        for (let dy = 0; dy < this.groundHeight; dy++) {
+            const y = this.state.y + dy;
+            for (let x = 0; x < this.displayWidth; x++) {
+                // Alternate between white and light gray for texture
+                const color = (x + dy) % 2 === 0 ? white : lightGray;
+                pixels.add(new Pixel(x, y, color));
+            }
+        }
+
+        return pixels;
+    }
+}
+
 export const EnvironmentSprites = {
     Bubble: BubbleSprite,
     Cloud: CloudSprite,
@@ -427,6 +471,7 @@ export const EnvironmentSprites = {
     Raindrop: RaindropSprite,
     Snowflake: SnowflakeSprite,
     Thunder: ThunderSprite,
-    Rainbow: RainbowSprite
+    Rainbow: RainbowSprite,
+    SnowGround: SnowGroundSprite
 };
 

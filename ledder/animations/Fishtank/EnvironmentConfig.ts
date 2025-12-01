@@ -61,6 +61,9 @@ export class EnvironmentConfig {
         const snowFarPercent = snowGroup.value("Far layer %", 40, 0, 100, 5);
         const snowMidPercent = snowGroup.value("Mid layer %", 40, 0, 100, 5);
         const snowNearPercent = snowGroup.value("Near layer %", 20, 0, 100, 5);
+        const enableSnowGround = snowGroup.switch("Ground layer", false);
+        const snowGroundHeight = snowGroup.value("Ground height (px)", 2, 1, 10, 1);
+        const snowGroundY = snowGroup.value("Ground Y position %", 95, 0, 100, 1);
         
         // Thunder
         const thunderGroup = this.controls.group("Lightning", true, true);
@@ -92,6 +95,9 @@ export class EnvironmentConfig {
             snowFarPercent,
             snowMidPercent,
             snowNearPercent,
+            enableSnowGround,
+            snowGroundHeight,
+            snowGroundY,
             enableThunder,
             numThunder
         };
@@ -190,6 +196,16 @@ export class EnvironmentConfig {
                 }
                 
                 environmentManager.addSprite(new EnvironmentSprites.Snowflake(x, y, depth, config.snowSpeedMultiplier.value));
+            }
+            
+            // Add snow ground layer if enabled
+            if (config.enableSnowGround.enabled) {
+                const groundY = Math.floor((box.height() * config.snowGroundY.value) / 100);
+                environmentManager.addSprite(new EnvironmentSprites.SnowGround(
+                    groundY,
+                    box.width(),
+                    config.snowGroundHeight.value
+                ));
             }
         }
         

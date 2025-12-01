@@ -35,6 +35,63 @@
    },
    "Enabled": {
     "enabled": true
+   },
+   "Enable": {
+    "enabled": true
+   },
+   "Tropical Fish": {
+    "Count (0=disabled)": {
+     "value": 0
+    },
+    "Enabled": {
+     "enabled": true
+    }
+   },
+   "Goldfish": {
+    "Count (0=disabled)": {
+     "value": 0
+    },
+    "Enabled": {
+     "enabled": true
+    }
+   },
+   "Clownfish": {
+    "Count (0=disabled)": {
+     "value": 0
+    },
+    "Enabled": {
+     "enabled": true
+    }
+   },
+   "Angelfish": {
+    "Count (0=disabled)": {
+     "value": 0
+    },
+    "Enabled": {
+     "enabled": true
+    }
+   },
+   "Neon Tetra": {
+    "Count (0=disabled)": {
+     "value": 0
+    },
+    "Enabled": {
+     "enabled": true
+    }
+   },
+   "Tiny Fish School": {
+    "Enable": {
+     "enabled": true
+    },
+    "School size": {
+     "value": 13
+    },
+    "Speed multiplier": {
+     "value": 1
+    },
+    "Enabled": {
+     "enabled": true
+    }
    }
   },
   "Plants & Vegetation": {
@@ -70,6 +127,73 @@
    },
    "Enabled": {
     "enabled": true
+   },
+   "Enable": {
+    "enabled": false
+   },
+   "Tall Plants": {
+    "Count (0=disabled)": {
+     "value": 2
+    },
+    "Enabled": {
+     "enabled": true
+    }
+   },
+   "Short Plants": {
+    "Count (0=disabled)": {
+     "value": 2
+    },
+    "Enabled": {
+     "enabled": true
+    }
+   },
+   "Bushes": {
+    "Count (0=disabled)": {
+     "value": 3
+    },
+    "Enabled": {
+     "enabled": true
+    }
+   },
+   "Grass": {
+    "Count (0=disabled)": {
+     "value": 4
+    },
+    "Enabled": {
+     "enabled": true
+    }
+   },
+   "Flowers": {
+    "Count (0=disabled)": {
+     "value": 3
+    },
+    "Enabled": {
+     "enabled": true
+    }
+   },
+   "Ferns": {
+    "Count (0=disabled)": {
+     "value": 2
+    },
+    "Enabled": {
+     "enabled": true
+    }
+   },
+   "Trees": {
+    "Count (0=disabled)": {
+     "value": 2
+    },
+    "Enabled": {
+     "enabled": true
+    }
+   },
+   "Cactus": {
+    "Count (0=disabled)": {
+     "value": 2
+    },
+    "Enabled": {
+     "enabled": true
+    }
    }
   },
   "Environment Effects": {
@@ -135,6 +259,129 @@
    },
    "Enabled": {
     "enabled": true
+   },
+   "Enable": {
+    "enabled": true
+   },
+   "Bubbles": {
+    "Enable": {
+     "enabled": false
+    },
+    "Count": {
+     "value": 5
+    },
+    "Rise speed": {
+     "value": 0.4
+    },
+    "Enabled": {
+     "enabled": true
+    }
+   },
+   "Clouds": {
+    "Enable": {
+     "enabled": false
+    },
+    "Count": {
+     "value": 3
+    },
+    "Drift speed": {
+     "value": 0.05
+    },
+    "Enabled": {
+     "enabled": true
+    }
+   },
+   "Sun": {
+    "Enable": {
+     "enabled": false
+    },
+    "Enabled": {
+     "enabled": true
+    }
+   },
+   "Moon": {
+    "Enable": {
+     "enabled": false
+    },
+    "Enabled": {
+     "enabled": true
+    }
+   },
+   "Stars": {
+    "Enable": {
+     "enabled": false
+    },
+    "Count": {
+     "value": 10
+    },
+    "Enabled": {
+     "enabled": true
+    }
+   },
+   "Rainbow": {
+    "Enable": {
+     "enabled": true
+    },
+    "Enabled": {
+     "enabled": true
+    }
+   },
+   "Rain": {
+    "Enable": {
+     "enabled": false
+    },
+    "Count": {
+     "value": 20
+    },
+    "Speed multiplier": {
+     "value": 1
+    },
+    "Far layer %": {
+     "value": 40
+    },
+    "Mid layer %": {
+     "value": 40
+    },
+    "Near layer %": {
+     "value": 20
+    },
+    "Enabled": {
+     "enabled": true
+    }
+   },
+   "Snow": {
+    "Enable": {
+     "enabled": false
+    },
+    "Count": {
+     "value": 20
+    },
+    "Speed multiplier": {
+     "value": 1
+    },
+    "Far layer %": {
+     "value": 40
+    },
+    "Mid layer %": {
+     "value": 40
+    },
+    "Near layer %": {
+     "value": 20
+    },
+    "Enabled": {
+     "enabled": true
+    }
+   },
+   "Lightning": {
+    "Enable": {
+     "enabled": false
+    },
+    "Bolt count": {
+     "value": 2
+    },
+    "Enabled": {
+     "enabled": true
+    }
    }
   },
   "Buildings": {
@@ -149,6 +396,121 @@
    },
    "Enabled": {
     "enabled": true
+   },
+   "Enable": {
+    "enabled": false
+   },
+   "Factory": {
+    "Enable": {
+     "enabled": false
+    },
+    "X Position": {
+     "value": 10
+    },
+    "Y Position": {
+     "value": 10
+    },
+    "Enabled": {
+     "enabled": true
+    }
+   },
+   "School": {
+    "Enable": {
+     "enabled": false
+    },
+    "X Position": {
+     "value": 10
+    },
+    "Y Position": {
+     "value": 10
+    },
+    "Enabled": {
+     "enabled": true
+    }
+   },
+   "Windmill": {
+    "Enable": {
+     "enabled": false
+    },
+    "X Position": {
+     "value": 10
+    },
+    "Y Position": {
+     "value": 10
+    },
+    "Enabled": {
+     "enabled": true
+    }
+   },
+   "Statue of Liberty": {
+    "Enable": {
+     "enabled": false
+    },
+    "X Position": {
+     "value": 10
+    },
+    "Y Position": {
+     "value": 10
+    },
+    "Enabled": {
+     "enabled": true
+    }
+   },
+   "Eiffel Tower": {
+    "Enable": {
+     "enabled": false
+    },
+    "X Position": {
+     "value": 10
+    },
+    "Y Position": {
+     "value": 10
+    },
+    "Enabled": {
+     "enabled": true
+    }
+   },
+   "Castle": {
+    "Enable": {
+     "enabled": false
+    },
+    "X Position": {
+     "value": 10
+    },
+    "Y Position": {
+     "value": 10
+    },
+    "Enabled": {
+     "enabled": true
+    }
+   },
+   "Church": {
+    "Enable": {
+     "enabled": false
+    },
+    "X Position": {
+     "value": 10
+    },
+    "Y Position": {
+     "value": 10
+    },
+    "Enabled": {
+     "enabled": true
+    }
+   },
+   "Tower": {
+    "Enable": {
+     "enabled": false
+    },
+    "X Position": {
+     "value": 10
+    },
+    "Y Position": {
+     "value": 10
+    },
+    "Enabled": {
+     "enabled": true
+    }
    }
   },
   "Background": {
@@ -165,6 +527,9 @@
     "value": 0.5
    },
    "Enabled": {
+    "enabled": true
+   },
+   "Enable": {
     "enabled": true
    }
   },
@@ -209,7 +574,7 @@
     "selected": "wave"
    },
    "Animation Speed": {
-    "value": 0.7000000000000001
+    "value": 0.1
    },
    "Enabled": {
     "enabled": true
@@ -231,6 +596,30 @@
    },
    "Anti-aliasing": {
     "enabled": true
+   },
+   "Enable": {
+    "enabled": true
+   },
+   "Text": {
+    "text": "Fishtank"
+   },
+   "Max Width %": {
+    "value": 90
+   },
+   "Animation": {
+    "selected": "wave"
+   },
+   "X Position %": {
+    "value": 50
+   },
+   "Y Position %": {
+    "value": 50
+   },
+   "Color": {
+    "r": 175,
+    "g": 129,
+    "b": 255,
+    "a": 1
    }
   },
   "Text Display": {

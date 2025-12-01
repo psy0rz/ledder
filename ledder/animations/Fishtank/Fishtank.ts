@@ -13,6 +13,7 @@ import { EnvironmentConfig } from "./EnvironmentConfig.js"
 import { BackgroundConfig } from "./BackgroundConfig.js"
 import { BuildingConfig } from "./BuildingConfig.js"
 import { TextConfig } from "./TextConfig.js"
+import { XmasConfig } from "./XmasConfig.js"
 
 export default class Fishtank extends Animator {
     static category = "Aquarium"
@@ -29,6 +30,7 @@ export default class Fishtank extends Animator {
         const textManager = new SpriteManager();
         const environmentManager = new SpriteManager();
         const schoolManager = new SpriteManager();
+        const xmasManager = new SpriteManager();
 
         // Create and populate sprites using config classes
         const fishConfig = new FishConfig(controls);
@@ -48,6 +50,9 @@ export default class Fishtank extends Animator {
         
         const textConfig = new TextConfig(controls);
         textConfig.populateSprites(textManager, box);
+        
+        const xmasConfig = new XmasConfig(controls);
+        xmasConfig.populateSprites(xmasManager, box);
 
 
         // Main animation loop
@@ -73,6 +78,9 @@ export default class Fishtank extends Animator {
 
             environmentManager.update(frameNr, box.width(), box.height());
             box.add(environmentManager.render());
+            
+            xmasManager.update(frameNr, box.width(), box.height());
+            box.add(xmasManager.render());
 
             textManager.update(frameNr, box.width(), box.height());
             box.add(textManager.render());

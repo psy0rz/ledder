@@ -84,7 +84,7 @@
      "enabled": true
     },
     "School size": {
-     "value": 5
+     "value": 8
     },
     "Speed multiplier": {
      "value": 3
@@ -133,7 +133,7 @@
    },
    "Tall Plants": {
     "Count (0=disabled)": {
-     "value": 0
+     "value": 2
     },
     "Enabled": {
      "enabled": true
@@ -141,7 +141,7 @@
    },
    "Short Plants": {
     "Count (0=disabled)": {
-     "value": 0
+     "value": 2
     },
     "Enabled": {
      "enabled": true
@@ -149,7 +149,7 @@
    },
    "Bushes": {
     "Count (0=disabled)": {
-     "value": 0
+     "value": 3
     },
     "Enabled": {
      "enabled": true
@@ -157,7 +157,7 @@
    },
    "Grass": {
     "Count (0=disabled)": {
-     "value": 0
+     "value": 4
     },
     "Enabled": {
      "enabled": true
@@ -165,7 +165,7 @@
    },
    "Flowers": {
     "Count (0=disabled)": {
-     "value": 0
+     "value": 3
     },
     "Enabled": {
      "enabled": true
@@ -173,7 +173,7 @@
    },
    "Ferns": {
     "Count (0=disabled)": {
-     "value": 0
+     "value": 2
     },
     "Enabled": {
      "enabled": true
@@ -189,7 +189,7 @@
    },
    "Cactus": {
     "Count (0=disabled)": {
-     "value": 0
+     "value": 2
     },
     "Enabled": {
      "enabled": true
@@ -279,7 +279,7 @@
     "enabled": false
    },
    "Enable": {
-    "enabled": false
+    "enabled": true
    },
    "Bubbles": {
     "Enable": {
@@ -369,10 +369,10 @@
    },
    "Snow": {
     "Enable": {
-     "enabled": false
+     "enabled": true
     },
     "Count": {
-     "value": 20
+     "value": 38
     },
     "Speed multiplier": {
      "value": 1
@@ -542,10 +542,10 @@
     "enabled": true
    },
    "Image URL": {
-    "text": "https://images.pexels.com/photos/440731/pexels-photo-440731.jpeg"
+    "text": "https://img.freepik.com/premium-photo/illuminated-christmas-tree-full-moon_639785-186682.jpg"
    },
    "Fit Mode": {
-    "selected": "fill"
+    "selected": "cover"
    },
    "Opacity": {
     "value": 0.5
@@ -651,19 +651,19 @@
     "enabled": true
    },
    "Font": {
-    "selected": "ZX Sierra Quest"
+    "selected": "Quasar"
    },
    "Text": {
-    "text": "Far out in the uncharted backwaters of the unfashionable end of the Western Spiral Arm of the Galaxy lies a small unregarded yellow sun.\n\nOrbiting this at a distance of roughly ninety-two million miles is an utterly insignificant little blue-green planet whose ape-descended life forms are so amazingly primitive that they still think digital watches are a pretty neat idea.\n\nThis planet has – or rather had – a problem, which was this: most of the people living on it were unhappy for pretty much of the time. Many solutions were suggested for this problem, but most of these were largely concerned with the movements of small green pieces of paper, which is odd because on the whole it wasn't the small green pieces of paper that were unhappy.\n\nAnd so the problem remained; lots of the people were mean, and most of them were miserable, even the ones with digital watches.\n\n==\nThe opening of 'The Hitchhiker's Guide to the Galaxy' by Douglas Adams"
+    "text": "MERRY XMAS "
    },
    "Max Width": {
     "value": 64
    },
    "Animation": {
-    "selected": "scroll-horizontal"
+    "selected": "fade"
    },
    "Animation Speed": {
-    "value": 2
+    "value": 0.1
    },
    "Horizontal Align": {
     "selected": "center"
@@ -690,10 +690,10 @@
     "value": 100
    },
    "X Position %": {
-    "value": 1
+    "value": 50
    },
    "Y Position %": {
-    "value": 34
+    "value": 8
    },
    "Enable": {
     "enabled": true
@@ -701,25 +701,28 @@
   },
   "Christmas 🎄": {
    "Enable": {
-    "enabled": false
+    "enabled": true
    },
    "Santa & Sleigh": {
     "Enable": {
      "enabled": true
     },
-    "Y Position %": {
-     "value": 80
+    "Y Position": {
+     "value": 0
     },
     "Speed": {
-     "value": -0.3
+     "value": 0.3
     },
     "Enabled": {
      "enabled": true
+    },
+    "Y Position %": {
+     "value": 25
     }
    },
    "Reindeer": {
     "Count (0=lights only)": {
-     "value": 1
+     "value": 3
     },
     "Enabled": {
      "enabled": true
