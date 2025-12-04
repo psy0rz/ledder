@@ -1,49 +1,37 @@
 import SpriteAnimator from "./SpriteAnimator.js"
 import type { SpriteState } from "./SpriteAnimator.js"
 
-// Factory with smoking chimney
+// Factory with smoking chimney - 12x10
 const factoryFrames = [
     `
-.....555.....
-....55555....
-...5555555...
-..555555555..
-.55555555555.
-555555555555.
-5rrrrr55rrrr5
-5rrrrr55rrrr5
-5wwwww55wwww5
-5wwwww55wwww5
-5wwwww55wwww5
-5555555555555
+...5.....55.
+..555...555.
+.55555.5555.
+555555555555
+5rrr55rrr555
+5www55www555
+5www55www555
+555555555555
 `,
     `
-....5.55.....
-....55555....
-...5555555...
-..555555555..
-.55555555555.
-555555555555.
-5rrrrr55rrrr5
-5rrrrr55rrrr5
-5wwwww55wwww5
-5wwwww55wwww5
-5wwwww55wwww5
-5555555555555
+..5......55.
+..555...555.
+.55555.5555.
+555555555555
+5rrr55rrr555
+5www55www555
+5www55www555
+555555555555
 `,
     `
-.....55.5....
-....55555....
-...5555555...
-..555555555..
-.55555555555.
-555555555555.
-5rrrrr55rrrr5
-5rrrrr55rrrr5
-5wwwww55wwww5
-5wwwww55wwww5
-5wwwww55wwww5
-5555555555555
+...5.5...55.
+..555...555.
+.55555.5555.
+555555555555
+5rrr55rrr555
+5www55www555
+5www55www555
+555555555555
 `
 ];
 
@@ -70,12 +58,11 @@ export class FactorySprite extends SpriteAnimator {
     }
 
     update(frameNr: number, boxWidth: number, boxHeight: number) {
-        // Animate smoke (optimized frame selection)
+        // Animate smoke
         const newFrame = ((frameNr / this.animSpeed) | 0) % this.frameCount;
         if (newFrame !== this.currentFrame) {
             this.currentFrame = newFrame;
             this.sprite = this.frames[this.currentFrame];
-            // Only recalculate dimensions when frame changes
             const lines = this.sprite.trim().split('\n');
             this.spriteHeight = lines.length;
             this.spriteWidth = lines[0]?.length || 1;
@@ -85,18 +72,16 @@ export class FactorySprite extends SpriteAnimator {
     }
 }
 
-// School building
+// School building - 10x8
 const schoolSprite = `
-...yyyy...
-..yyyyyy..
-.yyyyyyyy.
-yyyyyyyyyy
-5ww55ww555
-5ww55ww555
-5555555555
-5ww5ww5ww5
-5ww5ww5ww5
-5555555555
+..yyyy..
+.yyyyyy.
+55555555
+5ww55ww5
+5ww55ww5
+55555555
+5ww5ww55
+55555555
 `;
 
 export class SchoolSprite extends SpriteAnimator {
@@ -118,67 +103,59 @@ export class SchoolSprite extends SpriteAnimator {
     }
 }
 
-// Windmill with rotating blades
+// Windmill with rotating blades - 9x11
 const windmillFrames = [
     `
-.....w.....
-....www....
-...55555...
-..5555555..
-.555555555.
-...55555...
-..w55555w..
-.ww55555ww.
-..w55555w..
-...55555...
-...55555...
-...55555...
-...55555...
+....w....
+...www...
+..55555..
+.5555555.
+555555555
+..55555..
+.w55555w.
+..w555w..
+..55555..
+..55555..
+..55555..
 `,
     `
-.....w.....
-....w.w....
-...w5555w..
-..5555555..
-.555555555.
-...55555...
-...55555...
-..w55555w..
-...55555...
-...55555...
-...55555...
-...55555...
-...55555...
+....w....
+...w.w...
+..w555w..
+.5555555.
+555555555
+..55555..
+..55555..
+.w5555w..
+..55555..
+..55555..
+..55555..
 `,
     `
-.....w.....
-....www....
-...55555...
-..5555555..
-.555555555.
-...55555...
-w..55555..w
-.w.55555.w.
-w..55555..w
-...55555...
-...55555...
-...55555...
-...55555...
+....w....
+...www...
+..55555..
+.5555555.
+555555555
+..55555..
+w.55555.w
+.w5555w..
+..55555..
+..55555..
+..55555..
 `,
     `
-.....w.....
-....w.w....
-..w55555...
-..5555555..
-.555555555.
-...55555...
-...55555...
-w..55555..w
-...55555...
-...55555...
-...55555...
-...55555...
-...55555...
+....w....
+...w.w...
+.w5555...
+.5555555.
+555555555
+..55555..
+..55555..
+w.5555.w.
+..55555..
+..55555..
+..55555..
 `
 ];
 
@@ -214,23 +191,20 @@ export class WindmillSprite extends SpriteAnimator {
     }
 }
 
-// Statue of Liberty
+// Statue of Liberty - 7x12
 const libertyStatueSprite = `
-....5....
-...555...
-..55555..
-..5ggg5..
-...ggg...
-...ggg...
-...ggg...
-..ggggg..
-.ggggggg.
-...ggg...
-...ggg...
-...ggg...
-..55555..
-.5555555.
-555555555
+...5...
+..555..
+.55555.
+.5ggg5.
+..ggg..
+..ggg..
+.ggggg.
+ggggggg
+..ggg..
+..ggg..
+.55555.
+5555555
 `;
 
 export class LibertyStatueSprite extends SpriteAnimator {
@@ -252,22 +226,19 @@ export class LibertyStatueSprite extends SpriteAnimator {
     }
 }
 
-// Eiffel Tower
+// Eiffel Tower - 9x11
 const eiffelTowerSprite = `
-.....5.....
-....555....
-....555....
-...55555...
-..5555555..
-..5.555.5..
-..5.555.5..
-...55555...
-...5.5.5...
-...5.5.5...
-..55.5.55..
-..55555555.
-.5555555555
-555555555555
+....5....
+...555...
+..55555..
+.5555555.
+.5.555.5.
+.5.555.5.
+..55555..
+..5.5.5..
+.55.5.55.
+.5555555.
+555555555
 `;
 
 export class EiffelTowerSprite extends SpriteAnimator {
@@ -287,7 +258,7 @@ export class EiffelTowerSprite extends SpriteAnimator {
     }
 
     update(frameNr: number, boxWidth: number, boxHeight: number) {
-        // Gentle sway in wind
+        // Gentle sway
         this.phase += 0.02;
         const sway = Math.sin(this.phase) * 0.3;
         this.state.x = (this.state.originalX || this.state.x) + sway;
@@ -300,33 +271,29 @@ export class EiffelTowerSprite extends SpriteAnimator {
     }
 }
 
-// Castle with flags
+// Castle with flags - 11x9
 const castleFrames = [
     `
-r.5..5..5.r
-rr5rr5rr5rr
-555555555555
-5ww55ww55ww5
-5ww55ww55ww5
-5555555555555
-55ww5555ww555
-55ww5555ww555
-555555555555.
-5555wwwww5555
-555555555555.
+r.5.5.5.5.r
+rr5r5r5r5rr
+55555555555
+5ww55ww55w5
+5555555555.
+55ww55ww555
+5555555555.
+555wwwww555
+55555555555
 `,
     `
-.r5..5..5r.
-rr5rr5rr5rr
-555555555555
-5ww55ww55ww5
-5ww55ww55ww5
-5555555555555
-55ww5555ww555
-55ww5555ww555
-555555555555.
-5555wwwww5555
-555555555555.
+.r5.5.5.5r.
+rr5r5r5r5rr
+55555555555
+5ww55ww55w5
+5555555555.
+55ww55ww555
+5555555555.
+555wwwww555
+55555555555
 `
 ];
 
@@ -362,37 +329,31 @@ export class CastleSprite extends SpriteAnimator {
     }
 }
 
-// Church with bell tower
+// Church with bell tower - 9x10
 const churchFrames = [
     `
-....y....
 ...y5y...
 ..y555y..
 .y55555y.
 ..55555..
-...555...
-...555...
 ..55555..
 .5555555.
 .5ww5ww5.
 .5ww5ww5.
 .5555555.
-55555555555
+555555555
 `,
     `
-....5....
-...y5y...
+...555...
 ..y555y..
 .y55555y.
 ..55555..
-...555...
-...555...
 ..55555..
 .5555555.
 .5ww5ww5.
 .5ww5ww5.
 .5555555.
-55555555555
+555555555
 `
 ];
 
@@ -416,7 +377,7 @@ export class ChurchSprite extends SpriteAnimator {
     }
 
     update(frameNr: number, boxWidth: number, boxHeight: number) {
-        // Animate bell (subtle change)
+        // Animate bell
         if (frameNr % 120 === 0) {
             this.currentFrame = (this.currentFrame + 1) % this.frames.length;
         }
@@ -430,46 +391,40 @@ export class ChurchSprite extends SpriteAnimator {
     }
 }
 
-// Tower with blinking light
+// Tower with blinking light - 7x9
 const towerFrames = [
     `
-....r....
-...555...
-...555...
-...555...
-..55555..
-..55555..
-..55555..
-..55555..
-.5555555.
-.5555555.
-555555555
+...r...
+..555..
+..555..
+.55555.
+.55555.
+.55555.
+5555555
+5555555
+5555555
 `,
     `
-....y....
-...555...
-...555...
-...555...
-..55555..
-..55555..
-..55555..
-..55555..
-.5555555.
-.5555555.
-555555555
+...y...
+..555..
+..555..
+.55555.
+.55555.
+.55555.
+5555555
+5555555
+5555555
 `,
     `
-.........
-...555...
-...555...
-...555...
-..55555..
-..55555..
-..55555..
-..55555..
-.5555555.
-.5555555.
-555555555
+.......
+..555..
+..555..
+.55555.
+.55555.
+.55555.
+5555555
+5555555
+5555555
 `
 ];
 

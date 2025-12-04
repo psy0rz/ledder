@@ -2,16 +2,16 @@ import SpriteAnimator from "./SpriteAnimator.js"
 import type { SpriteState } from "./SpriteAnimator.js"
 
 const tallPlantSprite = `
+..GG..
+.GGGG.
+.gggg.
+.gggg.
+.G22G.
 ..gg..
-.gggg.
-.gggg.
-.gggg.
-.gggg.
+.gg2g.
+.g22g.
 ..gg..
-.gggg.
-.gggg.
-..gg..
-.gggg.
+.2gg2.
 `;
 
 export class TallPlantSprite extends SpriteAnimator {
@@ -41,12 +41,12 @@ export class TallPlantSprite extends SpriteAnimator {
 }
 
 const shortPlantSprite = `
-.ggg.
-ggggg
-.ggg.
-ggggg
-.ggg.
-..g..
+.GGG.
+Gg2gG
+.g2g.
+g222g
+.2g2.
+..2..
 `;
 
 export class ShortPlantSprite extends SpriteAnimator {
@@ -77,12 +77,12 @@ export class ShortPlantSprite extends SpriteAnimator {
 
 // Bush sprite - round and bushy
 const bushSprite = `
-..ggg..
-.ggggg.
-ggggggg
-ggggggg
-.ggggg.
-..ggg..
+..GGG..
+.GgggG.
+Gg222gG
+G22g22G
+.2ggg2.
+..222..
 `;
 
 export class BushSprite extends SpriteAnimator {
@@ -113,9 +113,9 @@ export class BushSprite extends SpriteAnimator {
 
 // Small bush
 const smallBushSprite = `
-.ggg.
-ggggg
-.ggg.
+.G2G.
+2ggg2
+.222.
 `;
 
 export class SmallBushSprite extends SpriteAnimator {
@@ -146,15 +146,15 @@ export class SmallBushSprite extends SpriteAnimator {
 
 // Pine tree - classic triangle shape
 const pineTreeSprite = `
-...g...
-..ggg..
-.ggggg.
-.ggggg.
-..ggg..
-.ggggg.
-ggggggg
-ggggggg
-..555..
+...G...
+..GgG..
+.Gg2gG.
+.g222g.
+..2g2..
+.2ggg2.
+22ggg22
+2g222g2
+..777..
 ..555..
 `;
 
@@ -177,11 +177,11 @@ export class PineTreeSprite extends SpriteAnimator {
 
 // Small pine tree
 const smallPineSprite = `
-..g..
-.ggg.
-ggggg
-.ggg.
-..5..
+..G..
+.G2G.
+2g2g2
+.222.
+..7..
 ..5..
 `;
 
@@ -204,13 +204,13 @@ export class SmallPineSprite extends SpriteAnimator {
 
 // Oak tree - round crown
 const oakTreeSprite = `
-..ggggg..
-.ggggggg.
-ggggggggg
-ggggggggg
-.ggggggg.
-...555...
-...555...
+..GgggG..
+.Gg222gG.
+G2g2g2g2G
+2gg2G2gg2
+.2ggggg2.
+...777...
+...575...
 ...555...
 `;
 
@@ -233,10 +233,10 @@ export class OakTreeSprite extends SpriteAnimator {
 
 // Small oak tree
 const smallOakSprite = `
-.ggggg.
-ggggggg
-ggggggg
-..555..
+.Gg2gG.
+G2ggg2G
+22g2g22
+..757..
 ..555..
 `;
 
@@ -259,9 +259,9 @@ export class SmallOakSprite extends SpriteAnimator {
 
 // Grass tuft - very small
 const grassSprite = `
-.g.g.
-gggg.
-.ggg.
+.G.2.
+2gg2.
+.g2g.
 `;
 
 export class GrassSprite extends SpriteAnimator {
@@ -292,9 +292,9 @@ export class GrassSprite extends SpriteAnimator {
 
 // Flower sprite
 const flowerSprite = `
-.r.
-rrr
-.g.
+.y.
+ryr
+.2.
 .g.
 `;
 
@@ -326,12 +326,12 @@ export class FlowerSprite extends SpriteAnimator {
 
 // Cactus - doesn't sway
 const cactusSprite = `
-..g..
-.ggg.
-gggg.
-.ggg.
-.ggg.
-.ggg.
+..2..
+.2g2.
+g2g2.
+.gg2.
+.2gg.
+.g2g.
 `;
 
 export class CactusSprite extends SpriteAnimator {
@@ -353,11 +353,11 @@ export class CactusSprite extends SpriteAnimator {
 
 // Fern - delicate and detailed
 const fernSprite = `
-.g.g.g.
-gggggg.
-.ggggg.
-..ggg..
-...g...
+.G.2.G.
+2gggg2.
+.2g2g2.
+..222..
+...2...
 `;
 
 export class FernSprite extends SpriteAnimator {

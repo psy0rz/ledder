@@ -37,7 +37,7 @@
     "enabled": true
    },
    "Enable": {
-    "enabled": true
+    "enabled": false
    },
    "Tropical Fish": {
     "Count (0=disabled)": {
@@ -81,10 +81,10 @@
    },
    "Tiny Fish School": {
     "Enable": {
-     "enabled": false
+     "enabled": true
     },
     "School size": {
-     "value": 5
+     "value": 8
     },
     "Speed multiplier": {
      "value": 3
@@ -141,7 +141,7 @@
    },
    "Tall Plants": {
     "Count (0=disabled)": {
-     "value": 0
+     "value": 2
     },
     "Enabled": {
      "enabled": true
@@ -149,7 +149,7 @@
    },
    "Short Plants": {
     "Count (0=disabled)": {
-     "value": 0
+     "value": 2
     },
     "Enabled": {
      "enabled": true
@@ -157,7 +157,7 @@
    },
    "Bushes": {
     "Count (0=disabled)": {
-     "value": 0
+     "value": 3
     },
     "Enabled": {
      "enabled": true
@@ -165,7 +165,7 @@
    },
    "Grass": {
     "Count (0=disabled)": {
-     "value": 0
+     "value": 4
     },
     "Enabled": {
      "enabled": true
@@ -173,7 +173,7 @@
    },
    "Flowers": {
     "Count (0=disabled)": {
-     "value": 0
+     "value": 3
     },
     "Enabled": {
      "enabled": true
@@ -181,7 +181,7 @@
    },
    "Ferns": {
     "Count (0=disabled)": {
-     "value": 0
+     "value": 2
     },
     "Enabled": {
      "enabled": true
@@ -189,7 +189,7 @@
    },
    "Trees": {
     "Count (0=disabled)": {
-     "value": 0
+     "value": 2
     },
     "Enabled": {
      "enabled": true
@@ -197,7 +197,7 @@
    },
    "Cactus": {
     "Count (0=disabled)": {
-     "value": 1
+     "value": 2
     },
     "Enabled": {
      "enabled": true
@@ -305,7 +305,7 @@
    },
    "Clouds": {
     "Enable": {
-     "enabled": false
+     "enabled": true
     },
     "Count": {
      "value": 3
@@ -357,10 +357,10 @@
      "enabled": false
     },
     "Count": {
-     "value": 8
+     "value": 20
     },
     "Speed multiplier": {
-     "value": 0.2
+     "value": 1
     },
     "Far layer %": {
      "value": 40
@@ -377,10 +377,10 @@
    },
    "Snow": {
     "Enable": {
-     "enabled": false
+     "enabled": true
     },
     "Count": {
-     "value": 20
+     "value": 38
     },
     "Speed multiplier": {
      "value": 1
@@ -398,13 +398,13 @@
      "enabled": true
     },
     "Ground layer": {
-     "enabled": false
+     "enabled": true
     },
     "Ground height (px)": {
-     "value": 2
+     "value": 4
     },
     "Ground Y position %": {
-     "value": 95
+     "value": 94
     }
    },
    "Lightning": {
@@ -446,10 +446,10 @@
      "enabled": false
     },
     "X Position": {
-     "value": 3
+     "value": 10
     },
     "Y Position": {
-     "value": 17
+     "value": 10
     },
     "Enabled": {
      "enabled": true
@@ -559,7 +559,7 @@
     "enabled": true
    },
    "Image URL": {
-    "text": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZ_7Tz4RE5XAnbjP-1sA1oz9JQFq750A6JuQ&s"
+    "text": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTk2poOy8opirZSSGV5vKkvcnGlvkVtRBGIrkOES8cmbh0lX0w3dNl0EPwZe0svbawWeyU&usqp=CAU"
    },
    "Fit Mode": {
     "selected": "fill"
@@ -668,16 +668,16 @@
     "enabled": true
    },
    "Font": {
-    "selected": "ZX Sierra Quest"
+    "selected": "MSX"
    },
    "Text": {
-    "text": "Far out in the uncharted backwaters of the unfashionable end of the Western Spiral Arm of the Galaxy lies a small unregarded yellow sun.\n\nOrbiting this at a distance of roughly ninety-two million miles is an utterly insignificant little blue-green planet whose ape-descended life forms are so amazingly primitive that they still think digital watches are a pretty neat idea.\n\nThis planet has – or rather had – a problem, which was this: most of the people living on it were unhappy for pretty much of the time. Many solutions were suggested for this problem, but most of these were largely concerned with the movements of small green pieces of paper, which is odd because on the whole it wasn't the small green pieces of paper that were unhappy.\n\nAnd so the problem remained; lots of the people were mean, and most of them were miserable, even the ones with digital watches.\n\n==\nThe opening of 'The Hitchhiker's Guide to the Galaxy' by Douglas Adams"
+    "text": ""
    },
    "Max Width": {
     "value": 64
    },
    "Animation": {
-    "selected": "starwars"
+    "selected": "static"
    },
    "Animation Speed": {
     "value": 1
@@ -695,9 +695,9 @@
     "value": 32
    },
    "Color": {
-    "r": 233,
+    "r": 255,
     "g": 255,
-    "b": 126,
+    "b": 255,
     "a": 1
    },
    "Enabled": {
@@ -710,7 +710,7 @@
     "value": 50
    },
    "Y Position %": {
-    "value": 0
+    "value": 37
    },
    "Enable": {
     "enabled": true
@@ -727,19 +727,22 @@
     "Enable": {
      "enabled": true
     },
-    "Y Position %": {
-     "value": 80
+    "Y Position": {
+     "value": 0
     },
     "Speed": {
-     "value": -1.9000000000000001
+     "value": 0.3
     },
     "Enabled": {
      "enabled": true
+    },
+    "Y Position %": {
+     "value": 25
     }
    },
    "Reindeer": {
     "Count (0=lights only)": {
-     "value": 1
+     "value": 2
     },
     "Enabled": {
      "enabled": true
@@ -755,22 +758,22 @@
    },
    "Galaga": {
     "Enable": {
-     "enabled": false
+     "enabled": true
     },
     "Boss count": {
-     "value": 2
+     "value": 1
     },
     "Butterfly count": {
-     "value": 3
+     "value": 1
     },
     "Bee count": {
-     "value": 3
+     "value": 1
     },
     "Speed": {
-     "value": 0.5
+     "value": 0.6000000000000001
     },
     "Y Position %": {
-     "value": 20
+     "value": 0
     },
     "Enabled": {
      "enabled": true
@@ -778,22 +781,22 @@
    },
    "Space Invaders": {
     "Enable": {
-     "enabled": false
+     "enabled": true
     },
     "Squid count": {
-     "value": 5
+     "value": 1
     },
     "Crab count": {
-     "value": 5
+     "value": 1
     },
     "Octopus count": {
-     "value": 5
+     "value": 1
     },
     "Speed": {
-     "value": 0.8
+     "value": 0.2
     },
     "Y Position %": {
-     "value": 10
+     "value": 0
     },
     "Enabled": {
      "enabled": true
@@ -801,28 +804,31 @@
    },
    "Arkanoid": {
     "Enable": {
-     "enabled": false
+     "enabled": true
     },
     "Paddle count": {
-     "value": 1
+     "value": 0
     },
     "Ball count": {
-     "value": 2
+     "value": 0
     },
     "Paddle speed": {
      "value": 0.8
     },
-    "Ball X direction": {
-     "value": 0.6
-    },
-    "Ball Y direction": {
-     "value": -0.8
+    "Ball speed": {
+     "value": 0.8
     },
     "Paddle Y %": {
-     "value": 90
+     "value": 100
     },
     "Enabled": {
      "enabled": true
+    },
+    "Ball X direction": {
+     "value": 0.9
+    },
+    "Ball Y direction": {
+     "value": -0.9
     }
    },
    "Enabled": {
@@ -835,7 +841,7 @@
    },
    "Anti-Aliasing": {
     "Enable": {
-     "enabled": true
+     "enabled": false
     },
     "Enabled": {
      "enabled": true
@@ -843,7 +849,7 @@
    },
    "Motion Blur": {
     "Enable": {
-     "enabled": true
+     "enabled": false
     },
     "Amount": {
      "value": 3
@@ -857,7 +863,7 @@
      "enabled": false
     },
     "Intensity": {
-     "value": 1
+     "value": 5
     },
     "Speed": {
      "value": 1
@@ -868,10 +874,10 @@
    },
    "Color Cycling": {
     "Enable": {
-     "enabled": false
+     "enabled": true
     },
     "Speed": {
-     "value": 0.1
+     "value": 1
     },
     "Enabled": {
      "enabled": true
@@ -882,10 +888,10 @@
      "enabled": false
     },
     "Intensity": {
-     "value": 3
+     "value": 0
     },
     "Speed": {
-     "value": 2.8000000000000003
+     "value": 5
     },
     "Enabled": {
      "enabled": true
@@ -897,11 +903,11 @@
   },
   "Text Effects 📝": {
    "Enable Text FX": {
-    "enabled": true
+    "enabled": false
    },
    "Motion-Adaptive AA": {
     "Enable": {
-     "enabled": false
+     "enabled": true
     },
     "Enabled": {
      "enabled": true
@@ -939,7 +945,7 @@
    },
    "Glow ✨": {
     "Enable": {
-     "enabled": true
+     "enabled": false
     },
     "Intensity": {
      "value": 2
@@ -950,7 +956,7 @@
    },
    "Drop Shadow": {
     "Enable": {
-     "enabled": true
+     "enabled": false
     },
     "Offset X": {
      "value": 1
@@ -987,10 +993,10 @@
      "enabled": false
     },
     "Palette": {
-     "selected": "fire"
+     "selected": "rainbow"
     },
     "Speed": {
-     "value": 0.5
+     "value": 1
     },
     "Scale": {
      "value": 1

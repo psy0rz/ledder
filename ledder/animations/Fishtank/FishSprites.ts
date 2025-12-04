@@ -294,12 +294,66 @@ export class TinyFishSchoolSprite extends SpriteAnimator {
     }
 }
 
+// Pot of Petunias - Hitchhiker's Guide to the Galaxy reference
+// A falling potted plant thinking "Oh no, not again"
+const potOfPetuniasSprite = `
+.rrrr.
+rrrrrr
+rrrrrr
+.5555.
+.5555.
+.5555.
+..55..
+`;
+
+export class PotOfPetuniasSprite extends SpriteAnimator {
+    private baseX: number;
+    private fallSpeed: number = 0.15;
+    private rotationPhase: number = 0;
+
+    constructor(x: number, y: number) {
+        const initialState: SpriteState = {
+            x,
+            y,
+            velocityY: 0
+        };
+
+        super(potOfPetuniasSprite, initialState, {
+            bounceOnEdges: false,
+            wrapAround: false
+        });
+
+        this.baseX = x;
+    }
+
+    update(frameNr: number, boxWidth: number, boxHeight: number) {
+        // Falling with gravity
+        if (this.state.velocityY !== undefined) {
+            this.state.velocityY += 0.005; // Acceleration
+            this.state.velocityY = Math.min(this.state.velocityY, this.fallSpeed); // Terminal velocity
+        }
+
+        // Gentle tumbling motion
+        this.rotationPhase = (this.rotationPhase + 0.03) % 6.28;
+        this.state.x = this.baseX + Math.sin(this.rotationPhase) * 0.5;
+
+        super.update(frameNr, boxWidth, boxHeight);
+
+        // Reset to top when it falls off bottom (loop the fall)
+        if (this.state.y > boxHeight + 10) {
+            this.state.y = -10;
+            this.state.velocityY = 0;
+        }
+    }
+}
+
 export const FishSprites = {
     TropicalFish: TropicalFishSprite,
     Goldfish: GoldfishSprite,
     Clownfish: ClownfishSprite,
     Angelfish: AngelfishSprite,
     NeonTetra: NeonTetraSprite,
-    TinyFishSchool: TinyFishSchoolSprite
+    TinyFishSchool: TinyFishSchoolSprite,
+    PotOfPetunias: PotOfPetuniasSprite
 };
 

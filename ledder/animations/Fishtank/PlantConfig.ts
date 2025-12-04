@@ -60,26 +60,27 @@ export class PlantConfig {
             return;
         }
         
-        // Add each plant type directly based on count
-        const addPlant = (PlantClass: any, count: number) => {
+        // Add each plant type with correct bottom positioning based on sprite height
+        const addPlant = (PlantClass: any, count: number, spriteHeight: number) => {
             for (let i = 0; i < count; i++) {
                 const plantX = Math.random() * box.width();
-                const plantY = box.height() - 10;
+                const plantY = box.height() - spriteHeight; // Position bottom at display bottom
                 plantManager.addSprite(new PlantClass(plantX, plantY));
             }
         };
         
-        addPlant(PlantSprites.TallPlant, config.plantTall.value);
-        addPlant(PlantSprites.ShortPlant, config.plantShort.value);
-        addPlant(PlantSprites.Bush, config.plantBush.value);
-        addPlant(PlantSprites.SmallBush, config.plantBush.value);
-        addPlant(PlantSprites.Grass, config.plantGrass.value);
-        addPlant(PlantSprites.Flower, config.plantFlower.value);
-        addPlant(PlantSprites.Fern, config.plantFern.value);
-        addPlant(PlantSprites.PineTree, config.plantTree.value);
-        addPlant(PlantSprites.SmallPine, config.plantTree.value);
-        addPlant(PlantSprites.OakTree, config.plantTree.value);
-        addPlant(PlantSprites.SmallOak, config.plantTree.value);
-        addPlant(PlantSprites.Cactus, config.plantCactus.value);
+        // Sprite heights calculated from their pixel art
+        addPlant(PlantSprites.TallPlant, config.plantTall.value, 10);      // 10 lines tall
+        addPlant(PlantSprites.ShortPlant, config.plantShort.value, 6);     // 6 lines tall
+        addPlant(PlantSprites.Bush, config.plantBush.value, 6);            // 6 lines tall
+        addPlant(PlantSprites.SmallBush, config.plantBush.value, 3);       // 3 lines tall
+        addPlant(PlantSprites.Grass, config.plantGrass.value, 3);          // 3 lines tall
+        addPlant(PlantSprites.Flower, config.plantFlower.value, 4);        // 4 lines tall
+        addPlant(PlantSprites.Fern, config.plantFern.value, 5);            // 5 lines tall
+        addPlant(PlantSprites.PineTree, config.plantTree.value, 10);       // 10 lines tall
+        addPlant(PlantSprites.SmallPine, config.plantTree.value, 6);       // 6 lines tall
+        addPlant(PlantSprites.OakTree, config.plantTree.value, 8);         // 8 lines tall
+        addPlant(PlantSprites.SmallOak, config.plantTree.value, 5);        // 5 lines tall
+        addPlant(PlantSprites.Cactus, config.plantCactus.value, 6);        // 6 lines tall
     }
 }

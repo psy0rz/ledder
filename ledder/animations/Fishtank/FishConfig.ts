@@ -32,6 +32,9 @@ export class FishConfig {
         const neonTetraGroup = this.controls.group("Neon Tetra", true, true);
         const fishNeonTetra = neonTetraGroup.value("Count (0=disabled)", 3, 0, 20, 1);
         
+        const potOfPetuniasGroup = this.controls.group("Pot of Petunias 🌺", true, true);
+        const fishPotOfPetunias = potOfPetuniasGroup.value("Count (0=disabled)", 0, 0, 5, 1);
+        
         // Tiny fish school
         const schoolGroup = this.controls.group("Tiny Fish School", true, true);
         const enableSchool = schoolGroup.switch("Enable", true);
@@ -46,6 +49,7 @@ export class FishConfig {
             fishClownfish,
             fishAngelfish,
             fishNeonTetra,
+            fishPotOfPetunias,
             enableSchool,
             schoolSize,
             schoolSpeedMultiplier
@@ -84,6 +88,13 @@ export class FishConfig {
         addFish(FishSprites.Clownfish, config.fishClownfish.value);
         addFish(FishSprites.Angelfish, config.fishAngelfish.value);
         addFish(FishSprites.NeonTetra, config.fishNeonTetra.value);
+        
+        // Add Pot of Petunias (special case - they fall, not swim)
+        for (let i = 0; i < config.fishPotOfPetunias.value; i++) {
+            const potX = Math.random() * (box.width() - 8);
+            const potY = -10 - Math.random() * 20; // Start above screen
+            fishManager.addSprite(new FishSprites.PotOfPetunias(potX, potY));
+        }
         
         // Add tiny fish school with formation
         if (config.enableSchool.enabled && schoolSize > 0) {

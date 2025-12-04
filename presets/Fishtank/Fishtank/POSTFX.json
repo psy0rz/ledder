@@ -7,7 +7,7 @@
     "enabled": true
    },
    "Large fish count": {
-    "value": 0
+    "value": 2
    },
    "Speed multiplier": {
     "value": 1
@@ -28,7 +28,7 @@
     "value": 20
    },
    "Tiny fish school size": {
-    "value": 4
+    "value": 30
    },
    "School speed multiplier": {
     "value": 2.3000000000000003
@@ -41,7 +41,7 @@
    },
    "Tropical Fish": {
     "Count (0=disabled)": {
-     "value": 0
+     "value": 1
     },
     "Enabled": {
      "enabled": true
@@ -49,7 +49,7 @@
    },
    "Goldfish": {
     "Count (0=disabled)": {
-     "value": 0
+     "value": 1
     },
     "Enabled": {
      "enabled": true
@@ -57,7 +57,7 @@
    },
    "Clownfish": {
     "Count (0=disabled)": {
-     "value": 0
+     "value": 1
     },
     "Enabled": {
      "enabled": true
@@ -65,7 +65,7 @@
    },
    "Angelfish": {
     "Count (0=disabled)": {
-     "value": 0
+     "value": 1
     },
     "Enabled": {
      "enabled": true
@@ -73,7 +73,7 @@
    },
    "Neon Tetra": {
     "Count (0=disabled)": {
-     "value": 0
+     "value": 1
     },
     "Enabled": {
      "enabled": true
@@ -81,21 +81,13 @@
    },
    "Tiny Fish School": {
     "Enable": {
-     "enabled": false
+     "enabled": true
     },
     "School size": {
-     "value": 5
+     "value": 29
     },
     "Speed multiplier": {
-     "value": 3
-    },
-    "Enabled": {
-     "enabled": true
-    }
-   },
-   "Pot of Petunias 🌺": {
-    "Count (0=disabled)": {
-     "value": 0
+     "value": 1
     },
     "Enabled": {
      "enabled": true
@@ -141,7 +133,7 @@
    },
    "Tall Plants": {
     "Count (0=disabled)": {
-     "value": 0
+     "value": 2
     },
     "Enabled": {
      "enabled": true
@@ -149,7 +141,7 @@
    },
    "Short Plants": {
     "Count (0=disabled)": {
-     "value": 0
+     "value": 1
     },
     "Enabled": {
      "enabled": true
@@ -157,7 +149,7 @@
    },
    "Bushes": {
     "Count (0=disabled)": {
-     "value": 0
+     "value": 1
     },
     "Enabled": {
      "enabled": true
@@ -165,7 +157,7 @@
    },
    "Grass": {
     "Count (0=disabled)": {
-     "value": 0
+     "value": 4
     },
     "Enabled": {
      "enabled": true
@@ -173,7 +165,7 @@
    },
    "Flowers": {
     "Count (0=disabled)": {
-     "value": 0
+     "value": 3
     },
     "Enabled": {
      "enabled": true
@@ -181,7 +173,7 @@
    },
    "Ferns": {
     "Count (0=disabled)": {
-     "value": 0
+     "value": 2
     },
     "Enabled": {
      "enabled": true
@@ -189,7 +181,7 @@
    },
    "Trees": {
     "Count (0=disabled)": {
-     "value": 0
+     "value": 2
     },
     "Enabled": {
      "enabled": true
@@ -197,7 +189,7 @@
    },
    "Cactus": {
     "Count (0=disabled)": {
-     "value": 1
+     "value": 2
     },
     "Enabled": {
      "enabled": true
@@ -206,22 +198,22 @@
   },
   "Environment Effects": {
    "Enable Effects": {
-    "enabled": true
+    "enabled": false
    },
    "Bubbles count": {
     "value": 1
    },
    "Bubble rise speed": {
-    "value": 0.1
+    "value": 1
    },
    "Clouds count": {
-    "value": 3
+    "value": 0
    },
    "Cloud drift speed": {
     "value": 0.05
    },
    "Show Sun": {
-    "enabled": true
+    "enabled": false
    },
    "Show Moon": {
     "enabled": false
@@ -230,7 +222,7 @@
     "value": 0
    },
    "Show Rainbow": {
-    "enabled": true
+    "enabled": false
    },
    "Rain count": {
     "value": 1
@@ -248,7 +240,7 @@
     "value": 20
    },
    "Snow count": {
-    "value": 25
+    "value": 0
    },
    "Snow speed multiplier": {
     "value": 1
@@ -263,28 +255,10 @@
     "value": 20
    },
    "Lightning bolts": {
-    "value": 1
+    "value": 0
    },
    "Enabled": {
     "enabled": true
-   },
-   "Enable Bubbles": {
-    "enabled": false
-   },
-   "Enable Clouds": {
-    "enabled": true
-   },
-   "Enable Stars": {
-    "enabled": false
-   },
-   "Enable Rain": {
-    "enabled": false
-   },
-   "Enable Snow": {
-    "enabled": true
-   },
-   "Enable Lightning": {
-    "enabled": false
    },
    "Enable": {
     "enabled": false
@@ -319,7 +293,7 @@
    },
    "Sun": {
     "Enable": {
-     "enabled": true
+     "enabled": false
     },
     "Enabled": {
      "enabled": true
@@ -346,7 +320,7 @@
    },
    "Rainbow": {
     "Enable": {
-     "enabled": false
+     "enabled": true
     },
     "Enabled": {
      "enabled": true
@@ -357,10 +331,10 @@
      "enabled": false
     },
     "Count": {
-     "value": 8
+     "value": 20
     },
     "Speed multiplier": {
-     "value": 0.2
+     "value": 1
     },
     "Far layer %": {
      "value": 40
@@ -424,19 +398,13 @@
     "enabled": false
    },
    "Building Type": {
-    "selected": "tower"
+    "selected": "factory"
    },
    "Show Building": {
-    "enabled": true
+    "enabled": false
    },
    "Enabled": {
     "enabled": true
-   },
-   "X Position": {
-    "value": 10
-   },
-   "Y Position": {
-    "value": 17
    },
    "Enable": {
     "enabled": false
@@ -446,10 +414,10 @@
      "enabled": false
     },
     "X Position": {
-     "value": 3
+     "value": 10
     },
     "Y Position": {
-     "value": 17
+     "value": 10
     },
     "Enabled": {
      "enabled": true
@@ -502,10 +470,10 @@
      "enabled": false
     },
     "X Position": {
-     "value": 10
+     "value": 43
     },
     "Y Position": {
-     "value": 10
+     "value": 53
     },
     "Enabled": {
      "enabled": true
@@ -559,10 +527,10 @@
     "enabled": true
    },
    "Image URL": {
-    "text": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZ_7Tz4RE5XAnbjP-1sA1oz9JQFq750A6JuQ&s"
+    "text": "https://thumbs.dreamstime.com/b/pixel-art-underwater-scene-featuring-ruins-coral-fish-blue-fantasy-landscape-digital-illustration-380525322.jpg"
    },
    "Fit Mode": {
-    "selected": "fill"
+    "selected": "cover"
    },
    "Opacity": {
     "value": 0.5
@@ -588,7 +556,7 @@
     "selected": "manual"
    },
    "Text Content": {
-    "text": "Far out in the uncharted backwaters of the unfashionable end of the Western Spiral Arm of the Galaxy lies a small unregarded yellow sun.\n\nOrbiting this at a distance of roughly ninety-two million miles is an utterly insignificant little blue-green planet whose ape-descended life forms are so amazingly primitive that they still think digital watches are a pretty neat idea.\n\nThis planet has – or rather had – a problem, which was this: most of the people living on it were unhappy for pretty much of the time. Many solutions were suggested for this problem, but most of these were largely concerned with the movements of small green pieces of paper, which is odd because on the whole it wasn't the small green pieces of paper that were unhappy.\n\nAnd so the problem remained; lots of the people were mean, and most of them were miserable, even the ones with digital watches."
+    "text": "Fishtank"
    },
    "RSS/JSON URL": {
     "text": ""
@@ -597,7 +565,7 @@
     "value": 300
    },
    "Font": {
-    "selected": "ZX Sierra Quest"
+    "selected": "Pixel-Gosub"
    },
    "Font height": {
     "value": 0
@@ -612,28 +580,28 @@
     "a": 1
    },
    "Animation Type": {
-    "selected": "scroll-vertical"
+    "selected": "wave"
    },
    "Animation Speed": {
-    "value": 1.2000000000000002
+    "value": 0.1
    },
    "Enabled": {
     "enabled": true
    },
    "X Position": {
-    "value": 24
+    "value": 0
    },
    "Y Position": {
     "value": 0
    },
    "Horizontal Align": {
-    "selected": "left"
+    "selected": "center"
    },
    "Vertical Align": {
-    "selected": "top"
+    "selected": "center"
    },
    "Text Scale": {
-    "value": 4.2
+    "value": 1
    },
    "Anti-aliasing": {
     "enabled": true
@@ -642,25 +610,25 @@
     "enabled": true
    },
    "Text": {
-    "text": "Far out in the uncharted backwaters of the unfashionable end of the Western Spiral Arm of the Galaxy lies a small unregarded yellow sun.\n\nOrbiting this at a distance of roughly ninety-two million miles is an utterly insignificant little blue-green planet whose ape-descended life forms are so amazingly primitive that they still think digital watches are a pretty neat idea.\n\nThis planet has – or rather had – a problem, which was this: most of the people living on it were unhappy for pretty much of the time. Many solutions were suggested for this problem, but most of these were largely concerned with the movements of small green pieces of paper, which is odd because on the whole it wasn't the small green pieces of paper that were unhappy.\n\nAnd so the problem remained; lots of the people were mean, and most of them were miserable, even the ones with digital watches."
+    "text": "Fishtank"
    },
    "Max Width %": {
     "value": 90
    },
    "Animation": {
-    "selected": "scroll-horizontal"
+    "selected": "wave"
    },
    "X Position %": {
-    "value": 2
+    "value": 50
    },
    "Y Position %": {
-    "value": 49
+    "value": 50
    },
    "Color": {
-    "r": 156,
-    "g": 255,
-    "b": 0,
-    "a": 0.49
+    "r": 175,
+    "g": 129,
+    "b": 255,
+    "a": 1
    }
   },
   "Text Display": {
@@ -671,52 +639,40 @@
     "selected": "ZX Sierra Quest"
    },
    "Text": {
-    "text": "Far out in the uncharted backwaters of the unfashionable end of the Western Spiral Arm of the Galaxy lies a small unregarded yellow sun.\n\nOrbiting this at a distance of roughly ninety-two million miles is an utterly insignificant little blue-green planet whose ape-descended life forms are so amazingly primitive that they still think digital watches are a pretty neat idea.\n\nThis planet has – or rather had – a problem, which was this: most of the people living on it were unhappy for pretty much of the time. Many solutions were suggested for this problem, but most of these were largely concerned with the movements of small green pieces of paper, which is odd because on the whole it wasn't the small green pieces of paper that were unhappy.\n\nAnd so the problem remained; lots of the people were mean, and most of them were miserable, even the ones with digital watches.\n\n==\nThe opening of 'The Hitchhiker's Guide to the Galaxy' by Douglas Adams"
+    "text": "Background antialiasing, smooth colorcycling, tunnel & warp FX"
    },
-   "Max Width": {
-    "value": 64
+   "Max Width %": {
+    "value": 90
    },
    "Animation": {
-    "selected": "starwars"
+    "selected": "scroll-horizontal"
    },
    "Animation Speed": {
-    "value": 1
+    "value": 1.1
    },
    "Horizontal Align": {
     "selected": "center"
    },
    "Vertical Align": {
-    "selected": "top"
-   },
-   "X Position": {
-    "value": 0
-   },
-   "Y Position": {
-    "value": 32
-   },
-   "Color": {
-    "r": 233,
-    "g": 255,
-    "b": 126,
-    "a": 1
-   },
-   "Enabled": {
-    "enabled": true
-   },
-   "Max Width %": {
-    "value": 100
+    "selected": "center"
    },
    "X Position %": {
     "value": 50
    },
    "Y Position %": {
-    "value": 0
+    "value": 6
+   },
+   "Color": {
+    "r": 255,
+    "g": 255,
+    "b": 255,
+    "a": 1
+   },
+   "Enabled": {
+    "enabled": true
    },
    "Enable": {
     "enabled": true
-   },
-   "Text Size": {
-    "value": 1
    }
   },
   "Christmas 🎄": {
@@ -731,7 +687,7 @@
      "value": 80
     },
     "Speed": {
-     "value": -1.9000000000000001
+     "value": -0.3
     },
     "Enabled": {
      "enabled": true
@@ -751,7 +707,7 @@
   },
   "Retro Games 🎮": {
    "Enable": {
-    "enabled": true
+    "enabled": false
    },
    "Galaga": {
     "Enable": {
@@ -781,16 +737,16 @@
      "enabled": false
     },
     "Squid count": {
-     "value": 5
+     "value": 2
     },
     "Crab count": {
-     "value": 5
+     "value": 2
     },
     "Octopus count": {
-     "value": 5
+     "value": 2
     },
     "Speed": {
-     "value": 0.8
+     "value": 0.2
     },
     "Y Position %": {
      "value": 10
@@ -801,7 +757,7 @@
    },
    "Arkanoid": {
     "Enable": {
-     "enabled": false
+     "enabled": true
     },
     "Paddle count": {
      "value": 1
@@ -841,37 +797,12 @@
      "enabled": true
     }
    },
-   "Motion Blur": {
-    "Enable": {
-     "enabled": true
-    },
-    "Amount": {
-     "value": 3
-    },
-    "Enabled": {
-     "enabled": true
-    }
-   },
-   "Fire Effect 🔥": {
-    "Enable": {
-     "enabled": false
-    },
-    "Intensity": {
-     "value": 1
-    },
-    "Speed": {
-     "value": 1
-    },
-    "Enabled": {
-     "enabled": true
-    }
-   },
    "Color Cycling": {
     "Enable": {
-     "enabled": false
+     "enabled": true
     },
     "Speed": {
-     "value": 0.1
+     "value": 1
     },
     "Enabled": {
      "enabled": true
@@ -882,123 +813,9 @@
      "enabled": false
     },
     "Intensity": {
-     "value": 3
+     "value": 5
     },
     "Speed": {
-     "value": 2.8000000000000003
-    },
-    "Enabled": {
-     "enabled": true
-    }
-   },
-   "Enabled": {
-    "enabled": true
-   }
-  },
-  "Text Effects 📝": {
-   "Enable Text FX": {
-    "enabled": true
-   },
-   "Motion-Adaptive AA": {
-    "Enable": {
-     "enabled": false
-    },
-    "Enabled": {
-     "enabled": true
-    }
-   },
-   "Motion Blur 💨": {
-    "Enable": {
-     "enabled": false
-    },
-    "Amount": {
-     "value": 3
-    },
-    "Enabled": {
-     "enabled": true
-    }
-   },
-   "Subpixel Rendering": {
-    "Enable": {
-     "enabled": false
-    },
-    "Enabled": {
-     "enabled": true
-    }
-   },
-   "Sharpen": {
-    "Enable": {
-     "enabled": false
-    },
-    "Amount": {
-     "value": 0.3
-    },
-    "Enabled": {
-     "enabled": true
-    }
-   },
-   "Glow ✨": {
-    "Enable": {
-     "enabled": true
-    },
-    "Intensity": {
-     "value": 2
-    },
-    "Enabled": {
-     "enabled": true
-    }
-   },
-   "Drop Shadow": {
-    "Enable": {
-     "enabled": true
-    },
-    "Offset X": {
-     "value": 1
-    },
-    "Offset Y": {
-     "value": 1
-    },
-    "Enabled": {
-     "enabled": true
-    }
-   },
-   "Flames 🔥": {
-    "Enable": {
-     "enabled": false
-    },
-    "Number of Flames": {
-     "value": 20
-    },
-    "Flame Height %": {
-     "value": 50
-    },
-    "Intensity": {
-     "value": 1
-    },
-    "Wildness": {
-     "value": 2
-    },
-    "Enabled": {
-     "enabled": true
-    }
-   },
-   "Plasma Colors 🌈": {
-    "Enable": {
-     "enabled": false
-    },
-    "Palette": {
-     "selected": "fire"
-    },
-    "Speed": {
-     "value": 0.5
-    },
-    "Scale": {
-     "value": 1
-    },
-    "Intensity": {
-     "value": 1
-    },
-    "Color Cycle Speed": {
      "value": 1
     },
     "Enabled": {

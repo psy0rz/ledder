@@ -50,6 +50,7 @@ export class TextSprite extends SpriteAnimator {
     protected maxWidth: number;
     protected hAlign: 'left' | 'center' | 'right';
     protected vAlign: 'top' | 'center' | 'bottom';
+    protected textSize: number;
     private boxWidth: number = 0;
     private boxHeight: number = 0;
     
@@ -72,7 +73,8 @@ export class TextSprite extends SpriteAnimator {
         animationSpeed: number = 1.0,
         maxWidth?: number,
         hAlign: 'left' | 'center' | 'right' = 'center',
-        vAlign: 'top' | 'center' | 'bottom' = 'center'
+        vAlign: 'top' | 'center' | 'bottom' = 'center',
+        textSize: number = 1.0
     ) {
         const initialState: TextSpriteState = {
             x,
@@ -101,6 +103,7 @@ export class TextSprite extends SpriteAnimator {
         this.maxWidth = maxWidth || 1000;
         this.hAlign = hAlign;
         this.vAlign = vAlign;
+        this.textSize = textSize;
         // Load font
         this.font.load();
         
@@ -124,14 +127,14 @@ export class TextSprite extends SpriteAnimator {
         if (this.boxWidth === 0 || this.boxHeight === 0) return; // Not initialized yet
         
         // Calculate total text dimensions with current scale
-        const scaledFontHeight = this.font.height;
-        const lineSpacing = 2;
+        const scaledFontHeight = this.font.height * this.textSize;
+        const lineSpacing = 2 * this.textSize;
         const totalHeight = this.textLines.length * (scaledFontHeight + lineSpacing);
         
         // Find longest line
         let maxLineWidth = 0;
         for (const line of this.textLines) {
-            const lineWidth = line.length * this.font.width;
+            const lineWidth = line.length * this.font.width * this.textSize;
             if (lineWidth > maxLineWidth) {
                 maxLineWidth = lineWidth;
             }
@@ -160,7 +163,7 @@ export class TextSprite extends SpriteAnimator {
         // Use boxWidth if available (after first update), otherwise fall back to maxWidth
         const displayWidth = this.boxWidth > 0 ? this.boxWidth : this.maxWidth;
         const effectiveWidth = displayWidth * 0.99;
-        const scaledFontWidth = this.font.width;
+        const scaledFontWidth = this.font.width * this.textSize;
         const maxCharsPerLine = Math.floor(effectiveWidth / scaledFontWidth);
         
         for (const paragraph of paragraphs) {
@@ -238,6 +241,10 @@ export class TextSprite extends SpriteAnimator {
             this.textLines = this.wrapText(this.textContent);
             // Auto-scale if text doesn't fit
             this.autoScaleToFit();
+            // Initialize Star Wars scroll position at bottom
+            if (this.animationType === TextAnimationType.StarWarsIntro) {
+                this.perspectiveY = boxHeight;
+            }
         }
         
         switch (this.animationType) {
@@ -272,8 +279,8 @@ export class TextSprite extends SpriteAnimator {
     private updateScrollHorizontal(frameNr: number, boxWidth: number) {
         // For horizontal scroll, use single line text for continuous scrolling
         const singleLineText = this.textContent.replace(/\n/g, ' ');
-        const textWidth = singleLineText.length * this.font.width;
-        const spacing = 20; // Spacing between loop iterations
+        const textWidth = singleLineText.length * this.font.width * this.textSize;
+        const spacing = 20 * this.textSize; // Spacing between loop iterations
         
         const scrollSpeed = this.animationSpeed * 0.5;
         this.scrollOffsetX -= scrollSpeed;
@@ -290,8 +297,8 @@ export class TextSprite extends SpriteAnimator {
         this.scrollOffsetY -= scrollSpeed;
         
         // Wrap around when text scrolls off top with scaled height
-        const scaledFontHeight = this.font.height;
-        const lineSpacing = 2;
+        const scaledFontHeight = this.font.height * this.textSize;
+        const lineSpacing = 2 * this.textSize;
         const totalHeight = this.textLines.length * (scaledFontHeight + lineSpacing);
         
         // Complete scroll: text enters from bottom, scrolls up, exits top, then wraps
@@ -301,23 +308,19 @@ export class TextSprite extends SpriteAnimator {
     }
 
     private updateStarWarsIntro(frameNr: number, boxHeight: number) {
-        // Scroll upward with perspective effect
-        const scrollSpeed = this.animationSpeed * 0.5;
+        // Scroll upward from bottom to top
+        const scrollSpeed = this.animationSpeed * 0.3;
         
-        // Calculate total text height to know when scrolling is complete
-        const totalTextHeight = this.textLines.length * (this.font.height + 3);
-        const vanishingPointY = -boxHeight * 0.5;
+        // Calculate total text height
+        const lineHeight = (this.font.height + 2) * this.textSize;
+        const totalTextHeight = this.textLines.length * lineHeight;
         
-        // Scroll until all text reaches vanishing point, then pause briefly before loop
-        const scrollEndPoint = vanishingPointY - totalTextHeight;
+        // Scroll upward
+        this.perspectiveY -= scrollSpeed;
         
-        if (this.perspectiveY > scrollEndPoint) {
-            this.perspectiveY -= scrollSpeed;
-        } else {
-            // Pause for a moment showing the end, then reset
-            if (frameNr % (60 * 3) === 0) { // 3 second pause at 60fps
-                this.perspectiveY = boxHeight;
-            }
+        // Reset when all text has scrolled past the top
+        if (this.perspectiveY < -totalTextHeight) {
+            this.perspectiveY = boxHeight;
         }
     }
 
@@ -398,9 +401,9 @@ export class TextSprite extends SpriteAnimator {
     }
 
     private renderStatic(pixels: PixelList) {
-        // Calculate total text height
-        const scaledFontHeight = this.font.height;
-        const lineSpacing = 2;
+        // Calculate total text height with scaling
+        const scaledFontHeight = this.font.height * this.textSize;
+        const lineSpacing = 2 * this.textSize;
         const totalTextHeight = this.textLines.length * (scaledFontHeight + lineSpacing) - lineSpacing;
         
         // Calculate starting Y based on vertical alignment
@@ -414,7 +417,7 @@ export class TextSprite extends SpriteAnimator {
         
         let yOffset = 0;
         for (const line of this.textLines) {
-            const lineWidth = line.length * this.font.width;
+            const lineWidth = line.length * this.font.width * this.textSize;
             
             // Calculate X position based on horizontal alignment
             let xPos = this.state.x;
@@ -430,7 +433,8 @@ export class TextSprite extends SpriteAnimator {
                 (yStart + yOffset + 0.5) | 0,
                 this.font,
                 line,
-                this.color
+                this.color,
+                this.textSize
             );
             pixels.add(text);
             yOffset += scaledFontHeight + lineSpacing;
@@ -441,10 +445,10 @@ export class TextSprite extends SpriteAnimator {
         // For horizontal scroll, use original unwrapped text on a single line
         // Replace newlines with spaces to keep it continuous
         const singleLineText = this.textContent.replace(/\n/g, ' ');
-        const textWidth = singleLineText.length * this.font.width;
+        const textWidth = singleLineText.length * this.font.width * this.textSize;
         
         // Center vertically
-        const scaledFontHeight = this.font.height;
+        const scaledFontHeight = this.font.height * this.textSize;
         let yPos = this.state.y;
         if (this.vAlign === 'center') {
             yPos = this.state.y + ((this.boxHeight - scaledFontHeight) / 2);
@@ -459,26 +463,28 @@ export class TextSprite extends SpriteAnimator {
             (yPos + 0.5) | 0,
             this.font,
             singleLineText,
-            this.color
+            this.color,
+            this.textSize
         );
         pixels.add(text);
         
         // Also render a copy for seamless looping
         // When text scrolls off left, the copy appears from right
         const text2 = new DrawText(
-            (xPos + textWidth + 20 + 0.5) | 0,
+            (xPos + textWidth + 20 * this.textSize + 0.5) | 0,
             (yPos + 0.5) | 0,
             this.font,
             singleLineText,
-            this.color
+            this.color,
+            this.textSize
         );
         pixels.add(text2);
     }
 
     private renderScrollVertical(pixels: PixelList) {
-        // Calculate total text height
-        const scaledFontHeight = this.font.height;
-        const lineSpacing = 2;
+        // Calculate total text height with scaling
+        const scaledFontHeight = this.font.height * this.textSize;
+        const lineSpacing = 2 * this.textSize;
         const totalTextHeight = this.textLines.length * (scaledFontHeight + lineSpacing) - lineSpacing;
         
         // Calculate starting Y based on vertical alignment
@@ -490,7 +496,7 @@ export class TextSprite extends SpriteAnimator {
         }
         
         for (const line of this.textLines) {
-            const lineWidth = line.length * this.font.width;
+            const lineWidth = line.length * this.font.width * this.textSize;
             
             // Calculate X position based on horizontal alignment
             let xPos = this.state.x;
@@ -504,7 +510,8 @@ export class TextSprite extends SpriteAnimator {
                 (yStart + 0.5) | 0,
                 this.font,
                 line,
-                this.color
+                this.color,
+                this.textSize
             );
             pixels.add(text);
             yStart += scaledFontHeight + lineSpacing;
@@ -512,62 +519,35 @@ export class TextSprite extends SpriteAnimator {
     }
 
     private renderStarWarsIntro(pixels: PixelList) {
-        // Star Trek/Wars perspective crawl effect
-        // Bottom: very large size (20-30px height), full opacity (text closest to viewer)
-        // Top: smaller size, full transparency (text far from viewer)
-        // Linear interpolation in between - zooming out effect
+        // Star Wars style crawl: scroll from bottom to top with fade at top
+        const lineHeight = (this.font.height + 2) * this.textSize;
+        const fadeZone = this.boxHeight * 0.3; // Top 30% fades out
         
-        const baseFontHeight = this.font.height;
-        const baseFontWidth = this.font.width;
-        const baseLineSpacing = 3;
-        
-        // Calculate actual scale multipliers for dramatic effect
-        // Bottom should be 6-10x the base scale for visibility
-        const bottomScaleMultiplier = 8.0;  // Large readable text
-        const topScaleMultiplier = 0.5;      // Small but still visible
-        
-        // Start position - text scrolls from bottom
         let currentY = this.perspectiveY;
-        
-        // Perspective configuration
-        const bottomY = this.boxHeight;        // Bottom of display (closest, largest)
-        const topY = 0;                        // Top of display (farthest, smallest)
-        const perspectiveRange = bottomY - topY; // Total range
         
         for (let i = 0; i < this.textLines.length; i++) {
             const line = this.textLines[i];
             
-            // Calculate position ratio based on current Y position
-            // When currentY is at bottomY (bottom): ratio = 1 (closest)
-            // When currentY is at topY (top): ratio = 0 (farthest)
-            const positionRatio = Math.max(0, Math.min(1, (currentY - topY) / perspectiveRange));
-            
-            // Linear scale interpolation: large at bottom → smaller at top
-            const perspectiveScale = topScaleMultiplier + (positionRatio * (bottomScaleMultiplier - topScaleMultiplier));
-            
-            // Apply user's base scale on top of perspective scale
-            const finalScale = perspectiveScale;
-            
-            // Linear transparency: 1.0 (opaque) at bottom → 0.0 (transparent) at top
-            const alpha = positionRatio; // Range: 0.0 to 1.0
-            
-            // Calculate scaled dimensions
-            const scaledFontHeight = baseFontHeight * perspectiveScale;
-            const scaledLineSpacing = baseLineSpacing * perspectiveScale;
-            const lineWidth = line.length * baseFontWidth * finalScale;
-            
-            // Calculate X position based on horizontal alignment
-            let xPos = this.state.x;
-            if (this.hAlign === 'center') {
-                xPos = this.state.x - (lineWidth / 2);
-            } else if (this.hAlign === 'right') {
-                xPos = this.state.x - lineWidth;
+            // Calculate alpha based on Y position - fade at top
+            let alpha = 1.0;
+            if (currentY < fadeZone) {
+                // Fade from full opacity at fadeZone to 0 at top
+                alpha = Math.max(0, currentY / fadeZone);
             }
-            // For 'left', xPos stays at this.state.x
             
-            // Only render if visible on screen and not fully transparent
-            if (currentY > topY - scaledFontHeight && currentY < bottomY && alpha > 0.01) {
-                // Create color with distance-based transparency
+            // Only render if visible and not fully transparent
+            if (currentY > -lineHeight && currentY < this.boxHeight && alpha > 0.01) {
+                const lineWidth = line.length * this.font.width * this.textSize;
+                
+                // Calculate X position based on horizontal alignment
+                let xPos = this.state.x;
+                if (this.hAlign === 'center') {
+                    xPos = this.state.x - (lineWidth / 2);
+                } else if (this.hAlign === 'right') {
+                    xPos = this.state.x - lineWidth;
+                }
+                
+                // Create color with fade
                 const fadeColor = new Color(
                     this.color.r,
                     this.color.g,
@@ -580,13 +560,14 @@ export class TextSprite extends SpriteAnimator {
                     (currentY + 0.5) | 0,
                     this.font,
                     line,
-                    fadeColor
+                    fadeColor,
+                    this.textSize
                 );
                 pixels.add(text);
             }
             
-            // Move to next line position with perspective-adjusted spacing
-            currentY -= (scaledFontHeight + scaledLineSpacing);
+            // Move to next line
+            currentY += lineHeight;
         }
     }
 
@@ -595,9 +576,9 @@ export class TextSprite extends SpriteAnimator {
         const visibleText = this.textContent.substring(0, (this.charIndex + 0.5) | 0);
         // Re-wrap the visible portion to match display wrapping
         const visibleLines = this.wrapText(visibleText);
-        // Calculate total text height
-        const scaledFontHeight = this.font.height;
-        const lineSpacing = 2;
+        // Calculate total text height with scaling
+        const scaledFontHeight = this.font.height * this.textSize;
+        const lineSpacing = 2 * this.textSize;
         const totalTextHeight = visibleLines.length * (scaledFontHeight + lineSpacing) - lineSpacing;
         
         // Calculate starting Y based on vertical alignment
@@ -611,7 +592,7 @@ export class TextSprite extends SpriteAnimator {
         let yOffset = 0;
         for (const line of visibleLines) {
             if (line.length > 0) {
-                const lineWidth = line.length * this.font.width;
+                const lineWidth = line.length * this.font.width * this.textSize;
                 
                 // Calculate X position based on horizontal alignment
                 let xPos = this.state.x;
@@ -625,7 +606,8 @@ export class TextSprite extends SpriteAnimator {
                     (yStart + yOffset + 0.5) | 0,
                     this.font,
                     line,
-                    this.color
+                    this.color,
+                    this.textSize
                 );
                 pixels.add(text);
             }
@@ -646,9 +628,9 @@ export class TextSprite extends SpriteAnimator {
             this.color.b,
             alpha
         );
-        // Calculate total text height
-        const scaledFontHeight = this.font.height;
-        const lineSpacing = 2;
+        // Calculate total text height with scaling
+        const scaledFontHeight = this.font.height * this.textSize;
+        const lineSpacing = 2 * this.textSize;
         const totalTextHeight = this.textLines.length * (scaledFontHeight + lineSpacing) - lineSpacing;
         
         // Calculate starting Y based on vertical alignment
@@ -661,7 +643,7 @@ export class TextSprite extends SpriteAnimator {
         
         let yOffset = 0;
         for (const line of this.textLines) {
-            const lineWidth = line.length * this.font.width;
+            const lineWidth = line.length * this.font.width * this.textSize;
             
             // Calculate X position based on horizontal alignment
             let xPos = this.state.x;
@@ -675,7 +657,8 @@ export class TextSprite extends SpriteAnimator {
                 (yStart + yOffset + 0.5) | 0,
                 this.font,
                 line,
-                fadedColor
+                fadedColor,
+                this.textSize
             );
             pixels.add(text);
             yOffset += scaledFontHeight + lineSpacing;
@@ -684,9 +667,9 @@ export class TextSprite extends SpriteAnimator {
 
     private renderWave(pixels: PixelList) {
         // Render text with sine wave vertical offset per character
-        // Calculate total text height
-        const scaledFontHeight = this.font.height;
-        const lineSpacing = 2;
+        // Calculate total text height with scaling
+        const scaledFontHeight = this.font.height * this.textSize;
+        const lineSpacing = 2 * this.textSize;
         const totalTextHeight = this.textLines.length * (scaledFontHeight + lineSpacing) - lineSpacing;
         
         // Calculate starting Y based on vertical alignment
@@ -699,11 +682,11 @@ export class TextSprite extends SpriteAnimator {
         
         let yOffset = 0;
         for (const line of this.textLines) {
-            const lineWidth = line.length * this.font.width;
+            const lineWidth = line.length * this.font.width * this.textSize;
             let charX = 0;
             for (let i = 0; i < line.length; i++) {
                 const char = line[i];
-                const waveOffset = Math.sin(this.wavePhase + i * 0.5) * 3;
+                const waveOffset = Math.sin(this.wavePhase + i * 0.5) * 3 * this.textSize;
                 
                 // Calculate X position based on horizontal alignment
                 let xPos = this.state.x + charX;
@@ -717,10 +700,11 @@ export class TextSprite extends SpriteAnimator {
                     (yStart + yOffset + waveOffset + 0.5) | 0,
                     this.font,
                     char,
-                    this.color
+                    this.color,
+                    this.textSize
                 );
                 pixels.add(text);
-                charX += this.font.width;
+                charX += this.font.width * this.textSize;
             }
             yOffset += scaledFontHeight + lineSpacing;
         }
@@ -728,10 +712,10 @@ export class TextSprite extends SpriteAnimator {
 
     private renderBounce(pixels: PixelList) {
         // Bounce text up and down
-        const bounceOffset = Math.sin(this.bouncePhase) * 5;
-        // Calculate total text height
-        const scaledFontHeight = this.font.height;
-        const lineSpacing = 2;
+        const bounceOffset = Math.sin(this.bouncePhase) * 5 * this.textSize;
+        // Calculate total text height with scaling
+        const scaledFontHeight = this.font.height * this.textSize;
+        const lineSpacing = 2 * this.textSize;
         const totalTextHeight = this.textLines.length * (scaledFontHeight + lineSpacing) - lineSpacing;
         
         // Calculate starting Y based on vertical alignment
@@ -744,7 +728,7 @@ export class TextSprite extends SpriteAnimator {
         
         let yOffset = 0;
         for (const line of this.textLines) {
-            const lineWidth = line.length * this.font.width;
+            const lineWidth = line.length * this.font.width * this.textSize;
             
             // Calculate X position based on horizontal alignment
             let xPos = this.state.x;
@@ -758,7 +742,8 @@ export class TextSprite extends SpriteAnimator {
                 (yStart + yOffset + bounceOffset + 0.5) | 0,
                 this.font,
                 line,
-                this.color
+                this.color,
+                this.textSize
             );
             pixels.add(text);
             yOffset += scaledFontHeight + lineSpacing;
@@ -789,9 +774,10 @@ export class DynamicTextSprite extends TextSprite {
         animationSpeed: number = 1.0,
         maxWidth?: number,
         hAlign: 'left' | 'center' | 'right' = 'center',
-        vAlign: 'top' | 'center' | 'bottom' = 'center'
+        vAlign: 'top' | 'center' | 'bottom' = 'center',
+        textSize: number = 1.0
     ) {
-        super(x, y, font, initialText, color, animationType, animationSpeed, maxWidth, hAlign, vAlign);
+        super(x, y, font, initialText, color, animationType, animationSpeed, maxWidth, hAlign, vAlign, textSize);
         
         this.sourceType = sourceType;
         this.sourceUrl = sourceUrl;

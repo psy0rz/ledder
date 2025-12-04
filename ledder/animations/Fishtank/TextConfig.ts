@@ -35,6 +35,9 @@ export class TextConfig {
         ];
         const selectedFont = this.controls.select("Font", "C64", fontChoices);
         
+        // Text size
+        const textSize = this.controls.value("Text Size", 1.0, 0.5, 5.0, 0.1);
+        
         // Text content
         const textContent = this.controls.input("Text", "Hello World!");
         const maxTextWidth = this.controls.value("Max Width %", 90, 10, 100, 5);
@@ -78,6 +81,7 @@ export class TextConfig {
         return {
             enableText,
             selectedFont,
+            textSize,
             textContent,
             maxTextWidth,
             animationType,
@@ -144,7 +148,8 @@ export class TextConfig {
             config.animationSpeed.value,
             actualMaxWidth,
             config.textHAlign.selected as 'left' | 'center' | 'right',
-            config.textVAlign.selected as 'top' | 'center' | 'bottom'
+            config.textVAlign.selected as 'top' | 'center' | 'bottom',
+            config.textSize.value
         );
         textManager.addSprite(textSprite);
     }
