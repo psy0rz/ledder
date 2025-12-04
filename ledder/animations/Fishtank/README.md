@@ -1,632 +1,613 @@
-# Fishtank - Modular Sprite Animation
+# Fishtank - Dynamic Scene Composition System
 
-A comprehensive, fully-configurable sprite-based animation system for creating aquarium scenes and environments. Features fish, plants, weather effects, and complete user control over all elements.
+**What is Fishtank?**
 
-## 🎯 Quick Start
+Fishtank is a modular animation framework that lets you fill your LED display with dynamic, layered scenes. Think of it as a virtual "tank" where you can add and configure visual elements - fish, plants, weather effects, buildings, scrolling text, and more. Each element is independently controllable, allowing you to create unique compositions that fit your display size and performance capabilities.
 
-The Fishtank animation provides:
-- **5 fish types** with configurable distribution and bidirectional movement
-- **12 plant varieties** including trees, bushes, flowers, and aquatic plants
-- **9 environment effects** (bubbles, clouds, sun, moon, stars, rain, snow, thunder, rainbow)
-- **8 animated buildings** (Factory, School, Windmill, Liberty Statue, Eiffel Tower, Castle, Church, Tower)
-- **Text display system** with 8 animation types and dynamic content sources
-- **3-layer depth system** for realistic rain and snow parallax
-- **Complete user controls** with organized groups and enable/disable switches
-- **Background image support** with URL loading and fit modes
-
-All elements are fully configurable through an intuitive control panel.
-
-## 🎮 User Controls
-
-See **[CONTROLS-GUIDE.md](./CONTROLS-GUIDE.md)** for complete control documentation.
-
-### Control Groups Overview
-
-#### 🐠 Fish (Enable/Disable)
-- Large fish count & speed
-- 5 fish types with percentage distribution (Tropical, Goldfish, Clownfish, Angelfish, Neon Tetra)
-- Tiny fish school with formation behavior
-
-#### 🌿 Plants & Vegetation (Enable/Disable)
-- Total plant count
-- 8 plant type percentages (Tall, Short, Bushes, Grass, Flowers, Ferns, Trees, Cactus)
-- Weighted pool distribution system
-
-#### � Buildings (Enable/Disable)
-- Building type selection (8 types: Factory, School, Windmill, Liberty Statue, Eiffel Tower, Castle, Church, Tower)
-- X/Y position controls (0-100)
-- Show/hide switch
-- Animated elements (smoke, blades, flags, lights)
-
-#### �🌈 Environment Effects (Enable/Disable)
-- **Bubbles:** Count + rise speed
-- **Clouds:** Count + drift speed (3 sizes)
-- **Celestial:** Sun, Moon, Stars, Rainbow
-- **Rain:** Count + speed + 3-layer depth distribution (far/mid/near %)
-- **Snow:** Count + speed + 3-layer depth distribution (far/mid/near %)
-- **Thunder:** Lightning flash count
-
-#### 🖼️ Background
-- Image URL loading
-- Fit modes (cover/contain/fill)
-- Opacity control
-
-#### 📝 Text (Enable/Disable)
-- **Text Source:** Manual input, RSS feed, or JSON URL
-- **Animation Types:** 8 styles (Static, Horizontal Scroll, Vertical Scroll, Star Wars Intro, Typewriter, Fade, Wave, Bounce)
-- **Font Selection:** All available fonts
-- **Color Control:** RGBA color picker
-- **Position Control:** X/Y positioning (0-100%)
-- **Animation Speed:** Adjustable speed multiplier
-- **Dynamic Updates:** Auto-refresh for RSS/JSON sources
+> **⚠️ Experimental System**  
+> Fishtank is highly experimental and optimized for speed, but with many objects and effects enabled, performance can degrade. Start with a few elements and add more until you find the sweet spot for your display.
 
 ---
 
-## 🏗️ Architecture
+## 🎯 What Can You Put in the Tank?
 
-### Core Framework Components
+### Available Elements
 
-### Core Framework Components
+- **🌀 Fractals** - Animated Mandelbrot and Julia sets with auto-zoom and customizable color palettes
+- **🐠 Fish** - 5 species with realistic swimming behavior (Tropical, Goldfish, Clownfish, Angelfish, Neon Tetra) plus schooling fish
+- **🌿 Plants** - 12 varieties including tall/short aquatic plants, bushes, grass, flowers, ferns, trees, and cacti
+- **🏢 Buildings** - 8 animated structures (Factory, School, Windmill, Statue of Liberty, Eiffel Tower, Castle, Church, Tower)
+- **🌤️ Weather & Environment** - Bubbles, clouds, sun, moon, stars, rain, snow, thunder, rainbow
+- **📝 Text** - Scrolling text with 8 animation styles, RSS feeds, and JSON API integration
+- **🖼️ Background** - Load images from URLs with adjustable opacity and fit modes
+- **✨ Post-Effects** - Anti-aliasing, color cycling, tunnel warp, motion blur, fire effects
+- **📝 Text Effects** - Motion blur, glow, shadow, flames, plasma, sharpening, subpixel rendering
 
-### 1. **SpriteAnimator** (Base Class)
-Foundation class for all sprites providing:
-- ASCII art sprite rendering with color codes
-- Position and velocity management
-- Boundary constraints (bouncing, wrapping)
-- Horizontal sprite flipping for directional movement
-- Protected state management
-- Automatic dimension calculation
+### Layering System
 
-### 2. **SpriteManager** (Collection Manager)
-Manages sprite collections:
-- Add/remove sprites dynamically
-- Update all sprites in one call
-- Render all sprites to PixelList
-- Layered rendering support
-
-### 3. **Sprite Collections**
-
-#### **FishSprites.ts** - 6 Fish Types
-- `TropicalFish` - Colorful, medium speed (base 0.08/0.02)
-- `Goldfish` - Orange, gentle swimming (base 0.06/0.03)
-- `Clownfish` - Orange/white, darting behavior (base 0.1/0.03)
-- `Angelfish` - Tall, graceful movement (base 0.05/0.02)
-- `NeonTetra` - Small, quick movements (base 0.12/0.04)
-- `TinyFishSchool` - Schooling formation with 4-frame animation (base 0.1/0.03)
-
-**Features:**
-- Bidirectional movement (50% spawn left-facing)
-- Automatic horizontal flipping based on direction
-- Water flow effects that preserve direction
-- Edge wrapping behavior
-- Frame-based smooth animation
-
-#### **PlantSprites.ts** - 12 Plant Varieties
-- `TallPlant`, `ShortPlant` - Aquatic plants with sway
-- `Bush`, `SmallBush` - Round bushes in two sizes
-- `PineTree`, `SmallPine` - Static pine trees
-- `OakTree`, `SmallOak` - Static oak trees
-- `Grass` - Short grass tufts with sway
-- `Flower` - Decorative flowers with sway
-- `Cactus` - Static desert cactus
-- `Fern` - Leafy fern with sway
-
-**Features:**
-- Trees are static (no movement)
-- Other plants use sine-wave swaying
-- Varying speeds and sway amounts
-- Bottom-anchored positioning
-
-#### **BuildingSprites.ts** - 8 Large Animated Buildings
-- `Factory` - Factory with animated smoking chimney (3 frames)
-- `School` - School building with windows and yellow roof
-- `Windmill` - Windmill with rotating blades (4 frames)
-- `LibertyStatue` - Statue of Liberty with torch
-- `EiffelTower` - Eiffel Tower with gentle sway in wind
-- `Castle` - Castle with waving flags (2 frames)
-- `Church` - Church with bell tower (bell animation)
-- `Tower` - Tower with blinking red/yellow light (3 frames)
-
-**Features:**
-- User-positionable with X/Y controls
-- Animated elements (smoke, blades, flags, lights)
-- Large sprites (10x11 to 14x15 pixels)
-- Enable/disable switch
-- Selectable building type
-- Static positioning (no automatic movement)
-- Rendered after background, before plants
-
-#### **EnvironmentSprites.ts** - 9 Environment Types
-- `Bubble` - Rising bubbles with wobble and vertical wrapping
-- `Cloud` - Drifting clouds in 3 sizes (small/medium/large) with horizontal wrapping
-- `Sun` - Static sun with gentle pulsing
-- `Moon` - Static moon sprite
-- `Star` - Twinkling stars with random offsets
-- `Raindrop` - 3 depth variants (far: gray/slow, mid: blue/medium, near: blue/fast)
-- `Snowflake` - 3 depth variants with frames, sway, and varying speeds
-- `Thunder` - Random flashing lightning bolts
-- `Rainbow` - Static rainbow arc
-
-**Features:**
-- Depth-based parallax (rain/snow)
-- Custom wrapping behavior per sprite type
-- Speed multiplier support for rain/snow
-- Random timing offsets for stars/thunder
-
-#### **BackgroundSprites.ts**
-- `ImageBackground` - External image loading with sharp/fetch
-  - URL-based image loading
-  - Fit modes: cover, contain, fill
-  - Opacity control
-  - Async image processing
-
-#### **TextSprites.ts** - Text Display System
-- `TextSprite` - Static and animated text rendering
-- `DynamicTextSprite` - Text from RSS feeds or JSON APIs
-
-**Animation Types:**
-- `Static` - No animation, fixed position
-- `ScrollHorizontal` - Text scrolls left to right
-- `ScrollVertical` - Text scrolls bottom to top
-- `StarWarsIntro` - Scrolling with perspective effect
-- `Typewriter` - Characters appear one by one
-- `Fade` - Fade in and out cycling
-- `Wave` - Sine wave vertical motion per character
-- `Bounce` - Bouncing text motion
-
-**Text Sources:**
-- `Manual` - User-defined text input
-- `RSS` - Fetch from RSS feed URL (auto-updates)
-- `JSON` - Fetch from JSON endpoint (auto-updates)
-
-**Features:**
-- Multi-line text support (newline separated)
-- **Automatic word wrapping** - Text intelligently wraps to fit display width
-- **Word-boundary breaking** - Wraps at spaces when possible
-- **Smart long-word handling** - Splits words longer than display width
-- Font selection (all available fonts)
-- RGBA color control
-- Position control (percentage-based)
-- Animation speed control
-- Auto-refresh for dynamic sources
-- Display-optimized formatting
+Elements render in this order (back to front):
+1. Fractals (animated mathematical patterns)
+2. Background Image
+2. Environment (sun, moon, stars, rainbow)
+3. Plants & Vegetation
+4. Buildings
+5. Fish & Schools
+6. Weather (bubbles, rain, snow, clouds, thunder)
+7. Game Elements (Space Invaders, Arkanoid, Christmas sprites)
+8. Text (always on top)
 
 ---
 
-## 🚀 Using the Framework
+## 🎮 How to Use Fishtank
 
-### Basic Usage Example
+### Getting Started
 
-```typescript
-import SpriteManager from "./SpriteManager.js"
-import { FishSprites } from "./FishSprites.js"
-import { PlantSprites } from "./PlantSprites.js"
+1. **Select "Fishtank Composition"** from the Aquarium category in your animation list
+2. **Start with a clean slate** - All elements are disabled by default
+3. **Enable what you want** - Each control group has an enable/disable switch
+4. **Adjust quantities** - Use count controls to add elements (start small!)
+5. **Fine-tune settings** - Tweak speeds, colors, positions, and distributions
+6. **Monitor performance** - If animation stutters, reduce element counts or disable effects
 
-// Create managers
-const fishManager = new SpriteManager();
-const plantManager = new SpriteManager();
+### Performance Tips
 
-// Add sprites
-const fish = new FishSprites.TropicalFish(10, 10, 0.08, 0.02);
-const plant = new PlantSprites.TallPlant(5, boxHeight - 10);
-fishManager.addSprite(fish);
-plantManager.addSprite(plant);
-
-// In animation loop
-scheduler.intervalControlled(1).do((frameNr) => {
-    fishManager.update(frameNr, boxWidth, boxHeight);
-    plantManager.update(frameNr, boxWidth, boxHeight);
-    
-    box.add(plantManager.render());  // Render plants first (background)
-    box.add(fishManager.render());   // Render fish on top
-});
-```
+- **Start minimal:** Enable 1-2 element types, then gradually add more
+- **Monitor FPS:** Lower speed = better performance (default: 1.0, try 0.5 or 0.3)
+- **Reduce counts:** Fewer sprites = faster rendering
+- **Disable effects:** Post-processing effects are resource-intensive
+- **Match display size:** Larger displays require more processing power
+- **Test combinations:** Some effects work better together than others
 
 ---
 
-## 🎨 Creating Custom Sprites
+## 📖 Control Reference
 
-### Step 1: Define Sprite Class
+### Global Controls
 
-```typescript
-import SpriteAnimator from "./SpriteAnimator.js"
-import type { SpriteState } from "./SpriteAnimator.js"
-
-const jellyfishSprite = `
-..www..
-.wwwww.
-wwwwwww
-.w.w.w.
-..w.w..
-`;
-
-export class JellyfishSprite extends SpriteAnimator {
-    private pulsePhase: number;
-
-    constructor(x: number, y: number) {
-        const initialState: SpriteState = {
-            x,
-            y,
-            velocityX: 0.1,
-            velocityY: 0
-        };
-
-        super(jellyfishSprite, initialState, {
-            bounceOnEdges: false,
-            wrapAround: true
-        });
-
-        this.pulsePhase = Math.random() * Math.PI * 2;
-    }
-
-    update(frameNr: number, boxWidth: number, boxHeight: number) {
-        // Pulsing vertical movement
-        const pulse = Math.sin(frameNr / 10 + this.pulsePhase) * 0.3;
-        this.state.velocityY = pulse;
-        
-        super.update(frameNr, boxWidth, boxHeight);
-    }
-}
-```
-
-### Step 2: Add to Collection
-
-```typescript
-// In FishSprites.ts or create NewSprites.ts
-export const AquaticSprites = {
-    Jellyfish: JellyfishSprite,
-    // ... other sprites
-};
-```
-
-### Step 3: Use in Fishtank
-
-```typescript
-// In Fishtank.ts
-import { AquaticSprites } from "./AquaticSprites.js"
-
-// Add to sprite pool
-const jellyfish = new AquaticSprites.Jellyfish(x, y);
-fishManager.addSprite(jellyfish);
-```
+#### Speed Control
+- **Parameter:** `Speed` (0.1 to 5.0)
+- **Default:** 1.0 (60 FPS equivalent)
+- **Description:** Controls animation update rate. Higher = faster updates = more CPU usage
+- **Tip:** Reduce to 0.5 or lower if performance is slow
 
 ---
 
-## 🎭 Advanced Features
+### 🌀 Fractals
 
-### Sprite Flipping
-Fish automatically flip horizontally based on movement direction:
-```typescript
-// Handled automatically in SpriteAnimator
-if (this.state.velocityX < 0) {
-    // Sprite is flipped when rendering
-}
-```
+**Enable Switch:** Turn fractal rendering on/off
 
-### Wrapping Behavior
-```typescript
-// Horizontal wrapping
-{
-    wrapAround: true,
-    minX: 0,
-    maxX: boxWidth
-}
+#### Fractal Type
+- **Mandelbrot** - Classic Mandelbrot set with intricate detail
+- **Julia** - Julia set variations with smooth organic shapes
 
-// Custom vertical wrapping (for rain/snow)
-if (this.state.y >= boxHeight) {
-    this.state.y = 0;
-    this.state.x = Math.random() * boxWidth;
-}
-```
+#### Animation Settings
+- **Auto Zoom** (switch): Enable automatic zoom in/out animation
+  - Zooms into fractal hotspots automatically
+  - Cycles through predefined interesting locations
+- **Zoom Speed** (0.001-0.1): Speed of automatic zoom animation
+- **Manual Zoom** (0.01-1000): Manual zoom level (when auto zoom disabled)
 
-### Depth Layers
-Create parallax effects with multiple depth variants:
-```typescript
-const depthSettings = {
-    far: { speed: 0.4, color: '5' },   // Slow, gray
-    mid: { speed: 0.8, color: 'b' },   // Medium, blue
-    near: { speed: 1.4, color: 'b' }   // Fast, bright
-};
-```
+#### Appearance
+- **Color Palette**: Select color scheme (Rainbow, Fire, Ocean, etc.)
+- **Max Iterations** (16-1024): Detail level (higher = more detail, slower)
+  - 16-64: Fast, simple patterns
+  - 128-256: Good balance (recommended)
+  - 512-1024: Maximum detail, slower performance
+- **Opacity** (0.0-1.0): Fractal transparency
 
-### Frame-Based Animation
-```typescript
-const frames = ['w', '5', 'w', '.'];
+#### Manual Hotspot (Advanced)
+- **Use Manual** (switch): Override automatic hotspot selection
+- **Center X** (-2.0 to 2.0): X coordinate in complex plane
+- **Center Y** (-2.0 to 2.0): Y coordinate in complex plane
+- **Max Zoom** (1-12): Maximum zoom depth for this location
 
-update(frameNr: number, boxWidth: number, boxHeight: number) {
-    const currentFrame = Math.floor(frameNr / 8) % frames.length;
-    this.sprite = frames[currentFrame];
-    // Update dimensions
-    const lines = this.sprite.trim().split('\n');
-    this.spriteHeight = lines.length;
-    this.spriteWidth = lines[0]?.length || 1;
-}
-```
+**How it Works:**
+- Fractals are rendered as the bottom-most layer
+- **Mandelbrot:** Each pixel tests if that coordinate escapes to infinity
+- **Julia:** Uses a fixed constant, creates organic shapes
+- **Auto Zoom:** Automatically explores 6 predefined interesting locations per fractal type
+- **Color Mapping:** Iteration count determines pixel color from palette
+- **Performance:** Lower iterations = faster, higher = more detail
 
-### Weighted Distribution
-```typescript
-// Build weighted pool from percentages
-const fishTypePool = [];
-if (fishTropical > 0) {
-    for (let i = 0; i < fishTropical; i++) {
-        fishTypePool.push(FishSprites.TropicalFish);
-    }
-}
-// ... add other types
-
-// Select random from pool
-const FishClass = fishTypePool[Math.floor(Math.random() * fishTypePool.length)];
-```
+**Tips:**
+- **Start simple:** Use 128-256 iterations for smooth performance
+- **Experiment with palettes:** Different colors reveal different patterns
+- **Manual hotspots:** Classic coordinates:
+  - Mandelbrot: cx=-0.75, cy=0.0 (main bulb)
+  - Julia: cx=-0.7, cy=0.27 (spiral)
+- **Opacity:** Use 0.5-0.7 to blend with other layers
+- **Performance:** Fractals are CPU-intensive - disable if animation is slow
 
 ---
 
-## 📊 Technical Details
+### 🐠 Fish
 
-### Color Codes
-Available in ASCII art sprites:
-- `r` - Red
-- `o` - Orange
-- `y` - Yellow
-- `g` - Green
-- `b` - Blue
-- `m` - Magenta
-- `w` - White
-- `5` - Gray
-- `.` - Transparent (no pixel)
+**Enable Switch:** Turn fish simulation on/off
 
-**Note:** Avoid `0` (black) - invisible on dark backgrounds.
+#### Large Fish
+- **Large Fish Count** (0-50): Total number of large fish
+- **Large Fish Speed** (0.01-0.5): Swimming speed multiplier
 
-### Performance Considerations
-- Keep sprites 4x4 to 16x16 pixels
-- Limit total sprite count (user-configurable)
-- Use frame-based updates (`frameNr % N`) instead of every-frame
-- Avoid expensive calculations in `update()`
+#### Fish Distribution (Percentages)
+Set the mix of fish species (total should equal 100%):
+- **Tropical Fish %** - Colorful, medium speed
+- **Goldfish %** - Orange, gentle swimming
+- **Clownfish %** - Orange/white, quick darting
+- **Angelfish %** - Tall, graceful movement
+- **Neon Tetra %** - Small, fast swimmers
 
-### State Management
-```typescript
-interface SpriteState {
-    x: number;
-    y: number;
-    velocityX?: number;
-    velocityY?: number;
-    // Custom properties allowed
-    [key: string]: any;
-}
-```
+#### Tiny Fish School
+- **School Count** (0-20): Number of schooling formations
+- **School Speed** (0.01-0.5): School movement speed
+- **School Fish** (2-10): Number of fish per school
 
-### Constraint Options
-```typescript
-interface SpriteConstraints {
-    bounceOnEdges?: boolean;  // Reverse velocity at boundaries
-    wrapAround?: boolean;     // Wrap to opposite side
-    minX?: number;            // Left boundary
-    maxX?: number;            // Right boundary  
-    minY?: number;            // Top boundary
-    maxY?: number;            // Bottom boundary
-}
-```
+**How it Works:**
+- Fish spawn randomly and swim left or right
+- They wrap around screen edges
+- Swimming direction affects sprite orientation
+- Species distribution is weighted by percentages
 
 ---
 
-## 📁 File Structure
+### 🌿 Plants & Vegetation
 
+**Enable Switch:** Turn plant system on/off
+
+#### Plant Controls
+- **Plant Count** (0-100): Total number of plants to display
+
+#### Plant Type Distribution (Percentages)
+Set the mix of plant types (total should equal 100%):
+- **Tall Plants %** - Large aquatic plants
+- **Short Plants %** - Medium aquatic plants
+- **Bushes %** - Round bushes
+- **Grass %** - Short grass tufts
+- **Flowers %** - Decorative flowers
+- **Ferns %** - Leafy ferns
+- **Trees %** - Pine and oak trees
+- **Cactus %** - Desert cacti
+
+**How it Works:**
+- Plants are positioned at the bottom of the display
+- Some plants sway (aquatic plants, grass, flowers, ferns)
+- Trees and cacti are static
+- Plants are selected randomly based on percentage weights
+
+---
+
+### 🏢 Buildings
+
+**Enable Switch:** Turn building display on/off
+
+#### Building Controls
+- **Building Type** (dropdown): Select from 8 building types
+  - Factory (animated smoke)
+  - School (static)
+  - Windmill (rotating blades)
+  - Liberty Statue (static)
+  - Eiffel Tower (gentle sway)
+  - Castle (waving flags)
+  - Church (bell animation)
+  - Tower (blinking light)
+- **X Position** (0-100): Horizontal position (% of screen width)
+- **Y Position** (0-100): Vertical position (% of screen height)
+- **Show Building** (switch): Toggle visibility
+
+**How it Works:**
+- Only one building displays at a time
+- Position is percentage-based (works with any display size)
+- Animated buildings loop their animations automatically
+- Building renders behind fish, in front of plants
+
+---
+
+### 🌤️ Environment & Weather
+
+**Enable Switch:** Turn environment system on/off
+
+#### Bubbles
+- **Bubble Count** (0-50): Number of rising bubbles
+- **Bubble Speed** (0.01-0.5): How fast bubbles rise
+
+#### Clouds
+- **Cloud Count** (0-20): Number of drifting clouds
+- **Cloud Speed** (0.01-0.3): Horizontal drift speed
+- Includes small, medium, and large cloud variants
+
+#### Celestial Objects
+- **Sun** (switch): Show/hide sun with gentle pulsing
+- **Moon** (switch): Show/hide moon
+- **Stars** (switch): Show/hide twinkling stars
+- **Star Count** (0-50): Number of stars (if enabled)
+- **Rainbow** (switch): Show/hide rainbow arc
+
+#### Rain
+- **Rain Count** (0-100): Number of raindrops
+- **Rain Speed** (0.1-2.0): Fall speed multiplier
+- **Far Layer %** (0-100): Percentage in background (gray, slow)
+- **Mid Layer %** (0-100): Percentage in middle (blue, medium)
+- **Near Layer %** (0-100): Percentage in foreground (blue, fast)
+
+#### Snow
+- **Snow Count** (0-100): Number of snowflakes
+- **Snow Speed** (0.1-2.0): Fall speed multiplier
+- **Far Layer %** (0-100): Percentage in background (slow)
+- **Mid Layer %** (0-100): Percentage in middle (medium)
+- **Near Layer %** (0-100): Percentage in foreground (fast)
+
+#### Thunder
+- **Thunder Count** (0-20): Number of lightning flashes
+
+**How it Works:**
+- **3-Layer Depth System:** Rain and snow have parallax layers (far/mid/near) for realistic depth
+- **Layer Distribution:** Percentages control how many particles appear in each depth layer
+- **Speed Variation:** Far layers move slower, near layers move faster
+- **Wrapping Behavior:** Elements wrap around edges (bubbles rise and reappear, clouds drift horizontally)
+- **Random Timing:** Stars twinkle and thunder flashes at random intervals
+
+---
+
+### 🖼️ Background
+
+**Enable Switch:** Turn background image on/off
+
+#### Background Image Controls
+- **Image URL**: Enter direct image URL (JPEG, PNG, GIF)
+- **Fit Mode**: How image scales to display
+  - `cover` - Fill display, crop if needed (maintains aspect ratio)
+  - `contain` - Fit entirely within display (may have letterboxing)
+  - `fill` - Stretch to fill display (may distort)
+- **Opacity** (0.0-1.0): Image transparency (0=invisible, 1=opaque)
+
+**How it Works:**
+- Images are fetched and processed server-side
+- Supports JPEG, PNG, and GIF formats
+- Image renders as bottom layer (everything appears on top)
+- Invalid URLs fall back to no background
+
+**Tips:**
+- Use lower opacity (0.3-0.7) to keep foreground elements visible
+- `cover` mode works best for most scenarios
+- Test with small images first to verify URL works
+
+---
+
+### 📝 Text Display
+
+**Enable Switch:** Turn text system on/off
+
+#### Text Source
+Choose where text comes from:
+- **Manual Input** - Type text directly
+- **RSS Feed** - Fetch from RSS URL (auto-updates)
+- **JSON URL** - Fetch from JSON endpoint (auto-updates)
+
+#### Text Content
+- **Text Content**: Enter your message (or fallback for RSS/JSON)
+  - Press Enter for line breaks
+  - Long lines automatically wrap to fit display
+- **RSS/JSON URL**: Feed or API endpoint URL
+- **Update Interval** (10-3600 seconds): How often to refresh dynamic content
+
+#### Text Appearance
+- **Font**: Select from available fonts (C64, Picopixel, Tiny 3x3, etc.)
+- **Text Color**: RGBA color picker (R: 0-255, G: 0-255, B: 0-255, A: 0-1)
+
+#### Animation
+- **Animation Type**: Choose text animation
+  - `Static` - No animation, fixed position
+  - `Scroll Horizontal` - Right to left scrolling
+  - `Scroll Vertical` - Bottom to top scrolling
+  - `Star Wars Intro` - 3D perspective scroll
+  - `Typewriter` - Character-by-character reveal
+  - `Fade` - Fade in/out cycling
+  - `Wave` - Sine wave vertical motion
+  - `Bounce` - Bouncing text
+- **Animation Speed** (0.1-5.0): Speed multiplier
+- **X Position** (0-100): Horizontal position (%)
+- **Y Position** (0-100): Vertical position (%)
+
+**How it Works:**
+- **Automatic Word Wrapping:** Long lines break at word boundaries to fit display width
+- **Multi-line Support:** Manual line breaks (`\n`) are preserved
+- **Dynamic Updates:** RSS/JSON content refreshes at specified interval
+- **Layered on Top:** Text always renders above all other elements
+- **Font-Aware Wrapping:** Calculates max characters per line based on selected font
+
+**Tips:**
+- **Static messages:** Use "Manual Input" + "Static" animation
+- **News ticker:** Use "RSS Feed" + "Scroll Horizontal"
+- **API data:** Use "JSON URL" with appropriate endpoint
+- **Readability:** Choose high-contrast colors (white/cyan/yellow on dark backgrounds)
+
+---
+
+### ✨ Post-Processing Effects
+
+**Enable Switch:** Turn post-FX system on/off
+
+Apply visual effects to the entire scene (excluding text):
+
+#### Anti-Aliasing
+- **Enable** (switch): Smooth pixel edges
+- Reduces jagged diagonal lines
+
+#### Motion Blur
+- **Enable** (switch): Add motion blur trails
+- **Blur Amount** (1-10): Strength of blur effect
+- Creates smooth motion trails behind moving objects
+
+#### Color Cycling
+- **Enable** (switch): Animated color shifts
+- **Cycle Speed** (0.1-5.0): How fast colors change
+- Cycles hue values over time
+
+#### Tunnel/Warp Effect
+- **Enable** (switch): Distort space
+- **Intensity** (0-20): Strength of warp
+- **Speed** (0.1-5.0): Animation speed
+- Creates psychedelic tunnel effects
+
+#### Fire Effect
+- **Enable** (switch): Add flames
+- **Intensity** (0.0-1.0): Fire strength
+- **Speed** (0.1-5.0): Flame animation speed
+- Adds flickering fire colors
+
+**Performance Note:** Each effect adds processing overhead. Disable unused effects for better performance.
+
+---
+
+### 📝 Text Post-Processing Effects
+
+**Enable Switch:** Turn text effects on/off
+
+Apply effects specifically to text layer:
+
+#### Motion Adaptive Anti-Aliasing
+- **Enable** (switch): Smooth text edges with motion detection
+
+#### Motion Blur
+- **Enable** (switch): Blur trail for moving text
+- **Blur Amount** (1-10): Blur strength
+
+#### Subpixel Rendering
+- **Enable** (switch): RGB subpixel color fringing for sharper text
+
+#### Sharpen
+- **Enable** (switch): Enhance text edges
+- **Sharpen Amount** (0.0-2.0): Sharpening strength
+
+#### Glow
+- **Enable** (switch): Add glow around text
+- **Glow Intensity** (0.0-1.0): Glow brightness
+
+#### Shadow
+- **Enable** (switch): Drop shadow behind text
+- **Shadow Offset X** (-5 to 5): Horizontal shadow offset
+- **Shadow Offset Y** (-5 to 5): Vertical shadow offset
+
+#### Flames
+- **Enable** (switch): Animated fire effect on text
+- **Flame Count** (1-20): Number of flames
+- **Flame Height** (1-10): How tall flames grow
+- **Flame Intensity** (0.0-1.0): Flame brightness
+- **Flame Wildness** (0.0-1.0): Flame randomness
+
+#### Plasma
+- **Enable** (switch): Animated plasma background
+- **Plasma Palette**: Choose color scheme (10 presets)
+  - Rainbow, Fire, Ocean, Sunset, Forest, Purple Dream, Neon, Ice, Lava, Cyberpunk
+- **Plasma Speed** (0.1-5.0): Animation speed
+- **Plasma Scale** (1-20): Pattern size
+- **Plasma Intensity** (0.0-1.0): Effect strength
+- **Plasma Cycle Speed** (0.1-5.0): Color cycling speed
+
+**Performance Note:** Text effects are GPU-intensive. Use sparingly on low-power devices.
+
+---
+
+## 🎨 Creative Usage Ideas
+
+### Fractal Explorer
 ```
-Fishtank/
-├── Fishtank.ts              # Main animation with user controls
-├── SpriteAnimator.ts        # Base class for all sprites
-├── SpriteManager.ts         # Collection manager
-├── FishSprites.ts           # 6 fish types
-├── PlantSprites.ts          # 12 plant varieties
-├── BuildingSprites.ts       # 8 large animated buildings
-├── EnvironmentSprites.ts    # 9 environment effects
-├── BackgroundSprites.ts     # Image background loader
-├── README.md                # This file
-└── CONTROLS-GUIDE.md        # Complete user controls documentation
+✓ Fractals: Mandelbrot with Rainbow palette (auto zoom enabled)
+✓ Max Iterations: 512 (high detail)
+✓ Opacity: 1.0 (solid)
+✓ All other elements: Disabled
+✓ Speed: 0.3 (slow, smooth zoom)
 ```
 
----
+### Psychedelic Ocean
+```
+✓ Fractals: Julia set with Ocean palette (opacity 0.5)
+✓ Fish: 15-20 fish (varied species)
+✓ Plants: 20-30 plants
+✓ Environment: Bubbles (20-30)
+✓ Post-FX: Color cycling
+```
 
-## 💡 Best Practices
-
-1. **Sprite Design**
-   - Face sideways for fish (left/right orientation)
-   - Keep recognizable at small sizes
-   - Use contrasting colors for visibility
-
-2. **Movement Patterns**
-   - Slow speeds for calm scenes (0.05-0.15)
-   - Fast speeds for action (0.5-2.0)
-   - Use sine waves for natural motion
-
-3. **Layering**
-   - Render background first
-   - Then buildings (large static objects)
-   - Then plants
-   - Then fish/effects
-   - Depth creates visual richness
-
-4. **User Experience**
-   - Provide enable/disable switches for groups
-   - Use percentage-based distribution
-   - Include speed multipliers
-   - Organize controls logically
-   - Position buildings with X/Y controls
-
-5. **Performance**
-   - Limit sprite counts via user controls
-   - Use frame-based timing
-   - Avoid redundant calculations
-   - Keep update logic simple
-   - Buildings are static (no movement overhead)
-
----
-
-## 🌟 Features Showcase
-
-✅ **Modular** - Each sprite is independent and reusable  
-✅ **Extensible** - Easy to add new sprite types  
-✅ **Configurable** - Complete user control over all parameters  
-✅ **Type-safe** - Full TypeScript support  
-✅ **Performant** - Efficient rendering and updates  
-✅ **Visual** - Depth layers, parallax, and animations  
-✅ **Flexible** - Support for complex behaviors  
-✅ **Organized** - Logical control grouping with enable/disable
-
----
-
-## 🎓 Examples
-
-### Classic Aquarium
-- 8 large fish (all types enabled)
-- 10 bubbles
-- 6 aquatic plants
-- Ocean background at 50% opacity
-
-### Winter Scene
-- No fish
-- 5 trees (100% tree distribution)
-- 30 snowflakes (3-layer depth)
-- Moon + 20 stars
-- Night sky background
+### Aquarium Scene
+```
+✓ Fish: 20-30 fish (mix all species)
+✓ Plants: 30-40 plants (varied types)
+✓ Environment: Bubbles (20-30), occasional thunder
+✓ Background: Blue gradient image (opacity 0.3)
+✓ Post-FX: Motion blur (low)
+```
 
 ### City Skyline
-- No fish
-- Factory at X=10, Y=5
-- Eiffel Tower at X=40, Y=3
-- 5 clouds drifting
-- Moon + 15 stars
-- City background image
-
-### Castle Scene
-- No fish
-- Castle at X=20, Y=10
-- 5 trees nearby
-- 3 clouds
-- Sun showing
-- Medieval landscape background
-
-### Stormy Weather
-- 3 slow fish
-- 10 plants
-- 40 raindrops (fast speed)
-- 5 clouds
-- 2 thunder bolts
-- Windmill at X=60, Y=8
-- Stormy sky background
-
-### Underwater Paradise
-- 12 fish (mixed types)
-- 15 tiny fish school
-- 12 plants (no trees)
-- 15 bubbles
-- Rainbow
-- Liberty Statue at X=70, Y=5 (underwater landmark)
-- Coral reef background
-
-### Scrolling News Display
-- No fish, plants, or effects
-- Text enabled with RSS feed
-- Animation: Horizontal Scroll
-- Font: C64
-- White text color
-- Auto-updates every 5 minutes
-- News background image
-
-### Aquarium with Title
-- 8 mixed fish
-- 10 plants at bottom
-- 12 bubbles rising
-- Text enabled: "MY AQUARIUM"
-- Animation: Wave
-- Font: Pixel-Gosub
-- Cyan text color
-- Position: Top center
-- Ocean background
-
----
-
-## 📝 Text Feature Details
-
-### Animation Types
-
-#### Static
-Fixed text display at specified position. No animation.
-
-#### Scroll Horizontal
-Text scrolls from right to left continuously. When text scrolls off the left edge, it wraps around to the right side. Perfect for news tickers and continuous messages.
-
-#### Scroll Vertical
-Text scrolls from bottom to top. Multi-line text supported. Each line scrolls upward independently. When all text scrolls off the top, it wraps to the bottom.
-
-#### Star Wars Intro
-Text scrolls upward with perspective effect - lines appear smaller as they get further away (toward the top). Creates a 3D depth illusion similar to the Star Wars opening crawl.
-
-#### Typewriter
-Characters appear one at a time from left to right, creating a typing effect. Supports multi-line text with natural line breaks.
-
-#### Fade In/Out
-Text smoothly fades in from transparent to opaque, then fades out again in a continuous cycle.
-
-#### Wave
-Each character moves up and down in a sine wave pattern, creating a wavy text effect. The wave travels through the text over time.
-
-#### Bounce
-Entire text bounces up and down smoothly using sine wave motion.
-
-### Text Sources
-
-#### Manual Input
-User types text directly in the "Text Content" field. Supports multi-line text (use line breaks). Best for static messages, titles, and labels.
-
-#### RSS Feed
-Fetches text from an RSS feed URL. Automatically updates at the specified interval. Displays the first `<title>` tag found in the RSS feed. Perfect for news headlines, blog updates, or weather reports.
-
-**Example RSS URLs:**
-- `https://feeds.bbci.co.uk/news/rss.xml` (BBC News)
-- `https://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml` (NY Times)
-
-#### JSON URL
-Fetches text from a JSON endpoint. Expects JSON with a `text` or `message` field. Auto-updates at the specified interval. Ideal for custom data sources, API integrations, or dynamic content.
-
-**Example JSON format:**
-```json
-{
-  "text": "Your message here",
-  "timestamp": "2025-11-26T12:00:00Z"
-}
+```
+✓ Buildings: Multiple buildings enabled (Factory, Tower, Church)
+✓ Environment: Clouds (5-10), stars, moon
+✓ Weather: Occasional rain or snow
+✓ Text: City name with horizontal scroll
+✓ Background: Sunset image (opacity 0.5)
 ```
 
-### Position Control
+### Weather Station
+```
+✓ Environment: Clouds, rain, thunder (heavy)
+✓ Buildings: Single building (Windmill or Tower)
+✓ Text: RSS weather feed with typewriter animation
+✓ Post-FX: Color cycling for dramatic effect
+```
 
-Text position is specified as percentages (0-100) of the display dimensions:
-- **X Position:** 0 = left edge, 50 = center, 100 = right edge
-- **Y Position:** 0 = top edge, 50 = middle, 100 = bottom edge
+### News Ticker
+```
+✓ Text: RSS feed with horizontal scroll
+✓ Text Effects: Glow or shadow for readability
+✓ Background: Solid color or minimal pattern
+✓ Minimal other elements for performance
+```
 
-For scrolling animations, the position determines the starting point of the text.
-
-### Font Selection
-
-All available fonts from the ledder font system can be used:
-- `C64` - Classic Commodore 64 style
-- `Picopixel` - Tiny, minimal font
-- `Tiny 3x3` - Extremely compact
-- `Pixel-Gosub` - Retro pixel font
-- And more...
-
-Different fonts have different dimensions, which affects text size and readability. Choose fonts based on your display resolution and desired visual style.
-
-### Usage Tips
-
-1. **For news tickers:** Use Horizontal Scroll with RSS source
-2. **For titles:** Use Static or Wave with manual input
-3. **For credits:** Use Vertical Scroll or Star Wars Intro
-4. **For announcements:** Use Typewriter with manual input
-5. **For atmosphere:** Use Fade with slow animation speed
-6. **For dynamic content:** Use JSON source with auto-refresh
+### Holiday Theme
+```
+✓ Environment: Snow (heavy), stars, moon
+✓ Buildings: Castle or Church
+✓ Plants: Pine trees
+✓ Text: Holiday message with Star Wars intro
+✓ Text Effects: Flames or plasma
+```
 
 ---
 
-**Version:** 2.1  
-**Framework:** Modular Sprite System  
-**TypeScript:** Full support  
-**License:** See main repository
+## ⚠️ Performance Guidelines
+
+### Display Size Recommendations
+
+| Display Size | Max Fish | Max Plants | Max Weather | Post-FX | Text FX |
+|--------------|----------|------------|-------------|---------|---------|
+| 16x16        | 5-10     | 10-20      | 10-20       | 0-1     | 0-1     |
+| 32x32        | 10-20    | 20-40      | 20-40       | 0-2     | 0-2     |
+| 64x32        | 20-40    | 40-80      | 40-80       | 1-3     | 1-3     |
+| 64x64        | 30-50    | 60-100     | 60-100      | 2-4     | 2-4     |
+| 128x64       | 40-60    | 80-120     | 80-120      | 3-5     | 3-5     |
+
+### Troubleshooting Slow Performance
+
+**Symptoms:** Stuttering animation, low FPS, delayed updates
+
+**Solutions (in order of priority):**
+
+1. **Reduce Speed** - Lower the Speed control from 1.0 to 0.5 or 0.3
+2. **Disable Effects** - Turn off all Post-FX and Text FX
+3. **Reduce Counts** - Cut fish/plant/weather counts in half
+4. **Simplify Text** - Use Static animation instead of complex effects
+5. **Remove Background** - Disable background image
+6. **Limit Layers** - Enable only 2-3 element types at once
+7. **Choose Static Elements** - Use trees/buildings instead of animated sprites
+
+### What Impacts Performance Most?
+
+**High Impact (avoid on slow systems):**
+- Fractals with high iterations (>512)
+- Post-processing effects (especially tunnel warp, fire)
+- Text effects (especially plasma, flames)
+- High fish counts (>30)
+- Animated backgrounds
+- Multiple text animations
+
+**Medium Impact (use moderately):**
+- Weather particles (rain/snow >50)
+- Plant counts (>60)
+- School fish (>10 schools)
+- Background images
+
+**Low Impact (safe to use):**
+- Static buildings
+- Static plants (trees, cacti)
+- Small fish schools (<5)
+- Celestial objects (sun, moon, stars)
+- Static text
+
+---
+
+## 🔧 Technical Notes
+
+### System Architecture
+
+Fishtank uses a **sprite-based rendering system** with these components:
+
+- **SpriteAnimator:** Base class for all moving objects
+- **SpriteManager:** Manages collections of sprites
+- **Layered Rendering:** 9 independent layers composited together
+- **PostFX Pipeline:** Applies effects to combined layers
+- **Dynamic Loading:** External content fetched asynchronously
+
+### Optimizations Applied
+
+- **Sprite Flip Caching:** Flipped sprites cached, not recalculated every frame
+- **Bitwise Rounding:** Fast integer conversion for pixel positions
+- **Batched Updates:** All sprites update before rendering for better CPU cache usage
+- **Empty Manager Skipping:** Layers with no sprites skip render pass
+- **Early Exit Optimization:** PostFX exits early when all effects disabled
+- **Lazy Evaluation:** Expensive operations only run when values change
+
+### Limitations
+
+- **No collision detection** (except game sprites)
+- **Fixed sprite graphics** (cannot customize pixel art at runtime)
+- **Single building display** (can't show multiple buildings simultaneously)
+- **Server-side image processing** (background images require server fetch)
+- **RSS/JSON parsing** (limited format support)
+
+---
+
+## 📚 Additional Resources
+
+### Example Configurations
+
+**Minimal Setup (16x16 display):**
+- Fish: 5 Goldfish
+- Plants: 10 Short Plants
+- Speed: 0.5
+
+**Balanced Scene (64x32 display):**
+- Fish: 15 mixed species
+- Plants: 30 varied types
+- Environment: 10 bubbles, 5 clouds
+- Building: Factory
+- Speed: 1.0
+
+**Maximum Scene (128x64 display):**
+- Fish: 40 mixed species + 5 schools
+- Plants: 80 varied types
+- Environment: All weather (moderate counts)
+- Building: Windmill
+- Text: RSS feed with glow
+- Post-FX: Anti-aliasing + motion blur
+- Speed: 1.0
+
+### Common Questions
+
+**Q: Why is my animation stuttering?**  
+A: Too many elements or effects for your display size. Reduce counts or disable post-FX.
+
+**Q: Can I show multiple buildings?**  
+A: No, only one building can display at a time. This is a design limitation.
+
+**Q: How do I make fish swim faster?**  
+A: Increase "Large Fish Speed" or "School Speed" controls.
+
+**Q: Can I use my own sprite graphics?**  
+A: Not through the UI. You'd need to modify the sprite definition files (e.g., FishSprites.ts).
+
+**Q: Why isn't my RSS feed showing?**  
+A: Check the URL is correct and accessible. Some feeds may be blocked by CORS policies.
+
+**Q: What's the difference between Speed and animation speeds?**  
+A: Speed controls the global update rate (FPS). Individual animation speeds (fish, rain, text) are multipliers within that rate.
+
+**Q: Can I save my configurations?**  
+A: Yes, Fishtank saves control values automatically. They persist between sessions.
+
+---
+
+## 🎉 Get Creative!
+
+Fishtank is designed for experimentation. There's no "right" way to use it - start with a few elements, adjust settings, and see what works for your display. The modular design means you can create anything from a peaceful aquarium to a chaotic weather display to an information dashboard.
+
+**Remember:** If it doesn't fit, don't force it. Performance degradation means you've exceeded your display's capabilities. Scale back and find the sweet spot where everything runs smoothly.
+
+Have fun filling your tank! 🐠🌿✨

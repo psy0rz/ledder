@@ -809,7 +809,7 @@ export class DynamicTextSprite extends TextSprite {
                 await this.fetchJSON();
             }
         } catch (error) {
-            console.error('Failed to fetch text content:', error);
+            // Silently fail - network errors or invalid URLs shouldn't crash
         } finally {
             this.fetchInProgress = false;
         }
@@ -828,7 +828,7 @@ export class DynamicTextSprite extends TextSprite {
                 this.setText(titleMatch[1]);
             }
         } catch (error) {
-            console.error('RSS fetch error:', error);
+            // Silently fail - keep fallback text
         }
     }
 
@@ -841,7 +841,7 @@ export class DynamicTextSprite extends TextSprite {
             const newText = data.text || data.message || JSON.stringify(data);
             this.setText(newText);
         } catch (error) {
-            console.error('JSON fetch error:', error);
+            // Silently fail - keep fallback text
         }
     }
 

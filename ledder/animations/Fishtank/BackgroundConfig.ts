@@ -44,6 +44,6 @@ export class BackgroundConfig {
         
         // Load image asynchronously without blocking sprite creation
         background.loadImageData(config.imageUrl.text, config.imageFit.selected, config.imageOpacity.value)
-            .catch(err => console.error("Background load failed:", err));
+            .catch(() => {}); // Silently fail - invalid URLs are user error
     }
 }

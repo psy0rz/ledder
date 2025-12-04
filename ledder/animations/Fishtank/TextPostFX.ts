@@ -40,6 +40,12 @@ export class TextPostFX {
             plasmaCycleSpeed: number;
         }
     ): PixelList {
+        // Early exit if no effects enabled
+        if (!options.motionAdaptiveAA && !options.motionBlur && !options.subpixelRendering &&
+            !options.sharpen && !options.glow && !options.shadow && !options.flames && !options.plasma) {
+            return pixels;
+        }
+        
         let result = pixels;
         
         // Apply shadow first (behind text)

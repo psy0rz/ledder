@@ -61,7 +61,7 @@ export class ImageBackgroundSprite extends SpriteAnimator {
 
             this.currentFrame = 0;
         } catch (error) {
-            console.error("Error loading image background:", error);
+            // Silently fail - invalid URLs or network errors shouldn't crash the animation
             this.imageFrames = [];
         }
     }

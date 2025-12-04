@@ -10,6 +10,7 @@ import { PostFX } from "./PostFX.js"
 import { TextPostFX } from "./TextPostFX.js"
 
 // Import configuration classes
+import { FractalConfig } from "./FractalConfig.js"
 import { FishConfig } from "./FishConfig.js"
 import { PlantConfig } from "./PlantConfig.js"
 import { EnvironmentConfig } from "./EnvironmentConfig.js"
@@ -22,13 +23,13 @@ import { PostFXConfig } from "./PostFXConfig.js"
 import { TextPostFXConfig } from "./TextPostFXConfig.js"
 
 export default class Fishtank extends Animator {
-    static category = "Aquarium"
-    static title = "Fishtank Composition"
-    static description = "Modular fishtank using sprite framework"
+    static category = "Compositions"
+    static title = "Fishtank"
+    static description = "Dynamic scene composition with fish, plants, weather, buildings, and text"
 
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) {
-        try {
         // Create sprite managers (in layer order: back to front)
+        const fractalManager = new SpriteManager();
         const backgroundManager = new SpriteManager();
         const environmentManager = new SpriteManager();
         const plantManager = new SpriteManager();
@@ -40,6 +41,9 @@ export default class Fishtank extends Animator {
         const textManager = new SpriteManager();
 
         // Create and populate sprites using config classes (in layer order)
+        const fractalConfig = new FractalConfig(controls);
+        fractalConfig.populateSprites(fractalManager, box);
+        
         const backgroundConfig = new BackgroundConfig(controls);
         backgroundConfig.populateSprites(backgroundManager, box);
         
@@ -73,46 +77,40 @@ export default class Fishtank extends Animator {
         const textPostFX = new TextPostFX();
 
 
+        // Cache dimensions
+        const boxW = box.width();
+        const boxH = box.height();
+        
         // Main animation loop
         scheduler.intervalControlled(controls.value("Speed", 1, 0.1, 5, 0.1), (frameNr) => {
             box.clear();
 
-            // Render all sprites in correct layer order (back to front):
+            // Batch all sprite updates first (better CPU cache utilization)
+            fractalManager.update(frameNr, boxW, boxH);
+            backgroundManager.update(frameNr, boxW, boxH);
+            environmentManager.update(frameNr, boxW, boxH);
+            plantManager.update(frameNr, boxW, boxH);
+            buildingManager.update(frameNr, boxW, boxH);
+            fishManager.update(frameNr, boxW, boxH);
+            schoolManager.update(frameNr, boxW, boxH);
+            gameManager.update(frameNr, boxW, boxH);
+            gameConfig.updateCollisions(gameManager);
+            xmasManager.update(frameNr, boxW, boxH);
+            
             // Collect all layers except text in a combined pixel list for post-FX
             const combinedPixels = new PixelList();
             
-            // 1. Background (furthest back)
-            backgroundManager.update(frameNr, box.width(), box.height());
-            combinedPixels.add(backgroundManager.render());
-
-            // 2. Environment (weather effects, clouds, etc.)
-            environmentManager.update(frameNr, box.width(), box.height());
-            combinedPixels.add(environmentManager.render());
-
-            // 3. Plants (aquatic plants, seaweed)
-            plantManager.update(frameNr, box.width(), box.height());
-            combinedPixels.add(plantManager.render());
-
-            // 4. Buildings (structures)
-            buildingManager.update(frameNr, box.width(), box.height());
-            combinedPixels.add(buildingManager.render());
-
-            // 5. Fish (individual fish)
-            fishManager.update(frameNr, box.width(), box.height());
-            combinedPixels.add(fishManager.render());
-
-            // 6. Fish schools (grouped fish)
-            schoolManager.update(frameNr, box.width(), box.height());
-            combinedPixels.add(schoolManager.render());
-
-            // 7. Game sprites (arcade game characters)
-            gameManager.update(frameNr, box.width(), box.height());
-            gameConfig.updateCollisions(gameManager);
-            combinedPixels.add(gameManager.render());
-            
-            // 8. Christmas sprites (Santa, reindeer)
-            xmasManager.update(frameNr, box.width(), box.height());
-            combinedPixels.add(xmasManager.render());
+            // Render all layers in order (back to front)
+            // Skip empty managers for performance
+            if (fractalManager.count() > 0) combinedPixels.add(fractalManager.render());
+            if (backgroundManager.count() > 0) combinedPixels.add(backgroundManager.render());
+            if (environmentManager.count() > 0) combinedPixels.add(environmentManager.render());
+            if (plantManager.count() > 0) combinedPixels.add(plantManager.render());
+            if (buildingManager.count() > 0) combinedPixels.add(buildingManager.render());
+            if (fishManager.count() > 0) combinedPixels.add(fishManager.render());
+            if (schoolManager.count() > 0) combinedPixels.add(schoolManager.render());
+            if (gameManager.count() > 0) combinedPixels.add(gameManager.render());
+            if (xmasManager.count() > 0) combinedPixels.add(xmasManager.render());
             
             // Apply post-processing effects to all layers except text
             const processedPixels = postFX.apply(
@@ -124,22 +122,19 @@ export default class Fishtank extends Animator {
             box.add(processedPixels);
 
             // 9. Text (foreground overlay - with text-specific post-FX)
-            textManager.update(frameNr, box.width(), box.height());
-            const textPixels = textManager.render();
-            
-            // Apply text-specific effects
-            const processedTextPixels = textPostFX.apply(
-                textPixels,
-                box.width(),
-                box.height(),
-                textPostFXConfig.getOptions()
-            );
-            box.add(processedTextPixels);
+            if (textManager.count() > 0) {
+                textManager.update(frameNr, boxW, boxH);
+                const textPixels = textManager.render();
+                
+                // Apply text-specific effects
+                const processedTextPixels = textPostFX.apply(
+                    textPixels,
+                    boxW,
+                    boxH,
+                    textPostFXConfig.getOptions()
+                );
+                box.add(processedTextPixels);
+            }
         });
-        
-        } catch (error) {
-            console.error("=== Fishtank error ===", error);
-            throw error;
-        }
     }
 }

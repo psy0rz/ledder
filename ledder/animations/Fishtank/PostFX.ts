@@ -28,6 +28,12 @@ export class PostFX {
             fireSpeed: number;
         }
     ): PixelList {
+        // Early exit if no effects enabled
+        if (!options.antiAliasing && !options.colorCycling && !options.tunnelWarp && 
+            !options.motionBlur && !options.fire) {
+            return pixels;
+        }
+        
         let result = pixels;
         
         // Apply tunnel/warp effect first (affects positions)

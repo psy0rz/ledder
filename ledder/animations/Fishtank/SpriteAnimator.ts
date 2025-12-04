@@ -143,16 +143,16 @@ export default class SpriteAnimator {
     render() {
         let spriteToRender = this.sprite;
         
-        // Flip sprite if moving left (with caching)
-        if (this.state.velocityX !== undefined && this.state.velocityX < 0) {
-            // Only recalculate if direction changed or no cache
-            const currentSign = this.state.velocityX < 0 ? -1 : 1;
-            if (currentSign !== this.lastVelocitySign || this.flippedSprite === null) {
+        // Flip sprite if moving left (with optimized caching)
+        const vx = this.state.velocityX;
+        if (vx !== undefined && vx < 0) {
+            // Only recalculate if direction changed or not cached yet
+            if (this.flippedSprite === null || this.lastVelocitySign !== -1) {
                 this.flippedSprite = this.flipSpriteHorizontally(this.sprite);
-                this.lastVelocitySign = currentSign;
+                this.lastVelocitySign = -1;
             }
             spriteToRender = this.flippedSprite;
-        } else {
+        } else if (this.lastVelocitySign === -1) {
             this.lastVelocitySign = 1;
         }
         
