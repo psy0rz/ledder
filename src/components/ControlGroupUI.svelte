@@ -7,49 +7,34 @@
     import ControlSwitchUI from "./ControlSwitchUI.svelte"
     import ControlSelectUI from "./ControlSelectUI.svelte"
     import ControlRangeUI from "./ControlRangeUI.svelte"
-    import { onMount, setContext } from 'svelte'
+    import { onMount } from 'svelte'
 
     export let controlGroup: ControlGroup
     export let path: Array<string> = []
     export let onChanged: (path: Array<string>, values: {}) => void
 
-    let initialized = false
-    let rangesInitialized = 0
-    let totalRanges = 0
+    let treeviewRefs: Map<string, any> = new Map()
     
-    // Count total Range controls in this group and subgroups
-    function countRanges(group: ControlGroup): number {
-        let count = 0
-        for (const control of Object.values(group.meta.controls)) {
-            if (control.meta.type === 'range') {
-                count++
-            } else if (control.meta.type === 'controls') {
-                count += countRanges(control)
-            }
+    function registerTreeview(control: ControlGroup, element: HTMLElement) {
+        if (element && control.meta.collapsed) {
+            treeviewRefs.set(control.meta.name, element)
         }
-        return count
     }
-    
-    totalRanges = countRanges(controlGroup)
-    
-    // Provide context for Range components to notify when ready
-    setContext('notifyRangeReady', () => {
-        rangesInitialized++
-        if (rangesInitialized >= totalRanges && !initialized) {
-            initialized = true
-        }
-    })
-    
-    // Reactively compute opened state
-    $: getOpened = (control: ControlGroup) => !initialized || !control.meta.collapsed
 
-    onMount(async () => {
-        // Fallback: if no ranges or they don't initialize, collapse after 500ms anyway
+    onMount(() => {
+        // Wait for Framework7 to initialize all components
         setTimeout(() => {
-            if (!initialized) {
-                initialized = true
-            }
-        }, 500)
+            // Programmatically close groups that should be collapsed
+            treeviewRefs.forEach((element) => {
+                const treeviewItem = element.closest('.treeview-item')
+                if (treeviewItem && treeviewItem.classList.contains('treeview-item-opened')) {
+                    const toggle = treeviewItem.querySelector('.treeview-toggle')
+                    if (toggle) {
+                        (toggle as HTMLElement).click()
+                    }
+                }
+            })
+        }, 200)
     })
 </script>
 
@@ -58,11 +43,12 @@
         <!-- Recurse into a nested ControlGroup -->
         <TreeviewItem
                 label={control.meta.name}
-                opened={getOpened(control)}
+                opened={true}
                 toggle={true}
                 itemToggle
                 class="{control.meta.enabled ?'':'disabled'}"
                 iconMaterial="{control.meta.switchable?'':'folder'}"
+                bind:this={treeviewRefs[control.meta.name]}
         >
             <span slot="content-start">
                 {#if control.meta.switchable}

@@ -1,19 +1,10 @@
 <script lang="ts">
     import { Range, Stepper } from "framework7-svelte";
     import ControlRange from "../../ledder/ControlRange.js"
-    import { getContext } from 'svelte'
 
     export let control: ControlRange;
     export let path: Array<string> = [];
     export let onChanged: (path: Array<string>, values: {}) => void;
-    
-    const notifyRangeReady = getContext('notifyRangeReady')
-    
-    function handleRangeInit() {
-        if (notifyRangeReady) {
-            notifyRangeReady()
-        }
-    }
 </script>
 
 <Stepper
@@ -44,7 +35,6 @@
     scale
     label={true}
     style="width:400px"
-    on:rangeChanged={handleRangeInit}
     on:rangeChange={(e) => {
         control.from = e.detail[0][0];
         control.to=e.detail[0][1];
