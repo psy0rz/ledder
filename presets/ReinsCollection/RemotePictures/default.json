@@ -1,0 +1,23 @@
+{
+ "title": "",
+ "description": "",
+ "values": {
+  "Image URL": {
+   "text": "http://localhost:3000/presets/Fires/PlasmaFire/Active%202.png?1702419790623.1921"
+  },
+  "fit": {
+   "selected": "2"
+  },
+  "animation control": {
+   "delay multiplier": {
+    "value": 1
+   },
+   "Enabled": {
+    "enabled": true
+   }
+  },
+  "Enabled": {
+   "enabled": true
+  }
+ }
+}

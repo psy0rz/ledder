@@ -279,17 +279,17 @@
   },
   "Eighties demo": {
    "Scene height": {
-    "value": 59
+    "value": 82
    },
    "Fractal Sky": {
     "Top color": {
-     "r": 0,
+     "r": 25,
      "g": 0,
-     "b": 100,
+     "b": 172,
      "a": 0.2
     },
     "Bottom color": {
-     "r": 0,
+     "r": 51,
      "g": 0,
      "b": 255,
      "a": 0.5
@@ -298,13 +298,13 @@
      "value": 50
     },
     "Change speed": {
-     "value": 0.0001
+     "value": 0.0004
     },
     "Colorshading": {
      "r": 0,
      "g": 0,
      "b": 0,
-     "a": 1
+     "a": 0.82
     },
     "Fractal galaxy enabled": {
      "enabled": true
@@ -314,28 +314,34 @@
     },
     "Colorshading enabled": {
      "enabled": true
+    },
+    "Enabled": {
+     "enabled": true
     }
    },
    "Sun": {
     "Radius": {
-     "value": 16
+     "value": 64
     },
     "Beams": {
-     "value": 200
+     "value": 76
     },
     "Inner color": {
-     "r": 82,
+     "r": 93,
      "g": 0,
      "b": 0,
-     "a": 0.22
+     "a": 1
     },
     "Outer color": {
-     "r": 220,
-     "g": 255,
+     "r": 255,
+     "g": 13,
      "b": 0,
-     "a": 0.03
+     "a": 0.01
     },
     "Sun enabled": {
+     "enabled": true
+    },
+    "Enabled": {
      "enabled": true
     }
    },
@@ -347,7 +353,10 @@
      "value": 1
     },
     "Amplitude": {
-     "value": 12
+     "value": 5
+    },
+    "Enabled": {
+     "enabled": true
     }
    },
    "Grid": {
@@ -364,6 +373,9 @@
      "value": 12
     },
     "Grid enabled": {
+     "enabled": true
+    },
+    "Enabled": {
      "enabled": true
     }
    },
@@ -391,6 +403,9 @@
     },
     "Fire": {
      "enabled": false
+    },
+    "Enabled": {
+     "enabled": true
     }
    },
    "3D cube": {
@@ -398,7 +413,7 @@
      "enabled": true
     },
     "Size": {
-     "value": 31
+     "value": 30
     },
     "Cube color": {
      "r": 255,
@@ -411,6 +426,21 @@
      "g": 0,
      "b": 0,
      "a": 1
+    },
+    "Enabled": {
+     "enabled": true
+    },
+    "Anti-aliasing": {
+     "enabled": true
+    },
+    "AA Threshold": {
+     "value": 0.5
+    },
+    "Motion Blur": {
+     "enabled": true
+    },
+    "Blur Steps": {
+     "value": 3
     }
    },
    "Size": {
@@ -418,9 +448,12 @@
    },
    "Date/Time": {
     "Show date": {
-     "enabled": true
+     "enabled": false
     },
     "Show time": {
+     "enabled": false
+    },
+    "Enabled": {
      "enabled": true
     }
    },
@@ -677,10 +710,13 @@
     "to": 100
    },
    "Vertical scroll speed": {
-    "value": 0.0013000000000000002
+    "value": 0.0009000000000000001
    },
    "Ground sinus": {
     "Groundsinus enabled": {
+     "enabled": true
+    },
+    "Enabled": {
      "enabled": true
     }
    },
@@ -695,7 +731,7 @@
      "value": 0
     },
     "Text": {
-     "text": "Marquee  "
+     "text": ""
     },
     "Text color": {
      "r": 33,
@@ -706,6 +742,33 @@
     "Stars": {
      "Enabled": {
       "enabled": false
+     },
+     "Star color": {
+      "r": 255,
+      "g": 255,
+      "b": 255,
+      "a": 0.2
+     },
+     "Number of stars": {
+      "value": 10
+     },
+     "Movie interval": {
+      "value": 5
+     },
+     "Movie interval randomizer": {
+      "value": 0
+     },
+     "Rotate interval": {
+      "value": 4
+     },
+     "Rotate interval randomizer": {
+      "value": 2
+     },
+     "Rotate X step": {
+      "value": -1
+     },
+     "Rotate Y step": {
+      "value": 0
      }
     },
     "Star field": {
@@ -716,11 +779,57 @@
     "The Matrix": {
      "Enabled": {
       "enabled": false
+     },
+     "Head color": {
+      "r": 128,
+      "g": 128,
+      "b": 128,
+      "a": 1
+     },
+     "Tail color": {
+      "r": 0,
+      "g": 128,
+      "b": 0,
+      "a": 1
+     },
+     "Fall interval": {
+      "value": 5
+     },
+     "Create interval": {
+      "value": 10
+     },
+     "Slow trials (percent)": {
+      "value": 10
+     },
+     "Slow fall interval": {
+      "value": 10
+     },
+     "Fade head": {
+      "Fade out time": {
+       "value": 10
+      },
+      "Fade out time randomizer": {
+       "value": 5
+      },
+      "Enabled": {
+       "enabled": true
+      }
+     },
+     "Fade tail": {
+      "Fade out time": {
+       "value": 30
+      },
+      "Fade out time randomizer": {
+       "value": 5
+      },
+      "Enabled": {
+       "enabled": true
+      }
      }
     },
     "Scrolling": {
      "Enabled": {
-      "enabled": true
+      "enabled": false
      },
      "FPS": {
       "value": 60
@@ -766,8 +875,36 @@
      "Enabled": {
       "enabled": false
      }
+    },
+    "Wobble": {
+     "Enabled": {
+      "enabled": false
+     }
+    },
+    "Enabled": {
+     "enabled": true
+    }
+   },
+   "Enabled": {
+    "enabled": true
+   },
+   "Post-processing FX": {
+    "Anti-aliasing": {
+     "enabled": false
+    },
+    "Motion Blur": {
+     "enabled": false
+    },
+    "Blur Amount": {
+     "value": 5
+    },
+    "Enabled": {
+     "enabled": true
     }
    }
+  },
+  "Enabled": {
+   "enabled": true
   }
  }
 }

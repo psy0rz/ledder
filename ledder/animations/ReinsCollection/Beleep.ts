@@ -63,30 +63,57 @@ export class BeleepParticle
     update()
     {
         if (this.mass<2) { 
-            this.x=this.x+((Math.random()-0.5)/64)
-            this.y=this.y+((Math.random()-0.5)/16)
-            this.x=this.x+(0.01/this.mass)
+            const randomX = (Math.random()-0.5) * 0.015625; // Precomputed 1/64
+            const randomY = (Math.random()-0.5) * 0.0625; // Precomputed 1/16
+            this.x += randomX + (0.01/this.mass);
+            this.y += randomY;
         }
-        let targetY=this.mass*4
-        if (this.y>targetY){ this.y=this.y-0.01} else {this.y=this.y+0.01 }
-        if (this.x<0){ this.x=this.x+64}
-        if (this.x>64){ this.x=this.x-64}
-        if (this.y<this.mass){ this.y=this.mass}
-        if (this.y>16-this.mass){ this.y=16-this.mass}
+        const targetY = this.mass * 4;
+        this.y += (this.y > targetY) ? -0.01 : 0.01;
+        
+        // Optimize wrapping with conditional checks
+        if (this.x < 0) this.x += 64;
+        else if (this.x > 64) this.x -= 64;
+        
+        // Clamp Y position
+        if (this.y < this.mass) this.y = this.mass;
+        else if (this.y > 16 - this.mass) this.y = 16 - this.mass;
     }
 
     render()
     {
-        let pl=new PixelList()
-        let px1=new Pixel(this.x,this.y,this.color)
-        pl.add(px1)
-        for (let radius=0;radius<this.mass;radius++)
-        {   
-            let color=this.color.copy()
-            color.a=1-(radius/this.mass)
-            pl.add(new DrawCircle(this.x,this.y,radius,color))
+        const pl = new PixelList();
+        
+        // Anti-aliasing: use subpixel positioning
+        const floorX = Math.floor(this.x);
+        const floorY = Math.floor(this.y);
+        const fracX = this.x - floorX;
+        const fracY = this.y - floorY;
+        
+        // Render with anti-aliasing on center pixel
+        const centerColor = this.color.copy();
+        pl.add(new Pixel(floorX, floorY, centerColor));
+        
+        // Add subpixel anti-aliasing to adjacent pixels
+        if (fracX > 0.3) {
+            const rightColor = this.color.copy();
+            rightColor.a *= fracX;
+            pl.add(new Pixel(floorX + 1, floorY, rightColor));
         }
-        return pl
+        if (fracY > 0.3) {
+            const downColor = this.color.copy();
+            downColor.a *= fracY;
+            pl.add(new Pixel(floorX, floorY + 1, downColor));
+        }
+        
+        // Optimize circle rendering - only render every other radius for large particles
+        const step = this.mass > 4 ? 2 : 1;
+        for (let radius = step; radius < this.mass; radius += step) {
+            const color = this.color.copy();
+            color.a = (1 - (radius / this.mass)) * 0.8;
+            pl.add(new DrawCircle(this.x, this.y, radius, color));
+        }
+        return pl;
     }
 }
 
@@ -135,95 +162,108 @@ export class Beleepuniverse
         this.matter.splice(0,len)
 
     }
-    colorMix(c1,c2,weight1,weight2)
+    colorMix(c1, c2, weight1, weight2)
     {
-        let factor=0.5
-        let f=Math.min(weight1,weight2)/Math.max(weight1,weight2)
-        if (weight1>weight2) { factor=1-f } else { factor=f}
-        //factor is weight for c1. c2 uses 1-factor
-        let r=(c1.r*factor)+(c2.r*(1-factor))
-        let g=(c1.g*factor)+(c2.g*(1-factor))
-        let b=(c1.b*factor)+(c2.b*(1-factor))
-        return new Color(r,g,b,c1.a)
+        const totalWeight = weight1 + weight2;
+        if (totalWeight === 0) return c1;
+        
+        const factor = weight1 / totalWeight;
+        const invFactor = 1 - factor;
+        
+        // Optimized color blending
+        return new Color(
+            c1.r * factor + c2.r * invFactor,
+            c1.g * factor + c2.g * invFactor,
+            c1.b * factor + c2.b * invFactor,
+            c1.a
+        );
     }
 
     update(speed)
     {
-       
-        let distance=100
-        for (let p=0;p<this.matter.length;p++)
-        {
-           
-            this.matter[p].update()
-            let randomElIndex=Math.round(Math.random()*this.matter.length-1)
-            if ( this.matter[randomElIndex]  && randomElIndex!=p)
-            {
-               distance=Math.sqrt(Math.pow(this.matter[p].x-this.matter[randomElIndex].x,2)+Math.pow(this.matter[p].y-this.matter[randomElIndex].y,2))
-               if (distance<this.matter[p].mass)
-                {
-                    if (this.matter[p].type==this.matter[randomElIndex].type)
-                    {
-                        //go away (same type)
-                        this.matter[p].attract(this.matter[randomElIndex],1+speed)
-
-                    }
-                    else
-                    {
-                        //move to (diff type)
-                        this.matter[p].attract(this.matter[randomElIndex],1-speed)
-                    }
-
-                
-                }
-
+        const len = this.matter.length;
         
-               
-                //console.log(distance);
-
-                
-            }
-            if (distance<this.matter[p].mass && this.matter[randomElIndex] && this.matter[p].mass>=this.matter[randomElIndex].mass)
-            {
-                this.matter[p].energy+=(this.matter[randomElIndex].energy/10)
-                this.matter[p].mass+=(this.matter[randomElIndex].mass/10)
-                this.matter[randomElIndex].energy= this.matter[randomElIndex].energy*0.9
-                this.matter[randomElIndex].mass= this.matter[randomElIndex].mass*0.9
-               this.matter[p].color=this.colorMix(this.matter[p].color,this.matter[randomElIndex].color,this.matter[p].mass,this.matter[randomElIndex].mass)
-            }
-
-          
-
-            if (this.matter[p].mass>this.matter[p].maxmass)
-            {
-                let r=Math.random()*10
-                for (let s=0; s<this.matter[p].energy;s++)
-                {
-                    let splitfactor=Math.random()
-                    let antisplitfactor=1-splitfactor
-                    let energy=Number(this.matter[p].energy)
-                    let mass=Number(this.matter[p].mass)
-                    this.matter[p].energy=(energy*splitfactor)
-                    this.matter[p].mass=(mass*splitfactor)
-                    let o=this.matter[p]
-                    let typecolor
-                    switch (o.type)
-                    {
-                        case 0: typecolor=new Color(255,0,0,0.5); break;
-                        case 1: typecolor=new Color(0,255,0,0.5); break;
-                        case 2: typecolor=new Color(0,0,255,0.5); break;
-                    }
-                    this.matter.push(new BeleepParticle(o.x,o.y,energy*antisplitfactor,mass*antisplitfactor,o.type,typecolor))
-                }
-            }
-
-            if (this.matter[p].mass<0.1)
-            {
-                this.matter[p]=undefined
-            }
-        
-          
+        // Optimize: Update all particles first
+        for (let p = 0; p < len; p++) {
+            this.matter[p].update();
         }
-        this.filter()
+        
+        // Optimize: Reduce collision checks - only check 1-2 particles per frame per particle
+        for (let p = 0; p < len; p++) {
+            const currentParticle = this.matter[p];
+            
+            // Check only 1-2 random neighbors instead of all
+            const checksPerFrame = Math.min(2, len - 1);
+            for (let c = 0; c < checksPerFrame; c++) {
+                const randomElIndex = Math.floor(Math.random() * len);
+                if (randomElIndex === p || !this.matter[randomElIndex]) continue;
+                
+                const other = this.matter[randomElIndex];
+                
+                // Optimize distance calculation - avoid sqrt when possible
+                const dx = currentParticle.x - other.x;
+                const dy = currentParticle.y - other.y;
+                const distSq = dx * dx + dy * dy;
+                const massThreshold = currentParticle.mass * currentParticle.mass;
+                
+                // Only calculate actual distance if within rough threshold
+                if (distSq < massThreshold * 4) {
+                    const distance = Math.sqrt(distSq);
+                    
+                    if (distance < currentParticle.mass) {
+                        if (currentParticle.type === other.type) {
+                            // go away (same type)
+                            currentParticle.attract(other, 1 + speed);
+                        } else {
+                            // move to (diff type)
+                            currentParticle.attract(other, 1 - speed);
+                        }
+                        
+                        // Merge particles if close enough
+                        if (currentParticle.mass >= other.mass) {
+                            currentParticle.energy += other.energy * 0.1;
+                            currentParticle.mass += other.mass * 0.1;
+                            other.energy *= 0.9;
+                            other.mass *= 0.9;
+                            currentParticle.color = this.colorMix(currentParticle.color, other.color, currentParticle.mass, other.mass);
+                        }
+                    }
+                }
+            }
+
+            // Optimize splitting - limit splits and cache color lookup
+            if (currentParticle.mass > currentParticle.maxmass) {
+                // Limit to max 3 splits instead of energy-based for performance
+                const splitCount = Math.min(3, Math.floor(currentParticle.energy));
+                const typeColors = [new Color(255,0,0,0.5), new Color(0,255,0,0.5), new Color(0,0,255,0.5)];
+                const typecolor = typeColors[currentParticle.type];
+                
+                for (let s = 0; s < splitCount; s++) {
+                    const splitfactor = Math.random();
+                    const antisplitfactor = 1 - splitfactor;
+                    const energy = currentParticle.energy;
+                    const mass = currentParticle.mass;
+                    
+                    currentParticle.energy *= splitfactor;
+                    currentParticle.mass *= splitfactor;
+                    
+                    this.matter.push(new BeleepParticle(
+                        currentParticle.x, currentParticle.y, 
+                        energy * antisplitfactor, 
+                        mass * antisplitfactor, 
+                        currentParticle.type, typecolor
+                    ));
+                }
+            }
+
+            // Mark small particles for removal
+            if (currentParticle.mass < 0.1) {
+                this.matter[p] = undefined;
+            }
+        }
+        
+        // Filter out undefined particles
+        this.filter();
     }
 
     render()

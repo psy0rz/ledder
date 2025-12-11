@@ -86,16 +86,15 @@ class PhotonStack
 
     render()
     {
-        let pl=new PixelList()
-        if (this.stack.length>0)
+        if (this.stack.length === 0) return null;
+        if (this.stack.length === 1) return this.stack[0].pixel;
+        
+        let pl = new PixelList();
+        for (let p=0; p<this.stack.length; p++)
         {
-            for (let p=0;p<this.stack.length;p++)
-            {
-                pl.add(this.stack[p].render())
-                //console.log(this.stack[p].pixel.color)
-            }
+            pl.add(this.stack[p].pixel);
         }
-        return pl
+        return pl;
     }
 }
 
@@ -131,15 +130,10 @@ class Photonmatrix
 
     xyToIndex(x:number,y:number)
     {
-        let intx=Math.round(x)
-        let inty=Math.round(y)
-        let index=0
-        if (intx>=0 && intx<=this.width && inty>=0 && inty<=this.height)
-        {
-            index=(this.width * inty) + intx 
-        }
-        //console.log(intx,inty,this.width,this.height, this.width*this.height,index)
-        return index
+        const intx = Math.floor(x);
+        const inty = Math.floor(y);
+        if (intx < 0 || intx >= this.width || inty < 0 || inty >= this.height) return -1;
+        return (this.width * inty) + intx;
     }
 
     addPixelList(pixellist)
@@ -149,10 +143,9 @@ class Photonmatrix
 
     addPixel(pixel:Pixel)
     {
-        let index=this.xyToIndex(pixel.x,pixel.y)
-        if (this.photonStack[index])
-        {
-            this.photonStack[index].addPixel(pixel)
+        const index = this.xyToIndex(pixel.x, pixel.y);
+        if (index >= 0) {
+            this.photonStack[index].addPixel(pixel);
         }
     }
 
@@ -170,39 +163,43 @@ class Photonmatrix
  
     addRandomPhoton(colorPalette,colorindex,colorshift)
     {
-      for (let q=0;q<3;q++)
+      const centerX = this.width / 2;
+      const centerY = this.height / 2;
+      const radiusFactor = this.width / 720; // Pre-calculate 360/(360/width/2)
+      
+      for (let q=0; q<3; q++)
       {
-        this.magic++
-        for (let i=0;i<360;i++)
+        this.magic++;
+        const magicOffset = this.magic / 60;
+        
+        for (let i=0; i<360; i++)
         {
-                colorindex=colorindex+colorshift
-                colorindex=colorindex%colorPalette.length
-                let radius=i/(360/this.width/2)
-                let x=Math.round(Math.sin((i+this.magic)/60)*(radius) +(this.width/2 ))
-                let y=Math.round(Math.cos((i+this.magic)/60)*(radius) + (this.height/2))
-                let color=colorPalette[colorindex].copy()
-                //color.a=0.2
-                this.addPixel(new Pixel(x,y,color))
+                colorindex = (colorindex + colorshift) % colorPalette.length;
+                const angle = (i + this.magic) / 60;
+                const radius = i * radiusFactor;
+                const x = Math.round(Math.sin(angle) * radius + centerX);
+                const y = Math.round(Math.cos(angle) * radius + centerY);
+                this.addPixel(new Pixel(x, y, colorPalette[colorindex]));
         }
       }
     }
 
     addRandomCircles(colorPalette, colorindex, colorshift)
     {
-        //put random pixels at random positions (just for testing)
-        for (let radius=0; radius<this.width;radius++)
+        const centerX = this.width / 2;
+        const centerY = this.height / 2;
+        const paletteLen = colorPalette.length;
+        
+        for (let radius=0; radius<this.width; radius++)
         {
             for (let circle=0; circle<360; circle++)
             {
-               
-                 colorindex=colorindex+colorshift
-                 colorindex=colorindex%colorPalette.length
-                 let x=Math.round(Math.sin(circle/60)*(radius) +(this.width/2 ))
-                 let y=Math.round(Math.cos(circle/60)*(radius) + (this.height/2))
-                 let color=colorPalette[colorindex].copy()
-                 color.a=0.5
-                 this.addPixel(new Pixel(x,y,color))
-             
+                colorindex = (colorindex + colorshift) % paletteLen;
+                const angle = circle / 60;
+                const x = Math.round(Math.sin(angle) * radius + centerX);
+                const y = Math.round(Math.cos(angle) * radius + centerY);
+                const color = colorPalette[colorindex];
+                this.addPixel(new Pixel(x, y, new Color(color.r, color.g, color.b, 0.5)));
             }
         }
     }
@@ -238,28 +235,19 @@ class Photonmatrix
 
     addClouds(colorPalette, colorindex, colorshift)
     {
-        
-            this.magic++
-            this.magic=this.magic%this.width
-            for (let x=0;x<this.width;x++)
+            this.magic = (this.magic + 1) % this.width;
+            const paletteLen = colorPalette.length;
+            const invPI = 1 / Math.PI;
+            
+            for (let x=0; x<this.width; x++)
             {
-                colorindex=colorindex+colorshift
-                colorindex=colorindex%colorPalette.length
-                
-               
-
-                let y=Math.random()*this.height
-                let intensity=128 //Math.round(Math.sin((x)/10)*127+127)
-                //this.addPixel(new Pixel(x,y,new Color(intensity,intensity,intensity,0.4)))
-                
-                    let xx=(Math.round(x)+(this.magic))%this.width
-                    let color=colorPalette[(colorindex+x)%colorPalette.length]
-                    let ccolor=color.copy()
-                    ccolor.a=(Math.sin((x+y)/Math.PI)+1)/2
-                    this.addPixel(new Pixel(xx,y,ccolor))
-               
+                colorindex = (colorindex + colorshift) % paletteLen;
+                const y = Math.random() * this.height;
+                const xx = (x + this.magic) % this.width;
+                const color = colorPalette[(colorindex + x) % paletteLen];
+                const alpha = (Math.sin((x + y) * invPI) + 1) * 0.5;
+                this.addPixel(new Pixel(xx, y, new Color(color.r, color.g, color.b, alpha)));
             }
-        
     }
 
     julia(c,px:number,py:number,width:number,height:number,zoom:number)
@@ -308,15 +296,15 @@ class Photonmatrix
             if (this.magic2>hotspots.length-1) {  this.magic2=0}
         }
        
-        for (let x=0;x<this.width;x++){
-            for (let y=0;y<this.height;y++){
-                let pixelcolor:number=this.julia(c,x,y,this.width,this.height,zoom)
-                let color:Color=colorpalette[pixelcolor%colorpalette.length]
-                if (pixelcolor>0)
+        const paletteLen = colorpalette.length;
+        for (let x=0; x<this.width; x++){
+            for (let y=0; y<this.height; y++){
+                const pixelcolor = this.julia(c, x, y, this.width, this.height, zoom);
+                if (pixelcolor > 0)
                 {
-                    let c=color.copy()
-                    c.a=0.7
-                    this.addPixel(new Pixel(x,y,c))
+                    const color = colorpalette[pixelcolor % paletteLen];
+                    const c = new Color(color.r, color.g, color.b, 0.7);
+                    this.addPixel(new Pixel(x, y, c));
                 }
             }
         }
@@ -364,15 +352,15 @@ class Photonmatrix
 
     render()
     {
-        let pl=new PixelList()
-        for (let p=0;p<this.photonStack.length;p++)
+        const pl = new PixelList();
+        for (let p=0; p<this.photonStack.length; p++)
         {
-            if (this.photonStack[p])
-            {
-                pl.add(this.photonStack[p].render())
+            const rendered = this.photonStack[p].render();
+            if (rendered) {
+                pl.add(rendered);
             }
         }
-        return pl
+        return pl;
     }
    
 }

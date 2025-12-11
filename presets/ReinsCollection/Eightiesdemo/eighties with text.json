@@ -276,6 +276,384 @@
      "value": 0
     }
    }
+  },
+  "Eighties demo": {
+   "Scene height": {
+    "value": 64
+   },
+   "Vertical scroll speed": {
+    "value": 0.0001
+   },
+   "Fractal Sky": {
+    "Top color": {
+     "r": 0,
+     "g": 0,
+     "b": 100,
+     "a": 0.2
+    },
+    "Bottom color": {
+     "r": 0,
+     "g": 0,
+     "b": 255,
+     "a": 0.5
+    },
+    "Fractal galaxy enabled": {
+     "enabled": true
+    },
+    "Zoom speed": {
+     "value": 1
+    },
+    "Change speed": {
+     "value": 0.0001
+    },
+    "Stars enabled": {
+     "enabled": true
+    },
+    "Colorshading enabled": {
+     "enabled": true
+    },
+    "Colorshading": {
+     "r": 0,
+     "g": 0,
+     "b": 0,
+     "a": 1
+    },
+    "Enabled": {
+     "enabled": true
+    }
+   },
+   "Sun": {
+    "Sun enabled": {
+     "enabled": true
+    },
+    "Radius": {
+     "value": 32
+    },
+    "Beams": {
+     "value": 90
+    },
+    "Inner color": {
+     "r": 255,
+     "g": 255,
+     "b": 100,
+     "a": 1
+    },
+    "Outer color": {
+     "r": 255,
+     "g": 0,
+     "b": 0,
+     "a": 0.1
+    },
+    "Enabled": {
+     "enabled": true
+    }
+   },
+   "Clouds": {
+    "Clouds": {
+     "enabled": true
+    },
+    "Zoom speed": {
+     "value": 1
+    },
+    "Amplitude": {
+     "value": 1
+    },
+    "Enabled": {
+     "enabled": true
+    }
+   },
+   "Grid": {
+    "Grid enabled": {
+     "enabled": true
+    },
+    "Horizontal line": {
+     "value": 12
+    },
+    "Hline top color": {
+     "r": 1,
+     "g": 1,
+     "b": 100,
+     "a": 1
+    },
+    "Vertical line": {
+     "value": 12
+    },
+    "Enabled": {
+     "enabled": true
+    }
+   },
+   "Ground sinus": {
+    "Groundsinus enabled": {
+     "enabled": true
+    },
+    "Enabled": {
+     "enabled": true
+    }
+   },
+   "Sprites": {
+    "Johny Walker": {
+     "enabled": true
+    },
+    "Pacman": {
+     "enabled": true
+    },
+    "Ghost": {
+     "enabled": true
+    },
+    "Food": {
+     "enabled": true
+    },
+    "Bird": {
+     "enabled": true
+    },
+    "Bird poop": {
+     "enabled": true
+    },
+    "Rocket": {
+     "enabled": true
+    },
+    "Fire": {
+     "enabled": true
+    },
+    "Enabled": {
+     "enabled": true
+    }
+   },
+   "3D cube": {
+    "Show 3D rotating cube": {
+     "enabled": true
+    },
+    "Size": {
+     "value": 10
+    },
+    "Cube color": {
+     "r": 255,
+     "g": 255,
+     "b": 0,
+     "a": 1
+    },
+    "Matter color": {
+     "r": 255,
+     "g": 0,
+     "b": 0,
+     "a": 1
+    },
+    "Enabled": {
+     "enabled": true
+    }
+   },
+   "Post-processing FX": {
+    "Anti-aliasing": {
+     "enabled": false
+    },
+    "Motion Blur": {
+     "enabled": false
+    },
+    "Blur Amount": {
+     "value": 3
+    },
+    "Enabled": {
+     "enabled": true
+    }
+   },
+   "Date/Time": {
+    "Show date": {
+     "enabled": true
+    },
+    "Show time": {
+     "enabled": true
+    },
+    "Enabled": {
+     "enabled": true
+    }
+   },
+   "Marquee": {
+    "Font": {
+     "selected": "Quasar"
+    },
+    "Font height": {
+     "value": 1
+    },
+    "Font width": {
+     "value": 1
+    },
+    "Text": {
+     "text": "Hello World"
+    },
+    "Text color": {
+     "r": 33,
+     "g": 255,
+     "b": 0,
+     "a": 1
+    },
+    "Wobble": {
+     "Enabled": {
+      "enabled": false
+     },
+     "X frequency (hz)": {
+      "value": 1
+     },
+     "X amplitude": {
+      "value": 0
+     },
+     "Y frequency (hz)": {
+      "value": 1
+     },
+     "Y amplitude": {
+      "value": 5
+     },
+     "Phase shift": {
+      "value": 0
+     }
+    },
+    "Stars": {
+     "Enabled": {
+      "enabled": false
+     }
+    },
+    "Star field": {
+     "Enabled": {
+      "enabled": false
+     }
+    },
+    "The Matrix": {
+     "Enabled": {
+      "enabled": false
+     }
+    },
+    "Scrolling": {
+     "Enabled": {
+      "enabled": false
+     },
+     "FPS": {
+      "value": 60
+     },
+     "Subpixel filtering": {
+      "enabled": true
+     },
+     "Rotate interval": {
+      "value": 1
+     },
+     "Rotate interval randomizer": {
+      "value": 0
+     },
+     "Rotate X step": {
+      "value": -1
+     },
+     "Rotate Y step": {
+      "value": 0
+     },
+     "Circular": {
+      "enabled": false
+     },
+     "Show one time only": {
+      "enabled": false
+     }
+    },
+    "Flames": {
+     "Enabled": {
+      "enabled": false
+     },
+     "Fire density [%]": {
+      "value": 10
+     },
+     "Fire intensity [%]": {
+      "value": 100
+     },
+     "Fire depth [pixels]": {
+      "value": 2
+     },
+     "Fire wind X": {
+      "value": 0.1
+     },
+     "Fire wind Y": {
+      "value": -0.2
+     },
+     "Fire cycle": {
+      "Color cycle time": {
+       "value": 15
+      },
+      "Color cycle time randomizer": {
+       "value": 15
+      },
+      "Color cycle repeat count": {
+       "value": 1
+      },
+      "Color cycle mode": {
+       "selected": "reverse"
+      },
+      "Color cycle pattern": {
+       "selected": "Bertrik fire"
+      },
+      "Color cycle pattern range": {
+       "from": 0,
+       "to": 100
+      },
+      "Enabled": {
+       "enabled": true
+      }
+     }
+    },
+    "Twinkle": {
+     "Enabled": {
+      "enabled": false
+     }
+    },
+    "Color pattern": {
+     "Enabled": {
+      "enabled": false
+     }
+    },
+    "Cursor": {
+     "Enabled": {
+      "enabled": false
+     }
+    },
+    "Enabled": {
+     "enabled": true
+    }
+   },
+   "Flames": {
+    "Fire colors": {
+     "selected": "Bertrik fire"
+    },
+    "Fire colors range": {
+     "from": 0,
+     "to": 100
+    },
+    "Fire interval": {
+     "value": 1
+    },
+    "Fire intensity %": {
+     "from": 0,
+     "to": 100
+    },
+    "Fire wildness %": {
+     "value": 10
+    },
+    "Fire decay %": {
+     "value": 10
+    },
+    "Fire sintel factor": {
+     "value": 0
+    },
+    "Fire speed": {
+     "value": 1
+    },
+    "Fire X range %": {
+     "from": 0,
+     "to": 100
+    },
+    "Enabled": {
+     "enabled": true
+    }
+   },
+   "Enabled": {
+    "enabled": true
+   }
+  },
+  "Enabled": {
+   "enabled": true
   }
  }
 }

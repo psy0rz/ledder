@@ -106,6 +106,10 @@ export class Object3d {
     points
     lines
     color:Color
+    
+    // Cached buffers for optimization
+    private pointBuffer: any[] = []
+    private perspectiveBuffer: any[] = []
 
     constructor(x:number,y:number,z:number, width:number,height:number,depth:number,color:Color)
     {
@@ -142,32 +146,30 @@ export class Object3d {
     render(box: PixelBox,gameControls)
     {
         let pl=new PixelList()
+        
         //pointbuffer is a copy of the basic points with aded transformation and stuff
         //it is calculated before every render to prevent rounding error accumulations 
-        let pointBuffer=[]
-        let perspectiveBuffer=[]
+        this.pointBuffer.length = 0
+        this.perspectiveBuffer.length = 0
 
         //transform points and put all transformed points into an new array (dont mess with the originals)
         for (let p=0;p<this.points.length;p++)
         {
             let newpoint=this.points[p].rotateX(this.transformation.rotate.x).rotateY(this.transformation.rotate.y).rotateZ(this.transformation.rotate.z)
             newpoint.color=this.points[p].color
-            pointBuffer.push(newpoint)
+            this.pointBuffer.push(newpoint)
         }
 
-        let depthLimits=this.getZProjectionlimits(pointBuffer)
+        let depthLimits=this.getZProjectionlimits(this.pointBuffer)
         let centerX=box.width()/2
         let centerY=box.height()/2
-        //draw points
-        for (let p=0;p<pointBuffer.length;p++)
+        
+        // Pre-calculate perspective for all points
+        for (let p=0;p<this.pointBuffer.length;p++)
         {  
-           
-    
-            let x=pointBuffer[p].x+this.transformation.translate.x
-            let y=pointBuffer[p].y+this.transformation.translate.y
-            let z=pointBuffer[p].z+this.transformation.translate.z
-            let c=this.color
-            if (this.points[p].color) { c=this.points[p].color } else {}
+            let x=this.pointBuffer[p].x+this.transformation.translate.x
+            let y=this.pointBuffer[p].y+this.transformation.translate.y
+            let z=this.pointBuffer[p].z+this.transformation.translate.z
 
             //depth correction (perspective)
             let xDiff=x-centerX
@@ -175,36 +177,40 @@ export class Object3d {
             let depthFactor=Math.pow(gameControls.perspective,z)
             x=centerX+(xDiff*depthFactor)
             y=centerY+(yDiff*depthFactor)
-            
 
             //color (more distance is less alpha)
-            let depthcolor=c.copy()
-            depthcolor.a=1-Math.max(0.1,(pointBuffer[p].z)*depthLimits.alphaPerZ)
-            perspectiveBuffer.push({x:x,y:y,z:z,a:depthcolor.a})
-   
-            //draw point
-            pl.add(new Pixel(x,y,depthcolor))
+            let alpha=1-Math.max(0.1,(this.pointBuffer[p].z)*depthLimits.alphaPerZ)
+            this.perspectiveBuffer.push({x:x,y:y,z:z,a:alpha})
+        }
+        
+        //draw points (optimized - no per-object effects)
+        for (let p=0;p<this.pointBuffer.length;p++)
+        {
+            let c=this.color
+            if (this.points[p].color) { c=this.points[p].color }
+            let depthcolor=new Color(c.r, c.g, c.b, this.perspectiveBuffer[p].a)
+            pl.add(new Pixel(this.perspectiveBuffer[p].x, this.perspectiveBuffer[p].y, depthcolor))
         }
 
         
         if (gameControls.wireframe)
         {
-            //drawlines
+            //drawlines - optimized to avoid color.copy()
             for (let l=0;l<this.lines.length;l++)
             {
                 let p1=this.lines[l].p1
                 let p2=this.lines[l].p2
-                let x1=perspectiveBuffer[p1].x
-                let y1=perspectiveBuffer[p1].y
+                let x1=this.perspectiveBuffer[p1].x
+                let y1=this.perspectiveBuffer[p1].y
                
-                let c1=pointBuffer[p1].color.copy()
-                c1.a=perspectiveBuffer[p1].a
+                let color1=this.pointBuffer[p1].color
+                let c1=new Color(color1.r, color1.g, color1.b, this.perspectiveBuffer[p1].a)
 
-                let x2=perspectiveBuffer[p2].x
-                let y2=perspectiveBuffer[p2].y
+                let x2=this.perspectiveBuffer[p2].x
+                let y2=this.perspectiveBuffer[p2].y
               
-                let c2=pointBuffer[p2].color.copy()
-                c2.a=perspectiveBuffer[p2].a
+                let color2=this.pointBuffer[p2].color
+                let c2=new Color(color2.r, color2.g, color2.b, this.perspectiveBuffer[p2].a)
 
                 pl.add(new DrawLine(x1,y1,x2,y2,c1,c2))
             }
@@ -522,7 +528,7 @@ export default class Eightiesdemo extends Animator {
         }
 
             //add wandelaar
-            if (horizonH<box.width() && horizonH>0)
+            if (horizonH<box.width() && horizonH>0                                                 )
                 {
                     pl.add(this.getWandelaar(frameNr/5,xOffset,horizonH+6))
                 } 
@@ -1120,6 +1126,12 @@ export default class Eightiesdemo extends Animator {
         const cubeColor=cube3dControl.color("Cube color",255,255,0,1,true)
         const cubematterColor=cube3dControl.color("Matter color",255,0,0,1,true)
         const cube3dSettings={cube3dEnabled:cube3dEnabled,cube3dSize:cube3dSize,cubeColor:cubeColor,cubematterColor:cubematterColor}
+        
+        // Post-processing effects applied to final render
+        const postFxControl=appControl.group("Post-processing FX",false)
+        const antiAliasingEnabled=postFxControl.switch("Anti-aliasing",true)
+        const motionBlurEnabled=postFxControl.switch("Motion Blur",false)
+        const motionBlurSteps=postFxControl.value("Blur Amount",3,1,5,1,true)
 
         const datetimeControl=appControl.group("Date/Time",false)
         const dateControl=datetimeControl.switch("Show date",true)
@@ -1141,12 +1153,7 @@ export default class Eightiesdemo extends Animator {
         const firebox=new PixelBox(box);
         const overlay=new PixelList();
         const canvas3d=new PixelList();
-        box.add(firebox);
-        box.add(canvas);
-        box.add(canvas3d);
-        box.add(sprites);
-       
-        box.add(overlay);
+        // Don't add layers to box here - we'll add them fresh each frame
        let animationNum=0;
       let font=fonts["Pixel-Gosub"];
       font.load();
@@ -1161,15 +1168,17 @@ export default class Eightiesdemo extends Animator {
       scene3d.objects.push(stars)
       scene3d.objects.push(cube)
       let rotation3d=0
-      let  controlSettings={rotation:1,wireframe:true,perspective:0.98,stars:100}
+      let  controlSettings={rotation:1,wireframe:true,perspective:0.98,stars:100,antiAliasing:false,antiAliasingThreshold:0.3,motionBlur:false,motionBlurSteps:3,frameNr:0}
        let textscroller=new Marquee()
        let horizonDir=verticalScrollSpeed.value;
        let yOffset=0;
        textscroller.run(box,scheduler,extMarqueeControl);
        let fire=new Fire();
        fire.run(firebox,scheduler,extfireControl);
-       scheduler.interval(1, (frameNr) => {
+       // Store previous frame for motion blur post-processing
+       let prevFramePixels: Map<string, Pixel> = new Map();
        
+       scheduler.interval(1, (frameNr) => {
             canvas.clear();
             
             if (horizonFactor>1) { horizonDir=-1* verticalScrollSpeed.value}
@@ -1261,6 +1270,120 @@ export default class Eightiesdemo extends Animator {
 
             canvas.crop(box)
             
+            // Combine all layers into box fresh each frame
+            box.clear();
+            box.add(firebox);
+            box.add(canvas);
+            box.add(canvas3d);
+            box.add(sprites);
+            box.add(overlay);
+            
+            // Apply post-processing effects to final render (Fishtank method)
+            if (antiAliasingEnabled.enabled || motionBlurEnabled.enabled) {
+                // Flatten all layers into a single combined PixelList
+                const combined = new PixelList();
+                box.forEachPixel((pixel) => {
+                    combined.add(pixel);
+                });
+                
+                let result = combined;
+                
+                // Anti-aliasing: Average neighboring pixels
+                if (antiAliasingEnabled.enabled) {
+                    const pixelMap = new Map<string, Pixel>();
+                    
+                    // Build pixel map
+                    result.forEachPixel((pixel) => {
+                        const key = `${Math.floor(pixel.x)},${Math.floor(pixel.y)}`;
+                        pixelMap.set(key, pixel);
+                    });
+                    
+                    const antiAliased = new PixelList();
+                    
+                    // Apply anti-aliasing
+                    pixelMap.forEach((pixel) => {
+                        const x = Math.floor(pixel.x);
+                        const y = Math.floor(pixel.y);
+                        
+                        // Sample neighboring pixels
+                        const neighbors: Pixel[] = [];
+                        for (let dy = -1; dy <= 1; dy++) {
+                            for (let dx = -1; dx <= 1; dx++) {
+                                const neighborKey = `${x + dx},${y + dy}`;
+                                const neighbor = pixelMap.get(neighborKey);
+                                if (neighbor) {
+                                    neighbors.push(neighbor);
+                                }
+                            }
+                        }
+                        
+                        if (neighbors.length > 1) {
+                            // Average colors
+                            let r = 0, g = 0, b = 0, a = 0;
+                            for (const n of neighbors) {
+                                r += n.color.r;
+                                g += n.color.g;
+                                b += n.color.b;
+                                a += n.color.a;
+                            }
+                            const count = neighbors.length;
+                            antiAliased.add(new Pixel(x, y, new Color(
+                                Math.round(r / count),
+                                Math.round(g / count),
+                                Math.round(b / count),
+                                a / count
+                            )));
+                        } else {
+                            antiAliased.add(pixel);
+                        }
+                    });
+                    
+                    result = antiAliased;
+                }
+                
+                // Motion blur: blend with previous frame
+                if (motionBlurEnabled.enabled) {
+                    if (prevFramePixels.size > 0) {
+                        const blurPixels = new PixelList();
+                        const blurStrength = motionBlurSteps.value / 5; // Normalize to 0.2-1.0 for stronger effect
+                        
+                        // Build current frame map
+                        const currentMap = new Map<string, boolean>();
+                        result.forEachPixel((pixel) => {
+                            currentMap.set(`${Math.floor(pixel.x)},${Math.floor(pixel.y)}`, true);
+                        });
+                        
+                        // Add ALL previous frame pixels with fading (not just moved ones)
+                        prevFramePixels.forEach((prevPixel, key) => {
+                            // Add previous frame pixels with reduced opacity to create trail
+                            blurPixels.add(new Pixel(prevPixel.x, prevPixel.y, new Color(
+                                prevPixel.color.r,
+                                prevPixel.color.g,
+                                prevPixel.color.b,
+                                prevPixel.color.a * blurStrength * 0.7
+                            )));
+                        });
+                        
+                        if (blurPixels.size > 0) {
+                            // Add blur pixels BEFORE current frame so current is on top
+                            const temp = new PixelList();
+                            temp.add(blurPixels);
+                            temp.add(result);
+                            result = temp;
+                        }
+                    }
+                    
+                    // Store current frame pixels for next blur
+                    prevFramePixels = new Map();
+                    result.forEachPixel((pixel) => {
+                        prevFramePixels.set(`${Math.floor(pixel.x)},${Math.floor(pixel.y)}`, pixel);
+                    });
+                }
+                
+                // Replace box content with processed result
+                box.clear();
+                box.add(result);
+            }
             //
         })
 

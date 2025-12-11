@@ -191,7 +191,7 @@ class VectorComposition {
             vectorImage.translate((i*(charWidth+charSpaceAfter))+x,y)
             this.vectorImages.push(vectorImage)
         }
-        console.log(this.vectorImages)
+        // console.log(this.vectorImages)
      }
 
    

@@ -512,7 +512,7 @@ class Renderer3D {
         // OPTIMIZED: Pre-calculate lighting direction (static)
         const lightIntensity = Math.max(0.3, -triangle.getNormal().dot(this.lightDir)) * lightingMultiplier
         
-        const litColor = triangle.color.copy()
+        const litColor = new Color(triangle.color.r, triangle.color.g, triangle.color.b, triangle.color.a)
         litColor.r = Math.floor(litColor.r * lightIntensity)
         litColor.g = Math.floor(litColor.g * lightIntensity)
         litColor.b = Math.floor(litColor.b * lightIntensity)
@@ -766,7 +766,7 @@ class ElectricSpark {
             
             // Add glow effect for brighter sparks
             if (this.color.a > 0.5) {
-                const glowColor = this.color.copy()
+                const glowColor = new Color(this.color.r, this.color.g, this.color.b, this.color.a)
                 glowColor.a *= 0.3
                 
                 // Add surrounding glow with subpixel precision
@@ -1052,7 +1052,7 @@ class FractalTree3D extends Mesh3D {
                 -0.01 - Math.random() * 0.02,  // Downward motion
                 (Math.random() - 0.5) * 0.01   // Random z-drift
             ),
-            leaf.color.copy()
+            new Color(leaf.color.r, leaf.color.g, leaf.color.b, leaf.color.a)
         )
         this.fallingLeaves.push(fallingLeaf)
     }
@@ -1281,7 +1281,7 @@ class FractalTree3D extends Mesh3D {
                 (startScreen.y < renderer.getHeight() + buffer || endScreen.y < renderer.getHeight() + buffer)) {
                 
                 // Get branch color and thickness - ENHANCED VISIBILITY
-                const branchColor = this.getBranchColor(branch.generation)
+                const branchColor = this.getBranchColor(branch.generation).copy()
                 branchColor.a = 1.0 // Force full opacity for visibility
                 
                 // FIXED: Ensure minimum thickness for visibility
@@ -1315,8 +1315,7 @@ class FractalTree3D extends Mesh3D {
             // Create emergency visible tree in center of screen
             const centerX = renderer.getWidth() / 2
             const centerY = renderer.getHeight() / 2
-            const trunkColor = colors.trunkBrown
-            trunkColor.a = 1.0
+            const trunkColor = new Color(colors.trunkBrown.r, colors.trunkBrown.g, colors.trunkBrown.b, 1.0)
             
             // Draw simple visible trunk
             for (let y = 0; y < 5; y++) {
@@ -1326,8 +1325,7 @@ class FractalTree3D extends Mesh3D {
             }
             
             // Draw simple branches
-            const leafColor = colors.springGreen
-            leafColor.a = 1.0
+            const leafColor = new Color(colors.springGreen.r, colors.springGreen.g, colors.springGreen.b, 1.0)
             pl.add(new Pixel(centerX - 2, centerY - 1, leafColor))
             pl.add(new Pixel(centerX + 2, centerY - 1, leafColor))
             pl.add(new Pixel(centerX - 1, centerY - 2, leafColor))
@@ -1359,7 +1357,7 @@ class FractalTree3D extends Mesh3D {
                 leafScreen.x >= -buffer && leafScreen.x < renderer.getWidth() + buffer &&
                 leafScreen.y >= -buffer && leafScreen.y < renderer.getHeight() + buffer) {
                 
-                const leafColor = this.getSeasonalLeafColor(season, seasonProgress)
+                const leafColor = this.getSeasonalLeafColor(season, seasonProgress).copy()
                 leafColor.a = 1.0 // Force full opacity for visibility
                 
                 // FIXED: Ensure minimum leaf size for visibility
@@ -1390,8 +1388,7 @@ class FractalTree3D extends Mesh3D {
         if (renderedLeaves === 0 && this.leaves.length > 0) {
             const centerX = renderer.getWidth() / 2
             const centerY = renderer.getHeight() / 2 - 5
-            const leafColor = colors.springGreen
-            leafColor.a = 1.0
+            const leafColor = new Color(colors.springGreen.r, colors.springGreen.g, colors.springGreen.b, 1.0)
             
             // Create simple visible leaves around center
             for (let lx = -3; lx <= 3; lx++) {
@@ -1425,7 +1422,7 @@ class FractalTree3D extends Mesh3D {
                 
                 // Add subtle motion trail
                 if (leaf.color.a > 0.3) {
-                    const trailColor = leaf.color.copy()
+                    const trailColor = new Color(leaf.color.r, leaf.color.g, leaf.color.b, leaf.color.a)
                     trailColor.a *= 0.3
                     renderer.renderSubpixel(pl, leafScreen.x, leafScreen.y - 1, trailColor)
                 }
@@ -2552,7 +2549,7 @@ class SkySystem2D {
                     const finalOpacity = strip.opacity * verticalFalloff * horizontalVariation * shimmer * intensity * timeVisibility
                     
                     if (finalOpacity > 0.02) {
-                        const auroraColor = strip.color.copy()
+                        const auroraColor = new Color(strip.color.r, strip.color.g, strip.color.b, strip.color.a)
                         auroraColor.a = finalOpacity
                         
                         // Use subpixel rendering for smoother aurora edges
@@ -2758,7 +2755,7 @@ class SkySystem2D {
             
             // Only render if star is within screen bounds AND above horizon AND visible
             if (star.x >= -1 && star.x < this.width + 1 && star.y >= -1 && star.y < horizonY + 1 && alpha > 0.05) {
-                const starColor = star.color.copy()
+                const starColor = new Color(star.color.r, star.color.g, star.color.b, star.color.a)
                 starColor.a = alpha
                 
                 // Draw lightning with subpixel precision for smooth movement
@@ -3008,7 +3005,7 @@ class SkySystem2D {
             if (obj.y >= horizonY) continue
             
             // Calculate time-based color modification
-            const objColor = obj.color.copy()
+            const objColor = new Color(obj.color.r, obj.color.g, obj.color.b, obj.color.a)
             objColor.a *= visibility
             
             // Add atmospheric haze effect during day
@@ -3320,8 +3317,8 @@ export default class Synthwave extends Animator {
             
             // Only render 3D if initialization succeeded
             if (renderer && camera) {
-                console.log("3D rendering active, frame:", frameNr)
-                try {
+                // console.log("3D rendering active, frame:", frameNr)
+                try{
                     renderer.clearDepthBuffer()
                     
                     // Calculate lighting multiplier for 3D scene based on UNIFIED time of day
@@ -3330,11 +3327,11 @@ export default class Synthwave extends Animator {
                                              timeOfDay < 0.35 || timeOfDay > 0.65 ? 0.5 + ((timeOfDay < 0.35 ? (timeOfDay - 0.25) : (0.75 - timeOfDay)) / 0.1 * 0.3) : // Dawn/dusk
                                              0.8 + (Math.cos(Math.abs(timeOfDay - 0.5) / 0.15 * Math.PI / 2) * 0.2) // Day - bright
                     
-                    console.log(`3D Lighting multiplier: ${lightingMultiplier.toFixed(2)} (unified timeOfDay: ${timeOfDay.toFixed(3)})`)
+                    // console.log(`3D Lighting multiplier: ${lightingMultiplier.toFixed(2)} (unified timeOfDay: ${timeOfDay.toFixed(3)})`)
                     
                     // Render sky system FIRST as background layer (behind all 3D objects)
                     if (showStarsControl.enabled && skySystem) {
-                        console.log("Rendering sky system as background...")
+                        // console.log("Rendering sky system as background...")
                         pl.add(skySystem.render(time, timeOfDay, windControl.value, height, lightningSpeedControl.value, lightningIntensityControl.value, auroraIntensityControl.value, showAuroraControl.enabled))
                     }
                     
@@ -3351,7 +3348,7 @@ export default class Synthwave extends Animator {
                     }
                     
                     if (fractalTree) {
-                        console.log("Rendering fractal tree with 2D rendering for maximum performance")
+                        // console.log("Rendering fractal tree with 2D rendering for maximum performance")
                         
                         // Update fractal tree with seasonal growth
                         const dayOfYear = Math.floor((time / speedControl.value) / framesPerDay) % 12

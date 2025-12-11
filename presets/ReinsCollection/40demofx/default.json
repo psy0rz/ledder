@@ -1,0 +1,141 @@
+{
+ "title": "",
+ "description": "",
+ "values": {
+  "Debug logging": {
+   "enabled": false
+  },
+  "Animation interval": {
+   "value": 1
+  },
+  "Effect speed": {
+   "value": 1
+  },
+  "Transition smoothness": {
+   "value": 0.1
+  },
+  "Mandelbrot Fractal": {
+   "enabled": false
+  },
+  "Plasma Effect": {
+   "enabled": true
+  },
+  "Metaballs": {
+   "enabled": true
+  },
+  "Fire Effect": {
+   "enabled": false
+  },
+  "Spiral Fractal": {
+   "enabled": false
+  },
+  "Rotating Cube": {
+   "enabled": false
+  },
+  "Tunnel Effect": {
+   "enabled": true
+  },
+  "Retro Sprites": {
+   "enabled": false
+  },
+  "Wave Distortion": {
+   "enabled": true
+  },
+  "Starfield 3D": {
+   "enabled": true
+  },
+  "Color Cycling": {
+   "enabled": true
+  },
+  "Scrolling Text": {
+   "enabled": false
+  },
+  "Julia Set": {
+   "enabled": false
+  },
+  "Rotozoomer": {
+   "enabled": true
+  },
+  "Maze 3D": {
+   "enabled": false
+  },
+  "Lens Distortion": {
+   "enabled": true
+  },
+  "Water Effect": {
+   "enabled": true
+  },
+  "Vector Balls": {
+   "enabled": true
+  },
+  "Sierpinski Triangle": {
+   "enabled": true
+  },
+  "Dragon Curve": {
+   "enabled": false
+  },
+  "Escher Stairs": {
+   "enabled": false
+  },
+  "Escher Tessellation": {
+   "enabled": false
+  },
+  "Wolfenstein 3D": {
+   "enabled": true
+  },
+  "Burning Ship Fractal": {
+   "enabled": false
+  },
+  "Mandala Pattern": {
+   "enabled": false
+  },
+  "Copper Bars": {
+   "enabled": true
+  },
+  "Bobbing": {
+   "enabled": false
+  },
+  "Phong 3D": {
+   "enabled": true
+  },
+  "Checkerboard 3D": {
+   "enabled": true
+  },
+  "Dot Matrix": {
+   "enabled": true
+  },
+  "Metamorphosis": {
+   "enabled": false
+  },
+  "Galaga": {
+   "enabled": true
+  },
+  "Asteroids": {
+   "enabled": true
+  },
+  "Tetris": {
+   "enabled": false
+  },
+  "Donkey Kong": {
+   "enabled": true
+  },
+  "Zelda": {
+   "enabled": false
+  },
+  "Prince of Persia": {
+   "enabled": false
+  },
+  "Lemmings": {
+   "enabled": false
+  },
+  "Boulder Dash": {
+   "enabled": false
+  },
+  "Pole Position": {
+   "enabled": true
+  },
+  "Enabled": {
+   "enabled": true
+  }
+ }
+}

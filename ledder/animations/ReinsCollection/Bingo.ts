@@ -73,7 +73,7 @@ export class Bingo
         {
             pl.add(new Pixel(d,box.height()-1,new Color(0,255,0,1)))
         }
-        console.log(this.counter,this.drawDelay,delayBarWidth)
+        // console.log(this.counter,this.drawDelay,delayBarWidth)
         return pl
 
     }

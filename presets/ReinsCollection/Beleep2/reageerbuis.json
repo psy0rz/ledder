@@ -13,13 +13,16 @@
    "value": 31
   },
   "speed": {
-   "value": 1
+   "value": 0.01
   },
   "Interval control (FPS)": {
    "value": 1.1
   },
   "Delay": {
    "value": 10
+  },
+  "Enabled": {
+   "enabled": true
   }
  }
 }

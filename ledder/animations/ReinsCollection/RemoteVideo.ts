@@ -7,92 +7,198 @@ import {spawn} from "child_process"
 import Pixel from "../../Pixel.js"
 import Color from "../../Color.js"
 
-let frameData = []
-
 export default class RemoteVideo extends Animator {
+    private frameData: PixelList[] = [];
+    private isDecoding: boolean = false;
+    private decodingComplete: boolean = false;
+    private maxFrames: number = 500; // Limit frames to prevent memory overflow
 
-    async decodeVideo(url, box, fps: number) {
-        let width = box.width()
-        let height = box.height()
-        let bufPos = 0
-        let frame = 0
+    async decodeVideo(url: string, box: PixelBox, fps: number) {
+        if (this.isDecoding) {
+            console.warn("Decode already in progress, skipping");
+            return false;
+        }
 
-        console.log("decode", url)
-        const ffmpeg = spawn('ffmpeg', [
-            '-i', url,
-            '-r', fps,
-            '-f', 'rawvideo',
-            '-s', width + 'x' + height,
-            '-pix_fmt', 'rgb24',
-            'pipe:1', // ffmpeg will output the data to stdout
-        ])
+        // Clear previous frame data
+        this.frameData = [];
+        this.isDecoding = true;
+        this.decodingComplete = false;
 
-        ffmpeg.stdout.on('data', function (chunk) {
-            chunk.copy(buffer, bufPos)
-            bufPos += chunk.length
+        const width = box.width();
+        const height = box.height();
+        const frameSize = width * height * 3; // RGB needs 3 bytes
+        const buffer = Buffer.allocUnsafe(frameSize * 2); // Double buffer for efficiency
+        let bufPos = 0;
+        let frameCount = 0;
 
-            // we have a complete frame (and possibly a bit of the next frame) in the buffer
-            if (bufPos >= frameSize) {
-                const rawPixels = buffer.subarray(0, frameSize)
-                // do something with the data
-                let pl = new PixelList()
-                let offset = 0
-                let pixelsize = 3
-                for (let y = 0; y < box.height(); y++) {
-                    for (let x = 0; x < box.width(); x++) {
-                        let rgb = buffer.subarray(offset, offset + pixelsize)
-                        pl.add(new Pixel(x, y, new Color(rgb[0], rgb[1], rgb[2], 1)))
-                        offset = offset + pixelsize
-                    }
+        console.log(`Decoding video: ${url} at ${fps}fps (${width}x${height})`);
+
+        return new Promise<boolean>((resolve, reject) => {
+            const ffmpeg = spawn('ffmpeg', [
+                '-i', url,
+                '-r', fps.toString(),
+                '-f', 'rawvideo',
+                '-s', `${width}x${height}`,
+                '-pix_fmt', 'rgb24',
+                '-'  // Output to stdout
+            ], {
+                stdio: ['ignore', 'pipe', 'pipe']
+            });
+
+            ffmpeg.stdout.on('data', (chunk: Buffer) => {
+                // Stop accepting frames if we've hit the limit
+                if (frameCount >= this.maxFrames) {
+                    ffmpeg.kill('SIGTERM');
+                    return;
                 }
-                frameData.push(pl)
-                // copy the overflowing part of the chunk to the beginning of the buffer
-                buffer.copy(buffer, 0, frameSize, bufPos - frameSize)
-                bufPos = bufPos - frameSize
-                frame++
-            }
-        })
 
-        ffmpeg.stderr.on('data', function (chunk) {
-            console.error(`ffmpeg stderr: ${chunk}`)
-        })
+                chunk.copy(buffer, bufPos);
+                bufPos += chunk.length;
 
-        ffmpeg.on('error', (code) => {
-            console.log(`ffmpeg error: ${code}`)
+                // Process all complete frames in the buffer
+                while (bufPos >= frameSize && frameCount < this.maxFrames) {
+                    const pl = new PixelList();
+                    let offset = 0;
 
-        })
-        const frameSize = width * height * 3 //rgb needs 3 bytes
-        const buffer = Buffer.alloc(frameSize + 1024 * 1024 * 1) // frameSize + 10MB headroom
-        return true
+                    // Optimized pixel creation - batch processing
+                    for (let y = 0; y < height; y++) {
+                        for (let x = 0; x < width; x++) {
+                            pl.add(new Pixel(x, y, new Color(
+                                buffer[offset],
+                                buffer[offset + 1],
+                                buffer[offset + 2],
+                                1
+                            )));
+                            offset += 3;
+                        }
+                    }
+
+                    this.frameData.push(pl);
+                    frameCount++;
+
+                    // Shift remaining data to beginning of buffer
+                    if (bufPos > frameSize) {
+                        buffer.copy(buffer, 0, frameSize, bufPos);
+                    }
+                    bufPos -= frameSize;
+                }
+            });
+
+            ffmpeg.stderr.on('data', (chunk: Buffer) => {
+                const msg = chunk.toString();
+                if (!msg.includes('frame=') && !msg.includes('fps=')) {
+                    console.error(`ffmpeg: ${msg}`);
+                }
+            });
+
+            ffmpeg.on('close', (code) => {
+                this.isDecoding = false;
+                this.decodingComplete = true;
+                if (code === 0 || code === null) {
+                    console.log(`Decode complete: ${frameCount} frames`);
+                    resolve(true);
+                } else if (frameCount >= this.maxFrames) {
+                    console.log(`Decode stopped at frame limit: ${frameCount} frames`);
+                    resolve(true);
+                } else {
+                    console.error(`ffmpeg exited with code ${code}`);
+                    reject(new Error(`ffmpeg failed with code ${code}`));
+                }
+            });
+
+            ffmpeg.on('error', (err) => {
+                this.isDecoding = false;
+                console.error(`ffmpeg error: ${err.message}`);
+                reject(err);
+            });
+        });
     }
 
-
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) {
-        let imgBox = new PixelBox(box)
-        box.add(imgBox)
-        let ready = false
-        const imageConfig = controls.input('Image URL', "http://localhost:3000/presets/Fires/PlasmaFire/Active%202.png?1702419790623.1921", true)
-        let animationControls = controls.group("animation control")
-        let movieFpsControl = animationControls.value("Movie FPS", 5, 1, 20, 1, true)
-        let delayControl = animationControls.value("Delay multiplier", 1, 0.1, 10, 0.1, true)
-        let loopControl = animationControls.switch("Loop", false, true)
-        ready = await this.decodeVideo(imageConfig.text, box, movieFpsControl.value)
-        scheduler.setFrameTimeuS(((1000 * 1000) / movieFpsControl.value) * delayControl.value)
-        let pl = new PixelList()
-        let frameBufferPointer = 0
+        const imgBox = new PixelBox(box);
+        box.add(imgBox);
+
+        const imageConfig = controls.input('Image URL', "http://localhost:3000/presets/Fires/PlasmaFire/Active%202.png", true);
+        const animationControls = controls.group("Animation Control");
+        const movieFpsControl = animationControls.value("Video FPS", 25, 1, 60, 1, true);
+        const playbackSpeedControl = animationControls.value("Playback Speed", 1, 0.1, 5, 0.1, true);
+        const loopControl = animationControls.switch("Loop", true, true);
+        const autoPlayControl = animationControls.switch("Auto Play", true, true);
+        const maxFramesControl = animationControls.value("Max Frames", 500, 50, 2000, 50, true);
+        const statusControl = animationControls.value("Status (frames)", 0, 0, 10000, 1, false);
+
+        let framePointer = 0;
+        let lastUrl = "";
+        let lastFpsUpdate = movieFpsControl.value;
+        let lastSpeedUpdate = playbackSpeedControl.value;
+
+        // Update max frames from control
+        this.maxFrames = maxFramesControl.value;
+
+        // Start initial decode
+        if (imageConfig.text && imageConfig.text !== lastUrl) {
+            lastUrl = imageConfig.text;
+            try {
+                await this.decodeVideo(imageConfig.text, box, movieFpsControl.value);
+            } catch (err) {
+                console.error("Failed to decode video:", err);
+            }
+        }
+
+        // Set initial frame timing
+        scheduler.setFrameTimeuS((1000000 / movieFpsControl.value) / playbackSpeedControl.value);
+
         scheduler.interval(1, (frameNr) => {
-            if (frameData.length > 1 && frameBufferPointer < frameData.length) {
-                imgBox.clear()
-                let frame = frameData[frameBufferPointer]
-                imgBox.add(frame)
-                frameBufferPointer++
-            } else {
-                if (!frameData[frameBufferPointer] && loopControl.enabled) {
-                    frameBufferPointer = 0
-                }
+            // Update max frames if changed
+            if (maxFramesControl.value !== this.maxFrames) {
+                this.maxFrames = maxFramesControl.value;
             }
 
-        })
+            // Update timing if FPS or speed changed
+            const currentFps = movieFpsControl.value;
+            const currentSpeed = playbackSpeedControl.value;
+            if (currentFps !== lastFpsUpdate || currentSpeed !== lastSpeedUpdate) {
+                scheduler.setFrameTimeuS((1000000 / currentFps) / currentSpeed);
+                lastFpsUpdate = currentFps;
+                lastSpeedUpdate = currentSpeed;
+            }
+
+            // Check if URL changed
+            if (imageConfig.text !== lastUrl && !this.isDecoding) {
+                lastUrl = imageConfig.text;
+                framePointer = 0;
+                this.decodeVideo(imageConfig.text, box, currentFps).catch(err => {
+                    console.error("Failed to decode video:", err);
+                });
+            }
+
+            // Update status display
+            statusControl.value = this.frameData.length;
+
+            // Render current frame if we have frames
+            if (this.frameData.length > 0 && autoPlayControl.enabled) {
+                // Ensure frame pointer is valid
+                if (framePointer >= this.frameData.length) {
+                    if (loopControl.enabled) {
+                        framePointer = 0;
+                    } else {
+                        framePointer = this.frameData.length - 1;
+                        return; // Stop at last frame
+                    }
+                }
+
+                imgBox.clear();
+                imgBox.add(this.frameData[framePointer]);
+                framePointer++;
+            } else if (this.frameData.length > 0 && !autoPlayControl.enabled) {
+                // Paused - just show current frame
+                if (framePointer >= this.frameData.length) {
+                    framePointer = this.frameData.length - 1;
+                }
+                imgBox.clear();
+                imgBox.add(this.frameData[framePointer]);
+            }
+        });
     }
 }
 

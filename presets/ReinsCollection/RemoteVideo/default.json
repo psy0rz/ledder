@@ -3,7 +3,7 @@
  "description": "",
  "values": {
   "Image URL": {
-   "text": "https://file-examples.com/storage/fe6e60472c657f757a0e725/2020/03/file_example_WEBM_1920_3_7MB.webm"
+   "text": "https://www.pexels.com/download/video/3209177/"
   },
   "animation control": {
    "delay multiplier": {
@@ -18,6 +18,32 @@
    "Loop": {
     "enabled": true
    }
+  },
+  "Animation Control": {
+   "Video FPS": {
+    "value": 25
+   },
+   "Playback Speed": {
+    "value": 1
+   },
+   "Loop": {
+    "enabled": true
+   },
+   "Auto Play": {
+    "enabled": true
+   },
+   "Max Frames": {
+    "value": 500
+   },
+   "Status (frames)": {
+    "value": 500
+   },
+   "Enabled": {
+    "enabled": true
+   }
+  },
+  "Enabled": {
+   "enabled": true
   }
  }
 }

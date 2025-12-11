@@ -18,6 +18,35 @@
    "Loop": {
     "enabled": true
    }
+  },
+  "Video URL": {
+   "text": "https://download.blender.org/peach/bigbuckbunny_movies/BigBuckBunny_320x180.mp4"
+  },
+  "Animation Control": {
+   "Video FPS": {
+    "value": 25
+   },
+   "Playback Speed": {
+    "value": 1
+   },
+   "Loop": {
+    "enabled": true
+   },
+   "Auto Play": {
+    "enabled": true
+   },
+   "Max Frames": {
+    "value": 2000
+   },
+   "Status (frames)": {
+    "value": 2000
+   },
+   "Enabled": {
+    "enabled": true
+   }
+  },
+  "Enabled": {
+   "enabled": true
   }
  }
 }

@@ -89,16 +89,113 @@ export default class EightiesFx extends Animator {
         const speedControl = controls.value("Effect speed", 0.7, 0.1, 2, 0.1); // Slower default
         const transitionControl = controls.value("Transition smoothness", 1, 0.1, 2, 0.1);
 
+        // Individual effect toggle switches
+        const effectToggles = {
+            mandelbrot: controls.switch("Mandelbrot Fractal", true),
+            plasma: controls.switch("Plasma Effect", true),
+            metaballs: controls.switch("Metaballs", true),
+            fire: controls.switch("Fire Effect", true),
+            spiral: controls.switch("Spiral Fractal", true),
+            cube: controls.switch("Rotating Cube", true),
+            tunnel: controls.switch("Tunnel Effect", true),
+            sprites: controls.switch("Retro Sprites", true),
+            wave: controls.switch("Wave Distortion", true),
+            starfield: controls.switch("Starfield 3D", true),
+            colorCycle: controls.switch("Color Cycling", true),
+            scrollText: controls.switch("Scrolling Text", true),
+            julia: controls.switch("Julia Set", true),
+            rotozoomer: controls.switch("Rotozoomer", true),
+            maze3d: controls.switch("Maze 3D", true),
+            lens: controls.switch("Lens Distortion", true),
+            water: controls.switch("Water Effect", true),
+            vectorBalls: controls.switch("Vector Balls", true),
+            sierpinski: controls.switch("Sierpinski Triangle", true),
+            dragon: controls.switch("Dragon Curve", true),
+            escherStairs: controls.switch("Escher Stairs", true),
+            escherTess: controls.switch("Escher Tessellation", true),
+            wolfenstein: controls.switch("Wolfenstein 3D", true),
+            burningShip: controls.switch("Burning Ship Fractal", true),
+            mandala: controls.switch("Mandala Pattern", true),
+            copper: controls.switch("Copper Bars", true),
+            bobbing: controls.switch("Bobbing", true),
+            phong: controls.switch("Phong 3D", true),
+            checkerboard: controls.switch("Checkerboard 3D", true),
+            dotMatrix: controls.switch("Dot Matrix", true),
+            metamorphosis: controls.switch("Metamorphosis", true),
+            galaga: controls.switch("Galaga", true),
+            asteroids: controls.switch("Asteroids", true),
+            tetris: controls.switch("Tetris", true),
+            donkeyKong: controls.switch("Donkey Kong", true),
+            zelda: controls.switch("Zelda", true),
+            princeOfPersia: controls.switch("Prince of Persia", true),
+            lemmings: controls.switch("Lemmings", true),
+            boulderDash: controls.switch("Boulder Dash", true),
+            polePosition: controls.switch("Pole Position", true)
+        };
+
+        // Helper function to check if an effect is enabled
+        const isEffectEnabled = (index: number): boolean => {
+            const effectKeys = Object.keys(effectToggles);
+            if (index >= 0 && index < effectKeys.length) {
+                const key = effectKeys[index] as keyof typeof effectToggles;
+                return effectToggles[key].enabled;
+            }
+            return false;
+        };
+
+        // Helper function to find next enabled effect
+        const findNextEnabledEffect = (currentIndex: number): number => {
+            const effectKeys = Object.keys(effectToggles);
+            const totalEffects = effectKeys.length;
+            
+            // If all effects are disabled, return current
+            let enabledCount = 0;
+            for (let i = 0; i < totalEffects; i++) {
+                if (isEffectEnabled(i)) enabledCount++;
+            }
+            if (enabledCount === 0) return currentIndex;
+            
+            // Find next enabled effect
+            let nextIndex = (currentIndex + 1) % totalEffects;
+            let attempts = 0;
+            while (!isEffectEnabled(nextIndex) && attempts < totalEffects) {
+                nextIndex = (nextIndex + 1) % totalEffects;
+                attempts++;
+            }
+            return nextIndex;
+        };
+
+        let currentDisplayedEffect = -1; // Track which effect is currently displayed
+        let effectStartFrame = 0; // Track when the current effect started
+
         scheduler.intervalControlled(intervalControl, (frameNr) => {
             effectsList.clear();
             transitionList.clear();
 
             const totalCycle = effectDuration + transitionDuration;
             const cyclePosition = frame % totalCycle;
-            const effectIndex = Math.floor(frame / totalCycle) % 40; // Updated to 40 effects to include new game effects
-            const nextEffectIndex = (Math.floor(frame / totalCycle) + 1) % 40;
+            
+            // Get base effect index from all 40 effects
+            const baseEffectIndex = Math.floor(frame / totalCycle) % 40;
+            
+            // Find the actual enabled effect to display
+            let effectIndex = baseEffectIndex;
+            if (!isEffectEnabled(effectIndex)) {
+                effectIndex = findNextEnabledEffect(baseEffectIndex);
+            }
+            
+            // Reset frame counter when switching to a new effect
+            if (currentDisplayedEffect !== effectIndex) {
+                effectStartFrame = frame;
+                currentDisplayedEffect = effectIndex;
+            }
+            
+            // Find next enabled effect for transitions
+            const nextEffectIndex = findNextEnabledEffect(effectIndex);
 
-            const adjustedFrame = frame * speedControl.value;
+            // Use relative frame for effect rendering (starts from 0 for each effect)
+            const relativeFrame = frame - effectStartFrame;
+            const adjustedFrame = relativeFrame * speedControl.value;
 
             // Determine if we're in transition period
             const isTransitioning = cyclePosition >= effectDuration;
@@ -973,13 +1070,13 @@ export default class EightiesFx extends Animator {
             for (let x = 0; x < box.width(); x++) {
                 const dx = x - centerX;
                 const dy = y - centerY;
-                const distance = Math.sqrt(dx * dx + dy * dy);
+                const distance = Math.max(0.1, Math.sqrt(dx * dx + dy * dy)); // Prevent division by zero
                 const angle = Math.atan2(dy, dx);
 
                 const tunnelDistance = 20 / distance + time;
                 const tunnelAngle = angle * 4 + time;
 
-                const colorIndex = Math.floor((tunnelDistance + Math.sin(tunnelAngle) * 2) * colors.length / 8) % colors.length;
+                const colorIndex = Math.floor(Math.abs((tunnelDistance + Math.sin(tunnelAngle) * 2) * colors.length / 8)) % colors.length;
                 container.add(new Pixel(x, y, colors[colorIndex]));
             }
         }

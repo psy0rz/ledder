@@ -10,13 +10,19 @@
    "to": 100
   },
   "particle count": {
-   "value": 51
+   "value": 13
   },
   "speed": {
-   "value": 0.01
+   "value": 1
   },
   "Interval control (FPS)": {
    "value": 1.1
+  },
+  "Delay": {
+   "value": 1.2000000000000002
+  },
+  "Enabled": {
+   "enabled": true
   }
  }
 }
