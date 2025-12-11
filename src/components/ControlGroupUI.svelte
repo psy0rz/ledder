@@ -13,11 +13,14 @@
     export let path: Array<string> = []
     export let onChanged: (path: Array<string>, values: {}) => void
 
-    let treeviewRefs: Map<string, any> = new Map()
+    let elementMap = new Map<string, HTMLElement>()
     
-    function registerTreeview(control: ControlGroup, element: HTMLElement) {
-        if (element && control.meta.collapsed) {
-            treeviewRefs.set(control.meta.name, element)
+    function registerElement(element: HTMLElement, controlName: string) {
+        elementMap.set(controlName, element)
+        return {
+            destroy() {
+                elementMap.delete(controlName)
+            }
         }
     }
 
@@ -25,12 +28,17 @@
         // Wait for Framework7 to initialize all components
         setTimeout(() => {
             // Programmatically close groups that should be collapsed
-            treeviewRefs.forEach((element) => {
-                const treeviewItem = element.closest('.treeview-item')
-                if (treeviewItem && treeviewItem.classList.contains('treeview-item-opened')) {
-                    const toggle = treeviewItem.querySelector('.treeview-toggle')
-                    if (toggle) {
-                        (toggle as HTMLElement).click()
+            Object.values(controlGroup.meta.controls).forEach((control) => {
+                if (control.meta.type === 'controls' && control.meta.collapsed) {
+                    const element = elementMap.get(control.meta.name)
+                    if (element) {
+                        const treeviewItem = element.closest('.treeview-item')
+                        if (treeviewItem && treeviewItem.classList.contains('treeview-item-opened')) {
+                            const toggle = treeviewItem.querySelector('.treeview-toggle')
+                            if (toggle) {
+                                (toggle as HTMLElement).click()
+                            }
+                        }
                     }
                 }
             })
@@ -41,15 +49,15 @@
 {#each Object.values(controlGroup.meta.controls) as control, i (control.meta.name)}
     {#if control.meta.type === "controls"}
         <!-- Recurse into a nested ControlGroup -->
-        <TreeviewItem
-                label={control.meta.name}
-                opened={true}
-                toggle={true}
-                itemToggle
-                class="{control.meta.enabled ?'':'disabled'}"
-                iconMaterial="{control.meta.switchable?'':'folder'}"
-                bind:this={treeviewRefs[control.meta.name]}
-        >
+        <div use:registerElement={control.meta.name}>
+            <TreeviewItem
+                    label={control.meta.name}
+                    opened={true}
+                    toggle={true}
+                    itemToggle
+                    class="{control.meta.enabled ?'':'disabled'}"
+                    iconMaterial="{control.meta.switchable?'':'folder'}"
+            >
             <span slot="content-start">
                 {#if control.meta.switchable}
                     <ControlSwitchUI
@@ -66,6 +74,7 @@
                     onChanged={onChanged}
             />
         </TreeviewItem>
+        </div>
     {:else}
         <TreeviewItem opened toggle={false} class="{control.meta.enabled&&controlGroup.enabled!==false?'':'disabled'}">
             <span slot="content" class="padding-bottom">
