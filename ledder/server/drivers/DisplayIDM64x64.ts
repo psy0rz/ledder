@@ -130,8 +130,8 @@ export class DisplayIDM64x64 extends Display {
             const uploaderPath = '/home/rein/ledderidm/ledder/ledder/server/drivers/idm_gif_uploader.py';
             
             // Start Python GIF uploader with MAC address and settings
-            // 10fps = 100ms/frame, 10 seconds = 100 frames
-            const args = [uploaderPath, '--fps', '10', '--frames', '100'];
+            // Maximum: 60 frames at 3fps = 20 seconds of animation
+            const args = [uploaderPath, '--fps', '3', '--frames', '60'];
             if (this.macAddress) {
                 args.push('--mac', this.macAddress);
             }

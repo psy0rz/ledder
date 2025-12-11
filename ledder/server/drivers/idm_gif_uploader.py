@@ -37,7 +37,7 @@ logger = logging.getLogger(__name__)
 class IDMGifUploader:
     """Collect frames and upload as animated GIF to display"""
 
-    def __init__(self, mac_address: str = None, fps: int = 10, max_frames: int = 100):
+    def __init__(self, mac_address: str = None, fps: int = 10, max_frames: int = 10, playback_fps: int = None):
         self.mac_address = mac_address
         self.client = None
         self.connected = False
@@ -48,9 +48,10 @@ class IDMGifUploader:
         self.width = 64
         self.height = 64
         self.uploading = False
-        self.duration_per_frame = int(1000 / fps)  # milliseconds per frame
+        # Use playback_fps for GIF encoding if specified, otherwise use collection fps
+        self.playback_fps = playback_fps if playback_fps is not None else fps
+        self.duration_per_frame = int(1000 / self.playback_fps)  # milliseconds per frame
         self.gif_uploaded = False  # Track if we've uploaded our GIF already
-        self.duration_per_frame = int(1000 / fps)  # milliseconds per frame
 
     async def connect(self):
         """Connect to the IDM display"""
@@ -78,6 +79,11 @@ class IDMGifUploader:
         # Skip frames if currently uploading
         if self.uploading:
             return
+        
+        # If we've already uploaded a GIF and we're getting new frames, reset for new animation
+        if self.gif_uploaded and len(self.frames) == 0:
+            logger.info("New animation detected, ready to collect new frames...")
+            self.gif_uploaded = False
             
         try:
             # Convert flat RGB array to PIL Image
@@ -94,9 +100,9 @@ class IDMGifUploader:
             
             self.frames.append(img)
 
-            # Upload when we have enough frames (only once)
-            if len(self.frames) >= self.max_frames and not self.gif_uploaded:
-                logger.info(f"Collected {self.max_frames} frames, uploading GIF...")
+            # Upload when we have enough frames (upload again on new animation)
+            if len(self.frames) >= self.max_frames and not self.uploading:
+                logger.info(f"Collected {len(self.frames)} frames, uploading GIF...")
                 asyncio.create_task(self.upload_gif())
 
         except Exception as e:
@@ -144,10 +150,10 @@ class IDMGifUploader:
             )
             
             logger.info("GIF uploaded successfully!")
+            logger.info("Animation will loop forever on display")
             
-            # Mark as uploaded so we don't upload again
+            # Mark as uploaded for this batch
             self.gif_uploaded = True
-            logger.info("GIF will now loop forever on the display")
             
             # Disconnect (ignore errors as connection might be closed already)
             try:
@@ -159,8 +165,8 @@ class IDMGifUploader:
             if os.path.exists(temp_gif):
                 os.remove(temp_gif)
             
-            # Keep frames in memory (don't clear) so we stop collecting
-            # self.frames = []  # Don't clear - we're done collecting
+            # Clear frames to free memory - we've uploaded them
+            self.frames = []
             
         except Exception as e:
             logger.error(f"Error uploading GIF: {e}")
@@ -171,7 +177,10 @@ class IDMGifUploader:
 
     async def run(self):
         """Main loop - read frames from stdin"""
-        logger.info(f"IDM GIF Uploader started (fps={self.fps}, max_frames={self.max_frames})")
+        if self.playback_fps != self.fps:
+            logger.info(f"IDM GIF Uploader started (collect={self.fps}fps, playback={self.playback_fps}fps, max_frames={self.max_frames})")
+        else:
+            logger.info(f"IDM GIF Uploader started (fps={self.fps}, max_frames={self.max_frames})")
         logger.info("Collecting frames...")
 
         try:
@@ -212,14 +221,16 @@ class IDMGifUploader:
 async def main():
     parser = argparse.ArgumentParser(description='IDM 64x64 GIF Uploader')
     parser.add_argument('--mac', type=str, help='Bluetooth MAC address of the display (optional)')
-    parser.add_argument('--fps', type=int, default=10, help='Target FPS for GIF (default: 10)')
+    parser.add_argument('--fps', type=float, default=10, help='Target FPS for frame collection (default: 10)')
+    parser.add_argument('--playback-fps', type=float, default=None, help='Target FPS for GIF playback (default: same as --fps)')
     parser.add_argument('--frames', type=int, default=100, help='Number of frames per GIF (default: 100)')
     args = parser.parse_args()
 
     uploader = IDMGifUploader(
         mac_address=args.mac,
         fps=args.fps,
-        max_frames=args.frames
+        max_frames=args.frames,
+        playback_fps=args.playback_fps
     )
     await uploader.run()
 
