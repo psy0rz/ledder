@@ -975,6 +975,124 @@
    "Enabled": {
     "enabled": true
    }
+  },
+  "Fractals": {
+   "Enable": {
+    "enabled": false
+   },
+   "Fractal Type": {
+    "selected": "Mandelbrot"
+   },
+   "Color Palette": {
+    "selected": "Rainbow"
+   },
+   "Color Palette range": {
+    "from": 0,
+    "to": 100
+   },
+   "Auto Zoom": {
+    "enabled": true
+   },
+   "Zoom Speed": {
+    "value": 0.01
+   },
+   "Manual Zoom": {
+    "value": 1
+   },
+   "Max Iterations": {
+    "value": 256
+   },
+   "Manual Hotspot": {
+    "Use Manual": {
+     "enabled": false
+    },
+    "Center X": {
+     "value": -0.5
+    },
+    "Center Y": {
+     "value": 0
+    },
+    "Max Zoom": {
+     "value": 9
+    },
+    "Enabled": {
+     "enabled": true
+    }
+   },
+   "Opacity": {
+    "value": 0.7
+   },
+   "Enabled": {
+    "enabled": true
+   }
+  },
+  "Logo 🖼️": {
+   "Enable": {
+    "enabled": false
+   },
+   "Image URL": {
+    "text": "https://www.hackerspace-drenthe.nl/wp-content/uploads/2021/11/4018_Hackerspace-Drenthe_01_small.png"
+   },
+   "Position": {
+    "X Position %": {
+     "value": 50
+    },
+    "Y Position %": {
+     "value": 11
+    },
+    "Width": {
+     "value": 64
+    },
+    "Height": {
+     "value": 16
+    },
+    "Scale": {
+     "value": 1
+    },
+    "Enabled": {
+     "enabled": true
+    }
+   },
+   "Animation": {
+    "Type": {
+     "selected": "static"
+    },
+    "Speed": {
+     "value": 1
+    },
+    "Enabled": {
+     "enabled": true
+    }
+   },
+   "Effects": {
+    "Opacity": {
+     "value": 1
+    },
+    "Glow": {
+     "value": 0
+    },
+    "Glow R": {
+     "value": 255
+    },
+    "Glow G": {
+     "value": 255
+    },
+    "Glow B": {
+     "value": 255
+    },
+    "Rainbow": {
+     "enabled": false
+    },
+    "Enabled": {
+     "enabled": true
+    }
+   },
+   "Enabled": {
+    "enabled": true
+   },
+   "Logo Type": {
+    "selected": "URL"
+   }
   }
  }
 }

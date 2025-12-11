@@ -684,6 +684,50 @@
    },
    "Text Size": {
     "value": 1
+   },
+   "Content Source": {
+    "Source Type": {
+     "selected": "manual"
+    },
+    "Text": {
+     "text": "Hello World!"
+    },
+    "Clock Format": {
+     "selected": "HH:MM:SS"
+    },
+    "24-Hour Format": {
+     "enabled": true
+    },
+    "RSS Feed URL": {
+     "text": "https://www.hackerspace-drenthe.nl/feed/"
+    },
+    "Show Title": {
+     "enabled": true
+    },
+    "Show Description": {
+     "enabled": false
+    },
+    "Max Items": {
+     "value": 5
+    },
+    "Update Interval (min)": {
+     "value": 5
+    },
+    "SpaceAPI URL": {
+     "text": "https://space.hackerspace-drenthe.nl/status.json"
+    },
+    "Display Format": {
+     "selected": "status"
+    },
+    "Open Text": {
+     "text": "OPEN"
+    },
+    "Closed Text": {
+     "text": "CLOSED"
+    },
+    "Enabled": {
+     "enabled": true
+    }
    }
   },
   "Christmas 🎄": {
@@ -838,7 +882,7 @@
    },
    "Motion Blur": {
     "Enable": {
-     "enabled": true
+     "enabled": false
     },
     "Amount": {
      "value": 5
@@ -984,7 +1028,7 @@
     "selected": "Julia"
    },
    "Color Palette": {
-    "selected": "Rainbow"
+    "selected": "DimmedReinbow"
    },
    "Color Palette range": {
     "from": 0,
@@ -994,7 +1038,7 @@
     "enabled": true
    },
    "Zoom Speed": {
-    "value": 0.024
+    "value": 0.002
    },
    "Manual Zoom": {
     "value": 1
@@ -1020,7 +1064,72 @@
     }
    },
    "Opacity": {
-    "value": 0.7
+    "value": 1
+   },
+   "Enabled": {
+    "enabled": true
+   }
+  },
+  "Logo 🖼️": {
+   "Enable": {
+    "enabled": true
+   },
+   "Logo Type": {
+    "selected": "HSD"
+   },
+   "Image URL": {
+    "text": ""
+   },
+   "Position": {
+    "X Position %": {
+     "value": 47
+    },
+    "Y Position %": {
+     "value": 7
+    },
+    "Scale": {
+     "value": 1
+    },
+    "Enabled": {
+     "enabled": true
+    }
+   },
+   "Animation": {
+    "Type": {
+     "selected": "static"
+    },
+    "Speed": {
+     "value": 1
+    },
+    "Enabled": {
+     "enabled": true
+    }
+   },
+   "Effects": {
+    "Opacity": {
+     "value": 1
+    },
+    "Glow": {
+     "value": 1
+    },
+    "Glow R": {
+     "value": 255
+    },
+    "Glow G": {
+     "value": 255
+    },
+    "Glow B": {
+     "value": 255
+    },
+    "Rainbow": {
+     "enabled": false
+    },
+    "Apply PostFX": {
+     "enabled": false
+    },
+    "Enabled": {
+     "enabled": true
+    }
    },
    "Enabled": {
     "enabled": true

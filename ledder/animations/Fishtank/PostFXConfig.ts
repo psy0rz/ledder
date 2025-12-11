@@ -5,7 +5,7 @@ export class PostFXConfig {
     private config: ReturnType<typeof this.setupControls>;
     
     constructor(parentControls: ControlGroup) {
-        this.controls = parentControls.group("Post FX 🎨", true, false);
+        this.controls = parentControls.group("Post FX 🎨", true, true);
         this.config = this.setupControls();
     }
     
@@ -13,27 +13,27 @@ export class PostFXConfig {
         const enablePostFX = this.controls.switch("Enable Post FX", false);
         
         // Anti-Aliasing
-        const aaGroup = this.controls.group("Anti-Aliasing", true, false);
+        const aaGroup = this.controls.group("Anti-Aliasing", true, true);
         const enableAA = aaGroup.switch("Enable", false);
         
         // Motion Blur
-        const motionBlurGroup = this.controls.group("Motion Blur", true, false);
+        const motionBlurGroup = this.controls.group("Motion Blur", true, true);
         const enableMotionBlur = motionBlurGroup.switch("Enable", false);
         const motionBlurAmount = motionBlurGroup.value("Amount", 3, 2, 5, 1);
         
         // Fire/Flames Effect
-        const fireGroup = this.controls.group("Fire Effect 🔥", true, false);
+        const fireGroup = this.controls.group("Fire Effect 🔥", true, true);
         const enableFire = fireGroup.switch("Enable", false);
         const fireIntensity = fireGroup.value("Intensity", 5, 1, 10, 1);
         const fireSpeed = fireGroup.value("Speed", 1.0, 0.1, 5.0, 0.1);
         
         // Color Cycling
-        const colorCycleGroup = this.controls.group("Color Cycling", true, false);
+        const colorCycleGroup = this.controls.group("Color Cycling", true, true);
         const enableColorCycle = colorCycleGroup.switch("Enable", false);
         const colorCycleSpeed = colorCycleGroup.value("Speed", 1.0, 0.1, 5.0, 0.1);
         
         // Tunnel/Warp Effect
-        const tunnelGroup = this.controls.group("Tunnel/Warp", true, false);
+        const tunnelGroup = this.controls.group("Tunnel/Warp", true, true);
         const enableTunnel = tunnelGroup.switch("Enable", false);
         const tunnelIntensity = tunnelGroup.value("Intensity", 5, 0, 20, 1);
         const tunnelSpeed = tunnelGroup.value("Speed", 1.0, 0.1, 5.0, 0.1);

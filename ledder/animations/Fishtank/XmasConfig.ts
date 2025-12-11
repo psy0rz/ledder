@@ -8,7 +8,7 @@ export class XmasConfig {
     private config: ReturnType<typeof this.setupControls>;
     
     constructor(parentControls: ControlGroup) {
-        this.controls = parentControls.group("Christmas 🎄", true, false);
+        this.controls = parentControls.group("Christmas 🎄", true, true);
         this.config = this.setupControls();
     }
     
@@ -16,13 +16,13 @@ export class XmasConfig {
         const enableXmas = this.controls.switch("Enable", false);
         
         // Santa & Sleigh
-        const santaGroup = this.controls.group("Santa & Sleigh", true, false);
+        const santaGroup = this.controls.group("Santa & Sleigh", true, true);
         const enableSanta = santaGroup.switch("Enable", true);
         const santaY = santaGroup.value("Y Position %", 80, 0, 100, 1);
         const santaSpeed = santaGroup.value("Speed", -0.3, -2.0, 2.0, 0.1);
         
         // Reindeer
-        const reindeerGroup = this.controls.group("Reindeer", true, false);
+        const reindeerGroup = this.controls.group("Reindeer", true, true);
         const reindeerCount = reindeerGroup.value("Count (0=lights only)", 1, 0, 6, 1);
         
         return {

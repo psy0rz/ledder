@@ -19,6 +19,7 @@ import { BuildingConfig } from "./BuildingConfig.js"
 import { TextConfig } from "./TextConfig.js"
 import { XmasConfig } from "./XmasConfig.js"
 import { GameConfig } from "./GameConfig.js"
+import { LogoConfig } from "./LogoConfig.js"
 import { PostFXConfig } from "./PostFXConfig.js"
 import { TextPostFXConfig } from "./TextPostFXConfig.js"
 
@@ -38,6 +39,7 @@ export default class Fishtank extends Animator {
         const schoolManager = new SpriteManager();
         const gameManager = new SpriteManager();
         const xmasManager = new SpriteManager();
+        const logoManager = new SpriteManager();
         const textManager = new SpriteManager();
 
         // Create and populate sprites using config classes (in layer order)
@@ -64,6 +66,9 @@ export default class Fishtank extends Animator {
         
         const xmasConfig = new XmasConfig(controls);
         xmasConfig.populateSprites(xmasManager, box);
+        
+        const logoConfig = new LogoConfig(controls);
+        await logoConfig.populateSprites(logoManager, box);
         
         const textConfig = new TextConfig(controls);
         textConfig.populateSprites(textManager, box);
@@ -96,6 +101,7 @@ export default class Fishtank extends Animator {
             gameManager.update(frameNr, boxW, boxH);
             gameConfig.updateCollisions(gameManager);
             xmasManager.update(frameNr, boxW, boxH);
+            logoManager.update(frameNr, boxW, boxH);
             
             // Collect all layers except text in a combined pixel list for post-FX
             const combinedPixels = new PixelList();
@@ -112,6 +118,11 @@ export default class Fishtank extends Animator {
             if (gameManager.count() > 0) combinedPixels.add(gameManager.render());
             if (xmasManager.count() > 0) combinedPixels.add(xmasManager.render());
             
+            // Add logo to combined pixels if PostFX enabled for it
+            if (logoManager.count() > 0 && logoConfig.shouldApplyPostFX()) {
+                combinedPixels.add(logoManager.render());
+            }
+            
             // Apply post-processing effects to all layers except text
             const processedPixels = postFX.apply(
                 combinedPixels,
@@ -121,7 +132,12 @@ export default class Fishtank extends Animator {
             );
             box.add(processedPixels);
 
-            // 9. Text (foreground overlay - with text-specific post-FX)
+            // 9. Logo (foreground overlay - without post-FX if disabled)
+            if (logoManager.count() > 0 && !logoConfig.shouldApplyPostFX()) {
+                box.add(logoManager.render());
+            }
+
+            // 10. Text (foreground overlay - with text-specific post-FX)
             if (textManager.count() > 0) {
                 textManager.update(frameNr, boxW, boxH);
                 const textPixels = textManager.render();

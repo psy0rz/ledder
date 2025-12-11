@@ -21,7 +21,7 @@ export class BackgroundConfig {
             {id: "contain", name: "Contain"},
             {id: "fill", name: "Fill"}
         ];
-        const imageFit = this.controls.select("Fit Mode", "cover", imageFitChoices);
+        const imageFit = this.controls.select("Fit Mode", "cover", imageFitChoices, true);
         const imageOpacity = this.controls.value("Opacity", 0.5, 0, 1, 0.1);
         
         return {

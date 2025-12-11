@@ -92,6 +92,14 @@
     "Enabled": {
      "enabled": true
     }
+   },
+   "Pot of Petunias 🌺": {
+    "Count (0=disabled)": {
+     "value": 0
+    },
+    "Enabled": {
+     "enabled": true
+    }
    }
   },
   "Plants & Vegetation": {
@@ -706,6 +714,53 @@
    },
    "Enable": {
     "enabled": true
+   },
+   "Content Source": {
+    "Source Type": {
+     "selected": "manual"
+    },
+    "Text": {
+     "text": "MRYXMAS"
+    },
+    "Clock Format": {
+     "selected": "HH:MM:SS"
+    },
+    "24-Hour Format": {
+     "enabled": true
+    },
+    "RSS Feed URL": {
+     "text": "https://www.hackerspace-drenthe.nl/feed/"
+    },
+    "Show Title": {
+     "enabled": true
+    },
+    "Show Description": {
+     "enabled": false
+    },
+    "Max Items": {
+     "value": 5
+    },
+    "Update Interval (min)": {
+     "value": 5
+    },
+    "SpaceAPI URL": {
+     "text": "https://space.hackerspace-drenthe.nl/status.json"
+    },
+    "Display Format": {
+     "selected": "status"
+    },
+    "Open Text": {
+     "text": "OPEN"
+    },
+    "Closed Text": {
+     "text": "CLOSED"
+    },
+    "Enabled": {
+     "enabled": true
+    }
+   },
+   "Text Size": {
+    "value": 1
    }
   },
   "Christmas 🎄": {
@@ -732,6 +787,381 @@
    "Reindeer": {
     "Count (0=lights only)": {
      "value": 2
+    },
+    "Enabled": {
+     "enabled": true
+    }
+   },
+   "Enabled": {
+    "enabled": true
+   }
+  },
+  "Fractals": {
+   "Enable": {
+    "enabled": false
+   },
+   "Fractal Type": {
+    "selected": "Mandelbrot"
+   },
+   "Color Palette": {
+    "selected": "Rainbow"
+   },
+   "Color Palette range": {
+    "from": 0,
+    "to": 100
+   },
+   "Auto Zoom": {
+    "enabled": true
+   },
+   "Zoom Speed": {
+    "value": 0.01
+   },
+   "Manual Zoom": {
+    "value": 1
+   },
+   "Max Iterations": {
+    "value": 256
+   },
+   "Manual Hotspot": {
+    "Use Manual": {
+     "enabled": false
+    },
+    "Center X": {
+     "value": -0.5
+    },
+    "Center Y": {
+     "value": 0
+    },
+    "Max Zoom": {
+     "value": 9
+    },
+    "Enabled": {
+     "enabled": true
+    }
+   },
+   "Opacity": {
+    "value": 0.7
+   },
+   "Enabled": {
+    "enabled": true
+   }
+  },
+  "Retro Games 🎮": {
+   "Enable": {
+    "enabled": false
+   },
+   "Galaga": {
+    "Enable": {
+     "enabled": false
+    },
+    "Boss count": {
+     "value": 2
+    },
+    "Butterfly count": {
+     "value": 3
+    },
+    "Bee count": {
+     "value": 3
+    },
+    "Speed": {
+     "value": 0.5
+    },
+    "Y Position %": {
+     "value": 20
+    },
+    "Enabled": {
+     "enabled": true
+    }
+   },
+   "Space Invaders": {
+    "Enable": {
+     "enabled": false
+    },
+    "Squid count": {
+     "value": 2
+    },
+    "Crab count": {
+     "value": 2
+    },
+    "Octopus count": {
+     "value": 2
+    },
+    "Speed": {
+     "value": 0.2
+    },
+    "Y Position %": {
+     "value": 10
+    },
+    "Enabled": {
+     "enabled": true
+    }
+   },
+   "Arkanoid": {
+    "Enable": {
+     "enabled": false
+    },
+    "Paddle count": {
+     "value": 1
+    },
+    "Ball count": {
+     "value": 2
+    },
+    "Paddle speed": {
+     "value": 0.8
+    },
+    "Ball X direction": {
+     "value": 0.6
+    },
+    "Ball Y direction": {
+     "value": -0.8
+    },
+    "Paddle Y %": {
+     "value": 90
+    },
+    "Enabled": {
+     "enabled": true
+    }
+   },
+   "Enabled": {
+    "enabled": true
+   }
+  },
+  "Logo 🖼️": {
+   "Enable": {
+    "enabled": false
+   },
+   "Logo Type": {
+    "selected": "URL"
+   },
+   "Image URL": {
+    "text": ""
+   },
+   "Position": {
+    "X Position %": {
+     "value": 50
+    },
+    "Y Position %": {
+     "value": 50
+    },
+    "Scale": {
+     "value": 1
+    },
+    "Enabled": {
+     "enabled": true
+    }
+   },
+   "Animation": {
+    "Type": {
+     "selected": "static"
+    },
+    "Speed": {
+     "value": 1
+    },
+    "Enabled": {
+     "enabled": true
+    }
+   },
+   "Effects": {
+    "Opacity": {
+     "value": 1
+    },
+    "Glow": {
+     "value": 0
+    },
+    "Glow R": {
+     "value": 255
+    },
+    "Glow G": {
+     "value": 255
+    },
+    "Glow B": {
+     "value": 255
+    },
+    "Rainbow": {
+     "enabled": false
+    },
+    "Apply PostFX": {
+     "enabled": false
+    },
+    "Enabled": {
+     "enabled": true
+    }
+   },
+   "Enabled": {
+    "enabled": true
+   }
+  },
+  "Post FX 🎨": {
+   "Enable Post FX": {
+    "enabled": false
+   },
+   "Anti-Aliasing": {
+    "Enable": {
+     "enabled": false
+    },
+    "Enabled": {
+     "enabled": true
+    }
+   },
+   "Motion Blur": {
+    "Enable": {
+     "enabled": false
+    },
+    "Amount": {
+     "value": 3
+    },
+    "Enabled": {
+     "enabled": true
+    }
+   },
+   "Fire Effect 🔥": {
+    "Enable": {
+     "enabled": false
+    },
+    "Intensity": {
+     "value": 5
+    },
+    "Speed": {
+     "value": 1
+    },
+    "Enabled": {
+     "enabled": true
+    }
+   },
+   "Color Cycling": {
+    "Enable": {
+     "enabled": false
+    },
+    "Speed": {
+     "value": 1
+    },
+    "Enabled": {
+     "enabled": true
+    }
+   },
+   "Tunnel/Warp": {
+    "Enable": {
+     "enabled": false
+    },
+    "Intensity": {
+     "value": 5
+    },
+    "Speed": {
+     "value": 1
+    },
+    "Enabled": {
+     "enabled": true
+    }
+   },
+   "Enabled": {
+    "enabled": true
+   }
+  },
+  "Text Effects 📝": {
+   "Enable Text FX": {
+    "enabled": false
+   },
+   "Motion-Adaptive AA": {
+    "Enable": {
+     "enabled": true
+    },
+    "Enabled": {
+     "enabled": true
+    }
+   },
+   "Motion Blur 💨": {
+    "Enable": {
+     "enabled": false
+    },
+    "Amount": {
+     "value": 3
+    },
+    "Enabled": {
+     "enabled": true
+    }
+   },
+   "Subpixel Rendering": {
+    "Enable": {
+     "enabled": false
+    },
+    "Enabled": {
+     "enabled": true
+    }
+   },
+   "Sharpen": {
+    "Enable": {
+     "enabled": false
+    },
+    "Amount": {
+     "value": 0.3
+    },
+    "Enabled": {
+     "enabled": true
+    }
+   },
+   "Glow ✨": {
+    "Enable": {
+     "enabled": false
+    },
+    "Intensity": {
+     "value": 2
+    },
+    "Enabled": {
+     "enabled": true
+    }
+   },
+   "Drop Shadow": {
+    "Enable": {
+     "enabled": false
+    },
+    "Offset X": {
+     "value": 1
+    },
+    "Offset Y": {
+     "value": 1
+    },
+    "Enabled": {
+     "enabled": true
+    }
+   },
+   "Flames 🔥": {
+    "Enable": {
+     "enabled": false
+    },
+    "Number of Flames": {
+     "value": 20
+    },
+    "Flame Height %": {
+     "value": 50
+    },
+    "Intensity": {
+     "value": 1
+    },
+    "Wildness": {
+     "value": 2
+    },
+    "Enabled": {
+     "enabled": true
+    }
+   },
+   "Plasma Colors 🌈": {
+    "Enable": {
+     "enabled": false
+    },
+    "Palette": {
+     "selected": "rainbow"
+    },
+    "Speed": {
+     "value": 1
+    },
+    "Scale": {
+     "value": 1
+    },
+    "Intensity": {
+     "value": 1
+    },
+    "Color Cycle Speed": {
+     "value": 1
     },
     "Enabled": {
      "enabled": true

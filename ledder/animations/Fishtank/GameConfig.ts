@@ -13,7 +13,7 @@ export class GameConfig {
     private boxHeight: number = 0;
     
     constructor(parentControls: ControlGroup) {
-        this.controls = parentControls.group("Retro Games 🎮", true, false);
+        this.controls = parentControls.group("Retro Games 🎮", true, true);
         this.config = this.setupControls();
     }
     
@@ -21,7 +21,7 @@ export class GameConfig {
         const enableGames = this.controls.switch("Enable", false);
         
         // Galaga
-        const galagaGroup = this.controls.group("Galaga", true, false);
+        const galagaGroup = this.controls.group("Galaga", true, true);
         const enableGalaga = galagaGroup.switch("Enable", false);
         const galagaBossCount = galagaGroup.value("Boss count", 2, 0, 5, 1);
         const galagaButterflyCount = galagaGroup.value("Butterfly count", 3, 0, 8, 1);
@@ -30,7 +30,7 @@ export class GameConfig {
         const galagaY = galagaGroup.value("Y Position %", 20, 0, 100, 1);
         
         // Space Invaders
-        const invadersGroup = this.controls.group("Space Invaders", true, false);
+        const invadersGroup = this.controls.group("Space Invaders", true, true);
         const enableInvaders = invadersGroup.switch("Enable", false);
         const invaderSquidCount = invadersGroup.value("Squid count", 2, 0, 6, 1);
         const invaderCrabCount = invadersGroup.value("Crab count", 2, 0, 6, 1);
@@ -39,7 +39,7 @@ export class GameConfig {
         const invaderY = invadersGroup.value("Y Position %", 10, 0, 100, 1);
         
         // Arkanoid
-        const arkanoidGroup = this.controls.group("Arkanoid", true, false);
+        const arkanoidGroup = this.controls.group("Arkanoid", true, true);
         const enableArkanoid = arkanoidGroup.switch("Enable", false);
         const arkanoidPaddleCount = arkanoidGroup.value("Paddle count", 1, 0, 3, 1);
         const arkanoidBallCount = arkanoidGroup.value("Ball count", 2, 0, 5, 1);

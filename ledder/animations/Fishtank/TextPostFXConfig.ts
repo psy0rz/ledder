@@ -5,7 +5,7 @@ export class TextPostFXConfig {
     private config: ReturnType<typeof this.setupControls>;
     
     constructor(parentControls: ControlGroup) {
-        this.controls = parentControls.group("Text Effects 📝", true, false);
+        this.controls = parentControls.group("Text Effects 📝", true, true);
         this.config = this.setupControls();
     }
     
@@ -13,36 +13,36 @@ export class TextPostFXConfig {
         const enableTextFX = this.controls.switch("Enable Text FX", false);
         
         // Motion-Adaptive Anti-Aliasing
-        const aaGroup = this.controls.group("Motion-Adaptive AA", true, false);
+        const aaGroup = this.controls.group("Motion-Adaptive AA", true, true);
         const enableAA = aaGroup.switch("Enable", true);
         
         // Motion Blur
-        const motionBlurGroup = this.controls.group("Motion Blur 💨", true, false);
+        const motionBlurGroup = this.controls.group("Motion Blur 💨", true, true);
         const enableMotionBlur = motionBlurGroup.switch("Enable", false);
         const motionBlurAmount = motionBlurGroup.value("Amount", 3, 2, 5, 1);
         
         // Subpixel Rendering
-        const subpixelGroup = this.controls.group("Subpixel Rendering", true, false);
+        const subpixelGroup = this.controls.group("Subpixel Rendering", true, true);
         const enableSubpixel = subpixelGroup.switch("Enable", false);
         
         // Sharpening
-        const sharpenGroup = this.controls.group("Sharpen", true, false);
+        const sharpenGroup = this.controls.group("Sharpen", true, true);
         const enableSharpen = sharpenGroup.switch("Enable", false);
         const sharpenAmount = sharpenGroup.value("Amount", 0.3, 0.1, 1.0, 0.1);
         
         // Glow
-        const glowGroup = this.controls.group("Glow ✨", true, false);
+        const glowGroup = this.controls.group("Glow ✨", true, true);
         const enableGlow = glowGroup.switch("Enable", false);
         const glowIntensity = glowGroup.value("Intensity", 2, 1, 5, 1);
         
         // Shadow
-        const shadowGroup = this.controls.group("Drop Shadow", true, false);
+        const shadowGroup = this.controls.group("Drop Shadow", true, true);
         const enableShadow = shadowGroup.switch("Enable", false);
         const shadowOffsetX = shadowGroup.value("Offset X", 1, -5, 5, 1);
         const shadowOffsetY = shadowGroup.value("Offset Y", 1, -5, 5, 1);
         
         // Flames
-        const flamesGroup = this.controls.group("Flames 🔥", true, false);
+        const flamesGroup = this.controls.group("Flames 🔥", true, true);
         const enableFlames = flamesGroup.switch("Enable", false);
         const flameCount = flamesGroup.value("Number of Flames", 20, 5, 50, 5);
         const flameHeight = flamesGroup.value("Flame Height %", 50, 10, 100, 5);
@@ -50,7 +50,7 @@ export class TextPostFXConfig {
         const flameWildness = flamesGroup.value("Wildness", 2, 0.5, 5, 0.5);
         
         // Plasma Color Effect
-        const plasmaGroup = this.controls.group("Plasma Colors 🌈", true, false);
+        const plasmaGroup = this.controls.group("Plasma Colors 🌈", true, true);
         const enablePlasma = plasmaGroup.switch("Enable", false);
         const plasmaPaletteChoices = [
             {id: "rainbow", name: "Rainbow"},
@@ -64,7 +64,7 @@ export class TextPostFXConfig {
             {id: "lava", name: "Lava"},
             {id: "ice", name: "Ice"}
         ];
-        const plasmaPalette = plasmaGroup.select("Palette", "rainbow", plasmaPaletteChoices);
+        const plasmaPalette = plasmaGroup.select("Palette", "rainbow", plasmaPaletteChoices, true);
         const plasmaSpeed = plasmaGroup.value("Speed", 1.0, 0.1, 5.0, 0.1);
         const plasmaScale = plasmaGroup.value("Scale", 1.0, 0.1, 5.0, 0.1);
         const plasmaIntensity = plasmaGroup.value("Intensity", 1.0, 0.1, 2.0, 0.1);

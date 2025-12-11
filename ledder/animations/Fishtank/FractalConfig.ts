@@ -22,7 +22,7 @@ export class FractalConfig {
             {id: "Mandelbrot", name: "Mandelbrot"},
             {id: "Julia", name: "Julia"}
         ];
-        const fractalType = this.controls.select("Fractal Type", "Mandelbrot", fractalTypeChoices);
+        const fractalType = this.controls.select("Fractal Type", "Mandelbrot", fractalTypeChoices, true);
         
         // Color palette selection
         const colorPalette = patternSelect(this.controls, "Color Palette", "Rainbow");
@@ -36,7 +36,7 @@ export class FractalConfig {
         const maxIterations = this.controls.value("Max Iterations", 256, 16, 1024, 16);
         
         // Manual hotspot controls
-        const manualHotspotGroup = this.controls.group("Manual Hotspot", true, false);
+        const manualHotspotGroup = this.controls.group("Manual Hotspot", true, true);
         const useManualHotspot = manualHotspotGroup.switch("Use Manual", false);
         const hotspotCx = manualHotspotGroup.value("Center X", -0.5, -2.0, 2.0, 0.01);
         const hotspotCy = manualHotspotGroup.value("Center Y", 0.0, -2.0, 2.0, 0.01);

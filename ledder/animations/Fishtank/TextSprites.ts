@@ -63,6 +63,8 @@ export class TextSprite extends SpriteAnimator {
     private scrollOffsetY: number = 0;
     private perspectiveY: number = 0;
 
+    protected textUpdateCallback?: () => string;
+    
     constructor(
         x: number,
         y: number,
@@ -74,7 +76,8 @@ export class TextSprite extends SpriteAnimator {
         maxWidth?: number,
         hAlign: 'left' | 'center' | 'right' = 'center',
         vAlign: 'top' | 'center' | 'bottom' = 'center',
-        textSize: number = 1.0
+        textSize: number = 1.0,
+        textUpdateCallback?: () => string
     ) {
         const initialState: TextSpriteState = {
             x,
@@ -104,6 +107,7 @@ export class TextSprite extends SpriteAnimator {
         this.hAlign = hAlign;
         this.vAlign = vAlign;
         this.textSize = textSize;
+        this.textUpdateCallback = textUpdateCallback;
         // Load font
         this.font.load();
         
@@ -235,6 +239,15 @@ export class TextSprite extends SpriteAnimator {
         const firstUpdate = this.boxWidth === 0;
         this.boxWidth = boxWidth;
         this.boxHeight = boxHeight;
+        
+        // Update text content if callback is provided
+        if (this.textUpdateCallback) {
+            const newText = this.textUpdateCallback();
+            if (newText !== this.textContent) {
+                this.textContent = newText;
+                this.textLines = this.wrapText(this.textContent);
+            }
+        }
         
         // Re-wrap text on first update when we know actual box dimensions
         if (firstUpdate) {

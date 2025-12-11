@@ -653,7 +653,7 @@
     "value": 90
    },
    "Animation": {
-    "selected": "scroll-horizontal"
+    "selected": "static"
    },
    "Animation Speed": {
     "value": 1.1
@@ -665,10 +665,10 @@
     "selected": "center"
    },
    "X Position %": {
-    "value": 50
+    "value": 57
    },
    "Y Position %": {
-    "value": 11
+    "value": 50
    },
    "Color": {
     "r": 255,
@@ -684,6 +684,50 @@
    },
    "Text Size": {
     "value": 1
+   },
+   "Content Source": {
+    "Source Type": {
+     "selected": "clock"
+    },
+    "Text": {
+     "text": "Hello World!"
+    },
+    "Clock Format": {
+     "selected": "HH:MM:SS"
+    },
+    "24-Hour Format": {
+     "enabled": true
+    },
+    "RSS Feed URL": {
+     "text": "https://www.hackerspace-drenthe.nl/feed/"
+    },
+    "Show Title": {
+     "enabled": true
+    },
+    "Show Description": {
+     "enabled": false
+    },
+    "Max Items": {
+     "value": 5
+    },
+    "Update Interval (min)": {
+     "value": 5
+    },
+    "SpaceAPI URL": {
+     "text": "https://space.hackerspace-drenthe.nl/status.json"
+    },
+    "Display Format": {
+     "selected": "status"
+    },
+    "Open Text": {
+     "text": "OPEN"
+    },
+    "Closed Text": {
+     "text": "CLOSED"
+    },
+    "Enabled": {
+     "enabled": true
+    }
    }
   },
   "Christmas 🎄": {
@@ -876,7 +920,7 @@
    },
    "Motion Blur 💨": {
     "Enable": {
-     "enabled": false
+     "enabled": true
     },
     "Amount": {
      "value": 2
@@ -887,7 +931,7 @@
    },
    "Subpixel Rendering": {
     "Enable": {
-     "enabled": true
+     "enabled": false
     },
     "Enabled": {
      "enabled": true
@@ -906,7 +950,7 @@
    },
    "Glow ✨": {
     "Enable": {
-     "enabled": true
+     "enabled": false
     },
     "Intensity": {
      "value": 2
@@ -934,7 +978,7 @@
      "enabled": false
     },
     "Number of Flames": {
-     "value": 45
+     "value": 15
     },
     "Flame Length": {
      "value": 19
@@ -949,10 +993,10 @@
      "enabled": true
     },
     "Flame Height %": {
-     "value": 30
+     "value": 75
     },
     "Intensity": {
-     "value": 1.9000000000000001
+     "value": 1.3
     }
    },
    "Enabled": {
@@ -978,8 +1022,123 @@
      "enabled": true
     },
     "Palette": {
-     "selected": "purple"
+     "selected": "ocean"
     }
+   }
+  },
+  "Fractals": {
+   "Enable": {
+    "enabled": false
+   },
+   "Fractal Type": {
+    "selected": "Mandelbrot"
+   },
+   "Color Palette": {
+    "selected": "Rainbow"
+   },
+   "Color Palette range": {
+    "from": 0,
+    "to": 100
+   },
+   "Auto Zoom": {
+    "enabled": true
+   },
+   "Zoom Speed": {
+    "value": 0.01
+   },
+   "Manual Zoom": {
+    "value": 1
+   },
+   "Max Iterations": {
+    "value": 256
+   },
+   "Manual Hotspot": {
+    "Use Manual": {
+     "enabled": false
+    },
+    "Center X": {
+     "value": -0.5
+    },
+    "Center Y": {
+     "value": 0
+    },
+    "Max Zoom": {
+     "value": 9
+    },
+    "Enabled": {
+     "enabled": true
+    }
+   },
+   "Opacity": {
+    "value": 0.7
+   },
+   "Enabled": {
+    "enabled": true
+   }
+  },
+  "Logo 🖼️": {
+   "Enable": {
+    "enabled": false
+   },
+   "Logo Type": {
+    "selected": "HSD120W8H"
+   },
+   "Image URL": {
+    "text": ""
+   },
+   "Position": {
+    "X Position %": {
+     "value": 50
+    },
+    "Y Position %": {
+     "value": 50
+    },
+    "Scale": {
+     "value": 1
+    },
+    "Enabled": {
+     "enabled": true
+    }
+   },
+   "Animation": {
+    "Type": {
+     "selected": "static"
+    },
+    "Speed": {
+     "value": 1
+    },
+    "Enabled": {
+     "enabled": true
+    }
+   },
+   "Effects": {
+    "Opacity": {
+     "value": 1
+    },
+    "Glow": {
+     "value": 0
+    },
+    "Glow R": {
+     "value": 255
+    },
+    "Glow G": {
+     "value": 255
+    },
+    "Glow B": {
+     "value": 255
+    },
+    "Rainbow": {
+     "enabled": false
+    },
+    "Apply PostFX": {
+     "enabled": false
+    },
+    "Enabled": {
+     "enabled": true
+    }
+   },
+   "Enabled": {
+    "enabled": true
    }
   }
  }
