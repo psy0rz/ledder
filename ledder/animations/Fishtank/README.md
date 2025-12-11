@@ -18,7 +18,10 @@ Fishtank is a modular animation framework that lets you fill your LED display wi
 - **🌿 Plants** - 12 varieties including tall/short aquatic plants, bushes, grass, flowers, ferns, trees, and cacti
 - **🏢 Buildings** - 8 animated structures (Factory, School, Windmill, Statue of Liberty, Eiffel Tower, Castle, Church, Tower)
 - **🌤️ Weather & Environment** - Bubbles, clouds, sun, moon, stars, rain, snow, thunder, rainbow
-- **📝 Text** - Scrolling text with 8 animation styles, RSS feeds, and JSON API integration
+- **🎮 Retro Games** - Animated game sprites (Galaga, Space Invaders, Arkanoid)
+- **🎄 Christmas** - Santa sleigh and reindeer with twinkling lights
+- **🖼️ Logo** - Display custom or predefined logos with animations and effects
+- **📝 Text** - Scrolling text with 8 animation styles, multiple content sources (manual, clock, RSS feeds, SpaceAPI)
 - **🖼️ Background** - Load images from URLs with adjustable opacity and fit modes
 - **✨ Post-Effects** - Anti-aliasing, color cycling, tunnel warp, motion blur, fire effects
 - **📝 Text Effects** - Motion blur, glow, shadow, flames, plasma, sharpening, subpixel rendering
@@ -28,13 +31,15 @@ Fishtank is a modular animation framework that lets you fill your LED display wi
 Elements render in this order (back to front):
 1. Fractals (animated mathematical patterns)
 2. Background Image
-2. Environment (sun, moon, stars, rainbow)
-3. Plants & Vegetation
-4. Buildings
-5. Fish & Schools
-6. Weather (bubbles, rain, snow, clouds, thunder)
-7. Game Elements (Space Invaders, Arkanoid, Christmas sprites)
-8. Text (always on top)
+3. Environment (sun, moon, stars, rainbow)
+4. Plants & Vegetation
+5. Buildings
+6. Fish & Schools
+7. Weather (bubbles, rain, snow, clouds, thunder)
+8. Game Elements (Space Invaders, Arkanoid, Christmas sprites)
+9. Logo (before or after post-FX based on setting)
+10. Post-Processing Effects (applied to layers 1-8, optional for logo)
+11. Text (always on top, with optional text-specific effects)
 
 ---
 
@@ -272,22 +277,91 @@ Set the mix of plant types (total should equal 100%):
 
 ---
 
+### 🖼️ Logo Display
+
+**Enable Switch:** Turn logo display on/off
+
+#### Logo Source
+- **Logo Type**: Select logo source
+  - `Remote URL` - Load from custom URL
+  - Predefined logos: HSD, TkkrLab, Stc, Hack42, TDVenlo, MaakPlek, and size variants
+- **Image URL**: Enter custom logo URL (when Remote URL selected)
+
+#### Position
+- **X Position %** (0-100): Horizontal position (center of logo)
+- **Y Position %** (0-100): Vertical position (center of logo)
+- **Scale** (0.1-3.0): Size multiplier
+
+#### Animation
+- **Type**: Choose animation style
+  - `Static` - No movement
+  - `Horizontal Scroll` - Scroll left/right
+  - `Vertical Scroll` - Scroll up/down
+  - `Bounce` - Bouncing movement
+  - `Flow` - Gentle floating motion
+- **Speed** (-2.0 to 2.0): Animation speed (negative = reverse direction)
+
+#### Effects
+- **Opacity** (0.0-1.0): Logo transparency
+- **Glow** (0-5): Add glow effect around logo
+  - **Glow R/G/B** (0-255): Glow color components
+- **Rainbow** (switch): Apply rainbow color cycling effect
+- **Apply PostFX** (switch): Include logo in post-processing effects
+
+**How it Works:**
+- Logo dimensions are automatically detected from image data
+- Position is based on logo center point for accurate placement
+- Logo renders after main scene, before or after post-FX based on toggle
+- Supports PNG, JPEG, and GIF formats
+
+**Tips:**
+- Use PNG format with transparency for best results
+- Scale adjusts size while maintaining aspect ratio
+- Disable PostFX for crisp logo display
+- Enable PostFX to blend logo with scene effects
+
+---
+
 ### 📝 Text Display
 
 **Enable Switch:** Turn text system on/off
 
-#### Text Source
+#### Content Source
 Choose where text comes from:
-- **Manual Input** - Type text directly
+- **Manual Text** - Type text directly
+- **Digital Clock** - Real-time clock display with multiple formats
 - **RSS Feed** - Fetch from RSS URL (auto-updates)
-- **JSON URL** - Fetch from JSON endpoint (auto-updates)
+- **SpaceAPI Status** - Show hackerspace open/closed status
 
-#### Text Content
-- **Text Content**: Enter your message (or fallback for RSS/JSON)
+#### Manual Text
+- **Text**: Enter your message
   - Press Enter for line breaks
   - Long lines automatically wrap to fit display
-- **RSS/JSON URL**: Feed or API endpoint URL
-- **Update Interval** (10-3600 seconds): How often to refresh dynamic content
+
+#### Digital Clock
+- **Clock Format**: Choose display format
+  - `HH:MM:SS` - Time with seconds
+  - `HH:MM` - Time without seconds
+  - `HH:MM:SS DD/MM/YYYY` - Date and time
+  - `DD/MM/YYYY` - Date only
+- **24-Hour Format** (switch): Toggle 12/24 hour format
+
+#### RSS Feed
+- **RSS Feed URL**: Feed endpoint URL
+- **Show Title** (switch): Display article titles
+- **Show Description** (switch): Display article descriptions
+- **Max Items** (1-20): Number of articles to cycle through
+- **Update Interval (min)** (1-60): How often to refresh feed
+
+#### SpaceAPI Status
+- **SpaceAPI URL**: Status endpoint URL (e.g., `https://space.example.com/status.json`)
+- **Display Format**: Choose what to show
+  - `Open/Closed Status` - Show open/closed text only
+  - `Status Message` - Show status message only
+  - `Status + Message` - Show both
+- **Open Text**: Custom text for open status (default: "OPEN")
+- **Closed Text**: Custom text for closed status (default: "CLOSED")
+- **Update Interval (min)** (1-60): How often to check status
 
 #### Text Appearance
 - **Font**: Select from available fonts (C64, Picopixel, Tiny 3x3, etc.)
@@ -309,15 +383,18 @@ Choose where text comes from:
 
 **How it Works:**
 - **Automatic Word Wrapping:** Long lines break at word boundaries to fit display width
-- **Multi-line Support:** Manual line breaks (`\n`) are preserved
-- **Dynamic Updates:** RSS/JSON content refreshes at specified interval
+- **Multi-line Support:** Manual line breaks are preserved
+- **Dynamic Clock:** Updates every second when clock source is selected
+- **RSS Updates:** Content refreshes at specified interval (cached between updates)
+- **SpaceAPI Integration:** Fetches hackerspace status from standard SpaceAPI JSON endpoint
 - **Layered on Top:** Text always renders above all other elements
 - **Font-Aware Wrapping:** Calculates max characters per line based on selected font
 
 **Tips:**
-- **Static messages:** Use "Manual Input" + "Static" animation
+- **Static messages:** Use "Manual Text" + "Static" animation
+- **Time display:** Use "Digital Clock" with preferred format
 - **News ticker:** Use "RSS Feed" + "Scroll Horizontal"
-- **API data:** Use "JSON URL" with appropriate endpoint
+- **Hackerspace status:** Use "SpaceAPI Status" to show if space is open
 - **Readability:** Choose high-contrast colors (white/cyan/yellow on dark backgrounds)
 
 ---
@@ -459,6 +536,24 @@ Apply effects specifically to text layer:
 ✓ Text Effects: Glow or shadow for readability
 ✓ Background: Solid color or minimal pattern
 ✓ Minimal other elements for performance
+```
+
+### Digital Clock Display
+```
+✓ Text: Digital Clock source with HH:MM:SS format
+✓ Text: Large font size (2.0-3.0)
+✓ Text: Static or wave animation
+✓ Text Effects: Glow for visibility
+✓ Background: Dark gradient or fractal (low opacity)
+```
+
+### Hackerspace Status
+```
+✓ Text: SpaceAPI source showing open/closed status
+✓ Logo: Hackerspace logo (centered, static)
+✓ Environment: Rainbow when open, clouds when closed
+✓ Text: Horizontal scroll animation
+✓ Background: Themed image
 ```
 
 ### Holiday Theme
