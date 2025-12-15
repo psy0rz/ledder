@@ -1,0 +1,27 @@
+{
+ "title": "",
+ "description": "",
+ "values": {
+  "Race Speed": {
+   "value": 1
+  },
+  "Number of Cars": {
+   "value": 0
+  },
+  "Track Curves": {
+   "value": 15
+  },
+  "Scene": {
+   "selected": "Mountains"
+  },
+  "Player Steering": {
+   "value": 0
+  },
+  "Animation interval": {
+   "value": 1
+  },
+  "Enabled": {
+   "enabled": true
+  }
+ }
+}

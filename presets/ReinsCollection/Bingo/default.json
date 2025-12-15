@@ -6,6 +6,29 @@
    "Delay (seconds)": {
     "value": 1
    }
+  },
+  "Bingo Settings": {
+   "Delay Between Numbers (sec)": {
+    "value": 1
+   },
+   "Delay Between Games (sec)": {
+    "value": 10
+   },
+   "Countdown Duration (sec)": {
+    "value": 3
+   },
+   "Lowest Number": {
+    "value": 1
+   },
+   "Highest Number": {
+    "value": 75
+   },
+   "Enabled": {
+    "enabled": true
+   }
+  },
+  "Enabled": {
+   "enabled": true
   }
  }
 }
