@@ -4,7 +4,7 @@ import ControlGroup from "../../ControlGroup.js"
 import PixelList from "../../PixelList.js"
 import FxMovie from "../../fx/FxMovie.js"
 import FxRotate from "../../fx/FxRotate.js"
-import FxNearestNeighbor from "../../fx/FxNearestNeighbor.js"
+//import FxNearestNeighbor from "../../fx/FxNearestNeighbor.js"
 import Animator from "../../Animator.js"
 import DrawAsciiArtColor from "../../draw/DrawAsciiArtColor.js"
 
@@ -129,7 +129,7 @@ class Bird extends Animator {
         
         // Apply nearest neighbor antialiasing to frames
         if (antialiasIntensity > 0) {
-            new FxNearestNeighbor(scheduler, controls, antialiasIntensity).run(frames)
+           // new FxNearestNeighbor(scheduler, controls, antialiasIntensity).run(frames)
         }
         
         // Faster animation speed (2 instead of 3) for smoother motion
@@ -177,7 +177,7 @@ class Bird extends Animator {
         
         // Apply nearest neighbor antialiasing to frames
         if (antialiasIntensity > 0) {
-            new FxNearestNeighbor(scheduler, controls, antialiasIntensity).run(frames)
+          //  new FxNearestNeighbor(scheduler, controls, antialiasIntensity).run(frames)
         }
         
         // Fast animation for small bird
