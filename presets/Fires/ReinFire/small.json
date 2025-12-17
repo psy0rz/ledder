@@ -1,0 +1,115 @@
+{
+ "title": "",
+ "description": "",
+ "values": {
+  "Physics": {
+   "Oxygen %": {
+    "value": 100
+   },
+   "Fuel amount": {
+    "value": 70
+   },
+   "Core temp": {
+    "value": 90
+   },
+   "Combustion rate": {
+    "value": 1
+   },
+   "Cooling rate": {
+    "value": 0.1
+   },
+   "Heat rise": {
+    "value": 0.8
+   },
+   "Enabled": {
+    "enabled": true
+   }
+  },
+  "Fire Position": {
+   "X Position %": {
+    "value": 50
+   },
+   "Width %": {
+    "value": 90
+   },
+   "Y Position": {
+    "value": 1
+   },
+   "Enabled": {
+    "enabled": true
+   }
+  },
+  "Visual": {
+   "Fire interval": {
+    "value": 1
+   },
+   "Turbulence": {
+    "value": 0.1
+   },
+   "Fire colors": {
+    "selected": "Doom fire"
+   },
+   "Fire colors range": {
+    "from": 0,
+    "to": 100
+   },
+   "Enabled": {
+    "enabled": true
+   },
+   "Update speed": {
+    "value": 1
+   }
+  },
+  "Antialiasing": {
+   "Enable AA": {
+    "enabled": true
+   },
+   "AA Intensity": {
+    "value": 0.25
+   },
+   "Enabled": {
+    "enabled": true
+   }
+  },
+  "Enabled": {
+   "enabled": true
+  },
+  "Fire Settings": {
+   "Flame height": {
+    "value": 100
+   },
+   "Flame count": {
+    "value": 3
+   },
+   "Flame width": {
+    "value": 64
+   },
+   "Flame variation %": {
+    "value": 100
+   },
+   "Randomization %": {
+    "value": 100
+   },
+   "Randomization period (s)": {
+    "value": 2
+   },
+   "Enabled": {
+    "enabled": true
+   }
+  },
+  "Fuel": {
+   "Oxygen %": {
+    "value": 50
+   },
+   "Wood amount": {
+    "value": 50
+   },
+   "Wood type": {
+    "selected": "Pine"
+   },
+   "Enabled": {
+    "enabled": true
+   }
+  }
+ }
+}
