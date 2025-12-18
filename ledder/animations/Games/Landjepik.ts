@@ -226,9 +226,9 @@ export default class Landjepik extends Animator {
                     let baseColor: Color
                     
                     if (currentOwner === 1) {
-                        baseColor = player1Color
+                        baseColor = new Color(player1Color.r, player1Color.g, player1Color.b, player1Color.a)
                     } else if (currentOwner === 2) {
-                        baseColor = player2Color
+                        baseColor = new Color(player2Color.r, player2Color.g, player2Color.b, player2Color.a)
                     } else {
                         baseColor = emptyColor
                     }
