@@ -16,7 +16,7 @@ export default class Landjepik extends Animator {
         const gameGroup = controls.group("Game Settings")
         const gameSpeed = gameGroup.value("Game speed", 3, 1, 10, 0.5)
         const ballSpeed = gameGroup.value("Ball speed", 0.8, 0.5, 1, 0.05)
-        const ballSize = gameGroup.value("Ball size", 1, 1, 5, 1)
+        const ballSize = gameGroup.value("Ball size", 1, 0.1, 5, 0.1)
         
         // Visual settings
         const visualGroup = controls.group("Visual")
@@ -41,41 +41,53 @@ export default class Landjepik extends Animator {
                 // Initialize: left half for player 1, right half for player 2
                 if (x < width / 2) {
                     territory[y][x] = 1
-                    pixels[y][x].color = player1Color
+                    pixels[y][x].color = new Color(player1Color.r, player1Color.g, player1Color.b, player1Color.a)
                 } else {
                     territory[y][x] = 2
-                    pixels[y][x].color = player2Color
+                    pixels[y][x].color = new Color(player2Color.r, player2Color.g, player2Color.b, player2Color.a)
                 }
             }
         }
         
+        // Helper function to normalize velocity to constant speed
+        function normalizeVelocity(dx: number, dy: number, speed: number): {dx: number, dy: number} {
+            const magnitude = Math.sqrt(dx * dx + dy * dy)
+            if (magnitude === 0) return {dx: speed, dy: 0}
+            return {
+                dx: (dx / magnitude) * speed,
+                dy: (dy / magnitude) * speed
+            }
+        }
+        
         // Player 1 (left side)
+        let vel1 = normalizeVelocity(1, 0.5, 1)
         let player1 = {
             score: 0,
             ball: {
                 x: 5,
                 y: Math.floor(height / 2),
-                dx: 1,
-                dy: 0.5,
+                dx: vel1.dx,
+                dy: vel1.dy,
                 active: true
             }
         }
         
         // Player 2 (right side)
+        let vel2 = normalizeVelocity(-1, -0.5, 1)
         let player2 = {
             score: 0,
             ball: {
                 x: width - 6,
                 y: Math.floor(height / 2),
-                dx: -1,
-                dy: -0.5,
+                dx: vel2.dx,
+                dy: vel2.dy,
                 active: true
             }
         }
         
-        // Helper function to draw ball as circle with center color and inverted outline
+        // Helper function to draw ball as solid circle
         // Uses subpixel positioning for smooth movement
-        function drawBall(ball: any, centerColor: Color, outlineColor: Color) {
+        function drawBall(ball: any, centerColor: Color) {
             const cx = ball.x  // Keep as float for subpixel accuracy
             const cy = ball.y
             const radius = ballSize.value
@@ -89,26 +101,15 @@ export default class Landjepik extends Animator {
                     
                     if (x >= 0 && x < width && y >= 0 && y < height) {
                         if (distance <= radius + 0.5) {
-                            // Determine base color
-                            let color: Color
-                            if (distance > radius - 0.5) {
-                                color = outlineColor
-                            } else {
-                                color = centerColor
-                            }
-                            
                             // Calculate subpixel alpha for smooth edges
                             let alpha = 1.0
                             if (distance > radius) {
                                 // Smooth falloff beyond radius
                                 alpha = Math.max(0, 1 - (distance - radius) * 2)
-                            } else if (distance > radius - 1) {
-                                // Blend outline/center transition
-                                alpha = 1.0
                             }
                             
                             if (alpha > 0.05) {
-                                pixels[y][x].color = new Color(color.r, color.g, color.b, color.a * alpha)
+                                pixels[y][x].color = new Color(centerColor.r, centerColor.g, centerColor.b, centerColor.a * alpha)
                             }
                         }
                     }
@@ -165,10 +166,13 @@ export default class Landjepik extends Animator {
                         // Player 1 captures this pixel
                         territory[ballY][ballX] = 1
                         player1.score++
-                        // Bounce the ball
+                        // Bounce the ball and add slight randomness
                         player1.ball.dx = -player1.ball.dx
-                        // Add slight randomness to dy
                         player1.ball.dy += (Math.random() - 0.5) * 0.3
+                        // Normalize to maintain constant speed
+                        const normalized = normalizeVelocity(player1.ball.dx, player1.ball.dy, 1)
+                        player1.ball.dx = normalized.dx
+                        player1.ball.dy = normalized.dy
                     }
                 }
                 
@@ -176,8 +180,10 @@ export default class Landjepik extends Animator {
                 if (ballX < 0 || ballX >= width) {
                     player1.ball.x = 5
                     player1.ball.y = Math.floor(height / 2)
-                    player1.ball.dx = 1
-                    player1.ball.dy = (Math.random() - 0.5) * 2
+                    const randomAngle = (Math.random() - 0.5) * 2
+                    const normalized = normalizeVelocity(1, randomAngle, 1)
+                    player1.ball.dx = normalized.dx
+                    player1.ball.dy = normalized.dy
                 }
             }
             
@@ -203,10 +209,13 @@ export default class Landjepik extends Animator {
                         // Player 2 captures this pixel
                         territory[ballY][ballX] = 2
                         player2.score++
-                        // Bounce the ball
+                        // Bounce the ball and add slight randomness
                         player2.ball.dx = -player2.ball.dx
-                        // Add slight randomness to dy
                         player2.ball.dy += (Math.random() - 0.5) * 0.3
+                        // Normalize to maintain constant speed
+                        const normalized = normalizeVelocity(player2.ball.dx, player2.ball.dy, 1)
+                        player2.ball.dx = normalized.dx
+                        player2.ball.dy = normalized.dy
                     }
                 }
                 
@@ -214,8 +223,10 @@ export default class Landjepik extends Animator {
                 if (ballX < 0 || ballX >= width) {
                     player2.ball.x = width - 6
                     player2.ball.y = Math.floor(height / 2)
-                    player2.ball.dx = -1
-                    player2.ball.dy = (Math.random() - 0.5) * 2
+                    const randomAngle = (Math.random() - 0.5) * 2
+                    const normalized = normalizeVelocity(-1, randomAngle, 1)
+                    player2.ball.dx = normalized.dx
+                    player2.ball.dy = normalized.dy
                 }
             }
             
@@ -286,16 +297,14 @@ export default class Landjepik extends Animator {
                 }
             }
             
-            // Draw balls with center color and inverted outline
+            // Draw balls as solid circles
             if (player1.ball.active) {
                 const centerColor = new Color(player1BallColor.r, player1BallColor.g, player1BallColor.b, player1BallColor.a)
-                const outlineColor = new Color(255 - player1BallColor.r, 255 - player1BallColor.g, 255 - player1BallColor.b, player1BallColor.a)
-                drawBall(player1.ball, centerColor, outlineColor)
+                drawBall(player1.ball, centerColor)
             }
             if (player2.ball.active) {
                 const centerColor = new Color(player2BallColor.r, player2BallColor.g, player2BallColor.b, player2BallColor.a)
-                const outlineColor = new Color(255 - player2BallColor.r, 255 - player2BallColor.g, 255 - player2BallColor.b, player2BallColor.a)
-                drawBall(player2.ball, centerColor, outlineColor)
+                drawBall(player2.ball, centerColor)
             }
 
             return true

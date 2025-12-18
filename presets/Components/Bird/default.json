@@ -1,0 +1,41 @@
+{
+ "title": "",
+ "description": "",
+ "values": {
+  "Bird Settings": {
+   "Big Birds": {
+    "value": 2
+   },
+   "Small Birds": {
+    "value": 2
+   },
+   "Enabled": {
+    "enabled": true
+   },
+   "Antialias": {
+    "value": 0
+   }
+  },
+  "Movie interval": {
+   "value": 7
+  },
+  "Movie interval randomizer": {
+   "value": 13
+  },
+  "Rotate interval": {
+   "value": 5
+  },
+  "Rotate interval randomizer": {
+   "value": 23
+  },
+  "Rotate X step": {
+   "value": 1
+  },
+  "Rotate Y step": {
+   "value": 0
+  },
+  "Enabled": {
+   "enabled": true
+  }
+ }
+}

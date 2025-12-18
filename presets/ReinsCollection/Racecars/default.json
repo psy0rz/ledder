@@ -1,0 +1,24 @@
+{
+ "title": "",
+ "description": "",
+ "values": {
+  "Race Speed": {
+   "value": 1
+  },
+  "Number of Cars": {
+   "value": 0
+  },
+  "Track Curves": {
+   "value": 5
+  },
+  "Animation interval": {
+   "value": 1
+  },
+  "Enabled": {
+   "enabled": true
+  },
+  "Player Steering": {
+   "value": 0
+  }
+ }
+}
