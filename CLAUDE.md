@@ -55,11 +55,10 @@ Three layers: the core animation framework (`ledder/`), the server that renders 
 "Quite OK Image Streamer" — a streaming adaptation of the [QOI format](https://qoiformat.org) used to feed the [ledstream](https://github.com/psy0rz/ledstream) ESP32 firmware. The encoder base class implements the standard QOI opcodes (RUN / INDEX / DIFF / LUMA / RGB; RGBA is never emitted — the stream is opaque RGB, alpha is blended away in `setPixel()`), with pixels gamma-mapped and reordered through the `OffsetMapper` before encoding. Deviations from stock QOI, all deliberate:
 
 - **No file container.** Each frame gets a 6-byte header: frame byte-length (2B, so frames are capped at 64 KiB), pixels-per-channel (2B), display timestamp (2B ms, wraps every 65.5 s).
-- **Encoder state (`prevPixel`, 64-color index) resets every frame.** This is required, not an oversight: frames must be independently decodable because unchanged frames are skipped and UDP packets can be lost. Don't "optimize" by persisting state across frames.
-- **Frame-skip on no change**: `encode()` returns whether the frame differs from the previous one; `DisplayQOISudp` drops unchanged frames entirely (temporal compression outside the codec).
+- **The 64-color index persists across frames** (`prevPixel` still resets to black per frame). The stream assumes a reliable transport and a decoder that starts at the beginning of the connection and keeps its index across frames. `resetEncoderState()` is called when a new HTTP client connects so encoder and decoder start from the same empty state.
 - **Deltas use 8-bit wraparound like stock QOI** (e.g. 255→0 encodes as +1); decoders reconstruct with wrapping uint8 additions.
 
-`DisplayQOISudp` packetizes the frame stream into 1460-byte UDP packets with a 6-byte packet header (packet nr, current time, sync offset to the next frame boundary — this lets displays re-lock after packet loss or when joining mid-stream). Frames are timestamped ~250 ms in the future so the firmware can buffer against network jitter. `DisplayQOIShttp` writes the same frame stream into a never-ending HTTP response. Compression-ratio logging exists but is commented out in `DisplayQOIS.ts` (`statsBytes`).
+`DisplayQOIShttp` writes the frame stream into a never-ending HTTP response. `DisplayQOISudp` (deprecated, slated for removal) packetizes the stream into UDP packets; it skips unchanged frames and tolerates packet loss, which is **incompatible** with the persistent color-index — don't use it without resetting the index per frame. Compression-ratio logging exists but is commented out in `DisplayQOIS.ts` (`statsBytes`).
 
 ### Web GUI (`src/`)
 

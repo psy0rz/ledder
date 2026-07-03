@@ -41,11 +41,7 @@ export abstract class DisplayQOIS extends Display {
 
         this.pixels = []
         this.prevPixels = []
-        this.index = []
-
-        for (let i = 0; i < 64; i++) {
-            this.index.push(colorBlack)
-        }
+        this.resetEncoderState()
 
 
         this.statsBytes = 0
@@ -74,6 +70,17 @@ export abstract class DisplayQOIS extends Display {
         this.pixels[offset].blend(color)
 
 
+    }
+
+    //reset the encoder color-index.
+    //The 64-color index persists across frames (the decoder keeps it in sync).
+    //Reset it whenever the decoder starts from scratch, i.e. when a new streaming
+    //client connects, so encoder and decoder start from the same empty state.
+    resetEncoderState() {
+        this.index = []
+        for (let i = 0; i < 64; i++) {
+            this.index.push(colorBlack)
+        }
     }
 
     //encodes current pixels by adding bytes to bytes array.
@@ -185,13 +192,6 @@ export abstract class DisplayQOIS extends Display {
 
         this.statsBytes += bytes.length
         // console.log(skips)
-
-        //FIXME: keep
-        this.index = []
-        for (let i = 0; i < 64; i++) {
-            this.index.push(colorBlack)
-        }
-
 
         // //update frame byte length
         bytes[0] = bytes.length & 0xff
