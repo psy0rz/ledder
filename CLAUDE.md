@@ -56,6 +56,8 @@ Three layers: the core animation framework (`ledder/`), the server that renders 
 
 - **No file container.** Each frame gets a 6-byte header: frame byte-length (2B, so frames are capped at 64 KiB), pixels-per-channel (2B), display timestamp (2B ms, wraps every 65.5 s).
 - **The 64-color index persists across frames** (`prevPixel` still resets to black per frame). The stream assumes a reliable transport and a decoder that starts at the beginning of the connection and keeps its index across frames. `resetEncoderState()` is called when a new HTTP client connects so encoder and decoder start from the same empty state.
+- **Temporal runs**: the unused `QOI_OP_RGBA` byte (0xff) is `QOIS_OP_PREVFRAME` — "keep the next N pixels from the previous frame" (2-byte LE count). The encoder emits it when it beats the spatial alternatives; static content collapses to a few bytes per frame.
+- **Decoder contract differs from stock QOI** — see the comment block at the top of `DisplayQOIS.ts`. Most importantly, the decoder's color-index must be updated only by DIFF/LUMA/RGB ops (not RUN/INDEX/PREVFRAME), or it desyncs from the encoder.
 - **Deltas use 8-bit wraparound like stock QOI** (e.g. 255→0 encodes as +1); decoders reconstruct with wrapping uint8 additions.
 
 `DisplayQOIShttp` writes the frame stream into a never-ending HTTP response. `DisplayQOISudp` (deprecated, slated for removal) packetizes the stream into UDP packets; it skips unchanged frames and tolerates packet loss, which is **incompatible** with the persistent color-index — don't use it without resetting the index per frame. Compression-ratio logging exists but is commented out in `DisplayQOIS.ts` (`statsBytes`).

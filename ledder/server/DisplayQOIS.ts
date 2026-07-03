@@ -9,7 +9,23 @@ const QOI_OP_DIFF = 0x40 /* 01xxxxxx */
 const QOI_OP_LUMA = 0x80 /* 10xxxxxx */
 const QOI_OP_RUN = 0xc0 /* 11xxxxxx */
 const QOI_OP_RGB = 0xfe /* 11111110 */
-const QOI_OP_RGBA = 0xff /* 11111111 */
+const QOI_OP_RGBA = 0xff /* 11111111 */ //never emitted, the stream is opaque RGB
+
+//QOIS extension, reuses the unused QOI_OP_RGBA byte:
+//keep the next N pixels from the previous frame. Followed by 2 bytes little-endian N.
+const QOIS_OP_PREVFRAME = 0xff
+
+/* DECODER CONTRACT (differs from stock QOI, the ledstream decoder must match this):
+ *  - the framebuffer and the 64-color index persist across frames within a connection;
+ *    both start zeroed/black at the start of a connection (see resetEncoderState()).
+ *  - the previous-pixel state resets to black at the start of every frame.
+ *  - the color-index is updated ONLY by DIFF/LUMA/RGB ops (index[hash(px)] = px after
+ *    decoding the pixel). RUN, INDEX and PREVFRAME ops must NOT touch the index --
+ *    stock QOI updates it after every op, which desyncs from this encoder now that
+ *    the index persists across frames.
+ *  - QOIS_OP_PREVFRAME: leave the next N framebuffer pixels untouched; the
+ *    previous-pixel state becomes the last kept pixel.
+ */
 
 const QOI_MASK_2 = 0xc0 /* 11000000 */
 
@@ -72,22 +88,22 @@ export abstract class DisplayQOIS extends Display {
 
     }
 
-    //reset the encoder color-index.
-    //The 64-color index persists across frames (the decoder keeps it in sync).
-    //Reset it whenever the decoder starts from scratch, i.e. when a new streaming
+    //reset the encoder state that persists across frames (64-color index and
+    //previous-frame pixels, both mirrored by the decoder).
+    //Call this whenever the decoder starts from scratch, i.e. when a new streaming
     //client connects, so encoder and decoder start from the same empty state.
     resetEncoderState() {
         this.index = []
         for (let i = 0; i < 64; i++) {
             this.index.push(colorBlack)
         }
+        this.prevPixels = []
     }
 
     //encodes current pixels by adding bytes to bytes array.
     encode(bytes: Array<number>, displayTimeMS): boolean {
         let prevPixel = colorBlack
         let run = 0
-        let pixelCount = 1
         let changed = false
 
         // //frame byte length
@@ -104,9 +120,11 @@ export abstract class DisplayQOIS extends Display {
 
 
         this.statsBytes -= bytes.length //substract header overhead
-        for (let i = 0; i < this.pixelCount; i++) {
 
-            //gamma/brightness mapping
+        //pass 1: gamma/brightness mapping and compare against the previous frame
+        const mapped: Array<Color> = new Array(this.pixelCount)
+        const unchangedPixel: Array<boolean> = new Array(this.pixelCount)
+        for (let i = 0; i < this.pixelCount; i++) {
             const c = this.pixels[i]
             let pixel = new Color(0, 0, 0, 1)
             if (c !== undefined) {
@@ -114,24 +132,43 @@ export abstract class DisplayQOIS extends Display {
                 pixel.g = this.gammaMapper[Math.round(c.g)]
                 pixel.b = this.gammaMapper[Math.round(c.b)]
             }
+            mapped[i] = pixel
+            unchangedPixel[i] = this.prevPixels[i] !== undefined && this.prevPixels[i].equal(pixel)
+            if (!unchangedPixel[i])
+                changed = true
+            this.prevPixels[i] = pixel
+        }
 
-            //whole frame is still unchanged compared to previous?
-            if (!changed) {
-                if (this.prevPixels[i] === undefined) {
-                    changed = true
-                } else {
-                    if (!this.prevPixels[i].equal(pixel)) {
-                        changed = true
-                    }
+        //pass 2: encode
+        let i = 0
+        while (i < this.pixelCount) {
+            const pixel = mapped[i]
 
+            //try a previous-frame run: only when no spatial run is active, and only
+            //when it covers more pixels than a spatial run would (a spatial run costs
+            //1 byte per 62 pixels, so it wins below 187 pixels if it covers the same span)
+            if (run == 0 && unchangedPixel[i]) {
+                let tRun = 1
+                while (i + tRun < this.pixelCount && unchangedPixel[i + tRun] && tRun < 0xffff)
+                    tRun++
+
+                let spatialRun = 0
+                while (i + spatialRun < this.pixelCount && mapped[i + spatialRun].equal(prevPixel) && spatialRun <= tRun)
+                    spatialRun++
+
+                if (tRun >= 4 && (tRun > spatialRun || tRun >= 187)) {
+                    bytes.push(QOIS_OP_PREVFRAME)
+                    bytes.push(tRun & 0xff)
+                    bytes.push((tRun >> 8) & 0xff)
+                    i += tRun
+                    prevPixel = mapped[i - 1]
+                    continue
                 }
             }
-            this.prevPixels[i] = pixel
-
 
             if (pixel.equal(prevPixel)) {
                 run++
-                if (run == 62 || pixelCount == this.pixelCount) {
+                if (run == 62) {
                     bytes.push(QOI_OP_RUN | (run - 1))
                     run = 0
                 }
@@ -182,10 +219,12 @@ export abstract class DisplayQOIS extends Display {
                 }
             }
 
-            pixelCount++
             prevPixel = pixel
-
+            i++
         }
+        //flush pending run at end of frame
+        if (run > 0)
+            bytes.push(QOI_OP_RUN | (run - 1))
 
         //prepare for next frame
         this.pixels = []
