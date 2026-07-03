@@ -22,6 +22,8 @@
 
     "perftest": "node ledder/server/perftest.js",
 
+    "qoisbench": "node ledder/server/qoisbench.js",
+
     "build": "tsc &&  NODE_ENV=production vite build && node ledder/server/buildpreviews.js",
 
     "buildpreviews": "node ledder/server/buildpreviews.js",
