@@ -144,19 +144,28 @@ export abstract class DisplayQOIS extends Display {
         while (i < this.pixelCount) {
             const pixel = mapped[i]
 
-            //try a previous-frame run: only when no spatial run is active, and only
-            //when it covers more pixels than a spatial run would (a spatial run costs
-            //1 byte per 62 pixels, so it wins below 187 pixels if it covers the same span)
+            //try a previous-frame run (only when no spatial run is active)
             if (run == 0 && unchangedPixel[i]) {
                 let tRun = 1
                 while (i + tRun < this.pixelCount && unchangedPixel[i + tRun] && tRun < 0xffff)
                     tRun++
 
-                let spatialRun = 0
-                while (i + spatialRun < this.pixelCount && mapped[i + spatialRun].equal(prevPixel) && spatialRun <= tRun)
-                    spatialRun++
+                //length of the solid-color prefix of the span
+                let solid = 1
+                while (solid < tRun && mapped[i + solid].equal(mapped[i]))
+                    solid++
 
-                if (tRun >= 4 && (tRun > spatialRun || tRun >= 187)) {
+                //a temporal run costs 3 bytes. If the whole span is one solid color,
+                //spatial encoding is hard to beat: 1 byte for the first pixel (0 if it
+                //just continues prevPixel) plus 1 RUN byte per 62 pixels. For spans with
+                //detail in them 3 bytes almost always wins.
+                let worthIt
+                if (solid == tRun)
+                    worthIt = (pixel.equal(prevPixel) ? Math.ceil(tRun / 62) : 1 + Math.ceil((tRun - 1) / 62)) > 3
+                else
+                    worthIt = true
+
+                if (tRun >= 4 && worthIt) {
                     bytes.push(QOIS_OP_PREVFRAME)
                     bytes.push(tRun & 0xff)
                     bytes.push((tRun >> 8) & 0xff)
