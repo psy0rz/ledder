@@ -50,6 +50,17 @@ Three layers: the core animation framework (`ledder/`), the server that renders 
 - `PresetStore` scans `ledder/animations/**` (compiled `.js`) and `presets/` to build the animation/preset list; `PreviewStore`/`RenderPreview` render the PNG previews.
 - **Drivers** (`ledder/server/drivers/`): `Display*` classes implement one output each — QOIS over UDP/HTTP (ESP32 "ledstream"), WLED, Raspberry Pi, Pixelflut, Chromecast, HUB75 via Colorlight 5A-75B, APNG, websocket (web preview), multi-display fan-out. New hardware support = new `Display` subclass plus an entry in `displayconf.js`.
 
+### QOIS compression (`ledder/server/DisplayQOIS.ts`)
+
+"Quite OK Image Streamer" — a streaming adaptation of the [QOI format](https://qoiformat.org) used to feed the [ledstream](https://github.com/psy0rz/ledstream) ESP32 firmware. The encoder base class implements the standard QOI opcodes (RUN / INDEX / DIFF / LUMA / RGB; RGBA is never emitted — the stream is opaque RGB, alpha is blended away in `setPixel()`), with pixels gamma-mapped and reordered through the `OffsetMapper` before encoding. Deviations from stock QOI, all deliberate:
+
+- **No file container.** Each frame gets a 6-byte header: frame byte-length (2B, so frames are capped at 64 KiB), pixels-per-channel (2B), display timestamp (2B ms, wraps every 65.5 s).
+- **Encoder state (`prevPixel`, 64-color index) resets every frame.** This is required, not an oversight: frames must be independently decodable because unchanged frames are skipped and UDP packets can be lost. Don't "optimize" by persisting state across frames.
+- **Frame-skip on no change**: `encode()` returns whether the frame differs from the previous one; `DisplayQOISudp` drops unchanged frames entirely (temporal compression outside the codec).
+- **Deltas don't use 8-bit wraparound** (unlike stock QOI) — wrap cases fall through to LUMA/RGB. Minor compression loss only; standard decoders still decode correctly.
+
+`DisplayQOISudp` packetizes the frame stream into 1460-byte UDP packets with a 6-byte packet header (packet nr, current time, sync offset to the next frame boundary — this lets displays re-lock after packet loss or when joining mid-stream). Frames are timestamped ~250 ms in the future so the firmware can buffer against network jitter. `DisplayQOIShttp` writes the same frame stream into a never-ending HTTP response. Compression-ratio logging exists but is commented out in `DisplayQOIS.ts` (`statsBytes`).
+
 ### Web GUI (`src/`)
 
 Framework7 + Svelte 5, bundled by Vite into `www/`. It talks JSON-RPC over `/ws`; `src/js/Rpc.ts` defines the call surface shared with the server. Control widgets in `src/components/Control*.svelte` mirror the `Control*` classes in `ledder/`.
