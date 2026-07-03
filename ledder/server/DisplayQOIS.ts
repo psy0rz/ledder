@@ -144,12 +144,14 @@ export abstract class DisplayQOIS extends Display {
                 } else {
                     this.index[index_pos] = pixel
 
-                    const vr = pixel.r - prevPixel.r
-                    const vg = pixel.g - prevPixel.g
-                    const vb = pixel.b - prevPixel.b
+                    //deltas use 8-bit wraparound like stock QOI (e.g. 255->0 is +1),
+                    //decoders reconstruct with wrapping uint8 additions
+                    const vr = ((pixel.r - prevPixel.r + 128) & 0xff) - 128
+                    const vg = ((pixel.g - prevPixel.g + 128) & 0xff) - 128
+                    const vb = ((pixel.b - prevPixel.b + 128) & 0xff) - 128
 
-                    const vg_r = vr - vg
-                    const vg_b = vb - vg
+                    const vg_r = ((vr - vg + 128) & 0xff) - 128
+                    const vg_b = ((vb - vg + 128) & 0xff) - 128
 
                     if (
                         vr > -3 && vr < 2 &&

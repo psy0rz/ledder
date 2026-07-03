@@ -57,7 +57,7 @@ Three layers: the core animation framework (`ledder/`), the server that renders 
 - **No file container.** Each frame gets a 6-byte header: frame byte-length (2B, so frames are capped at 64 KiB), pixels-per-channel (2B), display timestamp (2B ms, wraps every 65.5 s).
 - **Encoder state (`prevPixel`, 64-color index) resets every frame.** This is required, not an oversight: frames must be independently decodable because unchanged frames are skipped and UDP packets can be lost. Don't "optimize" by persisting state across frames.
 - **Frame-skip on no change**: `encode()` returns whether the frame differs from the previous one; `DisplayQOISudp` drops unchanged frames entirely (temporal compression outside the codec).
-- **Deltas don't use 8-bit wraparound** (unlike stock QOI) — wrap cases fall through to LUMA/RGB. Minor compression loss only; standard decoders still decode correctly.
+- **Deltas use 8-bit wraparound like stock QOI** (e.g. 255→0 encodes as +1); decoders reconstruct with wrapping uint8 additions.
 
 `DisplayQOISudp` packetizes the frame stream into 1460-byte UDP packets with a 6-byte packet header (packet nr, current time, sync offset to the next frame boundary — this lets displays re-lock after packet loss or when joining mid-stream). Frames are timestamped ~250 ms in the future so the firmware can buffer against network jitter. `DisplayQOIShttp` writes the same frame stream into a never-ending HTTP response. Compression-ratio logging exists but is commented out in `DisplayQOIS.ts` (`statsBytes`).
 
