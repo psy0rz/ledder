@@ -87,7 +87,6 @@ export class DisplayQOIShttp extends DisplayQOIS {
         //new client starts decoding from scratch, so the encoder color-index must also start fresh
         this.resetEncoderState()
 
-        response.socket.setNoDelay(true)
 
         this.response = response
         this.ready = true

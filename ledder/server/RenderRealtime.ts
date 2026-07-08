@@ -43,22 +43,16 @@ export class RenderRealtime extends Render {
     //the main step-render-send loop
     async renderInterval() {
 
-        //If a display is not ready, we dont do an anmation step and render/send
-        //So in that case we pause the animation, but drop a frame in timing.
-        //This is usefull for streaming displays that can get full buffers (DisplayQoisHTTP)
+        let intervalmS=0;
 
         if (this.primaryDisplay.ready) {
             let nowUS = Date.now() * 1000
             this.statsFrames++
 
-            //buffering displays allow rendering this far ahead of the wall clock
-//            const bufferAheadMicros = this.primaryDisplay.bufferAheadMicros
-
             //do THE step that runs all the animations
             let step=await this.scheduler.__step(true)
             this.displayNextTimeMicros += step
             this.localNextTimeMicros+=step
-
 
             //render to all displays
             for (const display of this.displays) {
@@ -75,29 +69,22 @@ export class RenderRealtime extends Render {
                     else
                         display.frame(this.displayNextTimeMicros)
                 }
-
-
             }
 
             //set next time. while the buffer-ahead cushion isnt full yet this is negative,
             //so we keep rendering as fast as possible until its full (or backpressure pauses us)
-            let  intervalmS = ((this.localNextTimeMicros ) / 1000) - Date.now()
+            intervalmS = ((this.localNextTimeMicros ) / 1000) - Date.now()
 
-
-            if (intervalmS<0) {
-                console.log(`inhalen interval ${intervalmS} ms`)
-                this.statsLag=-~~intervalmS
-                intervalmS = 0
-            }
-            this.statsIdleMs = this.statsIdleMs + intervalmS
-
-            this.timer = setTimeout(() => this.renderInterval(), intervalmS)
         } else {
-            //display not ready, wait 1 interval (it will catch up again when its ready)
-            console.log(`${this.primaryDisplay.id} not ready`)
-            this.statsWaitFrames++
-            this.timer = setTimeout(() => this.renderInterval(), this.scheduler.__frameTimeMicros/1000)
+            //display not ready, wait 1 interval (it will catch up again when its ready since we use synthetic time)
+            intervalmS=this.scheduler.__frameTimeMicros/1000
         }
+        if (intervalmS<0) {
+            this.statsLag=-~~intervalmS
+            intervalmS = 0
+        }
+        this.statsIdleMs = this.statsIdleMs + intervalmS
+        this.timer = setTimeout(() => this.renderInterval(), intervalmS)
 
 
     }
