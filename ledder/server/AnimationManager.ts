@@ -129,6 +129,9 @@ export default class AnimationManager {
     //stop current animation by cleaningup and detaching child objects
     public stop(keepControls: boolean) {
 
+        //make sure a stopped animation cannot receive animationEvents anymore
+        this.animation = undefined
+
         //this calls onCleanup for the animation
         this.scheduler.__clear()
         //now detach and clean again (in case the animation cleanup did something bad)
@@ -211,6 +214,16 @@ export default class AnimationManager {
 
         }
 
+    }
+
+    //forward a realtime event from a GUI client to the currently running animation
+    public animationEvent(name: string, data: any) {
+        try {
+            if (this.animation !== undefined)
+                this.animation.animationEvent(name, data)
+        } catch (e) {
+            console.error(e)
+        }
     }
 
     public async updateValue(path: [string], values: Values) {

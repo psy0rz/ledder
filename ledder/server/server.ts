@@ -139,6 +139,13 @@ rpc.addMethod("updateValue", async (context: WsContext, path, values) => {
 
 })
 
+//realtime events for interactive animations (drawing, game input). Sent as fire-and-forget notifications.
+rpc.addMethod("animationEvent", async (context: WsContext, name: string, data: any) => {
+
+    context.renderControl?.renderer.animationManager.animationEvent(name, data)
+
+})
+
 
 rpc.addMethod("getSettings", async (context: WsContext) => {
     return context.renderControl.getPrimaryDisplay().settingsControl
@@ -236,6 +243,7 @@ rpc.app.get('/stream/:id', async (req, resp) => {
         const display = renderControl.getPrimaryDisplay() as DisplayQOIShttp
         if (display !== undefined && display.id == req.params.id) {
             display.setResponseHandler(resp)
+            renderControl.renderer.resetTimers()
             return
         }
     }

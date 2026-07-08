@@ -26,5 +26,14 @@ export default class Animator {
 
     }
 
+    /**
+     * Override this to receive realtime events from GUI clients while the animation runs (drawing input,
+     * game controls, ...). Clients send these fire-and-forget via the "animationEvent" RPC notification;
+     * events are only delivered while this instance is the currently running animation.
+     */
+    animationEvent(name: string, data: any) {
+
+    }
+
 }
 

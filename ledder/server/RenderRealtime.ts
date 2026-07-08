@@ -7,6 +7,11 @@ import {Render} from "./Render.js"
  * Note that the time passed to frame() is "synthetic": its aways increased by the frame-time, regardless of the actual local time.
  * This helpts smooth playback on wifi devices with buffering.
  */
+
+//too small and low-bandwith animations will not have enough data. too big and high-bandwidth animations will stutter on the preview side (tcp backpressure)
+    // NOTE: 0 seems to be ok for now, since there is already enough buffering once the esp starts decoding it seems. (around 500mS lag)
+const BUFFER_MS=0
+
 export class RenderRealtime extends Render {
 
     private displayNextTimeMicros: number
@@ -18,16 +23,21 @@ export class RenderRealtime extends Render {
 
     async start() {
         if (this.timer === undefined) {
-            this.displayNextTimeMicros = 0;
-            this.localNextTimeMicros=Date.now() * 1000
 
             this.resetStats()
-
+            this.resetTimers()
 
             this.animationManager.run()
             await this.renderInterval()
             console.log(`RenderRealtime ${this.getPrimaryDisplay().descriptionControl.text} started.`)
         }
+    }
+
+
+    resetTimers()
+    {
+        this.displayNextTimeMicros = 0;
+        this.localNextTimeMicros=Date.now() * 1000 - (BUFFER_MS*1000)
     }
 
     //the main step-render-send loop
@@ -41,16 +51,14 @@ export class RenderRealtime extends Render {
             let nowUS = Date.now() * 1000
             this.statsFrames++
 
+            //buffering displays allow rendering this far ahead of the wall clock
+//            const bufferAheadMicros = this.primaryDisplay.bufferAheadMicros
+
             //do THE step that runs all the animations
             let step=await this.scheduler.__step(true)
             this.displayNextTimeMicros += step
             this.localNextTimeMicros+=step
 
-            //too slow, or other clock problem
-            if (Math.abs(this.localNextTimeMicros - nowUS) > this.scheduler.__frameTimeMicros * 2) {
-                //reset
-                this.localNextTimeMicros = nowUS + this.scheduler.__frameTimeMicros
-            }
 
             //render to all displays
             for (const display of this.displays) {
@@ -71,16 +79,23 @@ export class RenderRealtime extends Render {
 
             }
 
-            //set next time
-            const intervalmS = (this.localNextTimeMicros / 1000) - Date.now()
+            //set next time. while the buffer-ahead cushion isnt full yet this is negative,
+            //so we keep rendering as fast as possible until its full (or backpressure pauses us)
+            let  intervalmS = ((this.localNextTimeMicros ) / 1000) - Date.now()
+
+
+            if (intervalmS<0) {
+                console.log(`inhalen interval ${intervalmS} ms`)
+                this.statsLag=-~~intervalmS
+                intervalmS = 0
+            }
             this.statsIdleMs = this.statsIdleMs + intervalmS
-            if (intervalmS <= 0)
-                this.statsLateFrames++
 
             this.timer = setTimeout(() => this.renderInterval(), intervalmS)
         } else {
-            //droppped frame, just set timeout to try again
-            this.statsDroppedFrames++
+            //display not ready, wait 1 interval (it will catch up again when its ready)
+            console.log(`${this.primaryDisplay.id} not ready`)
+            this.statsWaitFrames++
             this.timer = setTimeout(() => this.renderInterval(), this.scheduler.__frameTimeMicros/1000)
         }
 

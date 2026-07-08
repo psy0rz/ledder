@@ -28,8 +28,8 @@ export class Render {
 
     protected statsLastTimestampMs:number
     protected statsIdleMs:number
-    protected statsLateFrames: number
-    protected statsDroppedFrames: number
+    protected statsLag: number
+    protected statsWaitFrames: number
     protected statsFrames: number
     protected statsBytes: number
 
@@ -53,8 +53,8 @@ export class Render {
     }
 
     resetStats() {
-        this.statsLateFrames = 0
-        this.statsDroppedFrames = 0
+        this.statsLag = 0
+        this.statsWaitFrames = 0
         this.statsBytes = 0
         this.statsIdleMs = 0
         this.statsFrames=0
@@ -108,12 +108,17 @@ export class Render {
 
 
 
-        const statStr= (`${fps} fps (${this.statsLateFrames} late, ${this.statsDroppedFrames} dropped), ${kbps} KB/s, ${busyPerc}% busy`)
+        const statStr= (`${fps} fps (${this.statsLag} mS lag, ${this.statsWaitFrames} dropped), ${kbps} KB/s, ${busyPerc}% busy`)
         this.resetStats()
         return statStr
 
     }
 
+
+    resetTimers()
+    {
+
+    }
 
     async start()
     {
