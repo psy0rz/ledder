@@ -1,6 +1,7 @@
 
 import ControlsPage from '../../pages/controls.svelte';
 import SettingsPage from '../../pages/settings.svelte';
+import DrawPage from '../../pages/draw.svelte';
 
 import AnimationRunner from '../../pages/animationrunner.svelte'
 
@@ -14,6 +15,10 @@ var routes = [
     path: '/controls',
     component: ControlsPage,
     // keepAlive: true
+  },
+  {
+    path: '/draw',
+    component: DrawPage,
   },
   // {
   //   path: '/:nameAndPreset*',

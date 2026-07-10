@@ -60,7 +60,7 @@ export default class DrawPad extends Animator {
             case "draw":
                 for (const cell of data.cells)
                     //each cell gets its own Color copy, so effects can later animate pixels individually
-                    this.setCell(box, cell.x, cell.y, new Color(data.color.r, data.color.g, data.color.b))
+                    this.setCell(box, cell.x, cell.y, new Color(data.color.r, data.color.g, data.color.b,data.color.a))
                 break
             case "erase":
                 for (const cell of data.cells)

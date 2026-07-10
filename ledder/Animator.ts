@@ -39,11 +39,7 @@ export default class Animator {
      */
     animationEvent(name: string, data: any, box: PixelBox, scheduler: Scheduler, controls: ControlGroup) {
 
-        switch (name) {
-            case "addPixel":
-                box.add(new Pixel(data.x, data.y, new Color(data.r, data.g, data.b, data.a)))
-                break
-        }
+
 
     }
 

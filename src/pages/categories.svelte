@@ -53,6 +53,12 @@
 
             />
             <Button
+                    iconMd="material:brush"
+                    href="/draw"
+                    title="Draw"
+
+            />
+            <Button
                     iconMd="material:upload"
                     on:click={ ()=> {($svelteStreamMode===1)?runnerBrowser.setStreamMode(2):runnerBrowser.setStreamMode(1)}}
                     title="Store to flash"
