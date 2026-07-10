@@ -28,6 +28,10 @@ export default class Animator {
 
     }
 
+    //pixels that were drawn via the default "draw" animationEvent, keyed by "x,y".
+    //only used so erase/clear can remove exactly what was drawn, nothing else.
+    private drawnPixels: Map<string, Pixel> = new Map()
+
     /**
      * Override this to receive realtime events from GUI clients while the animation runs (drawing input,
      * game controls, ...). Clients send these fire-and-forget via the "animationEvent" RPC notification;
@@ -35,11 +39,49 @@ export default class Animator {
      * Receives the same box/scheduler/controls that were passed to run().
      *
      * Default events, available in every animation (call super.animationEvent() when overriding to keep them):
-     *  "addPixel" {x, y, r, g, b, a}
+     *  "draw"  {cells: [{x,y}, ...], color: {r,g,b,a}}  add pixels straight to the box
+     *  "erase" {cells: [{x,y}, ...]}                    remove previously drawn pixels
+     *  "clear"                                          remove all drawn pixels
      */
     animationEvent(name: string, data: any, box: PixelBox, scheduler: Scheduler, controls: ControlGroup) {
 
+        switch (name) {
+            case "draw":
+                for (const cell of data.cells) {
+                    const x = ~~cell.x
+                    const y = ~~cell.y
+                    if (x < box.xMin || x > box.xMax || y < box.yMin || y > box.yMax)
+                        continue
 
+                    //each pixel gets its own Color, so effects can animate them individually
+                    const color = new Color(data.color.r, data.color.g, data.color.b, data.color.a)
+                    const key = x + "," + y
+                    const existing = this.drawnPixels.get(key)
+                    if (existing !== undefined)
+                        existing.color = color
+                    else {
+                        const pixel = new Pixel(x, y, color)
+                        this.drawnPixels.set(key, pixel)
+                        box.add(pixel)
+                    }
+                }
+                break
+            case "erase":
+                for (const cell of data.cells) {
+                    const key = ~~cell.x + "," + ~~cell.y
+                    const pixel = this.drawnPixels.get(key)
+                    if (pixel !== undefined) {
+                        this.drawnPixels.delete(key)
+                        box.delete(pixel)
+                    }
+                }
+                break
+            case "clear":
+                for (const pixel of this.drawnPixels.values())
+                    box.delete(pixel)
+                this.drawnPixels.clear()
+                break
+        }
 
     }
 
