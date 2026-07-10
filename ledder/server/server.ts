@@ -142,7 +142,7 @@ rpc.addMethod("updateValue", async (context: WsContext, path, values) => {
 //realtime events for interactive animations (drawing, game input). Sent as fire-and-forget notifications.
 rpc.addMethod("animationEvent", async (context: WsContext, name: string, data: any) => {
 
-    context.renderControl?.renderer.animationManager.animationEvent(name, data)
+    context.renderControl?.renderer.animationManager.animationEvent( name, data)
 
 })
 

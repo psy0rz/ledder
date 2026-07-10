@@ -20,21 +20,19 @@ export default class DrawPad extends Animator {
     static title = "Draw pad"
     static description = "Draw on the display in realtime via the web GUI"
 
-    private box: PixelBox
     private drawing: PixelList
     private cells: Map<string, Pixel>
 
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) {
-        this.box = box
         this.cells = new Map()
         this.drawing = new PixelList()
         box.add(this.drawing)
     }
 
-    private setCell(x: number, y: number, color: Color) {
+    private setCell(box: PixelBox, x: number, y: number, color: Color) {
         x = ~~x
         y = ~~y
-        if (x < this.box.xMin || x > this.box.xMax || y < this.box.yMin || y > this.box.yMax)
+        if (x < box.xMin || x > box.xMax || y < box.yMin || y > box.yMax)
             return
 
         const key = x + "," + y
@@ -57,12 +55,12 @@ export default class DrawPad extends Animator {
         }
     }
 
-    animationEvent(name: string, data: any) {
+    animationEvent(name: string, data: any, box: PixelBox, scheduler: Scheduler, controls: ControlGroup) {
         switch (name) {
             case "draw":
                 for (const cell of data.cells)
                     //each cell gets its own Color copy, so effects can later animate pixels individually
-                    this.setCell(cell.x, cell.y, new Color(data.color.r, data.color.g, data.color.b))
+                    this.setCell(box, cell.x, cell.y, new Color(data.color.r, data.color.g, data.color.b))
                 break
             case "erase":
                 for (const cell of data.cells)
@@ -72,6 +70,8 @@ export default class DrawPad extends Animator {
                 this.cells.clear()
                 this.drawing.clear()
                 break
+            default:
+                super.animationEvent(name, data, box, scheduler, controls)
         }
     }
 }

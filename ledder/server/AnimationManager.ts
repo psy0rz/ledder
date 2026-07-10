@@ -216,11 +216,12 @@ export default class AnimationManager {
 
     }
 
-    //forward a realtime event from a GUI client to the currently running animation
+    //forward a realtime event from a GUI client to the currently running animation.
+    //the animation gets the same box/scheduler/controls that were passed to its run().
     public animationEvent(name: string, data: any) {
         try {
             if (this.animation !== undefined)
-                this.animation.animationEvent(name, data)
+                this.animation.animationEvent(name, data, this.childBox, this.proxyScheduler.proxy, this.proxyControlGroup.proxy)
         } catch (e) {
             console.error(e)
         }

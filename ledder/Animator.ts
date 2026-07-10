@@ -1,6 +1,8 @@
 import Scheduler from "./Scheduler.js"
 import ControlGroup from "./ControlGroup.js"
 import PixelBox from "./PixelBox.js"
+import Pixel from "./Pixel.js"
+import Color from "./Color.js"
 
 
 
@@ -30,8 +32,18 @@ export default class Animator {
      * Override this to receive realtime events from GUI clients while the animation runs (drawing input,
      * game controls, ...). Clients send these fire-and-forget via the "animationEvent" RPC notification;
      * events are only delivered while this instance is the currently running animation.
+     * Receives the same box/scheduler/controls that were passed to run().
+     *
+     * Default events, available in every animation (call super.animationEvent() when overriding to keep them):
+     *  "addPixel" {x, y, r, g, b, a}
      */
-    animationEvent(name: string, data: any) {
+    animationEvent(name: string, data: any, box: PixelBox, scheduler: Scheduler, controls: ControlGroup) {
+
+        switch (name) {
+            case "addPixel":
+                box.add(new Pixel(data.x, data.y, new Color(data.r, data.g, data.b, data.a)))
+                break
+        }
 
     }
 
