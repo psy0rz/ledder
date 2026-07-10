@@ -24,6 +24,7 @@ export class RunnerBrowser {
 
     presets: Record<string, any>
     zoom: boolean
+    previewDisplay: DisplayCanvas
 
 
     constructor() {
@@ -60,7 +61,9 @@ console.log("ControlGroup.setcontrol values", controlGroup)
 
         rpc.addMethod('displaySize', (width, height) => {
             // const [width, height]=pars
-            rpc.registerDisplay(new DisplayCanvas(width, height, 8, '#ledder-display', '.ledder-display-box'))
+            if (this.previewDisplay !== undefined)
+                rpc.unregisterDisplay(this.previewDisplay)
+            this.previewDisplay = rpc.registerDisplay(new DisplayCanvas(width, height, 8, '#ledder-display', '.ledder-display-box'))
 
             console.log("got size", width, height)
             svelteDisplayWidth.set(width)

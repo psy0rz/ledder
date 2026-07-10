@@ -13,7 +13,7 @@ class RpcClient extends Rpc {
     private openHandler: () => void
     private closeHandler: () => void
     private url: string
-    private display: DisplayCanvas
+    private displays: Set<DisplayCanvas> = new Set()
     private webSocket: WebSocket
 
     constructor() {
@@ -82,8 +82,11 @@ class RpcClient extends Rpc {
 
                 this.serverAndClient.receiveAndSend(JSON.parse(event.data.toString()))
             else {
-                if (this.display)
-                    this.display.frame(await event.data.arrayBuffer())
+                if (this.displays.size) {
+                    const frame = await event.data.arrayBuffer()
+                    for (const display of this.displays)
+                        display.frame(frame)
+                }
 
             }
 
@@ -120,9 +123,16 @@ class RpcClient extends Rpc {
         })
     }
 
+    //incoming frames are painted on all registered displays
     registerDisplay(display: DisplayCanvas)
     {
-        this.display=display
+        this.displays.add(display)
+        return display
+    }
+
+    unregisterDisplay(display: DisplayCanvas)
+    {
+        this.displays.delete(display)
     }
 
     /**

@@ -36,9 +36,19 @@
     $: canvasWidth = $svelteDisplayWidth * cellSize
     $: canvasHeight = $svelteDisplayHeight * cellSize
 
-    //take over the frame stream from the top preview canvas while this page is open
-    $: if (mounted && $svelteDisplayWidth && $svelteDisplayHeight) {
-        rpc.registerDisplay(new DisplayCanvas($svelteDisplayWidth, $svelteDisplayHeight, 1, '#draw-display', '.draw-display-box'))
+    //paint the frame stream on our big canvas as well, while this page is open.
+    //(the normal preview canvas stays registered and keeps working)
+    let drawDisplay = null
+    let registeredWidth = 0
+    let registeredHeight = 0
+
+    $: if (mounted && $svelteDisplayWidth && $svelteDisplayHeight &&
+        ($svelteDisplayWidth !== registeredWidth || $svelteDisplayHeight !== registeredHeight)) {
+        if (drawDisplay)
+            rpc.unregisterDisplay(drawDisplay)
+        drawDisplay = rpc.registerDisplay(new DisplayCanvas($svelteDisplayWidth, $svelteDisplayHeight, 1, '#draw-display', '.draw-display-box'))
+        registeredWidth = $svelteDisplayWidth
+        registeredHeight = $svelteDisplayHeight
     }
 
     onMount(() => {
@@ -47,8 +57,8 @@
     })
 
     onDestroy(() => {
-        //hand the frame stream back to the top preview canvas
-        rpc.registerDisplay(new DisplayCanvas($svelteDisplayWidth, $svelteDisplayHeight, 8, '#ledder-display', '.ledder-display-box'))
+        if (drawDisplay)
+            rpc.unregisterDisplay(drawDisplay)
     })
 
     let drawing = false
