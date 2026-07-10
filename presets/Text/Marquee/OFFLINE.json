@@ -12,11 +12,11 @@
    "value": 0
   },
   "Text": {
-   "text": "LEDDER"
+   "text": "OFFLINE"
   },
   "Text color": {
-   "r": 33,
-   "g": 255,
+   "r": 255,
+   "g": 14,
    "b": 0,
    "a": 1
   },
@@ -67,66 +67,38 @@
   },
   "Twinkle": {
    "Enabled": {
+    "enabled": true
+   },
+   "Color": {
+    "r": 255,
+    "g": 255,
+    "b": 255,
+    "a": 1
+   },
+   "Twinkle density": {
+    "value": 3
+   },
+   "Create randomizer %": {
+    "value": 50
+   },
+   "Random colors": {
     "enabled": false
+   },
+   "Fade out time": {
+    "value": 0
+   },
+   "Fade out time randomizer": {
+    "value": 30
    }
   },
   "Color pattern": {
    "Enabled": {
-    "enabled": true
-   },
-   "Color cycle time": {
-    "value": 57
-   },
-   "Reverse": {
     "enabled": false
-   },
-   "Ping pong": {
-    "enabled": true
-   },
-   "Color cycle pattern": {
-    "selected": "Reinbow"
-   },
-   "Color cycle pattern range": {
-    "from": 66,
-    "to": 100
-   },
-   "Per pixel offset %": {
-    "value": 100
    }
   },
   "Cursor": {
    "Enabled": {
     "enabled": false
-   },
-   "Color": {
-    "r": 128,
-    "g": 128,
-    "b": 128,
-    "a": 1
-   },
-   "X offset": {
-    "value": 2
-   },
-   "Y offset": {
-    "value": 1
-   },
-   "Height": {
-    "value": 6
-   },
-   "Width": {
-    "value": 5
-   },
-   "On time": {
-    "value": 30
-   },
-   "Off time": {
-    "value": 30
-   },
-   "Fade out time": {
-    "value": 10
-   },
-   "Fade out time randomizer": {
-    "value": 0
    }
   },
   "Enabled": {

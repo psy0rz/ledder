@@ -29,7 +29,7 @@ export class DisplayQOIShttp extends DisplayQOIS {
         this.ready = false
 
 
-        this.streamMode = STREAM_REPLAY
+        this.streamMode = STREAM_LIVE
 
 
     }

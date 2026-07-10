@@ -8,9 +8,6 @@ import {Render} from "./Render.js"
  * This helpts smooth playback on wifi devices with buffering.
  */
 
-//too small and low-bandwith animations will not have enough data. too big and high-bandwidth animations will stutter on the preview side (tcp backpressure)
-    // NOTE: 0 seems to be ok for now, since there is already enough buffering once the esp starts decoding it seems. (around 500mS lag)
-const BUFFER_MS=0
 
 export class RenderRealtime extends Render {
 
@@ -37,7 +34,7 @@ export class RenderRealtime extends Render {
     resetTimers()
     {
         this.displayNextTimeMicros = 0;
-        this.localNextTimeMicros=Date.now() * 1000 - (BUFFER_MS*1000)
+        this.localNextTimeMicros=Date.now() * 1000
     }
 
     //the main step-render-send loop
