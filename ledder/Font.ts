@@ -33,7 +33,9 @@ export default class Font {
             render: true,
             loadTarget: freetype.RenderMode.MONO,
             // monochrome: false,
-            noAutohint: true
+            //no hinting at all: pixel fonts are rendered at their exact design size, and
+            //hinting results vary between freetype builds (glyphs come out a pixel off)
+            noHinting: true
         }))
     }
 
