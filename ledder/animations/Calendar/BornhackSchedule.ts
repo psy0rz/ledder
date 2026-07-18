@@ -102,12 +102,16 @@ export default class BornhackSchedule extends Animator {
 
             //when??
             if (ongoing) {
-                const timeTxt=`${formatCountdown(now - event.start.getTime())} past`
+                let timeTxt=formatCountdown(now - event.start.getTime())
+                if (timeTxt!="now")
+                    timeTxt=timeTxt+" past"
                 box.add(new DrawText(0, 24, fontSelect(controls),timeTxt , colorRed))
             }
             else
             {
-                const timeTxt=`in ${formatCountdown(event.start.getTime() - now )}`
+                let timeTxt=formatCountdown(event.start.getTime() - now )
+                if (timeTxt!="now")
+                    timeTxt="in "+timeTxt
                 box.add(new DrawText(0, 24, fontSelect(controls),timeTxt , colorGreen))
             }
 
