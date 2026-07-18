@@ -8,6 +8,7 @@ import type ColorInterface from "../../ColorInterface.js"
 import {parseICS, type IcsEvent} from "../../../util/ics.js"
 import Marquee from "../Text/Marquee.js";
 import {colorGreen, colorRed, colorWhite, colorYellow} from "../../Colors.js";
+import AnimationManager from "../../server/AnimationManager.js";
 
 const DEFAULT_ICS_URL = "https://bornhack.dk/bornhack-2026/program/ics/"
 
@@ -154,15 +155,25 @@ export default class BornhackSchedule extends Animator {
             }
         }
 
+        let animationManager=new AnimationManager(box, scheduler, controls)
+
         let lastUpdate=Date.now()
         while(1)
         {
+            box.clear()
+            //animate during fetch
+            await animationManager.select("Text/Marquee/ledder", false)
+
             lastUpdate=Date.now()
             await fetchEvents()
+
+            await animationManager.scheduler.delayTime(5)
+            await animationManager.stop(false)
+
             while (Date.now()-lastUpdate<60000) {
                 await showAll()
-                await scheduler.delayTime(1)
             }
+
 
         }
     }
