@@ -51,7 +51,7 @@ export default class BornhackSchedule extends Animator {
                 const now = Date.now()
 
                 ongoing = events
-                    .filter(e => e.start.getTime() <= now && e.end.getTime() > now)
+                    .filter(e => e.start.getTime() <= now && e.end.getTime() > now && now - e.start.getTime() < 30 * 60000)
                     .sort((a, b) => a.start.getTime() - b.start.getTime())
 
                 upcoming = events
@@ -141,8 +141,10 @@ export default class BornhackSchedule extends Animator {
         {
             lastUpdate=Date.now()
             await fetchEvents()
-            while (Date.now()-lastUpdate<60000)
+            while (Date.now()-lastUpdate<60000) {
                 await showAll()
+                await scheduler.delayTime(1)
+            }
 
         }
     }
