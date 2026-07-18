@@ -159,6 +159,14 @@ export default class Scheduler {
         this.setFrameTimeuS(1000000 / fps)
     }
 
+    /**
+     * Converts a duration in seconds to the number of frames that make it up,
+     * based on the current frame time. Useful for passing to interval()/delay().
+     */
+    public timeToFrames(seconds: number): number {
+        return Math.round(seconds * 1000000 / this.__frameTimeMicros)
+    }
+
 
     //Use this to do cleanup stuff in your animation. (like closing connections or other external stuff)
     onCleanup(callback) {
@@ -206,6 +214,15 @@ export default class Scheduler {
         this.intervals.add(interval)
         return (interval.createPromise())
     }
+
+    /**
+     * Delay by returning a promise you should await for.
+     * @param seconds Delay length, specified in seconds.
+     */
+    public delayTime(seconds: number): Promise<any> {
+        return this.delay(this.timeToFrames(seconds))
+    }
+
 
     /** Temporary stop the scheduler. Use when you do external async stuff. (like loading a file)
      * Can be called multiple times. Resume has to called the same amount of times.
