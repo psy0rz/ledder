@@ -37,6 +37,17 @@ export default class BornhackSchedule extends Animator {
         let ongoing: IcsEvent[] = []
         let upcoming: IcsEvent[] = []
 
+        //keeps only the first (earliest) event per location, preserving order
+        function firstPerLocation(list: IcsEvent[]): IcsEvent[] {
+            const seen = new Set<string>()
+            return list.filter(e => {
+                if (seen.has(e.location))
+                    return false
+                seen.add(e.location)
+                return true
+            })
+        }
+
         async function fetchEvents() {
             try {
                 scheduler.stop()
@@ -50,13 +61,13 @@ export default class BornhackSchedule extends Animator {
 
                 const now = Date.now()
 
-                ongoing = events
+                ongoing = firstPerLocation(events
                     .filter(e => e.start.getTime() <= now && e.end.getTime() > now && now - e.start.getTime() < 30 * 60000)
-                    .sort((a, b) => a.start.getTime() - b.start.getTime())
+                    .sort((a, b) => a.start.getTime() - b.start.getTime()))
 
-                upcoming = events
+                upcoming = firstPerLocation(events
                     .filter(e => e.start.getTime() > now)
-                    .sort((a, b) => a.start.getTime() - b.start.getTime())
+                    .sort((a, b) => a.start.getTime() - b.start.getTime()))
                     .slice(0, maxUpcoming.value)
 
             } catch (error) {

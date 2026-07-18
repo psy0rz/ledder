@@ -10,7 +10,7 @@
     "value": 60
    },
    "Max upcoming events": {
-    "value": 1
+    "value": 10
    },
    "Show location": {
     "enabled": true
@@ -62,6 +62,9 @@
   },
   "Font width": {
    "value": 0
+  },
+  "FPS": {
+   "value": 60
   }
  }
 }
