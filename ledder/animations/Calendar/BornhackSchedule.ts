@@ -97,14 +97,10 @@ export default class BornhackSchedule extends Animator {
                 box.add(new DrawText(0,0, fontSelect(controls), `Next:`, colorWhite))
 
             //what??
-            const summaryPixels=new DrawText(64, 16, fontSelect(controls), event.summary, colorWhite)
+            const summaryPixels=new DrawText(box.width(), 16, fontSelect(controls), event.summary, colorWhite)
             box.add(summaryPixels)
 
-
-            //location
-            box.add(new DrawText(0,8, fontSelect(controls), event.location, colorGreen))
-
-            //time
+            //when??
             if (ongoing) {
                 const timeTxt=`${formatCountdown(now - event.start.getTime())} past`
                 box.add(new DrawText(0, 24, fontSelect(controls),timeTxt , colorRed))
@@ -113,12 +109,23 @@ export default class BornhackSchedule extends Animator {
             {
                 const timeTxt=`in ${formatCountdown(event.start.getTime() - now )}`
                 box.add(new DrawText(0, 24, fontSelect(controls),timeTxt , colorGreen))
-
             }
 
-            // await scheduler.delayTime(2)
+            //where??
+            const locationPixels=new DrawText(box.width(),8, fontSelect(controls), event.location, colorGreen)
+            box.add(locationPixels)
+
+            //slide in
+            let scrollNeeded= box.width()
+            await scheduler.interval(1, ()=>{
+                const amount=4
+                locationPixels.move(-amount,0)
+                scrollNeeded=scrollNeeded-amount
+                return (scrollNeeded>0)
+            })
+
             //scroll until end
-            let scrollNeeded=summaryPixels.bbox().xMax+1
+            scrollNeeded=summaryPixels.bbox().xMax+1
             await scheduler.interval(1, ()=>{
 
                 summaryPixels.move(-1,0)
@@ -126,8 +133,6 @@ export default class BornhackSchedule extends Animator {
                 return (scrollNeeded!=0)
 
             })
-
-
 
         }
 
@@ -143,8 +148,6 @@ export default class BornhackSchedule extends Animator {
             {
                 await show(event, false)
             }
-
-
         }
 
         let lastUpdate=Date.now()
