@@ -25,7 +25,6 @@ export default class BornhackSchedule extends Animator {
         // scheduler.setFps(30)
         const settingsGroup = controls.group("Settings")
         const icsUrl = settingsGroup.input("ICS URL", DEFAULT_ICS_URL, true)
-        const maxUpcoming = settingsGroup.value("Max upcoming events", 3, 1, 10, 1)
 
             const fpsControl = controls.value("FPS", 60, 1, 120, 1)
             fpsControl.onChange(() => {
@@ -68,7 +67,6 @@ export default class BornhackSchedule extends Animator {
                 upcoming = firstPerLocation(events
                     .filter(e => e.start.getTime() > now)
                     .sort((a, b) => a.start.getTime() - b.start.getTime()))
-                    .slice(0, maxUpcoming.value)
 
             } catch (error) {
                 scheduler.resume()
