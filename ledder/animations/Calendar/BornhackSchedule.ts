@@ -179,19 +179,20 @@ export default class BornhackSchedule extends Animator {
             }
         }
 
-        let animationManager=new AnimationManager(box, scheduler, controls)
+        let animationManager=new AnimationManager(box, scheduler, controls.group("Sub animations"))
 
         let lastUpdate=Date.now()
         while(1)
         {
             box.clear()
             //animate during fetch
-            await animationManager.select("Text/Marquee/ledder", true)
+            await animationManager.select("Text/Marquee/ledder", false)
 
             lastUpdate=Date.now()
             await fetchEvents()
 
-            // await animationManager.scheduler.delayTime(5)
+
+            await animationManager.scheduler.delayTime(5)
             await animationManager.stop(true)
 
             while (Date.now()-lastUpdate<60000) {
