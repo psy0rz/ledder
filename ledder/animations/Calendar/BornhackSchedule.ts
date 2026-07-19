@@ -143,15 +143,19 @@ export default class BornhackSchedule extends Animator {
 
         async function showAll()
         {
+            if (ongoing.length || upcoming.length) {
+                for (const event of ongoing) {
+                    await show(event, true)
+                }
 
-            for (const event of ongoing)
-            {
-                await show(event, true)
+                for (const event of upcoming) {
+                    await show(event, false)
+                }
             }
-
-            for (const event of upcoming)
+            else
             {
-                await show(event, false)
+                box.add(new DrawText(0, 0, fontSelect(controls), "No events", colorRed))
+                await scheduler.delayTime(2)
             }
         }
 
