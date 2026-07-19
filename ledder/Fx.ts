@@ -22,8 +22,6 @@ export default class Fx {
     }
 
     //Run fx on pixels.
-    //Can be called multiple times. Use stop() to stop all running schedulers of this effect.
-    //Note that stop() only returns the last promise.
     //Run should set this.running to True and it should end when this.running becomes false.
     run(...any):Promise<any>
     {
@@ -31,12 +29,6 @@ export default class Fx {
         return (new Promise( undefined))
     }
 
-    //stops the effect. (promise will be fullfilled after stopping)
-    // async stop()
-    // {
-    //     this.running=false
-    //     return (this.promise)
-    // }
 
 
 }

@@ -9,6 +9,9 @@ import {parseICS, type IcsEvent} from "../../../util/ics.js"
 import Marquee from "../Text/Marquee.js";
 import {colorGreen, colorRed, colorWhite, colorYellow} from "../../Colors.js";
 import AnimationManager from "../../server/AnimationManager.js";
+import FxFlameout from "../../fx/FxFlameout.js";
+import {FxFadeOut} from "../../fx/FxFadeOut.js";
+import {color} from "@csstools/css-color-parser";
 
 const DEFAULT_ICS_URL = "https://bornhack.dk/bornhack-2026/program/ics/"
 
@@ -38,6 +41,10 @@ export default class BornhackSchedule extends Animator {
         let events: IcsEvent[] = []
         let ongoing: IcsEvent[] = []
         let upcoming: IcsEvent[] = []
+
+        const fxFlameout=new FxFlameout(scheduler, controls)
+        const fxFadeout=new FxFadeOut(scheduler, controls,20)
+
 
         //keeps only the first (earliest) event per location, preserving order
         function firstPerLocation(list: IcsEvent[]): IcsEvent[] {
@@ -90,30 +97,38 @@ export default class BornhackSchedule extends Animator {
         {
             const now = Date.now()
 
-            box.clear()
-
+            let titlePixels
+            let titleColor=colorWhite.copy()
             if (ongoing)
-                box.add(new DrawText(0,0, fontSelect(controls), `Now at:`, colorWhite))
+                titlePixels=new DrawText(0,0, fontSelect(controls), `Now at:`, titleColor)
             else
-                box.add(new DrawText(0,0, fontSelect(controls), `Next:`, colorWhite))
+                titlePixels=new DrawText(0,0, fontSelect(controls), `Next:`, titleColor)
+
+            box.add(titlePixels)
 
             //what??
             const summaryPixels=new DrawText(box.width(), 16, fontSelect(controls), event.summary, colorWhite)
             box.add(summaryPixels)
 
             //when??
+            let whenColor
+            let whenPixels
             if (ongoing) {
                 let timeTxt=formatCountdown(now - event.start.getTime())
                 if (timeTxt!="now")
                     timeTxt=timeTxt+" past"
-                box.add(new DrawText(0, 24, fontSelect(controls),timeTxt , colorRed))
+                whenColor=colorRed.copy()
+                whenPixels=new DrawText(0, 24, fontSelect(controls),timeTxt , whenColor)
+                box.add(whenPixels)
             }
             else
             {
                 let timeTxt=formatCountdown(event.start.getTime() - now )
                 if (timeTxt!="now")
                     timeTxt="in "+timeTxt
-                box.add(new DrawText(0, 24, fontSelect(controls),timeTxt , colorGreen))
+                whenColor=colorGreen.copy()
+                whenPixels=new DrawText(0, 24, fontSelect(controls),timeTxt , whenColor)
+                box.add(whenPixels)
             }
 
             //where??
@@ -129,7 +144,7 @@ export default class BornhackSchedule extends Animator {
                 return (scrollNeeded>0)
             })
 
-            //scroll until end
+            // scroll until end
             scrollNeeded=summaryPixels.bbox().xMax+1
             await scheduler.interval(1, ()=>{
 
@@ -137,7 +152,12 @@ export default class BornhackSchedule extends Animator {
                 scrollNeeded=scrollNeeded-1
                 return (scrollNeeded!=0)
 
-            })
+            }).then( ()=> box.delete(summaryPixels))
+
+            fxFlameout.run(locationPixels,false).then (()=> box.delete(locationPixels))
+            fxFadeout.run(titleColor).then(()=> box.delete(titlePixels))
+            fxFadeout.run(whenColor).then(()=> box.delete(whenPixels))
+
 
         }
 
@@ -166,13 +186,13 @@ export default class BornhackSchedule extends Animator {
         {
             box.clear()
             //animate during fetch
-            await animationManager.select("Text/Marquee/ledder", false)
+            await animationManager.select("Text/Marquee/ledder", true)
 
             lastUpdate=Date.now()
             await fetchEvents()
 
-            await animationManager.scheduler.delayTime(5)
-            await animationManager.stop(false)
+            // await animationManager.scheduler.delayTime(5)
+            await animationManager.stop(true)
 
             while (Date.now()-lastUpdate<60000) {
                 await showAll()
