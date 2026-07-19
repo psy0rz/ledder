@@ -226,6 +226,7 @@ export default class Scheduler {
 
     /** Temporary stop the scheduler. Use when you do external async stuff. (like loading a file)
      * Can be called multiple times. Resume has to called the same amount of times.
+     * Note that this doesnt affect realtime rendering, its only for static preview rendering.
      */
     public stop() {
         //start with fresh promise

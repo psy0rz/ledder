@@ -164,8 +164,8 @@ export default class BornhackSchedule extends Animator {
             await animationManager.select("Text/Marquee/ledder", false)
 
             lastUpdate=Date.now()
-            await fetchEvents()
-
+            //async in background
+            fetchEvents()
 
             await animationManager.scheduler.delayTime(5)
             await animationManager.stop(true)
