@@ -1,6 +1,5 @@
 import Scheduler from "../Scheduler.js"
 import FxFlameout from "../fx/FxFlameout.js"
-import FxPacman from "../fx/FxPacman.js"
 import ControlGroup from "../ControlGroup.js"
 import {PresetStore} from "../server/PresetStore.js"
 import Animator from "../Animator.js"
