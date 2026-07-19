@@ -6,19 +6,12 @@ import DrawText from "../../draw/DrawText.js"
 import {fonts, fontSelect} from "../../fonts.js"
 import type ColorInterface from "../../ColorInterface.js"
 import {parseICS, type IcsEvent} from "../../../util/ics.js"
-import Marquee from "../Text/Marquee.js";
-import {colorGreen, colorRed, colorWhite, colorYellow} from "../../Colors.js";
+import {colorGreen, colorRed, colorWhite} from "../../Colors.js";
 import AnimationManager from "../../server/AnimationManager.js";
 import FxFlameout from "../../fx/FxFlameout.js";
 import {FxFadeOut} from "../../fx/FxFadeOut.js";
-import {color} from "@csstools/css-color-parser";
 
 const DEFAULT_ICS_URL = "https://bornhack.dk/bornhack-2026/program/ics/"
-
-interface Segment {
-    text: string
-    color: ColorInterface
-}
 
 export default class BornhackSchedule extends Animator {
     static category = "Calendar"
@@ -32,10 +25,10 @@ export default class BornhackSchedule extends Animator {
         const maxOngoingMinutes = settingsGroup.value("Max ongoing (min)", 30, 1, 240, 1)
         const maxUpcomingMinutes = settingsGroup.value("Max upcoming (min)", 120, 1, 1440, 1)
 
-            const fpsControl = controls.value("FPS", 60, 1, 120, 1)
-            fpsControl.onChange(() => {
-                scheduler.setFps(fpsControl.value)
-            })
+        const fpsControl = controls.value("FPS", 60, 1, 120, 1)
+        fpsControl.onChange(() => {
+            scheduler.setFps(fpsControl.value)
+        })
 
 
         let events: IcsEvent[] = []
@@ -97,13 +90,8 @@ export default class BornhackSchedule extends Animator {
         {
             const now = Date.now()
 
-            let titlePixels
-            let titleColor=colorWhite.copy()
-            if (ongoing)
-                titlePixels=new DrawText(0,0, fontSelect(controls), `Now at:`, titleColor)
-            else
-                titlePixels=new DrawText(0,0, fontSelect(controls), `Next:`, titleColor)
-
+            const titleColor=colorWhite.copy()
+            const titlePixels=new DrawText(0,0, fontSelect(controls), ongoing ? "Now at:" : "Next:", titleColor)
             box.add(titlePixels)
 
             //what??
@@ -111,25 +99,12 @@ export default class BornhackSchedule extends Animator {
             box.add(summaryPixels)
 
             //when??
-            let whenColor
-            let whenPixels
-            if (ongoing) {
-                let timeTxt=formatCountdown(now - event.start.getTime())
-                if (timeTxt!="now")
-                    timeTxt=timeTxt+" past"
-                whenColor=colorRed.copy()
-                whenPixels=new DrawText(0, 24, fontSelect(controls),timeTxt , whenColor)
-                box.add(whenPixels)
-            }
-            else
-            {
-                let timeTxt=formatCountdown(event.start.getTime() - now )
-                if (timeTxt!="now")
-                    timeTxt="in "+timeTxt
-                whenColor=colorGreen.copy()
-                whenPixels=new DrawText(0, 24, fontSelect(controls),timeTxt , whenColor)
-                box.add(whenPixels)
-            }
+            let timeTxt=formatCountdown(ongoing ? now - event.start.getTime() : event.start.getTime() - now)
+            if (timeTxt!="now")
+                timeTxt=ongoing ? timeTxt+" past" : "in "+timeTxt
+            const whenColor=(ongoing ? colorRed : colorGreen).copy()
+            const whenPixels=new DrawText(0, 24, fontSelect(controls),timeTxt , whenColor)
+            box.add(whenPixels)
 
             //where??
             const locationPixels=new DrawText(box.width(),8, fontSelect(controls), event.location, colorGreen)
