@@ -1,0 +1,133 @@
+{
+ "title": "",
+ "description": "",
+ "values": {
+  "Settings": {
+   "ICS URL": {
+    "text": "https://bornhack.dk/bornhack-2026/program/ics/"
+   },
+   "Max ongoing (min)": {
+    "value": 30
+   },
+   "Max upcoming (min)": {
+    "value": 240
+   },
+   "Enabled": {
+    "enabled": true
+   }
+  },
+  "FPS": {
+   "value": 60
+  },
+  "Color cycle time": {
+   "value": 15
+  },
+  "Color cycle time randomizer": {
+   "value": 15
+  },
+  "Color cycle repeat count": {
+   "value": 1
+  },
+  "Color cycle mode": {
+   "selected": "reverse"
+  },
+  "Color cycle pattern": {
+   "selected": "Bertrik fire"
+  },
+  "Color cycle pattern range": {
+   "from": 0,
+   "to": 100
+  },
+  "Move interval": {
+   "value": 3
+  },
+  "Move interval randomizer": {
+   "value": 3
+  },
+  "Move X step": {
+   "value": 0.4
+  },
+  "Move Y step": {
+   "value": -1
+  },
+  "Fade out time": {
+   "value": 20
+  },
+  "Fade out time randomizer": {
+   "value": 0
+  },
+  "Sub animations": {
+   "Image URL": {
+    "text": "https://media.tenor.com/xo0jvr4bbTMAAAAi/rick-astley-rickroll.gif"
+   },
+   "Fractal interval": {
+    "value": 14
+   },
+   "Preset": {
+    "selected": "3"
+   },
+   "Movie interval": {
+    "value": 4
+   },
+   "Movie interval randomizer": {
+    "value": 0
+   },
+   "Rotate interval": {
+    "value": 2
+   },
+   "Rotate interval randomizer": {
+    "value": 0
+   },
+   "Rotate X step": {
+    "value": 0
+   },
+   "Rotate Y step": {
+    "value": 0
+   },
+   "animation control": {
+    "Movie interval": {
+     "value": 1
+    },
+    "Movie interval randomizer": {
+     "value": 0
+    },
+    "Rotate interval": {
+     "value": 3
+    },
+    "Rotate interval randomizer": {
+     "value": 9
+    },
+    "Rotate X step": {
+     "value": 0
+    },
+    "Rotate Y step": {
+     "value": 0
+    },
+    "delay multiplier": {
+     "value": 1
+    },
+    "Enabled": {
+     "enabled": true
+    }
+   },
+   "fit": {
+    "selected": "inside"
+   },
+   "Enabled": {
+    "enabled": true
+   }
+  },
+  "Font": {
+   "selected": "C64"
+  },
+  "Font height": {
+   "value": 0
+  },
+  "Font width": {
+   "value": 0
+  },
+  "Enabled": {
+   "enabled": true
+  }
+ }
+}

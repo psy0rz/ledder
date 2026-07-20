@@ -151,8 +151,6 @@ export default class BornhackSchedule extends Animator {
                 for (const event of upcoming) {
                     await show(event, false)
                 }
-                //give fx time to playout
-                await scheduler.delayTime(1)
 
             }
             else
@@ -170,13 +168,11 @@ export default class BornhackSchedule extends Animator {
 
             switch (currentAnimations) {
                 case 0:
-                    console.log("rickroll")
                     await animationManager.select("RemotePictures/rickroll", false)
                     await scheduler.delay(40)
                     // await scheduler.delayTime(1)
                     break
                 case 1:
-                    console.log("ledder")
                     await animationManager.select("Text/Marquee/ledder", false)
                     await scheduler.delay(160)
                     break
@@ -200,6 +196,9 @@ export default class BornhackSchedule extends Animator {
             while (Date.now()-lastUpdate<60000) {
                 await showAll()
             }
+
+            //give fx time to playout
+            await scheduler.delayTime(1)
 
         }
     }
