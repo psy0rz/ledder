@@ -38,6 +38,10 @@ export default class BornhackSchedule extends Animator {
         const fxFlameout=new FxFlameout(scheduler, controls)
         const fxFadeout=new FxFadeOut(scheduler, controls,20)
 
+        // const animationBox=new PixelBox(box)
+        // box.add(animationBox)
+        const animationManager=new AnimationManager(box, scheduler, controls.group("Sub animations"))
+
 
         //keeps only the first (earliest) event per location, preserving order
         function firstPerLocation(list: IcsEvent[]): IcsEvent[] {
@@ -54,7 +58,6 @@ export default class BornhackSchedule extends Animator {
             try {
                 scheduler.stop()
                 const response = await fetch(icsUrl.text)
-                scheduler.resume()
                 if (!response.ok) {
                     console.error("BornhackSchedule: HTTP error", response.status, response.statusText)
                     return
@@ -72,8 +75,10 @@ export default class BornhackSchedule extends Animator {
                     .sort((a, b) => a.start.getTime() - b.start.getTime()))
 
             } catch (error) {
-                scheduler.resume()
                 console.error("BornhackSchedule: fetch/parse error:", error)
+            }
+            finally {
+                scheduler.resume()
             }
         }
 
@@ -146,34 +151,55 @@ export default class BornhackSchedule extends Animator {
                 for (const event of upcoming) {
                     await show(event, false)
                 }
+                //give fx time to playout
+                await scheduler.delayTime(1)
+
             }
             else
             {
                 box.add(new DrawText(0, 0, fontSelect(controls), "No events", colorRed))
                 await scheduler.delayTime(2)
+                box.clear()
             }
         }
 
-        let animationManager=new AnimationManager(box, scheduler, controls.group("Sub animations"))
 
-        let lastUpdate=Date.now()
+        let currentAnimations=0
+
+        async function showRandomstuff() {
+
+            switch (currentAnimations) {
+                case 0:
+                    console.log("rickroll")
+                    await animationManager.select("RemotePictures/rickroll", false)
+                    await scheduler.delay(40)
+                    // await scheduler.delayTime(1)
+                    break
+                case 1:
+                    console.log("ledder")
+                    await animationManager.select("Text/Marquee/ledder", false)
+                    await scheduler.delay(160)
+                    break
+            }
+
+            animationManager.stop(true)
+            currentAnimations = (currentAnimations + 1) % 2
+        }
+
+            fetchEvents()
+
         while(1)
         {
-            box.clear()
-            //animate during fetch
-            await animationManager.select("Text/Marquee/ledder", false)
-
-            lastUpdate=Date.now()
             //async in background
             fetchEvents()
 
-            await animationManager.scheduler.delayTime(5)
-            await animationManager.stop(true)
+           await showRandomstuff()
 
+            //loop showall for a while
+            const lastUpdate=Date.now()
             while (Date.now()-lastUpdate<60000) {
                 await showAll()
             }
-
 
         }
     }

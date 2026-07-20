@@ -98,6 +98,8 @@
 
     "node-fetch": "^3.3.2",
 
+    "node-fetch-cache": "^5.1.0",
+
     "sharp": "^0.32",
 
     "skeleton-elements": "^4.0.1",

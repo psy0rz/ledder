@@ -220,6 +220,7 @@ export default class Scheduler {
      * @param seconds Delay length, specified in seconds.
      */
     public delayTime(seconds: number): Promise<any> {
+        // console.log(`Scheduler delayTime: ${seconds} with ${this.__frameTimeMicros}`)
         return this.delay(this.timeToFrames(seconds))
     }
 
