@@ -15,6 +15,9 @@ pids
 # Dependency directories
 node_modules/
 
+# node-fetch-cache disk cache
+.cache/
+
 # Optional npm cache directory
 .npm
 

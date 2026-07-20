@@ -4,7 +4,11 @@ import drawAnimatedImage from "../draw/DrawAnimatedImage.js"
 import Scheduler from "../Scheduler.js"
 import ControlGroup from "../ControlGroup.js"
 import Animator from "../Animator.js"
-import fetch from "node-fetch-cache"
+import NodeFetchCache, {FileSystemCache} from "node-fetch-cache"
+
+const fetch = NodeFetchCache.create({
+    cache: new FileSystemCache({cacheDirectory: ".cache/remote-pictures"})
+})
 
 export default class RemotePicture extends Animator {
 
