@@ -1,0 +1,84 @@
+{
+ "title": "",
+ "description": "",
+ "values": {
+  "Font": {
+   "selected": "C64"
+  },
+  "Font height": {
+   "value": 0
+  },
+  "Font width": {
+   "value": 0
+  },
+  "X frequency (hz)": {
+   "value": 4.9
+  },
+  "X amplitude": {
+   "value": 0
+  },
+  "Y frequency (hz)": {
+   "value": 1.5
+  },
+  "Y amplitude": {
+   "value": 2
+  },
+  "Phase shift": {
+   "value": 0
+  },
+  "Enabled": {
+   "enabled": true
+  },
+  "Logo color": {
+   "r": 255,
+   "g": 140,
+   "b": 0,
+   "a": 1
+  },
+  "Color": {
+   "r": 255,
+   "g": 255,
+   "b": 255,
+   "a": 1
+  },
+  "Random colors": {
+   "enabled": false
+  },
+  "Trace interval range": {
+   "from": 2,
+   "to": 2
+  },
+  "Fade out time": {
+   "value": 12
+  },
+  "Fade out time randomizer": {
+   "value": 0
+  },
+  "Twinkle density": {
+   "value": 3
+  },
+  "Create randomizer %": {
+   "value": 50
+  },
+  "Powered by": {
+   "Font": {
+    "selected": "Pixel-Gosub"
+   },
+   "Font height": {
+    "value": 0
+   },
+   "Font width": {
+    "value": 0
+   },
+   "Color": {
+    "r": 128,
+    "g": 128,
+    "b": 128,
+    "a": 1
+   },
+   "Enabled": {
+    "enabled": true
+   }
+  }
+ }
+}
