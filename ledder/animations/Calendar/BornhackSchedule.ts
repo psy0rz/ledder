@@ -168,18 +168,21 @@ export default class BornhackSchedule extends Animator {
 
             switch (currentAnimations) {
                 case 0:
-                    await animationManager.select("RemotePictures/rickroll", false)
-                    await scheduler.delay(40)
-                    // await scheduler.delayTime(1)
+                    await animationManager.select("Logos/ledder/default", false)
+                    await scheduler.delayTime(6)
                     break
                 case 1:
+                    await animationManager.select("RemotePictures/rickroll", false)
+                    await scheduler.delay(40)
+                    break
+                case 2:
                     await animationManager.select("Text/Marquee/ledder", false)
                     await scheduler.delay(160)
                     break
             }
 
             animationManager.stop(true)
-            currentAnimations = (currentAnimations + 1) % 2
+            currentAnimations = (currentAnimations + 1) % 3
         }
 
             fetchEvents()

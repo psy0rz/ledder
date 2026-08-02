@@ -26,7 +26,7 @@ export default class Ledder extends  Animator
         scrollBox.centerH(scrollBox)
 
         const pwrgroup=controls.group("Powered by")
-        const poweredby = new DrawText(0,3, fontSelect(pwrgroup), "powered by", pwrgroup.color())
+        const poweredby = new DrawText(0,0, fontSelect(pwrgroup), "Run by", pwrgroup.color())
         scrollBox.add(poweredby)
         poweredby.centerH(scrollBox)
 
