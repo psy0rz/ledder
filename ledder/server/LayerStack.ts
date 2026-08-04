@@ -130,6 +130,10 @@ export default class LayerStack {
             }
         }
 
+        //we were stopped while loading layers from disk, so dont attach anything anymore
+        if (!this.valid)
+            return
+
         //changing the order shouldnt restart anything, so we handle it ourselves
         for (const entry of this.entries)
             entry.z.onChange(() => this.resort())
@@ -225,6 +229,9 @@ export default class LayerStack {
 
     /** Load and start the animation of one layer */
     private async runSlot(slot: Slot) {
+
+        if (!this.valid)
+            return
 
         const animationName = slot.animation.selected
 
