@@ -84,16 +84,18 @@ export default class LayerStack {
         this.muteStates = []
         this.valid = true
 
-        //move the animation into our own container, so its Z can be changed as well
+        //NOTE: the container stays detached until resort() attaches it. This way the animation keeps
+        //rendering from the parent box while we load the layers from disk, instead of turning black.
         this.container = new PixelBox(box)
-        this.box.delete(this.baseBox)
-        this.box.add(this.container)
-        this.container.add(this.baseBox)
     }
 
 
     /** Create the layer controls and start all configured layers */
     async build() {
+
+        //normally called once per instance, but dont accumulate entries/layers if its not
+        this.entries = []
+        this.layerFilenames = []
 
         const layers = this.controls.group(LAYERS_GROUP, false, true, true, true)
         this.layersGroup = layers
@@ -153,6 +155,9 @@ export default class LayerStack {
      */
     private watchMutes(layers: ControlGroup, slots: Array<Slot>) {
 
+        if (this.muteWatcher !== undefined)
+            layers.__updateMetaCallbacks.unregister(this.muteWatcher)
+
         this.muteStates = [{group: layers, enabled: layers.enabled}]
         for (const slot of slots)
             this.muteStates.push({group: slot.group, enabled: slot.group.enabled})
@@ -180,6 +185,11 @@ export default class LayerStack {
     resort() {
         if (!this.valid)
             return
+
+        //take over the animation from the parent box, so we decide where it is rendered.
+        //(adding something thats already in a Set keeps its original position, so this is a no-op after the first time)
+        this.box.delete(this.baseBox)
+        this.box.add(this.container)
 
         this.container.clear()
         for (const entry of [...this.entries].sort((a, b) => a.z.value - b.z.value))
