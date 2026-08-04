@@ -102,6 +102,12 @@ export default class AnimationManager {
     public run() {
         if (this.animationClass!==undefined)
         {
+            //run() can be called again without a stop() in between: the renderer does this as soon as its
+            //first display connects, which can be long after the animation was selected at startup.
+            //Without this, the previous animation and its layers would keep running and stay in the box forever.
+            if (this.animation !== undefined)
+                this.stop(true)
+
             this.animation = new this.animationClass()
 
             //layers are added around the animation, so every animation supports them without knowing about it
