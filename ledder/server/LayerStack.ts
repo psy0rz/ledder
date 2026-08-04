@@ -105,9 +105,10 @@ export default class LayerStack {
 
         //note that creating the controls also loads their values from the preset, which is how we
         //find out how many layers this preset actually uses.
+        const items = animationItems().sort((a, b) => a.name.localeCompare(b.name))
         let slots: Array<Slot> = []
         for (let nr = 1; nr <= MAX_SLOTS; nr++)
-            slots.push(this.slotControls(layers, nr))
+            slots.push(this.slotControls(layers, nr, items))
 
         //show all used layers, plus one empty one to add the next layer to. remove the rest again.
         let used = 0
@@ -214,24 +215,26 @@ export default class LayerStack {
     }
 
 
+
     /** Get or create the controls of one layer */
-    private slotControls(layers: ControlGroup, nr: number): Slot {
+    private slotControls(layers: ControlGroup, nr: number, items: Array<AnimationListItemType>): Slot {
 
         const group = layers.group(slotName(nr), false, false, true, true)
 
         //NOTE: controls persist between restarts, so the choices of an existing control can be
         //outdated: new animations may have appeared, and the presets depend on the selected animation.
-        const animation = group.select("Animation", NONE, animationChoices(), true)
-        animation.meta.choices = animationChoices()
+        const animation = group.select("Animation", NONE, animationChoices(items), true)
+        animation.meta.choices = animationChoices(items)
         if (!hasChoice(animation.meta.choices, animation.selected))
             animation.selected = NONE
 
-        const preset = group.select("Preset", NONE, presetChoices(animation.selected))
-        preset.meta.choices = presetChoices(animation.selected)
+        const preset = group.select("Preset", NONE, presetChoices(items, animation.selected))
+        preset.meta.choices = presetChoices(items, animation.selected)
         if (!hasChoice(preset.meta.choices, preset.selected))
             preset.selected = NONE
 
-        const z = group.value("Z", nr * 10, -100, 100, 1)
+        //NOTE: the range has to fit the default Z of the last layer (MAX_SLOTS * 10)
+        const z = group.value("Z", nr * 10, -200, 200, 1)
 
         return {nr, group, animation, preset, z}
     }
@@ -277,7 +280,8 @@ export default class LayerStack {
 
         try {
             const promise = new animationClass().run(box, this.scheduler, controls)
-            if (promise !== undefined)
+            //not awaited: a layer usually runs forever. (and run() isnt always async)
+            if (typeof promise?.catch === 'function')
                 promise.catch((e) => console.error(`LayerStack: layer ${animationName} failed: `, e))
         } catch (e) {
             console.error(`LayerStack: layer ${animationName} failed: `, e)
@@ -338,18 +342,18 @@ function animationItems(list: AnimationListType = presetStore.animationPresetLis
     return ret
 }
 
-function animationChoices(): Choices {
+function animationChoices(items: Array<AnimationListItemType>): Choices {
     const choices: Choices = [{id: NONE, name: NONE}]
-    for (const item of animationItems().sort((a, b) => a.name.localeCompare(b.name)))
+    for (const item of items)
         choices.push({id: item.name, name: item.name})
     return choices
 }
 
-function presetChoices(animationName: string): Choices {
+function presetChoices(items: Array<AnimationListItemType>, animationName: string): Choices {
     const choices: Choices = [{id: NONE, name: NONE}]
 
     if (animationName !== NONE) {
-        const item = animationItems().find((item) => item.name === animationName)
+        const item = items.find((item) => item.name === animationName)
         if (item !== undefined)
             for (const preset of item.presets)
                 choices.push({id: preset.name, name: preset.name})
