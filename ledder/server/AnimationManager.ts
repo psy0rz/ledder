@@ -6,6 +6,7 @@ import ControlGroup from "../ControlGroup.js"
 import {type PresetValues} from "../PresetValues.js"
 import {type Values} from "../Control.js"
 import CallbackManager from "../../util/CallbackManager.js"
+import LayerStack from "./LayerStack.js"
 import chokidar from 'chokidar'
 
 
@@ -44,6 +45,7 @@ export default class AnimationManager {
     private proxyScheduler: { proxy: Scheduler; revoke: () => void }
     private proxyControlGroup: { proxy: ControlGroup; revoke: () => void }
     private childBox: PixelBox //NOTE: we cant use a Proxy since its a subclass of a native Set()
+    private layerStack: LayerStack
     private autoreloadTimeout: NodeJS.Timeout
     private autoreloadWatcher: any
 
@@ -64,6 +66,12 @@ export default class AnimationManager {
     // Dont forget to cleanup() before, if needed
     // Also detaches this.animation.
     private createProxies() {
+        //layers (also removes the container the childBox was moved into)
+        if (this.layerStack !== undefined) {
+            this.layerStack.remove()
+            this.layerStack = undefined
+        }
+
         //box
         if (this.childBox !== undefined)
             this.box.delete(this.childBox)
@@ -95,7 +103,21 @@ export default class AnimationManager {
         if (this.animationClass!==undefined)
         {
             this.animation = new this.animationClass()
-            return this.animation.run(this.childBox, this.proxyScheduler.proxy, this.proxyControlGroup.proxy)
+
+            //layers are added around the animation, so every animation supports them without knowing about it
+            this.layerStack = new LayerStack(this.box, this.childBox, this.proxyScheduler.proxy, this.proxyControlGroup.proxy, () => {
+                this.restart(true)
+            })
+
+            const promise = this.animation.run(this.childBox, this.proxyScheduler.proxy, this.proxyControlGroup.proxy)
+
+            //NOTE: not awaited, so run() keeps returning the promise of the animation itself.
+            //The scheduler is paused while the layers are loaded from disk, so it doesnt matter that this completes later.
+            this.layerStack.build()
+                .then(() => this.autoreload())
+                .catch((e) => console.error("LayerStack: ", e))
+
+            return promise
         }
     }
 
@@ -193,16 +215,19 @@ export default class AnimationManager {
         this.autoreloadStop()
         if (this.animationName) {
 
-            const filename = presetStore.animationFilename(this.animationName)
-            // console.log(`Enabling autoreload for animation ${filename}`)
+            //also watch the animations that are used as a layer
+            const filenames = [presetStore.animationFilename(this.animationName)]
+            if (this.layerStack !== undefined)
+                filenames.push(...this.layerStack.filenames())
+            // console.log(`Enabling autoreload for animations ${filenames}`)
 
-            const watcher = chokidar.watch(filename, {
+            const watcher = chokidar.watch(filenames, {
                 persistent: true,
                 ignoreInitial: true,
                 // awaitWriteFinish: true, // Wait for writes to finish
             })
 
-            watcher.on('change', () => {
+            watcher.on('change', (filename) => {
                 if (this.autoreloadTimeout !== undefined) clearTimeout(this.autoreloadTimeout)
                 this.autoreloadTimeout = setTimeout(async () => {
                     console.log(`${filename} changed, auto reloading animation`)
