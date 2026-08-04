@@ -47,7 +47,14 @@
 </script>
 
 {#each Object.values(controlGroup.meta.controls) as control, i (control.meta.name)}
-    {#if control.meta.type === "controls"}
+    {#if control.meta.type === "controls" && control.meta.inline}
+        <!-- Inline ControlGroup: only used to keep names apart, so dont show it as a level of its own -->
+        <svelte:self
+                controlGroup={control}
+                path={[...path, control.meta.name]}
+                onChanged={onChanged}
+        />
+    {:else if control.meta.type === "controls"}
         <!-- Recurse into a nested ControlGroup -->
         <div use:registerElement={control.meta.name}>
             <TreeviewItem

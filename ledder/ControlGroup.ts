@@ -18,6 +18,10 @@ interface ControlGroupMeta extends ControlMeta {
     controls: ControlMap
     collapsed: boolean
     switchable: boolean
+
+    //render the contents directly in the parent group, without a header/level of its own.
+    //(use this to keep controls in their own namespace, without showing that to the user)
+    inline: boolean
 }
 
 /**
@@ -52,6 +56,7 @@ export default class ControlGroup extends Control {
 
         this.meta.collapsed = collapsed
         this.meta.switchable = switchable
+        this.meta.inline = false
         this.__clear()
 
         if (switchable)

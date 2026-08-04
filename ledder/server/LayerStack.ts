@@ -271,7 +271,11 @@ export default class LayerStack {
         if (!this.valid)
             return
 
+        //the animation gets its own group, so its controls cant collide with ours (or with those of a
+        //previously selected animation). The GUI renders it inline, so the user doesnt see the difference.
         const controls = slot.group.group(animationName)
+        controls.meta.inline = true
+
         this.presetOnChange(slot, animationName, controls)
 
         const box = new PixelBox(this.container)
