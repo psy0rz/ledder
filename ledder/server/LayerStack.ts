@@ -22,128 +22,131 @@ import {presetStore} from "./PresetStore.js"
 //shown when a layer is empty, or when no preset should be applied
 export const NONE = "(none)"
 
-const LAYERS_GROUP = "Layers"
+const LAYERS_GROUP_NAME = "Layers"
 
 //we always show one more (empty) layer than the user is actually using, up to this maximum.
-const MAX_SLOTS = 16
+const MAX_LAYERS = 16
 
 
 //controls of one layer
-type Slot = {
-    nr: number
-    group: ControlGroup
-    animation: ControlSelect
-    preset: ControlSelect
-    z: ControlValue
+type LayerControls = {
+    layerNr: number
+    layerGroup: ControlGroup
+    animationSelect: ControlSelect
+    presetSelect: ControlSelect
+    zControl: ControlValue
 }
 
-//something thats rendered at a certain Z: either a layer, or the selected animation itself
-type Entry = {
+//a box thats rendered at a certain Z: either a layer, or the animation the user selected
+type ZOrderedBox = {
     box: PixelBox
-    z: ControlValue
+    zControl: ControlValue
 }
 
 
 export default class LayerStack {
 
     //parent box, usually the box of the renderer
-    private readonly box: PixelBox
+    private readonly parentBox: PixelBox
 
-    //all entries live in here, so we can re-order them without touching anything we dont own
-    private readonly container: PixelBox
+    //holds all z-ordered boxes, so we can re-order them without touching anything we dont own
+    private readonly stackBox: PixelBox
 
     //box of the animation the user has selected
-    private readonly baseBox: PixelBox
+    private readonly animationBox: PixelBox
 
     private readonly scheduler: Scheduler
-    private readonly controls: ControlGroup
+    private readonly rootControls: ControlGroup
 
     //asks AnimationManager to restart everything (used after loading a preset into a layer)
-    private readonly restart: () => void
+    private readonly restartAnimation: () => void
 
-    private entries: Array<Entry>
+    private zOrderedBoxes: Array<ZOrderedBox>
     private layerFilenames: Array<string>
 
     //enabled-state of all switchable groups, to detect that the user muted or unmuted something
-    private layersGroup: ControlGroup
-    private muteStates: Array<{ group: ControlGroup, enabled: boolean }>
-    private muteWatcher: () => void
+    private layersControls: ControlGroup
+    private muteSnapshot: Array<{ controls: ControlGroup, enabled: boolean }>
+    private muteChangeCallback: () => void
 
-    //set to false by remove(), so async stuff thats still running cannot do any harm anymore
-    private valid: boolean
+    //set by removeLayers(), so async stuff thats still running cannot do any harm anymore
+    private removed: boolean
 
-    constructor(box: PixelBox, baseBox: PixelBox, scheduler: Scheduler, controls: ControlGroup, restart: () => void) {
-        this.box = box
-        this.baseBox = baseBox
+    constructor(parentBox: PixelBox, animationBox: PixelBox, scheduler: Scheduler, rootControls: ControlGroup, restartAnimation: () => void) {
+        this.parentBox = parentBox
+        this.animationBox = animationBox
         this.scheduler = scheduler
-        this.controls = controls
-        this.restart = restart
+        this.rootControls = rootControls
+        this.restartAnimation = restartAnimation
 
-        this.entries = []
+        this.zOrderedBoxes = []
         this.layerFilenames = []
-        this.muteStates = []
-        this.valid = true
+        this.muteSnapshot = []
+        this.removed = false
 
-        //NOTE: the container stays detached until resort() attaches it. This way the animation keeps
+        //NOTE: the stackBox stays detached until applyZOrder() attaches it. This way the animation keeps
         //rendering from the parent box while we load the layers from disk, instead of turning black.
-        this.container = new PixelBox(box)
+        this.stackBox = new PixelBox(parentBox)
     }
 
 
     /** Create the layer controls and start all configured layers */
-    async build() {
+    async createLayers() {
 
-        //normally called once per instance, but dont accumulate entries/layers if its not
-        this.entries = []
+        //normally called once per instance, but dont accumulate boxes/layers if its not
+        this.zOrderedBoxes = []
         this.layerFilenames = []
 
-        const layers = this.controls.group(LAYERS_GROUP, false, true, true, true)
-        this.layersGroup = layers
+        const layersControls = this.rootControls.group(LAYERS_GROUP_NAME, false, true, true, true)
+        this.layersControls = layersControls
 
-        //the selected animation is just another entry, so layers can be put behind it as well
-        this.entries.push({box: this.baseBox, z: layers.value("Z of animation", 0, -100, 100, 1)})
+        //the selected animation is just another z-ordered box, so layers can be put behind it as well
+        this.zOrderedBoxes.push({
+            box: this.animationBox,
+            zControl: layersControls.value("Z of animation", 0, -100, 100, 1)
+        })
 
         //note that creating the controls also loads their values from the preset, which is how we
         //find out how many layers this preset actually uses.
-        const items = animationItems().sort((a, b) => a.name.localeCompare(b.name))
-        let slots: Array<Slot> = []
-        for (let nr = 1; nr <= MAX_SLOTS; nr++)
-            slots.push(this.slotControls(layers, nr, items))
+        const animations = allAnimations().sort((a, b) => a.name.localeCompare(b.name))
+        let layers: Array<LayerControls> = []
+        for (let layerNr = 1; layerNr <= MAX_LAYERS; layerNr++)
+            layers.push(this.createLayerControls(layersControls, layerNr, animations))
 
         //show all used layers, plus one empty one to add the next layer to. remove the rest again.
-        let used = 0
-        for (const slot of slots)
-            if (slot.animation.selected !== NONE)
-                used = slot.nr
+        let lastUsedLayerNr = 0
+        for (const layer of layers)
+            if (layer.animationSelect.selected !== NONE)
+                lastUsedLayerNr = layer.layerNr
 
-        for (let nr = used + 2; nr <= MAX_SLOTS; nr++)
-            layers.remove(slotName(nr))
-        slots = slots.slice(0, used + 1)
+        for (let layerNr = lastUsedLayerNr + 2; layerNr <= MAX_LAYERS; layerNr++)
+            layersControls.remove(layerGroupName(layerNr))
+        layers = layers.slice(0, lastUsedLayerNr + 1)
 
-        if (layers.enabled) {
+        if (layersControls.enabled) {
             //dont let the animation advance while we're loading layers from disk
             this.scheduler.stop()
             try {
-                for (const slot of slots)
-                    await this.runSlot(slot)
+                for (const layer of layers)
+                    await this.startLayer(layer)
             } finally {
                 //a restart during the loading above already resetted the scheduler
-                if (this.valid)
+                if (!this.removed)
                     this.scheduler.resume()
             }
         }
 
-        //we were stopped while loading layers from disk, so dont attach anything anymore
-        if (!this.valid)
+        //we were removed while loading layers from disk, so dont attach anything anymore
+        if (this.removed)
             return
 
         //changing the order shouldnt restart anything, so we handle it ourselves
-        for (const entry of this.entries)
-            entry.z.onChange(() => this.resort())
+        for (const zOrderedBox of this.zOrderedBoxes)
+            zOrderedBox.zControl.onChange(() => this.applyZOrder())
 
-        this.resort()
+        this.applyZOrder()
 
-        this.watchMutes(layers, slots)
+        this.restartWhenMuteChanges(layersControls, layers)
     }
 
 
@@ -154,110 +157,109 @@ export default class LayerStack {
      * of every control inside it (including the Z and the controls of the layer animation itself).
      * So instead we watch for meta updates and check if an enabled-state actually changed.
      */
-    private watchMutes(layers: ControlGroup, slots: Array<Slot>) {
+    private restartWhenMuteChanges(layersControls: ControlGroup, layers: Array<LayerControls>) {
 
-        if (this.muteWatcher !== undefined)
-            layers.__updateMetaCallbacks.unregister(this.muteWatcher)
+        if (this.muteChangeCallback !== undefined)
+            layersControls.__updateMetaCallbacks.unregister(this.muteChangeCallback)
 
-        this.muteStates = [{group: layers, enabled: layers.enabled}]
-        for (const slot of slots)
-            this.muteStates.push({group: slot.group, enabled: slot.group.enabled})
+        this.muteSnapshot = [{controls: layersControls, enabled: layersControls.enabled}]
+        for (const layer of layers)
+            this.muteSnapshot.push({controls: layer.layerGroup, enabled: layer.layerGroup.enabled})
 
-        this.muteWatcher = () => {
-            if (!this.valid)
+        this.muteChangeCallback = () => {
+            if (this.removed)
                 return
 
-            for (const state of this.muteStates)
-                if (state.group.enabled !== state.enabled) {
-                    this.restart()
+            for (const muteState of this.muteSnapshot)
+                if (muteState.controls.enabled !== muteState.enabled) {
+                    this.restartAnimation()
                     return
                 }
         }
 
-        layers.__updateMetaCallbacks.register(this.muteWatcher)
+        layersControls.__updateMetaCallbacks.register(this.muteChangeCallback)
     }
 
 
     /**
-     * Render all entries in the order the user wants.
-     * Rendering is done in the order the boxes were added, and the pixels live inside the entry boxes,
+     * Render all boxes in the order the user wants.
+     * Rendering is done in the order the boxes were added, and the pixels live inside those boxes,
      * so re-adding them is all it takes: nothing is restarted or lost.
      */
-    resort() {
-        if (!this.valid)
+    applyZOrder() {
+        if (this.removed)
             return
 
         //take over the animation from the parent box, so we decide where it is rendered.
         //(adding something thats already in a Set keeps its original position, so this is a no-op after the first time)
-        this.box.delete(this.baseBox)
-        this.box.add(this.container)
+        this.parentBox.delete(this.animationBox)
+        this.parentBox.add(this.stackBox)
 
-        this.container.clear()
-        for (const entry of [...this.entries].sort((a, b) => a.z.value - b.z.value))
-            this.container.add(entry.box)
+        this.stackBox.clear()
+        for (const zOrderedBox of [...this.zOrderedBoxes].sort((a, b) => a.zControl.value - b.zControl.value))
+            this.stackBox.add(zOrderedBox.box)
     }
 
 
-    /** Remove all layers and the container from the parent box */
-    remove() {
-        this.valid = false
+    /** Remove all layers and the stackBox from the parent box */
+    removeLayers() {
+        this.removed = true
 
-        if (this.layersGroup !== undefined && this.muteWatcher !== undefined)
-            this.layersGroup.__updateMetaCallbacks.unregister(this.muteWatcher)
+        if (this.layersControls !== undefined && this.muteChangeCallback !== undefined)
+            this.layersControls.__updateMetaCallbacks.unregister(this.muteChangeCallback)
 
-        this.box.delete(this.container)
+        this.parentBox.delete(this.stackBox)
     }
 
 
     /** Files of the currently running layer animations, so AnimationManager can watch them as well */
-    filenames() {
+    animationFilenames() {
         return this.layerFilenames
     }
 
 
-
     /** Get or create the controls of one layer */
-    private slotControls(layers: ControlGroup, nr: number, items: Array<AnimationListItemType>): Slot {
+    private createLayerControls(layersControls: ControlGroup, layerNr: number, animations: Array<AnimationListItemType>): LayerControls {
 
-        const group = layers.group(slotName(nr), false, false, true, true)
+        const layerGroup = layersControls.group(layerGroupName(layerNr), false, false, true, true)
 
         //NOTE: controls persist between restarts, so the choices of an existing control can be
         //outdated: new animations may have appeared, and the presets depend on the selected animation.
-        const animation = group.select("Animation", NONE, animationChoices(items), true)
-        animation.meta.choices = animationChoices(items)
-        if (!hasChoice(animation.meta.choices, animation.selected))
-            animation.selected = NONE
+        const animationSelect = layerGroup.select("Animation", NONE, animationChoices(animations), true)
+        animationSelect.meta.choices = animationChoices(animations)
+        if (!choiceExists(animationSelect.meta.choices, animationSelect.selected))
+            animationSelect.selected = NONE
 
-        const preset = group.select("Preset", NONE, presetChoices(items, animation.selected))
-        preset.meta.choices = presetChoices(items, animation.selected)
-        if (!hasChoice(preset.meta.choices, preset.selected))
-            preset.selected = NONE
+        const presetSelect = layerGroup.select("Preset", NONE, presetChoices(animations, animationSelect.selected))
+        presetSelect.meta.choices = presetChoices(animations, animationSelect.selected)
+        if (!choiceExists(presetSelect.meta.choices, presetSelect.selected))
+            presetSelect.selected = NONE
 
-        //NOTE: the range has to fit the default Z of the last layer (MAX_SLOTS * 10)
-        const z = group.value("Z", nr * 10, -200, 200, 1)
+        //NOTE: the range has to fit the default Z of the last layer (MAX_LAYERS * 10)
+        const zControl = layerGroup.value("Z", layerNr * 10, -200, 200, 1)
 
-        return {nr, group, animation, preset, z}
+        return {layerNr, layerGroup, animationSelect, presetSelect, zControl}
     }
 
 
     /** Load and start the animation of one layer */
-    private async runSlot(slot: Slot) {
+    private async startLayer(layer: LayerControls) {
 
-        if (!this.valid)
+        if (this.removed)
             return
 
-        const animationName = slot.animation.selected
+        const animationName = layer.animationSelect.selected
 
         //Store the current values, so the settings of a previously selected animation are not lost
         //when we remove its controls below. (save() keeps values of controls that no longer exist,
         //so they come back when the user selects that animation again)
-        slot.group.save()
-        for (const control of Object.values(slot.group.meta.controls))
+        layer.layerGroup.save()
+        for (const control of Object.values(layer.layerGroup.meta.controls))
             if (control.meta.type === 'controls' && control.meta.name !== animationName)
-                slot.group.remove(control)
+                layer.layerGroup.remove(control)
 
         //empty or muted layer
-        if (animationName === NONE || !slot.group.enabled)
+        if (animationName === NONE || !layer.layerGroup.enabled)
             return
 
         let animationClass
@@ -268,22 +270,22 @@ export default class LayerStack {
             return
         }
 
-        if (!this.valid)
+        if (this.removed)
             return
 
         //the animation gets its own group, so its controls cant collide with ours (or with those of a
         //previously selected animation). The GUI renders it inline, so the user doesnt see the difference.
-        const controls = slot.group.group(animationName)
-        controls.meta.inline = true
+        const animationControls = layer.layerGroup.group(animationName)
+        animationControls.meta.inline = true
 
-        this.presetOnChange(slot, animationName, controls)
+        this.loadPresetWhenSelected(layer, animationName, animationControls)
 
-        const box = new PixelBox(this.container)
-        this.entries.push({box, z: slot.z})
+        const layerBox = new PixelBox(this.stackBox)
+        this.zOrderedBoxes.push({box: layerBox, zControl: layer.zControl})
         this.layerFilenames.push(presetStore.animationFilename(animationName))
 
         try {
-            const promise = new animationClass().run(box, this.scheduler, controls)
+            const promise = new animationClass().run(layerBox, this.scheduler, animationControls)
             //not awaited: a layer usually runs forever. (and run() isnt always async)
             if (typeof promise?.catch === 'function')
                 promise.catch((e) => console.error(`LayerStack: layer ${animationName} failed: `, e))
@@ -297,26 +299,26 @@ export default class LayerStack {
      * Load the selected preset into a layer, but only when the user actually selects one:
      * a preset is just a starting point, after that the values are part of our own preset.
      */
-    private presetOnChange(slot: Slot, animationName: string, controls: ControlGroup) {
+    private loadPresetWhenSelected(layer: LayerControls, animationName: string, animationControls: ControlGroup) {
 
         //NOTE: onChange() always calls back once during registration, and we dont want to overwrite
         //the users changes with the preset again on every restart.
         let registering = true
 
-        slot.preset.onChange(() => {
+        layer.presetSelect.onChange(() => {
             if (registering)
                 return
 
-            const presetName = slot.preset.selected
+            const presetName = layer.presetSelect.selected
             if (presetName === NONE)
                 return
 
             presetStore.load(animationName, presetName)
                 .then((preset) => {
-                    if (!this.valid)
+                    if (this.removed)
                         return
-                    controls.load(preset.values)
-                    this.restart()
+                    animationControls.load(preset.values)
+                    this.restartAnimation()
                 })
                 .catch((e) => console.error(`LayerStack: cannot load preset ${animationName}/${presetName}: `, e))
         })
@@ -326,40 +328,40 @@ export default class LayerStack {
 }
 
 
-function slotName(nr: number) {
-    return `Layer ${nr}`
+function layerGroupName(layerNr: number) {
+    return `Layer ${layerNr}`
 }
 
-function hasChoice(choices: Choices, id: string) {
+function choiceExists(choices: Choices, id: string) {
     return choices.some((choice) => choice.id === id)
 }
 
 //flatten the animation/preset tree into a plain list of animations
-function animationItems(list: AnimationListType = presetStore.animationPresetList, ret: Array<AnimationListItemType> = []) {
-    for (const item of list) {
+function allAnimations(animationList: AnimationListType = presetStore.animationPresetList, found: Array<AnimationListItemType> = []) {
+    for (const item of animationList) {
         const dir = item as AnimationListDirType
         if (dir.animationList !== undefined)
-            animationItems(dir.animationList, ret)
+            allAnimations(dir.animationList, found)
         else
-            ret.push(item as AnimationListItemType)
+            found.push(item as AnimationListItemType)
     }
-    return ret
+    return found
 }
 
-function animationChoices(items: Array<AnimationListItemType>): Choices {
+function animationChoices(animations: Array<AnimationListItemType>): Choices {
     const choices: Choices = [{id: NONE, name: NONE}]
-    for (const item of items)
-        choices.push({id: item.name, name: item.name})
+    for (const animation of animations)
+        choices.push({id: animation.name, name: animation.name})
     return choices
 }
 
-function presetChoices(items: Array<AnimationListItemType>, animationName: string): Choices {
+function presetChoices(animations: Array<AnimationListItemType>, animationName: string): Choices {
     const choices: Choices = [{id: NONE, name: NONE}]
 
     if (animationName !== NONE) {
-        const item = items.find((item) => item.name === animationName)
-        if (item !== undefined)
-            for (const preset of item.presets)
+        const animation = animations.find((animation) => animation.name === animationName)
+        if (animation !== undefined)
+            for (const preset of animation.presets)
                 choices.push({id: preset.name, name: preset.name})
     }
 

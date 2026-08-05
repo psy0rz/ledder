@@ -68,7 +68,7 @@ export default class AnimationManager {
     private createProxies() {
         //layers (also removes the container the childBox was moved into)
         if (this.layerStack !== undefined) {
-            this.layerStack.remove()
+            this.layerStack.removeLayers()
             this.layerStack = undefined
         }
 
@@ -119,7 +119,7 @@ export default class AnimationManager {
 
             //NOTE: not awaited, so run() keeps returning the promise of the animation itself.
             //The scheduler is paused while the layers are loaded from disk, so it doesnt matter that this completes later.
-            this.layerStack.build()
+            this.layerStack.createLayers()
                 .then(() => this.autoreload())
                 .catch((e) => console.error("LayerStack: ", e))
 
@@ -224,7 +224,7 @@ export default class AnimationManager {
             //also watch the animations that are used as a layer
             const filenames = [presetStore.animationFilename(this.animationName)]
             if (this.layerStack !== undefined)
-                filenames.push(...this.layerStack.filenames())
+                filenames.push(...this.layerStack.animationFilenames())
             // console.log(`Enabling autoreload for animations ${filenames}`)
 
             const watcher = chokidar.watch(filenames, {
