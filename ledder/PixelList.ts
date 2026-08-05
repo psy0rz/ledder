@@ -96,7 +96,7 @@ export default class PixelList extends Set<Pixel | PixelList> {
     //Returns an x/y array with all pixels in the list.
     //Coordinates that do not have a corresponding pixel are undefined.
     //Coordinates that are occupied more than once contain only the latest match.
-    index() {
+    index(): Array<Array<Pixel>> {
         let ret: Array<Array<Pixel>>
         ret = []
 
@@ -110,7 +110,7 @@ export default class PixelList extends Set<Pixel | PixelList> {
     }
 
     //dump pixeltree in string format, for debugging
-    dump(indent = "") {
+    dump(indent: string = ""): string {
         let str = ""
         str = str + indent + `pixeltree:\n`
         indent = indent + " "
@@ -131,13 +131,13 @@ export default class PixelList extends Set<Pixel | PixelList> {
     }
 
     //print pixeltree to console
-    print() {
+    print(): void {
         console.log(this.dump())
     }
 
 
     //calls  callbackfn for each pixel in the pixeltree
-    forEachPixel(callbackfn: (pixel: Pixel, parent: PixelList) => void) {
+    forEachPixel(callbackfn: (pixel: Pixel, parent: PixelList) => void): void {
         // this.recurseForEachPixel(callbackfn, this)
         for (const p of this) {
             if (p instanceof Pixel)
@@ -252,7 +252,7 @@ export default class PixelList extends Set<Pixel | PixelList> {
 
     }
 
-    scale(scale) {
+    scale(scale: number): PixelList {
 
         let pl = new PixelList()
         if (scale != 0) {
@@ -275,25 +275,25 @@ export default class PixelList extends Set<Pixel | PixelList> {
 
 
     //relatively move all pixels in this tree by this amount
-    move(x: number, y: number, round = false) {
+    move(x: number, y: number, round = false): void {
         for (const p of this)
             p.move(x, y, round)
     }
 
     //keep pixels inside these x coordinates of box by wrapping (inclusive)
-    wrapX(bbox: BoxInterface) {
+    wrapX(bbox: BoxInterface): void {
         for (const p of this)
             p.wrapX(bbox)
     }
 
     //keep pixels inside these y coordinates of box by wrapping (inclusive)
-    wrapY(bbox: BoxInterface) {
+    wrapY(bbox: BoxInterface): void {
         for (const p of this)
             p.wrapY(bbox)
     }
 
     // keep pixels inside this box by wrapping (inclusive)
-    wrap(bbox: BoxInterface) {
+    wrap(bbox: BoxInterface): void {
         for (const p of this)
             p.wrap(bbox)
     }
@@ -342,13 +342,13 @@ export default class PixelList extends Set<Pixel | PixelList> {
     }
 
     //get centerpoint our pixels [x,y]
-    getCenter() {
+    getCenter(): Array<number> {
         const bbox = this.bbox()
         return [(bbox.xMax + bbox.xMin) / 2, (bbox.yMax + bbox.yMin) / 2]
 
     }
 
-    private getCenterOffsets(bbox: BoxInterface) {
+    private getCenterOffsets(bbox: BoxInterface): Array<number> {
         //our center
         const ourBbox = this.bbox()
         const ourX = (ourBbox.xMax + ourBbox.xMin) / 2
@@ -363,7 +363,7 @@ export default class PixelList extends Set<Pixel | PixelList> {
     }
 
     //center our pixels inside specified bbox
-    center(bbox: BoxInterface) {
+    center(bbox: BoxInterface): PixelList {
         let offsets = this.getCenterOffsets(bbox)
 
         this.move(offsets[0], offsets[1])
@@ -372,7 +372,7 @@ export default class PixelList extends Set<Pixel | PixelList> {
     }
 
     //vertical center our pixels indside specified box
-    centerV(bbox: BoxInterface) {
+    centerV(bbox: BoxInterface): PixelList {
         let offsets = this.getCenterOffsets(bbox)
 
         this.move(0, offsets[1])
@@ -381,7 +381,7 @@ export default class PixelList extends Set<Pixel | PixelList> {
     }
 
     //horizontal center our pixels indside specified box
-    centerH(bbox: BoxInterface) {
+    centerH(bbox: BoxInterface): PixelList {
         let offsets = this.getCenterOffsets(bbox)
 
         this.move(offsets[0], 0)
@@ -390,7 +390,7 @@ export default class PixelList extends Set<Pixel | PixelList> {
     }
 
     //remove pixels that are outside bounding box
-    crop(bbox: BoxInterface) {
+    crop(bbox: BoxInterface): void {
         this.forEachPixel((p, parent) => {
             if (p.isOutside(bbox))
                 parent.delete(p)
@@ -398,13 +398,13 @@ export default class PixelList extends Set<Pixel | PixelList> {
     }
 
     //remove all pixels that have this color and return them as pixel list. (ignores alpha)
-    filterColor(color: ColorInterface, tolerance = 0) {
+    filterColor(color: ColorInterface, tolerance = 0): PixelList {
         return (this.filterRGB(color.r, color.g, color.b))
 
     }
 
     //remove all pixels that have this color and return them as pixel list. (ignores alpha)
-    filterRGB(r: number, g: number, b: number, tolerance = 0) {
+    filterRGB(r: number, g: number, b: number, tolerance = 0): PixelList {
         const ret = new PixelList()
 
         this.forEachPixel((p, parent) => {
@@ -424,7 +424,7 @@ export default class PixelList extends Set<Pixel | PixelList> {
 
     //Finds all neighbouring pixels (and their neighbours) and returns it as a pixel list.
     //Will remove the pixels from this list.
-    filterCluster(pixel: Pixel) {
+    filterCluster(pixel: Pixel): PixelList {
         const index = this.index()
         const ret = new PixelList()
         const neighbours = new PixelList()
