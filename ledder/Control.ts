@@ -67,7 +67,7 @@ export class Control {
 
     load?(values: Values)
 
-    //update values, return true if animation should be restarted
+    //update values of the control. path is only used in controlgroup (it overrides this)
     updateValue(path: Array<string>, value: Values) {
 
         this.load(value)

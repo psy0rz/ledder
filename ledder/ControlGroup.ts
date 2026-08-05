@@ -294,7 +294,7 @@ export default class ControlGroup extends Control {
         }
     }
 
-    //return true if animation should be restarted
+    //update value of the subcontrol specified by path (recursive)
     updateValue(path: Array<string>, values: Values) {
         //its for ourself
         if (path.length === 0) {
@@ -316,9 +316,10 @@ export default class ControlGroup extends Control {
 
                 c.updateValue(path.slice(1), values)
 
-                if (!c.meta.restartOnChange && this.meta.restartOnChange)
-                    if (this.__onRestartRequiredCallback)
-                        this.__onRestartRequiredCallback()
+                //NOTE: dont do this anymore, (makes layerstack.ts simpler as well)
+                // if (!c.meta.restartOnChange && this.meta.restartOnChange)
+                //     if (this.__onRestartRequiredCallback)
+                //         this.__onRestartRequiredCallback()
 
             }
         }

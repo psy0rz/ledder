@@ -64,11 +64,6 @@ export default class LayerStack {
     private zOrderedBoxes: Array<ZOrderedBox>
     private layerFilenames: Array<string>
 
-    //enabled-state of all switchable groups, to detect that the user muted or unmuted something
-    private layersControls: ControlGroup
-    private muteSnapshot: Array<{ controls: ControlGroup, enabled: boolean }>
-    private muteChangeCallback: () => void
-
     //set by removeLayers(), so async stuff thats still running cannot do any harm anymore
     private removed: boolean
 
@@ -81,7 +76,6 @@ export default class LayerStack {
 
         this.zOrderedBoxes = []
         this.layerFilenames = []
-        this.muteSnapshot = []
         this.removed = false
 
         //NOTE: the stackBox stays detached until applyZOrder() attaches it. This way the animation keeps
@@ -97,8 +91,8 @@ export default class LayerStack {
         this.zOrderedBoxes = []
         this.layerFilenames = []
 
-        const layersControls = this.rootControls.group(LAYERS_GROUP_NAME, false, true, true, true)
-        this.layersControls = layersControls
+        //restartOnChange only applies to the switch of the group itself, so muting/unmuting all layers restarts.
+        const layersControls = this.rootControls.group(LAYERS_GROUP_NAME, true, true, true, true)
 
         //the selected animation is just another z-ordered box, so layers can be put behind it as well
         this.zOrderedBoxes.push({
@@ -145,39 +139,6 @@ export default class LayerStack {
             zOrderedBox.zControl.onChange(() => this.applyZOrder())
 
         this.applyZOrder()
-
-        this.restartWhenMuteChanges(layersControls, layers)
-    }
-
-
-    /**
-     * Restart when the user mutes or unmutes something.
-     *
-     * A switchable ControlGroup has no onChange, and its restartOnChange would restart on every change
-     * of every control inside it (including the Z and the controls of the layer animation itself).
-     * So instead we watch for meta updates and check if an enabled-state actually changed.
-     */
-    private restartWhenMuteChanges(layersControls: ControlGroup, layers: Array<LayerControls>) {
-
-        if (this.muteChangeCallback !== undefined)
-            layersControls.__updateMetaCallbacks.unregister(this.muteChangeCallback)
-
-        this.muteSnapshot = [{controls: layersControls, enabled: layersControls.enabled}]
-        for (const layer of layers)
-            this.muteSnapshot.push({controls: layer.layerGroup, enabled: layer.layerGroup.enabled})
-
-        this.muteChangeCallback = () => {
-            if (this.removed)
-                return
-
-            for (const muteState of this.muteSnapshot)
-                if (muteState.controls.enabled !== muteState.enabled) {
-                    this.restartAnimation()
-                    return
-                }
-        }
-
-        layersControls.__updateMetaCallbacks.register(this.muteChangeCallback)
     }
 
 
@@ -205,9 +166,6 @@ export default class LayerStack {
     removeLayers() {
         this.removed = true
 
-        if (this.layersControls !== undefined && this.muteChangeCallback !== undefined)
-            this.layersControls.__updateMetaCallbacks.unregister(this.muteChangeCallback)
-
         this.parentBox.delete(this.stackBox)
     }
 
@@ -221,7 +179,8 @@ export default class LayerStack {
     /** Get or create the controls of one layer */
     private createLayerControls(layersControls: ControlGroup, layerNr: number, animations: Array<AnimationListItemType>): LayerControls {
 
-        const layerGroup = layersControls.group(layerGroupName(layerNr), false, false, true, true)
+        //restartOnChange only applies to the switch of the group itself, so muting/unmuting this layer restarts.
+        const layerGroup = layersControls.group(layerGroupName(layerNr), true, false, true, true)
 
         //NOTE: controls persist between restarts, so the choices of an existing control can be
         //outdated: new animations may have appeared, and the presets depend on the selected animation.
