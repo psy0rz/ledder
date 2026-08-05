@@ -117,6 +117,9 @@ export default class LayerStack {
             layersControls.remove(layerGroupName(layerNr))
         layers = layers.slice(0, lastUsedLayerNr + 1)
 
+        //only show the layer settings unfolded when this preset actually uses layers
+        layersControls.meta.collapsed = (lastUsedLayerNr === 0)
+
         if (layersControls.enabled) {
             //dont let the animation advance while we're loading layers from disk
             this.scheduler.stop()
