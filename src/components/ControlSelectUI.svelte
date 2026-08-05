@@ -11,6 +11,7 @@
     type="select"
     label="Select"
     value={control.selected}
+    style="max-width:400px"
     on:input={(e) => {
         control.selected = e.detail[0].target.value;
         let values = { ...control };
