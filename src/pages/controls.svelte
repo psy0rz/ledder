@@ -37,7 +37,7 @@
     <Navbar backLink="Back">
         <NavLeft>
 
-            <Button iconMaterial="menu"
+            <Button iconMaterial="devices"
                     panelOpen="left"/>
 
             <Button

@@ -146,7 +146,7 @@
 <Page name="draw">
     <Navbar backLink="Back">
         <NavLeft>
-            <Button iconMaterial="menu" panelOpen="left"/>
+            <Button iconMaterial="devices" panelOpen="left"/>
         </NavLeft>
         <NavTitle title="Draw - {$svelteSelectedTitle}" subtitle="{$svelteStats}"></NavTitle>
     </Navbar>

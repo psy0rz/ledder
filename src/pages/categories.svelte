@@ -35,14 +35,14 @@
 
         <NavLeft>
 
-            <Button iconMaterial="menu"
+            <Button iconMaterial="devices"
 
                     panelOpen="left"/>
 
             <Button
-                    iconMaterial="settings"
+                    iconMaterial="settings_brightness"
                     href="/settings"
-                    title="Settings"
+                    title="Display settings"
 
 
             />
