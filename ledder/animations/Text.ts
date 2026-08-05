@@ -4,7 +4,6 @@ import FxRotate from "../fx/FxRotate.js"
 import PixelList from "../PixelList.js"
 import DrawBox from "../draw/DrawBox.js"
 import Pixel from "../Pixel.js"
-import Color from "../Color.js"
 import {FxFadeOut} from "../fx/FxFadeOut.js"
 import Scheduler from "../Scheduler.js"
 import ControlGroup from "../ControlGroup.js"
@@ -99,7 +98,6 @@ export default class Text extends Animator {
                 box.add(textPixels)
             }
 
-
             const rotator = new FxRotate(scheduler, scrollGroup, -1, 0, 1, 0, 0.01)
 
             //show one time or loop?
@@ -109,7 +107,7 @@ export default class Text extends Animator {
             if (scrollGroup.switch('Circular', false, true).enabled) {
                 //circular display, only add whitespace
                 const whitespace = scrollGroup.value("Whitespace", 10, 0, 100, 1, true)
-                textPixels.move(whitespace.value, 0)
+                // textPixels.move(whitespace.value, 0)
                 //replicate text until display is filled
                 const width = textPixels.bbox().xMax - box.xMin
                 if (textPixels.bbox().xMax > 0) {
@@ -125,7 +123,7 @@ export default class Text extends Animator {
 
             } else {
                 //non-circular, make sure marquee starts outside of the display
-                textPixels.move(box.width(), 0)
+                // textPixels.move(box.width(), 0)
 
                 //only show one time?
                 if (scrollGroup.switch('Show one time only', false, true).enabled)
@@ -133,11 +131,11 @@ export default class Text extends Animator {
 
             }
             const textBoundBox = textPixels.bbox()
-            textBoundBox.xMin = 0
-            textBoundBox.yMin=box.yMin
-            textBoundBox.yMax=box.yMax
+            // textBoundBox.xMin = 0
+            // textBoundBox.yMin=box.yMin
+            // textBoundBox.yMax=box.yMax
 
-            rotatorPromise = rotator.run(textPixels, textBoundBox, waitX, null)
+            rotatorPromise = rotator.run(textPixels, box, waitX, null)
 
 
         } else {
