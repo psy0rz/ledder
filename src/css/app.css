@@ -85,3 +85,15 @@
     justify-content: flex-start;
     gap: 4px;
 }
+
+/* A row holding a single control (see ControlGroupUI). Framework7's treeview rows are nested
+   flexboxes that shrink to fit their content, so a slider sized in % would collapse to nothing.
+   Let the row grow to the available width instead, so the sliders can size themselves relative
+   to it and stay inside the screen on narrow displays. */
+.ledder-control-row > .treeview-item-root,
+.ledder-control-row > .treeview-item-root > .treeview-item-content,
+.ledder-control-row .ledder-control
+{
+    flex-grow: 1;
+    min-width: 0;
+}

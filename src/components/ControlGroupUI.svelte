@@ -82,8 +82,8 @@
             />
         </TreeviewItem>
     {:else}
-        <TreeviewItem opened toggle={false} class="{control.meta.enabled&&controlGroup.enabled!==false?'':'disabled'}">
-            <span slot="content" class="padding-bottom">
+        <TreeviewItem opened toggle={false} class="ledder-control-row {control.meta.enabled&&controlGroup.enabled!==false?'':'disabled'}">
+            <span slot="content" class="padding-bottom ledder-control">
                 <BlockHeader>{control.meta.name}:</BlockHeader>
                 {#if control.meta.type === "value"}
                     <ControlValueUI

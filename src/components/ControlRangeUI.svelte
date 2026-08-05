@@ -34,7 +34,7 @@
     dual={true}
     scale
     label={true}
-    style="width:400px"
+    style="max-width:400px"
     on:rangeChange={(e) => {
         control.from = e.detail[0][0];
         control.to=e.detail[0][1];

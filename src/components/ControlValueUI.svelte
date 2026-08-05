@@ -22,7 +22,7 @@
     scaleSubSteps={10}
     scale
     label={true}
-    style="width:400px"
+    style="max-width:400px"
     on:rangeChange={(e) => {
         control.value = e.detail[0];
         let values = { ...control };
