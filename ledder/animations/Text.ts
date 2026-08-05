@@ -3,6 +3,8 @@ import DrawText from "../draw/DrawText.js"
 import FxRotate from "../fx/FxRotate.js"
 import PixelList from "../PixelList.js"
 import DrawBox from "../draw/DrawBox.js"
+import Pixel from "../Pixel.js"
+import Color from "../Color.js"
 import {FxFadeOut} from "../fx/FxFadeOut.js"
 import Scheduler from "../Scheduler.js"
 import ControlGroup from "../ControlGroup.js"
@@ -14,9 +16,11 @@ import FxColorPattern from "../fx/FxColorPattern.js"
 import FxSubpixels from "../fx/FxSubpixels.js"
 import {interpretMacro} from "../macros.js"
 import FxWobble from "../fx/FxWobble.js";
+import {colorRed, colorWhite} from "../Colors.js";
 
 
 export default class Text extends Animator {
+
 
 
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) {
@@ -28,15 +32,17 @@ export default class Text extends Animator {
 
         let macroedText=interpretMacro(input.text)
 
-        const positionControl=controls.position("Text anchor position", box, true )
+        const positionControl=controls.position("Text anchor position", box, true , "center" , 0, "middle",0)
 
-        const hAlignControl = controls.select("Horizontal text align", "left", [
+
+
+        const hAlignControl = controls.select("Horizontal text align", "centered", [
             {id: "left", name: "Left"},
             {id: "centered", name: "Centered"},
             {id: "right", name: "Right"},
         ], true)
 
-        const vAlignControl = controls.select("Vertical text align", "top", [
+        const vAlignControl = controls.select("Vertical text align", "middle", [
             {id: "top", name: "Top"},
             {id: "middle", name: "Middle"},
             {id: "bottom", name: "Bottom"},
@@ -56,6 +62,15 @@ export default class Text extends Animator {
             textPixels.centerV(positionControl.x, positionControl.y)
         else if (vAlignControl.selected === "bottom")
             textPixels.move(0, positionControl.y - textBbox.yMax)
+
+        if (controls.group("Text anchor position").switch("Show anchor", false, true).enabled) {
+            const anchorColor = colorWhite.copy()
+            textPixels.add(new Pixel(positionControl.x, positionControl.y, colorRed))
+            textPixels.add(new Pixel(positionControl.x, positionControl.y, anchorColor))
+            scheduler.interval(15, () => {
+                anchorColor.a = anchorColor.a ? 0 : 1
+            })
+        }
 
 
         let wobbleGroup=controls.group("Wobble", true,false, true)
