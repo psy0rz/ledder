@@ -69,3 +69,10 @@
     --f7-toast-bg-color: green;
 }
 
+
+/* Icon row below the navbar title (see Subnavbar in categories/controls pages) */
+.navbar-icons .subnavbar-inner
+{
+    justify-content: flex-start;
+    gap: 4px;
+}

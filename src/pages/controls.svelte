@@ -1,5 +1,5 @@
 <script>
-    import {Block, Button, Navbar, NavLeft, NavTitle, Page, Subnavbar, Treeview,} from "framework7-svelte"
+    import {Block, Button, Navbar, NavTitle, Page, Subnavbar, Treeview,} from "framework7-svelte"
 
     import {svelteLive, sveltePresets, svelteSelectedTitle,} from "../js/web/svelteStore.js"
     import {runnerBrowser} from "../js/web/RunnerBrowser.js"
@@ -35,8 +35,8 @@
 
 <Page name="controls" on:pageMounted={() => {}}>
     <Navbar backLink="Back">
-        <NavLeft>
-
+        <NavTitle title="Controls - {$svelteSelectedTitle}" subtitle="{$svelteStats}"></NavTitle>
+        <Subnavbar class="navbar-icons">
             <Button iconMaterial="devices"
                     panelOpen="left"/>
 
@@ -58,8 +58,7 @@
                     disabled={copyDisabled}
                     tonal
             />
-        </NavLeft>
-        <NavTitle title="Controls - {$svelteSelectedTitle}" subtitle="{$svelteStats}"></NavTitle>
+        </Subnavbar>
     </Navbar>
     <Block strong>
         <Treeview>

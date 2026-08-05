@@ -6,10 +6,10 @@
         Link,
         Message,
         Navbar,
-        NavLeft,
         NavTitle,
         Page,
         Preloader,
+        Subnavbar,
         Treeview
     } from "framework7-svelte"
 
@@ -32,8 +32,9 @@
 
 <Page name="categories">
     <Navbar>
+        <NavTitle title="{$svelteSelectedTitle}" subtitle="{$svelteStats}"></NavTitle>
 
-        <NavLeft>
+        <Subnavbar class="navbar-icons">
 
             <Button iconMaterial="devices"
 
@@ -76,8 +77,7 @@
                     fill={$svelteStreamMode===2}
 
             />
-        </NavLeft>
-        <NavTitle title="{$svelteSelectedTitle}" subtitle="{$svelteStats}"></NavTitle>
+        </Subnavbar>
     </Navbar>
 
     <Block>

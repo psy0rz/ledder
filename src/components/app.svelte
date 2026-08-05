@@ -15,7 +15,7 @@
     // Framework7 Parameters
     let f7params = {
         name: 'Ledder', // App name
-        theme: 'auto', // Automatic theme detection
+        theme: 'md', // force material theme, so mobile looks the same as desktop (ios theme centers navbar titles)
 
         // App routes
         routes: routes,
