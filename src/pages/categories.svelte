@@ -35,31 +35,31 @@
 
         <NavLeft>
 
-            <Button iconMd="material:menu"
+            <Button iconMaterial="menu"
 
                     panelOpen="left"/>
 
             <Button
-                    iconMd="material:settings"
+                    iconMaterial="settings"
                     href="/settings"
                     title="Settings"
 
 
             />
             <Button
-                    iconMd="material:tune"
+                    iconMaterial="tune"
                     href="/controls"
                     title="Controls"
 
             />
             <Button
-                    iconMd="material:brush"
+                    iconMaterial="brush"
                     href="/draw"
                     title="Draw"
 
             />
             <Button
-                    iconMd="material:upload"
+                    iconMaterial="upload"
                     on:click={ ()=> {($svelteStreamMode===1)?runnerBrowser.setStreamMode(2):runnerBrowser.setStreamMode(1)}}
                     title="Store to flash"
 
@@ -68,7 +68,7 @@
 
             />
             <Button
-                    iconMd="material:loop"
+                    iconMaterial="loop"
                     on:click={ ()=> {($svelteStreamMode===2)?runnerBrowser.setStreamMode(0):runnerBrowser.setStreamMode(2)}}
                     title="Replay from flash (no preview!)"
 

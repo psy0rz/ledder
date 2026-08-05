@@ -33,13 +33,13 @@
     <Navbar backLink="Back">
 <!--        <Subnavbar>-->
 <!--                <Button-->
-<!--                    iconMd="material:save"-->
+<!--                    iconMaterial="save"-->
 <!--                    onClick={onSave}-->
 <!--                    disabled={saveDisabled}-->
 <!--                    tonal-->
 <!--                />-->
 <!--                <Button-->
-<!--                    iconMd="material:undo"-->
+<!--                    iconMaterial="undo"-->
 <!--                    onClick={onDelete}-->
 <!--                    disabled={deleteDisabled}-->
 <!--                    tonal-->

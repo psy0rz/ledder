@@ -37,23 +37,23 @@
     <Navbar backLink="Back">
         <NavLeft>
 
-            <Button iconMd="material:menu"
+            <Button iconMaterial="menu"
                     panelOpen="left"/>
 
             <Button
-                    iconMd="material:save"
+                    iconMaterial="save"
                     onClick={onSave}
                     tonal
                     disabled={saveDisabled}
             />
             <Button
-                    iconMd="material:delete"
+                    iconMaterial="delete"
                     onClick={onDelete}
                     disabled={deleteDisabled}
                     tonal
             />
             <Button
-                    iconMd="material:file_copy"
+                    iconMaterial="file_copy"
                     onClick={onSaveAs}
                     disabled={copyDisabled}
                     tonal
