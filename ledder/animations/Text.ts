@@ -1,70 +1,71 @@
-import PixelBox from "../../PixelBox.js"
-import DrawText from "../../draw/DrawText.js"
-import MovingStars from "../Components/MovingStars.js"
-import Starfield from "../Components/Starfield.js"
-import FxRotate from "../../fx/FxRotate.js"
-import PixelList from "../../PixelList.js"
-import DrawBox from "../../draw/DrawBox.js"
-import {FxFadeOut} from "../../fx/FxFadeOut.js"
-import Scheduler from "../../Scheduler.js"
-import ControlGroup from "../../ControlGroup.js"
-import {fontSelect} from "../../fonts.js"
-import FxFlames from "../../fx/FxFlames.js"
-import Animator from "../../Animator.js"
-import FxTwinkle from "../../fx/FxTwinkle.js"
-import FxColorPattern from "../../fx/FxColorPattern.js"
-import TheMatrix from "../MovieFx/TheMatrix.js"
-import FxSubpixels from "../../fx/FxSubpixels.js"
-import {interpretMacro} from "../../macros.js"
-import FxWobble from "../../fx/FxWobble.js";
+import PixelBox from "../PixelBox.js"
+import DrawText from "../draw/DrawText.js"
+import FxRotate from "../fx/FxRotate.js"
+import PixelList from "../PixelList.js"
+import DrawBox from "../draw/DrawBox.js"
+import {FxFadeOut} from "../fx/FxFadeOut.js"
+import Scheduler from "../Scheduler.js"
+import ControlGroup from "../ControlGroup.js"
+import {fontSelect} from "../fonts.js"
+import FxFlames from "../fx/FxFlames.js"
+import Animator from "../Animator.js"
+import FxTwinkle from "../fx/FxTwinkle.js"
+import FxColorPattern from "../fx/FxColorPattern.js"
+import FxSubpixels from "../fx/FxSubpixels.js"
+import {interpretMacro} from "../macros.js"
+import FxWobble from "../fx/FxWobble.js";
 
 
-export default class Marquee extends Animator {
-
-    static title = "Marquee"
-    static description = ""
-    static category = "Marquees"
-
-    async run(box: PixelBox, scheduler: Scheduler, control: ControlGroup) {
-
-        const font = fontSelect(control, 'Font')
-        const input = control.input('Text', "Marquee  ", true)
+export default class Text extends Animator {
 
 
+    async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) {
 
-        const colorControl = control.color("Text color", 0x21, 0xff, 0, 1)
+        const font = fontSelect(controls, 'Font')
+        const input = controls.input('Text', "Text", true)
 
+        const colorControl = controls.color("Text color", 0x21, 0xff, 0, 1)
 
         let macroedText=interpretMacro(input.text)
-        const textPixels = new DrawText(box.xMin, box.yMin, font, macroedText, colorControl)
+
+        const positionControl=controls.position("Text anchor position", box, true )
+
+        const hAlignControl = controls.select("Horizontal text align", "left", [
+            {id: "left", name: "Left"},
+            {id: "centered", name: "Centered"},
+            {id: "right", name: "Right"},
+        ], true)
+
+        const vAlignControl = controls.select("Vertical text align", "top", [
+            {id: "top", name: "Top"},
+            {id: "middle", name: "Middle"},
+            {id: "bottom", name: "Bottom"},
+        ], true)
 
 
-        textPixels.centerV(box)
+        const textPixels = new DrawText(positionControl.x, positionControl.y, font, macroedText, colorControl)
 
-        let wobbleGroup=control.group("Wobble", true,false, true)
+        const textBbox = textPixels.bbox()
+
+        if (hAlignControl.selected === "centered")
+            textPixels.centerH(positionControl.x, positionControl.y)
+        else if (hAlignControl.selected === "right")
+            textPixels.move(positionControl.x - textBbox.xMax, 0)
+
+        if (vAlignControl.selected === "middle")
+            textPixels.centerV(positionControl.x, positionControl.y)
+        else if (vAlignControl.selected === "bottom")
+            textPixels.move(0, positionControl.y - textBbox.yMax)
+
+
+        let wobbleGroup=controls.group("Wobble", true,false, true)
         if (wobbleGroup.enabled) {
             let wobble = new FxWobble(scheduler, wobbleGroup)
             wobble.run(textPixels)
         }
 
-        let starsGroup = control.group("Stars", true, true, true)
-        if (starsGroup.enabled) {
-            new MovingStars().run(box, scheduler, starsGroup)
-        }
 
-        let starFieldGroup = control.group("Star field", true, true,true)
-        if (starFieldGroup.enabled) {
-            new Starfield().run(box, scheduler, starFieldGroup)
-        }
-
-        let theMatrixGroup = control.group("The Matrix", true, true,true)
-        if (theMatrixGroup.enabled) {
-            new TheMatrix().run(box, scheduler, theMatrixGroup)
-        }
-
-
-        let scrollGroup = control.group("Scrolling", true, true, true)
-
+        let scrollGroup = controls.group("Scrolling", true, true, true)
         let rotatorPromise
         if (scrollGroup.enabled) {
 
@@ -75,7 +76,7 @@ export default class Marquee extends Animator {
             })
 
             if (scrollGroup.switch("Subpixel filtering", false).enabled) {
-                const subpixelFilter = new FxSubpixels(scheduler, control)
+                const subpixelFilter = new FxSubpixels(scheduler, controls)
                 const filteredTextPixels = new PixelBox(box)
                 box.add(filteredTextPixels)
                 subpixelFilter.run(textPixels, filteredTextPixels)
@@ -127,18 +128,17 @@ export default class Marquee extends Animator {
         } else {
             //no scrolling
             box.add(textPixels)
-            textPixels.centerH(box)
         }
 
 
-        let flameGroup = control.group("Flames", true,true,true)
+        let flameGroup = controls.group("Flames", true,true,true)
         if (flameGroup.enabled) {
             const flames = new PixelList()
             box.add(flames)
             new FxFlames(scheduler, flameGroup).run(textPixels, flames, box)
         }
 
-        let twinkleGroup = control.group("Twinkle", true,true,true)
+        let twinkleGroup = controls.group("Twinkle", true,true,true)
         if (twinkleGroup.enabled) {
             const twinkleContainer = new PixelList()
             box.add(twinkleContainer)
@@ -146,12 +146,12 @@ export default class Marquee extends Animator {
         }
 
 
-        let colorPatternGroup = control.group("Color pattern", true,true,true)
+        let colorPatternGroup = controls.group("Color pattern", true,true,true)
         if (colorPatternGroup.enabled) {
             new FxColorPattern(scheduler, colorPatternGroup).run(textPixels)
         }
 
-        let cursorGroup = control.group("Cursor",true,true,true)
+        let cursorGroup = controls.group("Cursor",true,true,true)
         if (cursorGroup.enabled) {
             const cursorColor = cursorGroup.color("Color", 128, 128, 128, 1, true).copy()
             const cursorX = cursorGroup.value("X offset", 2, 0, 100, 1, true)

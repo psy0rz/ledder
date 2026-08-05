@@ -348,23 +348,31 @@ export default class PixelList extends Set<Pixel | PixelList> {
 
     }
 
-    private getCenterOffsets(bbox: BoxInterface): Array<number> {
+    private getCenterOffsets(x: number, y: number): Array<number> {
         //our center
         const ourBbox = this.bbox()
         const ourX = (ourBbox.xMax + ourBbox.xMin) / 2
         const ourY = (ourBbox.yMax + ourBbox.yMin) / 2
 
-        //other center
-        const x = (bbox.xMax + bbox.xMin) / 2
-        const y = (bbox.yMax + bbox.yMin) / 2
-
         return [Math.round(x - ourX), Math.round(y - ourY)]
 
     }
 
+    //resolve either a bbox or explicit x,y args into a target center point
+    private static resolveCenterTarget(a: BoxInterface | number, b?: number): Array<number> {
+        if (typeof a === "number")
+            return [a, b as number]
+
+        return [(a.xMax + a.xMin) / 2, (a.yMax + a.yMin) / 2]
+    }
+
     //center our pixels inside specified bbox
-    center(bbox: BoxInterface): PixelList {
-        let offsets = this.getCenterOffsets(bbox)
+    center(bbox: BoxInterface): PixelList
+    //center our pixels on this x,y point
+    center(x: number, y: number): PixelList
+    center(a: BoxInterface | number, b?: number): PixelList {
+        const [x, y] = PixelList.resolveCenterTarget(a, b)
+        let offsets = this.getCenterOffsets(x, y)
 
         this.move(offsets[0], offsets[1])
         return (this)
@@ -372,8 +380,12 @@ export default class PixelList extends Set<Pixel | PixelList> {
     }
 
     //vertical center our pixels indside specified box
-    centerV(bbox: BoxInterface): PixelList {
-        let offsets = this.getCenterOffsets(bbox)
+    centerV(bbox: BoxInterface): PixelList
+    //vertical center our pixels on this x,y point
+    centerV(x: number, y: number): PixelList
+    centerV(a: BoxInterface | number, b?: number): PixelList {
+        const [x, y] = PixelList.resolveCenterTarget(a, b)
+        let offsets = this.getCenterOffsets(x, y)
 
         this.move(0, offsets[1])
         return (this)
@@ -381,8 +393,12 @@ export default class PixelList extends Set<Pixel | PixelList> {
     }
 
     //horizontal center our pixels indside specified box
-    centerH(bbox: BoxInterface): PixelList {
-        let offsets = this.getCenterOffsets(bbox)
+    centerH(bbox: BoxInterface): PixelList
+    //horizontal center our pixels on this x,y point
+    centerH(x: number, y: number): PixelList
+    centerH(a: BoxInterface | number, b?: number): PixelList {
+        const [x, y] = PixelList.resolveCenterTarget(a, b)
+        let offsets = this.getCenterOffsets(x, y)
 
         this.move(offsets[0], 0)
         return (this)
