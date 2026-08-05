@@ -16,6 +16,7 @@
     type="colorpicker"
     label="Color Wheel"
     placeholder="Color"
+    style="max-width:400px"
     readonly
     value={{
         rgb: [control.r, control.g, control.b],

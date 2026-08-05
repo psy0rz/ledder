@@ -11,10 +11,6 @@ import Color from "./Color.js"
  */
 export default class Animator {
 
-    // keep: boolean;
-    static category = "Misc"
-    static title = "Untitled"
-    static description = ""
 
     //preview settings, fiddle with this to optimize your preview image (usually no need to change)
     static previewSkip = 120 //number of input-frames to skip

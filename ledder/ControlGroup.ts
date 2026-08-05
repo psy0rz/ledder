@@ -8,7 +8,7 @@ import ControlSelect, {type Choices} from "./ControlSelect.js"
 import ControlRange from "./ControlRange.js"
 import CallbackManager from "../util/CallbackManager.js"
 import type BoxInterface from "./BoxInterface.js";
-import  ControlPosition from "./ControlPosition.js";
+import  ControlPosition, {type XOrigin, type YOrigin} from "./ControlPosition.js";
 
 
 type ControlMap = Record<string, Control>
@@ -250,8 +250,10 @@ export default class ControlGroup extends Control {
 
 
     /** Relative position control
+     * @param xOrigin Horizontal anchor the X offset is measured from: "left", "center" or "right"
+     * @param yOrigin Vertical anchor the Y offset is measured from: "top", "middle" or "bottom"
      */
-    position(name: string, box: BoxInterface, restartOnChange=true, xOrigin, xOffset, yOrigin,yOffset): ControlPosition {
+    position(name: string, box: BoxInterface, restartOnChange=true, xOrigin: XOrigin = "left", xOffset = 0, yOrigin: YOrigin = "top", yOffset = 0): ControlPosition {
 
         return new ControlPosition(name, this, box, restartOnChange, xOrigin, xOffset, yOrigin, yOffset)
 

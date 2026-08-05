@@ -9,6 +9,7 @@
 
 <Input
     type="textarea"
+    style="max-width:400px"
     value={control.text}
     resizable=true
     on:input={(e) => {

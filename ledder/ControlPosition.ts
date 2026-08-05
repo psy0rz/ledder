@@ -3,6 +3,12 @@ import type BoxInterface from "./BoxInterface.js";
 
 //NOTE: this is a compound control that uses actual controls and does some calculations for the user. therefore its not a subclass from Control
 
+/** Horizontal anchor the X offset is measured from */
+export type XOrigin = "left" | "center" | "right"
+
+/** Vertical anchor the Y offset is measured from */
+export type YOrigin = "top" | "middle" | "bottom"
+
 // ControlPosition allows user to select a position within a box with offsets.
 export default class ControlPosition  {
 
@@ -10,12 +16,12 @@ export default class ControlPosition  {
     x: number
     y: number
 
-    constructor(name: string = 'root', parent: ControlGroup,box:BoxInterface, restartOnChange:boolean, xOrigin="left", xOffset=0, yOrigin="top", yOffset=0) {
+    constructor(name: string = 'root', parent: ControlGroup, box: BoxInterface, restartOnChange: boolean, xOrigin: XOrigin = "left", xOffset = 0, yOrigin: YOrigin = "top", yOffset = 0) {
 
         let group = parent.group(name, restartOnChange, false, false, true)
 
         ///////////// X
-        let xOriginControl=group.select("X origin", xOrigin, [
+        const xOriginChoices: Array<{ id: XOrigin, name: string }> = [
             {
                 "id": "left",
                 "name": "Left",
@@ -28,13 +34,14 @@ export default class ControlPosition  {
                 "id": "right",
                 "name": "Right",
             },
-        ])
+        ]
+        let xOriginControl=group.select("X origin", xOrigin, xOriginChoices, true)
 
         let xMax=box.xMax-box.xMin
-        let xOffsetControl=group.value("X offset", xOffset, -xMax, +xMax)
+        let xOffsetControl=group.value("X offset", xOffset, -xMax, +xMax,1,true)
 
         //////////// Y
-        let yOriginControl=group.select("Y origin", yOrigin, [
+        const yOriginChoices: Array<{ id: YOrigin, name: string }> = [
             {
                 "id": "top",
                 "name": "Top",
@@ -47,30 +54,34 @@ export default class ControlPosition  {
                 "id": "bottom",
                 "name": "Bottom",
             },
-        ])
+        ]
+        let yOriginControl=group.select("Y origin", yOrigin, yOriginChoices, true)
 
         let yMax=box.yMax-box.yMin
-        let yOffsetControl=group.value("Y offset", yOffset, -yMax, +yMax)
+        let yOffsetControl=group.value("Y offset", yOffset, -yMax, +yMax, 1, true)
 
         group.onChange( ()=>
         {
-            if (xOriginControl.selected=="center")
+            const selectedXOrigin = xOriginControl.selected as XOrigin
+            const selectedYOrigin = yOriginControl.selected as YOrigin
+
+            if (selectedXOrigin=="center")
                 this.x=box.xMin+(Math.floor(xMax/2))+xOffsetControl.value
 
-            if (xOriginControl.selected=="left")
+            if (selectedXOrigin=="left")
                 this.x=box.xMin+xOffsetControl.value
 
-            if (xOriginControl.selected=="right")
+            if (selectedXOrigin=="right")
                 this.x=box.xMax+xOffsetControl.value
 
 
-            if (yOriginControl.selected=="middle")
+            if (selectedYOrigin=="middle")
                 this.y=box.yMin+(Math.floor(yMax/2))+yOffsetControl.value
 
-            if (yOriginControl.selected=="top")
+            if (selectedYOrigin=="top")
                 this.y=box.yMin+yOffsetControl.value
 
-            if (yOriginControl.selected=="bottom")
+            if (selectedYOrigin=="bottom")
                 this.y=box.yMax+yOffsetControl.value
 
 
