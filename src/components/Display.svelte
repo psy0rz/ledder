@@ -5,35 +5,38 @@
     import {f7ready} from "framework7-svelte"
     import {svelteDisplayHeight, svelteDisplayWidth, svelteDisplayZoom} from "@/js/web/svelteStore.js"
 
-    let zoom = true
+    // below this viewport width the preview would cover most of the page, so we don't zoom at all
+    const smallScreenMaxWidth = 600
+
+    let autoZoomEnabled = true
 
     //zoom the preview to a reasoanble level for the screensize
     function autoZoom() {
 
-        if (!zoom) {
+        if (!autoZoomEnabled) {
             svelteDisplayZoom.set(2)
-        } else {
-
-            // const canvas = document.querySelector(".ledder-display")
-            let autozoom = ~~((window.innerWidth / 2) / $svelteDisplayWidth)
-
-            if (autozoom < 4)
-                autozoom = 4
-
-            if (autozoom > 8)
-                autozoom = 8
-
-
-            svelteDisplayZoom.set(autozoom)
+            return
         }
+
+        if (window.innerWidth < smallScreenMaxWidth) {
+            svelteDisplayZoom.set(1)
+            return
+        }
+
+        // const canvas = document.querySelector(".ledder-display")
+        let fittedZoom = ~~((window.innerWidth / 2) / $svelteDisplayWidth)
+
+        if (fittedZoom < 4)
+            fittedZoom = 4
+
+        if (fittedZoom > 8)
+            fittedZoom = 8
+
+        svelteDisplayZoom.set(fittedZoom)
     }
 
-    function toggleZoom() {
-        if (zoom) {
-            zoom = false
-        } else {
-            zoom = true
-        }
+    function toggleAutoZoom() {
+        autoZoomEnabled = !autoZoomEnabled
         autoZoom()
     }
 
@@ -65,6 +68,7 @@
 </script>
 
 
+<!-- display canvas, and grid overlay -->
 <canvas class="ledder-display ledder-display-box" id="ledder-display"/>
 
 <svg
@@ -93,7 +97,9 @@
     {/if}
 </svg>
 
-<div class="ledder-display-box" style="color: white; text-align:right;  " on:click={toggleZoom}>
-    {$svelteDisplayWidth} x {$svelteDisplayHeight}
+<div class="ledder-display-box" style="color: white; text-align:right;  " on:click={toggleAutoZoom}>
+    {#if $svelteDisplayWidth * $svelteDisplayZoom >= 100}
+        {$svelteDisplayWidth} x {$svelteDisplayHeight}
+    {/if}
 </div>
 
