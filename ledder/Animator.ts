@@ -8,6 +8,7 @@ import Color from "./Color.js"
 
 /**
  * An animation is a pixelcontainer and animates the properties of those pixels via the scheduler.
+ * Note that you can add a constructor yourself. (The parent does not have one you have to take into account)
  */
 export default class Animator {
 
