@@ -1,0 +1,200 @@
+{
+ "title": "",
+ "description": "",
+ "values": {
+  "Text": {
+   "text": "The Matrix has  you..."
+  },
+  "Text color": {
+   "r": 172,
+   "g": 252,
+   "b": 187,
+   "a": 1
+  },
+  "Text anchor position": {
+   "X origin": {
+    "selected": "center"
+   },
+   "X offset": {
+    "value": 0
+   },
+   "Y origin": {
+    "selected": "middle"
+   },
+   "Y offset": {
+    "value": 0
+   },
+   "Show anchor": {
+    "enabled": false
+   },
+   "Enabled": {
+    "enabled": true
+   }
+  },
+  "Horizontal text align": {
+   "selected": "centered"
+  },
+  "Vertical text align": {
+   "selected": "middle"
+  },
+  "Wrap text": {
+   "enabled": true
+  },
+  "Font": {
+   "selected": "MSX"
+  },
+  "Font height": {
+   "value": 0
+  },
+  "Font width": {
+   "value": 0
+  },
+  "Cursor": {
+   "X offset": {
+    "value": 0
+   },
+   "Y offset": {
+    "value": 1
+   },
+   "Height": {
+    "value": 6
+   },
+   "Width": {
+    "value": 5
+   },
+   "On time": {
+    "value": 30
+   },
+   "Fade out time": {
+    "value": 10
+   },
+   "Fade out time randomizer": {
+    "value": 0
+   },
+   "Off time": {
+    "value": 30
+   },
+   "Enabled": {
+    "enabled": true
+   }
+  },
+  "Wobble": {
+   "Enabled": {
+    "enabled": false
+   }
+  },
+  "Scrolling": {
+   "Scroll Speed": {
+    "value": 1
+   },
+   "Enabled": {
+    "enabled": false
+   }
+  },
+  "Flames": {
+   "Enabled": {
+    "enabled": false
+   }
+  },
+  "Twinkle": {
+   "Enabled": {
+    "enabled": false
+   }
+  },
+  "Color pattern": {
+   "Enabled": {
+    "enabled": false
+   }
+  },
+  "Layers": {
+   "Z of animation": {
+    "value": -1
+   },
+   "Layer 1": {
+    "Animation": {
+     "selected": "MovieFx/TheMatrix"
+    },
+    "Preset": {
+     "selected": "(none)"
+    },
+    "Z": {
+     "value": -32
+    },
+    "Enabled": {
+     "enabled": true
+    },
+    "MovieFx/TheMatrix": {
+     "Head color": {
+      "r": 128,
+      "g": 128,
+      "b": 128,
+      "a": 1
+     },
+     "Tail color": {
+      "r": 0,
+      "g": 128,
+      "b": 0,
+      "a": 1
+     },
+     "Fall interval": {
+      "value": 5
+     },
+     "Create interval": {
+      "value": 10
+     },
+     "Slow trials (percent)": {
+      "value": 10
+     },
+     "Slow fall interval": {
+      "value": 10
+     },
+     "Fade head": {
+      "Fade out time": {
+       "value": 10
+      },
+      "Fade out time randomizer": {
+       "value": 5
+      },
+      "Enabled": {
+       "enabled": true
+      }
+     },
+     "Fade tail": {
+      "Fade out time": {
+       "value": 30
+      },
+      "Fade out time randomizer": {
+       "value": 5
+      },
+      "Enabled": {
+       "enabled": true
+      }
+     },
+     "Enabled": {
+      "enabled": true
+     }
+    }
+   },
+   "Enabled": {
+    "enabled": true
+   },
+   "Layer 2": {
+    "Animation": {
+     "selected": "(none)"
+    },
+    "Preset": {
+     "selected": "(none)"
+    },
+    "Z": {
+     "value": 20
+    },
+    "Enabled": {
+     "enabled": true
+    }
+   }
+  },
+  "Enabled": {
+   "enabled": true
+  }
+ }
+}
