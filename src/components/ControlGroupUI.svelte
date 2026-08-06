@@ -12,6 +12,13 @@
     export let path: Array<string> = []
     export let onChanged: (path: Array<string>, values: {}) => void
 
+    //Whether the group we are rendered in is switched on. Only inline sub groups (such as the
+    //controls of a layer animation) need this: they have no item of their own to gray out, so they
+    //have to inherit the state of the group they are rendered in.
+    export let parentEnabled: boolean = true
+
+    $: groupEnabled = parentEnabled && controlGroup.enabled !== false && controlGroup.meta.enabled
+
     //Whether each sub group is currently unfolded, starting at the animation's collapsed default.
     //The control tree is re-rendered whenever an animation adds controls, so we have to remember
     //what the user opened or closed by hand, otherwise those groups fold back to the default.
@@ -49,6 +56,7 @@
                 controlGroup={control}
                 path={[...path, control.meta.name]}
                 onChanged={onChanged}
+                parentEnabled={groupEnabled}
         />
     {:else if control.meta.type === "controls"}
         <!-- Recurse into a nested ControlGroup -->
@@ -57,7 +65,7 @@
                 opened={isOpened(control)}
                 toggle={true}
                 itemToggle
-                class="{control.meta.enabled ?'':'disabled'}"
+                class="{control.meta.enabled&&groupEnabled?'':'disabled'}"
                 iconMaterial="{control.meta.switchable?'':'folder'}"
                 on:treeviewOpen={(e) => {
                     openedByGroupName.set(control.meta.name, true)
@@ -75,6 +83,8 @@
                 {/if}
             </span>
 
+            <!-- NOTE: no parentEnabled here: the item above already grays out its whole subtree,
+                 and graying out twice would stack the opacity -->
             <svelte:self
                     controlGroup={control}
                     path={[...path, control.meta.name]}
@@ -82,7 +92,7 @@
             />
         </TreeviewItem>
     {:else}
-        <TreeviewItem opened toggle={false} class="ledder-control-row {control.meta.enabled&&controlGroup.enabled!==false?'':'disabled'}">
+        <TreeviewItem opened toggle={false} class="ledder-control-row {control.meta.enabled&&groupEnabled?'':'disabled'}">
             <span slot="content" class="padding-bottom ledder-control">
                 <BlockHeader>{control.meta.name}:</BlockHeader>
                 {#if control.meta.type === "value"}
