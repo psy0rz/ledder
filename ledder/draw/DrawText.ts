@@ -26,6 +26,13 @@ function endsWord(char: string) {
 //wrapWidth is how wide a line may get before it wraps to the next one. Leave it out to never wrap.
 export default class DrawText extends Draw {
 
+    //Where the next character would be drawn: the pen after the last character, on the last line,
+    //with that line's horizontal alignment and the block's vertical alignment already applied.
+    //cursorY is the top of that line (not of its ink), so it doesn't jump around with the last
+    //character's shape. Use this to put a cursor at the end of the text.
+    readonly cursorX: number
+    readonly cursorY: number
+
     constructor(x: number, y: number, font: Font, rawText: string, color: ColorInterface,
                 scale: number = 1.0, wrapWidth?: number,
                 hAlign: HorizontalAlign = "left", vAlign: VerticalAlign = "top") {
@@ -104,6 +111,10 @@ export default class DrawText extends Draw {
             penX = penX + advance
         }
 
+        //where the pen ended up after the last character, and on which line
+        const cursorPenX = penX
+        const cursorLineNr = lineNr
+
         //Render each line into its own list, still in pen coordinates (line 0 starting at 0,0).
         const pixelsPerLine: Array<Array<Pixel>> = []
         for (let i = 0; i <= lineNr; i++)
@@ -143,23 +154,27 @@ export default class DrawText extends Draw {
         }
 
         //Horizontally align every line on the anchor, by its own rendered width.
+        //An empty line has no ink to align, so its pen simply starts on the anchor.
+        const lineXs: number[] = []
         for (const linePixels of pixelsPerLine) {
 
-            if (linePixels.length === 0)
-                continue
+            let lineX = x  //left: the pen starts on the anchor, so lines never jitter on glyph bearings
 
-            let inkMinX = linePixels[0].x
-            let inkMaxX = linePixels[0].x
-            for (const pixel of linePixels) {
-                inkMinX = Math.min(inkMinX, pixel.x)
-                inkMaxX = Math.max(inkMaxX, pixel.x)
+            if (linePixels.length !== 0) {
+                let inkMinX = linePixels[0].x
+                let inkMaxX = linePixels[0].x
+                for (const pixel of linePixels) {
+                    inkMinX = Math.min(inkMinX, pixel.x)
+                    inkMaxX = Math.max(inkMaxX, pixel.x)
+                }
+
+                if (hAlign === "centered")
+                    lineX = x - Math.round((inkMinX + inkMaxX) / 2)
+                else if (hAlign === "right")
+                    lineX = x - inkMaxX
             }
 
-            let lineX = x  //left: the pen starts on the anchor, so lines never jitter on glyph bearings
-            if (hAlign === "centered")
-                lineX = x - Math.round((inkMinX + inkMaxX) / 2)
-            else if (hAlign === "right")
-                lineX = x - inkMaxX
+            lineXs.push(lineX)
 
             for (const pixel of linePixels) {
                 pixel.x = pixel.x + lineX
@@ -167,11 +182,13 @@ export default class DrawText extends Draw {
             }
         }
 
+        this.cursorX = lineXs[cursorLineNr] + cursorPenX
+
         //Vertically align the block as a whole on the anchor.
         const blockBbox = this.bbox()
+        let blockY = y  //top: the first line starts on the anchor
         if (blockBbox !== undefined) {
 
-            let blockY = y  //top: the first line starts on the anchor
             if (vAlign === "middle")
                 blockY = y - Math.round((blockBbox.yMin + blockBbox.yMax) / 2)
             else if (vAlign === "bottom")
@@ -179,6 +196,8 @@ export default class DrawText extends Draw {
 
             this.move(0, blockY)
         }
+
+        this.cursorY = cursorLineNr * lineHeight + blockY
     }
 }
 
