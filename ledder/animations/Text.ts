@@ -49,9 +49,26 @@ export default class Text extends Animator {
             {id: "bottom", name: "Bottom"},
         ], true)
 
-// const scale=controls.value("scale",1,1,5,0.1,true)
-        const textPixels = new DrawText(positionControl.x, positionControl.y, font, macroedText, colorControl, 1, box.width(),
-            hAlignControl.selected as HorizontalAlign, vAlignControl.selected as VerticalAlign)
+
+        const hAlign = hAlignControl.selected as HorizontalAlign
+        const vAlign = vAlignControl.selected as VerticalAlign
+
+        //How much room the text has inside the box, measured from the anchor in the direction(s) it
+        //grows: right for left-aligned, left for right-aligned, both ways (so twice the nearest edge)
+        //for centered.
+        const roomLeftOfAnchor = positionControl.x - box.xMin + 1
+        const roomRightOfAnchor = box.xMax - positionControl.x + 1
+        let roomForText = roomRightOfAnchor
+        if (hAlign === "right")
+            roomForText = roomLeftOfAnchor
+        else if (hAlign === "centered")
+            roomForText = 2 * Math.min(roomLeftOfAnchor, roomRightOfAnchor) - 1
+
+        const wrapEnabled = controls.switch("Wrap text", false, true).enabled
+
+        const textPixels = new DrawText(positionControl.x, positionControl.y, font, macroedText, colorControl, 1,
+            wrapEnabled ? Math.max(1, roomForText) : undefined,
+            hAlign, vAlign)
 
         if (controls.group("Text anchor position").switch("Show anchor", false, true).enabled) {
             const anchorColor = colorWhite.copy()
