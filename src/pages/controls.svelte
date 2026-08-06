@@ -61,7 +61,7 @@
         </Subnavbar>
     </Navbar>
     <Block strong>
-        <Treeview>
+        <Treeview >
             <ControlGroup
                     controlGroup={$sveltePresets}
                     onChanged={(path, values) => {

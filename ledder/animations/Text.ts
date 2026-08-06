@@ -1,5 +1,5 @@
 import PixelBox from "../PixelBox.js"
-import DrawText from "../draw/DrawText.js"
+import DrawText, {type HorizontalAlign, type VerticalAlign} from "../draw/DrawText.js"
 import FxRotate from "../fx/FxRotate.js"
 import PixelList from "../PixelList.js"
 import DrawBox from "../draw/DrawBox.js"
@@ -31,6 +31,7 @@ export default class Text extends Animator {
 
         let macroedText=interpretMacro(input.text)
 
+
         const positionControl=controls.position("Text anchor position", box, true , "center" , 0, "middle",0)
 
 
@@ -41,26 +42,16 @@ export default class Text extends Animator {
             {id: "right", name: "Right"},
         ], true)
 
+
         const vAlignControl = controls.select("Vertical text align", "middle", [
             {id: "top", name: "Top"},
             {id: "middle", name: "Middle"},
             {id: "bottom", name: "Bottom"},
         ], true)
 
-
-        const textPixels = new DrawText(positionControl.x, positionControl.y, font, macroedText, colorControl)
-
-        const textBbox = textPixels.bbox()
-
-        if (hAlignControl.selected === "centered")
-            textPixels.centerH(positionControl.x, positionControl.y)
-        else if (hAlignControl.selected === "right")
-            textPixels.move(positionControl.x - textBbox.xMax, 0)
-
-        if (vAlignControl.selected === "middle")
-            textPixels.centerV(positionControl.x, positionControl.y)
-        else if (vAlignControl.selected === "bottom")
-            textPixels.move(0, positionControl.y - textBbox.yMax)
+// const scale=controls.value("scale",1,1,5,0.1,true)
+        const textPixels = new DrawText(positionControl.x, positionControl.y, font, macroedText, colorControl, 1, box.width(),
+            hAlignControl.selected as HorizontalAlign, vAlignControl.selected as VerticalAlign)
 
         if (controls.group("Text anchor position").switch("Show anchor", false, true).enabled) {
             const anchorColor = colorWhite.copy()
@@ -79,8 +70,13 @@ export default class Text extends Animator {
         }
 
 
-        let scrollGroup = controls.group("Scrolling", true, true, true)
         let rotatorPromise
+
+        let scrollGroup = controls.group("Scrolling", true, true, true)
+
+        const scrollSpeed=scrollGroup.value("Scroll Speed", 1, 0.1,8,0.1,true)
+        scrollSpeed.meta.enabled=scrollGroup.enabled
+
         if (scrollGroup.enabled) {
 
             //allow finetuning via actual FPS
@@ -98,7 +94,6 @@ export default class Text extends Animator {
                 box.add(textPixels)
             }
 
-            const rotator = new FxRotate(scheduler, scrollGroup, -1, 0, 1, 0, 0.01)
 
             //show one time or loop?
             let waitX = 0
@@ -122,8 +117,6 @@ export default class Text extends Animator {
                 }
 
             } else {
-                //non-circular, make sure marquee starts outside of the display
-                // textPixels.move(box.width(), 0)
 
                 //only show one time?
                 if (scrollGroup.switch('Show one time only', false, true).enabled)
@@ -131,11 +124,18 @@ export default class Text extends Animator {
 
             }
             const textBoundBox = textPixels.bbox()
-            // textBoundBox.xMin = 0
+            // //move the
+            // if (textBoundBox.xMax< box.xMax)
+            //     textBoundBox.xMax=box.xMax
+            // textBoundBox.xMin = position
             // textBoundBox.yMin=box.yMin
             // textBoundBox.yMax=box.yMax
-
-            rotatorPromise = rotator.run(textPixels, box, waitX, null)
+            // rotatorPromise = rotator.run(textPixels, textBoundBox, waitX, null)
+            // const scrollSpeed=controls.scroll
+            // scheduler.interval(1, ()=>
+            // {
+            //
+            // })
 
 
         } else {
