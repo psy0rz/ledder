@@ -1,0 +1,157 @@
+{
+ "title": "",
+ "description": "",
+ "values": {
+  "Text": {
+   "text": "A long time ago in a galaxy far, far away....\n\nIT IS A PERIOD OF CIVIL WAR. \n\nRebel space-ships, striking from a hidden base, have won their first victory against the evil Galactic Empire.\n\nDuring the battle, Rebel spies managed to steal secret plans to the Empire's ultimate weapon, the \nDEATHSTAR, an armored space station with enough power to destroy an entire planet.\n\nPursued by the Empire's sinister agents, Princess Leia races home aboard her starship, custodian of the stolen plans that can save her people and restore freedom to the galaxy...."
+  },
+  "Text color": {
+   "r": 255,
+   "g": 232,
+   "b": 0,
+   "a": 1
+  },
+  "Text anchor position": {
+   "X origin": {
+    "selected": "center"
+   },
+   "X offset": {
+    "value": 0
+   },
+   "Y origin": {
+    "selected": "middle"
+   },
+   "Y offset": {
+    "value": 0
+   },
+   "Show anchor": {
+    "enabled": false
+   },
+   "Enabled": {
+    "enabled": true
+   }
+  },
+  "Horizontal text align": {
+   "selected": "centered"
+  },
+  "Vertical text align": {
+   "selected": "middle"
+  },
+  "Wrap text": {
+   "enabled": true
+  },
+  "Font": {
+   "selected": "C64"
+  },
+  "Font height": {
+   "value": 0
+  },
+  "Font width": {
+   "value": 0
+  },
+  "Wobble": {
+   "Enabled": {
+    "enabled": false
+   }
+  },
+  "Scrolling": {
+   "Scroll Speed": {
+    "value": 0.1
+   },
+   "FPS": {
+    "value": 60
+   },
+   "Scroll direction": {
+    "selected": "vertical"
+   },
+   "Subpixel filtering": {
+    "enabled": false
+   },
+   "Show one time only": {
+    "enabled": false
+   },
+   "Gap": {
+    "value": 32
+   },
+   "Enabled": {
+    "enabled": true
+   }
+  },
+  "Flames": {
+   "Enabled": {
+    "enabled": false
+   }
+  },
+  "Twinkle": {
+   "Enabled": {
+    "enabled": false
+   }
+  },
+  "Color pattern": {
+   "Enabled": {
+    "enabled": false
+   }
+  },
+  "Cursor": {
+   "Enabled": {
+    "enabled": false
+   }
+  },
+  "Layers": {
+   "Z of animation": {
+    "value": 0
+   },
+   "Layer 1": {
+    "Animation": {
+     "selected": "Components/Starfield"
+    },
+    "Preset": {
+     "selected": "(none)"
+    },
+    "Z": {
+     "value": -12
+    },
+    "Enabled": {
+     "enabled": true
+    },
+    "Components/Starfield": {
+     "Base speed": {
+      "value": 0.001
+     },
+     "Acceleration": {
+      "value": 0.03
+     },
+     "Star offset": {
+      "value": 0.1
+     },
+     "Creation interval": {
+      "value": 5
+     },
+     "Enabled": {
+      "enabled": true
+     }
+    }
+   },
+   "Enabled": {
+    "enabled": true
+   },
+   "Layer 2": {
+    "Animation": {
+     "selected": "(none)"
+    },
+    "Preset": {
+     "selected": "(none)"
+    },
+    "Z": {
+     "value": 20
+    },
+    "Enabled": {
+     "enabled": true
+    }
+   }
+  },
+  "Enabled": {
+   "enabled": true
+  }
+ }
+}

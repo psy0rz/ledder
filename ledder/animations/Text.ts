@@ -1,6 +1,5 @@
 import PixelBox from "../PixelBox.js"
 import DrawText, {type HorizontalAlign, type VerticalAlign} from "../draw/DrawText.js"
-import FxRotate from "../fx/FxRotate.js"
 import PixelList from "../PixelList.js"
 import DrawBox from "../draw/DrawBox.js"
 import Pixel from "../Pixel.js"
@@ -24,7 +23,6 @@ export default class Text extends Animator {
 
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) {
 
-        const font = fontSelect(controls, 'Font')
         const input = controls.input('Text', "Text", true)
 
         const colorControl = controls.color("Text color", 0x21, 0xff, 0, 1)
@@ -64,7 +62,9 @@ export default class Text extends Animator {
         else if (hAlign === "centered")
             roomForText = 2 * Math.min(roomLeftOfAnchor, roomRightOfAnchor) - 1
 
-        const wrapEnabled = controls.switch("Wrap text", false, true).enabled
+        const wrapEnabled = controls.switch("Wrap text", true, true).enabled
+
+        const font = fontSelect(controls, 'Font')
 
         const textPixels = new DrawText(positionControl.x, positionControl.y, font, macroedText, colorControl, 1,
             wrapEnabled ? Math.max(1, roomForText) : undefined,
@@ -87,20 +87,26 @@ export default class Text extends Animator {
         }
 
 
-        let rotatorPromise
+        let scrollPromise
 
         let scrollGroup = controls.group("Scrolling", true, true, true)
 
-        const scrollSpeed=scrollGroup.value("Scroll Speed", 1, 0.1,8,0.1,true)
+        const scrollSpeed=scrollGroup.value("Scroll Speed", 1, 0.1,8,0.1)
         scrollSpeed.meta.enabled=scrollGroup.enabled
 
         if (scrollGroup.enabled) {
 
             //allow finetuning via actual FPS
-            const fpsControl = scrollGroup.value("FPS", 60, 1, 120, 1)
+            const fpsControl = scrollGroup.value("FPS", 60, 1, 120, 1, true)
             fpsControl.onChange(() => {
                 scheduler.setFps(fpsControl.value)
+
             })
+
+            const scrollsHorizontally = scrollGroup.select("Scroll direction", "horizontal", [
+                {id: "horizontal", name: "Horizontal (right to left)"},
+                {id: "vertical", name: "Vertical (bottom to top)"},
+            ], true).selected === "horizontal"
 
             if (scrollGroup.switch("Subpixel filtering", false).enabled) {
                 const subpixelFilter = new FxSubpixels(scheduler, controls)
@@ -111,49 +117,81 @@ export default class Text extends Animator {
                 box.add(textPixels)
             }
 
+            const showsOnce = scrollGroup.switch('Show one time only', false, true).enabled
 
-            //show one time or loop?
-            let waitX = 0
+            //blank space between the end of the text and the start of the next repeat. Defaults to a
+            //whole display, so by default the text has completely left before it comes back.
+            const boxLength = scrollsHorizontally ? box.width() : box.height()
+            const gap = scrollGroup.value("Gap", boxLength, 0, 4 * boxLength, 1, true).value
 
-            //circular?
-            if (scrollGroup.switch('Circular', false, true).enabled) {
-                //circular display, only add whitespace
-                const whitespace = scrollGroup.value("Whitespace", 10, 0, 100, 1, true)
-                // textPixels.move(whitespace.value, 0)
-                //replicate text until display is filled
-                const width = textPixels.bbox().xMax - box.xMin
-                if (textPixels.bbox().xMax > 0) {
-                    let charPixelsCopy = textPixels.copy()
-                    while (textPixels.bbox().xMax < box.xMax) {
-                        charPixelsCopy.move(width, 0)
-                        textPixels.add(charPixelsCopy)
+            //empty text has no bbox: scroll an empty 1x1 block so the animation still runs
+            const textBbox = textPixels.bbox() ?? {xMin: box.xMin, xMax: box.xMin, yMin: box.yMin, yMax: box.yMin}
+            const textLength = scrollsHorizontally
+                ? textBbox.xMax - textBbox.xMin + 1
+                : textBbox.yMax - textBbox.yMin + 1
 
-                        charPixelsCopy = charPixelsCopy.copy()
-                    }
-                    textPixels.flatten()
-                }
+            //start just off screen, at the edge the text scrolls in from
+            if (scrollsHorizontally)
+                textPixels.move(box.xMax + 1 - textBbox.xMin, 0)
+            else
+                textPixels.move(0, box.yMax + 1 - textBbox.yMin)
 
-            } else {
+            //One repeat is the text plus the gap. The text scrolls on an endless belt built out of
+            //whole repeats: pixels that fall off the start of the belt jump back to its end, which
+            //makes the loop seamless. The belt must be at least a display plus a text long, so with
+            //a small gap we need several copies of the text on it to keep it from showing holes.
+            const repeatLength = textLength + gap
+            const beltCopies = showsOnce ? 1 : Math.ceil((boxLength + textLength) / repeatLength)
+            const beltLength = beltCopies * repeatLength
 
-                //only show one time?
-                if (scrollGroup.switch('Show one time only', false, true).enabled)
-                    waitX = textPixels.bbox().xMax - box.xMin
-
+            //the belt ends where the text starts off screen, and reaches back from there
+            const beltMax = (scrollsHorizontally ? box.xMax : box.yMax) + textLength
+            const beltMin = beltMax - beltLength + 1
+            const beltBbox = {
+                xMin: scrollsHorizontally ? beltMin : box.xMin,
+                xMax: scrollsHorizontally ? beltMax : box.xMax,
+                yMin: scrollsHorizontally ? box.yMin : beltMin,
+                yMax: scrollsHorizontally ? box.yMax : beltMax,
             }
-            const textBoundBox = textPixels.bbox()
-            // //move the
-            // if (textBoundBox.xMax< box.xMax)
-            //     textBoundBox.xMax=box.xMax
-            // textBoundBox.xMin = position
-            // textBoundBox.yMin=box.yMin
-            // textBoundBox.yMax=box.yMax
-            // rotatorPromise = rotator.run(textPixels, textBoundBox, waitX, null)
-            // const scrollSpeed=controls.scroll
-            // scheduler.interval(1, ()=>
-            // {
-            //
-            // })
 
+            //fill the rest of the belt with copies, each one repeat further back
+            let previousCopy = textPixels
+            for (let copyNr = 1; copyNr < beltCopies; copyNr++) {
+                const nextCopy = previousCopy.copy()
+                if (scrollsHorizontally)
+                    nextCopy.move(-repeatLength, 0)
+                else
+                    nextCopy.move(0, -repeatLength)
+                textPixels.add(nextCopy)
+                previousCopy = nextCopy
+            }
+            if (beltCopies > 1)
+                textPixels.flatten()
+
+            //distance to travel before the text has completely left the display
+            const scrollLengthUntilGone = textLength + boxLength
+
+            let scrolled = 0
+            scrollPromise = scheduler.interval(1, () => {
+
+                const step = scrollSpeed.value
+                scrolled = scrolled + step
+
+                textPixels.forEachPixel((pixel) => {
+                    if (scrollsHorizontally) {
+                        pixel.x = pixel.x - step
+                        if (!showsOnce)
+                            pixel.wrapX(beltBbox)
+                    } else {
+                        pixel.y = pixel.y - step
+                        if (!showsOnce)
+                            pixel.wrapY(beltBbox)
+                    }
+                })
+
+                if (showsOnce && scrolled >= scrollLengthUntilGone)
+                    return false
+            })
 
         } else {
             //no scrolling
@@ -203,7 +241,7 @@ export default class Text extends Animator {
             }
         }
 
-        await rotatorPromise
+        await scrollPromise
 
     }
 
