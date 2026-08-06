@@ -11,7 +11,7 @@ export type VerticalAlign = "top" | "middle" | "bottom"
 
 
 function isWhitespace(char: string) {
-    return char === " " || char === "\t"
+    return char === " " || char === "\t" || char === "\n"
 }
 
 //text may wrap to the next line after these characters
@@ -26,10 +26,13 @@ function endsWord(char: string) {
 //wrapWidth is how wide a line may get before it wraps to the next one. Leave it out to never wrap.
 export default class DrawText extends Draw {
 
-    constructor(x: number, y: number, font: Font, text: string, color: ColorInterface,
+    constructor(x: number, y: number, font: Font, rawText: string, color: ColorInterface,
                 scale: number = 1.0, wrapWidth?: number,
                 hAlign: HorizontalAlign = "left", vAlign: VerticalAlign = "top") {
         super()
+
+        //so the layout below only ever has to look for "\n"
+        const text = rawText.replace(/\r\n?/g, "\n")
 
         const lineHeight = font.height * scale
         const maxLineWidth = wrapWidth ?? Infinity
@@ -56,7 +59,8 @@ export default class DrawText extends Draw {
         }
 
         //Lay out every character: which line it lands on and where the pen is on that line.
-        //lineNr is -1 for whitespace that a wrap swallowed, so it never indents the new line.
+        //lineNr is -1 for characters that render nothing: newlines, and whitespace that a wrap
+        //swallowed, so neither indents the new line.
         const lineNrs: number[] = []
         const penXs: number[] = []
         let penX = 0
@@ -64,6 +68,15 @@ export default class DrawText extends Draw {
 
         for (let charNr = 0; charNr < text.length; charNr++) {
             const advance = advances[charNr]
+
+            //explicit line break: always breaks, even on an empty line (giving a blank line)
+            if (text[charNr] === "\n") {
+                lineNrs.push(-1)
+                penXs.push(0)
+                penX = 0
+                lineNr++
+                continue
+            }
 
             if (penX > 0) {
 
