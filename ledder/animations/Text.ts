@@ -25,7 +25,7 @@ export default class Text extends Animator {
 
         const input = controls.input('Text', "Text", true)
 
-        const colorControl = controls.color("Text color", 0x21, 0xff, 0, 1)
+        const colorControl = controls.color("Text color", 0x21, 0xff, 0, 1, true)
 
         let macroedText=interpretMacro(input.text)
 
@@ -77,6 +77,38 @@ export default class Text extends Animator {
             scheduler.interval(15, () => {
                 anchorColor.a = anchorColor.a ? 0 : 1
             })
+        }
+
+
+        //The cursor sits at the end of the text: where the next character would be drawn, so it
+        //follows wrapping and alignment. It's added to textPixels before scrolling/effects, so it
+        //scrolls and repeats along with the text.
+        let cursorGroup = controls.group("Cursor", true, true, true)
+        if (cursorGroup.enabled) {
+            const cursorXOffset = cursorGroup.value("X offset", 0, 0, 100, 1, true)
+            const cursorYOffset = cursorGroup.value("Y offset", 1, 0, 100, 1, true)
+            const cursorHeight = cursorGroup.value("Height", 6, 0, 100, 1, true)
+            const cursorWidth = cursorGroup.value("Width", 5, 0, 100, 1, true)
+            const cursorOnTime = cursorGroup.value("On time", 30, 0, 60, 1, false)
+            const fader = new FxFadeOut(scheduler, cursorGroup, 10)
+            const cursorOffTime = cursorGroup.value("Off time", 30, 0, 60, 1, false)
+
+            const colorCopy=colorControl.copy()
+            textPixels.add(new DrawBox(
+                textPixels.cursorX + cursorXOffset.value,
+                textPixels.cursorY + cursorYOffset.value,
+                cursorWidth.value, cursorHeight.value, colorCopy))
+
+
+            //blinking runs for as long as the animation does, so it's not awaited here
+            void (async () => {
+                while (1) {
+                    colorCopy.a = 1
+                    await scheduler.delay(cursorOnTime.value)
+                    await fader.run(colorCopy)
+                    await scheduler.delay(cursorOffTime.value)
+                }
+            })()
         }
 
 
@@ -155,7 +187,7 @@ export default class Text extends Animator {
             }
 
             //fill the rest of the belt with copies, each one repeat further back
-            let previousCopy = textPixels
+            let previousCopy: PixelList = textPixels
             for (let copyNr = 1; copyNr < beltCopies; copyNr++) {
                 const nextCopy = previousCopy.copy()
                 if (scrollsHorizontally)
@@ -217,28 +249,6 @@ export default class Text extends Animator {
         let colorPatternGroup = controls.group("Color pattern", true,true,true)
         if (colorPatternGroup.enabled) {
             new FxColorPattern(scheduler, colorPatternGroup).run(textPixels)
-        }
-
-        let cursorGroup = controls.group("Cursor",true,true,true)
-        if (cursorGroup.enabled) {
-            const cursorColor = cursorGroup.color("Color", 128, 128, 128, 1, true).copy()
-            const cursorX = cursorGroup.value("X offset", 2, 0, 100, 1, true)
-            const cursorY = cursorGroup.value("Y offset", 1, 0, 100, 1, true)
-            const cursorH = cursorGroup.value("Height", 6, 0, 100, 1, true)
-            const cursorW = cursorGroup.value("Width", 5, 0, 100, 1, true)
-            const cursorOn = cursorGroup.value("On time", 30, 0, 60, 1, false)
-            const cursorOff = cursorGroup.value("Off time", 30, 0, 60, 1, false)
-            const bbox = textPixels.bbox()
-            const cursor = new DrawBox(bbox.xMax + cursorX.value, bbox.yMin + cursorY.value, cursorW.value, cursorH.value, cursorColor)
-            const fader = new FxFadeOut(scheduler, cursorGroup, 10)
-            textPixels.add(cursor)
-            while (1) {
-                cursorColor.a = 1
-                await scheduler.delay(cursorOn.value)
-                fader.run(cursorColor)
-                await scheduler.delay(cursorOff.value)
-
-            }
         }
 
         await scrollPromise
