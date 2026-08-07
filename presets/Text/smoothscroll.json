@@ -1,0 +1,126 @@
+{
+ "title": "",
+ "description": "",
+ "values": {
+  "Text": {
+   "text": "Smooth scrolling"
+  },
+  "Text color": {
+   "r": 33,
+   "g": 255,
+   "b": 0,
+   "a": 1
+  },
+  "Text anchor position": {
+   "X origin": {
+    "selected": "center"
+   },
+   "X offset": {
+    "value": 0
+   },
+   "Y origin": {
+    "selected": "middle"
+   },
+   "Y offset": {
+    "value": 0
+   },
+   "Show anchor": {
+    "enabled": false
+   },
+   "Enabled": {
+    "enabled": true
+   }
+  },
+  "Horizontal text align": {
+   "selected": "centered"
+  },
+  "Vertical text align": {
+   "selected": "middle"
+  },
+  "Wrap text": {
+   "enabled": false
+  },
+  "Font": {
+   "selected": "C64"
+  },
+  "Font height": {
+   "value": 0
+  },
+  "Font width": {
+   "value": 0
+  },
+  "Cursor": {
+   "Enabled": {
+    "enabled": false
+   }
+  },
+  "Wobble": {
+   "Enabled": {
+    "enabled": false
+   }
+  },
+  "Scrolling": {
+   "Scroll Speed": {
+    "value": 0.1
+   },
+   "FPS": {
+    "value": 60
+   },
+   "Scroll direction": {
+    "selected": "horizontal"
+   },
+   "Subpixel filtering": {
+    "enabled": true
+   },
+   "Show one time only": {
+    "enabled": false
+   },
+   "Gap": {
+    "value": 21
+   },
+   "Enabled": {
+    "enabled": true
+   }
+  },
+  "Flames": {
+   "Enabled": {
+    "enabled": false
+   }
+  },
+  "Twinkle": {
+   "Enabled": {
+    "enabled": false
+   }
+  },
+  "Color pattern": {
+   "Enabled": {
+    "enabled": false
+   }
+  },
+  "Layers": {
+   "Z of animation": {
+    "value": 0
+   },
+   "Layer 1": {
+    "Animation": {
+     "selected": "(none)"
+    },
+    "Preset": {
+     "selected": "(none)"
+    },
+    "Z": {
+     "value": 10
+    },
+    "Enabled": {
+     "enabled": true
+    }
+   },
+   "Enabled": {
+    "enabled": true
+   }
+  },
+  "Enabled": {
+   "enabled": true
+  }
+ }
+}
