@@ -6,6 +6,12 @@
  * any code of its own. The layer settings live in the root ControlGroup, so they are saved and loaded
  * as part of a normal preset of the selected animation.
  *
+ * Layers are recursive: an animation used as a layer gets its own LayerStack, so a preset that uses
+ * layers keeps working when its used as a layer itself. Every layer gets its own container box that
+ * takes up exactly one slot in our z-order, and the nested stack only re-orders inside that container.
+ * So you stack whole stacks on top of eachother, and a nested layer can never end up between our own
+ * layers.
+ *
  * Can only be used server-side. (it loads animations from disk)
  */
 
@@ -26,6 +32,10 @@ const LAYERS_GROUP_NAME = "Layers"
 
 //we always show one more (empty) layer than the user is actually using, up to this maximum.
 const MAX_LAYERS = 16
+
+//how deep layers may be nested. Prevents endless recursion when presets refer to eachother,
+//and keeps the control tree in the GUI readable.
+const MAX_DEPTH = 3
 
 
 //controls of one layer
@@ -61,21 +71,29 @@ export default class LayerStack {
     //asks AnimationManager to restart everything (used after loading a preset into a layer)
     private readonly restartAnimation: () => void
 
+    //how many stacks are above us: 0 for the animation the user selected
+    private readonly depth: number
+
     private zOrderedBoxes: Array<ZOrderedBox>
     private layerFilenames: Array<string>
+
+    //the stacks of the layer animations, so we can remove them and collect their filenames
+    private nestedStacks: Array<LayerStack>
 
     //set by removeLayers(), so async stuff thats still running cannot do any harm anymore
     private removed: boolean
 
-    constructor(parentBox: PixelBox, animationBox: PixelBox, scheduler: Scheduler, rootControls: ControlGroup, restartAnimation: () => void) {
+    constructor(parentBox: PixelBox, animationBox: PixelBox, scheduler: Scheduler, rootControls: ControlGroup, restartAnimation: () => void, depth: number = 0) {
         this.parentBox = parentBox
         this.animationBox = animationBox
         this.scheduler = scheduler
         this.rootControls = rootControls
         this.restartAnimation = restartAnimation
+        this.depth = depth
 
         this.zOrderedBoxes = []
         this.layerFilenames = []
+        this.nestedStacks = []
         this.removed = false
 
         //NOTE: the stackBox stays detached until applyZOrder() attaches it. This way the animation keeps
@@ -87,9 +105,15 @@ export default class LayerStack {
     /** Create the layer controls and start all configured layers */
     async createLayers() {
 
+        //too deeply nested: dont add layer controls at all. We never attach our stackBox, so the
+        //animation just keeps rendering from the parent box.
+        if (this.depth >= MAX_DEPTH)
+            return
+
         //normally called once per instance, but dont accumulate boxes/layers if its not
         this.zOrderedBoxes = []
         this.layerFilenames = []
+        this.nestedStacks = []
 
         //restartOnChange only applies to the switch of the group itself, so muting/unmuting all layers restarts.
         const layersControls = this.rootControls.group(LAYERS_GROUP_NAME, true, true, true, true)
@@ -169,13 +193,19 @@ export default class LayerStack {
     removeLayers() {
         this.removed = true
 
+        for (const nestedStack of this.nestedStacks)
+            nestedStack.removeLayers()
+
         this.parentBox.delete(this.stackBox)
     }
 
 
-    /** Files of the currently running layer animations, so AnimationManager can watch them as well */
+    /** Files of all currently running layer animations, so AnimationManager can watch them as well */
     animationFilenames() {
-        return this.layerFilenames
+        const filenames = [...this.layerFilenames]
+        for (const nestedStack of this.nestedStacks)
+            filenames.push(...nestedStack.animationFilenames())
+        return filenames
     }
 
 
@@ -242,18 +272,36 @@ export default class LayerStack {
 
         this.loadPresetWhenSelected(layer, animationName, animationControls)
 
-        const layerBox = new PixelBox(this.stackBox)
-        this.zOrderedBoxes.push({box: layerBox, zControl: layer.zControl})
+        //The container is what we z-order, the animation renders one level deeper. This way the nested
+        //stack can re-order everything inside the container, without us undoing that in applyZOrder(),
+        //and without the nested layers ever escaping the containers slot in our own z-order.
+        const layerContainerBox = new PixelBox(this.stackBox)
+        const layerAnimationBox = new PixelBox(layerContainerBox)
+        layerContainerBox.add(layerAnimationBox)
+
+        this.zOrderedBoxes.push({box: layerContainerBox, zControl: layer.zControl})
         this.layerFilenames.push(presetStore.animationFilename(animationName))
 
         try {
-            const promise = new animationClass().run(layerBox, this.scheduler, animationControls)
+            const promise = new animationClass().run(layerAnimationBox, this.scheduler, animationControls)
             //not awaited: a layer usually runs forever. (and run() isnt always async)
             if (typeof promise?.catch === 'function')
                 promise.catch((e) => console.error(`LayerStack: layer ${animationName} failed: `, e))
         } catch (e) {
             console.error(`LayerStack: layer ${animationName} failed: `, e)
         }
+
+        //the layer animation might use layers itself. Its controls are its own root, so its layer
+        //settings are saved as part of the layers controls, just like ours are part of the preset.
+        const nestedStack = new LayerStack(layerContainerBox, layerAnimationBox, this.scheduler, animationControls, this.restartAnimation, this.depth + 1)
+        this.nestedStacks.push(nestedStack)
+        console.log("boom nested")
+        await nestedStack.createLayers()
+
+        //we were removed while the nested stack was loading from disk, and removeLayers() may have
+        //already passed it by, so make sure it doesnt keep running.
+        if (this.removed)
+            nestedStack.removeLayers()
     }
 
 
