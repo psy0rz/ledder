@@ -59,19 +59,20 @@ export default abstract class Display {
     //Accumulation buffers for subpixel filtering, see renderFiltered(). The layer buffers hold
     //premultiplied color (color * weight) and the summed coverage of the layer being accumulated;
     //the frame buffers hold the layers composited over each other so far. The touched-lists keep
-    //the per-frame clearing proportional to the number of lit pixels instead of the display size.
+    //the per-frame clearing proportional to the number of lit pixels instead of the display size;
+    //they can never hold more than one entry per display pixel, so they are preallocated at that
+    //size and used up to their own counter instead of being grown and truncated every frame.
     //Allocated on first use and whenever the display changes size (the preview resizes to whatever
     //the browser asks for), so they always match the current width and height.
+    //Red, green, blue and coverage are interleaved per display pixel rather than kept in four
+    //separate arrays, so accumulating one pixel touches one cache line instead of four.
     private filterBufferPixelCount: number
-    private layerRed: Float64Array
-    private layerGreen: Float64Array
-    private layerBlue: Float64Array
-    private layerCoverage: Float64Array
-    private layerTouched: Array<number>
-    private frameRed: Float64Array
-    private frameGreen: Float64Array
-    private frameBlue: Float64Array
-    private frameTouched: Array<number>
+    private layerData: Float32Array
+    private layerTouched: Int32Array
+    private layerTouchedCount: number
+    private frameData: Float32Array
+    private frameTouched: Int32Array
+    private frameTouchedCount: number
     private frameIsTouched: Uint8Array
     private emitColor: Color
 
@@ -106,15 +107,12 @@ export default abstract class Display {
             return
 
         this.filterBufferPixelCount = pixelCount
-        this.layerRed = new Float64Array(pixelCount)
-        this.layerGreen = new Float64Array(pixelCount)
-        this.layerBlue = new Float64Array(pixelCount)
-        this.layerCoverage = new Float64Array(pixelCount)
-        this.layerTouched = []
-        this.frameRed = new Float64Array(pixelCount)
-        this.frameGreen = new Float64Array(pixelCount)
-        this.frameBlue = new Float64Array(pixelCount)
-        this.frameTouched = []
+        this.layerData = new Float32Array(pixelCount * 4)
+        this.layerTouched = new Int32Array(pixelCount)
+        this.layerTouchedCount = 0
+        this.frameData = new Float32Array(pixelCount * 4)
+        this.frameTouched = new Int32Array(pixelCount)
+        this.frameTouchedCount = 0
         this.frameIsTouched = new Uint8Array(pixelCount)
     }
 
@@ -168,21 +166,32 @@ export default abstract class Display {
     private renderFiltered(container: PixelList) {
         this.allocateFilterBuffers()
 
+        //A layer is only composited once the *next* one starts, so that a container holding a single
+        //layer (by far the common case) never touches the frame buffer at all and can be handed to
+        //the driver straight from the layer buffer, saving a whole pass over the lit pixels.
+        let pendingLayerIsSublist = false
+
         for (const child of container) {
-            if (child instanceof Pixel)
+            if (child instanceof Pixel) {
+                //loose pixels are a layer above the sublist before them, not part of it
+                if (pendingLayerIsSublist) {
+                    this.compositeLayer()
+                    pendingLayerIsSublist = false
+                }
                 this.accumulatePixel(child)
-            else if (child instanceof PixelList) {
-                //the loose pixels before this sublist are a layer below it
+            } else if (child instanceof PixelList) {
                 this.compositeLayer()
                 this.accumulateList(child)
-                this.compositeLayer()
+                pendingLayerIsSublist = true
             }
         }
 
-        //loose pixels after the last sublist
-        this.compositeLayer()
-
-        this.emitFrame()
+        if (this.frameTouchedCount === 0)
+            this.emitLayer()
+        else {
+            this.compositeLayer()
+            this.emitFrame()
+        }
     }
 
     //recursively accumulates a whole layer
@@ -227,22 +236,31 @@ export default abstract class Display {
             return
 
         const offset = x + y * this.width
-        if (this.layerCoverage[offset] === 0)
-            this.layerTouched.push(offset)
+        const slot = offset * 4
+        const layerData = this.layerData
 
-        this.layerRed[offset] += color.r * weight
-        this.layerGreen[offset] += color.g * weight
-        this.layerBlue[offset] += color.b * weight
-        this.layerCoverage[offset] += weight
+        if (layerData[slot + 3] === 0)
+            this.layerTouched[this.layerTouchedCount++] = offset
+
+        layerData[slot] += color.r * weight
+        layerData[slot + 1] += color.g * weight
+        layerData[slot + 2] += color.b * weight
+        layerData[slot + 3] += weight
     }
 
     //alphablends the accumulated layer over the frame so far, and clears the layer
     private compositeLayer() {
-        for (const offset of this.layerTouched) {
-            let coverage = this.layerCoverage[offset]
-            let red = this.layerRed[offset]
-            let green = this.layerGreen[offset]
-            let blue = this.layerBlue[offset]
+        const layerData = this.layerData
+        const frameData = this.frameData
+
+        for (let entry = 0; entry < this.layerTouchedCount; entry++) {
+            const offset = this.layerTouched[entry]
+            const slot = offset * 4
+
+            let coverage = layerData[slot + 3]
+            let red = layerData[slot]
+            let green = layerData[slot + 1]
+            let blue = layerData[slot + 2]
 
             //More than fully covered means opaque pixels of the same layer overlap here. Scaling
             //back to full coverage averages their colors, instead of summing them towards white.
@@ -256,41 +274,75 @@ export default abstract class Display {
             const behind = 1 - coverage
             if (!this.frameIsTouched[offset]) {
                 this.frameIsTouched[offset] = 1
-                this.frameTouched.push(offset)
+                this.frameTouched[this.frameTouchedCount++] = offset
             }
 
-            this.frameRed[offset] = this.frameRed[offset] * behind + red
-            this.frameGreen[offset] = this.frameGreen[offset] * behind + green
-            this.frameBlue[offset] = this.frameBlue[offset] * behind + blue
+            frameData[slot] = frameData[slot] * behind + red
+            frameData[slot + 1] = frameData[slot + 1] * behind + green
+            frameData[slot + 2] = frameData[slot + 2] * behind + blue
 
-            this.layerRed[offset] = 0
-            this.layerGreen[offset] = 0
-            this.layerBlue[offset] = 0
-            this.layerCoverage[offset] = 0
+            layerData[slot] = 0
+            layerData[slot + 1] = 0
+            layerData[slot + 2] = 0
+            layerData[slot + 3] = 0
         }
 
-        this.layerTouched.length = 0
+        this.layerTouchedCount = 0
+    }
+
+    //hands a single accumulated layer straight to the driver, skipping the frame buffer
+    private emitLayer() {
+        const layerData = this.layerData
+        this.emitColor.a = 1
+
+        for (let entry = 0; entry < this.layerTouchedCount; entry++) {
+            const offset = this.layerTouched[entry]
+            const slot = offset * 4
+
+            const coverage = layerData[slot + 3]
+            //see compositeLayer(): overlapping opaque pixels are averaged, not summed
+            const scale = coverage > 1 ? 1 / coverage : 1
+
+            this.emitColor.r = layerData[slot] * scale
+            this.emitColor.g = layerData[slot + 1] * scale
+            this.emitColor.b = layerData[slot + 2] * scale
+
+            const y = ~~(offset / this.width)
+            this.setPixel(offset - y * this.width, y, this.emitColor)
+
+            layerData[slot] = 0
+            layerData[slot + 1] = 0
+            layerData[slot + 2] = 0
+            layerData[slot + 3] = 0
+        }
+
+        this.layerTouchedCount = 0
     }
 
     //hands the composited frame to the driver, one opaque pixel per lit display pixel
     private emitFrame() {
         this.emitColor.a = 1
 
-        for (const offset of this.frameTouched) {
-            this.emitColor.r = this.frameRed[offset]
-            this.emitColor.g = this.frameGreen[offset]
-            this.emitColor.b = this.frameBlue[offset]
+        const frameData = this.frameData
+
+        for (let entry = 0; entry < this.frameTouchedCount; entry++) {
+            const offset = this.frameTouched[entry]
+            const slot = offset * 4
+
+            this.emitColor.r = frameData[slot]
+            this.emitColor.g = frameData[slot + 1]
+            this.emitColor.b = frameData[slot + 2]
 
             const y = ~~(offset / this.width)
             this.setPixel(offset - y * this.width, y, this.emitColor)
 
-            this.frameRed[offset] = 0
-            this.frameGreen[offset] = 0
-            this.frameBlue[offset] = 0
+            frameData[slot] = 0
+            frameData[slot + 1] = 0
+            frameData[slot + 2] = 0
             this.frameIsTouched[offset] = 0
         }
 
-        this.frameTouched.length = 0
+        this.frameTouchedCount = 0
     }
 
     status() {
