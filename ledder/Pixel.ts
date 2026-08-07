@@ -65,7 +65,7 @@ export default class Pixel implements PixelInterface {
 
     //keep pixel inside these x coordinates of box by wrapping (inclusive)
     wrapX(bbox: BoxInterface) {
-        if (this.x < bbox.xMin)
+        if (~~this.x < bbox.xMin)
             this.x += (bbox.xMax - bbox.xMin + 1)
         else if (~~this.x > bbox.xMax) //floor to make rounding errors compatible with display drivers
             this.x -= (bbox.xMax - bbox.xMin + 1)

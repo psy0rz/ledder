@@ -38,8 +38,10 @@ export default class FxSubpixels extends Fx {
 
             //traverse all the source pixels and update target
             sourceList.forEachPixel((p) => {
-                let x = ~~p.x
-                let y = ~~p.y
+                //floor instead of truncate: truncating folds -0.5 onto 0, which would smear pixels
+                //that are just off the left/top edge into the first row/column.
+                let x = Math.floor(p.x)
+                let y = Math.floor(p.y)
 
                 const factorX=p.x-x
                 const factorY=p.y-y
@@ -47,8 +49,13 @@ export default class FxSubpixels extends Fx {
                 const sourceColor = p.color
 
 
+                //Each source pixel spreads over the four display pixels it overlaps. The bounds
+                //checks are per corner because a source pixel can straddle an edge of the target
+                //box, and the source list may lie completely outside it (scrollers keep their text
+                //off screen).
+
                 //left top:
-                if (x<=targetBox.xMax && y<=targetBox.yMax) {
+                if (x>=targetBox.xMin && x<=targetBox.xMax && y>=targetBox.yMin && y<=targetBox.yMax) {
                     const targetColor = targetXY[x][y].color
                     const factor = (1 - factorX) * (1 - factorY)
 
@@ -59,7 +66,7 @@ export default class FxSubpixels extends Fx {
 
                 //right top:
                 x=x+1
-                if (x<=targetBox.xMax && y<=targetBox.yMax) {
+                if (x>=targetBox.xMin && x<=targetBox.xMax && y>=targetBox.yMin && y<=targetBox.yMax) {
                     const targetColor = targetXY[x][y].color
                     const factor = (factorX) * (1 - factorY)
 
@@ -70,7 +77,7 @@ export default class FxSubpixels extends Fx {
 
                 //right bottom:
                 y=y+1
-                if (x<=targetBox.xMax && y<=targetBox.yMax) {
+                if (x>=targetBox.xMin && x<=targetBox.xMax && y>=targetBox.yMin && y<=targetBox.yMax) {
                     const targetColor = targetXY[x][y].color
                     const factor = (factorX) * (factorY)
 
@@ -81,7 +88,7 @@ export default class FxSubpixels extends Fx {
 
                 //left bottom:
                 x=x-1
-                if (x<=targetBox.xMax && y<=targetBox.yMax) {
+                if (x>=targetBox.xMin && x<=targetBox.xMax && y>=targetBox.yMin && y<=targetBox.yMax) {
                     const targetColor = targetXY[x][y].color
                     const factor = (1-factorX) * (factorY)
 

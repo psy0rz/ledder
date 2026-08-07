@@ -140,14 +140,6 @@ export default class Text extends Animator {
                 {id: "vertical", name: "Vertical (bottom to top)"},
             ], true).selected === "horizontal"
 
-            if (scrollGroup.switch("Subpixel filtering", false).enabled) {
-                const subpixelFilter = new FxSubpixels(scheduler, controls)
-                const filteredTextPixels = new PixelBox(box)
-                box.add(filteredTextPixels)
-                subpixelFilter.run(textPixels, filteredTextPixels)
-            } else {
-                box.add(textPixels)
-            }
 
             const showsOnce = scrollGroup.switch('Show one time only', false, true).enabled
 
@@ -199,27 +191,54 @@ export default class Text extends Animator {
             }
             if (beltCopies > 1)
                 textPixels.flatten()
+            textPixels.print()
 
             //distance to travel before the text has completely left the display
             const scrollLengthUntilGone = textLength + boxLength
 
+            const subpixelFilteringEnabled = scrollGroup.switch("Subpixel filtering", false).enabled
+            if (subpixelFilteringEnabled) {
+                const subpixelFilter = new FxSubpixels(scheduler, controls)
+                const filteredTextPixels = new PixelBox(box)
+                box.add(filteredTextPixels)
+                subpixelFilter.run(textPixels, filteredTextPixels)
+            } else {
+                box.add(textPixels)
+            }
+
+
+            //Subpixel filtering renders the fraction between two display pixels, so there the pixels
+            //keep their fractional positions. Without it the display drivers just floor the
+            //coordinates, and moving every pixel by e.g. 0.1 per frame only gives each pixel its own
+            //float rounding error (0.1 is not representable in binary, and the error depends on the
+            //pixel's own coordinate). Coordinates that should land exactly on an integer then end up
+            //just below it and floor a whole pixel too far, tearing the glyphs apart. So without the
+            //filter the fraction is accumulated here and handed to the pixels as whole steps only.
             let scrolled = 0
+            let steppedPixels = 0
             scrollPromise = scheduler.interval(1, () => {
 
-                const step = scrollSpeed.value
-                scrolled = scrolled + step
+                scrolled = scrolled + scrollSpeed.value
 
-                textPixels.forEachPixel((pixel) => {
-                    if (scrollsHorizontally) {
-                        pixel.x = pixel.x - step
-                        if (!showsOnce)
-                            pixel.wrapX(beltBbox)
-                    } else {
-                        pixel.y = pixel.y - step
-                        if (!showsOnce)
-                            pixel.wrapY(beltBbox)
-                    }
-                })
+                let step = scrollSpeed.value
+                if (!subpixelFilteringEnabled) {
+                    step = Math.floor(scrolled) - steppedPixels
+                    steppedPixels = steppedPixels + step
+                }
+
+                if (step) {
+                    textPixels.forEachPixel((pixel) => {
+                        if (scrollsHorizontally) {
+                            pixel.x = pixel.x - step
+                            if (!showsOnce)
+                                pixel.wrapX(beltBbox)
+                        } else {
+                            pixel.y = pixel.y - step
+                            if (!showsOnce)
+                                pixel.wrapY(beltBbox)
+                        }
+                    })
+                }
 
                 if (showsOnce && scrolled >= scrollLengthUntilGone)
                     return false
