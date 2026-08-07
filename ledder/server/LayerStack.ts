@@ -28,7 +28,10 @@ import {presetStore} from "./PresetStore.js"
 //shown when a layer is empty, or when no preset should be applied
 export const NONE = "(none)"
 
+//name of the group with all our layers: the top level has "Layers", a nested stack has "Sublayers",
+//so its clear which stack a layer belongs to when you're looking at a deeply nested control tree.
 const LAYERS_GROUP_NAME = "Layers"
+const SUBLAYERS_GROUP_NAME = "Sublayers"
 
 //we always show one more (empty) layer than the user is actually using, up to this maximum.
 const MAX_LAYERS = 16
@@ -53,6 +56,18 @@ type ZOrderedBox = {
     zControl: ControlValue
 }
 
+//where a nested stack sits in the layer tree, only used to give its controls names the user can follow
+type Nesting = {
+    //how many stacks are above us
+    depth: number
+
+    //numbers of the layers above us, e.g. "1.2." so our own layers become "Layer 1.2.1", "Layer 1.2.2", ...
+    layerNumberPrefix: string
+
+    //the animation this stack adds layers to, e.g. "Fires/Fire"
+    hostAnimationName: string
+}
+
 
 export default class LayerStack {
 
@@ -71,8 +86,8 @@ export default class LayerStack {
     //asks AnimationManager to restart everything (used after loading a preset into a layer)
     private readonly restartAnimation: () => void
 
-    //how many stacks are above us: 0 for the animation the user selected
-    private readonly depth: number
+    //where we are in the layer tree: undefined for the animation the user selected
+    private readonly nesting: Nesting | undefined
 
     private zOrderedBoxes: Array<ZOrderedBox>
     private layerFilenames: Array<string>
@@ -83,13 +98,13 @@ export default class LayerStack {
     //set by removeLayers(), so async stuff thats still running cannot do any harm anymore
     private removed: boolean
 
-    constructor(parentBox: PixelBox, animationBox: PixelBox, scheduler: Scheduler, rootControls: ControlGroup, restartAnimation: () => void, depth: number = 0) {
+    constructor(parentBox: PixelBox, animationBox: PixelBox, scheduler: Scheduler, rootControls: ControlGroup, restartAnimation: () => void, nesting?: Nesting) {
         this.parentBox = parentBox
         this.animationBox = animationBox
         this.scheduler = scheduler
         this.rootControls = rootControls
         this.restartAnimation = restartAnimation
-        this.depth = depth
+        this.nesting = nesting
 
         this.zOrderedBoxes = []
         this.layerFilenames = []
@@ -107,7 +122,7 @@ export default class LayerStack {
 
         //too deeply nested: dont add layer controls at all. We never attach our stackBox, so the
         //animation just keeps rendering from the parent box.
-        if (this.depth >= MAX_DEPTH)
+        if (this.nesting !== undefined && this.nesting.depth >= MAX_DEPTH)
             return
 
         //normally called once per instance, but dont accumulate boxes/layers if its not
@@ -116,12 +131,15 @@ export default class LayerStack {
         this.nestedStacks = []
 
         //restartOnChange only applies to the switch of the group itself, so muting/unmuting all layers restarts.
-        const layersControls = this.rootControls.group(LAYERS_GROUP_NAME, true, true, true, true)
+        const layersGroupName = (this.nesting === undefined) ? LAYERS_GROUP_NAME : SUBLAYERS_GROUP_NAME
+        const layersControls = this.rootControls.group(layersGroupName, true, true, true, true)
 
-        //the selected animation is just another z-ordered box, so layers can be put behind it as well
+        //the animation we add layers to is just another z-ordered box, so layers can be put behind it as well.
+        //Naming it after the animation makes clear that this only orders it against our own layers.
+        const hostZName = (this.nesting === undefined) ? "Z of animation" : `Z of ${this.nesting.hostAnimationName}`
         this.zOrderedBoxes.push({
             box: this.animationBox,
-            zControl: layersControls.value("Z of animation", 0, -100, 100, 1)
+            zControl: layersControls.value(hostZName, 0, -100, 100, 1)
         })
 
         //note that creating the controls also loads their values from the preset, which is how we
@@ -138,7 +156,7 @@ export default class LayerStack {
                 lastUsedLayerNr = layer.layerNr
 
         for (let layerNr = lastUsedLayerNr + 2; layerNr <= MAX_LAYERS; layerNr++)
-            layersControls.remove(layerGroupName(layerNr))
+            layersControls.remove(this.layerGroupName(layerNr))
         layers = layers.slice(0, lastUsedLayerNr + 1)
 
         //only show the layer settings unfolded when this preset actually uses layers
@@ -209,11 +227,32 @@ export default class LayerStack {
     }
 
 
+    /**
+     * Name of the group of one of our layers. Nested stacks number their layers after the layer they
+     * live in ("Layer 2.1"), so you can tell from the name alone which stack a layer belongs to.
+     */
+    private layerGroupName(layerNr: number) {
+        const prefix = (this.nesting === undefined) ? "" : this.nesting.layerNumberPrefix
+        return `Layer ${prefix}${layerNr}`
+    }
+
+
+    /** How a nested stack inside one of our layers should number and name its own controls */
+    private nestingOfLayer(layer: LayerControls, animationName: string): Nesting {
+        const prefix = (this.nesting === undefined) ? "" : this.nesting.layerNumberPrefix
+        return {
+            depth: (this.nesting === undefined) ? 1 : this.nesting.depth + 1,
+            layerNumberPrefix: `${prefix}${layer.layerNr}.`,
+            hostAnimationName: animationName,
+        }
+    }
+
+
     /** Get or create the controls of one layer */
     private createLayerControls(layersControls: ControlGroup, layerNr: number, animations: Array<AnimationListItemType>): LayerControls {
 
         //restartOnChange only applies to the switch of the group itself, so muting/unmuting this layer restarts.
-        const layerGroup = layersControls.group(layerGroupName(layerNr), true, false, true, true)
+        const layerGroup = layersControls.group(this.layerGroupName(layerNr), true, false, true, true)
 
         //NOTE: controls persist between restarts, so the choices of an existing control can be
         //outdated: new animations may have appeared, and the presets depend on the selected animation.
@@ -293,7 +332,7 @@ export default class LayerStack {
 
         //the layer animation might use layers itself. Its controls are its own root, so its layer
         //settings are saved as part of the layers controls, just like ours are part of the preset.
-        const nestedStack = new LayerStack(layerContainerBox, layerAnimationBox, this.scheduler, animationControls, this.restartAnimation, this.depth + 1)
+        const nestedStack = new LayerStack(layerContainerBox, layerAnimationBox, this.scheduler, animationControls, this.restartAnimation, this.nestingOfLayer(layer, animationName))
         this.nestedStacks.push(nestedStack)
         console.log("boom nested")
         await nestedStack.createLayers()
@@ -337,10 +376,6 @@ export default class LayerStack {
     }
 }
 
-
-function layerGroupName(layerNr: number) {
-    return `Layer ${layerNr}`
-}
 
 function choiceExists(choices: Choices, id: string) {
     return choices.some((choice) => choice.id === id)
