@@ -1,0 +1,278 @@
+{
+ "title": "",
+ "description": "",
+ "values": {
+  "Image URL": {
+   "text": "https://media.tenor.com/xo0jvr4bbTMAAAAi/rick-astley-rickroll.gif"
+  },
+  "Fractal interval": {
+   "value": 14
+  },
+  "Preset": {
+   "selected": "3"
+  },
+  "Movie interval": {
+   "value": 4
+  },
+  "Movie interval randomizer": {
+   "value": 0
+  },
+  "Rotate interval": {
+   "value": 2
+  },
+  "Rotate interval randomizer": {
+   "value": 0
+  },
+  "Rotate X step": {
+   "value": 0
+  },
+  "Rotate Y step": {
+   "value": 0
+  },
+  "animation control": {
+   "Movie interval": {
+    "value": 1
+   },
+   "Movie interval randomizer": {
+    "value": 0
+   },
+   "Rotate interval": {
+    "value": 3
+   },
+   "Rotate interval randomizer": {
+    "value": 9
+   },
+   "Rotate X step": {
+    "value": 0
+   },
+   "Rotate Y step": {
+    "value": 0
+   },
+   "delay multiplier": {
+    "value": 1
+   },
+   "Enabled": {
+    "enabled": true
+   }
+  },
+  "fit": {
+   "selected": "inside"
+  },
+  "Enabled": {
+   "enabled": true
+  },
+  "Layers": {
+   "Z of animation": {
+    "value": -17
+   },
+   "Layer 1": {
+    "Animation": {
+     "selected": "Text"
+    },
+    "Preset": {
+     "selected": "starwars"
+    },
+    "Z": {
+     "value": 10
+    },
+    "Enabled": {
+     "enabled": true
+    },
+    "Text": {
+     "Text": {
+      "text": "Never gonna give you up\n\nNever gonna let you down\n\nNever gonna run around and desert you\n\nNever gonna make you cry\n\nNever gonna say goodbye\n\nNever gonna tell a lie and hurt you\n"
+     },
+     "Text color": {
+      "r": 255,
+      "g": 232,
+      "b": 0,
+      "a": 1
+     },
+     "Text anchor position": {
+      "X origin": {
+       "selected": "center"
+      },
+      "X offset": {
+       "value": 0
+      },
+      "Y origin": {
+       "selected": "middle"
+      },
+      "Y offset": {
+       "value": 0
+      },
+      "Show anchor": {
+       "enabled": false
+      },
+      "Enabled": {
+       "enabled": true
+      }
+     },
+     "Horizontal text align": {
+      "selected": "centered"
+     },
+     "Vertical text align": {
+      "selected": "middle"
+     },
+     "Wrap text": {
+      "enabled": true
+     },
+     "Font": {
+      "selected": "C64"
+     },
+     "Font height": {
+      "value": 0
+     },
+     "Font width": {
+      "value": 0
+     },
+     "Wobble": {
+      "Enabled": {
+       "enabled": false
+      }
+     },
+     "Scrolling": {
+      "Scroll Speed": {
+       "value": 1
+      },
+      "FPS": {
+       "value": 60
+      },
+      "Scroll direction": {
+       "selected": "vertical"
+      },
+      "Subpixel filtering": {
+       "enabled": false
+      },
+      "Show one time only": {
+       "enabled": false
+      },
+      "Gap": {
+       "value": 16
+      },
+      "Enabled": {
+       "enabled": true
+      }
+     },
+     "Flames": {
+      "Enabled": {
+       "enabled": false
+      }
+     },
+     "Twinkle": {
+      "Enabled": {
+       "enabled": false
+      }
+     },
+     "Color pattern": {
+      "Enabled": {
+       "enabled": false
+      }
+     },
+     "Cursor": {
+      "Enabled": {
+       "enabled": false
+      },
+      "X offset": {
+       "value": 0
+      },
+      "Y offset": {
+       "value": 1
+      },
+      "Height": {
+       "value": 6
+      },
+      "Width": {
+       "value": 5
+      },
+      "On time": {
+       "value": 30
+      },
+      "Fade out time": {
+       "value": 10
+      },
+      "Fade out time randomizer": {
+       "value": 0
+      },
+      "Off time": {
+       "value": 30
+      }
+     },
+     "Layers": {
+      "Z of animation": {
+       "value": 0
+      },
+      "Layer 1": {
+       "Animation": {
+        "selected": "Components/Starfield"
+       },
+       "Preset": {
+        "selected": "(none)"
+       },
+       "Z": {
+        "value": -12
+       },
+       "Enabled": {
+        "enabled": true
+       },
+       "Components/Starfield": {
+        "Base speed": {
+         "value": 0.001
+        },
+        "Acceleration": {
+         "value": 0.03
+        },
+        "Star offset": {
+         "value": 0.1
+        },
+        "Creation interval": {
+         "value": 5
+        },
+        "Enabled": {
+         "enabled": true
+        }
+       }
+      },
+      "Enabled": {
+       "enabled": true
+      },
+      "Layer 2": {
+       "Animation": {
+        "selected": "(none)"
+       },
+       "Preset": {
+        "selected": "(none)"
+       },
+       "Z": {
+        "value": 20
+       },
+       "Enabled": {
+        "enabled": true
+       }
+      }
+     },
+     "Enabled": {
+      "enabled": true
+     }
+    }
+   },
+   "Layer 2": {
+    "Animation": {
+     "selected": "(none)"
+    },
+    "Preset": {
+     "selected": "(none)"
+    },
+    "Z": {
+     "value": 20
+    },
+    "Enabled": {
+     "enabled": true
+    }
+   },
+   "Enabled": {
+    "enabled": true
+   }
+  }
+ }
+}
