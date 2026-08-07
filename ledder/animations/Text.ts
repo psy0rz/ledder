@@ -11,7 +11,6 @@ import FxFlames from "../fx/FxFlames.js"
 import Animator from "../Animator.js"
 import FxTwinkle from "../fx/FxTwinkle.js"
 import FxColorPattern from "../fx/FxColorPattern.js"
-import FxSubpixels from "../fx/FxSubpixels.js"
 import {interpretMacro} from "../macros.js"
 import FxWobble from "../fx/FxWobble.js";
 import {colorRed, colorWhite} from "../Colors.js";
@@ -191,40 +190,31 @@ export default class Text extends Animator {
             }
             if (beltCopies > 1)
                 textPixels.flatten()
-            textPixels.print()
 
             //distance to travel before the text has completely left the display
             const scrollLengthUntilGone = textLength + boxLength
 
-            const subpixelFilteringEnabled = scrollGroup.switch("Subpixel filtering", false).enabled
-            if (subpixelFilteringEnabled) {
-                const subpixelFilter = new FxSubpixels(scheduler, controls)
-                const filteredTextPixels = new PixelBox(box)
-                box.add(filteredTextPixels)
-                subpixelFilter.run(textPixels, filteredTextPixels)
-            } else {
-                box.add(textPixels)
-            }
+            box.add(textPixels)
 
+            //Pixels are moved in whole 1/256ths of a pixel, because unlike e.g. 0.1 those are exactly
+            //representable in binary: the coordinates stay exact however long the animation runs.
+            //Moving by the raw speed instead would give every pixel its own rounding error, growing
+            //with every frame and differing per pixel because it depends on the pixel's own
+            //coordinate. Coordinates that should land exactly on an integer then end up just below
+            //it and floor a whole pixel too far, tearing the glyphs apart.
+            //The quantization error itself doesn't accumulate (it's taken out of the next step), so
+            //the average scroll speed still comes out exactly as set.
+            const stepsPerPixel = 256
 
-            //Subpixel filtering renders the fraction between two display pixels, so there the pixels
-            //keep their fractional positions. Without it the display drivers just floor the
-            //coordinates, and moving every pixel by e.g. 0.1 per frame only gives each pixel its own
-            //float rounding error (0.1 is not representable in binary, and the error depends on the
-            //pixel's own coordinate). Coordinates that should land exactly on an integer then end up
-            //just below it and floor a whole pixel too far, tearing the glyphs apart. So without the
-            //filter the fraction is accumulated here and handed to the pixels as whole steps only.
             let scrolled = 0
-            let steppedPixels = 0
+            let steppedSteps = 0
             scrollPromise = scheduler.interval(1, () => {
 
                 scrolled = scrolled + scrollSpeed.value
 
-                let step = scrollSpeed.value
-                if (!subpixelFilteringEnabled) {
-                    step = Math.floor(scrolled) - steppedPixels
-                    steppedPixels = steppedPixels + step
-                }
+                const wantedSteps = Math.round(scrolled * stepsPerPixel)
+                const step = (wantedSteps - steppedSteps) / stepsPerPixel
+                steppedSteps = wantedSteps
 
                 if (step) {
                     textPixels.forEachPixel((pixel) => {
