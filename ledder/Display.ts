@@ -11,6 +11,17 @@ import type ControlSwitch from "./ControlSwitch.js";
 //also swallows the tiny float drift that pixels pick up from being moved by fractions repeatedly.
 const minVisibleWeight = 1 / 512
 
+//Every display pixel keeps one accumulator per direction a contribution can arrive from: from the
+//pixel itself, plus from each of the 8 pixels around it. See renderFiltered().
+const bucketsPerPixel = 9
+const floatsPerBucket = 4 //red, green, blue, coverage
+const floatsPerPixel = bucketsPerPixel * floatsPerBucket
+
+//direction towards the source pixels home (-1, 0 or 1 per axis) -> accumulator index
+function bucketIndex(dx: number, dy: number) {
+    return (dy + 1) * 3 + (dx + 1)
+}
+
 /**
  * The display renders a pixelcontainer to an actual display.
  * The subclasses are actual implementations for different display types.
@@ -56,24 +67,23 @@ export default abstract class Display {
     public subpixelFilteringControl: ControlSwitch
     protected gammaMapper: GammaMapper
 
-    //Accumulation buffers for subpixel filtering, see renderFiltered(). The layer buffers hold
-    //premultiplied color (color * weight) and the summed coverage of the layer being accumulated;
-    //the frame buffers hold the layers composited over each other so far. The touched-lists keep
-    //the per-frame clearing proportional to the number of lit pixels instead of the display size;
-    //they can never hold more than one entry per display pixel, so they are preallocated at that
-    //size and used up to their own counter instead of being grown and truncated every frame.
+    //Accumulation buffers for subpixel filtering, see renderFiltered(). bucketData holds the 9
+    //accumulators of every display pixel, each with premultiplied color (color * coverage) and the
+    //coverage itself. The touched-list keeps the per-frame clearing proportional to the number of lit
+    //pixels instead of the display size; it can never hold more than one entry per display pixel, so
+    //it is preallocated at that size and used up to its own counter instead of being grown and
+    //truncated every frame.
     //Allocated on first use and whenever the display changes size (the preview resizes to whatever
     //the browser asks for), so they always match the current width and height.
-    //Red, green, blue and coverage are interleaved per display pixel rather than kept in four
-    //separate arrays, so accumulating one pixel touches one cache line instead of four.
+    //The accumulators of one display pixel are interleaved rather than kept in separate arrays, so
+    //emitting a pixel walks one stretch of memory instead of nine. Most pixels only ever get
+    //contributions from one or two directions, so touchedBuckets holds a bit per accumulator and
+    //emitting skips the ones that were never written, which keeps it off the untouched cache lines.
     private filterBufferPixelCount: number
-    private layerData: Float32Array
-    private layerTouched: Int32Array
-    private layerTouchedCount: number
-    private frameData: Float32Array
-    private frameTouched: Int32Array
-    private frameTouchedCount: number
-    private frameIsTouched: Uint8Array
+    private bucketData: Float32Array
+    private touchedPixels: Int32Array
+    private touchedPixelCount: number
+    private touchedBuckets: Uint16Array
     private emitColor: Color
 
     protected constructor(width, height) {
@@ -107,13 +117,10 @@ export default abstract class Display {
             return
 
         this.filterBufferPixelCount = pixelCount
-        this.layerData = new Float32Array(pixelCount * 4)
-        this.layerTouched = new Int32Array(pixelCount)
-        this.layerTouchedCount = 0
-        this.frameData = new Float32Array(pixelCount * 4)
-        this.frameTouched = new Int32Array(pixelCount)
-        this.frameTouchedCount = 0
-        this.frameIsTouched = new Uint8Array(pixelCount)
+        this.bucketData = new Float32Array(pixelCount * floatsPerPixel)
+        this.touchedPixels = new Int32Array(pixelCount)
+        this.touchedPixelCount = 0
+        this.touchedBuckets = new Uint16Array(pixelCount)
     }
 
     //bbox of a display is the whole screen
@@ -157,44 +164,32 @@ export default abstract class Display {
      * partly on the same display pixel, and blending them would leave the inside of a solid shape
      * dimmer than it is (down to 75% at half a pixel offset), so it would pulse while scrolling.
      *
-     * Adding is only correct within one layer though, otherwise content stops covering what is
-     * behind it. So every sublist directly under the rendered container is a layer of its own: it is
-     * accumulated on its own and then alphablended over the result of the previous layers, which
-     * keeps the existing behaviour between layers. Loose pixels directly under the container share
-     * one layer with the loose pixels next to them.
+     * Adding is only correct for content that lies next to each other though, otherwise content stops
+     * covering what is behind it. Both cases look the same once you only count *how much* of a
+     * display pixel is covered, so we also keep track of *where* inside it each contribution lands.
+     *
+     * A source pixel is rounded to a home display pixel, which leaves it at most half a pixel off, so
+     * it can only ever spill into the 8 pixels directly around that home. Every display pixel
+     * therefore has 9 accumulators, one per direction a contribution can arrive from, and that
+     * direction tells us which part of the pixel gets covered: a contribution arriving from the left
+     * covers the left edge, one from the home pixel itself covers the middle, and so on.
+     * Contributions landing in the same accumulator cover the same part, so they overlap and are
+     * alphablended in draw order, letting the last one win. Contributions in different accumulators
+     * lie next to each other and are added. Draw order is therefore respected at every depth of the
+     * tree, exactly like renderDirect() does, and sublists need no special treatment.
+     *
+     * Two shapes with a *different* subpixel offset can still overlap while landing in different
+     * accumulators. Their coverage then adds up to more than the whole pixel and emitPixels() scales
+     * it back, which averages them instead of letting the front one occlude. All pixels of one shape
+     * share the same offset, so this only shows up where independently positioned content overlaps.
      */
     private renderFiltered(container: PixelList) {
         this.allocateFilterBuffers()
-
-        //A layer is only composited once the *next* one starts, so that a container holding a single
-        //layer (by far the common case) never touches the frame buffer at all and can be handed to
-        //the driver straight from the layer buffer, saving a whole pass over the lit pixels.
-        let pendingLayerIsSublist = false
-
-        for (const child of container) {
-            if (child instanceof Pixel) {
-                //loose pixels are a layer above the sublist before them, not part of it
-                if (pendingLayerIsSublist) {
-                    this.compositeLayer()
-                    pendingLayerIsSublist = false
-                }
-                this.accumulatePixel(child)
-            } else if (child instanceof PixelList) {
-                this.compositeLayer()
-                this.accumulateList(child)
-                pendingLayerIsSublist = true
-            }
-        }
-
-        if (this.frameTouchedCount === 0)
-            this.emitLayer()
-        else {
-            this.compositeLayer()
-            this.emitFrame()
-        }
+        this.accumulateList(container)
+        this.emitPixels()
     }
 
-    //recursively accumulates a whole layer
+    //recursively accumulates the whole pixeltree, in draw order
     private accumulateList(container: PixelList) {
         for (const p of container) {
             if (p instanceof Pixel)
@@ -204,145 +199,117 @@ export default abstract class Display {
         }
     }
 
+
     //spreads one pixel over the (up to four) display pixels it overlaps
     private accumulatePixel(p: Pixel) {
         if (p.color.a === 0)
             return
 
-        //floor instead of truncate, so a pixel just off the left or top edge stays off it
-        const left = Math.floor(p.x)
-        const top = Math.floor(p.y)
-        const rightPart = p.x - left
-        const bottomPart = p.y - top
-        const leftPart = 1 - rightPart
-        const topPart = 1 - bottomPart
+        //rounding to a home pixel keeps the offset within half a pixel, so a pixel never spills
+        //further than its direct neighbours
+        const homeX = Math.round(p.x)
+        const homeY = Math.round(p.y)
+        const offsetX = p.x - homeX
+        const offsetY = p.y - homeY
 
-        this.accumulateContribution(left, top, p.color, leftPart * topPart)
-        if (rightPart)
-            this.accumulateContribution(left + 1, top, p.color, rightPart * topPart)
-        if (bottomPart) {
-            this.accumulateContribution(left, top + 1, p.color, leftPart * bottomPart)
-            if (rightPart)
-                this.accumulateContribution(left + 1, top + 1, p.color, rightPart * bottomPart)
+        const spillX = Math.sign(offsetX)
+        const spillY = Math.sign(offsetY)
+        const spillPartX = Math.abs(offsetX)
+        const spillPartY = Math.abs(offsetY)
+        const homePartX = 1 - spillPartX
+        const homePartY = 1 - spillPartY
+
+        //the direction is seen from the display pixel, so it points back at the home pixel
+        this.accumulateContribution(homeX, homeY, bucketIndex(0, 0), p.color, homePartX * homePartY)
+
+        if (spillPartX)
+            this.accumulateContribution(homeX + spillX, homeY, bucketIndex(-spillX, 0), p.color, spillPartX * homePartY)
+
+        if (spillPartY) {
+            this.accumulateContribution(homeX, homeY + spillY, bucketIndex(0, -spillY), p.color, homePartX * spillPartY)
+            if (spillPartX)
+                this.accumulateContribution(homeX + spillX, homeY + spillY, bucketIndex(-spillX, -spillY), p.color, spillPartX * spillPartY)
         }
     }
 
-    private accumulateContribution(x: number, y: number, color: ColorInterface, overlap: number) {
-        const weight = overlap * color.a
-        if (weight < minVisibleWeight)
+    private accumulateContribution(x: number, y: number, bucket: number, color: ColorInterface, overlap: number) {
+        //how much of the display pixel this contribution covers opaquely
+        const coverage = overlap * color.a
+        if (coverage < minVisibleWeight)
             return
 
         if (x < 0 || y < 0 || x >= this.width || y >= this.height)
             return
 
-        const offset = x + y * this.width
-        const slot = offset * 4
-        const layerData = this.layerData
+        const pixelOffset = x + y * this.width
+        const wasTouched = this.touchedBuckets[pixelOffset]
+        if (wasTouched === 0)
+            this.touchedPixels[this.touchedPixelCount++] = pixelOffset
+        this.touchedBuckets[pixelOffset] = wasTouched | (1 << bucket)
 
-        if (layerData[slot + 3] === 0)
-            this.layerTouched[this.layerTouchedCount++] = offset
+        //the same accumulator means the same part of the display pixel, so this contribution covers
+        //whatever was drawn there before it
+        const slot = pixelOffset * floatsPerPixel + bucket * floatsPerBucket
+        const bucketData = this.bucketData
+        const behind = 1 - coverage
 
-        layerData[slot] += color.r * weight
-        layerData[slot + 1] += color.g * weight
-        layerData[slot + 2] += color.b * weight
-        layerData[slot + 3] += weight
+        bucketData[slot] = bucketData[slot] * behind + color.r * coverage
+        bucketData[slot + 1] = bucketData[slot + 1] * behind + color.g * coverage
+        bucketData[slot + 2] = bucketData[slot + 2] * behind + color.b * coverage
+        bucketData[slot + 3] = bucketData[slot + 3] * behind + coverage
     }
 
-    //alphablends the accumulated layer over the frame so far, and clears the layer
-    private compositeLayer() {
-        const layerData = this.layerData
-        const frameData = this.frameData
+    //hands the accumulated pixels to the driver, one opaque pixel per lit display pixel, and clears
+    //the accumulators again
+    private emitPixels() {
+        const bucketData = this.bucketData
+        this.emitColor.a = 1
 
-        for (let entry = 0; entry < this.layerTouchedCount; entry++) {
-            const offset = this.layerTouched[entry]
-            const slot = offset * 4
+        for (let entry = 0; entry < this.touchedPixelCount; entry++) {
+            const pixelOffset = this.touchedPixels[entry]
+            const firstSlot = pixelOffset * floatsPerPixel
 
-            let coverage = layerData[slot + 3]
-            let red = layerData[slot]
-            let green = layerData[slot + 1]
-            let blue = layerData[slot + 2]
+            //the accumulators hold different parts of the display pixel, so they add up
+            let red = 0
+            let green = 0
+            let blue = 0
+            let coverage = 0
+            for (let remainingBuckets = this.touchedBuckets[pixelOffset]; remainingBuckets !== 0;) {
+                //take the lowest bucket thats still set, and clear it from the mask
+                const lowestBucket = remainingBuckets & -remainingBuckets
+                remainingBuckets = remainingBuckets ^ lowestBucket
 
-            //More than fully covered means opaque pixels of the same layer overlap here. Scaling
-            //back to full coverage averages their colors, instead of summing them towards white.
+                const slot = firstSlot + (31 - Math.clz32(lowestBucket)) * floatsPerBucket
+                red += bucketData[slot]
+                green += bucketData[slot + 1]
+                blue += bucketData[slot + 2]
+                coverage += bucketData[slot + 3]
+
+                bucketData[slot] = 0
+                bucketData[slot + 1] = 0
+                bucketData[slot + 2] = 0
+                bucketData[slot + 3] = 0
+            }
+
+            //More than fully covered means content with different subpixel offsets overlaps here.
+            //Scaling back to full coverage averages their colors, instead of summing them towards white.
             if (coverage > 1) {
                 red = red / coverage
                 green = green / coverage
                 blue = blue / coverage
-                coverage = 1
             }
 
-            const behind = 1 - coverage
-            if (!this.frameIsTouched[offset]) {
-                this.frameIsTouched[offset] = 1
-                this.frameTouched[this.frameTouchedCount++] = offset
-            }
+            this.emitColor.r = red
+            this.emitColor.g = green
+            this.emitColor.b = blue
 
-            frameData[slot] = frameData[slot] * behind + red
-            frameData[slot + 1] = frameData[slot + 1] * behind + green
-            frameData[slot + 2] = frameData[slot + 2] * behind + blue
+            const y = ~~(pixelOffset / this.width)
+            this.setPixel(pixelOffset - y * this.width, y, this.emitColor)
 
-            layerData[slot] = 0
-            layerData[slot + 1] = 0
-            layerData[slot + 2] = 0
-            layerData[slot + 3] = 0
+            this.touchedBuckets[pixelOffset] = 0
         }
 
-        this.layerTouchedCount = 0
-    }
-
-    //hands a single accumulated layer straight to the driver, skipping the frame buffer
-    private emitLayer() {
-        const layerData = this.layerData
-        this.emitColor.a = 1
-
-        for (let entry = 0; entry < this.layerTouchedCount; entry++) {
-            const offset = this.layerTouched[entry]
-            const slot = offset * 4
-
-            const coverage = layerData[slot + 3]
-            //see compositeLayer(): overlapping opaque pixels are averaged, not summed
-            const scale = coverage > 1 ? 1 / coverage : 1
-
-            this.emitColor.r = layerData[slot] * scale
-            this.emitColor.g = layerData[slot + 1] * scale
-            this.emitColor.b = layerData[slot + 2] * scale
-
-            const y = ~~(offset / this.width)
-            this.setPixel(offset - y * this.width, y, this.emitColor)
-
-            layerData[slot] = 0
-            layerData[slot + 1] = 0
-            layerData[slot + 2] = 0
-            layerData[slot + 3] = 0
-        }
-
-        this.layerTouchedCount = 0
-    }
-
-    //hands the composited frame to the driver, one opaque pixel per lit display pixel
-    private emitFrame() {
-        this.emitColor.a = 1
-
-        const frameData = this.frameData
-
-        for (let entry = 0; entry < this.frameTouchedCount; entry++) {
-            const offset = this.frameTouched[entry]
-            const slot = offset * 4
-
-            this.emitColor.r = frameData[slot]
-            this.emitColor.g = frameData[slot + 1]
-            this.emitColor.b = frameData[slot + 2]
-
-            const y = ~~(offset / this.width)
-            this.setPixel(offset - y * this.width, y, this.emitColor)
-
-            frameData[slot] = 0
-            frameData[slot + 1] = 0
-            frameData[slot + 2] = 0
-            this.frameIsTouched[offset] = 0
-        }
-
-        this.frameTouchedCount = 0
+        this.touchedPixelCount = 0
     }
 
     status() {
