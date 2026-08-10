@@ -93,7 +93,7 @@ export default abstract class Display {
         this.settingsControl = new ControlGroup('Display settings')
         this.descriptionControl = this.settingsControl.input('Description', 'Display')
         this.gammaMapper = new GammaMapper(this.settingsControl)
-        this.subpixelFilteringControl = this.settingsControl.switch('Subpixel filtering', false, false)
+        this.subpixelFilteringControl = this.settingsControl.switch('Subpixel filtering', true, false)
 
         this.filterBufferPixelCount = 0
         this.emitColor = new Color(0, 0, 0, 1)
