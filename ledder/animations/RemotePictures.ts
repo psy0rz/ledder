@@ -1,22 +1,40 @@
 import PixelBox from "../PixelBox.js"
 import sharp from "sharp"
-import drawAnimatedImage from "../draw/DrawAnimatedImage.js"
-import type {ImgAnimationFrames} from "../draw/DrawAnimatedImage.js"
+import drawAnimatedImage, {ImgAnimationFrames} from "../draw/DrawAnimatedImage.js"
+import type {PlainAnimationFrames} from "../draw/DrawAnimatedImage.js"
 import Scheduler from "../Scheduler.js"
 import ControlGroup from "../ControlGroup.js"
 import Animator from "../Animator.js"
 import {NodeFetchCache, FileSystemCache, cacheStrategies} from "node-fetch-cache"
+import {createHash} from "crypto"
+import {mkdir, readFile, writeFile} from "fs/promises"
 
-//Remote images are cached on disk, so restarting the animation (which happens on every control change)
-//doesnt refetch them. The ttl makes sure images that update at the source (weather radar) still refresh.
-const cacheTtlMs = 60 * 60 * 1000
+const logPrefix = "RemotePictures:"
 
+//the downloaded image files are cached on disk (raw bytes, one file per url), so restarting the
+//animation (which happens on every control change) doesnt refetch them.
 const fetchImage = NodeFetchCache.create({
-    cache: new FileSystemCache({cacheDirectory: ".cache/remote-pictures", ttl: cacheTtlMs}),
+    cache: new FileSystemCache({cacheDirectory: ".cache/remote-pictures"}),
 
     //never cache 404s and other error responses, they would stay in the cache for the whole ttl
     shouldCacheResponse: cacheStrategies.cacheOkayOnly
 })
+
+//Decoding is by far the slowest part: sharp decodes every frame of an animation at full resolution
+//(tens of megapixels for a big gif) and we keep only a few hundred pixels of it. Skipping the download
+//is not enough, so we also cache the decoded frames, keyed by everything that changes the result.
+//Note that the cached pixels are shared between every animation using them, so treat them as read-only.
+const decodedImageDiskCacheDirectory = ".cache/remote-pictures-decoded"
+const maxCachedImagesInMemory = 100
+
+type CachedImage = {
+    //the promise, not the result: restarting while a load is still running reuses that same load
+    framesPromise: Promise<ImgAnimationFrames>
+    decodedAtMs: number
+}
+
+//in least-recently-used order, so the first entry is the one to drop
+const decodedImageMemoryCache = new Map<string, CachedImage>()
 
 //how the image is fitted into the display when its aspect ratio doesnt match: crop it, letterbox it, stretch it, ...
 //https://github.com/lovell/sharp/blob/main/docs/api-resize.md
@@ -33,14 +51,21 @@ const defaultImageUrl = "https://api.buienradar.nl/image/1.0/RadarMapNL?w=256&h=
 
 export default class RemotePictures extends Animator {
 
-    /** Download the image and decode it into pixel frames that fit imageBox */
-    private async loadImageFrames(imageUrl: string, imageBox: PixelBox, resizeFit: keyof sharp.FitEnum): Promise<ImgAnimationFrames> {
+    /** Download the image and decode it into pixel frames that fit imageBox. ttlMs undefined means cache forever. */
+    private async loadImageFrames(imageUrl: string, imageBox: PixelBox, resizeFit: keyof sharp.FitEnum, ttlMs: number | undefined): Promise<ImgAnimationFrames> {
 
-        const response = await fetchImage(imageUrl)
+        console.log(logPrefix, "downloading", imageUrl)
+
+        //ttl is passed per-request, so the user can change it via the control without recreating fetchImage
+        const response = await fetchImage(imageUrl, {}, {
+            cache: new FileSystemCache({cacheDirectory: ".cache/remote-pictures", ttl: ttlMs})
+        })
         if (!response.ok)
             throw new Error(`Could not fetch ${imageUrl}: ${response.status} ${response.statusText}`)
 
         const imageBuffer = Buffer.from(await response.arrayBuffer())
+
+        console.log(logPrefix, "decoding", imageUrl)
         const sourceImage = sharp(imageBuffer, {animated: true})
 
         //read the frame delays from the source: after resizing sharp reports the input metadata anyway
@@ -57,7 +82,74 @@ export default class RemotePictures extends Animator {
         if (sourceMetadata.delay)
             frames.setFrameDelaysMs(sourceMetadata.delay)
 
+        console.log(logPrefix, "ready", imageUrl)
         return frames
+    }
+
+    private decodedImageDiskCachePath(cacheKey: string): string {
+        return `${decodedImageDiskCacheDirectory}/${createHash("sha256").update(cacheKey).digest("hex")}.json`
+    }
+
+    /** Read previously decoded frames for cacheKey from disk, if present and not older than ttlMs (undefined = cache forever) */
+    private async readDecodedImageFromDisk(cacheKey: string, ttlMs: number | undefined): Promise<ImgAnimationFrames | undefined> {
+        try {
+            const diskCacheFile = JSON.parse(await readFile(this.decodedImageDiskCachePath(cacheKey), "utf8"))
+            if (ttlMs !== undefined && (Date.now() - diskCacheFile.decodedAtMs) >= ttlMs)
+                return undefined
+
+            return ImgAnimationFrames.fromPlainObject(diskCacheFile.frames as PlainAnimationFrames)
+        } catch (e) {
+            //no cache file, corrupt cache file, ... just treat it as a cache miss
+            return undefined
+        }
+    }
+
+    private async writeDecodedImageToDisk(cacheKey: string, frames: ImgAnimationFrames) {
+        try {
+            await mkdir(decodedImageDiskCacheDirectory, {recursive: true})
+            const diskCacheFile = {decodedAtMs: Date.now(), frames: frames.toPlainObject()}
+            await writeFile(this.decodedImageDiskCachePath(cacheKey), JSON.stringify(diskCacheFile))
+        } catch (e) {
+            console.error(logPrefix, "failed to write decoded image cache:", e.message)
+        }
+    }
+
+    /** The decoded frames of this image, from the memory or disk cache when we decoded them before.
+     * ttlMs undefined means cache forever. */
+    private cachedImageFrames(imageUrl: string, imageBox: PixelBox, resizeFit: keyof sharp.FitEnum, ttlMs: number | undefined): Promise<ImgAnimationFrames> {
+
+        const cacheKey = `${imageUrl}|${imageBox.width()}x${imageBox.height()}|${resizeFit}`
+        const memoryCached = decodedImageMemoryCache.get(cacheKey)
+
+        if (memoryCached !== undefined && (ttlMs === undefined || (Date.now() - memoryCached.decodedAtMs) < ttlMs)) {
+            console.log(logPrefix, "ready (from memory cache)", imageUrl)
+            //re-insert to mark it as recently used
+            decodedImageMemoryCache.delete(cacheKey)
+            decodedImageMemoryCache.set(cacheKey, memoryCached)
+            return memoryCached.framesPromise
+        }
+
+        const framesPromise = (async () => {
+            const diskCached = await this.readDecodedImageFromDisk(cacheKey, ttlMs)
+            if (diskCached !== undefined) {
+                console.log(logPrefix, "ready (from disk cache)", imageUrl)
+                return diskCached
+            }
+
+            const frames = await this.loadImageFrames(imageUrl, imageBox, resizeFit, ttlMs)
+            void this.writeDecodedImageToDisk(cacheKey, frames)
+            return frames
+        })()
+
+        //dont remember failed loads, they would keep failing until the ttl expires
+        framesPromise.catch(() => decodedImageMemoryCache.delete(cacheKey))
+
+        decodedImageMemoryCache.set(cacheKey, {framesPromise, decodedAtMs: Date.now()})
+
+        while (decodedImageMemoryCache.size > maxCachedImagesInMemory)
+            decodedImageMemoryCache.delete(decodedImageMemoryCache.keys().next().value)
+
+        return framesPromise
     }
 
     /** How many display frames to wait before showing the next image frame (at least one) */
@@ -73,23 +165,25 @@ export default class RemotePictures extends Animator {
         //create all controls before loading, so they still show up in the GUI when the load fails
         const imageUrlControl = controls.input('Image URL', defaultImageUrl, true)
         const resizeFitControl = controls.select("fit", "fill", resizeFitChoices, true)
+        const cacheForeverControl = controls.switch("cache forever", true, true)
+        const cacheTtlControl = controls.value("cache TTL (minutes)", 60, 1, 1440, 1)
+        cacheTtlControl.meta.enabled=!cacheForeverControl.enabled
         const playbackControls = controls.group("playback")
         const speedControl = playbackControls.value("speed multiplier", 1, 0.1, 10, 0.1)
 
-        console.log("RemotePictures: loading", imageUrlControl.text)
-
-        //pause the (preview) renderer while we do slow network stuff
+        //pause the (preview) renderer while we do slow network and decoding stuff
         scheduler.stop()
         let frames: ImgAnimationFrames
         try {
-            frames = await this.loadImageFrames(imageUrlControl.text, imageBox, resizeFitControl.selected as keyof sharp.FitEnum)
+            const ttlMs = cacheForeverControl.enabled ? undefined : cacheTtlControl.value * 60 * 1000
+            frames = await this.cachedImageFrames(imageUrlControl.text, imageBox, resizeFitControl.selected as keyof sharp.FitEnum, ttlMs)
         } finally {
             //always resume: without this a failed load blocks this displays render loop forever
             scheduler.resume()
         }
 
         if (frames.length() === 0) {
-            console.warn("RemotePictures: image has no frames:", imageUrlControl.text)
+            console.warn(logPrefix, "image has no frames:", imageUrlControl.text)
             return
         }
 

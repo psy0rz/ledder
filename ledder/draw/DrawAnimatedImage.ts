@@ -4,6 +4,14 @@ import PixelList from "../PixelList.js"
 import ColorCache from "../ColorCache.js"
 import type BoxInterface from "../BoxInterface.js"
 
+//plain-data form of ImgAnimationFrames, suitable for JSON.stringify (e.g. to cache decoded frames on disk)
+export type PlainAnimationFrames = {
+    defaultFrameDelayMs: number
+    frameDelaysMs: number[]
+    //per frame, per pixel: [x, y, r, g, b, a]
+    frames: Array<Array<[number, number, number, number, number, number]>>
+}
+
 
 //Converts raw image data from the sharp library into a list of pixel frames.
 //Pixels with alpha 0 are skipped.
@@ -65,6 +73,31 @@ export class ImgAnimationFrames {
             return this.defaultFrameDelayMs
 
         return delayMs
+    }
+
+    //plain-data copy, e.g. to cache decoded frames on disk. See fromPlainObject() for the reverse.
+    toPlainObject(): PlainAnimationFrames {
+        return {
+            defaultFrameDelayMs: this.defaultFrameDelayMs,
+            frameDelaysMs: [...this.frameDelaysMs],
+            frames: this.frames.map(frame => [...frame].map((pixel: Pixel) =>
+                [pixel.x, pixel.y, pixel.color.r, pixel.color.g, pixel.color.b, pixel.color.a]))
+        }
+    }
+
+    static fromPlainObject(plainFrames: PlainAnimationFrames): ImgAnimationFrames {
+        const frames = new ImgAnimationFrames(0, plainFrames.defaultFrameDelayMs)
+        const colorCache = new ColorCache()
+
+        for (const plainFrame of plainFrames.frames) {
+            const frame = new PixelList()
+            for (const [x, y, r, g, b, a] of plainFrame)
+                frame.add(new Pixel(x, y, colorCache.get(r, g, b, a)))
+            frames.addFrame(frame)
+        }
+
+        frames.setFrameDelaysMs(plainFrames.frameDelaysMs)
+        return frames
     }
 }
 
