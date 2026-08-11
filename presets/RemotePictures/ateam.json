@@ -54,6 +54,50 @@
   },
   "fit": {
    "selected": "cover"
+  },
+  "Render settings": {
+   "FPS": {
+    "value": 60
+   },
+   "Subpixel filtering": {
+    "enabled": false
+   },
+   "Enabled": {
+    "enabled": true
+   }
+  },
+  "playback": {
+   "speed multiplier": {
+    "value": 1
+   },
+   "Enabled": {
+    "enabled": true
+   }
+  },
+  "Layers": {
+   "Z of animation": {
+    "value": 0
+   },
+   "Layer 1": {
+    "Animation": {
+     "selected": "(none)"
+    },
+    "Preset": {
+     "selected": "(none)"
+    },
+    "Z": {
+     "value": 10
+    },
+    "Enabled": {
+     "enabled": true
+    }
+   },
+   "Enabled": {
+    "enabled": true
+   }
+  },
+  "Enabled": {
+   "enabled": true
   }
  }
 }

@@ -42,10 +42,7 @@ export class ImageBackgroundSprite extends SpriteAnimator {
             }).metadata();
 
             // Generate frames
-            const framesData = await drawAnimatedImage(
-                { width: () => this.displayWidth, height: () => this.displayHeight } as any,
-                0, 0, sharpImg
-            );
+            const framesData = await drawAnimatedImage(sharpImg);
 
             this.imageFrames = framesData.frames.map((frame: PixelList) => {
                 const adjustedFrame = new PixelList();

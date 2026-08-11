@@ -237,10 +237,7 @@ export class LogoSprite extends SpriteAnimator {
 
             if (metadata.pages && metadata.pages > 1) {
                 // Animated image - store raw frames
-                const framesData = await drawAnimatedImage(
-                    { width: () => this.targetWidth, height: () => this.targetHeight } as any,
-                    0, 0, sharpImg
-                );
+                const framesData = await drawAnimatedImage(sharpImg);
                 
                 this.imageFrames = framesData.frames;
             } else {

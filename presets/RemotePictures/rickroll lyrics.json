@@ -56,14 +56,14 @@
    }
   },
   "fit": {
-   "selected": "inside"
+   "selected": "contain"
   },
   "Enabled": {
    "enabled": true
   },
   "Layers": {
    "Z of animation": {
-    "value": -17
+    "value": 0
    },
    "Layer 1": {
     "Animation": {
@@ -84,8 +84,8 @@
      },
      "Text color": {
       "r": 255,
-      "g": 232,
-      "b": 0,
+      "g": 0,
+      "b": 235,
       "a": 1
      },
      "Text anchor position": {
@@ -133,7 +133,7 @@
      },
      "Scrolling": {
       "Scroll Speed": {
-       "value": 1
+       "value": 0.30000000000000004
       },
       "FPS": {
        "value": 60
@@ -167,6 +167,25 @@
      "Color pattern": {
       "Enabled": {
        "enabled": false
+      },
+      "Color cycle time": {
+       "value": 240
+      },
+      "Reverse": {
+       "enabled": false
+      },
+      "Ping pong": {
+       "enabled": true
+      },
+      "Color cycle pattern": {
+       "selected": "Bertrik fire"
+      },
+      "Color cycle pattern range": {
+       "from": 0,
+       "to": 100
+      },
+      "Per pixel offset %": {
+       "value": 1
       }
      },
      "Cursor": {
@@ -253,6 +272,28 @@
      },
      "Enabled": {
       "enabled": true
+     },
+     "Sublayers": {
+      "Z of Text": {
+       "value": 0
+      },
+      "Layer 1.1": {
+       "Animation": {
+        "selected": "(none)"
+       },
+       "Preset": {
+        "selected": "(none)"
+       },
+       "Z": {
+        "value": 10
+       },
+       "Enabled": {
+        "enabled": true
+       }
+      },
+      "Enabled": {
+       "enabled": true
+      }
      }
     }
    },
@@ -269,6 +310,25 @@
     "Enabled": {
      "enabled": true
     }
+   },
+   "Enabled": {
+    "enabled": true
+   }
+  },
+  "Render settings": {
+   "FPS": {
+    "value": 60
+   },
+   "Subpixel filtering": {
+    "enabled": false
+   },
+   "Enabled": {
+    "enabled": true
+   }
+  },
+  "playback": {
+   "speed multiplier": {
+    "value": 1
    },
    "Enabled": {
     "enabled": true

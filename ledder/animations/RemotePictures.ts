@@ -1,85 +1,114 @@
 import PixelBox from "../PixelBox.js"
-import sharp, {type Sharp} from "sharp"
+import sharp from "sharp"
 import drawAnimatedImage from "../draw/DrawAnimatedImage.js"
+import type {ImgAnimationFrames} from "../draw/DrawAnimatedImage.js"
 import Scheduler from "../Scheduler.js"
 import ControlGroup from "../ControlGroup.js"
 import Animator from "../Animator.js"
-import NodeFetchCache, {FileSystemCache} from "node-fetch-cache"
+import {NodeFetchCache, FileSystemCache, cacheStrategies} from "node-fetch-cache"
 
-const fetch = NodeFetchCache.create({
-    cache: new FileSystemCache({cacheDirectory: ".cache/remote-pictures"})
+//Remote images are cached on disk, so restarting the animation (which happens on every control change)
+//doesnt refetch them. The ttl makes sure images that update at the source (weather radar) still refresh.
+const cacheTtlMs = 60 * 60 * 1000
+
+const fetchImage = NodeFetchCache.create({
+    cache: new FileSystemCache({cacheDirectory: ".cache/remote-pictures", ttl: cacheTtlMs}),
+
+    //never cache 404s and other error responses, they would stay in the cache for the whole ttl
+    shouldCacheResponse: cacheStrategies.cacheOkayOnly
 })
 
-export default class RemotePicture extends Animator {
+//how the image is fitted into the display when its aspect ratio doesnt match: crop it, letterbox it, stretch it, ...
+//https://github.com/lovell/sharp/blob/main/docs/api-resize.md
+const resizeFitChoices = [
+    {id: "cover", name: "crop to fill, centered"},
+    {id: "contain", name: "whole image, centered"},
+    {id: "fill", name: "stretch to fill"},
+    {id: "inside", name: "whole image, top left"},
+    {id: "outside", name: "crop to fill, top left"}
+]
+
+const defaultImageUrl = "https://api.buienradar.nl/image/1.0/RadarMapNL?w=256&h=256"
 
 
-    toBuffer(arrayBuffer) {
-        const buffer = Buffer.alloc(arrayBuffer.byteLength);
-        const view = new Uint8Array(arrayBuffer);
-        for (let i = 0; i < buffer.length; ++i) {
-            buffer[i] = view[i];
-        }
-        return buffer;
-    }
+export default class RemotePictures extends Animator {
 
+    /** Download the image and decode it into pixel frames that fit imageBox */
+    private async loadImageFrames(imageUrl: string, imageBox: PixelBox, resizeFit: keyof sharp.FitEnum): Promise<ImgAnimationFrames> {
 
-    async loadImage(imageUrl, box, resizeOptions) {
-        const image = await fetch(imageUrl);
-        const imageBuffer = await image.arrayBuffer();
-        let width = box.width()
-        let height = box.height()
-        const sharpImg = await sharp(this.toBuffer(imageBuffer), {
-            animated: true,
-            pages: -1
-        }).resize(width, height, {fit: resizeOptions})
+        const response = await fetchImage(imageUrl)
+        if (!response.ok)
+            throw new Error(`Could not fetch ${imageUrl}: ${response.status} ${response.statusText}`)
 
-        const sharpMetaData = await sharp(this.toBuffer(imageBuffer), {
-            animated: true,
-            pages: -1
-        }).resize(width, height, {fit: resizeOptions}).metadata()
+        const imageBuffer = Buffer.from(await response.arrayBuffer())
+        const sourceImage = sharp(imageBuffer, {animated: true})
 
-        let framedata = await drawAnimatedImage(box, 0, 0, sharpImg)
-        if (sharpMetaData.delay) {
-            let delay = sharpMetaData.delay[0]
-            if (delay < 1) {
-                delay = 100
-            }
-            framedata.setFrameDelay(delay)
-        }
-        return framedata
-    }
+        //read the frame delays from the source: after resizing sharp reports the input metadata anyway
+        const sourceMetadata = await sourceImage.metadata()
 
-
-    async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) {
-        let imgBox = new PixelBox(box)
-        box.add(imgBox)
-        //https://github.com/lovell/sharp/blob/main/docs/api-resize.md
-        let resizeOptions = []
-        resizeOptions.push({id: "cover", name: "cover"})
-        resizeOptions.push({id: "contain", name: "contain"})
-        resizeOptions.push({id: "fill", name: "fill"})
-        resizeOptions.push({id: "inside", name: "inside"})
-        resizeOptions.push({id: "outside", name: "outside"})
-        const imageConfig = controls.input('Image URL', "http://localhost:3000/presets/Fires/PlasmaFire/Active%202.png?1702419790623.1921", true)
-        const imageResize = controls.select("fit", "fill", resizeOptions, true)
-        console.log("loading ", imageConfig.text)
-
-        scheduler.stop()
-        let framedata = await this.loadImage(imageConfig.text, imgBox, imageResize.selected)
-        scheduler.resume()
-
-        let animationControls = controls.group("animation control")
-        let delayControl = animationControls.value("delay multiplier", 1, 0.1, 10, 0.1, true)
-        let frameId = 0
-        scheduler.interval(1, (frameNr) => {
-            if (framedata && framedata.length() > 0) {
-                imgBox.clear()
-                frameId = frameNr % framedata.length()
-                imgBox.add(framedata.getFrame(frameId))
-            }
-
+        const resizedImage = sourceImage.resize(imageBox.width(), imageBox.height(), {
+            fit: resizeFit,
+            background: {r: 0, g: 0, b: 0, alpha: 0}
         })
 
+        //clip instead of wrap: cover/outside produce an image that is larger than the box
+        const frames = await drawAnimatedImage(resizedImage, imageBox.xMin, imageBox.yMin, imageBox)
 
+        if (sourceMetadata.delay)
+            frames.setFrameDelaysMs(sourceMetadata.delay)
+
+        return frames
+    }
+
+    /** How many display frames to wait before showing the next image frame (at least one) */
+    private frameDelayToDisplayFrames(scheduler: Scheduler, frameDelayMs: number, speedMultiplier: number): number {
+        return Math.max(1, scheduler.timeToFrames(frameDelayMs / 1000 / speedMultiplier))
+    }
+
+    async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) {
+
+        const imageBox = new PixelBox(box)
+        box.add(imageBox)
+
+        //create all controls before loading, so they still show up in the GUI when the load fails
+        const imageUrlControl = controls.input('Image URL', defaultImageUrl, true)
+        const resizeFitControl = controls.select("fit", "fill", resizeFitChoices, true)
+        const playbackControls = controls.group("playback")
+        const speedControl = playbackControls.value("speed multiplier", 1, 0.1, 10, 0.1)
+
+        console.log("RemotePictures: loading", imageUrlControl.text)
+
+        //pause the (preview) renderer while we do slow network stuff
+        scheduler.stop()
+        let frames: ImgAnimationFrames
+        try {
+            frames = await this.loadImageFrames(imageUrlControl.text, imageBox, resizeFitControl.selected as keyof sharp.FitEnum)
+        } finally {
+            //always resume: without this a failed load blocks this displays render loop forever
+            scheduler.resume()
+        }
+
+        if (frames.length() === 0) {
+            console.warn("RemotePictures: image has no frames:", imageUrlControl.text)
+            return
+        }
+
+        //still image: just draw it once
+        if (frames.length() === 1) {
+            imageBox.add(frames.getFrame(0))
+            return
+        }
+
+        let frameIndex = 0
+        scheduler.interval(this.frameDelayToDisplayFrames(scheduler, frames.getFrameDelayMs(0), speedControl.value), () => {
+
+            imageBox.clear()
+            imageBox.add(frames.getFrame(frameIndex))
+
+            //the next frame may have a different delay, and the user can change the speed while we run
+            const displayFrames = this.frameDelayToDisplayFrames(scheduler, frames.getFrameDelayMs(frameIndex), speedControl.value)
+            frameIndex = (frameIndex + 1) % frames.length()
+            return displayFrames
+        })
     }
 }
