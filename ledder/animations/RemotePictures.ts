@@ -49,7 +49,7 @@ const resizeFitChoices = [
     {id: "outside", name: "crop to fill, top left"}
 ]
 
-const defaultImageUrl = "https://api.buienradar.nl/image/1.0/RadarMapNL?w=256&h=256"
+const defaultImageUrl = ""
 
 const statusFont = fonts['Pixel-Gosub']
 statusFont.load()
@@ -187,6 +187,12 @@ export default class RemotePictures extends Animator {
                 1, imageBox.width(), "centered", "middle"))
         }
 
+        if (imageUrlControl.text==="")
+        {
+            showStatusText("No url", errorTextColor)
+            return
+        }
+
         //pause the (preview) renderer while we do slow network and decoding stuff
         scheduler.stop()
         let frames: AnimatedImage
@@ -211,6 +217,7 @@ export default class RemotePictures extends Animator {
 
         //still image: just draw it once
         if (frames.length() === 1) {
+            imageBox.clear()
             imageBox.add(frames.getFrame(0))
             return
         }
