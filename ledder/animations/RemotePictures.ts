@@ -1,7 +1,7 @@
 import PixelBox from "../PixelBox.js"
 import sharp from "sharp"
-import {ImgAnimationFrames} from "../draw/DrawAnimatedImage.js"
-import type {PlainAnimationFrames} from "../draw/DrawAnimatedImage.js"
+import {AnimatedImage} from "../draw/AnimatedImage.js"
+import type {PlainAnimatedImage} from "../draw/AnimatedImage.js"
 import DrawText from "../draw/DrawText.js"
 import {fonts} from "../fonts.js"
 import Color from "../Color.js"
@@ -32,7 +32,7 @@ const maxCachedImagesInMemory = 10
 
 type CachedImage = {
     //the promise, not the result: restarting while a load is still running reuses that same load
-    framesPromise: Promise<ImgAnimationFrames>
+    framesPromise: Promise<AnimatedImage>
     decodedAtMs: number
 }
 
@@ -60,7 +60,7 @@ const errorTextColor = new Color(255, 0, 0, 1, true)
 export default class RemotePictures extends Animator {
 
     /** Download the image and decode it into pixel frames that fit imageBox. ttlMs undefined means cache forever. */
-    private async loadImageFrames(imageUrl: string, imageBox: PixelBox, resizeFit: keyof sharp.FitEnum, ttlMs: number | undefined): Promise<ImgAnimationFrames> {
+    private async loadImageFrames(imageUrl: string, imageBox: PixelBox, resizeFit: keyof sharp.FitEnum, ttlMs: number | undefined): Promise<AnimatedImage> {
 
         console.log(logPrefix, "downloading", imageUrl)
 
@@ -85,7 +85,7 @@ export default class RemotePictures extends Animator {
         })
 
         //clip instead of wrap: cover/outside produce an image that is larger than the box
-        const frames = await ImgAnimationFrames.fromSharp(resizedImage, imageBox.xMin, imageBox.yMin, imageBox)
+        const frames = await AnimatedImage.fromSharp(resizedImage, imageBox.xMin, imageBox.yMin, imageBox)
 
         if (sourceMetadata.delay)
             frames.setFrameDelaysMs(sourceMetadata.delay)
@@ -99,20 +99,20 @@ export default class RemotePictures extends Animator {
     }
 
     /** Read previously decoded frames for cacheKey from disk, if present and not older than ttlMs (undefined = cache forever) */
-    private async readDecodedImageFromDisk(cacheKey: string, ttlMs: number | undefined): Promise<ImgAnimationFrames | undefined> {
+    private async readDecodedImageFromDisk(cacheKey: string, ttlMs: number | undefined): Promise<AnimatedImage | undefined> {
         try {
             const diskCacheFile = JSON.parse(await readFile(this.decodedImageDiskCachePath(cacheKey), "utf8"))
             if (ttlMs !== undefined && (Date.now() - diskCacheFile.decodedAtMs) >= ttlMs)
                 return undefined
 
-            return ImgAnimationFrames.fromPlainObject(diskCacheFile.frames as PlainAnimationFrames)
+            return AnimatedImage.fromPlainObject(diskCacheFile.frames as PlainAnimatedImage)
         } catch (e) {
             //no cache file, corrupt cache file, ... just treat it as a cache miss
             return undefined
         }
     }
 
-    private async writeDecodedImageToDisk(cacheKey: string, frames: ImgAnimationFrames) {
+    private async writeDecodedImageToDisk(cacheKey: string, frames: AnimatedImage) {
         try {
             await mkdir(decodedImageDiskCacheDirectory, {recursive: true})
             const diskCacheFile = {decodedAtMs: Date.now(), frames: frames.toPlainObject()}
@@ -125,7 +125,7 @@ export default class RemotePictures extends Animator {
     /** The decoded frames of this image, from the memory or disk cache when we decoded them before.
      * ttlMs undefined means cache forever. onDownloadStart is called only when neither cache has a fresh
      * copy, i.e. right before we actually hit the network. */
-    private cachedImageFrames(imageUrl: string, imageBox: PixelBox, resizeFit: keyof sharp.FitEnum, ttlMs: number | undefined, onDownloadStart: () => void): Promise<ImgAnimationFrames> {
+    private cachedImageFrames(imageUrl: string, imageBox: PixelBox, resizeFit: keyof sharp.FitEnum, ttlMs: number | undefined, onDownloadStart: () => void): Promise<AnimatedImage> {
 
         const cacheKey = `${imageUrl}|${imageBox.width()}x${imageBox.height()}|${resizeFit}`
         const memoryCached = decodedImageMemoryCache.get(cacheKey)
@@ -189,7 +189,7 @@ export default class RemotePictures extends Animator {
 
         //pause the (preview) renderer while we do slow network and decoding stuff
         scheduler.stop()
-        let frames: ImgAnimationFrames
+        let frames: AnimatedImage
         try {
             const ttlMs = cacheForeverControl.enabled ? undefined : cacheTtlControl.value * 60 * 1000
             frames = await this.cachedImageFrames(imageUrlControl.text, imageBox, resizeFitControl.selected as keyof sharp.FitEnum, ttlMs,

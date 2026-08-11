@@ -3,7 +3,7 @@ import Pixel from "../../Pixel.js"
 import Color from "../../Color.js"
 import SpriteAnimator from "./SpriteAnimator.js"
 import sharp from "sharp"
-import {ImgAnimationFrames} from "../../draw/DrawAnimatedImage.js"
+import {AnimatedImage} from "../../draw/AnimatedImage.js"
 
 /**
  * Image background sprite that loads and displays remote images
@@ -42,7 +42,7 @@ export class ImageBackgroundSprite extends SpriteAnimator {
             }).metadata();
 
             // Generate frames
-            const framesData = await ImgAnimationFrames.fromSharp(sharpImg);
+            const framesData = await AnimatedImage.fromSharp(sharpImg);
 
             this.imageFrames = framesData.frames.map((frame: PixelList) => {
                 const adjustedFrame = new PixelList();

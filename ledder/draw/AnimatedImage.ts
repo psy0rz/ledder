@@ -4,8 +4,8 @@ import PixelList from "../PixelList.js"
 import ColorCache from "../ColorCache.js"
 import type BoxInterface from "../BoxInterface.js"
 
-//plain-data form of ImgAnimationFrames, suitable for JSON.stringify (e.g. to cache decoded frames on disk)
-export type PlainAnimationFrames = {
+//plain-data form of AnimatedImage, suitable for JSON.stringify (e.g. to cache decoded frames on disk)
+export type PlainAnimatedImage = {
     defaultFrameDelayMs: number
     frameDelaysMs: number[]
     //per frame, per pixel: [x, y, r, g, b, a]
@@ -13,16 +13,15 @@ export type PlainAnimationFrames = {
 }
 
 
-//Converts raw image data from the sharp library into a list of pixel frames.
+//Converts raw image data from the sharp library into a pixelLists and times, accesible via member functions.
 //Pixels with alpha 0 are skipped.
 //Sharp decodes an animated image into one tall canvas with all frames stacked in the y direction and
 //reports the height of a single frame in info.pageHeight.
 
-
 //display time of a frame that is shorter than this is treated as "not specified" (same as what browsers do)
 const minimumFrameDelayMs = 10
 
-export class ImgAnimationFrames {
+export class AnimatedImage {
 
     readonly frames: PixelList[] = []
 
@@ -76,7 +75,7 @@ export class ImgAnimationFrames {
     }
 
     //plain-data copy, e.g. to cache decoded frames on disk. See fromPlainObject() for the reverse.
-    toPlainObject(): PlainAnimationFrames {
+    toPlainObject(): PlainAnimatedImage {
         return {
             defaultFrameDelayMs: this.defaultFrameDelayMs,
             frameDelaysMs: [...this.frameDelaysMs],
@@ -85,8 +84,8 @@ export class ImgAnimationFrames {
         }
     }
 
-    static fromPlainObject(plainFrames: PlainAnimationFrames): ImgAnimationFrames {
-        const frames = new ImgAnimationFrames(0, plainFrames.defaultFrameDelayMs)
+    static fromPlainObject(plainFrames: PlainAnimatedImage): AnimatedImage {
+        const frames = new AnimatedImage(0, plainFrames.defaultFrameDelayMs)
         const colorCache = new ColorCache()
 
         for (const plainFrame of plainFrames.frames) {
@@ -108,7 +107,7 @@ export class ImgAnimationFrames {
      * @param yOffset added to the y of every pixel.
      * @param clipBox when given, pixels outside this box are dropped instead of drawn.
      */
-    static async fromSharp(image: sharp.Sharp, xOffset: number = 0, yOffset: number = 0, clipBox?: BoxInterface): Promise<ImgAnimationFrames> {
+    static async fromSharp(image: sharp.Sharp, xOffset: number = 0, yOffset: number = 0, clipBox?: BoxInterface): Promise<AnimatedImage> {
 
         //the raw output doesnt tell us how tall one frame is, so we get the frame count from the source metadata.
         //(the resulting frame height is not the requested height: fit modes like inside/outside change it)
@@ -119,9 +118,9 @@ export class ImgAnimationFrames {
 
         const frameHeight = Math.trunc(info.height / frameCount)
         if (frameHeight < 1)
-            return new ImgAnimationFrames(0)
+            return new AnimatedImage(0)
 
-        const frames = new ImgAnimationFrames(frameCount)
+        const frames = new AnimatedImage(frameCount)
         const colorCache = new ColorCache()
 
         for (let canvasY = 0; canvasY < info.height; canvasY++) {

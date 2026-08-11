@@ -5,7 +5,7 @@ import Pixel from "../../Pixel.js"
 import Color from "../../Color.js"
 import sharp from "sharp"
 import drawImage from "../../draw/DrawImage.js"
-import {ImgAnimationFrames} from "../../draw/DrawAnimatedImage.js"
+import {AnimatedImage} from "../../draw/AnimatedImage.js"
 import DrawAsciiArtColor from "../../draw/DrawAsciiArtColor.js"
 
 /**
@@ -237,7 +237,7 @@ export class LogoSprite extends SpriteAnimator {
 
             if (metadata.pages && metadata.pages > 1) {
                 // Animated image - store raw frames
-                const framesData = await ImgAnimationFrames.fromSharp(sharpImg);
+                const framesData = await AnimatedImage.fromSharp(sharpImg);
                 
                 this.imageFrames = framesData.frames;
             } else {
