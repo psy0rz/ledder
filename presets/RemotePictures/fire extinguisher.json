@@ -1,0 +1,62 @@
+{
+ "title": "",
+ "description": "",
+ "values": {
+  "Render settings": {
+   "FPS": {
+    "value": 60
+   },
+   "Subpixel filtering": {
+    "enabled": false
+   },
+   "Enabled": {
+    "enabled": true
+   }
+  },
+  "Image URL": {
+   "text": "https://upload.wikimedia.org/wikipedia/commons/3/3e/ISO_7010_F001.svg?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=original"
+  },
+  "fit": {
+   "selected": "contain"
+  },
+  "cache forever": {
+   "enabled": true
+  },
+  "cache TTL (minutes)": {
+   "value": 60
+  },
+  "playback": {
+   "speed multiplier": {
+    "value": 1
+   },
+   "Enabled": {
+    "enabled": true
+   }
+  },
+  "Layers": {
+   "Z of animation": {
+    "value": 0
+   },
+   "Layer 1": {
+    "Animation": {
+     "selected": "(none)"
+    },
+    "Preset": {
+     "selected": "(none)"
+    },
+    "Z": {
+     "value": 10
+    },
+    "Enabled": {
+     "enabled": true
+    }
+   },
+   "Enabled": {
+    "enabled": true
+   }
+  },
+  "Enabled": {
+   "enabled": true
+  }
+ }
+}
