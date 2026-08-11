@@ -15,6 +15,7 @@ export default class Scheduler {
     private intervals: Set<Interval>
     public __frameTimeMicros: number
     private defaultFrameTimeMicros: number
+    private subpixelFilteringEnabled: boolean
     private onCleanupCallbacks: any[]
     private childScheduler: Scheduler
 
@@ -48,6 +49,7 @@ export default class Scheduler {
 
         this.frameNr = 0
         this.setFrameTimeuS(this.defaultFrameTimeMicros)
+        this.subpixelFilteringEnabled = false
         this.intervals.clear()
 
         if (this.childScheduler)
@@ -157,6 +159,26 @@ export default class Scheduler {
      */
     public setFps(fps) {
         this.setFrameTimeuS(1000000 / fps)
+    }
+
+    /*
+     * Enables subpixel filtering: pixels on fractional coordinates are spread over the display
+     * pixels they overlap, so slowly moving content moves smoothly instead of jumping a whole pixel
+     * at a time.
+     * Its off by default (and after every animation restart), since its expensive and looks wrong
+     * for animations that count on pixels being whole pixels.
+     */
+    public setSubpixelFiltering(enabled: boolean) {
+        this.subpixelFilteringEnabled = enabled
+    }
+
+    //Never call this directly, used by the renderer.
+    //Like the frametime, the child scheduler takes precedence.
+    public __getSubpixelFiltering(): boolean {
+        if (this.childScheduler)
+            return this.childScheduler.__getSubpixelFiltering()
+
+        return this.subpixelFilteringEnabled
     }
 
     /**

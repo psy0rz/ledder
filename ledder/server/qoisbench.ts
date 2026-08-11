@@ -90,7 +90,7 @@ async function bench(animPath: string, width: number, height: number, preset: st
 
     for (let i = 0; i < frames; i++) {
         await scheduler.__step(false)
-        display.render(box)
+        display.render(box, scheduler.__getSubpixelFiltering())
 
         const raw = display.rawFrame()
 

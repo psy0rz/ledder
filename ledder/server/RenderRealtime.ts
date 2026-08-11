@@ -48,6 +48,7 @@ export class RenderRealtime extends Render {
 
             //do THE step that runs all the animations
             let step=await this.scheduler.__step(true)
+            const subpixelFiltering=this.scheduler.__getSubpixelFiltering()
             this.displayNextTimeMicros += step
             this.localNextTimeMicros+=step
 
@@ -56,7 +57,7 @@ export class RenderRealtime extends Render {
                 if (display.ready) {
                     try {
 
-                        display.render(this.box)
+                        display.render(this.box, subpixelFiltering)
                     } catch (e) {
                         console.error("Exception while rendering:", e)
                     }

@@ -5,7 +5,6 @@ import Color from "./Color.js"
 import GammaMapper from "./server/drivers/GammaMapper.js"
 import ControlGroup from "./ControlGroup.js";
 import type ControlInput from "./ControlInput.js";
-import type ControlSwitch from "./ControlSwitch.js";
 
 //A contribution below this weight can never change an 8-bit channel value, so it's dropped. This
 //also swallows the tiny float drift that pixels pick up from being moved by fractions repeatedly.
@@ -64,7 +63,6 @@ export default abstract class Display {
 
     public descriptionControl: ControlInput
     public settingsControl: ControlGroup
-    public subpixelFilteringControl: ControlSwitch
     protected gammaMapper: GammaMapper
 
     //Accumulation buffers for subpixel filtering, see renderFiltered(). bucketData holds the 9
@@ -103,7 +101,6 @@ export default abstract class Display {
         this.settingsControl = new ControlGroup('Display settings')
         this.descriptionControl = this.settingsControl.input('Description', 'Display')
         this.gammaMapper = new GammaMapper(this.settingsControl)
-        this.subpixelFilteringControl = this.settingsControl.switch('Subpixel filtering', true, false)
 
         this.filterBufferPixelCount = 0
         this.emitColor = new Color(0, 0, 0, 1)
@@ -133,9 +130,10 @@ export default abstract class Display {
         }
     }
 
-    //recursively renders all pixels in this pixeltree
-    render(container: PixelList) {
-        if (this.subpixelFilteringControl.enabled)
+    //recursively renders all pixels in this pixeltree.
+    //Subpixel filtering is enabled by the animation, via Scheduler.setSubpixelFiltering()
+    render(container: PixelList, subpixelFiltering: boolean) {
+        if (subpixelFiltering)
             this.renderFiltered(container)
         else
             this.renderDirect(container)

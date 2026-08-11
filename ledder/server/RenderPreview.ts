@@ -38,7 +38,7 @@ export class RenderPreview extends Render {
             if (frameTime >= this.primaryDisplay.minFrameTimeMicros) {
                 displayTime += frameTime
                 frameTime = 0
-                this.primaryDisplay.render(this.box)
+                this.primaryDisplay.render(this.box, this.scheduler.__getSubpixelFiltering())
                 this.primaryDisplay.frame(displayTime)
             }
         }

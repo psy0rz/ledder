@@ -22,6 +22,7 @@ export default class Text extends Animator {
 
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) {
 
+
         const input = controls.input('Text', "Text", true)
 
         const colorControl = controls.color("Text color", 0x21, 0xff, 0, 1, true)
@@ -118,7 +119,14 @@ export default class Text extends Animator {
         }
 
 
-        let scrollPromise
+        //Text scrolls and wobbles in fractions of a pixel, which only looks smooth when the display
+        //spreads those fractions over the pixels they overlap.
+        const subpixelFilteringControl = controls.switch("Subpixel filtering", false, false)
+        subpixelFilteringControl.onChange(() => {
+            scheduler.setSubpixelFiltering(subpixelFilteringControl.enabled)
+        })
+        scheduler.setSubpixelFiltering(subpixelFilteringControl.enabled)
+        let scrollPromise=undefined
 
         let scrollGroup = controls.group("Scrolling", true, true, true)
 
