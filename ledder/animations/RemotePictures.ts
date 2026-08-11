@@ -2,6 +2,9 @@ import PixelBox from "../PixelBox.js"
 import sharp from "sharp"
 import {ImgAnimationFrames} from "../draw/DrawAnimatedImage.js"
 import type {PlainAnimationFrames} from "../draw/DrawAnimatedImage.js"
+import DrawText from "../draw/DrawText.js"
+import {fonts} from "../fonts.js"
+import Color from "../Color.js"
 import Scheduler from "../Scheduler.js"
 import ControlGroup from "../ControlGroup.js"
 import Animator from "../Animator.js"
@@ -25,7 +28,7 @@ const fetchImage = NodeFetchCache.create({
 //is not enough, so we also cache the decoded frames, keyed by everything that changes the result.
 //Note that the cached pixels are shared between every animation using them, so treat them as read-only.
 const decodedImageDiskCacheDirectory = ".cache/remote-pictures-decoded"
-const maxCachedImagesInMemory = 100
+const maxCachedImagesInMemory = 10
 
 type CachedImage = {
     //the promise, not the result: restarting while a load is still running reuses that same load
@@ -47,6 +50,11 @@ const resizeFitChoices = [
 ]
 
 const defaultImageUrl = "https://api.buienradar.nl/image/1.0/RadarMapNL?w=256&h=256"
+
+const statusFont = fonts['Pixel-Gosub']
+statusFont.load()
+const loadingTextColor = new Color(128, 128, 128, 1, true)
+const errorTextColor = new Color(255, 0, 0, 1, true)
 
 
 export default class RemotePictures extends Animator {
@@ -115,8 +123,9 @@ export default class RemotePictures extends Animator {
     }
 
     /** The decoded frames of this image, from the memory or disk cache when we decoded them before.
-     * ttlMs undefined means cache forever. */
-    private cachedImageFrames(imageUrl: string, imageBox: PixelBox, resizeFit: keyof sharp.FitEnum, ttlMs: number | undefined): Promise<ImgAnimationFrames> {
+     * ttlMs undefined means cache forever. onDownloadStart is called only when neither cache has a fresh
+     * copy, i.e. right before we actually hit the network. */
+    private cachedImageFrames(imageUrl: string, imageBox: PixelBox, resizeFit: keyof sharp.FitEnum, ttlMs: number | undefined, onDownloadStart: () => void): Promise<ImgAnimationFrames> {
 
         const cacheKey = `${imageUrl}|${imageBox.width()}x${imageBox.height()}|${resizeFit}`
         const memoryCached = decodedImageMemoryCache.get(cacheKey)
@@ -136,6 +145,7 @@ export default class RemotePictures extends Animator {
                 return diskCached
             }
 
+            onDownloadStart()
             const frames = await this.loadImageFrames(imageUrl, imageBox, resizeFit, ttlMs)
             void this.writeDecodedImageToDisk(cacheKey, frames)
             return frames
@@ -171,12 +181,23 @@ export default class RemotePictures extends Animator {
         const playbackControls = controls.group("playback")
         const speedControl = playbackControls.value("speed multiplier", 1, 0.1, 10, 0.1)
 
+        const showStatusText = (text: string, color: Color) => {
+            imageBox.clear()
+            imageBox.add(new DrawText(imageBox.middleX(), imageBox.middleY(), statusFont, text, color,
+                1, imageBox.width(), "centered", "middle"))
+        }
+
         //pause the (preview) renderer while we do slow network and decoding stuff
         scheduler.stop()
         let frames: ImgAnimationFrames
         try {
             const ttlMs = cacheForeverControl.enabled ? undefined : cacheTtlControl.value * 60 * 1000
-            frames = await this.cachedImageFrames(imageUrlControl.text, imageBox, resizeFitControl.selected as keyof sharp.FitEnum, ttlMs)
+            frames = await this.cachedImageFrames(imageUrlControl.text, imageBox, resizeFitControl.selected as keyof sharp.FitEnum, ttlMs,
+                () => showStatusText("loading", loadingTextColor))
+        } catch (e) {
+            console.error(logPrefix, "failed to load", imageUrlControl.text, e)
+            showStatusText("error", errorTextColor)
+            return
         } finally {
             //always resume: without this a failed load blocks this displays render loop forever
             scheduler.resume()
@@ -184,6 +205,7 @@ export default class RemotePictures extends Animator {
 
         if (frames.length() === 0) {
             console.warn(logPrefix, "image has no frames:", imageUrlControl.text)
+            showStatusText("error", errorTextColor)
             return
         }
 
