@@ -13,9 +13,9 @@ const minVisibleWeight = 1 / 512
 
 //Every display pixel keeps one accumulator per direction a contribution can arrive from: from the
 //pixel itself, plus from each of the 8 pixels around it. See renderFiltered().
-const bucketsPerPixel = 9
-const floatsPerBucket = 4 //red, green, blue, coverage
-const floatsPerPixel = bucketsPerPixel * floatsPerBucket
+const BUCKETS_PER_PIXEL = 9
+const FLOATS_PER_BUCKET = 4 //red, green, blue, coverage
+const FLOATS_PER_PIXEL = BUCKETS_PER_PIXEL * FLOATS_PER_BUCKET
 
 //direction towards the source pixels home (-1, 0 or 1 per axis) -> accumulator index
 function bucketIndex(dx: number, dy: number) {
@@ -117,7 +117,7 @@ export default abstract class Display {
             return
 
         this.filterBufferPixelCount = pixelCount
-        this.bucketData = new Float32Array(pixelCount * floatsPerPixel)
+        this.bucketData = new Float32Array(pixelCount * FLOATS_PER_PIXEL)
         this.touchedPixels = new Int32Array(pixelCount)
         this.touchedPixelCount = 0
         this.touchedBuckets = new Uint16Array(pixelCount)
@@ -249,7 +249,7 @@ export default abstract class Display {
 
         //the same accumulator means the same part of the display pixel, so this contribution covers
         //whatever was drawn there before it
-        const slot = pixelOffset * floatsPerPixel + bucket * floatsPerBucket
+        const slot = pixelOffset * FLOATS_PER_PIXEL + bucket * FLOATS_PER_BUCKET
         const bucketData = this.bucketData
         const behind = 1 - coverage
 
@@ -267,7 +267,7 @@ export default abstract class Display {
 
         for (let entry = 0; entry < this.touchedPixelCount; entry++) {
             const pixelOffset = this.touchedPixels[entry]
-            const firstSlot = pixelOffset * floatsPerPixel
+            const firstSlot = pixelOffset * FLOATS_PER_PIXEL
 
             //the accumulators hold different parts of the display pixel, so they add up
             let red = 0
@@ -279,7 +279,7 @@ export default abstract class Display {
                 const lowestBucket = remainingBuckets & -remainingBuckets
                 remainingBuckets = remainingBuckets ^ lowestBucket
 
-                const slot = firstSlot + (31 - Math.clz32(lowestBucket)) * floatsPerBucket
+                const slot = firstSlot + (31 - Math.clz32(lowestBucket)) * FLOATS_PER_BUCKET
                 red += bucketData[slot]
                 green += bucketData[slot + 1]
                 blue += bucketData[slot + 2]
