@@ -14,11 +14,6 @@ import {colorBlack, colorRed} from "../Colors.js"
 export default class Template extends Animator {
 
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) {
-            const fpsControl = controls.value("FPS", 60, 1, 120, 1)
-            fpsControl.onChange(() => {
-                scheduler.setFps(fpsControl.value)
-            })
-
         const mqttHost = controls.input('MQTT host', 'mqtt://mqtt.why2025.org')
         const mqttTopic = controls.input('MQTT topic', 'why2025/ticketshop/quotas/Event Visitors/paid_orders')
         const digitCount=controls.value('Digits', 4)

@@ -7,6 +7,7 @@ import {type PresetValues} from "../PresetValues.js"
 import {type Values} from "../Control.js"
 import CallbackManager from "../../util/CallbackManager.js"
 import LayerStack from "./LayerStack.js"
+import type RenderSettings from "../RenderSettings.js"
 import chokidar from 'chokidar'
 
 
@@ -41,6 +42,12 @@ export default class AnimationManager {
     public readonly scheduler: Scheduler
     public readonly controlGroup: ControlGroup
 
+    //Only the manager of the animation the user selected has these: they are the settings of the
+    //whole render, and their controls are part of the preset of that animation. A manager thats
+    //created by an animation to run sub-animations doesnt get them, so sub-animations cant have
+    //render settings of their own.
+    private readonly renderSettings: RenderSettings | undefined
+
     //childs/proxies
     private proxyScheduler: { proxy: Scheduler; revoke: () => void }
     private proxyControlGroup: { proxy: ControlGroup; revoke: () => void }
@@ -49,11 +56,12 @@ export default class AnimationManager {
     private autoreloadTimeout: NodeJS.Timeout
     private autoreloadWatcher: any
 
-    constructor(box: PixelBox, scheduler: Scheduler, controlGroup: ControlGroup) {
+    constructor(box: PixelBox, scheduler: Scheduler, controlGroup: ControlGroup, renderSettings?: RenderSettings) {
 
         this.box = box
         this.scheduler = scheduler
         this.controlGroup = controlGroup
+        this.renderSettings = renderSettings
 
         this.createProxies()
 
@@ -109,6 +117,10 @@ export default class AnimationManager {
                 this.stop(true)
 
             this.animation = new this.animationClass()
+
+            //created first, so the user finds them at the top, above the controls of the animation itself
+            if (this.renderSettings !== undefined)
+                this.renderSettings.__createControls(this.controlGroup)
 
             //layers are added around the animation, so every animation supports them without knowing about it
             this.layerStack = new LayerStack(this.box, this.childBox, this.proxyScheduler.proxy, this.proxyControlGroup.proxy, () => {

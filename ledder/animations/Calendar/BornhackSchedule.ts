@@ -19,16 +19,10 @@ export default class BornhackSchedule extends Animator {
     static description = "Shows events currently going on at BornHack, and what's coming up next, from the live BornHack ICS feed."
 
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) {
-        // scheduler.setFps(30)
         const settingsGroup = controls.group("Settings")
         const icsUrl = settingsGroup.input("ICS URL", DEFAULT_ICS_URL, true)
         const maxOngoingMinutes = settingsGroup.value("Max ongoing (min)", 30, 1, 240, 1)
         const maxUpcomingMinutes = settingsGroup.value("Max upcoming (min)", 120, 1, 1440, 1)
-
-        const fpsControl = controls.value("FPS", 60, 1, 120, 1)
-        fpsControl.onChange(() => {
-            scheduler.setFps(fpsControl.value)
-        })
 
 
         let events: IcsEvent[] = []

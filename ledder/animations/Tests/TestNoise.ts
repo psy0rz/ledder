@@ -19,11 +19,6 @@ export default class TestNoise extends Animator {
 
         const raster = box.raster(box, colorBlack, false, false, false, true)
 
-        const fpsControl = controls.value("FPS", 60, 1, 120, 1)
-        fpsControl.onChange(() => {
-            scheduler.setFps(fpsControl.value)
-        })
-
         scheduler.interval(1, () => {
             box.forEachPixel((p) => {
                 p.color.r = random(0, 255)

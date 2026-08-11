@@ -119,13 +119,6 @@ export default class Text extends Animator {
         }
 
 
-        //Text scrolls and wobbles in fractions of a pixel, which only looks smooth when the display
-        //spreads those fractions over the pixels they overlap.
-        const subpixelFilteringControl = controls.switch("Subpixel filtering", false, false)
-        subpixelFilteringControl.onChange(() => {
-            scheduler.setSubpixelFiltering(subpixelFilteringControl.enabled)
-        })
-        scheduler.setSubpixelFiltering(subpixelFilteringControl.enabled)
         let scrollPromise=undefined
 
         let scrollGroup = controls.group("Scrolling", true, true, true)
@@ -134,13 +127,6 @@ export default class Text extends Animator {
         scrollSpeed.meta.enabled=scrollGroup.enabled
 
         if (scrollGroup.enabled) {
-
-            //allow finetuning via actual FPS
-            const fpsControl = scrollGroup.value("FPS", 60, 1, 120, 1, true)
-            fpsControl.onChange(() => {
-                scheduler.setFps(fpsControl.value)
-
-            })
 
             const scrollsHorizontally = scrollGroup.select("Scroll direction", "horizontal", [
                 {id: "horizontal", name: "Horizontal (right to left)"},

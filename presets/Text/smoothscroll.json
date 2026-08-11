@@ -3,7 +3,7 @@
  "description": "",
  "values": {
   "Text": {
-   "text": "Smooth scrolling"
+   "text": "Smooth slow scrolling via subpixel rendering"
   },
   "Text color": {
    "r": 33,
@@ -121,6 +121,17 @@
   },
   "Enabled": {
    "enabled": true
+  },
+  "Render settings": {
+   "FPS": {
+    "value": 60
+   },
+   "Subpixel filtering": {
+    "enabled": true
+   },
+   "Enabled": {
+    "enabled": true
+   }
   }
  }
 }

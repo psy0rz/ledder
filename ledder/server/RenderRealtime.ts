@@ -47,8 +47,9 @@ export class RenderRealtime extends Render {
             this.statsFrames++
 
             //do THE step that runs all the animations
-            let step=await this.scheduler.__step(true)
-            const subpixelFiltering=this.scheduler.__getSubpixelFiltering()
+            await this.scheduler.__step(true)
+
+            const step=this.renderSettings.frameTimeMicros
             this.displayNextTimeMicros += step
             this.localNextTimeMicros+=step
 
@@ -57,7 +58,7 @@ export class RenderRealtime extends Render {
                 if (display.ready) {
                     try {
 
-                        display.render(this.box, subpixelFiltering)
+                        display.render(this.box, this.renderSettings.subpixelFiltering)
                     } catch (e) {
                         console.error("Exception while rendering:", e)
                     }
@@ -75,7 +76,7 @@ export class RenderRealtime extends Render {
 
         } else {
             //display not ready, wait 1 interval (it will catch up again when its ready since we use synthetic time)
-            intervalmS=this.scheduler.__frameTimeMicros/1000
+            intervalmS=this.renderSettings.frameTimeMicros/1000
         }
         if (intervalmS<0) {
             this.statsLag=-~~intervalmS

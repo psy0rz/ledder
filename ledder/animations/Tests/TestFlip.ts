@@ -12,7 +12,6 @@ export default class TestFlip extends Animator {
 
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) {
 
-        scheduler.setFrameTimeuS(1000000)
 
         const c = new Color(255, 0, 0, 0.5)
         box.add(new DrawBox(0, 0, box.width(), box.height(), c))

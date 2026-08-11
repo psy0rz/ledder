@@ -6,6 +6,7 @@ import Interval from "./Interval.js"
 import type ValueInterface from "./ValueInterface.js"
 import IntervalOnce from "./IntervalOnce.js"
 import PublicPromise from "./PublicPromise.js"
+import type RenderSettings from "./RenderSettings.js"
 import {clearTimeout} from "timers"
 
 
@@ -13,17 +14,20 @@ export default class Scheduler {
 
     private frameNr: number
     private intervals: Set<Interval>
-    public __frameTimeMicros: number
-    private defaultFrameTimeMicros: number
-    private subpixelFilteringEnabled: boolean
+
+    //the framerate belongs to the user, not to the animation, so its owned by the renderer.
+    //We only read it, to convert times to frames.
+    private readonly renderSettings: RenderSettings
+
     private onCleanupCallbacks: any[]
     private childScheduler: Scheduler
 
     private stopCount: number
     public __resumePromise: PublicPromise<boolean>
 
-    constructor() {
+    constructor(renderSettings: RenderSettings) {
 
+        this.renderSettings = renderSettings
         this.childScheduler = undefined
         this.intervals = new Set()
         this.onCleanupCallbacks = []
@@ -48,8 +52,6 @@ export default class Scheduler {
         this.onCleanupCallbacks = []
 
         this.frameNr = 0
-        this.setFrameTimeuS(this.defaultFrameTimeMicros)
-        this.subpixelFilteringEnabled = false
         this.intervals.clear()
 
         if (this.childScheduler)
@@ -62,21 +64,8 @@ export default class Scheduler {
     }
 
 
-    /* Never call this directly. Set by renderer
-     * Default frametime thats set after a clear().
-     * Note that this is also the maximum fps that can be set by an animation.
-     */
-    public __setDefaultFrameTime(frameTimeMicros) {
-        this.defaultFrameTimeMicros = frameTimeMicros
-        this.setFrameTimeuS(frameTimeMicros)
-
-        if (this.childScheduler)
-            this.childScheduler.__setDefaultFrameTime(frameTimeMicros)
-    }
-
     //called by renderloop on every frame.
     //Dont call this directly!
-    //Returns time in uS until next frame should be rendered.
     public async __step(realtime: boolean) {
 
         if (!realtime && this.stopCount !== 0) {
@@ -105,11 +94,8 @@ export default class Scheduler {
             }
         }
 
-        //child fps takes precedence
         if (this.childScheduler)
-            return await this.childScheduler.__step(realtime)
-        else
-            return this.__frameTimeMicros
+            await this.childScheduler.__step(realtime)
 
     }
 
@@ -140,53 +126,13 @@ export default class Scheduler {
      * Stuff thats called by the user/animation starts here:
      *******************************************************/
 
-    /*
-     * Sets FPS, by specifying the frametime in whole uS.
-     * The actual FPS depends on the display driver. Some use rounding, and most have maximum limits.
-     * Set to 0 to use default FPS of display driver
-     */
-    public setFrameTimeuS(frameTimeMicros) {
-        if (frameTimeMicros < this.defaultFrameTimeMicros)
-            this.__frameTimeMicros = this.defaultFrameTimeMicros
-        else
-            this.__frameTimeMicros = ~~frameTimeMicros
-
-    }
-
-    /*
-     * Same as above but in fps
-     * The actual FPS depends on the display driver. Some use rounding, and most have maximum limits.
-     */
-    public setFps(fps) {
-        this.setFrameTimeuS(1000000 / fps)
-    }
-
-    /*
-     * Enables subpixel filtering: pixels on fractional coordinates are spread over the display
-     * pixels they overlap, so slowly moving content moves smoothly instead of jumping a whole pixel
-     * at a time.
-     * Its off by default (and after every animation restart), since its expensive and looks wrong
-     * for animations that count on pixels being whole pixels.
-     */
-    public setSubpixelFiltering(enabled: boolean) {
-        this.subpixelFilteringEnabled = enabled
-    }
-
-    //Never call this directly, used by the renderer.
-    //Like the frametime, the child scheduler takes precedence.
-    public __getSubpixelFiltering(): boolean {
-        if (this.childScheduler)
-            return this.childScheduler.__getSubpixelFiltering()
-
-        return this.subpixelFilteringEnabled
-    }
-
     /**
-     * Converts a duration in seconds to the number of frames that make it up,
-     * based on the current frame time. Useful for passing to interval()/delay().
+     * Converts a duration in seconds to the number of frames that make it up, based on the framerate
+     * the user selected. Useful for passing to interval()/delay().
+     * NOTE: the user can change the framerate while the animation runs, so dont cache this.
      */
     public timeToFrames(seconds: number): number {
-        return Math.round(seconds * 1000000 / this.__frameTimeMicros)
+        return Math.round(seconds * 1000000 / this.renderSettings.frameTimeMicros)
     }
 
 
@@ -242,7 +188,6 @@ export default class Scheduler {
      * @param seconds Delay length, specified in seconds.
      */
     public delayTime(seconds: number): Promise<any> {
-        // console.log(`Scheduler delayTime: ${seconds} with ${this.__frameTimeMicros}`)
         return this.delay(this.timeToFrames(seconds))
     }
 
@@ -276,16 +221,14 @@ export default class Scheduler {
 
     //Create independent child scheduler. Every scheduler can have one child. (which in turn can have another one)
     //A clear() detaches the child.
-    //Functions that get call from "higher up", will be pushed down to the child. (things like step() and setFps())
+    //A step() from "higher up" is pushed down to the child, so it runs on the same frames as we do.
     //Functions that get called from "below" (this user/anmations), operate only on this scheduler.
     //Use this if you created a new AnimationManager. Pass the child scheduler to it.
     child() {
         if (this.childScheduler !== undefined)
             throw ("Scheduler already has child")
 
-        this.childScheduler = new Scheduler()
-        this.childScheduler.__setDefaultFrameTime(this.defaultFrameTimeMicros)
-        this.childScheduler.setFrameTimeuS(this.__frameTimeMicros)
+        this.childScheduler = new Scheduler(this.renderSettings)
         return (this.childScheduler)
     }
 

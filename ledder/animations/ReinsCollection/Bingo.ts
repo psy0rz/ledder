@@ -77,7 +77,6 @@ export default class Bingo extends Animator {
         }
         
         setState(GameState.INTRO)
-        scheduler.setFrameTimeuS(100000)
         
         scheduler.interval(1, (frameNr) => {
             frameCounter++

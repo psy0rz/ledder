@@ -6,6 +6,7 @@ import ControlGroup from "../ControlGroup.js"
 import Display from "../Display.js"
 import PixelBox from "../PixelBox.js"
 import Scheduler from "../Scheduler.js"
+import RenderSettings from "../RenderSettings.js"
 
 
 //A renderer can have multiple displays
@@ -25,6 +26,9 @@ export class Render {
     public readonly box: PixelBox
     protected readonly scheduler: Scheduler
 
+    //framerate and subpixel filtering, controlled by the user via the preset of the selected animation
+    public readonly renderSettings: RenderSettings
+
 
     protected statsLastTimestampMs:number
     protected statsIdleMs:number
@@ -39,11 +43,11 @@ export class Render {
 
 
         this.controlGroup = new ControlGroup('root')
-        this.scheduler = new Scheduler()
+        this.renderSettings = new RenderSettings()
+        this.scheduler = new Scheduler(this.renderSettings)
 
         this.box = new PixelBox({xMin:0,xMax:31,yMin:0,yMax:7})
-        this.scheduler.__setDefaultFrameTime(60/1000000)
-        this.animationManager = new AnimationManager(this.box, this.scheduler, this.controlGroup)
+        this.animationManager = new AnimationManager(this.box, this.scheduler, this.controlGroup, this.renderSettings)
 
 
         this.resetStats()
@@ -80,7 +84,7 @@ export class Render {
             this.box.yMin=display.yMin
             this.box.yMax=display.yMax
             this.box.xMax=display.xMax
-            this.scheduler.__setDefaultFrameTime(display.defaultFrameTimeMicros)
+            this.renderSettings.__useDisplayLimits(display)
             await this.start()
         }
     }

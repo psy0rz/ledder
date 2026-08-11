@@ -27,7 +27,6 @@ export default class Test extends Animator {
         const c2 = new Color(255, 0, 0, 1)
        const p2=new Pixel(3,3,c2)
 
-        scheduler.setFps(50)
         while (1) {
             box.add(p)
             await scheduler.delay(50)

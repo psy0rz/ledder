@@ -29,7 +29,8 @@ export class RenderPreview extends Render {
 
             for (let d = 0; d < this.animationManager.animationClass.previewDivider; d++) {
                 //NOTE: await is needed, to allow  microtasks to run!
-                frameTime = frameTime + await this.scheduler.__step(false)
+                await this.scheduler.__step(false)
+                frameTime = frameTime + this.renderSettings.frameTimeMicros
             }
 
             frameTime = ~~(frameTime / this.primaryDisplay.frameRoundingMicros) * this.primaryDisplay.frameRoundingMicros
@@ -38,7 +39,7 @@ export class RenderPreview extends Render {
             if (frameTime >= this.primaryDisplay.minFrameTimeMicros) {
                 displayTime += frameTime
                 frameTime = 0
-                this.primaryDisplay.render(this.box, this.scheduler.__getSubpixelFiltering())
+                this.primaryDisplay.render(this.box, this.renderSettings.subpixelFiltering)
                 this.primaryDisplay.frame(displayTime)
             }
         }

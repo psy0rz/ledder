@@ -12,7 +12,6 @@ export default class TestBlack extends Animator {
 
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) {
 
-        scheduler.setFrameTimeuS(1000000)
 
        box.clear()
 

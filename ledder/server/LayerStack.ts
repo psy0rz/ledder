@@ -334,7 +334,6 @@ export default class LayerStack {
         //settings are saved as part of the layers controls, just like ours are part of the preset.
         const nestedStack = new LayerStack(layerContainerBox, layerAnimationBox, this.scheduler, animationControls, this.restartAnimation, this.nestingOfLayer(layer, animationName))
         this.nestedStacks.push(nestedStack)
-        console.log("boom nested")
         await nestedStack.createLayers()
 
         //we were removed while the nested stack was loading from disk, and removeLayers() may have

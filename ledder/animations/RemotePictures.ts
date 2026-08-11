@@ -71,7 +71,6 @@ export default class RemotePicture extends Animator {
         let animationControls = controls.group("animation control")
         let delayControl = animationControls.value("delay multiplier", 1, 0.1, 10, 0.1, true)
         let frameId = 0
-        scheduler.setFrameTimeuS(framedata.getDelayMs() * 1000 * delayControl.value)
         scheduler.interval(1, (frameNr) => {
             if (framedata && framedata.length() > 0) {
                 imgBox.clear()

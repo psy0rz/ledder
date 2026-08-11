@@ -145,8 +145,6 @@ export default class RemoteVideo extends Animator {
             }
         }
 
-        // Set initial frame timing
-        scheduler.setFrameTimeuS((1000000 / movieFpsControl.value) / playbackSpeedControl.value);
 
         scheduler.interval(1, (frameNr) => {
             // Update max frames if changed
@@ -158,7 +156,6 @@ export default class RemoteVideo extends Animator {
             const currentFps = movieFpsControl.value;
             const currentSpeed = playbackSpeedControl.value;
             if (currentFps !== lastFpsUpdate || currentSpeed !== lastSpeedUpdate) {
-                scheduler.setFrameTimeuS((1000000 / currentFps) / currentSpeed);
                 lastFpsUpdate = currentFps;
                 lastSpeedUpdate = currentSpeed;
             }

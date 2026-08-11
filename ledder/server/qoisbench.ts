@@ -20,6 +20,7 @@ import {readFile} from "node:fs/promises"
 import {createRequire} from "node:module"
 
 import Scheduler from "../Scheduler.js"
+import RenderSettings from "../RenderSettings.js"
 import ControlGroup from "../ControlGroup.js"
 import PixelBox from "../PixelBox.js"
 import OffsetMapper from "./drivers/OffsetMapper.js"
@@ -67,8 +68,9 @@ async function bench(animPath: string, width: number, height: number, preset: st
     const AnimClass = animModule.default
 
     const display = new DisplayCapture(width, height)
-    const scheduler = new Scheduler()
-    scheduler.__setDefaultFrameTime(display.defaultFrameTimeMicros)
+    const renderSettings = new RenderSettings()
+    renderSettings.__useDisplayLimits(display)
+    const scheduler = new Scheduler(renderSettings)
     const box = new PixelBox(display.bbox())
     const controls = new ControlGroup("root")
 
@@ -76,6 +78,9 @@ async function bench(animPath: string, width: number, height: number, preset: st
         const pv = JSON.parse(await readFile(`presets/${animPath}/${preset}.json`, "utf8"))
         controls.load(pv.values)
     }
+
+    //normally done by AnimationManager: takes the render settings of the preset
+    renderSettings.__createControls(controls)
 
     const anim = new AnimClass()
     anim.run(box, scheduler, controls).catch(() => {
@@ -90,7 +95,7 @@ async function bench(animPath: string, width: number, height: number, preset: st
 
     for (let i = 0; i < frames; i++) {
         await scheduler.__step(false)
-        display.render(box, scheduler.__getSubpixelFiltering())
+        display.render(box, renderSettings.subpixelFiltering)
 
         const raw = display.rawFrame()
 
