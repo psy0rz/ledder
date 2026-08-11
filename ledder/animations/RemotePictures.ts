@@ -1,6 +1,6 @@
 import PixelBox from "../PixelBox.js"
 import sharp from "sharp"
-import drawAnimatedImage, {ImgAnimationFrames} from "../draw/DrawAnimatedImage.js"
+import {ImgAnimationFrames} from "../draw/DrawAnimatedImage.js"
 import type {PlainAnimationFrames} from "../draw/DrawAnimatedImage.js"
 import Scheduler from "../Scheduler.js"
 import ControlGroup from "../ControlGroup.js"
@@ -77,7 +77,7 @@ export default class RemotePictures extends Animator {
         })
 
         //clip instead of wrap: cover/outside produce an image that is larger than the box
-        const frames = await drawAnimatedImage(resizedImage, imageBox.xMin, imageBox.yMin, imageBox)
+        const frames = await ImgAnimationFrames.fromSharp(resizedImage, imageBox.xMin, imageBox.yMin, imageBox)
 
         if (sourceMetadata.delay)
             frames.setFrameDelaysMs(sourceMetadata.delay)

@@ -99,57 +99,56 @@ export class ImgAnimationFrames {
         frames.setFrameDelaysMs(plainFrames.frameDelaysMs)
         return frames
     }
-}
 
+    /**
+     * Decode a sharp image into pixel frames.
+     * @param image sharp pipeline, created with {animated: true} if you want all frames of an animation.
+     *              Must be based on a buffer or file: we read its metadata before rendering it.
+     * @param xOffset added to the x of every pixel.
+     * @param yOffset added to the y of every pixel.
+     * @param clipBox when given, pixels outside this box are dropped instead of drawn.
+     */
+    static async fromSharp(image: sharp.Sharp, xOffset: number = 0, yOffset: number = 0, clipBox?: BoxInterface): Promise<ImgAnimationFrames> {
 
-/**
- * Decode an image into pixel frames.
- * @param image sharp pipeline, created with {animated: true} if you want all frames of an animation.
- *              Must be based on a buffer or file: we read its metadata before rendering it.
- * @param xOffset added to the x of every pixel.
- * @param yOffset added to the y of every pixel.
- * @param clipBox when given, pixels outside this box are dropped instead of drawn.
- */
-export default async function drawAnimatedImage(image: sharp.Sharp, xOffset: number = 0, yOffset: number = 0, clipBox?: BoxInterface): Promise<ImgAnimationFrames> {
+        //the raw output doesnt tell us how tall one frame is, so we get the frame count from the source metadata.
+        //(the resulting frame height is not the requested height: fit modes like inside/outside change it)
+        const frameCount = (await image.metadata()).pages ?? 1
 
-    //the raw output doesnt tell us how tall one frame is, so we get the frame count from the source metadata.
-    //(the resulting frame height is not the requested height: fit modes like inside/outside change it)
-    const frameCount = (await image.metadata()).pages ?? 1
+        //ensureAlpha: without an alpha channel (jpeg, opaque png) we would read the next pixel's red as our alpha
+        const {data, info} = await image.ensureAlpha().raw().toBuffer({resolveWithObject: true})
 
-    //ensureAlpha: without an alpha channel (jpeg, opaque png) we would read the next pixel's red as our alpha
-    const {data, info} = await image.ensureAlpha().raw().toBuffer({resolveWithObject: true})
+        const frameHeight = Math.trunc(info.height / frameCount)
+        if (frameHeight < 1)
+            return new ImgAnimationFrames(0)
 
-    const frameHeight = Math.trunc(info.height / frameCount)
-    if (frameHeight < 1)
-        return new ImgAnimationFrames(0)
+        const frames = new ImgAnimationFrames(frameCount)
+        const colorCache = new ColorCache()
 
-    const frames = new ImgAnimationFrames(frameCount)
-    const colorCache = new ColorCache()
+        for (let canvasY = 0; canvasY < info.height; canvasY++) {
+            const frameIndex = Math.trunc(canvasY / frameHeight)
+            const pixelY = (canvasY % frameHeight) + yOffset
 
-    for (let canvasY = 0; canvasY < info.height; canvasY++) {
-        const frameIndex = Math.trunc(canvasY / frameHeight)
-        const pixelY = (canvasY % frameHeight) + yOffset
-
-        if (clipBox && (pixelY < clipBox.yMin || pixelY > clipBox.yMax))
-            continue
-
-        for (let canvasX = 0; canvasX < info.width; canvasX++) {
-            const pixelX = canvasX + xOffset
-
-            if (clipBox && (pixelX < clipBox.xMin || pixelX > clipBox.xMax))
+            if (clipBox && (pixelY < clipBox.yMin || pixelY > clipBox.yMax))
                 continue
 
-            const offset = (canvasX * info.channels) + (canvasY * info.width * info.channels)
-            const alpha = data[offset + 3]
+            for (let canvasX = 0; canvasX < info.width; canvasX++) {
+                const pixelX = canvasX + xOffset
 
-            //ignore fully transparent pixels
-            if (alpha === 0)
-                continue
+                if (clipBox && (pixelX < clipBox.xMin || pixelX > clipBox.xMax))
+                    continue
 
-            const color = colorCache.get(data[offset], data[offset + 1], data[offset + 2], alpha / 255)
-            frames.addPixel(frameIndex, new Pixel(pixelX, pixelY, color))
+                const offset = (canvasX * info.channels) + (canvasY * info.width * info.channels)
+                const alpha = data[offset + 3]
+
+                //ignore fully transparent pixels
+                if (alpha === 0)
+                    continue
+
+                const color = colorCache.get(data[offset], data[offset + 1], data[offset + 2], alpha / 255)
+                frames.addPixel(frameIndex, new Pixel(pixelX, pixelY, color))
+            }
         }
-    }
 
-    return frames
+        return frames
+    }
 }
