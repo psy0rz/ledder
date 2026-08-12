@@ -35,7 +35,10 @@ export default class Font {
             // monochrome: false,
             //no hinting at all: pixel fonts are rendered at their exact design size, and
             //hinting results vary between freetype builds (glyphs come out a pixel off)
-            noHinting: true
+            noHinting: true,
+            noAutohint: true,
+            forceAutohint: false,
+            ignoreTransform: true
         }))
     }
 
