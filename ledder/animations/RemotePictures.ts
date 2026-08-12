@@ -178,6 +178,8 @@ export default class RemotePictures extends Animator {
         const cacheForeverControl = controls.switch("cache forever", true, true)
         const cacheTtlControl = controls.value("cache TTL (minutes)", 60, 1, 1440, 1)
         cacheTtlControl.meta.enabled=!cacheForeverControl.enabled
+        const autoRefreshControl = controls.switch("auto-refresh", false, true)
+        autoRefreshControl.meta.enabled=!cacheForeverControl.enabled
         const playbackControls = controls.group("playback")
         const speedControl = playbackControls.value("speed multiplier", 1, 0.1, 10, 0.1)
 
@@ -193,45 +195,78 @@ export default class RemotePictures extends Animator {
             return
         }
 
-        //pause the (preview) renderer while we do slow network and decoding stuff
-        scheduler.stop()
-        let frames: AnimatedImage
-        try {
-            const ttlMs = cacheForeverControl.enabled ? undefined : cacheTtlControl.value * 60 * 1000
-            frames = await this.cachedImageFrames(imageUrlControl.text, imageBox, resizeFitControl.selected as keyof sharp.FitEnum, ttlMs,
-                () => showStatusText("loading", loadingTextColor))
-        } catch (e) {
-            console.error(logPrefix, "failed to load", imageUrlControl.text, e)
-            showStatusText("error", errorTextColor)
-            return
-        } finally {
-            //always resume: without this a failed load blocks this displays render loop forever
-            scheduler.resume()
+        //stops the previous image's playback interval, if any, so a reload doesnt draw two images at once
+        let stopPlayback: () => void = () => {}
+
+        const showFrames = (frames: AnimatedImage) => {
+            stopPlayback()
+
+            //still image: just draw it once
+            if (frames.length() === 1) {
+                imageBox.clear()
+                imageBox.add(frames.getFrame(0))
+                stopPlayback = () => {}
+                return
+            }
+
+            let stopped = false
+            stopPlayback = () => {stopped = true}
+
+            let frameIndex = 0
+            scheduler.interval(this.frameDelayToDisplayFrames(scheduler, frames.getFrameDelayMs(0), speedControl.value), () => {
+                if (stopped)
+                    return false
+
+                imageBox.clear()
+                imageBox.add(frames.getFrame(frameIndex))
+
+                //the next frame may have a different delay, and the user can change the speed while we run
+                const displayFrames = this.frameDelayToDisplayFrames(scheduler, frames.getFrameDelayMs(frameIndex), speedControl.value)
+                frameIndex = (frameIndex + 1) % frames.length()
+                return displayFrames
+            })
         }
 
-        if (frames.length() === 0) {
-            console.warn(logPrefix, "image has no frames:", imageUrlControl.text)
-            showStatusText("error", errorTextColor)
-            return
+        /** Load and show the image. Returns false (and shows an error/blank status) if it could not be loaded. */
+        const loadAndShowImage = async (): Promise<boolean> => {
+
+            //pause the (preview) renderer while we do slow network and decoding stuff
+            scheduler.stop()
+            let frames: AnimatedImage
+            try {
+                const ttlMs = cacheForeverControl.enabled ? undefined : cacheTtlControl.value * 60 * 1000
+                frames = await this.cachedImageFrames(imageUrlControl.text, imageBox, resizeFitControl.selected as keyof sharp.FitEnum, ttlMs,
+                    () => showStatusText("loading", loadingTextColor))
+            } catch (e) {
+                console.error(logPrefix, "failed to load", imageUrlControl.text, e)
+                showStatusText("error", errorTextColor)
+                return false
+            } finally {
+                //always resume: without this a failed load blocks this displays render loop forever
+                scheduler.resume()
+            }
+
+            if (frames.length() === 0) {
+                console.warn(logPrefix, "image has no frames:", imageUrlControl.text)
+                showStatusText("error", errorTextColor)
+                return false
+            }
+
+            showFrames(frames)
+            return true
         }
 
-        //still image: just draw it once
-        if (frames.length() === 1) {
-            imageBox.clear()
-            imageBox.add(frames.getFrame(0))
+        if (!await loadAndShowImage())
             return
+
+        //auto-refresh reuses the cache TTL as the reload interval: once it elapses the cached copy is
+        //stale anyway, so reloading naturally refetches the image
+        if (autoRefreshControl.enabled && !cacheForeverControl.enabled) {
+            const refreshIntervalSeconds = cacheTtlControl.value * 60+10
+            while (true) {
+                await scheduler.delayTime(refreshIntervalSeconds)
+                await loadAndShowImage()
+            }
         }
-
-        let frameIndex = 0
-        scheduler.interval(this.frameDelayToDisplayFrames(scheduler, frames.getFrameDelayMs(0), speedControl.value), () => {
-
-            imageBox.clear()
-            imageBox.add(frames.getFrame(frameIndex))
-
-            //the next frame may have a different delay, and the user can change the speed while we run
-            const displayFrames = this.frameDelayToDisplayFrames(scheduler, frames.getFrameDelayMs(frameIndex), speedControl.value)
-            frameIndex = (frameIndex + 1) % frames.length()
-            return displayFrames
-        })
     }
 }

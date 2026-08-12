@@ -86,6 +86,9 @@
   },
   "Enabled": {
    "enabled": true
+  },
+  "auto-refresh": {
+   "enabled": true
   }
  }
 }
