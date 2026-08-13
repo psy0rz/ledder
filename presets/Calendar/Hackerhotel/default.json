@@ -1,0 +1,118 @@
+{
+ "title": "",
+ "description": "",
+ "values": {
+  "Render settings": {
+   "FPS": {
+    "value": 60
+   },
+   "Subpixel filtering": {
+    "enabled": false
+   },
+   "Enabled": {
+    "enabled": true
+   }
+  },
+  "Settings": {
+   "Schedule URL": {
+    "text": "https://pretalx.hackerhotel.nl/2025/schedule/export/schedule.json"
+   },
+   "Max ongoing (min)": {
+    "value": 30
+   },
+   "Max upcoming (min)": {
+    "value": 120
+   },
+   "Enabled": {
+    "enabled": true
+   }
+  },
+  "Time simulation": {
+   "Fake date (YYYY-MM-DD)": {
+    "text": "2025-02-15"
+   },
+   "Offset from now (min)": {
+    "value": 279
+   },
+   "Enabled": {
+    "enabled": true
+   }
+  },
+  "Color cycle time": {
+   "value": 15
+  },
+  "Color cycle time randomizer": {
+   "value": 15
+  },
+  "Color cycle repeat count": {
+   "value": 1
+  },
+  "Color cycle mode": {
+   "selected": "reverse"
+  },
+  "Color cycle pattern": {
+   "selected": "Bertrik fire"
+  },
+  "Color cycle pattern range": {
+   "from": 0,
+   "to": 100
+  },
+  "Move interval": {
+   "value": 3
+  },
+  "Move interval randomizer": {
+   "value": 3
+  },
+  "Move X step": {
+   "value": 0.4
+  },
+  "Move Y step": {
+   "value": -1
+  },
+  "Fade out time": {
+   "value": 20
+  },
+  "Fade out time randomizer": {
+   "value": 0
+  },
+  "Sub animations": {
+   "Enabled": {
+    "enabled": true
+   }
+  },
+  "Font": {
+   "selected": "C64"
+  },
+  "Font height": {
+   "value": 0
+  },
+  "Font width": {
+   "value": 0
+  },
+  "Layers": {
+   "Z of animation": {
+    "value": 0
+   },
+   "Layer 1": {
+    "Animation": {
+     "selected": "(none)"
+    },
+    "Preset": {
+     "selected": "(none)"
+    },
+    "Z": {
+     "value": 10
+    },
+    "Enabled": {
+     "enabled": true
+    }
+   },
+   "Enabled": {
+    "enabled": true
+   }
+  },
+  "Enabled": {
+   "enabled": true
+  }
+ }
+}
