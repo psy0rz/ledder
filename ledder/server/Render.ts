@@ -47,7 +47,7 @@ export class Render {
         this.scheduler = new Scheduler(this.renderSettings)
 
         this.box = new PixelBox({xMin:0,xMax:31,yMin:0,yMax:7})
-        this.animationManager = new AnimationManager(this.box, this.scheduler, this.controlGroup, this.renderSettings)
+        this.animationManager = new AnimationManager(this.box, this.scheduler, this.controlGroup, this.renderSettings, true)
 
 
         this.resetStats()

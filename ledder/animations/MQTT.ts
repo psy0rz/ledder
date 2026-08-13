@@ -52,7 +52,7 @@ export default class MQTT extends Animator {
 
 
 
-        this.animationManager = new AnimationManager(box, scheduler.child(), childControls)
+        this.animationManager = new AnimationManager(box, scheduler, childControls)
 
         this.statusMessage(`conn ${mqttHost.text}`)
         console.log(`MQTT: Connecting ${mqttHost.text}`)
