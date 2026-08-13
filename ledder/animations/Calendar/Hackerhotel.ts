@@ -221,6 +221,11 @@ export default class Hackerhotel extends Animator {
 
            await showRandomstuff()
 
+            await animationManager.select("RemotePictures/Buienradar.nl", false)
+            await scheduler.delayTime(4)
+            animationManager.stop(true)
+
+
             //loop showall for a while
             // const lastUpdate=Date.now()
             // while (Date.now()-lastUpdate<60000) {
