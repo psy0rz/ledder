@@ -189,22 +189,22 @@ export default class Hackerhotel extends Animator {
         }
 
 
-        let currentAnimations=0
+        let currentAnimations=2
 
         async function showRandomstuff() {
 
             switch (currentAnimations) {
                 case 0:
                     await animationManager.select("Logos/ledder/default", false)
-                    await scheduler.delayTime(6)
+                    await scheduler.delayTime(4)
                     break
                 case 1:
                     await animationManager.select("RemotePictures/rickroll", false)
-                    await scheduler.delay(40)
+                    await scheduler.delayTime(4)
                     break
                 case 2:
-                    await animationManager.select("Text/Marquee/ledder", false)
-                    await scheduler.delay(160)
+                    await animationManager.select("Logos/Hackerhotel/default", false)
+                    await scheduler.delayTime(4)
                     break
             }
 
@@ -219,13 +219,13 @@ export default class Hackerhotel extends Animator {
             //async in background
             fetchEvents()
 
-           // await showRandomstuff()
+           await showRandomstuff()
 
             //loop showall for a while
-            const lastUpdate=Date.now()
-            while (Date.now()-lastUpdate<60000) {
+            // const lastUpdate=Date.now()
+            // while (Date.now()-lastUpdate<60000) {
                 await showAll()
-            }
+            // }
 
             //give fx time to playout
             await scheduler.delayTime(1)
