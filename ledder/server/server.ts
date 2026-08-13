@@ -56,7 +56,7 @@ setInterval(() => {
     const m = process.memoryUsage()
     const mb = (bytes: number) => (bytes / 1024 / 1024).toFixed(1)
     console.log(`Memory: rss=${mb(m.rss)}MB heapUsed=${mb(m.heapUsed)}MB heapTotal=${mb(m.heapTotal)}MB external=${mb(m.external)}MB arrayBuffers=${mb(m.arrayBuffers)}MB`)
-}, 1000)
+}, 30000)
 
 
 //RPC bindings

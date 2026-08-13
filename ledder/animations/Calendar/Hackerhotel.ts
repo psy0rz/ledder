@@ -60,7 +60,7 @@ export default class Hackerhotel extends Animator {
 
         // const animationBox=new PixelBox(box)
         // box.add(animationBox)
-        const animationManager=new AnimationManager(box, scheduler, controls.group("Sub animations"))
+        const animationManager=new AnimationManager(box, scheduler.child(), controls.group("Sub animations"))
 
 
         //keeps only the first (earliest) event per location, preserving order
