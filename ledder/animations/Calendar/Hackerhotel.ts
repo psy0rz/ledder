@@ -37,7 +37,7 @@ export default class Hackerhotel extends Animator {
         //testing aid: replays real events against a past/future conference day. Real time keeps
         //ticking (so countdowns and scrolling behave normally), it just wraps every 24h so the
         //fake day loops forever; the offset shifts which moment of that day "now" starts at.
-        const timeSimGroup = controls.group("Time simulation", false, false, true, false)
+        const timeSimGroup = controls.group("Time simulation", true, false, true, false)
         const fakeDate = timeSimGroup.input("Fake date (YYYY-MM-DD)", "2025-02-14", true)
         const fakeOffsetMinutes = timeSimGroup.value("Offset from now (min)", 0, -1440, 1440, 1, true)
 
@@ -94,6 +94,12 @@ export default class Hackerhotel extends Animator {
                 upcoming = firstPerLocation(events
                     .filter(e => e.start.getTime() > nowMs && e.start.getTime() - nowMs < maxUpcomingMinutes.value * 60000)
                     .sort((a, b) => a.start.getTime() - b.start.getTime()))
+
+                if (ongoing.length === 0 && upcoming.length === 0) {
+                    upcoming = firstPerLocation(events
+                        .filter(e => e.start.getTime() > nowMs)
+                        .sort((a, b) => a.start.getTime() - b.start.getTime()))
+                }
 
             } catch (error) {
                 console.error("Hackerhotel: fetch/parse error:", error)
