@@ -46,8 +46,9 @@ function toAsciiText(text: string): string {
     //decomposes accented letters so the diacritic can be stripped, e.g. "café" -> "cafe"
     result = result.normalize("NFKD").replace(/[\u0300-\u036f]/g, "")
 
-    //anything still outside printable ASCII (emoji, CJK, ...) has no glyph in the pixel fonts
-    return result.replace(/[^\x20-\x7e]/g, "?")
+    //anything still outside printable ASCII (emoji, CJK, ...) has no glyph in the pixel fonts, remove it. (they use lots of emoticons)
+    return result.replace(/[^\x20-\x7e]/g, "")
+    // return result
 }
 
 export function parsePretalxSchedule(json: string): PretalxEvent[] {
