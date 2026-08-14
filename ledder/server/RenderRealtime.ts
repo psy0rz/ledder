@@ -77,6 +77,7 @@ export class RenderRealtime extends Render {
         } else {
             //display not ready, wait 1 interval (it will catch up again when its ready since we use synthetic time)
             intervalmS=this.renderSettings.frameTimeMicros/1000
+            this.statsNotReadyMs = this.statsNotReadyMs + intervalmS
         }
         if (intervalmS<0) {
             this.statsLag=-~~intervalmS

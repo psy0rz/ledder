@@ -7,6 +7,7 @@ import Display from "../Display.js"
 import PixelBox from "../PixelBox.js"
 import Scheduler from "../Scheduler.js"
 import RenderSettings from "../RenderSettings.js"
+import {formatTimeAgo} from "../timeAgo.js"
 
 
 //A renderer can have multiple displays
@@ -36,6 +37,9 @@ export class Render {
     protected statsFrames: number
     protected statsBytes: number
 
+    //time we did not step the animation because the primary display was not ready for the next frame
+    protected statsNotReadyMs: number
+
 
 
     constructor( ) {
@@ -60,6 +64,7 @@ export class Render {
         this.statsBytes = 0
         this.statsIdleMs = 0
         this.statsFrames=0
+        this.statsNotReadyMs = 0
         this.statsLastTimestampMs=Date.now()
 
     }
@@ -100,6 +105,17 @@ export class Render {
 
     getStats() {
 
+        //An offline display renders nothing at all, so fps, throughput and waiting time would all be
+        //zero-ish numbers saying the same thing. Report why instead.
+        if (this.primaryDisplay !== undefined && !this.primaryDisplay.isOnline()) {
+            this.resetStats()
+
+            if (this.primaryDisplay.lastSeenTimestampMs === undefined)
+                return `OFFLINE (never seen)`
+
+            return `OFFLINE (last seen ${formatTimeAgo(Date.now() - this.primaryDisplay.lastSeenTimestampMs)})`
+        }
+
         const deltaS=(Date.now()-this.statsLastTimestampMs)/1000
         const fps=~~(this.statsFrames/deltaS)
         const kbps =~~(this.statsBytes/deltaS/1000)
@@ -109,8 +125,16 @@ export class Render {
             busyPerc=0
 
 
+        let waitingPerc = ~~(((this.statsNotReadyMs / 1000) / deltaS) * 100)
+        if (waitingPerc > 100)
+            waitingPerc = 100
 
-        const statStr= (`${fps} fps, ${this.statsLag} mS lag, ${kbps} KB/s, ${busyPerc}% CPU`)
+        let statStr = (`${fps} fps, ${this.statsLag} mS lag, ${kbps} KB/s, ${busyPerc}% CPU`)
+
+        //an online display that we keep having to wait for is what explains a dropped framerate
+        if (waitingPerc > 0)
+            statStr = statStr + `, ${waitingPerc}% waiting for display`
+
         this.resetStats()
         return statStr
 
