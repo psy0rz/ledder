@@ -4,15 +4,9 @@ import ControlGroup from "../ControlGroup.js"
 import Animator from "../Animator.js"
 import {FxFadeMask} from "../fx/FxFadeMask.js"
 import AnimationManager from "../server/AnimationManager.js"
-import {presetStore} from "../server/PresetStore.js"
-import type ControlSelect from "../ControlSelect.js"
-import type {Choices} from "../ControlSelect.js"
+import ControlAnimationPreset from "../server/ControlAnimationPreset.js"
 import type ControlValue from "../ControlValue.js"
-import type {AnimationListType, AnimationListItemType, AnimationListDirType} from "../AnimationListTypes.js"
 
-
-//shown when a slide is empty
-const NONE = "(none)"
 
 //we always show one more (empty) slide than the user is actually using, up to this maximum.
 const MAX_SLIDES = 32
@@ -22,8 +16,7 @@ const MAX_SLIDES = 32
 type SlideControls = {
     slideNr: number
     slideGroup: ControlGroup
-    animationSelect: ControlSelect
-    presetSelect: ControlSelect
+    animationPreset: ControlAnimationPreset
     timeControl: ControlValue
     orderControl: ControlValue
 }
@@ -48,16 +41,15 @@ export default class Slideshow extends Animator {
         const startAtControl = controls.value("Start at", 1, 1, MAX_SLIDES, 1, true)
 
         const slidesGroup = controls.group("Slides", true)
-        const animations = allAnimations().sort((a, b) => a.name.localeCompare(b.name))
 
         let slides: Array<SlideControls> = []
         for (let slideNr = 1; slideNr <= MAX_SLIDES; slideNr++)
-            slides.push(createSlideControls(slidesGroup, slideNr, animations))
+            slides.push(createSlideControls(slidesGroup, slideNr))
 
         //show all used slides, plus one empty one to add the next slide to. remove the rest again.
         let lastUsedSlideNr = 0
         for (const slide of slides)
-            if (slide.animationSelect.selected !== NONE)
+            if (slide.animationPreset.animationName !== undefined)
                 lastUsedSlideNr = slide.slideNr
 
         for (let slideNr = lastUsedSlideNr + 2; slideNr <= MAX_SLIDES; slideNr++)
@@ -82,7 +74,7 @@ export default class Slideshow extends Animator {
 
         while (!stopped) {
             const activeSlides = slides
-                .filter((slide) => slide.animationSelect.selected !== NONE)
+                .filter((slide) => slide.animationPreset.animationName !== undefined)
                 .sort((a, b) => a.orderControl.value - b.orderControl.value)
 
             if (activeSlides.length === 0) {
@@ -101,8 +93,7 @@ export default class Slideshow extends Animator {
                 if (box.size > 0 && useFade)
                     await fader.run(box, true, fadeFrames)
 
-                const presetName = slide.presetSelect.selected === NONE ? "default" : slide.presetSelect.selected
-                await manager.select(`${slide.animationSelect.selected}/${presetName}`, false)
+                await manager.select(`${slide.animationPreset.animationName}/${slide.animationPreset.presetName}`, false)
 
                 //select() re-arms the file watcher, so if we were cleaned up while it was loading we
                 //have to stop the manager again, otherwise that watcher outlives us after all.
@@ -127,63 +118,17 @@ function slideGroupName(slideNr: number) {
 
 
 /** Get or create the controls of one slide */
-function createSlideControls(slidesGroup: ControlGroup, slideNr: number, animations: Array<AnimationListItemType>): SlideControls {
+function createSlideControls(slidesGroup: ControlGroup, slideNr: number): SlideControls {
 
     const slideGroup = slidesGroup.group(slideGroupName(slideNr), true)
 
-    //NOTE: controls persist between restarts, so the choices of an existing control can be
-    //outdated: new animations may have appeared, and the presets depend on the selected animation.
-    const animationSelect = slideGroup.select("Animation", NONE, animationChoices(animations), true)
-    animationSelect.meta.choices = animationChoices(animations)
-    if (!choiceExists(animationSelect.meta.choices, animationSelect.selected))
-        animationSelect.selected = NONE
-
-    const presetSelect = slideGroup.select("Preset", NONE, presetChoices(animations, animationSelect.selected), true)
-    presetSelect.meta.choices = presetChoices(animations, animationSelect.selected)
-    if (!choiceExists(presetSelect.meta.choices, presetSelect.selected))
-        presetSelect.selected = NONE
+    //picking another preset should restart, so the slide is shown with it right away
+    const animationPreset = new ControlAnimationPreset(slideGroup, true)
 
     const timeControl = slideGroup.value("Time (ms)", 8000, 100, 60000, 100, true)
 
     //NOTE: the range has to fit the default order of the last slide (MAX_SLIDES * 10)
     const orderControl = slideGroup.value("Order", slideNr * 10, 0, MAX_SLIDES * 10, 1, true)
 
-    return {slideNr, slideGroup, animationSelect, presetSelect, timeControl, orderControl}
-}
-
-
-function choiceExists(choices: Choices, id: string) {
-    return choices.some((choice) => choice.id === id)
-}
-
-//flatten the animation/preset tree into a plain list of animations
-function allAnimations(animationList: AnimationListType = presetStore.animationPresetList, found: Array<AnimationListItemType> = []) {
-    for (const item of animationList) {
-        const dir = item as AnimationListDirType
-        if (dir.animationList !== undefined)
-            allAnimations(dir.animationList, found)
-        else
-            found.push(item as AnimationListItemType)
-    }
-    return found
-}
-
-function animationChoices(animations: Array<AnimationListItemType>): Choices {
-    const choices: Choices = [{id: NONE, name: NONE}]
-    for (const animation of animations)
-        choices.push({id: animation.name, name: animation.name})
-    return choices
-}
-
-function presetChoices(animations: Array<AnimationListItemType>, animationName: string): Choices {
-    const choices: Choices = [{id: NONE, name: NONE}]
-
-    if (animationName !== NONE) {
-        const animation = animations.find((animation) => animation.name === animationName)
-        if (animation !== undefined)
-            for (const preset of animation.presets)
-                choices.push({id: preset.name, name: preset.name})
-    }
-
-    return choices
+    return {slideNr, slideGroup, animationPreset, timeControl, orderControl}
 }

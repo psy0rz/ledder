@@ -19,14 +19,9 @@ import PixelBox from "../PixelBox.js"
 import type Scheduler from "../Scheduler.js"
 import type ControlGroup from "../ControlGroup.js"
 import type ControlValue from "../ControlValue.js"
-import type ControlSelect from "../ControlSelect.js"
-import type {Choices} from "../ControlSelect.js"
-import type {AnimationListType, AnimationListItemType, AnimationListDirType} from "../AnimationListTypes.js"
+import ControlAnimationPreset from "./ControlAnimationPreset.js"
 import {presetStore} from "./PresetStore.js"
 
-
-//shown when a layer is empty, or when no preset should be applied
-export const NONE = "(none)"
 
 //name of the group with all our layers: the top level has "Layers", a nested stack has "Sublayers",
 //so its clear which stack a layer belongs to when you're looking at a deeply nested control tree.
@@ -45,8 +40,7 @@ const MAX_DEPTH = 3
 type LayerControls = {
     layerNr: number
     layerGroup: ControlGroup
-    animationSelect: ControlSelect
-    presetSelect: ControlSelect
+    animationPreset: ControlAnimationPreset
     zControl: ControlValue
 }
 
@@ -144,15 +138,14 @@ export default class LayerStack {
 
         //note that creating the controls also loads their values from the preset, which is how we
         //find out how many layers this preset actually uses.
-        const animations = allAnimations().sort((a, b) => a.name.localeCompare(b.name))
         let layers: Array<LayerControls> = []
         for (let layerNr = 1; layerNr <= MAX_LAYERS; layerNr++)
-            layers.push(this.createLayerControls(layersControls, layerNr, animations))
+            layers.push(this.createLayerControls(layersControls, layerNr))
 
         //show all used layers, plus one empty one to add the next layer to. remove the rest again.
         let lastUsedLayerNr = 0
         for (const layer of layers)
-            if (layer.animationSelect.selected !== NONE)
+            if (layer.animationPreset.animationName !== undefined)
                 lastUsedLayerNr = layer.layerNr
 
         for (let layerNr = lastUsedLayerNr + 2; layerNr <= MAX_LAYERS; layerNr++)
@@ -249,27 +242,18 @@ export default class LayerStack {
 
 
     /** Get or create the controls of one layer */
-    private createLayerControls(layersControls: ControlGroup, layerNr: number, animations: Array<AnimationListItemType>): LayerControls {
+    private createLayerControls(layersControls: ControlGroup, layerNr: number): LayerControls {
 
         //restartOnChange only applies to the switch of the group itself, so muting/unmuting this layer restarts.
         const layerGroup = layersControls.group(this.layerGroupName(layerNr), true, false, true, true)
 
-        //NOTE: controls persist between restarts, so the choices of an existing control can be
-        //outdated: new animations may have appeared, and the presets depend on the selected animation.
-        const animationSelect = layerGroup.select("Animation", NONE, animationChoices(animations), true)
-        animationSelect.meta.choices = animationChoices(animations)
-        if (!choiceExists(animationSelect.meta.choices, animationSelect.selected))
-            animationSelect.selected = NONE
-
-        const presetSelect = layerGroup.select("Preset", NONE, presetChoices(animations, animationSelect.selected))
-        presetSelect.meta.choices = presetChoices(animations, animationSelect.selected)
-        if (!choiceExists(presetSelect.meta.choices, presetSelect.selected))
-            presetSelect.selected = NONE
+        //a preset is just a starting point here (see loadPresetWhenSelected), so picking one shouldnt restart
+        const animationPreset = new ControlAnimationPreset(layerGroup)
 
         //NOTE: the range has to fit the default Z of the last layer (MAX_LAYERS * 10)
         const zControl = layerGroup.value("Z", layerNr * 10, -200, 200, 1)
 
-        return {layerNr, layerGroup, animationSelect, presetSelect, zControl}
+        return {layerNr, layerGroup, animationPreset, zControl}
     }
 
 
@@ -279,7 +263,7 @@ export default class LayerStack {
         if (this.removed)
             return
 
-        const animationName = layer.animationSelect.selected
+        const animationName = layer.animationPreset.animationName
 
         //Store the current values, so the settings of a previously selected animation are not lost
         //when we remove its controls below. (save() keeps values of controls that no longer exist,
@@ -290,7 +274,7 @@ export default class LayerStack {
                 layer.layerGroup.remove(control)
 
         //empty or muted layer
-        if (animationName === NONE || !layer.layerGroup.enabled)
+        if (animationName === undefined || !layer.layerGroup.enabled)
             return
 
         let animationClass
@@ -353,13 +337,11 @@ export default class LayerStack {
         //the users changes with the preset again on every restart.
         let registering = true
 
-        layer.presetSelect.onChange(() => {
+        layer.animationPreset.presetSelect.onChange(() => {
             if (registering)
                 return
 
-            const presetName = layer.presetSelect.selected
-            if (presetName === NONE)
-                return
+            const presetName = layer.animationPreset.presetName
 
             presetStore.load(animationName, presetName)
                 .then((preset) => {
@@ -373,41 +355,4 @@ export default class LayerStack {
 
         registering = false
     }
-}
-
-
-function choiceExists(choices: Choices, id: string) {
-    return choices.some((choice) => choice.id === id)
-}
-
-//flatten the animation/preset tree into a plain list of animations
-function allAnimations(animationList: AnimationListType = presetStore.animationPresetList, found: Array<AnimationListItemType> = []) {
-    for (const item of animationList) {
-        const dir = item as AnimationListDirType
-        if (dir.animationList !== undefined)
-            allAnimations(dir.animationList, found)
-        else
-            found.push(item as AnimationListItemType)
-    }
-    return found
-}
-
-function animationChoices(animations: Array<AnimationListItemType>): Choices {
-    const choices: Choices = [{id: NONE, name: NONE}]
-    for (const animation of animations)
-        choices.push({id: animation.name, name: animation.name})
-    return choices
-}
-
-function presetChoices(animations: Array<AnimationListItemType>, animationName: string): Choices {
-    const choices: Choices = [{id: NONE, name: NONE}]
-
-    if (animationName !== NONE) {
-        const animation = animations.find((animation) => animation.name === animationName)
-        if (animation !== undefined)
-            for (const preset of animation.presets)
-                choices.push({id: preset.name, name: preset.name})
-    }
-
-    return choices
 }
