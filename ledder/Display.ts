@@ -324,6 +324,12 @@ export default abstract class Display {
         return true
     }
 
+    //Called periodically (see the status poller in server.ts) so drivers can drop a connection that
+    //looks open but is not carrying data anymore. Doing this from a poll instead of from frame() is
+    //what makes it work at all: a stalled display stops being ready, and then it gets no more frames.
+    disconnectIfDead() {
+    }
+
 
 
     //implemed in driver subclass:

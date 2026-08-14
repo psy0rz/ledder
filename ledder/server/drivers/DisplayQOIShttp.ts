@@ -8,9 +8,25 @@ export const STREAM_LIVE = 0
 export const STREAM_RECORD = 1
 export const STREAM_REPLAY = 2
 
+//A display that vanishes (unplugged, crashed, out of wifi range) usually does not close its TCP
+//connection: our writes just pile up in the kernel socket buffer and the write-callback stops firing.
+//After this long without a single completed write we call the display offline, even though the socket
+//is still nominally open. It has to be well above the worst case for a display that is merely slow:
+//the renderer stops producing frames while a write is outstanding, so a healthy display drains
+//every frame it is sent.
+const stalledOfflineMillis = 5000
+
+//Ask the OS to probe idle connections, so a peer that went away without closing eventually
+//destroys the socket instead of looking connected forever.
+const keepAliveDelayMillis = 10000
+
 export class DisplayQOIShttp extends DisplayQOIS {
 
     private response: Response
+
+    //Date.now() of the moment the current unfinished write started, or undefined when no write is
+    //waiting to be flushed to the display.
+    private writePendingSinceMs: number
 
 
     private streamMode: number
@@ -27,6 +43,7 @@ export class DisplayQOIShttp extends DisplayQOIS {
 
         this.response = undefined
         this.ready = false
+        this.writePendingSinceMs = undefined
 
 
         this.streamMode = STREAM_LIVE
@@ -65,9 +82,19 @@ export class DisplayQOIShttp extends DisplayQOIS {
         abuffer.set(this.frameBuffer.subarray(0, length))
 
         try {
-            this.ready = this.response.write(abuffer, () => {
+            const flushedImmediately = this.response.write(abuffer, () => {
                 this.ready = true
+                this.writePendingSinceMs = undefined
             })
+            this.ready = flushedImmediately
+
+            //the callback also runs for a write that was flushed immediately, but only on the next
+            //tick, so clear the stall timer here as well instead of leaving it set in between.
+            if (flushedImmediately)
+                this.writePendingSinceMs = undefined
+            else if (this.writePendingSinceMs === undefined)
+                this.writePendingSinceMs = Date.now()
+
             return length
         } catch (e) {
             console.error(e)
@@ -78,9 +105,11 @@ export class DisplayQOIShttp extends DisplayQOIS {
 
     abortConnection() {
         if (this.response !== undefined) {
-            this.response.socket.destroy()
+            //an already closed response has no socket left to destroy
+            this.response.socket?.destroy()
             this.response = undefined
             this.ready = false
+            this.writePendingSinceMs = undefined
         }
 
     }
@@ -96,6 +125,10 @@ export class DisplayQOIShttp extends DisplayQOIS {
 
         this.response = response
         this.ready = true
+        this.writePendingSinceMs = undefined
+
+        //let the OS notice a peer that disappeared without closing its side
+        response.socket?.setKeepAlive(true, keepAliveDelayMillis)
 
 
         response.on('close', () => {
@@ -103,6 +136,7 @@ export class DisplayQOIShttp extends DisplayQOIS {
             if (this.response === response) {
                 this.ready = false
                 this.response = undefined
+                this.writePendingSinceMs = undefined
             }
 
         })
@@ -116,9 +150,28 @@ export class DisplayQOIShttp extends DisplayQOIS {
 
     }
 
-    isOnline()
-    {
-        return this.response!==undefined
+    isOnline() {
+
+        if (this.response === undefined || !this.response.writable)
+            return false
+
+        //frames we handed to the socket are not getting out: the display is gone, even though the
+        //connection is still open as far as we can tell.
+        return !this.writeStalled()
+    }
+
+    //a stalled connection never recovers on its own (we stop sending frames once a write is pending),
+    //so drop it: the display reconnects and both sides start from a clean state again.
+    disconnectIfDead() {
+        if (this.response !== undefined && this.writeStalled()) {
+            console.log(`Display http stalled, dropping connection: ${this.id}`)
+            this.abortConnection()
+        }
+    }
+
+    //is a frame we handed to the socket still not flushed after all this time?
+    private writeStalled() {
+        return this.writePendingSinceMs !== undefined && Date.now() - this.writePendingSinceMs > stalledOfflineMillis
     }
 
 

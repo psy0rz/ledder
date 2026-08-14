@@ -33,6 +33,22 @@ export class DisplayMulti extends Display {
         return statsBytes
     }
 
+    //the combined display is only usable when every panel of it is
+    isOnline() {
+        for (const displays of this.displays)
+            for (const display of displays)
+                if (!display.isOnline())
+                    return false
+
+        return true
+    }
+
+    disconnectIfDead() {
+        for (const displays of this.displays)
+            for (const display of displays)
+                display.disconnectIfDead()
+    }
+
     setPixel(x: number, y: number, color: ColorInterface) {
         // const floor_y = ~~y
         // const floor_x = ~~x

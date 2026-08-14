@@ -106,6 +106,8 @@ function updateDisplayStatus() {
         if (display === undefined)
             return
 
+        display.disconnectIfDead()
+
         const online = display.isOnline()
         if (online)
             display.lastSeenTimestampMs = Date.now()
