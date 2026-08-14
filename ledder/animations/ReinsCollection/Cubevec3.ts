@@ -274,8 +274,6 @@ class Pyramid3d extends Object3d {
 
 
 export default class Cubevec3 extends Animator {
-    static category = "3D"
-    static title = "Cubevec3"
     static description = "3d Cube (work in progress) with vec3 lib"
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) {
         //do config shizzles

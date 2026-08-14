@@ -241,9 +241,7 @@ class VectorComposition {
 }
 
 export default class Ledder extends Animator {
-    static category = "Misc"
     static title = "vector"
-    static description = "blabla"
 
 
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup, x = 0, y = 0) {

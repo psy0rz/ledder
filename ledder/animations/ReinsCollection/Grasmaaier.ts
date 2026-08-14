@@ -14,9 +14,6 @@ import DrawLine from "../../draw/DrawLine.js"
 
 
 export default class Grasmaaier extends Animator {
-    static category = "Misc"
-    static title = "Grasmaaier"
-    static description = "blabla"
 
     mapValue(value:number,sourceMin:number,sourceMax:number)
     {

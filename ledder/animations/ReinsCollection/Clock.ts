@@ -10,9 +10,6 @@ import Color from "../../Color.js"
 
 
 export default class Clock extends Animator {
-    static category = "Time"
-    static title = "Clock"
-    static description = "blabla"
 
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup, x = 0, y = 0) 
     {

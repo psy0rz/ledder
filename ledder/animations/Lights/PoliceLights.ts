@@ -13,9 +13,6 @@ import Animator from "../../Animator.js"
 
 export default class PoliceLights extends Animator {
 
-    static title = "Police lights"
-    static description = ""
-    static category = "Signal lights"
 
 
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup, overrideText1?:string, overrideText2?:string) {

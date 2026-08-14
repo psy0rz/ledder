@@ -10,8 +10,6 @@ import DrawAsciiArtColor from "../../draw/DrawAsciiArtColor.js"
 
 
 export default class Kong extends Animator {
-    static category = "Misc"
-    static title = "Kong"
     static description = "The ugly friend of Donkey Kong"
 
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup, x = 0, y = 0) {

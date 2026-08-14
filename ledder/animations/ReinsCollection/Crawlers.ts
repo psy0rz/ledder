@@ -106,8 +106,6 @@ class CrawlerGeometry{
 
 export default class Snow extends Animator {
 
-    static category = "Basic"
-    static title = "Crawlers"
     static description = "xmas"
 
 

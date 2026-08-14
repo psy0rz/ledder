@@ -24,7 +24,6 @@ const fetchSchedule = NodeFetchCache.create({
 })
 
 export default class Hackerhotel extends Animator {
-    static category = "Calendar"
     static title = "Hackerhotel Schedule"
     static description = "Shows events currently going on at Hackerhotel, and what's coming up next, from the live pretalx schedule."
 

@@ -367,8 +367,6 @@ class Photonmatrix
 
 export default class Photonmatrixtest extends Animator {
 
-    static category = "Basic"
-    static title = "Photon"
     static description = "Photon test"
 
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) {

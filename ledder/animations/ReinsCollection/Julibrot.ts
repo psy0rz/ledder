@@ -20,8 +20,6 @@ import Color from "../../Color.js"
 
 
 export default class <Julibrot> extends Animator {
-    static category = "Fractals"
-    static title = "Julibrot"
     static description = "Julia & Mandelbrot fractal sets"
     max_iterations=1600
     

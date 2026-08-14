@@ -10,9 +10,6 @@ import DrawAsciiArtColor from "../../draw/DrawAsciiArtColor.js"
 
 
 export default class Pacman extends Animator {
-    static category = "Misc"
-    static title = "Pacman"
-    static description = "blabla"
 
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup, x = 0, y = 0) {
 

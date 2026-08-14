@@ -11,8 +11,6 @@ import {fonts} from "../../fonts.js"
 
 
 export default class Pong extends Animator {
-    static category = "Gamesdemos"
-    static title = "Pong"
     static description = "inspired by the Atari game"
     
 

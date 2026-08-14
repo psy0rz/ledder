@@ -10,8 +10,6 @@ import Animator from "../../Animator.js"
 
 export default class Cyber extends  Animator
 {
-    static category = "Misc"
-    static title = "Cyber"
     static description = "Cyber, the Meme(tm)"
 
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) {

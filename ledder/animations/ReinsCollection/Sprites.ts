@@ -495,9 +495,6 @@ export class SpriteSpaceship extends Sprite {
 }
 
 export default class Sprites extends Animator {
-    static category = "Misc"
-    static title = "Sprites"
-    static description = "blabla"
 
 
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) {

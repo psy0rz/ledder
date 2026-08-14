@@ -20,9 +20,6 @@ const logo = `
 `
 
 export default class HSD extends Animator {
-    static category = "Misc"
-    static title = "HSD"
-    static description = ""
 
 
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) {

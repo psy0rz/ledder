@@ -11,7 +11,6 @@ const carSprites = {player: `.wwwwww.\nwwwwwwww\nwwwwwwww\nwwwwwwww\nyyyyyyyy\nr
 interface RaceCar { position: number; lane: number; speed: number; color: string; sprite: string }
 
 export default class Vwlt35 extends Animator {
-    static category = "ReinsCollection"
     static title = "VW LT35 Van Race"
     static description = "VW LT35 van racing circuit - Pole Position style"
 

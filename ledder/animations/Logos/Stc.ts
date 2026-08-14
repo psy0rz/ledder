@@ -27,8 +27,6 @@ const logo = `
 `
 
 export default class HSD extends Animator {
-    static category = "Misc"
-    static title = "Stc"
     static description = "Logo voor Tristan"
 
 

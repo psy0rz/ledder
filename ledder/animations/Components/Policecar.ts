@@ -9,8 +9,6 @@ import DrawAsciiArtColor from "../../draw/DrawAsciiArtColor.js"
 
 
 export default class Policecar extends Animator {
-    static category = "Vehicles"
-    static title = "Police Car"
     static description = "Police car sprite with flashing lights animation"
 
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup, x = 0, y = 0) {

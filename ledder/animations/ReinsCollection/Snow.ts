@@ -47,8 +47,6 @@ class SnowflakeGeometry{
 
 export default class Snow extends Animator {
 
-    static category = "Basic"
-    static title = "snow"
     static description = "xmas"
 
 

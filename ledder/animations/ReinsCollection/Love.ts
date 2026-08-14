@@ -133,8 +133,6 @@ const bgImage=`
 
 
 export default class Love extends Animator {
-    static category = "Misc"
-    static title = "Love"
     static description = "x loves y"
     fireshow=true
     fireFull=false

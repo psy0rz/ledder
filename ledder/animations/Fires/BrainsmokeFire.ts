@@ -11,7 +11,6 @@ import Animator from "../../Animator.js"
 
 export default class BrainsmokeFire extends Animator {
 
-    static category = "Fire"
     static title = "Brainsmoke"
     static description = "Fire based on <a href='https://github.com/techinc/lewd/blob/master/animations/fire.py'>this.</a><br>Has an interesting decay method."
 

@@ -44,9 +44,6 @@ yyyyyyyyyyyyyyy
 
 
 export default class TkkrLab extends Animator {
-    static category = "Logos"
-    static title = "TkkrLab"
-    static description = ""
 
 
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) {

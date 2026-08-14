@@ -324,9 +324,6 @@ export class Sky {
 
 
 export default class Weiland extends Animator {
-    static category = "Misc"
-    static title = "Weiland"
-    static description = "blabla"
 
    
 

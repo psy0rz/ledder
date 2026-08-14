@@ -6,8 +6,6 @@ import PixelBox from "../../PixelBox.js"
 
 
 export default class Landjepik extends Animator {
-    static category = "Gamesdemos"
-    static title = "Landjepik"
     static description = "Two AI players battle for territory with bouncing balls"
 
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) {

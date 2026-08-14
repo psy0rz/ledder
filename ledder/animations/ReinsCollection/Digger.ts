@@ -127,8 +127,6 @@ tttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
 
 
 export default class Digger extends Animator {
-    static category = "Gamesdemos"
-    static title = "Digger"
     static description = "inspired by the vic-20 game"
     
 

@@ -9,9 +9,7 @@ import {FxFadeMask} from "../fx/FxFadeMask.js"
 const presetStore = new PresetStore()
 
 export default class Cycle extends Animator {
-    static category = "Misc"
     static title = "Cycle stuff"
-    static description = ""
 
 
 

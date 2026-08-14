@@ -14,8 +14,6 @@ import {FxFadeOut} from "../../fx/FxFadeOut.js";
 const DEFAULT_ICS_URL = "https://bornhack.dk/bornhack-2026/program/ics/"
 
 export default class BornhackSchedule extends Animator {
-    static category = "Calendar"
-    static title = "BornHack Schedule"
     static description = "Shows events currently going on at BornHack, and what's coming up next, from the live BornHack ICS feed."
 
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) {

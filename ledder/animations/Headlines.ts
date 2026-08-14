@@ -15,7 +15,6 @@ import Color from "../Color.js"
 
 
 export default class Headlines extends Animator {
-    static category = "Misc"
     static title = "RSS Headlines"
     static description = "scroller"
     public headlinesArray=[]

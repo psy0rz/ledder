@@ -14,8 +14,6 @@ import {mapRange} from "../../utils.js"
 
 
 export default class Pong extends Animator {
-    static category = "Gamesdemos"
-    static title = "Pong"
     static description = "inspired by the Atari game"
     private lastStatusMessage: any
     private box: PixelBox

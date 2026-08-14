@@ -12,9 +12,6 @@ import Animator from "../../Animator.js"
 
 export default class ItsFine extends Animator {
 
-    static title = "Its fine"
-    static description = ""
-    static category = "memes"
 
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) {
 

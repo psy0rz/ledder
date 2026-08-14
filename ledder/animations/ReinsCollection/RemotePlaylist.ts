@@ -10,7 +10,6 @@ import AnimationManager from "../../server/AnimationManager.js"
 
 
 export default class RemotePlaylist extends Animator {
-    static category = "Time"
     static title = "Playlist "
     static description = "playlist"
     private animationManager: AnimationManager

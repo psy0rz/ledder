@@ -8,8 +8,6 @@ import {fonts, fontSelect} from "../../fonts.js"
 
 
 export default class GoogleCalendar extends Animator {
-    static category = "Calendar"
-    static title = "Google Calendar"
     static description = "Display upcoming events from Google Calendar"
 
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) {

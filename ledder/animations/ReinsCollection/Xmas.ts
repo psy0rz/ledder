@@ -13,8 +13,6 @@ import Text from "../Text.js"
 
 
 export default class Xmas extends Animator {
-    static category = "XMAS"
-    static title = "XMAS"
     static description = "composition"
  
 

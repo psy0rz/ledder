@@ -22,8 +22,6 @@ import Animator from "../../Animator.js"
 
 export default class Nyancat extends Animator {
 
-    static category = "Memes"
-    static title = "Nyancat"
     static description = "Based on <a href='https://github.com/bertrik/nyancat/blob/master/nyancat.c'>this</a>"
 
 

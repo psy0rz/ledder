@@ -117,8 +117,6 @@ class PrismaObj
 
 export default class Prisma extends Animator {
 
-    static category = "Basic"
-    static title = "Prisma"
     static description = "Pink Floyd prisma"
 
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) {

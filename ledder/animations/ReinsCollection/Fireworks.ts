@@ -111,8 +111,6 @@ class CloudGeometry{
 
 export default class Fireworks extends Animator {
 
-    static category = "Basic"
-    static title = "Fireworks"
     static description = "vuurpijlen"
 
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) {

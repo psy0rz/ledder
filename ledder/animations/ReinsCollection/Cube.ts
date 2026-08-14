@@ -338,8 +338,6 @@ class Axis3d extends Object3d {
 
 
 export default class Cube extends Animator {
-    static category = "3D"
-    static title = "Cube"
     static description = "3d Cube (work in progress)"
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) {
         //do config shizzles

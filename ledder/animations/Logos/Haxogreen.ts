@@ -10,9 +10,6 @@ import Animator from "../../Animator.js"
 
 
 export default class Haxogreen extends Animator {
-    static category = "Misc"
-    static title = "Haxogreen"
-    static description = "blabla"
 
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) {
 

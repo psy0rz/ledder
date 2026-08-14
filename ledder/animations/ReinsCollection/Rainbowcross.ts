@@ -7,9 +7,6 @@ import Color from "../../Color.js"
 
 
 export default class Rainbowcross extends Animator {
-    static category = "Ledart"
-    static title = "Rainbowcross"
-    static description = "blabla"
 
 
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) 

@@ -12,7 +12,6 @@ import DrawCircle from "../../draw/DrawCircle.js";
 import { fonts } from "../../fonts.js";
 
 export default class EightiesFx extends Animator {
-    static category = "Retro"
     static title = "80s Demo AI"
     static description = "A retro demoscene-style animation with 80s and 90s effects including fractals, blobs, fire, and retro sprites"
 

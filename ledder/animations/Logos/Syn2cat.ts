@@ -7,8 +7,6 @@ import Animator from "../../Animator.js"
 
 export default class Syn2Cat extends  Animator
 {
-    static category = "Logos"
-    static title = "Syn2cat"
     static description = "syn2cat.lu"
 
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) {

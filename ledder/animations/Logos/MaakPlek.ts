@@ -8,8 +8,6 @@ import Animator from "../../Animator.js"
 
 export default class MaakPlek extends  Animator
 {
-    static category = "Logos"
-    static title = "Maakplek"
     static description = "http://maakplek.nl"
 
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) {

@@ -8,8 +8,6 @@ import {glow} from "../../utils.js"
 
 
 export default class ReinFire extends Animator {
-    static category = "Fire"
-    static title = "ReinFire"
     static description = "Simple realistic wood fire simulation"
 
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) {

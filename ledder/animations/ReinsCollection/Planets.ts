@@ -55,7 +55,6 @@ const venus = `
 
 
 export default class Planets extends Animator {
-    static category = "Ledart"
     static title = "planetarium"
     static description = "planetarium"
     

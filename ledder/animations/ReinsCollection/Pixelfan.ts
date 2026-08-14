@@ -8,8 +8,6 @@ import Color from "../../Color.js"
 
 
 export default class Pixelfan extends Animator {
-    static category = "Ledart"
-    static title = "Pixelfan"
     static description = "led ventlator thingy"
     
 

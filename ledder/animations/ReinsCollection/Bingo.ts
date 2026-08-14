@@ -17,8 +17,6 @@ enum GameState {
 }
 
 export default class Bingo extends Animator {
-    static category = "ReinsCollection"
-    static title = "Bingo"
     static description = "Bingo number drawer with intro and countdown"
 
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) {

@@ -9,8 +9,6 @@ import DrawAsciiArtColor from "../../draw/DrawAsciiArtColor.js"
 
 
 export default class Racecar extends Animator {
-    static category = "Vehicles"
-    static title = "Racecar"
     static description = "Racing car sprite with motion animation"
 
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup, x = 0, y = 0) {

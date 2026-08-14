@@ -17,7 +17,6 @@ function deg2rad(degrees: number) {
 }
 
 export default class ClockAnalogue extends Animator {
-    static category = "Time"
     static title = "Clock "
     static description = "analoge? klok"
     cx:number

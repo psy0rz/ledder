@@ -294,7 +294,6 @@ class SkySystem {
 
 // Main animation
 export default class Synthwave extends Animator {
-    static category = "Synthwave"
     static title = "3D Synthwave"
     static description = "Simplified tree animation with day/night cycle"
     

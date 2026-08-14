@@ -146,7 +146,6 @@ yyyy....
 
 
 export default class Planetsgone extends Animator {
-    static category = "Ledart"
     static title = "planetman"
     static description = "planetman"
     

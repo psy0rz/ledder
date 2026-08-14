@@ -11,9 +11,6 @@ import {random} from "../../utils.js"
 import {patternSelect} from "../../ColorPatterns.js"
 
 export default class Lines extends Animator {
-    static category = "Misc"
-    static title = "Lines"
-    static description = "blabla"
 
 
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup, x = 0, y = 0) {

@@ -8,8 +8,6 @@ import DrawAsciiArtColor from "../../draw/DrawAsciiArtColor.js"
 import FxRotate from "../../fx/FxRotate.js"
 
 export default class XmasSantaReindeer extends Animator {
-    static category = "Misc"
-    static title = "XmasSantaReindeer"
     static description = "xmas theme, santa + sled + reindeers"
 
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup, x =0, y =  box.height()-13, reindeers=1) {

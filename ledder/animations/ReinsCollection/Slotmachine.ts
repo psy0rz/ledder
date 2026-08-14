@@ -217,8 +217,6 @@ export class Fruitautomaat{
 
 export default class Slotmachine extends Animator {
 
-    static category = "Basic"
-    static title = "Slotmachine"
     static description = "fruitautomaat"
 
 

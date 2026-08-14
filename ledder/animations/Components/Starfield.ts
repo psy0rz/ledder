@@ -53,9 +53,6 @@ class Star {
 }
 
 export default class Starfield extends Animator {
-    static category = "Misc"
-    static title = "Starfield"
-    static description = "blabla"
 
 
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) {

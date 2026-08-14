@@ -501,8 +501,6 @@ export class Tankwarsgame {
 
 
 export default class Tankwars extends Animator {
-    static category = "Games"
-    static title = "Tankwars"
     static description = "multiplayer mqtt controlled game"
     private lastStatusMessage: any
     private box: PixelBox

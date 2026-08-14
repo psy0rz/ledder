@@ -187,8 +187,6 @@ ttt5ttatttaaaaa
 
 
 export default class Landscapescroller extends Animator {
-    static category = "Gamesdemos"
-    static title = "Landscapescroller"
     static description = "Just because"
     mapWidth:number=1024
     farBackgroundMap:PixelList=new PixelList()

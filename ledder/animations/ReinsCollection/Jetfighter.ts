@@ -50,8 +50,6 @@ gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg5555
 
 
 export default class Jetfighter extends Animator {
-    static category = "Gamesdemos"
-    static title = "Jetfighter"
     static description = "inspired by the vic-20 game"
     
 

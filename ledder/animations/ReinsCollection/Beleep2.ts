@@ -461,7 +461,6 @@ export class Beleepuniverse
 }
 
 export default class Beleep2 extends Animator {
-    static category = "Ledart"
     static title = "Beleep"
     static description = "life thingy variant 2"
     

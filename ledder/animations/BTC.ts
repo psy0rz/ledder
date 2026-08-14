@@ -10,8 +10,6 @@ import Starfield from "./Components/Starfield.js"
 import Animator from "../Animator.js"
 
 export default class BTC extends Animator {
-    static category = "Misc"
-    static title = "BTC"
     static description = "Rotating bitcoin counter."
 
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) {

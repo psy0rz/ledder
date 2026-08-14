@@ -13,9 +13,7 @@ import Pixel from "../../Pixel.js"
 
 
 export default class Dnaspiral extends Animator {
-    static category = "Misc"
     static title = "Pacman"
-    static description = "blabla"
 
     mapValue(value:number,sourceMin:number,sourceMax:number)
     {

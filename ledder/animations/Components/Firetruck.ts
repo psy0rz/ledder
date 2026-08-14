@@ -9,8 +9,6 @@ import DrawAsciiArtColor from "../../draw/DrawAsciiArtColor.js"
 
 
 export default class Firetruck extends Animator {
-    static category = "Vehicles"
-    static title = "Fire Truck"
     static description = "Fire truck sprite with flashing lights and ladder"
 
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup, x = 0, y = 0) {

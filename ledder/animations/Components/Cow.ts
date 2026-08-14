@@ -9,8 +9,6 @@ import DrawAsciiArtColor from "../../draw/DrawAsciiArtColor.js"
 
 
 export default class Cow extends Animator {
-    static category = "Animals"
-    static title = "Cow"
     static description = "Simple cow sprite with walking animation"
 
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup, x = 0, y = 0) {

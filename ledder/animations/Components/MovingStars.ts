@@ -24,7 +24,6 @@ let starAscii=[`
 
 export default class MovingStars extends Animator {
 
-    static category = "Basic"
     static title = "Moving stars left"
     static description = "Used in nyancat :)"
 

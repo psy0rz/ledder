@@ -22,8 +22,6 @@ import {fonts, fontSelect} from "../../fonts.js"
 
 
 export default class Sensorclock32x8 extends Animator {
-    static category = "Displaysize"
-    static title = "Sensorclock32x8"
     static description = "Clock and sensor display optimized for 32x8 display"
 
     

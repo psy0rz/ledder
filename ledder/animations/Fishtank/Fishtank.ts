@@ -24,8 +24,6 @@ import { PostFXConfig } from "./PostFXConfig.js"
 import { TextPostFXConfig } from "./TextPostFXConfig.js"
 
 export default class Fishtank extends Animator {
-    static category = "Compositions"
-    static title = "Fishtank"
     static description = "Dynamic scene composition with fish, plants, weather, buildings, and text"
 
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) {

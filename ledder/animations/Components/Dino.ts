@@ -9,7 +9,6 @@ import DrawAsciiArtColor from "../../draw/DrawAsciiArtColor.js"
 
 
 export default class Dino extends Animator {
-    static category = "Sprites"
     static title = "Dinosaur"
     static description = "Mozilla/Chrome style dinosaur sprite"
 

@@ -37,8 +37,6 @@ const horiz = `
 
 
 export default class Poleposition extends Animator {
-    static category = "Gamesdemos"
-    static title = "Pole position"
     static description = "inspired by the vic-20 game"
     
 

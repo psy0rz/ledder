@@ -398,9 +398,6 @@ class Plane3d extends Object3d {
 
 
 export default class LedderDemo extends Animator {
-    static category = "Misc"
-    static title = "LedderDemo"
-    static description = "blabla"
     counter: number = 0
     c = 255
     moviepart = 0

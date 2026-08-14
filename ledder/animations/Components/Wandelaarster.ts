@@ -10,7 +10,6 @@ import DrawAsciiArtColor from "../../draw/DrawAsciiArtColor.js"
 
 
 export default class Wandelaarster extends Animator {
-    static category = "Misc"
     static title = "Wandelaar female"
     static description = "Walking female"
 

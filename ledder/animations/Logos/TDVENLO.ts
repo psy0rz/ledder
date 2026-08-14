@@ -20,9 +20,6 @@ y...bb...wwbbbb.y..
 `
 
 export default class TDVenlo extends Animator {
-    static category = "Logos"
-    static title = "TDvenlo"
-    static description = ""
 
 
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) {

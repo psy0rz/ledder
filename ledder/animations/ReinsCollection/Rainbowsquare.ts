@@ -7,9 +7,7 @@ import Color from "../../Color.js"
 
 
 export default class Squarerainbow2 extends Animator {
-    static category = "Viz"
     static title = "Squarerainbow"
-    static description = "blabla"
 
 
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) 

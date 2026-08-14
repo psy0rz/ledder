@@ -10,8 +10,6 @@ import Animator from "../../Animator.js"
 import {inspect} from "util"
 
 export default class PlasmaFire extends Animator {
-    static category = "Fire"
-    static title = "Plasma Fire "
     static description = "Base on the 1993 Firedemo"
 
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) {

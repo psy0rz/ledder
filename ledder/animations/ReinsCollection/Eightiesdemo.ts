@@ -373,8 +373,6 @@ export class Random3d extends Object3d{
 
 export default class Eightiesdemo extends Animator {
 
-    static category = "Demo"
-    static title = "Eighties demo"
     static description = "retro style demo inspired by the 80s "
    static max_iteration=512
     

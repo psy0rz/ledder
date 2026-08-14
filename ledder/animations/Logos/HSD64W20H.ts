@@ -54,7 +54,6 @@ w...w.w...w.wwwww.w...w.wwwww.w...w.wwwww.w.....w...w.wwwww.wwwww
 
 
 export default class HSD64W20H extends Animator {
-    static category = "Logos"
     static title = "hackerspace drenthe"
     static description = "Large vertical logo scroller for big screens (64 pixels width)"
     

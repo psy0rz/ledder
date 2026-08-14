@@ -84,9 +84,6 @@ export class Fortunecookies {
 
 
 export default class FortuneCookie extends Animator {
-    static category = "Misc"
-    static title = "Fortune Cookie"
-    static description = "blabla"
 
 
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) {

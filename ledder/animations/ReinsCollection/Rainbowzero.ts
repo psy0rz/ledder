@@ -7,9 +7,6 @@ import Color from "../../Color.js"
 
 
 export default class Rainbowzero extends Animator {
-    static category = "Ledart"
-    static title = "Rainbowzero"
-    static description = "blabla"
 
 
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) 
