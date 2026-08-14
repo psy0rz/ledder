@@ -16,7 +16,7 @@ export default class ControlPosition  {
     x: number
     y: number
 
-    constructor(name: string = 'root', parent: ControlGroup, box: BoxInterface, restartOnChange: boolean, xOrigin: XOrigin = "left", xOffset = 0, yOrigin: YOrigin = "top", yOffset = 0) {
+    constructor(name: string = 'Position', parent: ControlGroup, box: BoxInterface, restartOnChange: boolean, xOrigin: XOrigin = "left", xOffset = 0, yOrigin: YOrigin = "top", yOffset = 0) {
 
         let group = parent.group(name, restartOnChange, false, false, true)
 
