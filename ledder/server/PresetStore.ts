@@ -159,10 +159,11 @@ export class PresetStore {
         for (const entry of await readdir(startPath, {withFileTypes: true})) {
             if (entry.isDirectory())
 
-                //recurse
+                //recurse. Note that we pass the path relative to animationPath, not just the
+                //directory name: an animation deeper than one level is named after its whole path.
                 ret.push({
                     name: entry.name,
-                    animationList: await this.buildAnimationPresetList(entry.name)
+                    animationList: await this.buildAnimationPresetList(path.join(dir, entry.name))
                 })
             else {
                 //actual animation?
