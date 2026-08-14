@@ -52,7 +52,7 @@
      "selected": "Xmas/XmasSantaReindeer"
     },
     "Preset": {
-     "selected": "(none)"
+     "selected": "default"
     },
     "Z": {
      "value": 10
@@ -99,7 +99,7 @@
         "selected": "(none)"
        },
        "Preset": {
-        "selected": "(none)"
+        "selected": "default"
        },
        "Z": {
         "value": 10
@@ -119,7 +119,7 @@
      "selected": "Text/Marquee"
     },
     "Preset": {
-     "selected": "(none)"
+     "selected": "default"
     },
     "Z": {
      "value": 20
@@ -209,8 +209,8 @@
      },
      "Text color": {
       "r": 255,
-      "g": 255,
-      "b": 255,
+      "g": 193,
+      "b": 0,
       "a": 1
      },
      "Font": {
@@ -218,7 +218,28 @@
      },
      "Twinkle": {
       "Enabled": {
+       "enabled": true
+      },
+      "Color": {
+       "r": 255,
+       "g": 255,
+       "b": 255,
+       "a": 1
+      },
+      "Twinkle density": {
+       "value": 9
+      },
+      "Create randomizer %": {
+       "value": 50
+      },
+      "Random colors": {
        "enabled": false
+      },
+      "Fade out time": {
+       "value": 23
+      },
+      "Fade out time randomizer": {
+       "value": 4
       }
      },
      "Scrolling": {
@@ -302,7 +323,7 @@
         "selected": "(none)"
        },
        "Preset": {
-        "selected": "(none)"
+        "selected": "default"
        },
        "Z": {
         "value": 10
@@ -325,7 +346,7 @@
      "selected": "(none)"
     },
     "Preset": {
-     "selected": "(none)"
+     "selected": "default"
     },
     "Z": {
      "value": 30
