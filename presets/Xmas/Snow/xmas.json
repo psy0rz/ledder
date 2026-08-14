@@ -2,41 +2,75 @@
  "title": "",
  "description": "",
  "values": {
+  "Snow": {
+   "Animation interval": {
+    "value": 1
+   },
+   "Snowflakes": {
+    "Snowflake color": {
+     "r": 255,
+     "g": 255,
+     "b": 255,
+     "a": 0.7
+    },
+    "Number of snowflakes": {
+     "value": 502
+    }
+   },
+   "Weather": {
+    "Wind speed": {
+     "value": -7.300000000000001
+    }
+   },
+   "Snow ground layer": {
+    "Snow ground layer enabled": {
+     "enabled": true
+    },
+    "Snow ground layer height": {
+     "value": 3
+    }
+   }
+  },
   "Layers": {
    "Z of animation": {
     "value": 0
    },
    "Layer 1": {
     "Animation": {
-     "selected": "Sprites/Pacman"
+     "selected": "Xmas/XmasSantaReindeer"
     },
     "Preset": {
      "selected": "(none)"
     },
     "Z": {
-     "value": -10
+     "value": 10
     },
     "Enabled": {
      "enabled": true
     },
-    "Sprites/Pacman": {
-     "Movie interval": {
-      "value": 4
-     },
-     "Movie interval randomizer": {
-      "value": 0
-     },
-     "Rotate Y step": {
-      "value": 0
-     },
-     "Rotate interval": {
-      "value": 2
-     },
-     "Rotate interval randomizer": {
-      "value": 0
-     },
-     "Rotate X step": {
-      "value": 0
+    "Xmas/XmasSantaReindeer": {
+     "Sled": {
+      "Reindeers count": {
+       "value": 1
+      },
+      "Movie interval": {
+       "value": 8
+      },
+      "Movie interval randomizer": {
+       "value": 0
+      },
+      "Rotate interval": {
+       "value": 8
+      },
+      "Rotate interval randomizer": {
+       "value": 0
+      },
+      "Rotate X step": {
+       "value": 1
+      },
+      "Rotate Y step": {
+       "value": 0
+      }
      },
      "Enabled": {
       "enabled": true
@@ -51,75 +85,46 @@
      "selected": "(none)"
     },
     "Z": {
-     "value": 10
+     "value": 20
     },
     "Enabled": {
      "enabled": true
     },
     "Text/Marquee": {
-     "Scrolling": {
-      "Enabled": {
-       "enabled": true
-      },
-      "Whitespace": {
-       "value": 10
-      },
-      "Rotate interval": {
-       "value": 2
-      },
-      "Rotate interval randomizer": {
-       "value": 0
-      },
-      "Rotate X step": {
-       "value": -1
-      },
-      "Rotate Y step": {
-       "value": 0
-      },
-      "Circular": {
-       "enabled": false
-      },
-      "Show one time only": {
-       "enabled": true
-      },
-      "FPS": {
-       "value": 60
-      }
-     },
-     "Text color": {
-      "r": 229,
-      "g": 229,
-      "b": 229,
-      "a": 1
-     },
      "Color pattern": {
       "Enabled": {
-       "enabled": true
+       "enabled": false
       },
       "Color cycle time": {
        "value": 240
       },
       "Reverse": {
-       "enabled": false
+       "enabled": true
       },
       "Ping pong": {
        "enabled": true
       },
       "Color cycle pattern": {
-       "selected": "Rainbow"
+       "selected": "DimmedReinbow"
       },
       "Color cycle pattern range": {
-       "from": 81,
+       "from": 0,
        "to": 100
       },
       "Per pixel offset %": {
        "value": 1
       }
      },
-     "Twinkle": {
+     "Cursor": {
       "Enabled": {
        "enabled": false
       }
+     },
+     "Font height": {
+      "value": 0
+     },
+     "Font width": {
+      "value": 0
      },
      "Flames": {
       "Enabled": {
@@ -138,7 +143,7 @@
        "value": 0.1
       },
       "Fire wind Y": {
-       "value": 0.2
+       "value": -0.2
       },
       "Fire cycle": {
        "Color cycle time": {
@@ -154,55 +159,55 @@
         "selected": "reverse"
        },
        "Color cycle pattern": {
-        "selected": "Bertrik fire"
+        "selected": "Rainbow"
+       },
+       "Color cycle pattern range": {
+        "from": 0,
+        "to": 100
        }
       }
      },
      "Text": {
-      "text": "Hackerspace Drenthe is the best \\o/"
+      "text": "MERRY X-MAS & A HAPPY NEW YEAR"
+     },
+     "Text color": {
+      "r": 255,
+      "g": 255,
+      "b": 255,
+      "a": 1
      },
      "Font": {
       "selected": "C64"
      },
-     "Font width": {
-      "value": 0
-     },
-     "Font height": {
-      "value": 0
-     },
-     "Cursor": {
+     "Twinkle": {
       "Enabled": {
        "enabled": false
+      }
+     },
+     "Scrolling": {
+      "Enabled": {
+       "enabled": true
       },
-      "Color": {
-       "r": 128,
-       "g": 128,
-       "b": 128,
-       "a": 1
+      "FPS": {
+       "value": 60
       },
-      "X offset": {
+      "Rotate interval": {
        "value": 2
       },
-      "Y offset": {
-       "value": 1
-      },
-      "Height": {
-       "value": 6
-      },
-      "Width": {
-       "value": 5
-      },
-      "Fade out time": {
-       "value": 10
-      },
-      "Fade out time randomizer": {
+      "Rotate interval randomizer": {
        "value": 0
       },
-      "On time": {
-       "value": 30
+      "Rotate X step": {
+       "value": -1
       },
-      "Off time": {
-       "value": 30
+      "Rotate Y step": {
+       "value": 0
+      },
+      "Circular": {
+       "enabled": false
+      },
+      "Show one time only": {
+       "enabled": false
       }
      },
      "Enabled": {

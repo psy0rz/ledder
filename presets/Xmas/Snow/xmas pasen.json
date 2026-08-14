@@ -1,0 +1,187 @@
+{
+ "title": "",
+ "description": "",
+ "values": {
+  "Snow": {
+   "Animation interval": {
+    "value": 1
+   },
+   "Snowflakes": {
+    "Snowflake color": {
+     "r": 63,
+     "g": 0,
+     "b": 252,
+     "a": 0.49
+    },
+    "Number of snowflakes": {
+     "value": 342
+    }
+   },
+   "Weather": {
+    "Wind speed": {
+     "value": 0
+    }
+   },
+   "Snow ground layer": {
+    "Snow ground layer enabled": {
+     "enabled": false
+    },
+    "Snow ground layer height": {
+     "value": 3
+    }
+   }
+  },
+  "Layers": {
+   "Z of animation": {
+    "value": 0
+   },
+   "Layer 1": {
+    "Animation": {
+     "selected": "Xmas/XmasSantaReindeer"
+    },
+    "Preset": {
+     "selected": "(none)"
+    },
+    "Z": {
+     "value": 10
+    },
+    "Enabled": {
+     "enabled": true
+    },
+    "Xmas/XmasSantaReindeer": {
+     "Sled": {
+      "Reindeers count": {
+       "value": 0
+      },
+      "Movie interval": {
+       "value": 8
+      },
+      "Movie interval randomizer": {
+       "value": 0
+      },
+      "Rotate interval": {
+       "value": 8
+      },
+      "Rotate interval randomizer": {
+       "value": 0
+      },
+      "Rotate X step": {
+       "value": 1
+      },
+      "Rotate Y step": {
+       "value": 0
+      }
+     },
+     "Enabled": {
+      "enabled": true
+     }
+    }
+   },
+   "Layer 2": {
+    "Animation": {
+     "selected": "Text/Marquee"
+    },
+    "Preset": {
+     "selected": "(none)"
+    },
+    "Z": {
+     "value": 20
+    },
+    "Enabled": {
+     "enabled": true
+    },
+    "Text/Marquee": {
+     "Color pattern": {
+      "Enabled": {
+       "enabled": true
+      },
+      "Color cycle time": {
+       "value": 240
+      },
+      "Reverse": {
+       "enabled": false
+      },
+      "Ping pong": {
+       "enabled": true
+      },
+      "Color cycle pattern": {
+       "selected": "Rainbow"
+      },
+      "Color cycle pattern range": {
+       "from": 0,
+       "to": 100
+      },
+      "Per pixel offset %": {
+       "value": 1
+      }
+     },
+     "Cursor": {
+      "Enabled": {
+       "enabled": false
+      }
+     },
+     "Font height": {
+      "value": 0
+     },
+     "Font width": {
+      "value": 0
+     },
+     "Flames": {
+      "Enabled": {
+       "enabled": false
+      }
+     },
+     "Text": {
+      "text": "Prettige paasdagen"
+     },
+     "Text color": {
+      "r": 33,
+      "g": 255,
+      "b": 0,
+      "a": 1
+     },
+     "Font": {
+      "selected": "ORG v01"
+     },
+     "Twinkle": {
+      "Enabled": {
+       "enabled": false
+      }
+     },
+     "Scrolling": {
+      "Enabled": {
+       "enabled": true
+      },
+      "FPS": {
+       "value": 60
+      },
+      "Rotate interval": {
+       "value": 2
+      },
+      "Rotate interval randomizer": {
+       "value": 0
+      },
+      "Rotate X step": {
+       "value": -1
+      },
+      "Rotate Y step": {
+       "value": 0
+      },
+      "Circular": {
+       "enabled": false
+      },
+      "Show one time only": {
+       "enabled": false
+      }
+     },
+     "Enabled": {
+      "enabled": true
+     }
+    }
+   },
+   "Enabled": {
+    "enabled": true
+   }
+  }
+ }
+}

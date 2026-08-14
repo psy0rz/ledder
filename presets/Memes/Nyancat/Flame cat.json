@@ -43,38 +43,6 @@
     "enabled": true
    }
   },
-  "Stars": {
-   "Star color": {
-    "r": 255,
-    "g": 255,
-    "b": 255,
-    "a": 0.19
-   },
-   "Number of stars": {
-    "value": 10
-   },
-   "Movie interval": {
-    "value": 5
-   },
-   "Movie interval randomizer": {
-    "value": 0
-   },
-   "Rotate interval": {
-    "value": 4
-   },
-   "Rotate interval randomizer": {
-    "value": 2
-   },
-   "Rotate X step": {
-    "value": -1
-   },
-   "Rotate Y step": {
-    "value": 0
-   },
-   "Enabled": {
-    "enabled": true
-   }
-  },
   "Move": {
    "Rotate interval": {
     "value": 2
@@ -145,6 +113,42 @@
   },
   "Enabled": {
    "enabled": true
+  },
+  "Layers": {
+   "Z of animation": {
+    "value": 0
+   },
+   "Layer 1": {
+    "Animation": {
+     "selected": "Sprites/MovingStars"
+    },
+    "Preset": {
+     "selected": "(none)"
+    },
+    "Z": {
+     "value": -10
+    },
+    "Enabled": {
+     "enabled": true
+    },
+    "Sprites/MovingStars": {
+     "Star color": {
+      "r": 255,
+      "g": 255,
+      "b": 255,
+      "a": 0.19
+     },
+     "Number of stars": {
+      "value": 10
+     },
+     "Enabled": {
+      "enabled": true
+     }
+    }
+   },
+   "Enabled": {
+    "enabled": true
+   }
   }
  }
 }

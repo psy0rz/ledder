@@ -6,7 +6,6 @@
 
 
 import PixelBox from "../../PixelBox.js"
-import MovingStars from "../Sprites/MovingStars.js"
 import PixelList from "../../PixelList.js"
 import FxRotate from "../../fx/FxRotate.js"
 import DrawAsciiArtColor from "../../draw/DrawAsciiArtColor.js"
@@ -29,10 +28,6 @@ export default class Nyancat extends Animator {
 
         controls.group("Rainbow")
         let fireGroup=controls.group("Fire", true,true,true)
-
-        //start with the stars in the background
-        let stars = new MovingStars();
-        stars.run(box, scheduler, controls.group("Stars"))
 
         //move the whole cat (will add pixels later)
         let cat = new PixelList()

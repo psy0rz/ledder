@@ -1,9 +1,7 @@
 import PixelBox from "../../PixelBox.js"
-import Pacman from "../Sprites/Pacman.js"
 import DrawAsciiArtColor from "../../draw/DrawAsciiArtColor.js"
 import Scheduler from "../../Scheduler.js"
 import ControlGroup from "../../ControlGroup.js"
-import {animationRun} from "../../server/utils.js"
 import Animator from "../../Animator.js"
 
 
@@ -24,24 +22,7 @@ export default class HSD extends Animator {
 
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) {
 
-
-        const marqueeBox = new PixelBox(box)
-        box.add(marqueeBox)
-
-        // box.add(new DrawBox(0,0,4,8, new Color(0,0,0,)))
-        // box.centerV(box)
-
-        new Pacman().run(box, scheduler, controls)
-
-
-
         const logoBox=new DrawAsciiArtColor(box.width() - 8, 0, logo).centerV(box)
         box.add(logoBox)
-
-        // box.centerV(box)
-
-       await animationRun(marqueeBox, scheduler, controls, "Text/Marquee")
-
-
     }
 }
