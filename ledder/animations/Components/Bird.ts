@@ -9,6 +9,10 @@ import Animator from "../../Animator.js"
 import DrawAsciiArtColor from "../../draw/DrawAsciiArtColor.js"
 
 class Bird extends Animator {
+    static category = "Sprites"
+    static title = "Bird"
+    static description = "Flying bird sprite with FRONT VIEW wing flapping animation"
+
     private usedPositions: Set<string> = new Set()
     
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) {
@@ -185,9 +189,5 @@ class Bird extends Animator {
         new FxRotate(scheduler, controls, 1).run(frames, birdBox)
     }
 }
-
-Bird.category = "Sprites"
-Bird.title = "Bird"
-Bird.description = "Flying bird sprite with FRONT VIEW wing flapping animation"
 
 export default Bird

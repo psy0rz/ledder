@@ -12,6 +12,9 @@ import Color from "./Color.js"
  */
 export default class Animator {
 
+    //how this animation is presented in the GUI, set these in your subclass
+    static title: string
+    static description: string
 
     //preview settings, fiddle with this to optimize your preview image (usually no need to change)
     static previewSkip = 120 //number of input-frames to skip

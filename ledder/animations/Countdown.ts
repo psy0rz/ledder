@@ -5,7 +5,7 @@ import {fontSelect} from "../fonts.js"
 import DrawText from "../draw/DrawText.js"
 import Animator from "../Animator.js"
 
-import Marquee from "./Text/Marquee.js"
+import Text from "./Text.js"
 
 function paddy(num, padlen, padchar = '0') {
     var pad = new Array(1 + padlen).join(padchar)
@@ -20,8 +20,8 @@ export default class Countdown extends Animator {
 
         let targetDate = new Date(controls.input('Target time', '2024-09-04T00:00', true).text)
 
-        const marqueeBox=new PixelBox(box)
-        box.add(marqueeBox)
+        const textBox=new PixelBox(box)
+        box.add(textBox)
 
         const countBox = new PixelBox(box)
         box.add(countBox)
@@ -37,8 +37,8 @@ export default class Countdown extends Animator {
 
         let blinkdir = 1 / 60
 
-        let marquee=new Marquee()
-        marquee.run(marqueeBox, scheduler,controls.group("Marquee"))
+        let textAnimation=new Text()
+        textAnimation.run(textBox, scheduler,controls.group("Marquee"))
 
         scheduler.interval(1, () => {
 

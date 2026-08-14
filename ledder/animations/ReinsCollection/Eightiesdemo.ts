@@ -18,7 +18,7 @@ import DrawBox from "../../draw/DrawBox.js"
 import DrawCircle from "../../draw/DrawCircle.js"
 import { reinGalaxy } from "../../ColorPatterns.js"
 import Matrix from "matrix_transformer"
-import Marquee from "../Text/Marquee.js"
+import Text from "../Text.js"
 import Fire from "../Fires/Fire.js"
 
 export class scene3D {
@@ -1169,7 +1169,7 @@ export default class Eightiesdemo extends Animator {
       scene3d.objects.push(cube)
       let rotation3d=0
       let  controlSettings={rotation:1,wireframe:true,perspective:0.98,stars:100,antiAliasing:false,antiAliasingThreshold:0.3,motionBlur:false,motionBlurSteps:3,frameNr:0}
-       let textscroller=new Marquee()
+       let textscroller=new Text()
        let horizonDir=verticalScrollSpeed.value;
        let yOffset=0;
        textscroller.run(box,scheduler,extMarqueeControl);

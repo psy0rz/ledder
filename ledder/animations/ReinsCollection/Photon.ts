@@ -8,7 +8,7 @@ import DrawLine from "../../draw/DrawLine.js"
 import Pixel from "../../Pixel.js"
 import Color from "../../Color.js"
 import { patternSelect } from "../../ColorPatterns.js"
-import Marquee from "../Text/Marquee.js"
+import Text from "../Text.js"
 import Fire from "../Fires/Fire.js"
 
 class PhotonPixel 
@@ -408,8 +408,8 @@ export default class Photonmatrixtest extends Animator {
         
         if (marqueeEnabledControl.enabled)
         {
-            let marquee=new Marquee()
-            marquee.run(box,scheduler,marqueeControl)
+            let textAnimation=new Text()
+            textAnimation.run(box,scheduler,marqueeControl)
         }
       
         scheduler.intervalControlled(intervalControl, (frameNr) => {

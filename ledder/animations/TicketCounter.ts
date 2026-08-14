@@ -6,7 +6,7 @@ import ControlGroup from "../ControlGroup.js"
 import Animator from "../Animator.js"
 import mqtt from "mqtt"
 import DrawCounter from "../draw/DrawCounter.js"
-import Marquee from "./Text/Marquee.js"
+import Text from "./Text.js"
 import DrawBox from "../draw/DrawBox.js"
 import {colorBlack, colorRed} from "../Colors.js"
 
@@ -19,16 +19,16 @@ export default class Template extends Animator {
         const digitCount=controls.value('Digits', 4)
 
         const xPad=8
-        const marquee=new Marquee()
+        const textAnimation=new Text()
         const counterX=box.width()/2 - (7*2)
 
 
 
 
-        let marqueeBox=new PixelBox(box)
-        box.add(marqueeBox)
+        let textBox=new PixelBox(box)
+        box.add(textBox)
 
-        marquee.run(marqueeBox, scheduler, controls.group("Marquee"))
+        textAnimation.run(textBox, scheduler, controls.group("Marquee"))
 
 
         // box.add(new DrawBox(counterX-3, 0, box.xMax-counterX+xPad, box.height(), colorBlack ))

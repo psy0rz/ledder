@@ -57,20 +57,20 @@ export default class Cycle extends Animator {
 
         const fxControls=controls.group("FX")
         while(1) {
-            await show("Text/Marquee", "dosprompt", 8000)
+            await show("Text", "dosprompt", 8000)
 
-            await show("Text/BTC", "ethereum", 8000)
-            await show("Text/BTC", "default", 8000)
+            await show("BTC", "ethereum", 8000)
+            await show("BTC", "default", 8000)
 
-            await show("Text/Marquee", "hsnlgroot", 8000)
+            await show("Text", "hsnlgroot", 8000)
 
             await show("Logos/HSD64W20H", "default", 8000)
             // await show("Logos/divd", "default", 8000)
 
 
-            // await show("Text/Marquee", "hsnl", 8000)
+            // await show("Text", "hsnl", 8000)
 
-            // await show("Text/Marquee", "github", 10000)
+            // await show("Text", "github", 10000)
 
 
 
@@ -87,14 +87,14 @@ export default class Cycle extends Animator {
                 await show("Memes/Cyber", "default", 4000)
 
 
-            await show("Text/Marquee", "bornhack", 8000)
+            await show("Text", "bornhack", 8000)
 
             await show("ReinsCollection/XmasSantaReindeer", "default", 8000)
 
 
             await show("ReinsCollection/Prisma", "default", 8000)
 
-            await show("Text/Marquee", "drink", 8000)
+            await show("Text", "drink", 8000)
 
             await show("Logos/HSD", "default", 0)
 

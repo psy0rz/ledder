@@ -4,7 +4,7 @@ import XmasSantaReindeer from "./XmasSantaReindeer.js"
 import Scheduler from "../../Scheduler.js"
 import ControlGroup from "../../ControlGroup.js"
 import Animator from "../../Animator.js"
-import Marquee from "../Text/Marquee.js"
+import Text from "../Text.js"
 
 
 
@@ -21,7 +21,7 @@ export default class Xmas extends Animator {
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) {     
         let snow = new Snow() 
         let santa= new XmasSantaReindeer()
-        let marquee=new Marquee()
+        let textAnimation=new Text()
       
       
         let x=0;
@@ -31,7 +31,7 @@ export default class Xmas extends Animator {
         //let them run
         snow.run(box, scheduler, controls) 
         santa.run(box, scheduler, controls) 
-        marquee.run(box, scheduler, controls) 
+        textAnimation.run(box, scheduler, controls) 
       
        
 
