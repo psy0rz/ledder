@@ -14,7 +14,7 @@
      "selected": "(none)"
     },
     "Z": {
-     "value": -10
+     "value": 0
     },
     "Enabled": {
      "enabled": true
@@ -40,6 +40,28 @@
      },
      "Enabled": {
       "enabled": true
+     },
+     "Sublayers": {
+      "Z of Sprites/Pacman": {
+       "value": 0
+      },
+      "Layer 1.1": {
+       "Animation": {
+        "selected": "(none)"
+       },
+       "Preset": {
+        "selected": "(none)"
+       },
+       "Z": {
+        "value": 10
+       },
+       "Enabled": {
+        "enabled": true
+       }
+      },
+      "Enabled": {
+       "enabled": true
+      }
      }
     }
    },
@@ -51,7 +73,7 @@
      "selected": "(none)"
     },
     "Z": {
-     "value": 10
+     "value": -15
     },
     "Enabled": {
      "enabled": true
@@ -80,10 +102,19 @@
        "enabled": false
       },
       "Show one time only": {
-       "enabled": true
+       "enabled": false
       },
       "FPS": {
        "value": 60
+      },
+      "Scroll Speed": {
+       "value": 1
+      },
+      "Scroll direction": {
+       "selected": "horizontal"
+      },
+      "Gap": {
+       "value": 64
       }
      },
      "Text color": {
@@ -94,7 +125,7 @@
      },
      "Color pattern": {
       "Enabled": {
-       "enabled": true
+       "enabled": false
       },
       "Color cycle time": {
        "value": 240
@@ -207,12 +238,113 @@
      },
      "Enabled": {
       "enabled": true
+     },
+     "Text anchor position": {
+      "X origin": {
+       "selected": "center"
+      },
+      "X offset": {
+       "value": 0
+      },
+      "Y origin": {
+       "selected": "middle"
+      },
+      "Y offset": {
+       "value": 1
+      },
+      "Show anchor": {
+       "enabled": false
+      },
+      "Enabled": {
+       "enabled": true
+      }
+     },
+     "Horizontal text align": {
+      "selected": "centered"
+     },
+     "Vertical text align": {
+      "selected": "middle"
+     },
+     "Wrap text": {
+      "enabled": false
+     },
+     "Wobble": {
+      "Enabled": {
+       "enabled": false
+      }
+     },
+     "Sublayers": {
+      "Z of Text/Marquee": {
+       "value": 0
+      },
+      "Layer 2.1": {
+       "Animation": {
+        "selected": "(none)"
+       },
+       "Preset": {
+        "selected": "(none)"
+       },
+       "Z": {
+        "value": 10
+       },
+       "Enabled": {
+        "enabled": true
+       }
+      },
+      "Enabled": {
+       "enabled": true
+      }
      }
     }
    },
    "Enabled": {
     "enabled": true
+   },
+   "Layer 3": {
+    "Animation": {
+     "selected": "(none)"
+    },
+    "Preset": {
+     "selected": "(none)"
+    },
+    "Z": {
+     "value": 30
+    },
+    "Enabled": {
+     "enabled": true
+    }
    }
+  },
+  "Render settings": {
+   "FPS": {
+    "value": 60
+   },
+   "Subpixel filtering": {
+    "enabled": false
+   },
+   "Enabled": {
+    "enabled": true
+   }
+  },
+  "Position": {
+   "X origin": {
+    "selected": "right"
+   },
+   "X offset": {
+    "value": -4
+   },
+   "Y origin": {
+    "selected": "middle"
+   },
+   "Y offset": {
+    "value": 0
+   },
+   "Enabled": {
+    "enabled": true
+   }
+  },
+  "Enabled": {
+   "enabled": true
   }
  }
 }

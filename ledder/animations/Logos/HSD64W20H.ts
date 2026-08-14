@@ -11,6 +11,7 @@ import FxMovie from "../../fx/FxMovie.js"
 import Color from "../../Color.js"
 import DrawAsciiArtColor from "../../draw/DrawAsciiArtColor.js"
 import DrawText from "../../draw/DrawText.js"
+import FxRotate from "../../fx/FxRotate.js"
 
 
 
@@ -58,40 +59,25 @@ export default class HSD64W20H extends Animator {
     static description = "Large vertical logo scroller for big screens (64 pixels width)"
     
 
-    async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) 
+    async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup)
     {
-        
-     
-        function putLogo(x:number,y:number)
-        {
-            return new DrawAsciiArtColor(x,y, hsdLogo64W32H)
+        let x = (box.width() - 64) / 2
+        if (x < 0) { x = 0 }
+
+        //logo enters from just below the box and scrolls up; the wrap bbox is tall enough
+        //(box height + gap on both ends) that it's fully off-screen before it teleports back
+        const startY = box.yMin + box.height()
+        const wrapBbox = {
+            xMin: box.xMin,
+            xMax: box.xMax,
+            yMin: box.yMin - box.height() - 10,
+            yMax: startY,
         }
 
-        let time=0
-        const intervalControl = controls.value("Animation interval", 1, 1, 10, 0.1)
-        const speedControl = controls.value("Time divider", 10, 1, 100, 1)
-        let logoList=new PixelList()
-        box.add(logoList) 
-       
-       scheduler.intervalControlled(intervalControl, (frameNr) => {
-       
-            logoList.clear()
-            time=time+1
+        const logo = new DrawAsciiArtColor(x, startY, hsdLogo64W32H)
+        box.add(logo)
 
-            let x=(box.width()-64)/2
-            if (x<0) {x=0}
-            
-            let y=box.height()-(time/speedControl.value)
-            
-            logoList.add(putLogo(x,y))
-
-            if (y< (-1*box.height())-20)
-            {
-                time=0
-            }
-
-       });
-       
+        new FxRotate(scheduler, controls, 0, -1, 2, 0).run(logo, wrapBbox)
     }
 
     

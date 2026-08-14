@@ -15,11 +15,17 @@
     },
     "Number of snowflakes": {
      "value": 502
+    },
+    "Enabled": {
+     "enabled": true
     }
    },
    "Weather": {
     "Wind speed": {
      "value": -7.300000000000001
+    },
+    "Enabled": {
+     "enabled": true
     }
    },
    "Snow ground layer": {
@@ -28,7 +34,13 @@
     },
     "Snow ground layer height": {
      "value": 3
+    },
+    "Enabled": {
+     "enabled": true
     }
+   },
+   "Enabled": {
+    "enabled": true
    }
   },
   "Layers": {
@@ -70,10 +82,35 @@
       },
       "Rotate Y step": {
        "value": 0
+      },
+      "Enabled": {
+       "enabled": true
       }
      },
      "Enabled": {
       "enabled": true
+     },
+     "Sublayers": {
+      "Z of Xmas/XmasSantaReindeer": {
+       "value": 0
+      },
+      "Layer 1.1": {
+       "Animation": {
+        "selected": "(none)"
+       },
+       "Preset": {
+        "selected": "(none)"
+       },
+       "Z": {
+        "value": 10
+       },
+       "Enabled": {
+        "enabled": true
+       }
+      },
+      "Enabled": {
+       "enabled": true
+      }
      }
     }
    },
@@ -208,16 +245,109 @@
       },
       "Show one time only": {
        "enabled": false
+      },
+      "Scroll Speed": {
+       "value": 0.5
+      },
+      "Scroll direction": {
+       "selected": "horizontal"
+      },
+      "Gap": {
+       "value": 64
       }
      },
      "Enabled": {
       "enabled": true
+     },
+     "Text anchor position": {
+      "X origin": {
+       "selected": "center"
+      },
+      "X offset": {
+       "value": 0
+      },
+      "Y origin": {
+       "selected": "middle"
+      },
+      "Y offset": {
+       "value": 0
+      },
+      "Show anchor": {
+       "enabled": false
+      },
+      "Enabled": {
+       "enabled": true
+      }
+     },
+     "Horizontal text align": {
+      "selected": "centered"
+     },
+     "Vertical text align": {
+      "selected": "middle"
+     },
+     "Wrap text": {
+      "enabled": false
+     },
+     "Wobble": {
+      "Enabled": {
+       "enabled": false
+      }
+     },
+     "Sublayers": {
+      "Z of Text/Marquee": {
+       "value": 0
+      },
+      "Layer 2.1": {
+       "Animation": {
+        "selected": "(none)"
+       },
+       "Preset": {
+        "selected": "(none)"
+       },
+       "Z": {
+        "value": 10
+       },
+       "Enabled": {
+        "enabled": true
+       }
+      },
+      "Enabled": {
+       "enabled": true
+      }
      }
     }
    },
    "Enabled": {
     "enabled": true
+   },
+   "Layer 3": {
+    "Animation": {
+     "selected": "(none)"
+    },
+    "Preset": {
+     "selected": "(none)"
+    },
+    "Z": {
+     "value": 30
+    },
+    "Enabled": {
+     "enabled": true
+    }
    }
+  },
+  "Render settings": {
+   "FPS": {
+    "value": 60
+   },
+   "Subpixel filtering": {
+    "enabled": false
+   },
+   "Enabled": {
+    "enabled": true
+   }
+  },
+  "Enabled": {
+   "enabled": true
   }
  }
 }

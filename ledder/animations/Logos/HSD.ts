@@ -22,7 +22,9 @@ export default class HSD extends Animator {
 
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) {
 
-        const logoBox=new DrawAsciiArtColor(box.width() - 8, 0, logo).centerV(box)
+        const positionControl = controls.position('Position', box, true, 'center', 0, 'middle', 0)
+
+        const logoBox = new DrawAsciiArtColor(0, 0, logo).center(positionControl.x, positionControl.y)
         box.add(logoBox)
     }
 }
