@@ -131,6 +131,13 @@ export abstract class DisplayQOIS extends Display {
                 pixel.r = this.gammaMapper[Math.round(c.r)]
                 pixel.g = this.gammaMapper[Math.round(c.g)]
                 pixel.b = this.gammaMapper[Math.round(c.b)]
+
+                //reset the accumulator to opaque black in place, ready for next frame's setPixel()
+                //calls to blend into -- avoids reallocating it the way resetting the whole array would
+                c.r = 0
+                c.g = 0
+                c.b = 0
+                c.a = 1
             }
             mapped[i] = pixel
             unchangedPixel[i] = this.prevPixels[i] !== undefined && this.prevPixels[i].equal(pixel)
@@ -235,8 +242,8 @@ export abstract class DisplayQOIS extends Display {
         if (run > 0)
             bytes.push(QOI_OP_RUN | (run - 1))
 
-        //prepare for next frame
-        this.pixels = []
+        //pass 1 already reset every touched accumulator to opaque black in place, so pixels
+        //not drawn to next frame correctly come out black again without reallocating this.pixels
 
         this.statsBytes += bytes.length
         // console.log(skips)
