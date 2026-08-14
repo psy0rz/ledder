@@ -8,6 +8,12 @@ import type {WsContext} from "./WsContext.js";
 import * as fs from "node:fs";
 import {loadSettings, saveSettingsDelayed} from "./DisplaySettings.js";
 import {previewStore} from "./PreviewStore.js";
+import sharp from "sharp"
+
+//sharp's native decode cache is process-wide and keyed by input, so it fights repeatedly
+//re-decoded sources (e.g. a refreshing radar image) instead of helping. We already cache
+//decoded frames ourselves (RemotePictures.ts), so disable sharp's own cache.
+sharp.cache(false)
 
 // if (process.env.NODE_ENV == 'development') {
     await presetStore.storeAnimationPresetList()
@@ -45,6 +51,12 @@ setInterval(() => {
         renderControl.sendStats()
     }
 }, 1000)
+
+setInterval(() => {
+    const m = process.memoryUsage()
+    const mb = (bytes: number) => (bytes / 1024 / 1024).toFixed(1)
+    console.log(`Memory: rss=${mb(m.rss)}MB heapUsed=${mb(m.heapUsed)}MB heapTotal=${mb(m.heapTotal)}MB external=${mb(m.external)}MB arrayBuffers=${mb(m.arrayBuffers)}MB`)
+}, 30000)
 
 
 //RPC bindings

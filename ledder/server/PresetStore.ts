@@ -49,7 +49,12 @@ export class PresetStore {
         //note: this path is relative to this javascript module instead of current working dir.
         const importFilename = path.join("..", "..", this.animationFilename(animationName))
 
-        let module = await import(importFilename + "?" + Date.now()) //prevent caching
+        //cache-bust only when the file actually changed: a fixed query string per Date.now() call
+        //would make every select() import a brand new ES module instance, and Node never garbage
+        //collects those (every module-level cache/Map/etc. in the animation file leaks forever).
+        //Keying on mtime instead means repeated selects of an unchanged file reuse the same module.
+        const mtime = await getMtime(this.animationFilename(animationName))
+        let module = await import(importFilename + "?" + mtime)
 
         if (module.default === undefined || !(module.default.prototype instanceof Animator))
 

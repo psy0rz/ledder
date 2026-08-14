@@ -49,7 +49,7 @@ export default class RemotePlaylist extends Animator {
         const playlistUrl = controls.input("playlistUrl","https://mechanicape.nl/playlist.json",true)
         const cacheControl=controls.value("Cache refresh time (s)",600,15,60*60*24,60,true)
         let childControls = controls.group('Current animation')
-        this.animationManager = new AnimationManager(box, scheduler.child(), childControls)
+        this.animationManager = new AnimationManager(box, scheduler, childControls)
         this.playListReady=false
      
 

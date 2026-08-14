@@ -23,7 +23,9 @@ process.on('unhandledRejection', (err) => {
 
 /**
  * Manages livecycle of an animation. (Loading/Starting/Restarting/Stopping/Cleaning up)
- * Also: This can be used from an Animation to manage sub-animations.
+ * Also: This can be used from an Animation to manage sub-animations. Just pass your own scheduler
+ * in as-is: the constructor isolates its own child from it (unless `root` is set, see below), so
+ * this manager's restarts can never clear intervals belonging to the animation that created it.
  *
  */
 export default class AnimationManager {
@@ -56,10 +58,17 @@ export default class AnimationManager {
     private autoreloadTimeout: NodeJS.Timeout
     private autoreloadWatcher: any
 
-    constructor(box: PixelBox, scheduler: Scheduler, controlGroup: ControlGroup, renderSettings?: RenderSettings) {
+    //NOTE: takes the caller's scheduler and isolates a child from it (see Scheduler.child()), so this
+    //manager's own stop()/restart() (which clears its scheduler) can never wipe out intervals
+    //belonging to whoever created us. The caller must not use `scheduler` for its own intervals after
+    //this: since Scheduler only allows one child, calling this twice on the same scheduler throws.
+    //Pass root=true only when `scheduler` is a freshly created one that exists solely to be handed to
+    //this manager (e.g. the per-display scheduler in Render.ts): there is then nothing else it could
+    //clear out from under, so the extra child scheduler would just be pointless indirection.
+    constructor(box: PixelBox, scheduler: Scheduler, controlGroup: ControlGroup, renderSettings?: RenderSettings, root: boolean = false) {
 
         this.box = box
-        this.scheduler = scheduler
+        this.scheduler = root ? scheduler : scheduler.child()
         this.controlGroup = controlGroup
         this.renderSettings = renderSettings
 

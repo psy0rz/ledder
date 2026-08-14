@@ -53,9 +53,7 @@ displayconf.js
 .idea
 .vscode
 
-/util/CallbackManager.js
-/util/CallbackManager.js.map
-/util/ics.js
-/util/ics.js.map
+/util/*.js
+/util/*.js.map
 
 /settings.json
