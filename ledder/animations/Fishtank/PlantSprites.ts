@@ -145,119 +145,6 @@ export class SmallBushSprite extends SpriteAnimator {
 }
 
 // Pine tree - classic triangle shape
-const pineTreeSprite = `
-...G...
-..GgG..
-.Gg2gG.
-.g222g.
-..2g2..
-.2ggg2.
-22ggg22
-2g222g2
-..777..
-..555..
-`;
-
-export class PineTreeSprite extends SpriteAnimator {
-    constructor(x: number, y: number) {
-        const initialState: SpriteState = {
-            x,
-            y
-        };
-
-        super(pineTreeSprite, initialState, {
-            bounceOnEdges: false
-        });
-    }
-
-    update(frameNr: number, boxWidth: number, boxHeight: number) {
-        // Trees don't move
-    }
-}
-
-// Small pine tree
-const smallPineSprite = `
-..G..
-.G2G.
-2g2g2
-.222.
-..7..
-..5..
-`;
-
-export class SmallPineSprite extends SpriteAnimator {
-    constructor(x: number, y: number) {
-        const initialState: SpriteState = {
-            x,
-            y
-        };
-
-        super(smallPineSprite, initialState, {
-            bounceOnEdges: false
-        });
-    }
-
-    update(frameNr: number, boxWidth: number, boxHeight: number) {
-        // Trees don't move
-    }
-}
-
-// Oak tree - round crown
-const oakTreeSprite = `
-..GgggG..
-.Gg222gG.
-G2g2g2g2G
-2gg2G2gg2
-.2ggggg2.
-...777...
-...575...
-...555...
-`;
-
-export class OakTreeSprite extends SpriteAnimator {
-    constructor(x: number, y: number) {
-        const initialState: SpriteState = {
-            x,
-            y
-        };
-
-        super(oakTreeSprite, initialState, {
-            bounceOnEdges: false
-        });
-    }
-
-    update(frameNr: number, boxWidth: number, boxHeight: number) {
-        // Trees don't move
-    }
-}
-
-// Small oak tree
-const smallOakSprite = `
-.Gg2gG.
-G2ggg2G
-22g2g22
-..757..
-..555..
-`;
-
-export class SmallOakSprite extends SpriteAnimator {
-    constructor(x: number, y: number) {
-        const initialState: SpriteState = {
-            x,
-            y
-        };
-
-        super(smallOakSprite, initialState, {
-            bounceOnEdges: false
-        });
-    }
-
-    update(frameNr: number, boxWidth: number, boxHeight: number) {
-        // Trees don't move
-    }
-}
-
-// Grass tuft - very small
 const grassSprite = `
 .G.2.
 2gg2.
@@ -291,67 +178,6 @@ export class GrassSprite extends SpriteAnimator {
 }
 
 // Flower sprite
-const flowerSprite = `
-.y.
-ryr
-.2.
-.g.
-`;
-
-export class FlowerSprite extends SpriteAnimator {
-    private baseX: number;
-    private swaySpeed: number = 18;
-    private phaseOffset: number;
-
-    constructor(x: number, y: number, swayAmount: number = 0.5) {
-        const initialState: SpriteState = {
-            x,
-            y,
-            swayAmount
-        };
-
-        super(flowerSprite, initialState, {
-            bounceOnEdges: false
-        });
-
-        this.baseX = x;
-        this.phaseOffset = Math.random() * 6.28;
-    }
-
-    update(frameNr: number, boxWidth: number, boxHeight: number) {
-        // Optimized sway calculation
-        this.state.x = this.baseX + Math.sin(frameNr / this.swaySpeed + this.phaseOffset) * (this.state.swayAmount || 0.5);
-    }
-}
-
-// Cactus - doesn't sway
-const cactusSprite = `
-..2..
-.2g2.
-g2g2.
-.gg2.
-.2gg.
-.g2g.
-`;
-
-export class CactusSprite extends SpriteAnimator {
-    constructor(x: number, y: number) {
-        const initialState: SpriteState = {
-            x,
-            y
-        };
-
-        super(cactusSprite, initialState, {
-            bounceOnEdges: false
-        });
-    }
-
-    update(frameNr: number, boxWidth: number, boxHeight: number) {
-        // Cactus doesn't move at all
-    }
-}
-
-// Fern - delicate and detailed
 const fernSprite = `
 .G.2.G.
 2gggg2.
@@ -391,13 +217,7 @@ export const PlantSprites = {
     ShortPlant: ShortPlantSprite,
     Bush: BushSprite,
     SmallBush: SmallBushSprite,
-    PineTree: PineTreeSprite,
-    SmallPine: SmallPineSprite,
-    OakTree: OakTreeSprite,
-    SmallOak: SmallOakSprite,
     Grass: GrassSprite,
-    Flower: FlowerSprite,
-    Cactus: CactusSprite,
     Fern: FernSprite
 };
 

@@ -1,0 +1,65 @@
+{
+ "title": "",
+ "description": "",
+ "values": {
+  "Render settings": {
+   "FPS": {
+    "value": 60
+   },
+   "Subpixel filtering": {
+    "enabled": false
+   },
+   "Enabled": {
+    "enabled": true
+   }
+  },
+  "Image URL": {
+   "text": "https://thumbs.dreamstime.com/b/pixel-art-underwater-scene-featuring-ruins-coral-fish-blue-fantasy-landscape-digital-illustration-380525322.jpg"
+  },
+  "fit": {
+   "selected": "fill"
+  },
+  "cache forever": {
+   "enabled": true
+  },
+  "cache TTL (minutes)": {
+   "value": 60
+  },
+  "auto-refresh": {
+   "enabled": false
+  },
+  "playback": {
+   "speed multiplier": {
+    "value": 1
+   },
+   "Enabled": {
+    "enabled": true
+   }
+  },
+  "Layers": {
+   "Z of animation": {
+    "value": 0
+   },
+   "Layer 1": {
+    "Animation": {
+     "selected": "(none)"
+    },
+    "Preset": {
+     "selected": "(none)"
+    },
+    "Z": {
+     "value": 10
+    },
+    "Enabled": {
+     "enabled": true
+    }
+   },
+   "Enabled": {
+    "enabled": true
+   }
+  },
+  "Enabled": {
+   "enabled": true
+  }
+ }
+}

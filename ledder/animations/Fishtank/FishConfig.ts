@@ -14,32 +14,32 @@ export class FishConfig {
     
     setupControls() {
         const enableFish = this.controls.switch("Enable", true);
-        const fishSpeedMultiplier = this.controls.value("Speed multiplier", 1.0, 0.1, 3.0, 0.1);
+        const fishSpeedMultiplier = this.controls.value("Speed multiplier", 1.0, 0.1, 3.0, 0.1, true);
         
         // Fish type distribution - each with its own subgroup
         const tropicalGroup = this.controls.group("Tropical Fish", true, true);
-        const fishTropical = tropicalGroup.value("Count (0=disabled)", 3, 0, 20, 1);
+        const fishTropical = tropicalGroup.value("Count (0=disabled)", 3, 0, 20, 1, true);
         
         const goldfishGroup = this.controls.group("Goldfish", true, true);
-        const fishGoldfish = goldfishGroup.value("Count (0=disabled)", 3, 0, 20, 1);
+        const fishGoldfish = goldfishGroup.value("Count (0=disabled)", 3, 0, 20, 1, true);
         
         const clownfishGroup = this.controls.group("Clownfish", true, true);
-        const fishClownfish = clownfishGroup.value("Count (0=disabled)", 3, 0, 20, 1);
+        const fishClownfish = clownfishGroup.value("Count (0=disabled)", 3, 0, 20, 1, true);
         
         const angelfishGroup = this.controls.group("Angelfish", true, true);
-        const fishAngelfish = angelfishGroup.value("Count (0=disabled)", 3, 0, 20, 1);
+        const fishAngelfish = angelfishGroup.value("Count (0=disabled)", 3, 0, 20, 1, true);
         
         const neonTetraGroup = this.controls.group("Neon Tetra", true, true);
-        const fishNeonTetra = neonTetraGroup.value("Count (0=disabled)", 3, 0, 20, 1);
+        const fishNeonTetra = neonTetraGroup.value("Count (0=disabled)", 3, 0, 20, 1, true);
         
         const potOfPetuniasGroup = this.controls.group("Pot of Petunias 🌺", true, true);
-        const fishPotOfPetunias = potOfPetuniasGroup.value("Count (0=disabled)", 0, 0, 5, 1);
+        const fishPotOfPetunias = potOfPetuniasGroup.value("Count (0=disabled)", 0, 0, 5, 1, true);
         
         // Tiny fish school
         const schoolGroup = this.controls.group("Tiny Fish School", true, true);
         const enableSchool = schoolGroup.switch("Enable", true);
-        const schoolSize = schoolGroup.value("School size", 8, 0, 30, 1);
-        const schoolSpeedMultiplier = schoolGroup.value("Speed multiplier", 1.0, 0.1, 3.0, 0.1);
+        const schoolSize = schoolGroup.value("School size", 8, 0, 30, 1, true);
+        const schoolSpeedMultiplier = schoolGroup.value("Speed multiplier", 1.0, 0.1, 3.0, 0.1, true);
         
         return {
             enableFish,
