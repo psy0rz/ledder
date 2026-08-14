@@ -43,13 +43,13 @@ class DisplayCapture extends DisplayQOIS {
     //raw gamma-mapped RGB buffer, same values the QOIS encoder sees
     rawFrame(): Buffer {
         const buf = Buffer.alloc(this.pixelCount * 3)
-        for (let i = 0; i < this.pixelCount; i++) {
-            const c = this["pixels"][i]
-            if (c !== undefined) {
-                buf[i * 3] = this.gammaMapper[Math.round(c.r)]
-                buf[i * 3 + 1] = this.gammaMapper[Math.round(c.g)]
-                buf[i * 3 + 2] = this.gammaMapper[Math.round(c.b)]
-            }
+        const acc = this.pixelsRGB
+        const table = this.gammaMapper.table
+        //same rounding and clamping as the encoder, see DisplayQOIS.encode() pass 1
+        for (let i = 0; i < this.pixelCount * 3; i++) {
+            let v = (acc[i] + 0.5) | 0
+            if (v < 0) v = 0; else if (v > 255) v = 255
+            buf[i] = table[v]
         }
         return buf
     }
@@ -111,10 +111,8 @@ async function bench(animPath: string, width: number, height: number, preset: st
         } else raw.copy(delta)
         prevRaw = raw
 
-        const qoisBytes = []
-        display.encode(qoisBytes, 0) //consumes display pixels, appends one encoded frame
-
-        sizes.qois.push(qoisBytes.length)
+        //consumes display pixels, encodes one frame into the displays frame buffer
+        sizes.qois.push(display.encode(0))
         if (lz4)
             sizes.lz4.push(lz4.compress(raw).length)
         sizes.deflate1.push(zlib.deflateRawSync(raw, {level: 1}).length)

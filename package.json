@@ -24,6 +24,8 @@
 
     "qoisbench": "node ledder/server/qoisbench.js",
 
+    "qoisperf": "node ledder/server/qoisperf.js",
+
     "build": "tsc &&  NODE_ENV=production vite build && node ledder/server/buildpreviews.js",
 
     "buildpreviews": "node ledder/server/buildpreviews.js",

@@ -39,34 +39,40 @@ export class DisplayQOIShttp extends DisplayQOIS {
 
         displayTime = displayTime / 1000
 
+        //always encode, also when there is nobody to send it to: encode() is what resets the pixel
+        //accumulators for the next frame, and it keeps the encoder state moving with the animation
+        const length = this.encode(displayTime)
 
-        const buffer = []
+        if (this.streamMode === STREAM_REPLAY) {
+            this.ready = false
+            return 0
+        }
 
-        this.encode(buffer, displayTime)
+        if (this.response === undefined || !this.response.writable)
+            return 0
 
-        const abuffer = new Uint8Array(buffer)
+        //frame did not fit in the stream format. The decoder can not resync by itself, so drop the
+        //client and let it reconnect, which starts both sides from a clean state again.
+        if (length === 0) {
+            this.abortConnection()
+            return 0
+        }
 
+        //response.write() can hold on to the buffer past this call, so the shared frameBuffer can not
+        //be handed over directly. Buffer.allocUnsafe() takes these from a pool, which is far cheaper
+        //than the Array-of-numbers the encoder used to build.
+        const abuffer = Buffer.allocUnsafe(length)
+        abuffer.set(this.frameBuffer.subarray(0, length))
 
         try {
-            if (this.streamMode !== STREAM_REPLAY) {
-                if (this.response!==undefined && this.response.writable) {
-
-                    this.ready = this.response.write(abuffer, () => {
-                        this.ready = true
-                    })
-                    return abuffer.length
-                }
-            } else {
-
-                this.ready = false;
-            }
+            this.ready = this.response.write(abuffer, () => {
+                this.ready = true
+            })
+            return length
         } catch (e) {
             console.error(e)
             return 0
         }
-
-        return 0
-
     }
 
 

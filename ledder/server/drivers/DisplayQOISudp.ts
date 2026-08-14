@@ -94,8 +94,6 @@ export class DisplayQOISudp extends DisplayQOIS {
         displayTime = displayTime / 1000
 
 
-        const frameBytes = []
-
         const maxFramesLag = 24
         const maxTimeLag = 250
 
@@ -112,13 +110,17 @@ export class DisplayQOISudp extends DisplayQOIS {
 
         const laggedTime = displayTime + lag
 
-        //encodes current frame via QIOS into bytes
-        if (this.encode(frameBytes, laggedTime)  ) {
+        //encodes current frame via QIOS into the encoders frame buffer
+        const frameLength = this.encode(laggedTime)
+
+        if (this.frameChanged && frameLength > 0) {
 
             //the syncoffset is needed so that a display can pickup a stream thats already running, or if it lost packets
-            this.nextSyncOffset = this.nextSyncOffset + frameBytes.length
+            this.nextSyncOffset = this.nextSyncOffset + frameLength
 
-            this.byteStream.push(...frameBytes)
+            const frameBuffer = this.frameBuffer
+            for (let i = 0; i < frameLength; i++)
+                this.byteStream.push(frameBuffer[i])
         }
 
         //is it time to send, or packet is full?

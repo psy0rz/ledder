@@ -61,7 +61,11 @@ Three layers: the core animation framework (`ledder/`), the server that renders 
 - **Decoder contract differs from stock QOI** — see the comment block at the top of `DisplayQOIS.ts`. Most importantly, the decoder's color-index must be updated only by DIFF/LUMA/RGB ops (not RUN/INDEX/PREVFRAME), or it desyncs from the encoder.
 - **Deltas use 8-bit wraparound like stock QOI** (e.g. 255→0 encodes as +1); decoders reconstruct with wrapping uint8 additions.
 
+`encode(displayTimeMS)` writes one frame into the encoder's own preallocated `frameBuffer` and returns its byte length (0 = the frame did not fit in the 2-byte length field, and the caller should drop the client so it reconnects and resyncs); `frameChanged` says whether anything changed. The buffer is scratch space reused every frame, so callers must copy out of it before handing bytes to anything asynchronous like a socket write.
+
 `DisplayQOIShttp` writes the frame stream into a never-ending HTTP response. `DisplayQOISudp` (deprecated, slated for removal) packetizes the stream into UDP packets; it skips unchanged frames and tolerates packet loss, which is **incompatible** with the persistent color-index — don't use it without resetting the index per frame. Compression-ratio logging exists but is commented out in `DisplayQOIS.ts` (`statsBytes`).
+
+Two benchmarks: `npm run qoisbench` measures compression ratio against deflate/lz4 on the same frames, `npm run qoisperf` measures CPU time of `render()` and `frame()` against a fake HTTP response. The encoder is per-pixel hot code, so treat it accordingly: keep the pixel loops on typed arrays and integer arithmetic (`(x + 0.5) | 0` rather than `Math.round()`, `gammaMapper.table` rather than indexing the `GammaMapper` Array subclass), and don't allocate per frame.
 
 ### Web GUI (`src/`)
 
