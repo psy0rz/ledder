@@ -359,12 +359,10 @@ export class DisplayChromecast extends Display {
             console.log(`━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`)
 
             this.connected = true
-            this.ready = true
 
         } catch (err: any) {
             console.error("Chromecast: Connection failed:", err.message)
             this.connected = false
-            this.ready = false
             
             // Cleanup on failure
             if (this.castClient) {
@@ -404,7 +402,6 @@ export class DisplayChromecast extends Display {
         }
 
         this.connected = false
-        this.ready = false
         console.log("Chromecast: Disconnected")
     }
 
@@ -431,11 +428,17 @@ export class DisplayChromecast extends Display {
         )
     }
 
+    //the cast session is what carries the frames, so being connected is both being online and being
+    //able to accept the next frame (isReady() inherits from this)
+    isOnline(): boolean {
+        return this.connected
+    }
+
     /**
      * Send the current frame
      */
     frame(displayTimeMicros: number): number {
-        if (!this.ready) {
+        if (!this.connected) {
             return 0
         }
 

@@ -42,7 +42,7 @@ export class RenderRealtime extends Render {
 
         let intervalmS=0;
 
-        if (this.primaryDisplay.ready) {
+        if (this.primaryDisplay.isReady()) {
             let nowUS = Date.now() * 1000
             this.statsFrames++
 
@@ -55,7 +55,7 @@ export class RenderRealtime extends Render {
 
             //render to all displays
             for (const display of this.displays) {
-                if (display.ready) {
+                if (display.isReady()) {
                     try {
 
                         display.render(this.box, this.renderSettings.subpixelFiltering)

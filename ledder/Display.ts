@@ -55,10 +55,6 @@ export default abstract class Display {
     // private colors: Set<ColorInterface>;
 
 
-    //indicdates the display is ready for the next frame.
-    //The renderer will pause until its ready. (only for primary displays)
-    ready: boolean
-
     id: string
 
     //Date.now() of the last moment isOnline() was true, or undefined when the display was never seen
@@ -97,8 +93,6 @@ export default abstract class Display {
         this.yMin = 0
         this.xMax = width - 1
         this.yMax = height - 1
-
-        this.ready=true
 
         this.id="unknown"
 
@@ -318,15 +312,40 @@ export default abstract class Display {
         // console.log("Matrix pixels: ", this.size);
     }
 
-    //Is the display actually reachable right now? Drivers that can lose their connection (e.g.
-    //DisplayQOIShttp) override this. Drivers that are always available report online.
+    /*
+     * Connection state, answered by the driver.
+     *
+     * The two look similar but answer different questions, on different timescales:
+     *
+     * isOnline() - "is there a display out there at all?"
+     *   Slow, coarse, and meant for the *user*: the web GUI shows it as online/offline plus a
+     *   "last seen" time. It changes when hardware connects, disconnects or disappears, so it is
+     *   polled once per second (see server.ts) and it is fine for it to be a bit conservative.
+     *
+     * isReady() - "may I hand it the next frame right now?"
+     *   Fast, per-frame flow control, and meant for the *renderer*: RenderRealtime does not step the
+     *   animation at all while the primary display is not ready, so this is what keeps a buffering
+     *   display from being flooded and what pauses the animation when nobody can show it.
+     *   It is asked every frame and must stay cheap.
+     *
+     * A display that is offline is never ready (the default below encodes that), but an online
+     * display is regularly not ready: its socket buffer is full, or it is playing from its own flash.
+     * Drivers that just fire frames off (UDP, files, websockets) need neither and inherit both.
+     */
+
+    //Drivers that can lose their connection override this. Drivers that are always available stay online.
     isOnline(): boolean {
         return true
     }
 
-    //Called periodically (see the status poller in server.ts) so drivers can drop a connection that
-    //looks open but is not carrying data anymore. Doing this from a poll instead of from frame() is
-    //what makes it work at all: a stalled display stops being ready, and then it gets no more frames.
+    //Drivers that need flow control (backpressure, an ack, a buffer that has to drain) override this.
+    isReady(): boolean {
+        return this.isOnline()
+    }
+
+    //Called by the status poller in server.ts, so drivers can drop a connection that looks open but
+    //is not carrying data anymore. Doing this from a poll instead of from frame() is what makes it
+    //work at all: a display that stops draining stops being ready, and then it gets no more frames.
     disconnectIfDead() {
     }
 
