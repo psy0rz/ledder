@@ -29,7 +29,6 @@ type SlideControls = {
  * slide, which is handy while tuning a single slide instead of waiting through the ones before it.
  */
 export default class Slideshow extends Animator {
-    static title = "Slideshow"
     static description = "Shows a sequence of animations, one after another"
 
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) {

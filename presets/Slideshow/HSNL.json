@@ -1,0 +1,296 @@
+{
+ "title": "",
+ "description": "",
+ "values": {
+  "Render settings": {
+   "FPS": {
+    "value": 60
+   },
+   "Subpixel filtering": {
+    "enabled": false
+   },
+   "Enabled": {
+    "enabled": true
+   }
+  },
+  "Effect": {
+   "selected": "Fade"
+  },
+  "Fade time (ms)": {
+   "value": 500
+  },
+  "Start at": {
+   "value": 1
+  },
+  "Slides": {
+   "Slide 1": {
+    "Animation": {
+     "selected": "(none)"
+    },
+    "Preset": {
+     "selected": "default"
+    },
+    "Time (ms)": {
+     "value": 4100
+    },
+    "Order": {
+     "value": 10
+    },
+    "Enabled": {
+     "enabled": true
+    }
+   },
+   "Slide 2": {
+    "Animation": {
+     "selected": "Logos/HSD64W20H"
+    },
+    "Preset": {
+     "selected": "default"
+    },
+    "Time (ms)": {
+     "value": 4900
+    },
+    "Order": {
+     "value": 20
+    },
+    "Enabled": {
+     "enabled": true
+    }
+   },
+   "Slide 3": {
+    "Animation": {
+     "selected": "Logos/MaakPlek"
+    },
+    "Preset": {
+     "selected": "default"
+    },
+    "Time (ms)": {
+     "value": 4000
+    },
+    "Order": {
+     "value": 30
+    },
+    "Enabled": {
+     "enabled": true
+    }
+   },
+   "Slide 4": {
+    "Animation": {
+     "selected": "Logos/TDVENLO"
+    },
+    "Preset": {
+     "selected": "default"
+    },
+    "Time (ms)": {
+     "value": 3800
+    },
+    "Order": {
+     "value": 40
+    },
+    "Enabled": {
+     "enabled": true
+    }
+   },
+   "Slide 5": {
+    "Animation": {
+     "selected": "Logos/TkkrLab"
+    },
+    "Preset": {
+     "selected": "default"
+    },
+    "Time (ms)": {
+     "value": 3800
+    },
+    "Order": {
+     "value": 50
+    },
+    "Enabled": {
+     "enabled": true
+    }
+   },
+   "Slide 6": {
+    "Animation": {
+     "selected": "Logos/hack42"
+    },
+    "Preset": {
+     "selected": "default"
+    },
+    "Time (ms)": {
+     "value": 8000
+    },
+    "Order": {
+     "value": 60
+    },
+    "Enabled": {
+     "enabled": true
+    }
+   },
+   "Slide 7": {
+    "Animation": {
+     "selected": "(none)"
+    },
+    "Preset": {
+     "selected": "default"
+    },
+    "Time (ms)": {
+     "value": 8000
+    },
+    "Order": {
+     "value": 70
+    },
+    "Enabled": {
+     "enabled": true
+    }
+   },
+   "Enabled": {
+    "enabled": true
+   }
+  },
+  "Now playing": {
+   "Render settings": {
+    "FPS": {
+     "value": 60
+    },
+    "Subpixel filtering": {
+     "enabled": false
+    },
+    "Enabled": {
+     "enabled": true
+    }
+   },
+   "Rotate interval": {
+    "value": 8
+   },
+   "Rotate interval randomizer": {
+    "value": 0
+   },
+   "Rotate X step": {
+    "value": 0
+   },
+   "Rotate Y step": {
+    "value": -1
+   },
+   "Layers": {
+    "Z of animation": {
+     "value": 0
+    },
+    "Layer 1": {
+     "Animation": {
+      "selected": "(none)"
+     },
+     "Preset": {
+      "selected": "default"
+     },
+     "Z": {
+      "value": 10
+     },
+     "Enabled": {
+      "enabled": true
+     }
+    },
+    "Enabled": {
+     "enabled": true
+    }
+   },
+   "Enabled": {
+    "enabled": true
+   }
+  },
+  "Layers": {
+   "Z of animation": {
+    "value": 0
+   },
+   "Layer 1": {
+    "Animation": {
+     "selected": "Fires/Fire"
+    },
+    "Preset": {
+     "selected": "default"
+    },
+    "Z": {
+     "value": -12
+    },
+    "Enabled": {
+     "enabled": true
+    },
+    "Fires/Fire": {
+     "Fire colors": {
+      "selected": "Bertrik fire"
+     },
+     "Fire colors range": {
+      "from": 0,
+      "to": 100
+     },
+     "Fire interval": {
+      "value": 1
+     },
+     "Fire intensity %": {
+      "from": 0,
+      "to": 100
+     },
+     "Fire wildness %": {
+      "value": 10
+     },
+     "Fire decay %": {
+      "value": 10
+     },
+     "Fire sintel factor": {
+      "value": 0
+     },
+     "Fire speed": {
+      "value": 1
+     },
+     "Fire X range %": {
+      "from": 0,
+      "to": 100
+     },
+     "Sublayers": {
+      "Z of Fires/Fire": {
+       "value": 0
+      },
+      "Layer 1.1": {
+       "Animation": {
+        "selected": "(none)"
+       },
+       "Preset": {
+        "selected": "default"
+       },
+       "Z": {
+        "value": 10
+       },
+       "Enabled": {
+        "enabled": true
+       }
+      },
+      "Enabled": {
+       "enabled": true
+      }
+     },
+     "Enabled": {
+      "enabled": true
+     }
+    }
+   },
+   "Enabled": {
+    "enabled": true
+   },
+   "Layer 2": {
+    "Animation": {
+     "selected": "(none)"
+    },
+    "Preset": {
+     "selected": "default"
+    },
+    "Z": {
+     "value": 20
+    },
+    "Enabled": {
+     "enabled": true
+    }
+   }
+  },
+  "Enabled": {
+   "enabled": true
+  }
+ }
+}

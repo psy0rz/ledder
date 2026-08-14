@@ -51,7 +51,6 @@ export default class Ledder extends  Animator
             return (steps>0)
         })
 
-        console.log("KLAAR")
 
     }
 }
