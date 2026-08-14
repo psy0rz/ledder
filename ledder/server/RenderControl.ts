@@ -131,8 +131,13 @@ export default class RenderControl {
 
 
 
+        //NOTE: deliberately no "resetControls" here. That blanks the whole control panel in the browser
+        //instantly, while the tree that replaces it only arrives after delayedSetControls()' debounce,
+        //so the user sees the panel disappear and rebuild. The tree we send below is authoritative
+        //(the browser merges it, dropping controls that are gone), so blanking first is not needed.
+        //This fires a lot: every sub-AnimationManager that clears its controls triggers it through
+        //the parent groups, e.g. Slideshow on every slide change.
         this.renderer.animationManager.controlGroup.__resetCallbacks.register(() => {
-            this.notifyAll("resetControls")
             this.delayedSetControls()
         })
 
