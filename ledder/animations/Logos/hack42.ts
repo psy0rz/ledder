@@ -1,5 +1,5 @@
 import PixelBox from "../../PixelBox.js"
-import Pacman from "../Components/Pacman.js"
+import Pacman from "../Sprites/Pacman.js"
 import DrawAsciiArtColor from "../../draw/DrawAsciiArtColor.js"
 import Scheduler from "../../Scheduler.js"
 import ControlGroup from "../../ControlGroup.js"
@@ -7,7 +7,7 @@ import {animationRun} from "../../server/utils.js"
 import Animator from "../../Animator.js"
 import DrawAsciiArt from "../../draw/DrawAsciiArt.js"
 import TheMatrix from "../MovieFx/TheMatrix.js"
-import Starfield from "../Components/Starfield.js"
+import Starfield from "../Sprites/Starfield.js"
 
 
 

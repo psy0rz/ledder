@@ -1,19 +1,19 @@
-import PixelBox from "../PixelBox.js"
-import DrawText, {type HorizontalAlign, type VerticalAlign} from "../draw/DrawText.js"
-import PixelList from "../PixelList.js"
-import DrawBox from "../draw/DrawBox.js"
-import Pixel from "../Pixel.js"
-import {FxFadeOut} from "../fx/FxFadeOut.js"
-import Scheduler from "../Scheduler.js"
-import ControlGroup from "../ControlGroup.js"
-import {fontSelect} from "../fonts.js"
-import FxFlames from "../fx/FxFlames.js"
-import Animator from "../Animator.js"
-import FxTwinkle from "../fx/FxTwinkle.js"
-import FxColorPattern from "../fx/FxColorPattern.js"
-import {interpretMacro} from "../macros.js"
-import FxWobble from "../fx/FxWobble.js";
-import {colorRed, colorWhite} from "../Colors.js";
+import PixelBox from "../../PixelBox.js"
+import DrawText, {type HorizontalAlign, type VerticalAlign} from "../../draw/DrawText.js"
+import PixelList from "../../PixelList.js"
+import DrawBox from "../../draw/DrawBox.js"
+import Pixel from "../../Pixel.js"
+import {FxFadeOut} from "../../fx/FxFadeOut.js"
+import Scheduler from "../../Scheduler.js"
+import ControlGroup from "../../ControlGroup.js"
+import {fontSelect} from "../../fonts.js"
+import FxFlames from "../../fx/FxFlames.js"
+import Animator from "../../Animator.js"
+import FxTwinkle from "../../fx/FxTwinkle.js"
+import FxColorPattern from "../../fx/FxColorPattern.js"
+import {interpretMacro} from "../../macros.js"
+import FxWobble from "../../fx/FxWobble.js";
+import {colorRed, colorWhite} from "../../Colors.js";
 
 
 export default class Text extends Animator {

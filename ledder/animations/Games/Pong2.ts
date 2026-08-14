@@ -10,7 +10,7 @@ import {fonts} from "../../fonts.js"
 
 
 
-export default class Pong extends Animator {
+export default class Pong2 extends Animator {
     static description = "inspired by the Atari game"
     
 

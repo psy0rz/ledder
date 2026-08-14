@@ -5,7 +5,7 @@ import Scheduler from "../../Scheduler.js"
 import ControlGroup from "../../ControlGroup.js"
 import Animator from "../../Animator.js"
 import FxMove from "../../fx/FxMove.js"
-import Starfield from "../Components/Starfield.js"
+import Starfield from "../Sprites/Starfield.js"
 import FxTwinkle from "../../fx/FxTwinkle.js"
 
 

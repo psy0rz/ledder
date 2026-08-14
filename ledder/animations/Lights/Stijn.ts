@@ -9,7 +9,7 @@ import ControlGroup from "../../ControlGroup.js"
 import {fontSelect} from "../../fonts.js"
 import Animator from "../../Animator.js"
 import Font from "../../Font.js"
-import Starfield from "../Components/Starfield.js"
+import Starfield from "../Sprites/Starfield.js"
 import {colorWhite} from "../../Colors.js"
 
 

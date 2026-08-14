@@ -103,7 +103,7 @@
    },
    "Layer 1": {
     "Animation": {
-     "selected": "Components/Starfield"
+     "selected": "Sprites/Starfield"
     },
     "Preset": {
      "selected": "(none)"
@@ -114,7 +114,7 @@
     "Enabled": {
      "enabled": true
     },
-    "Components/Starfield": {
+    "Sprites/Starfield": {
      "Base speed": {
       "value": 0.001
      },

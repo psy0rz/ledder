@@ -55,20 +55,20 @@ export default class Cycle extends Animator {
 
         const fxControls=controls.group("FX")
         while(1) {
-            await show("Text", "dosprompt", 8000)
+            await show("Text/Marquee", "dosprompt", 8000)
 
-            await show("BTC", "ethereum", 8000)
-            await show("BTC", "default", 8000)
+            await show("Text/BTC", "ethereum", 8000)
+            await show("Text/BTC", "default", 8000)
 
-            await show("Text", "hsnlgroot", 8000)
+            await show("Text/Marquee", "hsnlgroot", 8000)
 
             await show("Logos/HSD64W20H", "default", 8000)
             // await show("Logos/divd", "default", 8000)
 
 
-            // await show("Text", "hsnl", 8000)
+            // await show("Text/Marquee", "hsnl", 8000)
 
-            // await show("Text", "github", 10000)
+            // await show("Text/Marquee", "github", 10000)
 
 
 
@@ -79,20 +79,20 @@ export default class Cycle extends Animator {
             await show("Memes/ItsFine", "default", 8000)
 
 
-            // await show("ReinsCollection/Cubevec3", "default", 8000)
+            // await show("3D/Cubevec3", "default", 8000)
 
             if (Math.random()<0.25)
                 await show("Memes/Cyber", "default", 4000)
 
 
-            await show("Text", "bornhack", 8000)
+            await show("Text/Marquee", "bornhack", 8000)
 
-            await show("ReinsCollection/XmasSantaReindeer", "default", 8000)
+            await show("Xmas/XmasSantaReindeer", "default", 8000)
 
 
-            await show("ReinsCollection/Prisma", "default", 8000)
+            await show("Patterns/Prisma", "default", 8000)
 
-            await show("Text", "drink", 8000)
+            await show("Text/Marquee", "drink", 8000)
 
             await show("Logos/HSD", "default", 0)
 
@@ -100,7 +100,7 @@ export default class Cycle extends Animator {
 
             await show("Fires/Fire", "Flames", 8000)
 
-            // await show("ReinsCollection/Dna", "default", 4000)
+            // await show("Patterns/Dna", "default", 4000)
 
             // await new FxPacman(scheduler, fxControls).run(box, 0, box.height )
             // scheduler.__clear()

@@ -64,7 +64,7 @@
    },
    "Layer 1": {
     "Animation": {
-     "selected": "Text"
+     "selected": "Text/Marquee"
     },
     "Preset": {
      "selected": "(none)"
@@ -75,7 +75,7 @@
     "Enabled": {
      "enabled": true
     },
-    "Text": {
+    "Text/Marquee": {
      "Text": {
       "text": "OFFLINE"
      },

@@ -154,22 +154,36 @@ export class PresetStore {
     async buildAnimationPresetList(dir: string = ""): Promise<AnimationListType> {
         let ret: AnimationListType = []
 
+        //tracks names already added at this level, so a stale compiled .js left behind by a
+        //moved/renamed .ts (or any other name clash) is caught here instead of surfacing as a
+        //Svelte "duplicate key" crash in the browser once the list reaches the GUI.
+        const namesAtThisLevel = new Set<string>()
 
         const startPath = path.join(this.animationPath, dir)
         for (const entry of await readdir(startPath, {withFileTypes: true})) {
-            if (entry.isDirectory())
+            if (entry.isDirectory()) {
+
+                const fullPath = path.join(dir, entry.name)
+                if (namesAtThisLevel.has(fullPath))
+                    throw new Error(`Duplicate animation list entry "${fullPath}": a directory and a file (likely a stale compiled .js left over from a move/rename) share the same name. Run "npx tsc" to check for orphaned .js files, or remove the stale one.`)
+                namesAtThisLevel.add(fullPath)
 
                 //recurse. Note that we pass the path relative to animationPath, not just the
                 //directory name: an animation deeper than one level is named after its whole path.
                 ret.push({
                     name: entry.name,
-                    animationList: await this.buildAnimationPresetList(path.join(dir, entry.name))
+                    animationList: await this.buildAnimationPresetList(fullPath)
                 })
-            else {
+            } else {
                 //actual animation?
                 if (path.extname(entry.name) == '.js') {
 
                     const animationName = path.join(dir, path.basename(entry.name, ".js"))
+
+                    if (namesAtThisLevel.has(animationName))
+                        throw new Error(`Duplicate animation list entry "${animationName}": a directory and a file (likely a stale compiled .js left over from a move/rename) share the same name. Run "npx tsc" to check for orphaned .js files, or remove the stale one.`)
+                    namesAtThisLevel.add(animationName)
+
                     // console.log(`\nLoading ${animationName}:`)
                     try {
                         const animationClass = await this.loadAnimation(animationName)

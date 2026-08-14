@@ -67,7 +67,7 @@
    },
    "Layer 1": {
     "Animation": {
-     "selected": "Text"
+     "selected": "Text/Marquee"
     },
     "Preset": {
      "selected": "starwars"
@@ -78,7 +78,7 @@
     "Enabled": {
      "enabled": true
     },
-    "Text": {
+    "Text/Marquee": {
      "Text": {
       "text": "Never gonna give you up\n\nNever gonna let you down\n\nNever gonna run around and desert you\n\nNever gonna make you cry\n\nNever gonna say goodbye\n\nNever gonna tell a lie and hurt you\n"
      },
@@ -223,7 +223,7 @@
       },
       "Layer 1": {
        "Animation": {
-        "selected": "Components/Starfield"
+        "selected": "Sprites/Starfield"
        },
        "Preset": {
         "selected": "(none)"
@@ -234,7 +234,7 @@
        "Enabled": {
         "enabled": true
        },
-       "Components/Starfield": {
+       "Sprites/Starfield": {
         "Base speed": {
          "value": 0.001
         },

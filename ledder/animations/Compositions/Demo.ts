@@ -1,15 +1,15 @@
 import PixelBox from "../../PixelBox.js"
-import Clock from "../ReinsCollection/Clock.js"
-import Julibrot from "../ReinsCollection/Julibrot.js"
-import Rainbowcross from "../ReinsCollection/Rainbowcross.js"
-import Rainbowsquare from "../ReinsCollection/Rainbowsquare.js"
-import Rainbowsinus from "../ReinsCollection/Rainbowsinus.js"
-import Rainbowzero from "../ReinsCollection/Rainbowzero.js"
+import Clock from "../Clocks/Clock.js"
+import Julibrot from "../Fractals/Julibrot.js"
+import Rainbowcross from "../Patterns/Rainbowcross.js"
+import Rainbowsquare from "../Patterns/Rainbowsquare.js"
+import Rainbowsinus from "../Patterns/Rainbowsinus.js"
+import Rainbowzero from "../Patterns/Rainbowzero.js"
 import Fire from "../Fires/Fire.js"
-import Starfield from "../Components/Starfield.js"
-import Pacman from "../Components/Pacman.js"
-import Wandelaar from "../Components/Wandelaar.js"
-import Wandelaarster from "../Components/Wandelaarster.js"
+import Starfield from "../Sprites/Starfield.js"
+import Pacman from "../Sprites/Pacman.js"
+import Wandelaar from "../Sprites/Wandelaar.js"
+import Wandelaarster from "../Sprites/Wandelaarster.js"
 import Cyber from "../Memes/Cyber.js"
 import Nyancat from "../Memes/Nyancat.js"
 import Scheduler from "../../Scheduler.js"
@@ -69,26 +69,26 @@ export default class Cycle extends Animator {
         while(1) {
             await show("Logos/HSD", "default", 5000)
            
-            await show("ReinsCollection/Clock", "default", 5000)
+            await show("Clocks/Clock", "default", 5000)
             scheduler.__clear()
            
-            await show("ReinsCollection/Rainbowsinus", "default", 30000)
+            await show("Patterns/Rainbowsinus", "default", 30000)
             scheduler.__clear()
            
            
-            await show("ReinsCollection/Rainbowcross", "default", 15000)
+            await show("Patterns/Rainbowcross", "default", 15000)
             scheduler.__clear()
         
 
-            await show("ReinsCollection/Rainbowzero", "default", 50000)
+            await show("Patterns/Rainbowzero", "default", 50000)
             scheduler.__clear()
            
            
-            await show("ReinsCollection/Rainbowsquare", "default", 30000)
+            await show("Patterns/Rainbowsquare", "default", 30000)
             scheduler.__clear()
 
            
-            await show("ReinsCollection/Julibrot", "default", 60000)
+            await show("Fractals/Julibrot", "default", 60000)
             scheduler.__clear()
            
 

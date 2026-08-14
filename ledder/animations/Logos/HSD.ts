@@ -1,5 +1,5 @@
 import PixelBox from "../../PixelBox.js"
-import Pacman from "../Components/Pacman.js"
+import Pacman from "../Sprites/Pacman.js"
 import DrawAsciiArtColor from "../../draw/DrawAsciiArtColor.js"
 import Scheduler from "../../Scheduler.js"
 import ControlGroup from "../../ControlGroup.js"

@@ -4,7 +4,7 @@ import XmasSantaReindeer from "./XmasSantaReindeer.js"
 import Scheduler from "../../Scheduler.js"
 import ControlGroup from "../../ControlGroup.js"
 import Animator from "../../Animator.js"
-import Text from "../Text.js"
+import Text from "../Text/Marquee.js"
 
 
 

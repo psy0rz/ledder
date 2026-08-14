@@ -6,7 +6,7 @@
 
 
 import PixelBox from "../../PixelBox.js"
-import MovingStars from "../Components/MovingStars.js"
+import MovingStars from "../Sprites/MovingStars.js"
 import PixelList from "../../PixelList.js"
 import FxRotate from "../../fx/FxRotate.js"
 import DrawAsciiArtColor from "../../draw/DrawAsciiArtColor.js"

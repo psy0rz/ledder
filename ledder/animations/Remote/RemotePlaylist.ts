@@ -144,22 +144,22 @@ export default class RemotePlaylist extends Animator {
         },
  	{
                 "order"	: 29,
-                "preset"	: "ReinsCollection/Sensorclock32x8/default",
+                "preset"	: "Clocks/Sensorclock32x8/default",
                 "duration": 10
         },
         {
                 "order"	: 30,
-                "preset"	: "ReinsCollection/Photon/Plasma",
+                "preset"	: "Scenes/Photon/Plasma",
                 "duration": 30
         },
 	{
                 "order" : 80,
-                "preset"        : "ReinsCollection/Cube2/default",
+                "preset"        : "3D/Cube2/default",
                 "duration": 30
         },
 	{
                 "order" : 100,
-                "preset"        : "ReinsCollection/Dna/default",
+                "preset"        : "Patterns/Dna/default",
                 "duration": 30
         },
 	{
@@ -195,47 +195,47 @@ export default class RemotePlaylist extends Animator {
 	,
         {
                 "order" : 140,
-                "preset"  : "ReinsCollection/PolePosition/default",
+                "preset"  : "Games/PolePosition/default",
                 "duration": 20
         },
 	{
                 "order" : 150,
-                "preset"  : "ReinsCollection/Julibrot/default",
+                "preset"  : "Fractals/Julibrot/default",
                 "duration": 30
         },
 	{
                 "order" : 160,
-                "preset"  : "ReinsCollection/Fireworks/default",
+                "preset"  : "Weather/Fireworks/default",
                 "duration": 10
         },
 	{
                 "order" : 170,
-                "preset"  : "ReinsCollection/MQTTclimate/default",
+                "preset"  : "Remote/MQTTclimate/default",
                 "duration": 30
         },
 	{
                 "order" : 180,
-                "preset"  : "ReinsCollection/Love/default",
+                "preset"  : "Scenes/Love/default",
                 "duration": 80
         },
 	{
                 "order" : 190,
-                "preset"  : "ReinsCollection/Pong/default",
+                "preset"  : "Games/Pong2/default",
                 "duration": 10
         },
 	{
                 "order" : 200,
-                "preset"  : "ReinsCollection/Prisma/default",
+                "preset"  : "Patterns/Prisma/default",
                 "duration": 10
         },
 	{
                 "order" : 150,
-                "preset"  : "ReinsCollection/Rainbowcross/default",
+                "preset"  : "Patterns/Rainbowcross/default",
                 "duration": 30
         },
     {
                 "order" : 160,
-                "preset"  : "ReinsCollection/Beleep2/oersoep",
+                "preset"  : "Patterns/Beleep2/oersoep",
                 "duration": 30
         },
         {

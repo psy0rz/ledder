@@ -1,11 +1,11 @@
-import PixelBox from "../PixelBox.js"
-import Scheduler from "../Scheduler.js"
-import ControlGroup from "../ControlGroup.js"
-import Animator from "../Animator.js"
+import PixelBox from "../../PixelBox.js"
+import Scheduler from "../../Scheduler.js"
+import ControlGroup from "../../ControlGroup.js"
+import Animator from "../../Animator.js"
 import mqtt, {MqttClient} from "mqtt"
-import {statusMessage} from "../message.js"
-import DrawText from "../draw/DrawText.js"
-import AnimationManager from "../server/AnimationManager.js"
+import {statusMessage} from "../../message.js"
+import DrawText from "../../draw/DrawText.js"
+import AnimationManager from "../../server/AnimationManager.js"
 /*
 Example:
 
