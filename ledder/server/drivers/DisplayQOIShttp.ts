@@ -28,6 +28,10 @@ export class DisplayQOIShttp extends DisplayQOIS {
     //waiting to be flushed to the display.
     private writePendingSinceMs: number
 
+    //did the last frame we handed to the socket get flushed? While it did not, the next frame has to
+    //wait. See updateReady(), which is what actually decides whether the renderer may continue.
+    private lastWriteFlushed: boolean
+
 
     private streamMode: number
 
@@ -42,13 +46,24 @@ export class DisplayQOIShttp extends DisplayQOIS {
         this.defaultFrameTimeMicros = this.minFrameTimeMicros
 
         this.response = undefined
-        this.ready = false
         this.writePendingSinceMs = undefined
+        this.lastWriteFlushed = true
 
 
         this.streamMode = STREAM_LIVE
 
+        this.updateReady()
 
+    }
+
+
+    //The renderer only steps the animation while the primary display is ready, so this is where the
+    //driver decides whether the animation may continue. Call it after anything that can change the
+    //connection state. There is no point in rendering frames for a display that is offline (they
+    //would be encoded and thrown away, and the animation would be somewhere else entirely by the
+    //time the display comes back), nor for one that is replaying from its own flash.
+    private updateReady() {
+        this.ready = this.lastWriteFlushed && this.streamMode !== STREAM_REPLAY && this.isOnline()
     }
 
 
@@ -61,7 +76,7 @@ export class DisplayQOIShttp extends DisplayQOIS {
         const length = this.encode(displayTime)
 
         if (this.streamMode === STREAM_REPLAY) {
-            this.ready = false
+            this.updateReady()
             return 0
         }
 
@@ -83,10 +98,11 @@ export class DisplayQOIShttp extends DisplayQOIS {
 
         try {
             const flushedImmediately = this.response.write(abuffer, () => {
-                this.ready = true
+                this.lastWriteFlushed = true
                 this.writePendingSinceMs = undefined
+                this.updateReady()
             })
-            this.ready = flushedImmediately
+            this.lastWriteFlushed = flushedImmediately
 
             //the callback also runs for a write that was flushed immediately, but only on the next
             //tick, so clear the stall timer here as well instead of leaving it set in between.
@@ -94,6 +110,8 @@ export class DisplayQOIShttp extends DisplayQOIS {
                 this.writePendingSinceMs = undefined
             else if (this.writePendingSinceMs === undefined)
                 this.writePendingSinceMs = Date.now()
+
+            this.updateReady()
 
             return length
         } catch (e) {
@@ -108,8 +126,9 @@ export class DisplayQOIShttp extends DisplayQOIS {
             //an already closed response has no socket left to destroy
             this.response.socket?.destroy()
             this.response = undefined
-            this.ready = false
             this.writePendingSinceMs = undefined
+            this.lastWriteFlushed = true
+            this.updateReady()
         }
 
     }
@@ -124,8 +143,9 @@ export class DisplayQOIShttp extends DisplayQOIS {
 
 
         this.response = response
-        this.ready = true
         this.writePendingSinceMs = undefined
+        this.lastWriteFlushed = true
+        this.updateReady()
 
         //let the OS notice a peer that disappeared without closing its side
         response.socket?.setKeepAlive(true, keepAliveDelayMillis)
@@ -134,9 +154,10 @@ export class DisplayQOIShttp extends DisplayQOIS {
         response.on('close', () => {
             //we're still the responder?
             if (this.response === response) {
-                this.ready = false
                 this.response = undefined
                 this.writePendingSinceMs = undefined
+                this.lastWriteFlushed = true
+                this.updateReady()
             }
 
         })
@@ -167,6 +188,10 @@ export class DisplayQOIShttp extends DisplayQOIS {
             console.log(`Display http stalled, dropping connection: ${this.id}`)
             this.abortConnection()
         }
+
+        //going offline can also happen without an event we hook into (a socket that stopped being
+        //writable), so this poll is what makes the renderer notice it in that case
+        this.updateReady()
     }
 
     //is a frame we handed to the socket still not flushed after all this time?
@@ -178,6 +203,7 @@ export class DisplayQOIShttp extends DisplayQOIS {
     setStreamMode(mode: number) {
         this.streamMode = mode
         this.abortConnection()
+        this.updateReady()
 
     }
 
