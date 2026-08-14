@@ -1,5 +1,5 @@
 import type SpriteAnimator from "./SpriteAnimator.js"
-import PixelList from "../../PixelList.js"
+import PixelList from "../PixelList.js"
 
 /**
  * Manages a collection of sprites, handling updates and rendering

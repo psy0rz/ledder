@@ -1,4 +1,4 @@
-import DrawAsciiArtColor from "../../draw/DrawAsciiArtColor.js"
+import DrawAsciiArtColor from "../draw/DrawAsciiArtColor.js"
 
 export interface SpriteState {
     x: number;

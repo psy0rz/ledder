@@ -1,12 +1,12 @@
-import PixelBox from "../../PixelBox.js"
-import Scheduler from "../../Scheduler.js"
-import ControlGroup from "../../ControlGroup.js"
-import Animator from "../../Animator.js"
+import PixelBox from "../PixelBox.js"
+import Scheduler from "../Scheduler.js"
+import ControlGroup from "../ControlGroup.js"
+import Animator from "../Animator.js"
 
-import SpriteManager from "./SpriteManager.js"
-import { BubbleConfig } from "./BubbleConfig.js"
-import { PlantConfig } from "./PlantConfig.js"
-import { FishConfig } from "./FishConfig.js"
+import SpriteManager from "../fishtank/SpriteManager.js"
+import { BubbleConfig } from "../fishtank/BubbleConfig.js"
+import { PlantConfig } from "../fishtank/PlantConfig.js"
+import { FishConfig } from "../fishtank/FishConfig.js"
 
 export default class Fishtank extends Animator {
     static description = "An aquarium with fish, plants and bubbles. Use layers to add anything else."

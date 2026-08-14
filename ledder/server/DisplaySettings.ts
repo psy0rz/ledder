@@ -57,7 +57,11 @@ export async function loadSettings(renderControllers: Array<RenderControl>) {
             if (settings[display.id] !== undefined) {
 
                 const displaySettings = settings[display.id]
-                await renderControl.select(displaySettings.animationAndPresetPath, false)
+                try {
+                    await renderControl.select(displaySettings.animationAndPresetPath, false)
+                } catch (e) {
+                    console.error(`Could not restore animation "${displaySettings.animationAndPresetPath}" for display ${display.id}:`, e)
+                }
                 display.settingsControl.load(displaySettings.settingsControl)
                 if (display instanceof DisplayQOIShttp)
                 {

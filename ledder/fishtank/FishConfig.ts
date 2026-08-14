@@ -1,6 +1,6 @@
-import type ControlGroup from "../../ControlGroup.js"
+import type ControlGroup from "../ControlGroup.js"
 import type SpriteManager from "./SpriteManager.js"
-import type PixelBox from "../../PixelBox.js"
+import type PixelBox from "../PixelBox.js"
 import { FishSprites } from "./FishSprites.js"
 
 export class FishConfig {
