@@ -61,6 +61,10 @@ export default abstract class Display {
 
     id: string
 
+    //Date.now() of the last moment isOnline() was true, or undefined when the display was never seen
+    //online since the server started. Updated by the status poller in server.ts.
+    lastSeenTimestampMs: number = undefined
+
     public descriptionControl: ControlInput
     public settingsControl: ControlGroup
     protected gammaMapper: GammaMapper
@@ -312,6 +316,12 @@ export default abstract class Display {
 
     status() {
         // console.log("Matrix pixels: ", this.size);
+    }
+
+    //Is the display actually reachable right now? Drivers that can lose their connection (e.g.
+    //DisplayQOIShttp) override this. Drivers that are always available report online.
+    isOnline(): boolean {
+        return true
     }
 
 

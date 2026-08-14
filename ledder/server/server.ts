@@ -50,6 +50,7 @@ setInterval(() => {
     for (let renderControl of renderControllers) {
         renderControl.sendStats()
     }
+    updateDisplayStatus()
 }, 1000)
 
 setInterval(() => {
@@ -69,27 +70,54 @@ function notifyAll(method: string, ...params) {
     }
 }
 
-//display list suitable for webclients
+//display list suitable for webclients.
+//lastSeenMillisAgo is relative instead of an absolute timestamp, so it doesn't depend on the browser
+//clock being in sync with the server clock. It is undefined when the display was never seen online.
 function getDisplayList() {
     let displays = []
+    const nowMs = Date.now()
+
     for (let renderControl of renderControllers) {
 
-        let online = true;
-        const display = renderControl.getPrimaryDisplay() as DisplayQOIShttp
+        const display = renderControl.getPrimaryDisplay()
 
         if (display !== undefined) {
-            if (display.isOnline != undefined)
-                online = display.isOnline()
-
             displays.push({
-                description: renderControl.getPrimaryDisplay().descriptionControl.text,
-                online: online,
+                description: display.descriptionControl.text,
+                online: display.isOnline(),
+                lastSeenMillisAgo: display.lastSeenTimestampMs === undefined ? undefined : nowMs - display.lastSeenTimestampMs,
             })
         }
     }
 
     return displays
 
+}
+
+//poll all displays and inform the clients whenever one goes online or offline.
+//The clients count the "last seen" time up themselves, so nothing is sent while the status is stable.
+let previousOnlineStates: Array<boolean> = []
+
+function updateDisplayStatus() {
+    let statusChanged = false
+
+    renderControllers.forEach((renderControl, displayNr) => {
+        const display = renderControl.getPrimaryDisplay()
+        if (display === undefined)
+            return
+
+        const online = display.isOnline()
+        if (online)
+            display.lastSeenTimestampMs = Date.now()
+
+        if (previousOnlineStates[displayNr] !== online) {
+            previousOnlineStates[displayNr] = online
+            statusChanged = true
+        }
+    })
+
+    if (statusChanged)
+        notifyAll("displayList", getDisplayList())
 }
 
 

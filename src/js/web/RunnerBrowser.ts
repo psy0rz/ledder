@@ -79,7 +79,15 @@ console.log("ControlGroup.setcontrol values", controlGroup)
         )
 
         rpc.addMethod("displayList", (list) => {
-            svelteDisplayList.set(list)
+            //the server sends how long ago it saw each display, so translate that to browser-clock
+            //timestamps once: from there the GUI can count up on its own without asking the server.
+            const receivedAtMs = Date.now()
+            svelteDisplayList.set(list.map(display => ({
+                ...display,
+                lastSeenBrowserTimestampMs: display.lastSeenMillisAgo === undefined
+                    ? undefined
+                    : receivedAtMs - display.lastSeenMillisAgo
+            })))
         })
 
 
