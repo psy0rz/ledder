@@ -100,12 +100,15 @@ export default class ControlGroup extends Control {
 
     /** Delete control from set **/
     public remove(control: string | Control) {
-        if (typeof control === 'string') {
-            delete this.meta.controls[control]
-        }
-        if (control instanceof Control) {
-            delete this.meta.controls[control.meta.name]
-        }
+        const name = (control instanceof Control) ? control.meta.name : control
+
+        //only trigger when something actually changed: callers (e.g. Slideshow's unused-slot cleanup)
+        //may call this on names that were already removed on every restart, and resending the whole
+        //control tree to the browser for a no-op remove is what causes the controls panel to flash.
+        if (!(name in this.meta.controls))
+            return
+
+        delete this.meta.controls[name]
         this.__updateMetaCallbacks.trigger()
     }
 

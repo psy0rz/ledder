@@ -1,0 +1,140 @@
+{
+ "title": "",
+ "description": "",
+ "values": {
+  "Render settings": {
+   "FPS": {
+    "value": 60
+   },
+   "Subpixel filtering": {
+    "enabled": false
+   },
+   "Enabled": {
+    "enabled": true
+   }
+  },
+  "Effect": {
+   "selected": "Fade"
+  },
+  "Fade time (ms)": {
+   "value": 500
+  },
+  "Start at": {
+   "value": 1
+  },
+  "Slides": {
+   "Slide 1": {
+    "Animation": {
+     "selected": "3D/Cube2"
+    },
+    "Preset": {
+     "selected": "(none)"
+    },
+    "Time (ms)": {
+     "value": 500
+    },
+    "Order": {
+     "value": 10
+    },
+    "Enabled": {
+     "enabled": true
+    }
+   },
+   "Slide 2": {
+    "Animation": {
+     "selected": "(none)"
+    },
+    "Preset": {
+     "selected": "(none)"
+    },
+    "Time (ms)": {
+     "value": 8000
+    },
+    "Order": {
+     "value": 20
+    },
+    "Enabled": {
+     "enabled": true
+    }
+   },
+   "Enabled": {
+    "enabled": true
+   }
+  },
+  "Now playing": {
+   "3D": {
+    "Clock interval": {
+     "value": 1
+    },
+    "Rotation per clock interval": {
+     "value": 1
+    },
+    "Perspective factor": {
+     "value": 0.99
+    },
+    "Draw wireframelines": {
+     "enabled": true
+    },
+    "Stars": {
+     "value": 66
+    },
+    "Boxsize": {
+     "value": 22
+    },
+    "Enabled": {
+     "enabled": true
+    }
+   },
+   "Layers": {
+    "Z of animation": {
+     "value": 0
+    },
+    "Layer 1": {
+     "Animation": {
+      "selected": "(none)"
+     },
+     "Preset": {
+      "selected": "(none)"
+     },
+     "Z": {
+      "value": 10
+     },
+     "Enabled": {
+      "enabled": true
+     }
+    },
+    "Enabled": {
+     "enabled": true
+    }
+   },
+   "Enabled": {
+    "enabled": true
+   }
+  },
+  "Layers": {
+   "Z of animation": {
+    "value": 0
+   },
+   "Layer 1": {
+    "Animation": {
+     "selected": "(none)"
+    },
+    "Preset": {
+     "selected": "(none)"
+    },
+    "Z": {
+     "value": 10
+    },
+    "Enabled": {
+     "enabled": true
+    }
+   },
+   "Enabled": {
+    "enabled": true
+   }
+  },
+  "Enabled": {
+   "enabled": true
+  }
+ }
+}
