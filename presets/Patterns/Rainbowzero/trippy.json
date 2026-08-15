@@ -1,0 +1,79 @@
+{
+ "title": "",
+ "description": "",
+ "values": {
+  "Render settings": {
+   "FPS": {
+    "value": 60
+   },
+   "Subpixel filtering": {
+    "enabled": false
+   },
+   "Enabled": {
+    "enabled": true
+   }
+  },
+  "alpha/brightness": {
+   "value": 0.9
+  },
+  "Fractal interval": {
+   "value": 1
+  },
+  "Wave speed": {
+   "value": 1
+  },
+  "Wavelength sweep": {
+   "Sweep per pixel": {
+    "value": 0.001
+   },
+   "Sweep wraps at": {
+    "value": 5
+   },
+   "Enabled": {
+    "enabled": true
+   }
+  },
+  "Color phase (turns)": {
+   "Red": {
+    "value": 0.22
+   },
+   "Green": {
+    "value": 0.46
+   },
+   "Blue": {
+    "value": 0
+   },
+   "Enabled": {
+    "enabled": true
+   }
+  },
+  "Mirror quadrants": {
+   "enabled": true
+  },
+  "Layers": {
+   "Z of animation": {
+    "value": 0
+   },
+   "Layer 1": {
+    "Animation": {
+     "selected": "(none)"
+    },
+    "Preset": {
+     "selected": "default"
+    },
+    "Z": {
+     "value": 10
+    },
+    "Enabled": {
+     "enabled": true
+    }
+   },
+   "Enabled": {
+    "enabled": true
+   }
+  },
+  "Enabled": {
+   "enabled": true
+  }
+ }
+}

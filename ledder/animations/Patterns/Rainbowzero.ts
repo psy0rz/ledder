@@ -18,13 +18,13 @@ export default class Rainbowzero extends Animator {
         const intervalControl = controls.value("Fractal interval", 1, 1, 10, 0.1)
         const waveSpeedControl = controls.value("Wave speed", 1, 0, 5, 0.05)
 
-        const wavelengthControls = controls.group("Wavelength sweep")
+        const wavelengthControls = controls.group("Wavelength sweep", false, true)
         const wavelengthStepControl = wavelengthControls.value("Sweep per pixel", 0.005, 0.0001, 0.05, 0.0001)
         const wavelengthMaxControl = wavelengthControls.value("Sweep wraps at", 5, 0.5, 20, 0.1)
 
         //Each channel is the same sine wave, shifted by this fraction of a full turn.
         //The default blue shift of 0.25 turns makes it a cosine, like the original.
-        const phaseControls = controls.group("Color phase (turns)")
+        const phaseControls = controls.group("Color phase (turns)", false, true)
         const redPhaseControl = phaseControls.value("Red", 0, 0, 1, 0.01)
         const greenPhaseControl = phaseControls.value("Green", 0, 0, 1, 0.01)
         const bluePhaseControl = phaseControls.value("Blue", 0.25, 0, 1, 0.01)
