@@ -79,10 +79,10 @@
     "value": 100
    },
    "Flame count": {
-    "value": 19
+    "value": 20
    },
    "Flame width": {
-    "value": 63
+    "value": 22
    },
    "Flame variation %": {
     "value": 100
@@ -91,7 +91,7 @@
     "value": 100
    },
    "Randomization period (s)": {
-    "value": 10.4
+    "value": 54.6
    },
    "Enabled": {
     "enabled": true
@@ -105,7 +105,40 @@
     "value": 70
    },
    "Wood type": {
-    "selected": "Oak"
+    "selected": "Cedar"
+   },
+   "Enabled": {
+    "enabled": true
+   }
+  },
+  "Render settings": {
+   "FPS": {
+    "value": 60
+   },
+   "Subpixel filtering": {
+    "enabled": false
+   },
+   "Enabled": {
+    "enabled": true
+   }
+  },
+  "Layers": {
+   "Z of animation": {
+    "value": 0
+   },
+   "Layer 1": {
+    "Animation": {
+     "selected": "(none)"
+    },
+    "Preset": {
+     "selected": "default"
+    },
+    "Z": {
+     "value": 10
+    },
+    "Enabled": {
+     "enabled": true
+    }
    },
    "Enabled": {
     "enabled": true
