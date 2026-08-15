@@ -1,0 +1,83 @@
+{
+ "title": "",
+ "description": "",
+ "values": {
+  "Render settings": {
+   "FPS": {
+    "value": 60
+   },
+   "Subpixel filtering": {
+    "enabled": false
+   },
+   "Enabled": {
+    "enabled": true
+   }
+  },
+  "Snow": {
+   "Animation interval": {
+    "value": 1
+   },
+   "Snowflakes": {
+    "Snowflake color": {
+     "r": 255,
+     "g": 255,
+     "b": 255,
+     "a": 0.7
+    },
+    "Number of snowflakes": {
+     "value": 110
+    },
+    "Enabled": {
+     "enabled": true
+    }
+   },
+   "Weather": {
+    "Wind speed": {
+     "value": 0.9
+    },
+    "Enabled": {
+     "enabled": true
+    }
+   },
+   "Snow ground layer": {
+    "Snow ground layer enabled": {
+     "enabled": true
+    },
+    "Snow ground layer height": {
+     "value": 3
+    },
+    "Enabled": {
+     "enabled": true
+    }
+   },
+   "Enabled": {
+    "enabled": true
+   }
+  },
+  "Layers": {
+   "Z of animation": {
+    "value": 0
+   },
+   "Layer 1": {
+    "Animation": {
+     "selected": "(none)"
+    },
+    "Preset": {
+     "selected": "default"
+    },
+    "Z": {
+     "value": 10
+    },
+    "Enabled": {
+     "enabled": true
+    }
+   },
+   "Enabled": {
+    "enabled": true
+   }
+  },
+  "Enabled": {
+   "enabled": true
+  }
+ }
+}

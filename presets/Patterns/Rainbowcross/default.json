@@ -21,7 +21,7 @@
   },
   "Rings": {
    "Wavelength": {
-    "value": 64
+    "value": 8
    },
    "Center distance offset": {
     "value": 0.01
@@ -43,7 +43,7 @@
   },
   "Color phase (turns)": {
    "Red": {
-    "value": 0
+    "value": 0.96
    },
    "Green": {
     "value": 0
