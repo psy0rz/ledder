@@ -1,0 +1,115 @@
+{
+ "title": "",
+ "description": "",
+ "values": {
+  "Render settings": {
+   "FPS": {
+    "value": 60
+   },
+   "Subpixel filtering": {
+    "enabled": false
+   },
+   "Enabled": {
+    "enabled": true
+   }
+  },
+  "alpha/brightness": {
+   "value": 1
+  },
+  "Fractal interval": {
+   "value": 1
+  },
+  "Rings": {
+   "Wavelength": {
+    "value": 64
+   },
+   "Center distance offset": {
+    "value": 0.01
+   },
+   "Enabled": {
+    "enabled": true
+   }
+  },
+  "Pulse": {
+   "Speed": {
+    "value": 0.001
+   },
+   "Amplitude": {
+    "value": 10000
+   },
+   "Enabled": {
+    "enabled": true
+   }
+  },
+  "Color phase (turns)": {
+   "Red": {
+    "value": 0
+   },
+   "Green": {
+    "value": 0
+   },
+   "Blue": {
+    "value": 0.25
+   },
+   "Enabled": {
+    "enabled": true
+   }
+  },
+  "Center": {
+   "X origin": {
+    "selected": "center"
+   },
+   "X offset": {
+    "value": 0
+   },
+   "Y origin": {
+    "selected": "middle"
+   },
+   "Y offset": {
+    "value": 0
+   },
+   "Enabled": {
+    "enabled": true
+   }
+  },
+  "White center dot": {
+   "enabled": true
+  },
+  "Bounce center": {
+   "Speed X": {
+    "value": -0.5
+   },
+   "Speed Y": {
+    "value": 0.7
+   },
+   "Enabled": {
+    "enabled": false
+   }
+  },
+  "Layers": {
+   "Z of animation": {
+    "value": 0
+   },
+   "Layer 1": {
+    "Animation": {
+     "selected": "(none)"
+    },
+    "Preset": {
+     "selected": "default"
+    },
+    "Z": {
+     "value": 10
+    },
+    "Enabled": {
+     "enabled": true
+    }
+   },
+   "Enabled": {
+    "enabled": true
+   }
+  },
+  "Enabled": {
+   "enabled": true
+  }
+ }
+}
