@@ -7,7 +7,9 @@
  * as part of a normal preset of the selected animation.
  *
  * Layers are recursive: an animation used as a layer gets its own LayerStack, so a preset that uses
- * layers keeps working when its used as a layer itself. Every layer gets its own container box that
+ * layers keeps working when its used as a layer itself. This only works because all layer controls have
+ * the same names at every nesting level: a nested stack reads exactly the values that were saved when
+ * its animation was the selected one. Every layer gets its own container box that
  * takes up exactly one slot in our z-order, and the nested stack only re-orders inside that container.
  * So you stack whole stacks on top of eachother, and a nested layer can never end up between our own
  * layers.
@@ -23,10 +25,11 @@ import ControlAnimationPreset from "./ControlAnimationPreset.js"
 import {presetStore} from "./PresetStore.js"
 
 
-//name of the group with all our layers: the top level has "Layers", a nested stack has "Sublayers",
-//so its clear which stack a layer belongs to when you're looking at a deeply nested control tree.
+//name of the group with all our layers, and of the Z control of the animation we add layers to.
+//NOTE: these names are the same at every nesting level on purpose: an animation is saved as a preset
+//while its the selected one, and has to find those exact same values back when its used as a layer.
 const LAYERS_GROUP_NAME = "Layers"
-const SUBLAYERS_GROUP_NAME = "Sublayers"
+const HOST_Z_CONTROL_NAME = "Z of animation"
 
 //we always show one more (empty) layer than the user is actually using, up to this maximum.
 const MAX_LAYERS = 16
@@ -50,16 +53,10 @@ type ZOrderedBox = {
     zControl: ControlValue
 }
 
-//where a nested stack sits in the layer tree, only used to give its controls names the user can follow
+//where a nested stack sits in the layer tree
 type Nesting = {
     //how many stacks are above us
     depth: number
-
-    //numbers of the layers above us, e.g. "1.2." so our own layers become "Layer 1.2.1", "Layer 1.2.2", ...
-    layerNumberPrefix: string
-
-    //the animation this stack adds layers to, e.g. "Fires/Fire"
-    hostAnimationName: string
 }
 
 
@@ -125,15 +122,12 @@ export default class LayerStack {
         this.nestedStacks = []
 
         //restartOnChange only applies to the switch of the group itself, so muting/unmuting all layers restarts.
-        const layersGroupName = (this.nesting === undefined) ? LAYERS_GROUP_NAME : SUBLAYERS_GROUP_NAME
-        const layersControls = this.rootControls.group(layersGroupName, true, true, true, true)
+        const layersControls = this.rootControls.group(LAYERS_GROUP_NAME, true, true, true, true)
 
         //the animation we add layers to is just another z-ordered box, so layers can be put behind it as well.
-        //Naming it after the animation makes clear that this only orders it against our own layers.
-        const hostZName = (this.nesting === undefined) ? "Z of animation" : `Z of ${this.nesting.hostAnimationName}`
         this.zOrderedBoxes.push({
             box: this.animationBox,
-            zControl: layersControls.value(hostZName, 0, -100, 100, 1)
+            zControl: layersControls.value(HOST_Z_CONTROL_NAME, 0, -100, 100, 1)
         })
 
         //note that creating the controls also loads their values from the preset, which is how we
@@ -221,22 +215,18 @@ export default class LayerStack {
 
 
     /**
-     * Name of the group of one of our layers. Nested stacks number their layers after the layer they
-     * live in ("Layer 2.1"), so you can tell from the name alone which stack a layer belongs to.
+     * Name of the group of one of our layers. The same at every nesting level, since a nested stack has
+     * to find back the values that were saved when its animation was the selected one.
      */
     private layerGroupName(layerNr: number) {
-        const prefix = (this.nesting === undefined) ? "" : this.nesting.layerNumberPrefix
-        return `Layer ${prefix}${layerNr}`
+        return `Layer ${layerNr}`
     }
 
 
-    /** How a nested stack inside one of our layers should number and name its own controls */
-    private nestingOfLayer(layer: LayerControls, animationName: string): Nesting {
-        const prefix = (this.nesting === undefined) ? "" : this.nesting.layerNumberPrefix
+    /** Where a nested stack inside one of our layers sits in the layer tree */
+    private nestingOfLayer(): Nesting {
         return {
             depth: (this.nesting === undefined) ? 1 : this.nesting.depth + 1,
-            layerNumberPrefix: `${prefix}${layer.layerNr}.`,
-            hostAnimationName: animationName,
         }
     }
 
@@ -316,7 +306,7 @@ export default class LayerStack {
 
         //the layer animation might use layers itself. Its controls are its own root, so its layer
         //settings are saved as part of the layers controls, just like ours are part of the preset.
-        const nestedStack = new LayerStack(layerContainerBox, layerAnimationBox, this.scheduler, animationControls, this.restartAnimation, this.nestingOfLayer(layer, animationName))
+        const nestedStack = new LayerStack(layerContainerBox, layerAnimationBox, this.scheduler, animationControls, this.restartAnimation, this.nestingOfLayer())
         this.nestedStacks.push(nestedStack)
         await nestedStack.createLayers()
 
