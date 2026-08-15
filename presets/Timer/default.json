@@ -3,25 +3,25 @@
  "description": "",
  "values": {
   "Target time": {
-   "text": "2025-01-01T00:00"
+   "text": "2026-08-15T15:00"
   },
-  "Normal": {
+  "Before": {
    "r": 0,
    "g": 255,
    "b": 0,
    "a": 1
   },
-  "Warning": {
+  "After": {
    "r": 255,
    "g": 0,
    "b": 0,
-   "a": 0.8166666666666661
+   "a": 1
+  },
+  "Show hours": {
+   "enabled": true
   },
   "Show mS": {
    "enabled": true
-  },
-  "Warning time (min)": {
-   "value": 10
   },
   "Font": {
    "Font": {
@@ -31,13 +31,27 @@
     "value": 0
    },
    "Font width": {
-    "value": 5
-   },
-   "X": {
     "value": 0
    },
-   "Y": {
+   "Enabled": {
+    "enabled": true
+   }
+  },
+  "Timer position": {
+   "X origin": {
+    "selected": "left"
+   },
+   "X offset": {
     "value": 0
+   },
+   "Y origin": {
+    "selected": "top"
+   },
+   "Y offset": {
+    "value": 0
+   },
+   "Enabled": {
+    "enabled": true
    }
   },
   "Marquee": {
@@ -123,6 +137,42 @@
      "enabled": false
     }
    }
+  },
+  "Render settings": {
+   "FPS": {
+    "value": 60
+   },
+   "Subpixel filtering": {
+    "enabled": false
+   },
+   "Enabled": {
+    "enabled": true
+   }
+  },
+  "Layers": {
+   "Z of animation": {
+    "value": 0
+   },
+   "Layer 1": {
+    "Animation": {
+     "selected": "(none)"
+    },
+    "Preset": {
+     "selected": "default"
+    },
+    "Z": {
+     "value": 10
+    },
+    "Enabled": {
+     "enabled": true
+    }
+   },
+   "Enabled": {
+    "enabled": true
+   }
+  },
+  "Enabled": {
+   "enabled": true
   }
  }
 }
