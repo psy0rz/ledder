@@ -12,7 +12,7 @@ import sharp from "sharp"
 
 //sharp's native decode cache is process-wide and keyed by input, so it fights repeatedly
 //re-decoded sources (e.g. a refreshing radar image) instead of helping. We already cache
-//decoded frames ourselves (RemotePictures.ts), so disable sharp's own cache.
+//decoded frames ourselves (Image.ts), so disable sharp's own cache.
 sharp.cache(false)
 
 // if (process.env.NODE_ENV == 'development') {

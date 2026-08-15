@@ -1,18 +1,18 @@
-import PixelBox from "../../PixelBox.js"
+import PixelBox from "../PixelBox.js"
 import sharp from "sharp"
-import {AnimatedImage} from "../../draw/AnimatedImage.js"
-import type {PlainAnimatedImage} from "../../draw/AnimatedImage.js"
-import DrawText from "../../draw/DrawText.js"
-import {fonts} from "../../fonts.js"
-import Color from "../../Color.js"
-import Scheduler from "../../Scheduler.js"
-import ControlGroup from "../../ControlGroup.js"
-import Animator from "../../Animator.js"
+import {AnimatedImage} from "../draw/AnimatedImage.js"
+import type {PlainAnimatedImage} from "../draw/AnimatedImage.js"
+import DrawText from "../draw/DrawText.js"
+import {fonts} from "../fonts.js"
+import Color from "../Color.js"
+import Scheduler from "../Scheduler.js"
+import ControlGroup from "../ControlGroup.js"
+import Animator from "../Animator.js"
 import {NodeFetchCache, FileSystemCache, cacheStrategies} from "node-fetch-cache"
 import {createHash} from "crypto"
 import {mkdir, readFile, writeFile} from "fs/promises"
 
-const logPrefix = "RemotePictures:"
+const logPrefix = "Image:"
 
 //the downloaded image files are cached on disk (raw bytes, one file per url), so restarting the
 //animation (which happens on every control change) doesnt refetch them.
@@ -57,7 +57,7 @@ const loadingTextColor = new Color(128, 128, 128, 1, true)
 const errorTextColor = new Color(255, 0, 0, 1, true)
 
 
-export default class RemotePictures extends Animator {
+export default class Image extends Animator {
 
     /** Download the image and decode it into pixel frames that fit imageBox. ttlMs undefined means cache forever. */
     private async loadImageFrames(imageUrl: string, imageBox: PixelBox, resizeFit: keyof sharp.FitEnum, ttlMs: number | undefined): Promise<AnimatedImage> {

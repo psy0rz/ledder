@@ -217,7 +217,7 @@
    },
    "Layer 1": {
     "Animation": {
-     "selected": "RemotePictures"
+     "selected": "Image"
     },
     "Preset": {
      "selected": "fishtank"
@@ -228,7 +228,7 @@
     "Enabled": {
      "enabled": true
     },
-    "RemotePictures": {
+    "Image": {
      "Render settings": {
       "FPS": {
        "value": 60
@@ -289,7 +289,7 @@
       "enabled": true
      },
      "Sublayers": {
-      "Z of RemotePictures": {
+      "Z of Image": {
        "value": 0
       },
       "Layer 1.1": {

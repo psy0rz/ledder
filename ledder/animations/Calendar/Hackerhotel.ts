@@ -198,7 +198,7 @@ export default class Hackerhotel extends Animator {
                     await scheduler.delayTime(4)
                     break
                 case 1:
-                    await animationManager.select("RemotePictures/rickroll", false)
+                    await animationManager.select("Image/rickroll", false)
                     await scheduler.delayTime(4)
                     break
                 case 2:
@@ -220,7 +220,7 @@ export default class Hackerhotel extends Animator {
 
            await showRandomstuff()
 
-            await animationManager.select("Remote/RemotePictures/Buienradar.nl", false)
+            await animationManager.select("Image/Buienradar.nl", false)
             await scheduler.delayTime(4)
             animationManager.stop(true)
 

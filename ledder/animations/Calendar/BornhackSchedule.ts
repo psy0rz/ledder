@@ -164,7 +164,7 @@ export default class BornhackSchedule extends Animator {
                     await scheduler.delayTime(6)
                     break
                 case 1:
-                    await animationManager.select("RemotePictures/rickroll", false)
+                    await animationManager.select("Image/rickroll", false)
                     await scheduler.delay(40)
                     break
                 case 2:
