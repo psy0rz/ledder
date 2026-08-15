@@ -15,10 +15,7 @@ import sharp from "sharp"
 //decoded frames ourselves (Image.ts), so disable sharp's own cache.
 sharp.cache(false)
 
-// if (process.env.NODE_ENV == 'development') {
-    await presetStore.storeAnimationPresetList()
-    // await previewStore.renderAll(presetStore.animationPresetList, false)
-// }
+await presetStore.storeAnimationPresetList()
 
 await loadDisplayconf()
 
@@ -295,4 +292,29 @@ rpc.app.get('/stream/:id', async (req, resp) => {
 
 
 })
+
+
+/**
+ * Re-render the previews that no longer match the current animation code and presets.
+ *
+ * Deliberately not awaited: on a cold start (fresh checkout, no .png's yet) this renders every
+ * preview, which takes way too long to keep the displays dark for. PreviewCache decides by content
+ * hash, so normally nothing has to be rendered at all and this finishes in a fraction of a second.
+ */
+async function updateOutdatedPreviews() {
+    try {
+        const renderedCount = await previewStore.renderAll(presetStore.animationPresetList, false)
+
+        if (renderedCount) {
+            //the animation list embeds the preview mtime in each previewFile url (for cache busting),
+            //so it has to be rebuilt and resent, otherwise the GUI keeps showing the previous previews.
+            await presetStore.storeAnimationPresetList()
+            notifyAll("animationList", presetStore.animationPresetList)
+        }
+    } catch (e) {
+        console.error("Error while updating previews: ", e)
+    }
+}
+
+updateOutdatedPreviews()
 

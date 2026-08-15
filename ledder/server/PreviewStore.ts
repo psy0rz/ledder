@@ -52,6 +52,9 @@ export class PreviewStore {
         await this.recordPreviewHash(animationName, presetName)
     }
 
+    /**
+     * Render all previews that are outdated (see PreviewCache), and return how many were rendered.
+     */
     async renderAll(animationList: AnimationListType, force: boolean) {
         console.log("Rendering previews...")
 
@@ -80,6 +83,8 @@ export class PreviewStore {
         await this.previewCache.storeHashes(true)
 
         console.log(`Rendering previews completed: ${renderedCount} rendered, ${skippedCount} still up to date.`)
+
+        return renderedCount
     }
 
     private previewOutdated(animationName: string, presetName: string) {
