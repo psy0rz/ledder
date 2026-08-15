@@ -7,7 +7,7 @@ import DrawText from "../draw/DrawText.js"
 import {cryptoTicker24h} from "../crypto.js"
 import Animator from "../Animator.js"
 
-export default class BTC extends Animator {
+export default class Crypto extends Animator {
     static description = "Rotating bitcoin counter."
 
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) {

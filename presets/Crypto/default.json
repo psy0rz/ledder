@@ -1,0 +1,133 @@
+{
+ "title": "",
+ "description": "",
+ "values": {
+  "Render settings": {
+   "FPS": {
+    "value": 60
+   },
+   "Subpixel filtering": {
+    "enabled": false
+   },
+   "Enabled": {
+    "enabled": true
+   }
+  },
+  "Symbol": {
+   "text": "BTCUSDT"
+  },
+  "Label": {
+   "text": "BTC"
+  },
+  "Label position": {
+   "X origin": {
+    "selected": "left"
+   },
+   "X offset": {
+    "value": 0
+   },
+   "Y origin": {
+    "selected": "middle"
+   },
+   "Y offset": {
+    "value": -4
+   },
+   "Enabled": {
+    "enabled": true
+   }
+  },
+  "Font": {
+   "selected": "C64"
+  },
+  "Font height": {
+   "value": 0
+  },
+  "Font width": {
+   "value": 0
+  },
+  "Text color": {
+   "r": 128,
+   "g": 128,
+   "b": 128,
+   "a": 1
+  },
+  "Layers": {
+   "Z of animation": {
+    "value": 0
+   },
+   "Layer 1": {
+    "Animation": {
+     "selected": "(none)"
+    },
+    "Preset": {
+     "selected": "default"
+    },
+    "Z": {
+     "value": 10
+    },
+    "Enabled": {
+     "enabled": true
+    }
+   },
+   "Enabled": {
+    "enabled": true
+   }
+  },
+  "Counter position": {
+   "X origin": {
+    "selected": "left"
+   },
+   "X offset": {
+    "value": 22
+   },
+   "Y origin": {
+    "selected": "middle"
+   },
+   "Y offset": {
+    "value": -4
+   },
+   "Enabled": {
+    "enabled": true
+   }
+  },
+  "Digits": {
+   "value": 6
+  },
+  "Digit color": {
+   "r": 255,
+   "g": 144,
+   "b": 0,
+   "a": 1
+  },
+  "Divider color": {
+   "r": 128,
+   "g": 128,
+   "b": 128,
+   "a": 1
+  },
+  "Rotate speed": {
+   "value": 0.001
+  },
+  "Easing": {
+   "selected": "easeInOutQuart"
+  },
+  "Leading zeros": {
+   "enabled": false
+  },
+  "Start value": {
+   "text": "0"
+  },
+  "Value": {
+   "text": "10000"
+  },
+  "Counter dim %": {
+   "value": 50
+  },
+  "Counter dim steps": {
+   "value": 3
+  },
+  "Enabled": {
+   "enabled": true
+  }
+ }
+}

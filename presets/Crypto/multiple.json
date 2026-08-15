@@ -1,0 +1,430 @@
+{
+ "title": "",
+ "description": "",
+ "values": {
+  "Render settings": {
+   "FPS": {
+    "value": 60
+   },
+   "Subpixel filtering": {
+    "enabled": false
+   },
+   "Enabled": {
+    "enabled": true
+   }
+  },
+  "Symbol": {
+   "text": "BTCUSDT"
+  },
+  "Label": {
+   "text": "BTC"
+  },
+  "Label position": {
+   "X origin": {
+    "selected": "left"
+   },
+   "X offset": {
+    "value": 0
+   },
+   "Y origin": {
+    "selected": "top"
+   },
+   "Y offset": {
+    "value": 1
+   },
+   "Enabled": {
+    "enabled": true
+   }
+  },
+  "Font": {
+   "selected": "C64"
+  },
+  "Font height": {
+   "value": 0
+  },
+  "Font width": {
+   "value": 0
+  },
+  "Text color": {
+   "r": 128,
+   "g": 128,
+   "b": 128,
+   "a": 1
+  },
+  "Layers": {
+   "Z of animation": {
+    "value": 0
+   },
+   "Layer 1": {
+    "Animation": {
+     "selected": "Crypto"
+    },
+    "Preset": {
+     "selected": "ETH"
+    },
+    "Z": {
+     "value": 10
+    },
+    "Enabled": {
+     "enabled": true
+    },
+    "Crypto": {
+     "Render settings": {
+      "FPS": {
+       "value": 60
+      },
+      "Subpixel filtering": {
+       "enabled": false
+      },
+      "Enabled": {
+       "enabled": true
+      }
+     },
+     "Symbol": {
+      "text": "ETHUSDT"
+     },
+     "Label": {
+      "text": "ETH"
+     },
+     "Label position": {
+      "X origin": {
+       "selected": "left"
+      },
+      "X offset": {
+       "value": 0
+      },
+      "Y origin": {
+       "selected": "top"
+      },
+      "Y offset": {
+       "value": 10
+      },
+      "Enabled": {
+       "enabled": true
+      }
+     },
+     "Font": {
+      "selected": "C64"
+     },
+     "Font height": {
+      "value": 0
+     },
+     "Font width": {
+      "value": 0
+     },
+     "Text color": {
+      "r": 128,
+      "g": 128,
+      "b": 128,
+      "a": 1
+     },
+     "Layers": {
+      "Z of animation": {
+       "value": 0
+      },
+      "Layer 1": {
+       "Animation": {
+        "selected": "(none)"
+       },
+       "Preset": {
+        "selected": "default"
+       },
+       "Z": {
+        "value": 10
+       },
+       "Enabled": {
+        "enabled": true
+       }
+      },
+      "Enabled": {
+       "enabled": true
+      }
+     },
+     "Counter position": {
+      "X origin": {
+       "selected": "left"
+      },
+      "X offset": {
+       "value": 22
+      },
+      "Y origin": {
+       "selected": "top"
+      },
+      "Y offset": {
+       "value": 10
+      },
+      "Enabled": {
+       "enabled": true
+      }
+     },
+     "Digits": {
+      "value": 6
+     },
+     "Digit color": {
+      "r": 255,
+      "g": 144,
+      "b": 0,
+      "a": 1
+     },
+     "Divider color": {
+      "r": 128,
+      "g": 128,
+      "b": 128,
+      "a": 1
+     },
+     "Rotate speed": {
+      "value": 0.001
+     },
+     "Easing": {
+      "selected": "easeInOutQuart"
+     },
+     "Leading zeros": {
+      "enabled": false
+     },
+     "Start value": {
+      "text": "0"
+     },
+     "Value": {
+      "text": "10000"
+     },
+     "Counter dim %": {
+      "value": 50
+     },
+     "Counter dim steps": {
+      "value": 3
+     },
+     "Enabled": {
+      "enabled": true
+     },
+     "Sublayers": {
+      "Z of Crypto": {
+       "value": 0
+      },
+      "Layer 1.1": {
+       "Animation": {
+        "selected": "(none)"
+       },
+       "Preset": {
+        "selected": "default"
+       },
+       "Z": {
+        "value": 10
+       },
+       "Enabled": {
+        "enabled": true
+       }
+      },
+      "Enabled": {
+       "enabled": true
+      }
+     }
+    }
+   },
+   "Enabled": {
+    "enabled": true
+   },
+   "Layer 2": {
+    "Animation": {
+     "selected": "Crypto"
+    },
+    "Preset": {
+     "selected": "default"
+    },
+    "Z": {
+     "value": 20
+    },
+    "Enabled": {
+     "enabled": true
+    },
+    "Crypto": {
+     "Symbol": {
+      "text": "SOLUSDT"
+     },
+     "Label": {
+      "text": "SOL"
+     },
+     "Label position": {
+      "X origin": {
+       "selected": "left"
+      },
+      "X offset": {
+       "value": 0
+      },
+      "Y origin": {
+       "selected": "top"
+      },
+      "Y offset": {
+       "value": 19
+      },
+      "Enabled": {
+       "enabled": true
+      }
+     },
+     "Font": {
+      "selected": "C64"
+     },
+     "Font height": {
+      "value": 0
+     },
+     "Font width": {
+      "value": 0
+     },
+     "Text color": {
+      "r": 128,
+      "g": 128,
+      "b": 128,
+      "a": 1
+     },
+     "Sublayers": {
+      "Z of Crypto": {
+       "value": 0
+      },
+      "Layer 2.1": {
+       "Animation": {
+        "selected": "(none)"
+       },
+       "Preset": {
+        "selected": "default"
+       },
+       "Z": {
+        "value": 10
+       },
+       "Enabled": {
+        "enabled": true
+       }
+      },
+      "Enabled": {
+       "enabled": true
+      }
+     },
+     "Counter position": {
+      "X origin": {
+       "selected": "left"
+      },
+      "X offset": {
+       "value": 22
+      },
+      "Y origin": {
+       "selected": "top"
+      },
+      "Y offset": {
+       "value": 19
+      },
+      "Enabled": {
+       "enabled": true
+      }
+     },
+     "Digits": {
+      "value": 6
+     },
+     "Digit color": {
+      "r": 255,
+      "g": 144,
+      "b": 0,
+      "a": 1
+     },
+     "Divider color": {
+      "r": 128,
+      "g": 128,
+      "b": 128,
+      "a": 1
+     },
+     "Rotate speed": {
+      "value": 0.001
+     },
+     "Easing": {
+      "selected": "easeInOutQuart"
+     },
+     "Leading zeros": {
+      "enabled": false
+     },
+     "Start value": {
+      "text": "0"
+     },
+     "Value": {
+      "text": "10000"
+     },
+     "Counter dim %": {
+      "value": 50
+     },
+     "Counter dim steps": {
+      "value": 3
+     },
+     "Enabled": {
+      "enabled": true
+     }
+    }
+   },
+   "Layer 3": {
+    "Animation": {
+     "selected": "(none)"
+    },
+    "Preset": {
+     "selected": "default"
+    },
+    "Z": {
+     "value": 30
+    },
+    "Enabled": {
+     "enabled": true
+    }
+   }
+  },
+  "Counter position": {
+   "X origin": {
+    "selected": "left"
+   },
+   "X offset": {
+    "value": 22
+   },
+   "Y origin": {
+    "selected": "top"
+   },
+   "Y offset": {
+    "value": 1
+   },
+   "Enabled": {
+    "enabled": true
+   }
+  },
+  "Digits": {
+   "value": 6
+  },
+  "Digit color": {
+   "r": 255,
+   "g": 144,
+   "b": 0,
+   "a": 1
+  },
+  "Divider color": {
+   "r": 128,
+   "g": 128,
+   "b": 128,
+   "a": 1
+  },
+  "Rotate speed": {
+   "value": 0.001
+  },
+  "Easing": {
+   "selected": "easeInOutQuart"
+  },
+  "Leading zeros": {
+   "enabled": false
+  },
+  "Start value": {
+   "text": "0"
+  },
+  "Value": {
+   "text": "10000"
+  },
+  "Counter dim %": {
+   "value": 50
+  },
+  "Counter dim steps": {
+   "value": 3
+  },
+  "Enabled": {
+   "enabled": true
+  }
+ }
+}
