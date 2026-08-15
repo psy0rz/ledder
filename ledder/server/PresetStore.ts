@@ -31,7 +31,7 @@ export class PresetStore {
 
     }
 
-    private presetFilename(animationName: string, presetName: string) {
+    public presetFilename(animationName: string, presetName: string) {
         return (path.join(this.presetPath, animationName, presetName + ".json"))
     }
 
@@ -123,13 +123,7 @@ export class PresetStore {
     }
 
 
-    async previewOutdated(animationName: string, presetName: string) {
-        const previewMtime = await getMtime(this.previewFilename(animationName, presetName))
-        const animationMtime = await getMtime(this.animationFilename(animationName))
-        const presetMtime = await getMtime(this.presetFilename(animationName, presetName))
-
-        return (previewMtime == 0 || previewMtime < animationMtime || previewMtime < presetMtime)
-    }
+    //note: whether a preview is outdated is decided by content hash, see PreviewCache.
 
     // Gets stripped list of all presets for animation, and adds previewUrl
     async buildPresetList(animationClass: typeof Animator, animationName: string): Promise<PresetListType> {
