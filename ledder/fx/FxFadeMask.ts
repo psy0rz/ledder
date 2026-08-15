@@ -4,10 +4,14 @@ import Scheduler from "../Scheduler.js"
 import PixelBox from "../PixelBox.js"
 import Color from "../Color.js"
 import DrawBox from "../draw/DrawBox.js"
+import type PixelList from "../PixelList.js";
 
 
 //Fade in/out by placing a black mask over a box and using the alpha channel. Usefull to keep animations running undistrubed while fading out or in
 export class FxFadeMask extends Fx {
+
+    mask:PixelList
+    color: Color
 
     constructor(scheduler: Scheduler, controlGroup:ControlGroup) {
         super(scheduler, controlGroup);
@@ -18,21 +22,25 @@ export class FxFadeMask extends Fx {
     {
         this.running=true
 
-        const c=new Color(0,0,0,0)
         let stepA
 
+        if (this.color===undefined)
+            this.color=new Color(0,0,0,0)
+
         if (out) {
-            c.a = 0
+            this.color.a = 0
             stepA=(1/time)
 
         }
         else {
-            c.a = 1
+            this.color.a = 1
             stepA=-(1/time)
         }
 
-        const mask=  new DrawBox(pixelBox.xMin,pixelBox.yMin, pixelBox.width(), pixelBox.height(), c)
-        pixelBox.add(mask)
+        if (this.mask===undefined) {
+            this.mask = new DrawBox(pixelBox.xMin, pixelBox.yMin, pixelBox.width(), pixelBox.height(), this.color)
+        }
+        pixelBox.add(this.mask)
 
         let frameNr
         frameNr = time;
@@ -40,17 +48,17 @@ export class FxFadeMask extends Fx {
         this.promise = this.scheduler.interval(1, () => {
 
             frameNr--;
-            c.a=c.a+stepA
+            this.color.a=this.color.a+stepA
 
             if (frameNr <= 0) {
                 if (out)
                 {
                     //make sure last step is exact
-                    c.a=1
+                    this.color.a=1
                 }
                 else {
                     //we've fade in, mask is transparent so it can be removed
-                    pixelBox.delete(mask)
+                    pixelBox.delete(this.mask)
                 }
                 return false
             }

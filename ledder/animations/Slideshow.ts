@@ -41,6 +41,7 @@ export default class Slideshow extends Animator {
 
         const slidesGroup = controls.group("Slides", true)
 
+        //always create all the empty SlideControls
         let slides: Array<SlideControls> = []
         for (let slideNr = 1; slideNr <= MAX_SLIDES; slideNr++)
             slides.push(createSlideControls(slidesGroup, slideNr))
@@ -51,6 +52,7 @@ export default class Slideshow extends Animator {
             if (slide.animationPreset.animationName !== undefined)
                 lastUsedSlideNr = slide.slideNr
 
+        //removed unused ones after the last unused one
         for (let slideNr = lastUsedSlideNr + 2; slideNr <= MAX_SLIDES; slideNr++)
             slidesGroup.remove(slideGroupName(slideNr))
         slides = slides.slice(0, lastUsedSlideNr + 1)
@@ -59,19 +61,21 @@ export default class Slideshow extends Animator {
         //(loading, revocable proxies, autoreload on file change) exactly like the animation the user
         //would pick directly. Its controls show up live, under "Now playing", while its slide is up.
         const playingControls = controls.group("Now playing", true, true)
-        const manager = new AnimationManager(box, scheduler, playingControls)
+        const animationLayer=new PixelBox(box)
+        box.add(animationLayer)
+        const manager = new AnimationManager(animationLayer, scheduler, playingControls)
 
         //We own this manager, so we have to tear it down ourselves when we're stopped or restarted:
         //it watches the current slide's file for changes (autoreload), and a leaked watcher keeps
         //reloading animations into our box forever. Since every control here restarts us, that would
         //pile up a new watcher per tweak.
-        let stopped = false
-        scheduler.onCleanup(() => {
-            stopped = true
-            manager.stop(true)
-        })
+        // let stopped = false
+        // scheduler.onCleanup(() => {
+        //     stopped = true
+        //     manager.stop(true)
+        // })
 
-        while (!stopped) {
+        while (1) {
             const activeSlides = slides
                 .filter((slide) => slide.animationPreset.animationName !== undefined)
                 .sort((a, b) => a.orderControl.value - b.orderControl.value)
@@ -92,14 +96,15 @@ export default class Slideshow extends Animator {
                 if (box.size > 0 && useFade)
                     await fader.run(box, true, fadeFrames)
 
+
                 await manager.select(`${slide.animationPreset.animationName}/${slide.animationPreset.presetName}`, false)
 
                 //select() re-arms the file watcher, so if we were cleaned up while it was loading we
                 //have to stop the manager again, otherwise that watcher outlives us after all.
-                if (stopped) {
-                    manager.stop(true)
-                    return
-                }
+                // if (stopped) {
+                //     manager.stop(true)
+                //     return
+                // }
 
                 if (useFade)
                     await fader.run(box, false, fadeFrames)
