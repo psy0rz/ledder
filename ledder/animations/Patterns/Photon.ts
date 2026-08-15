@@ -6,400 +6,189 @@ import Animator from "../../Animator.js"
 import Pixel from "../../Pixel.js"
 import Color from "../../Color.js"
 import { patternSelect } from "../../ColorPatterns.js"
-import type {Choices} from "../../ControlSelect.js"
 
-class PhotonPixel 
-{
-    pixel:Pixel
-    mass:number
-   
-    constructor(pixel:Pixel)
-    {
-        this.pixel=pixel
-        this.mass=1.0
+/**
+ * One x/y position of the matrix.
+ *
+ * Pixels added during a frame are averaged together with the pixel that was blended in the previous
+ * frame, so the blended pixel decays towards the new input instead of being replaced by it. That
+ * carry-over is what gives the matrix its smear/afterglow.
+ */
+class PixelStack {
+    x: number
+    y: number
+    blendedPixel: Pixel | null
+    addedPixels: Pixel[]
+
+    constructor(x: number, y: number) {
+        this.x = x
+        this.y = y
+        this.blendedPixel = null
+        this.addedPixels = []
     }
 
-    render()
-    {
-        return this.pixel
+    addPixel(pixel: Pixel) {
+        this.addedPixels.push(pixel)
+    }
+
+    /**
+     * Average everything added this frame with the previous blend result, into one pixel.
+     *
+     * @param afterglowWeight How heavy the previous frame's pixel counts in the average. 0 discards
+     *                        it (crisp), 1 weighs it as one extra added pixel, higher values smear.
+     * @param maxAlpha        Upper limit for the resulting alpha.
+     */
+    blendAddedPixels(afterglowWeight: number, maxAlpha: number) {
+        if (this.addedPixels.length === 0)
+            return
+
+        let redSum = 0
+        let greenSum = 0
+        let blueSum = 0
+        let alphaSum = 0
+
+        for (const pixel of this.addedPixels) {
+            redSum += pixel.color.r
+            greenSum += pixel.color.g
+            blueSum += pixel.color.b
+            alphaSum += pixel.color.a
+        }
+
+        let pixelCount = this.addedPixels.length
+        if (this.blendedPixel !== null && afterglowWeight > 0) {
+            redSum += this.blendedPixel.color.r * afterglowWeight
+            greenSum += this.blendedPixel.color.g * afterglowWeight
+            blueSum += this.blendedPixel.color.b * afterglowWeight
+            alphaSum += this.blendedPixel.color.a * afterglowWeight
+            pixelCount += afterglowWeight
+        }
+
+        this.addedPixels = []
+        this.blendedPixel = new Pixel(this.x, this.y, new Color(
+            Math.round(redSum / pixelCount),
+            Math.round(greenSum / pixelCount),
+            Math.round(blueSum / pixelCount),
+            Math.min(maxAlpha, alphaSum / pixelCount),
+        ))
     }
 }
 
-class PhotonStack
-{
-    x:number
-    y:number
-    stack:PhotonPixel[]
+/**
+ * A grid of PixelStacks: pixels drawn on top of each other at the same position are blended
+ * additively instead of overwriting each other.
+ */
+class PhotonMatrix {
+    width: number
+    height: number
+    pixelStacks: PixelStack[]
 
-    constructor(x:number,y:number)
-    {
-        this.x=x
-        this.y=y
-        this.stack=[]
+    constructor(width: number, height: number) {
+        this.width = width
+        this.height = height
+        this.pixelStacks = []
+        for (let y = 0; y < height; y++)
+            for (let x = 0; x < width; x++)
+                this.pixelStacks.push(new PixelStack(x, y))
     }
 
-    update()
-    {
-        //flatten stack (x/y position) by calculating replacement pixel.
-        let red=0
-        let green=0
-        let blue=0
-        let alpha=0
-        let rSum=0
-        let gSum=0
-        let bSum=0
-        let aSum=0
-        let rMass=0
-        let gMass=0
-        let bMass=0
-        let aMass=0
-        if (this.stack.length>0)
-        {
-            for (let p=0;p<this.stack.length;p++)
-            {
-                rSum=rSum+this.stack[p].pixel.color.r*this.stack[p].mass
-                rMass=rMass+this.stack[p].mass
-                gSum=gSum+this.stack[p].pixel.color.g*this.stack[p].mass
-                gMass=gMass+this.stack[p].mass
-                bSum=bSum+this.stack[p].pixel.color.b*this.stack[p].mass
-                bMass=bMass+this.stack[p].mass
-                aSum=aSum+this.stack[p].pixel.color.a*this.stack[p].mass
-                aMass=aMass+this.stack[p].mass
-            }
-            red=Math.round(rSum/rMass)
-            green=Math.round(gSum/gMass)
-            blue=Math.round(bSum/bMass)
-            alpha=Math.min(0.8,aSum/aMass)
-            this.stack=[]
-            this.stack.push(new PhotonPixel(new Pixel(this.x,this.y,new Color(red,green,blue,alpha))))
-        }
-        
+    /** Index into pixelStacks, or -1 when x/y falls outside the matrix. */
+    stackIndex(x: number, y: number) {
+        const stackX = Math.floor(x)
+        const stackY = Math.floor(y)
+        if (stackX < 0 || stackX >= this.width || stackY < 0 || stackY >= this.height)
+            return -1
+        return (this.width * stackY) + stackX
     }
 
-    addPixel(pixel:Pixel)
-    {
-        this.stack.push(new PhotonPixel(pixel))
+    addPixel(pixel: Pixel) {
+        const index = this.stackIndex(pixel.x, pixel.y)
+        if (index >= 0)
+            this.pixelStacks[index].addPixel(pixel)
     }
 
-    render()
-    {
-        if (this.stack.length === 0) return null;
-        if (this.stack.length === 1) return this.stack[0].pixel;
-        
-        let pl = new PixelList();
-        for (let p=0; p<this.stack.length; p++)
-        {
-            pl.add(this.stack[p].pixel);
-        }
-        return pl;
-    }
-}
+    /**
+     * Sweep the palette over the whole matrix twice: once column by column (the vertical sweep),
+     * once row by row (the horizontal sweep). Both passes continue on the same palette index, so
+     * their diagonals interfere and blend into a plaid-like pattern.
+     *
+     * @param startColorIndex Palette index the first pass starts at.
+     * @param verticalShift   Palette steps per pixel while sweeping columns top to bottom.
+     * @param horizontalShift Palette steps per pixel while sweeping rows left to right.
+     */
+    addXYSweep(colorPalette: Color[], startColorIndex: number,
+               verticalShift: number, horizontalShift: number,
+               sweepVertical: boolean, sweepHorizontal: boolean) {
 
-class Photonmatrix
-{
-    width:number
-    height:number
-    photonStack: PhotonStack[]
-    palette:Color[]
-    magic:number
-    magic2:number
+        let colorIndex = startColorIndex
 
-    radius:number
-    
-
-    constructor(width:number,height:number)
-    {
-        this.width=width
-        this.height=height
-        this.photonStack=[]
-        this.palette=[]
-        this.magic=0
-        this.magic2=0
-        this.radius=0
-        for (let y=0;y<height;y++)
-        {
-            for (let x=0;x<width;x++)
-            {
-                this.photonStack.push(new PhotonStack(x,y))
-            }
-        }
-    }
-
-    xyToIndex(x:number,y:number)
-    {
-        const intx = Math.floor(x);
-        const inty = Math.floor(y);
-        if (intx < 0 || intx >= this.width || inty < 0 || inty >= this.height) return -1;
-        return (this.width * inty) + intx;
-    }
-
-    addPixelList(pixellist)
-    {
-
-    }
-
-    addPixel(pixel:Pixel)
-    {
-        const index = this.xyToIndex(pixel.x, pixel.y);
-        if (index >= 0) {
-            this.photonStack[index].addPixel(pixel);
-        }
-    }
-
-    update()
-    {
-        for (let s=0;s<this.photonStack.length;s++)
-        {
-            if (this.photonStack[s])
-            {
-                this.photonStack[s].update()
-            }
-        }
-    }
-
- 
-    addRandomPhoton(colorPalette,colorindex,colorshift)
-    {
-      const centerX = this.width / 2;
-      const centerY = this.height / 2;
-      const radiusFactor = this.width / 720; // Pre-calculate 360/(360/width/2)
-      
-      for (let q=0; q<3; q++)
-      {
-        this.magic++;
-        const magicOffset = this.magic / 60;
-        
-        for (let i=0; i<360; i++)
-        {
-                colorindex = (colorindex + colorshift) % colorPalette.length;
-                const angle = (i + this.magic) / 60;
-                const radius = i * radiusFactor;
-                const x = Math.round(Math.sin(angle) * radius + centerX);
-                const y = Math.round(Math.cos(angle) * radius + centerY);
-                this.addPixel(new Pixel(x, y, colorPalette[colorindex]));
-        }
-      }
-    }
-
-    addRandomCircles(colorPalette, colorindex, colorshift)
-    {
-        const centerX = this.width / 2;
-        const centerY = this.height / 2;
-        const paletteLen = colorPalette.length;
-        
-        for (let radius=0; radius<this.width; radius++)
-        {
-            for (let circle=0; circle<360; circle++)
-            {
-                colorindex = (colorindex + colorshift) % paletteLen;
-                const angle = circle / 60;
-                const x = Math.round(Math.sin(angle) * radius + centerX);
-                const y = Math.round(Math.cos(angle) * radius + centerY);
-                const color = colorPalette[colorindex];
-                this.addPixel(new Pixel(x, y, new Color(color.r, color.g, color.b, 0.5)));
-            }
-        }
-    }
-
-
-    addRandomGrid(colorPalette, colorindex, colorshift)
-    {
-        //put random pixels at random positions (just for testing)
-        for (let x=0; x<this.width;x++)
-        {
-            for (let y=0; y<this.height; y++)
-            {
-                colorindex=colorindex+colorshift
-                colorindex=colorindex%colorPalette.length
-                let color=colorPalette[colorindex].copy()
-                color.a=0.5
-                this.addPixel(new Pixel(x,y,colorPalette[colorindex].copy()))
+        if (sweepVertical) {
+            for (let x = 0; x < this.width; x++) {
+                for (let y = 0; y < this.height; y++) {
+                    colorIndex = (colorIndex + verticalShift) % colorPalette.length
+                    this.addPixel(new Pixel(x, y, colorPalette[colorIndex].copy()))
+                }
             }
         }
 
-        for (let y=0; y<this.height;y++)
-        {
-            for (let x=0; x<this.width; x++)
-            {
-                colorindex=colorindex+colorshift
-                colorindex=colorindex%colorPalette.length
-                let color=colorPalette[colorindex].copy()
-                color.a=0.5
-                this.addPixel(new Pixel(x,y,colorPalette[colorindex].copy()))
-            }
-        }   
-    }
-
-    addClouds(colorPalette, colorindex, colorshift)
-    {
-            this.magic = (this.magic + 1) % this.width;
-            const paletteLen = colorPalette.length;
-            const invPI = 1 / Math.PI;
-            
-            for (let x=0; x<this.width; x++)
-            {
-                colorindex = (colorindex + colorshift) % paletteLen;
-                const y = Math.random() * this.height;
-                const xx = (x + this.magic) % this.width;
-                const color = colorPalette[(colorindex + x) % paletteLen];
-                const alpha = (Math.sin((x + y) * invPI) + 1) * 0.5;
-                this.addPixel(new Pixel(xx, y, new Color(color.r, color.g, color.b, alpha)));
-            }
-    }
-
-    julia(c,px:number,py:number,width:number,height:number,zoom:number)
-    {
-        //calculate the initial real and imaginary part of z, based on the pixel location and zoom and position values
-         let newRe = 1.5 * (px - width / 2) / (0.5 * zoom * width) ;
-         let newIm = (py - height / 2) / (0.5 * zoom * height);
-         let oldRe=0;
-         let oldIm=0
-         //i will represent the number of iterations
-         let n=0
-         //start the iteration process
-         do
-         {
-             //remember value of previous iteration
-             oldRe = newRe;
-             oldIm = newIm;
-             //the actual iteration, the real and imaginary part are calculated
-             newRe = oldRe * oldRe - oldIm * oldIm + c.cx
-             newIm = 2 * oldRe * oldIm + c.cy
-             //if the point is outside the circle with radius 2: stop
-             if((newRe * newRe + newIm * newIm) > 4) break;
-             n++
-         } while (n<500)
-         return n
-    }
-
-    addJulia(colorpalette,colorindex,colorshift)
-    {
-        this.magic=Math.max(2,this.magic)
-        let hotspotsel=this.magic2
-        this.magic=Math.max(1,this.magic*1.001)
-        let hotspots=[
-            { cx:-0.74800888462543, cy:0.058641210013121,  maxz:2.80},
-            { cx:0.31997989023329, cy:0.037739114652372,   maxz:8},
-            { cx:0.30532223412791, cy:0.028030387481731,   maxz:8.05},
-            { cx:-1.4183762254903, cy:-0.00058322469430364, maxz:9}
-        ]
-        let c=hotspots[this.magic2]
-        let zoom=this.magic
-        if (zoom>Math.pow(10,c.maxz-1))
-        {
-            zoom=1
-            this.magic=1
-            this.magic2++
-            if (this.magic2>hotspots.length-1) {  this.magic2=0}
-        }
-       
-        const paletteLen = colorpalette.length;
-        for (let x=0; x<this.width; x++){
-            for (let y=0; y<this.height; y++){
-                const pixelcolor = this.julia(c, x, y, this.width, this.height, zoom);
-                if (pixelcolor > 0)
-                {
-                    const color = colorpalette[pixelcolor % paletteLen];
-                    const c = new Color(color.r, color.g, color.b, 0.7);
-                    this.addPixel(new Pixel(x, y, c));
+        if (sweepHorizontal) {
+            for (let y = 0; y < this.height; y++) {
+                for (let x = 0; x < this.width; x++) {
+                    colorIndex = (colorIndex + horizontalShift) % colorPalette.length
+                    this.addPixel(new Pixel(x, y, colorPalette[colorIndex].copy()))
                 }
             }
         }
     }
 
-    addStripes(colorPalette, colorindex, colorshift)
-    {
-        
-            this.magic=this.magic+Math.random()*8
-            this.magic=this.magic%360
-            let cx=(this.width/2)
-            let cy=(this.height/2)
-            let rx=cx+(Math.sin(this.magic/60)*(this.width/2))
-            let ry=cy+(Math.cos(this.magic/60)*(this.width/2))
-            let distance=Math.sqrt(Math.pow(cx-rx,2)+(Math.pow(cy-ry,2)))
-            let xd=(rx-cx)/distance
-            let yd=(ry-cy)/distance
-
-            let x=cx
-            let y=cy
-                
-            for (let ll=0;ll<distance;ll++)
-            {
-                colorindex=colorindex+colorshift
-                colorindex=colorindex%colorPalette.length
-                let color=colorPalette[(colorindex)%colorPalette.length]
-                let ccolor=color.copy()
-                ccolor.a= Math.max(0,Math.min(1,ccolor.a/((ll+1)/colorPalette.length)))
-            
-                x=(x+xd)
-                y=(y+yd)
-                this.addPixel(new Pixel(Math.round(x),Math.round(y),ccolor))
-            }
-            
-        
+    blendAddedPixels(afterglowWeight: number, maxAlpha: number) {
+        for (const pixelStack of this.pixelStacks)
+            pixelStack.blendAddedPixels(afterglowWeight, maxAlpha)
     }
 
-    shift(pixelcount)
-    {
-
+    render() {
+        const pixelList = new PixelList()
+        for (const pixelStack of this.pixelStacks)
+            if (pixelStack.blendedPixel !== null)
+                pixelList.add(pixelStack.blendedPixel)
+        return pixelList
     }
-
-
-
-
-    render()
-    {
-        const pl = new PixelList();
-        for (let p=0; p<this.photonStack.length; p++)
-        {
-            const rendered = this.photonStack[p].render();
-            if (rendered) {
-                pl.add(rendered);
-            }
-        }
-        return pl;
-    }
-   
 }
 
 export default class Photon extends Animator {
 
-    static description = "Additive photon matrix, rendering various generated patterns"
+    static description = "Additive photon matrix, sweeping a color palette over the x and y axis"
 
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) {
-        const patternChoices: Choices = [
-            {id: "Photon", name: "Photon"},
-            {id: "SinCos", name: "SinCos"},
-            {id: "XY", name: "XY"},
-            {id: "Clouds", name: "Clouds"},
-            {id: "Stripes", name: "Stripes"},
-            {id: "Julia", name: "Julia"},
-        ]
+        const photonControls = controls.group("Photon", true)
+        const intervalControl = photonControls.value("Animation interval", 1, 1, 10, 1)
+        const colorPaletteControl = patternSelect(photonControls, 'Color Palette', 'DimmedReinbow')
 
-        const photonControls        = controls.group("Photon", true)
-        const colorShiftControl     = photonControls.value("Color shift", 0, 0, 32, 1)
-        const intervalControl       = photonControls.value("Animation interval", 1, 1, 10, 1)
-        const patternControl        = photonControls.select("Pattern", "Photon", patternChoices, true)
-        const colorPaletteControl   = patternSelect(photonControls, 'Color Palette', 'DimmedReinbow')
+        const sweepControls = photonControls.group("Sweep")
+        const verticalShiftControl = sweepControls.value("Vertical color shift", 3, 0, 32, 1)
+        const horizontalShiftControl = sweepControls.value("Horizontal color shift", 3, 0, 32, 1)
+        const sweepVerticalControl = sweepControls.switch("Sweep vertically", true, false)
+        const sweepHorizontalControl = sweepControls.switch("Sweep horizontally", true, false)
+        const paletteScrollControl = sweepControls.value("Palette scroll per frame", 1, 0, 32, 1)
 
-        const photon = new Photonmatrix(box.width(), box.height())
+        const blendControls = photonControls.group("Blending")
+        const afterglowControl = blendControls.value("Afterglow", 1, 0, 16, 0.5)
+        const maxAlphaControl = blendControls.value("Max alpha", 0.8, 0, 1, 0.05)
 
-        const pixellist = new PixelList()
-        box.add(pixellist)
+        const photonMatrix = new PhotonMatrix(box.width(), box.height())
+
+        const pixelList = new PixelList()
+        box.add(pixelList)
 
         scheduler.intervalControlled(intervalControl, (frameNr) => {
-            pixellist.clear()
-            const colorIndex = frameNr % colorPaletteControl.length
-            switch (patternControl.selected) {
-                case "Photon":  photon.addRandomPhoton(colorPaletteControl, colorIndex, colorShiftControl.value); break
-                case "SinCos":  photon.addRandomCircles(colorPaletteControl, colorIndex, colorShiftControl.value); break
-                case "XY":      photon.addRandomGrid(colorPaletteControl, colorIndex, colorShiftControl.value); break
-                case "Clouds":  photon.addClouds(colorPaletteControl, colorIndex, colorShiftControl.value); break
-                case "Stripes": photon.addStripes(colorPaletteControl, colorIndex, colorShiftControl.value); break
-                case "Julia":   photon.addJulia(colorPaletteControl, colorIndex, colorShiftControl.value); break
-            }
-            photon.update()
-            pixellist.add(photon.render())
+            pixelList.clear()
+            const startColorIndex = (frameNr * paletteScrollControl.value) % colorPaletteControl.length
+            photonMatrix.addXYSweep(
+                colorPaletteControl, startColorIndex,
+                verticalShiftControl.value, horizontalShiftControl.value,
+                sweepVerticalControl.enabled, sweepHorizontalControl.enabled,
+            )
+            photonMatrix.blendAddedPixels(afterglowControl.value, maxAlphaControl.value)
+            pixelList.add(photonMatrix.render())
         })
     }
 }
