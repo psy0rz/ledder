@@ -30,6 +30,9 @@
 
     "buildpreviews": "node ledder/server/buildpreviews.js",
 
+    "buildpreviewsforce": "node ledder/server/buildpreviews.js --force",
+
+
     "buildweb": "tsc ; NODE_ENV=production vite build",
 
     "production": "NODE_ENV=production node ledder/server/server.js",
