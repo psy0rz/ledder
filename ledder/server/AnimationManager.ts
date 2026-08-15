@@ -9,13 +9,19 @@ import CallbackManager from "../../util/CallbackManager.js"
 import LayerStack from "./LayerStack.js"
 import type RenderSettings from "../RenderSettings.js"
 import chokidar from 'chokidar'
+import {isAnimationStopped, stoppableProxy} from "./AnimationStopped.js"
 
 
 /*
- * We need this, since we will have unhandled rejections once we revoke proxy objects (see below)
+ * We need this, since we will have unhandled rejections once we stop the proxy objects (see below)
  * We cant expect all animations to behave correctly all the time and handle all the edge cases regarding this.
+ * Those rejections are AnimationStopped: they mean a stopped animation was cut off, which is exactly what
+ * should happen, so we drop them without a word. Anything else is a real bug in an animation and stays loud.
  */
 process.on('unhandledRejection', (err) => {
+    if (isAnimationStopped(err))
+        return
+
     console.error(err)
 
 })
@@ -99,12 +105,12 @@ export default class AnimationManager {
         //scheduler
         if (this.proxyScheduler !== undefined)
             this.proxyScheduler.revoke()
-        this.proxyScheduler = Proxy.revocable(this.scheduler, {})
+        this.proxyScheduler = stoppableProxy(this.scheduler, "scheduler", () => this.animationName)
 
         this.controlGroup.__detach() //removes onChange handlers etc
         if (this.proxyControlGroup !== undefined)
             this.proxyControlGroup.revoke()
-        this.proxyControlGroup = Proxy.revocable(this.controlGroup, {})
+        this.proxyControlGroup = stoppableProxy(this.controlGroup, "controls", () => this.animationName)
 
         this.controlGroup.__onRestartRequired(() => {
 
@@ -142,7 +148,13 @@ export default class AnimationManager {
             //The scheduler is paused while the layers are loaded from disk, so it doesnt matter that this completes later.
             this.layerStack.createLayers()
                 .then(() => this.autoreload())
-                .catch((e) => console.error("LayerStack: ", e))
+                .catch((e) => {
+                    //the animation was stopped while its layers were still loading: expected, nothing to do
+                    if (isAnimationStopped(e))
+                        return
+
+                    console.error("LayerStack: ", e)
+                })
 
             return promise
         }
@@ -275,6 +287,10 @@ export default class AnimationManager {
             if (this.animation !== undefined)
                 this.animation.animationEvent(name, data, this.childBox, this.proxyScheduler.proxy, this.proxyControlGroup.proxy)
         } catch (e) {
+            //the animation was stopped between the event arriving and it being handled: expected
+            if (isAnimationStopped(e))
+                return
+
             console.error(e)
         }
     }
