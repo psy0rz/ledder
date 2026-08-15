@@ -37,7 +37,7 @@ class TicTacToeCell
     }
 
 
-    render(xOffset,yOffset,width,height)
+    render(xOffset,yOffset,width,height,winningCell=false)
     {
         const cross=`
         b.b
@@ -50,7 +50,7 @@ class TicTacToeCell
         rrr
         `
         let pl=new PixelList()
-        //pl.add(new DrawRectangle(xOffset,yOffset,width,height,new Color(64,64,64,1)))
+        if (winningCell) { pl.add(new DrawRectangle(xOffset,yOffset,width,height,new Color(64,64,0,1))) }
 
         let xOff=xOffset+1
         let yOff=yOffset+1
@@ -59,13 +59,13 @@ class TicTacToeCell
         let cx=xOff+w/2
         let cy=yOff+w/2
 
-        if (this.owner=='x') { 
+        if (this.owner=='x') {
            pl.add(new DrawAsciiArtColor(cx-1,cy-1, cross))
-    
-        } 
-        if (this.owner=='o') { 
+
+        }
+        if (this.owner=='o') {
             pl.add(new DrawAsciiArtColor(cx-1,cy-1, circle))
-        } 
+        }
         return pl
     }
 
@@ -119,7 +119,11 @@ export class TicTacToe
     gameId=0
     animationTimer=0
     pastGames=[]
-   
+    finished=false
+    endGameTimer=0
+    endGameHoldTicks=10
+    winningCombo=null
+
 
 
     constructor()
@@ -167,12 +171,14 @@ export class TicTacToe
     }
 
     gameOver(gameWon) {
+        this.winningCombo=this.winCombos[gameWon.index]
         this.declareWinner(gameWon.player+" win!");
     }
 
     declareWinner(who) {
        this.gameStatus=who
-       this.startGame()
+       this.finished=true
+       this.endGameTimer=0
     }
 
     emptySquares() {
@@ -246,14 +252,28 @@ export class TicTacToe
 
     update(turn:number)
     {
+        if (this.finished)
+        {
+            this.endGameTimer++
+            if (this.endGameTimer>this.endGameHoldTicks)
+            {
+                this.pastGames.unshift(this.cells)
+                if (this.pastGames.length>32){ this.pastGames.pop()}
+                this.finished=false
+                this.winningCombo=null
+                this.startGame()
+            }
+            return
+        }
+
         if (this.emptySquares().length>0)
         {
             let playerId=turn%2
-          
-    
+
+
                 if (playerId==0)
                 {
-                
+
                     let bestSpot0=this.bestSpot(this.player0)
                     if (this.emptySquares().length>8){ bestSpot0=Math.round(Math.random()*9)}
                     this.turn(bestSpot0,this.player0)
@@ -264,15 +284,13 @@ export class TicTacToe
                     if (this.emptySquares().length>8){ bestSpot1=Math.round(Math.random()*9)}
                     this.turn(bestSpot1,this.player1)
                 }
-            
+
         }
         else
         {
-            this.pastGames.unshift(this.cells)
-            if (this.pastGames.length>32){ this.pastGames.pop()}
-            this.startGame()
+            this.declareWinner("Tie Game!")
         }
-        
+
     }
 
     render(xOffset,yOffset,width,height)
@@ -295,7 +313,8 @@ export class TicTacToe
         {
             let cxOffset=xOffset+(rstruct[g][0]*cellWidth)
             let cyOffset=yOffset+(rstruct[g][1]*cellHeight)
-            pl.add(this.cells[g].render(cxOffset,cyOffset,cellWidth,cellHeight))
+            let winningCell=this.finished && this.winningCombo!=null && this.winningCombo.indexOf(g)>-1
+            pl.add(this.cells[g].render(cxOffset,cyOffset,cellWidth,cellHeight,winningCell))
         }
         pl.add(new DrawRectangle(xOffset,yOffset,height,height,new Color(64,64,64,1)))
 
@@ -375,13 +394,13 @@ export default class Wopr extends Animator {
         let xOffset=0
         scheduler.intervalControlled(intervalControl, (frameNr) => {
             
-            if (frameNr<1000)
-            {
-                imgBox.clear()
-                imgBox.add(wopr.renderIntro(box,frameNr))
-            }
-            else
-            {
+            // if (frameNr<1000)
+            // {
+            //     imgBox.clear()
+            //     imgBox.add(wopr.renderIntro(box,frameNr))
+            // }
+            // else
+            // {
                 
                    
                     if (xOffset>box.width() ) { imgBox.clear() ; xOffset=0}
@@ -392,7 +411,7 @@ export default class Wopr extends Animator {
                     turn++
                 
                 
-            }
+            // }
 
           
         
