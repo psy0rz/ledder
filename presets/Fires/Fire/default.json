@@ -5,21 +5,35 @@
   "FPS": {
    "value": 60
   },
-  "Fire colors": {
-   "selected": "Bertrik fire"
-  },
   "Fire interval": {
    "value": 1
   },
-  "Fire intensity %": {
-   "from": 0,
-   "to": 100
+  "Fire minimum intensity": {
+   "value": 117
+  },
+  "Fire maximum intensity": {
+   "value": 634
+  },
+  "Fire wildness": {
+   "value": 100
+  },
+  "Fire decay": {
+   "value": 1
+  },
+  "Fire colors": {
+   "selected": "Bertrik fire"
+  },
+  "Fire minimum intensity %": {
+   "value": 0
+  },
+  "Fire maximum intensity %": {
+   "value": 100
   },
   "Fire wildness %": {
-   "value": 22
+   "value": 50
   },
   "Fire decay %": {
-   "value": 7
+   "value": 5
   },
   "Fire sintel factor": {
    "value": 0
@@ -27,9 +41,53 @@
   "Fire speed": {
    "value": 1
   },
+  "Render settings": {
+   "FPS": {
+    "value": 60
+   },
+   "Subpixel filtering": {
+    "enabled": false
+   },
+   "Enabled": {
+    "enabled": true
+   }
+  },
+  "Fire colors range": {
+   "from": 0,
+   "to": 100
+  },
+  "Fire intensity %": {
+   "from": 0,
+   "to": 100
+  },
   "Fire X range %": {
    "from": 0,
    "to": 100
+  },
+  "Layers": {
+   "Z of animation": {
+    "value": 0
+   },
+   "Layer 1": {
+    "Animation": {
+     "selected": "(none)"
+    },
+    "Preset": {
+     "selected": "default"
+    },
+    "Z": {
+     "value": 10
+    },
+    "Enabled": {
+     "enabled": true
+    }
+   },
+   "Enabled": {
+    "enabled": true
+   }
+  },
+  "Enabled": {
+   "enabled": true
   }
  }
 }
