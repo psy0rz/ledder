@@ -2,14 +2,11 @@ import PixelBox from "../../PixelBox.js"
 import Scheduler from "../../Scheduler.js"
 import ControlGroup from "../../ControlGroup.js"
 import PixelList from "../../PixelList.js"
-import {random} from "../../utils.js"
 import Animator from "../../Animator.js"
-import DrawLine from "../../draw/DrawLine.js"
 import Pixel from "../../Pixel.js"
 import Color from "../../Color.js"
 import { patternSelect } from "../../ColorPatterns.js"
-import Text from "../Text.js"
-import Fire from "../Fires/Fire.js"
+import type {Choices} from "../../ControlSelect.js"
 
 class PhotonPixel 
 {
@@ -365,78 +362,44 @@ class Photonmatrix
    
 }
 
-export default class Photonmatrixtest extends Animator {
+export default class Photon extends Animator {
 
-    static description = "Photon test"
+    static description = "Additive photon matrix, rendering various generated patterns"
 
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) {
-        let choices=[]
-        choices.push({id:1, name:"Photon"})
-        choices.push({id:2, name:"SinCos"})
-        choices.push({id:3, name:"XY"})
-        choices.push({id:4, name:"Clouds"})
-        choices.push({id:5, name:"Stripes"})
-        choices.push({id:6, name:"Julia"})
+        const patternChoices: Choices = [
+            {id: "Photon", name: "Photon"},
+            {id: "SinCos", name: "SinCos"},
+            {id: "XY", name: "XY"},
+            {id: "Clouds", name: "Clouds"},
+            {id: "Stripes", name: "Stripes"},
+            {id: "Julia", name: "Julia"},
+        ]
 
-        const animatorControl               = controls.group("Photon",true)
-        const colorshiftControl             = animatorControl.value("Color shift", 0, 0 ,32, 1)
-        const intervalControl               = animatorControl.value("Animation interval", 1, 1, 10, 1)
-       
-        const patternControl                = animatorControl.select("Algoritm","Photon",choices,true)
-        const colorPaletteControl           = patternSelect(animatorControl, 'Color Palette', 'DimmedReinbow')
-        const fireEnabledControl            = animatorControl.switch("Fire enable",false,true)
-        const marqueeEnabledControl          = animatorControl.switch("Marquee enable",false,true)
-        const fireControl                   = animatorControl.group("Fire")
-        const marqueeControl                = animatorControl.group("Marquee")
-       
-       
-       
-       
-        let photon=new Photonmatrix(box.width(),box.height())
+        const photonControls        = controls.group("Photon", true)
+        const colorShiftControl     = photonControls.value("Color shift", 0, 0, 32, 1)
+        const intervalControl       = photonControls.value("Animation interval", 1, 1, 10, 1)
+        const patternControl        = photonControls.select("Pattern", "Photon", patternChoices, true)
+        const colorPaletteControl   = patternSelect(photonControls, 'Color Palette', 'DimmedReinbow')
 
-        if (fireEnabledControl.enabled)
-        {
-            let fire=new Fire()
-            fire.run(box,scheduler,fireControl)
-        }
-        
-        let pixellist=new PixelList()
+        const photon = new Photonmatrix(box.width(), box.height())
+
+        const pixellist = new PixelList()
         box.add(pixellist)
 
-        
-        if (marqueeEnabledControl.enabled)
-        {
-            let textAnimation=new Text()
-            textAnimation.run(box,scheduler,marqueeControl)
-        }
-      
         scheduler.intervalControlled(intervalControl, (frameNr) => {
             pixellist.clear()
-            switch (patternControl.selected)
-            {
-               
-               
-                
-                case "Photon":  
-                case "1":       photon.addRandomPhoton(colorPaletteControl,frameNr%colorPaletteControl.length,colorshiftControl.value); break;
-                case "SinCos": 
-                case "2":       photon.addRandomCircles(colorPaletteControl,frameNr%colorPaletteControl.length,colorshiftControl.value); break
-                case "XY":   
-                case "3":       photon.addRandomGrid(colorPaletteControl,frameNr%colorPaletteControl.length,colorshiftControl.value); break
-                case "Clouds":   
-                case "4":       photon.addClouds(colorPaletteControl,frameNr%colorPaletteControl.length,colorshiftControl.value); break
-                case "Stripes":   
-                case "5":       photon.addStripes(colorPaletteControl,frameNr%colorPaletteControl.length,colorshiftControl.value); break
-                case "Julia":   
-                case "6":       photon.addJulia(colorPaletteControl,frameNr%colorPaletteControl.length,colorshiftControl.value); break
+            const colorIndex = frameNr % colorPaletteControl.length
+            switch (patternControl.selected) {
+                case "Photon":  photon.addRandomPhoton(colorPaletteControl, colorIndex, colorShiftControl.value); break
+                case "SinCos":  photon.addRandomCircles(colorPaletteControl, colorIndex, colorShiftControl.value); break
+                case "XY":      photon.addRandomGrid(colorPaletteControl, colorIndex, colorShiftControl.value); break
+                case "Clouds":  photon.addClouds(colorPaletteControl, colorIndex, colorShiftControl.value); break
+                case "Stripes": photon.addStripes(colorPaletteControl, colorIndex, colorShiftControl.value); break
+                case "Julia":   photon.addJulia(colorPaletteControl, colorIndex, colorShiftControl.value); break
             }
             photon.update()
-            let newPixelData:PixelList=photon.render()
-            //console.log(newPixelData)
-            pixellist.add(newPixelData)
+            pixellist.add(photon.render())
         })
-
-
-       
     }
 }
