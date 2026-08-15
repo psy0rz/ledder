@@ -1,0 +1,65 @@
+{
+ "title": "",
+ "description": "",
+ "values": {
+  "Render settings": {
+   "FPS": {
+    "value": 60
+   },
+   "Subpixel filtering": {
+    "enabled": false
+   },
+   "Enabled": {
+    "enabled": true
+   }
+  },
+  "Image URL": {
+   "text": "https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExcXl4eDhlNzF3Z256eGFweDF2aXB2eDBhNDNoNzZmOGJyaG5ubHFmZiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/9M5jK4GXmD5o1irGrF/giphy.gif"
+  },
+  "fit": {
+   "selected": "outside"
+  },
+  "cache forever": {
+   "enabled": true
+  },
+  "cache TTL (minutes)": {
+   "value": 60
+  },
+  "auto-refresh": {
+   "enabled": false
+  },
+  "playback": {
+   "speed multiplier": {
+    "value": 1
+   },
+   "Enabled": {
+    "enabled": true
+   }
+  },
+  "Layers": {
+   "Z of animation": {
+    "value": 0
+   },
+   "Layer 1": {
+    "Animation": {
+     "selected": "(none)"
+    },
+    "Preset": {
+     "selected": "default"
+    },
+    "Z": {
+     "value": 10
+    },
+    "Enabled": {
+     "enabled": true
+    }
+   },
+   "Enabled": {
+    "enabled": true
+   }
+  },
+  "Enabled": {
+   "enabled": true
+  }
+ }
+}

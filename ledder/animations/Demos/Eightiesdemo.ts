@@ -9,17 +9,11 @@ import Animator from "../../Animator.js"
 import Pixel from "../../Pixel.js"
 import Color from "../../Color.js"
 import DrawAsciiArtColor from "../../draw/DrawAsciiArtColor.js"
-import Font from "../../Font.js"
-import { fonts } from "../../fonts.js"
-import DrawText from "../../draw/DrawText.js"
 import DrawLine from "../../draw/DrawLine.js"
-import Pacman from "../Sprites/Pacman.js"
 import DrawBox from "../../draw/DrawBox.js"
 import DrawCircle from "../../draw/DrawCircle.js"
 import { reinGalaxy } from "../../ColorPatterns.js"
 import Matrix from "matrix_transformer"
-import Text from "../Text.js"
-import Fire from "../Fires/Fire.js"
 
 export class scene3D {
     points=[]
@@ -1131,15 +1125,6 @@ export default class Eightiesdemo extends Animator {
         const motionBlurEnabled=postFxControl.switch("Motion Blur",false)
         const motionBlurSteps=postFxControl.value("Blur Amount",3,1,5,1,true)
 
-        const datetimeControl=appControl.group("Date/Time",false)
-        const dateControl=datetimeControl.switch("Show date",true)
-        const timeControl=datetimeControl.switch("Show time",true)
-
-        const extMarqueeControl=appControl.group("Marquee",false)
-        const extfireControl=appControl.group("Flames",false)
-
-
-
         const settings={ground:groundSettings,sky:skySettings,sun:sunSettings,clouds:cloudSettings,grid:gridSettings,cube3d:cube3dSettings}
 
 
@@ -1148,13 +1133,9 @@ export default class Eightiesdemo extends Animator {
        
         const canvas=new PixelList();
         const sprites=new PixelList();
-        const firebox=new PixelBox(box);
-        const overlay=new PixelList();
         const canvas3d=new PixelList();
         // Don't add layers to box here - we'll add them fresh each frame
        let animationNum=0;
-      let font=fonts["Pixel-Gosub"];
-      font.load();
        let pacmanSeq=0;
       //scheduler.setFrameTimeuS(100000)
       let scene3d=new scene3D()
@@ -1167,12 +1148,8 @@ export default class Eightiesdemo extends Animator {
       scene3d.objects.push(cube)
       let rotation3d=0
       let  controlSettings={rotation:1,wireframe:true,perspective:0.98,stars:100,antiAliasing:false,antiAliasingThreshold:0.3,motionBlur:false,motionBlurSteps:3,frameNr:0}
-       let textscroller=new Text()
        let horizonDir=verticalScrollSpeed.value;
        let yOffset=0;
-       textscroller.run(box,scheduler,extMarqueeControl);
-       let fire=new Fire();
-       fire.run(firebox,scheduler,extfireControl);
        // Store previous frame for motion blur post-processing
        let prevFramePixels: Map<string, Pixel> = new Map();
        
@@ -1184,18 +1161,7 @@ export default class Eightiesdemo extends Animator {
             let xOffset=Math.cos(90-frameNr/2000)*(box.width()/2)+(box.width()/2);
             let yOffset=0; //(frameNr/animationHeight.value);
             horizonFactor=horizonFactor+horizonDir
-            let date=new Date()
-           let datetext=date.toLocaleDateString("NL")
-           let timetext=date.toLocaleTimeString("NL")
-           let txtx=(frameNr/8)%(timetext.length*(font.width+8))
             canvas.add(this.drawBackground(box,xOffset,yOffset,horizonFactor,animationHeight.value,frameNr,settings));
-            if (dateControl.enabled){
-            canvas.add(new DrawText(0,0,font,datetext,new Color(0,0,0,0.3)))
-            }
-            if (timeControl.enabled)
-            {
-              canvas.add(new DrawText(box.width()-26,0,font,timetext,new Color(255,255,255,0.3)))
-            }
             sprites.clear()
             let pacmanX=0;
             let pacmanY=0;
@@ -1270,12 +1236,10 @@ export default class Eightiesdemo extends Animator {
             
             // Combine all layers into box fresh each frame
             box.clear();
-            box.add(firebox);
             box.add(canvas);
             box.add(canvas3d);
             box.add(sprites);
-            box.add(overlay);
-            
+
             // Apply post-processing effects to final render (Fishtank method)
             if (antiAliasingEnabled.enabled || motionBlurEnabled.enabled) {
                 // Flatten all layers into a single combined PixelList
