@@ -37,8 +37,8 @@ const {default: PixelBox} = await import(`${R}/PixelBox.js`)
 const cases = [
     ["Fires/PlasmaFire", 64, 32, null],
     ["Fires/Fire", 64, 32, null],
-    ["Text/Marquee", 64, 32, "github"],
-    ["Text/Marquee", 32, 8, "github"],
+    ["Text", 64, 32, "github"],
+    ["Text", 32, 8, "github"],
     ["Lights/PoliceLights", 64, 32, null],
 ]
 const WARMUP_FRAMES = 120

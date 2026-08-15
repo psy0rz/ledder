@@ -10,7 +10,7 @@
  *
  * Usage:
  *   npm run qoisbench                                # default animation set
- *   node ledder/server/qoisbench.js Fires/Fire:64:32 "Text/Marquee:64:32:github"
+ *   node ledder/server/qoisbench.js Fires/Fire:64:32 "Text:64:32:github"
  *
  * Each argument is <animationPath>:<width>:<height>[:<presetName>]
  */
@@ -139,8 +139,8 @@ if (specs.length === 0)
     specs = [
         "Fires/PlasmaFire:64:32",
         "Fires/Fire:64:32",
-        "Text/Marquee:64:32:github",
-        "Text/Marquee:32:8:github",
+        "Text:64:32:github",
+        "Text:32:8:github",
         "Lights/PoliceLights:64:32",
     ]
 

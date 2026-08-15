@@ -46,7 +46,7 @@ export default class HSD extends Animator {
 
         // box.centerV(box)
 
-       await animationRun(marqueeBox, scheduler, controls, "Text/Marquee")
+       await animationRun(marqueeBox, scheduler, controls, "Text")
 
 
     }

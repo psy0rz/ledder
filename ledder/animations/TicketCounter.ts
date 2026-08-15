@@ -1,17 +1,17 @@
-import PixelBox from "../../PixelBox.js"
-import Pixel from "../../Pixel.js"
-import Scheduler from "../../Scheduler.js"
-import Color from "../../Color.js"
-import ControlGroup from "../../ControlGroup.js"
-import Animator from "../../Animator.js"
+import PixelBox from "../PixelBox.js"
+import Pixel from "../Pixel.js"
+import Scheduler from "../Scheduler.js"
+import Color from "../Color.js"
+import ControlGroup from "../ControlGroup.js"
+import Animator from "../Animator.js"
 import mqtt from "mqtt"
-import DrawCounter from "../../draw/DrawCounter.js"
-import Text from "./Marquee.js"
-import DrawBox from "../../draw/DrawBox.js"
-import {colorBlack, colorRed} from "../../Colors.js"
+import DrawCounter from "../draw/DrawCounter.js"
+import Text from "./Text.js"
+import DrawBox from "../draw/DrawBox.js"
+import {colorBlack, colorRed} from "../Colors.js"
 
 
-export default class Template extends Animator {
+export default class TicketCounter extends Animator {
 
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) {
         const mqttHost = controls.input('MQTT host', 'mqtt://mqtt.why2025.org')

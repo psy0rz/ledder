@@ -89,57 +89,57 @@ export default class RemotePlaylist extends Animator {
 [
 	{
 		"order": 0,
-		"preset":"Text/Marquee/ledder",
+		"preset":"Text/ledder",
 		"duration":30
 	},
 	{
 		"order": 10,
-		"preset":"Text/Marquee/coolfx",
+		"preset":"Text/coolfx",
 		"duration":30
 	},
 	{
                 "order": 11,
-                "preset":"Text/Marquee/Font Atari",
+                "preset":"Text/Font Atari",
                 "duration":2
         },
 	{
                 "order": 12,
-                "preset":"Text/Marquee/Font C64",
+                "preset":"Text/Font C64",
                 "duration":2
         },
 	{
                 "order": 13,
-                "preset":"Text/Marquee/Font MSDOS",
+                "preset":"Text/Font MSDOS",
                 "duration":2
         },
         {
                 "order": 14,
-                "preset":"Text/Marquee/Font MSX",
+                "preset":"Text/Font MSX",
                 "duration":2
         },
 	{
                 "order": 15,
-                "preset":"Text/Marquee/Font Quasar",
+                "preset":"Text/Font Quasar",
                 "duration":2
         },
         {
                 "order": 16,
-                "preset":"Text/Marquee/FX Twinkle",
+                "preset":"Text/FX Twinkle",
                 "duration":4
         },
         {
                 "order": 17,
-                "preset":"Text/Marquee/FX Flames",
+                "preset":"Text/FX Flames",
                 "duration":4
         },
           {
                 "order": 18,
-                "preset":"Text/Marquee/Water",
+                "preset":"Text/Water",
                 "duration":4
         },
         {
                 "order": 18,
-                "preset":"Text/Marquee/Ijspegels",
+                "preset":"Text/Ijspegels",
                 "duration":4
         },
  	{

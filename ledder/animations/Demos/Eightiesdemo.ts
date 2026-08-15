@@ -18,7 +18,7 @@ import DrawBox from "../../draw/DrawBox.js"
 import DrawCircle from "../../draw/DrawCircle.js"
 import { reinGalaxy } from "../../ColorPatterns.js"
 import Matrix from "matrix_transformer"
-import Text from "../Text/Marquee.js"
+import Text from "../Text.js"
 import Fire from "../Fires/Fire.js"
 
 export class scene3D {

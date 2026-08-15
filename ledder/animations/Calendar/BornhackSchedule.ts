@@ -168,7 +168,7 @@ export default class BornhackSchedule extends Animator {
                     await scheduler.delay(40)
                     break
                 case 2:
-                    await animationManager.select("Text/Marquee/ledder", false)
+                    await animationManager.select("Text/ledder", false)
                     await scheduler.delay(160)
                     break
             }

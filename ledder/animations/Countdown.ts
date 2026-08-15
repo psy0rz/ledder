@@ -1,11 +1,11 @@
-import PixelBox from "../../PixelBox.js"
-import Scheduler from "../../Scheduler.js"
-import ControlGroup from "../../ControlGroup.js"
-import {fontSelect} from "../../fonts.js"
-import DrawText from "../../draw/DrawText.js"
-import Animator from "../../Animator.js"
+import PixelBox from "../PixelBox.js"
+import Scheduler from "../Scheduler.js"
+import ControlGroup from "../ControlGroup.js"
+import {fontSelect} from "../fonts.js"
+import DrawText from "../draw/DrawText.js"
+import Animator from "../Animator.js"
 
-import Text from "./Marquee.js"
+import Text from "./Text.js"
 
 function paddy(num, padlen, padchar = '0') {
     var pad = new Array(1 + padlen).join(padchar)

@@ -79,7 +79,7 @@
    },
    "Layer 2": {
     "Animation": {
-     "selected": "Text/Marquee"
+     "selected": "Text"
     },
     "Preset": {
      "selected": "(none)"
@@ -90,7 +90,7 @@
     "Enabled": {
      "enabled": true
     },
-    "Text/Marquee": {
+    "Text": {
      "Color pattern": {
       "Enabled": {
        "enabled": true

@@ -8,7 +8,7 @@ import DrawLine from "../../draw/DrawLine.js"
 import Pixel from "../../Pixel.js"
 import Color from "../../Color.js"
 import { patternSelect } from "../../ColorPatterns.js"
-import Text from "../Text/Marquee.js"
+import Text from "../Text.js"
 import Fire from "../Fires/Fire.js"
 
 class PhotonPixel 
