@@ -2,11 +2,9 @@ import PixelBox from "../PixelBox.js"
 import Scheduler from "../Scheduler.js"
 import ControlGroup from "../ControlGroup.js"
 import {fonts, fontSelect} from "../fonts.js"
-import DrawCounter from "../draw/DrawCounter.js"
+import Counter from "./Counter.js"
 import DrawText from "../draw/DrawText.js"
-import {cryptoFirstLast} from "../crypto.js"
-import Fire from "./Fires/Fire.js"
-import Starfield from "./Sprites/Starfield.js"
+import {cryptoTicker24h} from "../crypto.js"
 import Animator from "../Animator.js"
 
 export default class BTC extends Animator {
@@ -18,50 +16,22 @@ export default class BTC extends Animator {
         let init = true
         let counter
 
-        const choices=[
-            {
-                id: "BTCUSDT",
-                name: "BTC"
-            },
-            {
-                id: "ETHUSDT",
-                name: "ETH"
-            },
-        ]
-        const symbolSelect=controls.select("Symbol", "BTCUSDT", choices, true )
-
-
-        const percentageRange=controls.range("Burn/Moon percentages", -1,1,-5,5,0.1, true)
+        const symbolInput=controls.input("Symbol", "BTCUSDT", true)
+        const labelInput=controls.input("Label", "BTC", true)
 
         fonts.C64.load()
 
-        const firebox=new PixelBox(box)
-        firebox.xMin=5
-        firebox.xMax=20
-        box.add(firebox)
+        counter = new Counter()
 
-        const starBox=new PixelBox(box)
-        box.add(starBox)
-
-        counter = new DrawCounter()
-        box.add(counter)
-
-        const y=~~box.middleY()-3
-        const x=~~box.middleX()-8
 
         const digitCount=6
 
+        //the counter draws from the top left of the box it gets, so put that corner where we want it
+        const counterBox=new PixelBox(box)
+        box.add(counterBox)
 
-        let selectedText="?"
-        for (const choice of choices)
-        {
-            if (choice.id==symbolSelect.selected)
-            {
-                selectedText=choice.name
-            }
-        }
-
-        const label=new DrawText(x-23,y+1, fontSelect(controls), selectedText, controls.color('Text color'))
+        const position=controls.position("Label position", box)
+        const label=new DrawText(position.x,position.y, fontSelect(controls), labelInput.text, controls.color('Text color'))
         box.add(label)
 
         let stopped=false
@@ -69,44 +39,34 @@ export default class BTC extends Animator {
             stopped=true
         })
 
-        function update() {
+        const update = async () => {
 
-            cryptoFirstLast(symbolSelect.selected,  (symbol, first, last) => {
+            let ticker
+            try {
+                ticker = await cryptoTicker24h(symbolInput.text)
+            } catch (e) {
+                console.error("BTC:", e)
+                return
+            }
 
-                if (stopped)
-                    return
+            if (stopped)
+                return
 
-                if (init) {
+            if (init) {
 
-                    counter.run(scheduler, controls, x,y,digitCount, 0.001)
+                counter.run(counterBox, scheduler, controls, digitCount, 0.001)
 
-                    const percentage=((last/first)-1)*100
-                    console.log("Percentage change 24h:", percentage)
+                counter.update(~~ticker.openPrice)
+                init = false
+            }
 
-                    if (percentage<=percentageRange.from)
-                    {
-                        const flames=new Fire()
-                        flames.run(firebox, scheduler,controls)
-                    }
-
-                    if (percentage>=percentageRange.to) {
-                        const stars = new Starfield()
-                        stars.run(starBox, scheduler, controls.group("stars"))
-                    }
-
-                    counter.update(~~first)
-                    // counter.update(0)
-                    init = false
-                }
-
-                counter.update(~~last)
-                // counter.update(100)
-            })
+            counter.update(~~ticker.lastPrice)
         }
 
-       update()
+       void update()
 
-        scheduler.interval(30*60, () => update())
+        //not awaited: the interval only kicks off the next update, it never waits for it
+        scheduler.interval(30*60, () => { void update() })
 
     }
 }

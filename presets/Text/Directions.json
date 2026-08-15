@@ -14,7 +14,7 @@
    }
   },
   "Text": {
-   "text": "Coffee"
+   "text": "THAT WAY"
   },
   "Text color": {
    "r": 33,
@@ -102,7 +102,7 @@
      "selected": "Sprites/Arrow"
     },
     "Preset": {
-     "selected": "(none)"
+     "selected": "default"
     },
     "Z": {
      "value": 0
@@ -175,7 +175,7 @@
         "selected": "(none)"
        },
        "Preset": {
-        "selected": "(none)"
+        "selected": "default"
        },
        "Z": {
         "value": 10
@@ -198,7 +198,7 @@
      "selected": "(none)"
     },
     "Preset": {
-     "selected": "(none)"
+     "selected": "default"
     },
     "Z": {
      "value": 20

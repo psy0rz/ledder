@@ -5,36 +5,6 @@
   "FPS": {
    "value": 60
   },
-  "Burn/Moon percentages": {
-   "from": -5,
-   "to": 5
-  },
-  "Fire colors": {
-   "selected": "Bertrik fire"
-  },
-  "Fire interval": {
-   "value": 1
-  },
-  "Fire intensity %": {
-   "from": 0,
-   "to": 100
-  },
-  "Fire wildness %": {
-   "value": 29
-  },
-  "Fire decay %": {
-   "value": 16
-  },
-  "Fire sintel factor": {
-   "value": 0.97
-  },
-  "Fire speed": {
-   "value": 1
-  },
-  "Fire X range %": {
-   "from": 0,
-   "to": 100
-  },
   "Digit color": {
    "r": 255,
    "g": 144,
@@ -62,22 +32,11 @@
    "b": 128,
    "a": 1
   },
-  "stars": {
-   "Base speed": {
-    "value": 0.001
-   },
-   "Acceleration": {
-    "value": 0.03
-   },
-   "Star offset": {
-    "value": 0.1
-   },
-   "Creation interval": {
-    "value": 0
-   }
-  },
   "Symbol": {
-   "selected": "BTCUSDT"
+   "text": "BTCUSDT"
+  },
+  "Label": {
+   "text": "BTC"
   },
   "Font": {
    "selected": "C64"
@@ -90,6 +49,91 @@
   },
   "Font width": {
    "value": 0
+  },
+  "Render settings": {
+   "FPS": {
+    "value": 60
+   },
+   "Subpixel filtering": {
+    "enabled": false
+   },
+   "Enabled": {
+    "enabled": true
+   }
+  },
+  "Label position": {
+   "X origin": {
+    "selected": "left"
+   },
+   "X offset": {
+    "value": 0
+   },
+   "Y origin": {
+    "selected": "top"
+   },
+   "Y offset": {
+    "value": 0
+   },
+   "Enabled": {
+    "enabled": true
+   }
+  },
+  "Layers": {
+   "Z of animation": {
+    "value": 0
+   },
+   "Layer 1": {
+    "Animation": {
+     "selected": "(none)"
+    },
+    "Preset": {
+     "selected": "default"
+    },
+    "Z": {
+     "value": 10
+    },
+    "Enabled": {
+     "enabled": true
+    }
+   },
+   "Enabled": {
+    "enabled": true
+   }
+  },
+  "Counter position": {
+   "X origin": {
+    "selected": "left"
+   },
+   "X offset": {
+    "value": 22
+   },
+   "Y origin": {
+    "selected": "top"
+   },
+   "Y offset": {
+    "value": 0
+   },
+   "Enabled": {
+    "enabled": true
+   }
+  },
+  "Digits": {
+   "value": 6
+  },
+  "Easing": {
+   "selected": "easeInOutQuart"
+  },
+  "Leading zeros": {
+   "enabled": false
+  },
+  "Start value": {
+   "text": "0"
+  },
+  "Value": {
+   "text": "10000"
+  },
+  "Enabled": {
+   "enabled": true
   }
  }
 }
