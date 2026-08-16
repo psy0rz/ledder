@@ -14,7 +14,7 @@ import {mapRange} from "../../utils.js"
 
 
 export default class Pong extends Animator {
-    static description = "inspired by the Atari game"
+    static description = "Two-player Pong, inspired by the classic Atari game, with paddles controlled remotely over MQTT."
     private lastStatusMessage: any
     private box: PixelBox
     private mqttHost: ControlInput

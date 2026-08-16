@@ -187,7 +187,7 @@ ttt5ttatttaaaaa
 
 
 export default class Landscapescroller extends Animator {
-    static description = "Just because"
+    static description = "Parallax scrolling landscape with layered far and close background/foreground maps."
     mapWidth:number=1024
     farBackgroundMap:PixelList=new PixelList()
     closeBackgroundMap:PixelList=new PixelList()

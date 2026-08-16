@@ -501,7 +501,7 @@ export class Tankwarsgame {
 
 
 export default class Tankwars extends Animator {
-    static description = "multiplayer mqtt controlled game"
+    static description = "Multiplayer artillery game: tanks on a destructible landscape aim and fire at each other, controlled remotely over MQTT."
     private lastStatusMessage: any
     private box: PixelBox
     private mqttHost: ControlInput

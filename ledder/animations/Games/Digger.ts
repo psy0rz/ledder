@@ -127,7 +127,7 @@ tttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
 
 
 export default class Digger extends Animator {
-    static description = "inspired by the vic-20 game"
+    static description = "A digger character burrows through the ground, inspired by the classic VIC-20 game."
     
 
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) 

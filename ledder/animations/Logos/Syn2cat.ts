@@ -7,7 +7,7 @@ import Animator from "../../Animator.js"
 
 export default class Syn2Cat extends  Animator
 {
-    static description = "syn2cat.lu"
+    static description = "Static Syn2Cat hackerspace logo, drawn as pixel art."
 
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) {
 

@@ -21,7 +21,7 @@ import Animator from "../../Animator.js"
 
 export default class Nyancat extends Animator {
 
-    static description = "Based on <a href='https://github.com/bertrik/nyancat/blob/master/nyancat.c'>this</a>"
+    static description = "The classic Nyan Cat flying across a rainbow trail, based on <a href='https://github.com/bertrik/nyancat/blob/master/nyancat.c'>this</a>."
 
 
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) {

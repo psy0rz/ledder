@@ -37,7 +37,7 @@ const horiz = `
 
 
 export default class Poleposition extends Animator {
-    static description = "inspired by the vic-20 game"
+    static description = "Pseudo-3D racing circuit scrolling towards the viewer, inspired by the classic Pole Position arcade game."
     
 
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) 

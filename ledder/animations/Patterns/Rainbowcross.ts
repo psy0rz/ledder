@@ -8,8 +8,6 @@ const TWO_PI = Math.PI * 2
 
 export default class Rainbowcross extends Animator {
 
-    static category = "Patterns"
-    static title = "Crossrainbow"
     static description = "Rainbow rings around a center point, breathing in and out. Close to the center the rings collapse into a shimmering cross."
 
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) {

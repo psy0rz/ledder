@@ -217,7 +217,7 @@ export class Fruitautomaat{
 
 export default class Slotmachine extends Animator {
 
-    static description = "fruitautomaat"
+    static description = "A fruit-machine slot game: spinning reels of fruit symbols come to a stop for a payout."
 
 
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) {

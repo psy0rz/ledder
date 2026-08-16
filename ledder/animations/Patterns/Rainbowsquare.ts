@@ -8,8 +8,6 @@ const TWO_PI = Math.PI * 2
 
 export default class Rainbowsquare extends Animator {
 
-    static category = "Patterns"
-    static title = "Squarerainbow"
     static description = "One quadrant of interfering sine waves with a slowly sweeping wavelength, mirrored into a square."
 
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) {

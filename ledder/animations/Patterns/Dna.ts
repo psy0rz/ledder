@@ -13,7 +13,7 @@ import Pixel from "../../Pixel.js"
 
 
 export default class Dnaspiral extends Animator {
-    static title = "Pacman"
+    static description = "A DNA double helix, drawn as two interleaved sine waves scrolling vertically with connecting rungs."
 
     mapValue(value:number,sourceMin:number,sourceMax:number)
     {

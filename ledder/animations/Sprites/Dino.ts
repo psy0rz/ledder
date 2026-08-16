@@ -9,7 +9,6 @@ import DrawAsciiArtColor from "../../draw/DrawAsciiArtColor.js"
 
 
 export default class Dino extends Animator {
-    static title = "Dinosaur"
     static description = "Mozilla/Chrome style dinosaur sprite"
 
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup, x = 0, y = 0) {

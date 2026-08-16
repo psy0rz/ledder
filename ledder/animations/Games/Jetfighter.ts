@@ -50,7 +50,7 @@ gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg5555
 
 
 export default class Jetfighter extends Animator {
-    static description = "inspired by the vic-20 game"
+    static description = "A jet plane flies across the screen firing bullets, inspired by the classic VIC-20 game."
     
 
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) 

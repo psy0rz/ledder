@@ -133,7 +133,7 @@ const bgImage=`
 
 
 export default class Love extends Animator {
-    static description = "x loves y"
+    static description = "A romantic scene: two configurable names scroll in on either side of a heart/fractal image with a fading \"LOVE\" banner."
     fireshow=true
     fireFull=false
     fireFunky=true

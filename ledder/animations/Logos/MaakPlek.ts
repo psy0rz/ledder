@@ -8,7 +8,7 @@ import Animator from "../../Animator.js"
 
 export default class MaakPlek extends  Animator
 {
-    static description = "http://maakplek.nl"
+    static description = "Static \"MAAK PLEK\" text logo, centered on the display."
 
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) {
 

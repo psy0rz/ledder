@@ -11,7 +11,7 @@ import {fonts} from "../../fonts.js"
 
 
 export default class Pong2 extends Animator {
-    static description = "inspired by the Atari game"
+    static description = "Self-playing Pong, inspired by the classic Atari game: two AI paddles chase the ball automatically."
     
 
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) 

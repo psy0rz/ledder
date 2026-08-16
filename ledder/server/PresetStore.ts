@@ -184,7 +184,6 @@ export class PresetStore {
 
                         ret.push({
                             name: animationName,
-                            title: animationClass.title,
                             description: animationClass.description,
                             presets: await this.buildPresetList(animationClass, animationName)
                         })

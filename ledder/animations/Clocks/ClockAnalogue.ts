@@ -17,8 +17,7 @@ function deg2rad(degrees: number) {
 }
 
 export default class ClockAnalogue extends Animator {
-    static title = "Clock "
-    static description = "analoge? klok"
+    static description = "Analog clock face with hour, minute and second hands drawn as lines from the center."
     cx:number
     cy:number
     radius:number

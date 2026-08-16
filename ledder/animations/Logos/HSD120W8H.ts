@@ -34,8 +34,7 @@ rrr..rrr......................................................................rr
 
 
 export default class HSD64W20H extends Animator {
-    static title = "hackerspace drenthe"
-    static description = "Large horizontal logo scroller. 8 Pixels height"
+    static description = "Scrolling Hackerspace Drenthe logo, sized for large horizontal screens (8 pixels tall)."
     
 
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup,y:number=Math.round(box.height()-8)/2) 

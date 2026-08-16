@@ -10,8 +10,7 @@ import AnimationManager from "../../server/AnimationManager.js"
 
 
 export default class RemotePlaylist extends Animator {
-    static title = "Playlist "
-    static description = "playlist"
+    static description = "Cycles through a playlist of animation presets fetched from a remote source, switching to the next one on a timer."
     private animationManager: AnimationManager
 
 

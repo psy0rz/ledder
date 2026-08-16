@@ -367,7 +367,7 @@ export class Random3d extends Object3d{
 
 export default class Eightiesdemo extends Animator {
 
-    static description = "retro style demo inspired by the 80s "
+    static description = "Retro demoscene-style show: a starfield and a rotating 3D wireframe cube flying over a scrolling horizon."
    static max_iteration=512
     
     mandelbrot(c,px:number,py:number,width:number,height:number,zoom:number,max_iterations) {

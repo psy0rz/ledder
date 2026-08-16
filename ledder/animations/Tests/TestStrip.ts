@@ -11,7 +11,6 @@ import Animator from "../../Animator.js"
 
 export default class TestStrip extends Animator {
 
-  static title="Strip test"
   static description="To verify functionality of a led strip."
 
   async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) {

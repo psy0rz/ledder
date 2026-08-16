@@ -13,7 +13,6 @@ export type PresetListType = Array<PresetListItemType>
 
 export type AnimationListItemType = {
     name: string,
-    title: string,
     description: string,
     presets: PresetListType,
 }

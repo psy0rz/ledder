@@ -54,8 +54,7 @@ w...w.w...w.wwwww.w...w.wwwww.w...w.wwwww.w.....w...w.wwwww.wwwww
 
 
 export default class HSD64W20H extends Animator {
-    static title = "hackerspace drenthe"
-    static description = "Large vertical logo scroller for big screens (64 pixels width)"
+    static description = "Scrolling Hackerspace Drenthe logo, sized for large vertical screens (64 pixels width)."
     
 
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup)

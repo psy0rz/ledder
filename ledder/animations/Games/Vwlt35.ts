@@ -11,8 +11,7 @@ const carSprites = {player: `.wwwwww.\nwwwwwwww\nwwwwwwww\nwwwwwwww\nyyyyyyyy\nr
 interface RaceCar { position: number; lane: number; speed: number; color: string; sprite: string }
 
 export default class Vwlt35 extends Animator {
-    static title = "VW LT35 Van Race"
-    static description = "VW LT35 van racing circuit - Pole Position style"
+    static description = "VW LT35 vans racing around a winding pseudo-3D circuit, Pole Position style."
 
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) {
         const spd = controls.value("Race Speed", 15, 1, 50, 1), numC = controls.value("Number of Cars", 5, 0, 8, 1), crv = controls.value("Track Curves", 50, 0, 100, 5)

@@ -16,7 +16,6 @@ import {fonts} from "../../fonts.js"
 
 export default class TestGrid extends Animator {
 
-    static title = "Grid layout test"
     static description = "Usefull to verify the layout of a grid of displays."
 
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) {

@@ -440,8 +440,7 @@ class Random3d extends Object3d{
 
 
 export default class Project3 extends Animator {
-    static title = "Cubevec3"
-    static description = "3d Cube (work in progress) with vec3 lib"
+    static description = "A rotating 3D wireframe cube, projected onto the pixel grid using a vec3 math library. Work in progress."
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) {
         //do config shizzles
         const gameControls = controls.group("3D")

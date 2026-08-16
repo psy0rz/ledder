@@ -117,7 +117,7 @@ class PrismaObj
 
 export default class Prisma extends Animator {
 
-    static description = "Pink Floyd prisma"
+    static description = "A beam of light splitting through a prism into a spectrum of colored beams, Pink Floyd \"Dark Side of the Moon\" style."
 
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) {
         const animatorControl             = controls.group("Prisma",true)

@@ -10,7 +10,7 @@ import Animator from "../../Animator.js"
 
 export default class Cyber extends  Animator
 {
-    static description = "Cyber, the Meme(tm)"
+    static description = "Configurable text (default \"CYBER\") flashing between normal and color-inverted, meme style."
 
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) {
 

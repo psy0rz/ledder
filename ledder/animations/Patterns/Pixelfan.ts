@@ -8,7 +8,7 @@ import Color from "../../Color.js"
 
 
 export default class Pixelfan extends Animator {
-    static description = "led ventlator thingy"
+    static description = "A spinning, color-cycling spiral of pixels expanding outward from the center, like a pinwheel fan."
     
 
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) 

@@ -281,7 +281,7 @@ export class Beleepuniverse
 }
 
 export default class Beleep extends Animator {
-    static description = "led ventlator thingy"
+    static description = "Particle simulation: mass and energy carrying particles drift, collide and merge into bigger ones."
     
    
 

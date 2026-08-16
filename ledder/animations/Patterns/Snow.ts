@@ -47,7 +47,7 @@ class SnowflakeGeometry{
 
 export default class Snow extends Animator {
 
-    static description = "xmas"
+    static description = "Snowflakes falling and drifting with wind, at different depths for a parallax effect."
 
 
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) {

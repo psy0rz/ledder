@@ -111,7 +111,7 @@ class CloudGeometry{
 
 export default class Fireworks extends Animator {
 
-    static description = "vuurpijlen"
+    static description = "Fireworks exploding into fading particle bursts at random positions."
 
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) {
         const fwControl             = controls.group("Fireworks",true)

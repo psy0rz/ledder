@@ -24,8 +24,7 @@ let starAscii=[`
 
 export default class MovingStars extends Animator {
 
-    static title = "Moving stars left"
-    static description = "Used in nyancat :)"
+    static description = "Twinkling stars drifting leftward across the background. Used as the star trail behind Nyancat."
 
     createStar(x,y, c)
     {

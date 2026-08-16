@@ -55,8 +55,7 @@ const venus = `
 
 
 export default class Planets extends Animator {
-    static title = "planetarium"
-    static description = "planetarium"
+    static description = "A small solar system: the sun with the planets and moons orbiting it at different speeds and distances."
     
 
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) 

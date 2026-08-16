@@ -8,8 +8,6 @@ const TWO_PI = Math.PI * 2
 
 export default class Rainbowzero extends Animator {
 
-    static category = "Patterns"
-    static title = "Rainbow zero"
     static description = "Interfering sine waves with a slowly sweeping wavelength, mirrored into four quadrants."
 
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) {

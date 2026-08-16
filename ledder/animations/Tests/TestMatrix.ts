@@ -11,7 +11,6 @@ import Animator from "../../Animator.js"
 
 export default class TestMatrix extends Animator {
 
-    static title = "Matrix test screen"
     static description = "To verify correct orientation and color configuration of a display"
 
 

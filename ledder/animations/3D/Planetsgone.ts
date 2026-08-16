@@ -146,8 +146,7 @@ yyyy....
 
 
 export default class Planetsgone extends Animator {
-    static title = "planetman"
-    static description = "planetman"
+    static description = "Same orbiting solar system as Planets, but a Pacman-like ghost-eater chomps its way through the planets, exploding them one by one."
     
 
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) 

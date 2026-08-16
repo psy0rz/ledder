@@ -8,8 +8,6 @@ const TWO_PI = Math.PI * 2
 
 export default class Rainbowsinus extends Animator {
 
-    static category = "Patterns"
-    static title = "Sinusrainbow"
     static description = "A sine wave sweeping across the display, each point smeared out into a vertical rainbow glow."
 
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) {

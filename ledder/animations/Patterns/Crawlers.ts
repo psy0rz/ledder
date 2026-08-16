@@ -106,7 +106,7 @@ class CrawlerGeometry{
 
 export default class Snow extends Animator {
 
-    static description = "xmas"
+    static description = "Colored particles with fading tails crawl outward from the center, chasing slowly orbiting targets."
 
 
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) {

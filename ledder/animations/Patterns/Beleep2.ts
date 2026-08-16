@@ -461,8 +461,7 @@ export class Beleepuniverse
 }
 
 export default class Beleep2 extends Animator {
-    static title = "Beleep"
-    static description = "life thingy variant 2"
+    static description = "Variant of the Beleep particle simulation, with a selectable color palette for the drifting, colliding particles."
     
    
 

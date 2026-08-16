@@ -10,8 +10,7 @@ import DrawAsciiArtColor from "../../draw/DrawAsciiArtColor.js"
 
 
 export default class Wandelaarster extends Animator {
-    static title = "Wandelaar female"
-    static description = "Walking female"
+    static description = "Simple walking female sprite."
 
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup, x = 0, y = 0) {
 
