@@ -2,57 +2,6 @@
  "title": "",
  "description": "",
  "values": {
-  "Hour color": {
-   "r": 255,
-   "g": 0,
-   "b": 0,
-   "a": 1
-  },
-  "Minute color": {
-   "r": 0,
-   "g": 255,
-   "b": 0,
-   "a": 1
-  },
-  "Second color": {
-   "r": 0,
-   "g": 0,
-   "b": 255,
-   "a": 1
-  },
-  "Milli color": {
-   "r": 0,
-   "g": 0,
-   "b": 255,
-   "a": 0.8
-  },
-  "Marks color": {
-   "r": 32,
-   "g": 0,
-   "b": 0,
-   "a": 0.3
-  },
-  "Hour marks": {
-   "enabled": true
-  },
-  "Text": {
-   "enabled": true
-  },
-  "Dots": {
-   "enabled": true
-  },
-  "Clock interval": {
-   "value": 1
-  },
-  "Font": {
-   "selected": "MSX"
-  },
-  "Font height": {
-   "value": 0
-  },
-  "Font width": {
-   "value": 0
-  },
   "Render settings": {
    "FPS": {
     "value": 60
@@ -64,11 +13,23 @@
     "enabled": true
    }
   },
-  "Time color": {
+  "Date color": {
    "r": 255,
    "g": 255,
    "b": 255,
    "a": 1
+  },
+  "Font": {
+   "selected": "MSX"
+  },
+  "Font height": {
+   "value": 0
+  },
+  "Font width": {
+   "value": 0
+  },
+  "Format": {
+   "text": "ddd DD-MM-YYYY"
   },
   "Position": {
    "X origin": {
@@ -95,21 +56,6 @@
   },
   "Vertical align": {
    "selected": "top"
-  },
-  "24 hour": {
-   "enabled": true
-  },
-  "Leading zero on hour": {
-   "enabled": true
-  },
-  "Show seconds": {
-   "enabled": false
-  },
-  "Blink colon": {
-   "enabled": true
-  },
-  "Show AM/PM": {
-   "enabled": false
   },
   "Layers": {
    "Z of animation": {
