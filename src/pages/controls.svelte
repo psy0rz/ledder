@@ -6,6 +6,7 @@
     import ControlGroup from "../components/ControlGroupUI.svelte"
     import {rpc} from "../js/web/RpcClient.js"
     import {svelteStats} from "@/js/web/svelteStore.js";
+    import {externalizeLinks} from "@/js/web/util.js"
 
 
     // let presets = []
@@ -61,7 +62,7 @@
         </Subnavbar>
     </Navbar>
     {#if $svelteSelectedDescription}
-        <div class="ledder-controls-description" title={$svelteSelectedDescription}>{$svelteSelectedDescription}</div>
+        <div class="ledder-controls-description">{@html externalizeLinks($svelteSelectedDescription)}</div>
     {/if}
     <Block strong>
         <Treeview >

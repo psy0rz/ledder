@@ -2,6 +2,7 @@
     import {type AnimationListType} from "../../ledder/AnimationListTypes.js"
     import PresetListItem from "./PresetListItem.svelte"
     import {TreeviewItem} from "framework7-svelte"
+    import {externalizeLinks} from "@/js/web/util.js"
 
     export let animationList: AnimationListType
 
@@ -38,7 +39,7 @@
                 <div slot="label" class="ledder-animation-label">
                     <span>{animationListItem.name}</span>
                     {#if animationListItem.description}
-                        <div class="ledder-animation-description">{animationListItem.description}</div>
+                        <div class="ledder-animation-description">{@html externalizeLinks(animationListItem.description)}</div>
                     {/if}
                 </div>
                 {#each animationListItem.presets as presetListItem ( animationListItem.name+presetListItem.name+presetListItem.previewFile)}

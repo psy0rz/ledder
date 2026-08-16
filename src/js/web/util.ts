@@ -57,6 +57,23 @@ export function progressReset() {
 }
 
 /**
+ * Framework7 intercepts every <a> click and preventDefault()s it to route through its own
+ * router, unless the link carries class="external" (see clicks.js). Animation descriptions
+ * are rendered as raw HTML, so any <a> in them needs that class (plus a new tab, since we
+ * don't want to navigate the app away) to actually be clickable.
+ */
+export function externalizeLinks(html: string): string {
+    const container = document.createElement("div")
+    container.innerHTML = html
+    container.querySelectorAll("a").forEach(link => {
+        link.classList.add("external")
+        link.target = "_blank"
+        link.rel = "noopener noreferrer"
+    })
+    return container.innerHTML
+}
+
+/**
  * Asks user for confirmation, returns Promise
  * @param title
  * @param content
