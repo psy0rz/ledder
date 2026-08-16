@@ -52,7 +52,7 @@
    "enabled": false
   },
   "cache TTL (minutes)": {
-   "value": 1
+   "value": 10
   },
   "playback": {
    "speed multiplier": {
@@ -71,7 +71,7 @@
      "selected": "(none)"
     },
     "Preset": {
-     "selected": "(none)"
+     "selected": "default"
     },
     "Z": {
      "value": 10

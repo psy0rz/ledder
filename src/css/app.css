@@ -125,7 +125,5 @@
     opacity: 0.6;
     padding: 2px 12px;
     margin: 0;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    white-space: wrap;
 }

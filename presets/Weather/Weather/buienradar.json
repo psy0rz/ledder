@@ -1,0 +1,212 @@
+{
+ "title": "",
+ "description": "",
+ "values": {
+  "Render settings": {
+   "FPS": {
+    "value": 60
+   },
+   "Subpixel filtering": {
+    "enabled": false
+   },
+   "Enabled": {
+    "enabled": true
+   }
+  },
+  "Location": {
+   "Place name": {
+    "text": "Emmen, nl"
+   },
+   "Units": {
+    "selected": "metric"
+   },
+   "Update interval (minutes)": {
+    "value": 15
+   },
+   "Enabled": {
+    "enabled": true
+   }
+  },
+  "Display": {
+   "Text color": {
+    "r": 255,
+    "g": 252,
+    "b": 0,
+    "a": 1
+   },
+   "Font": {
+    "selected": "MSX"
+   },
+   "Font height": {
+    "value": 0
+   },
+   "Font width": {
+    "value": 0
+   },
+   "Format": {
+    "text": "{feels}\n"
+   },
+   "Show icon": {
+    "enabled": false
+   },
+   "Position": {
+    "X origin": {
+     "selected": "left"
+    },
+    "X offset": {
+     "value": 39
+    },
+    "Y origin": {
+     "selected": "top"
+    },
+    "Y offset": {
+     "value": 23
+    },
+    "Show anchor": {
+     "enabled": false
+    },
+    "Enabled": {
+     "enabled": true
+    }
+   },
+   "Horizontal align": {
+    "selected": "left"
+   },
+   "Vertical align": {
+    "selected": "top"
+   },
+   "Enabled": {
+    "enabled": true
+   }
+  },
+  "Layers": {
+   "Z of animation": {
+    "value": 0
+   },
+   "Layer 1": {
+    "Animation": {
+     "selected": "Image"
+    },
+    "Preset": {
+     "selected": "Buienradar.nl"
+    },
+    "Z": {
+     "value": -16
+    },
+    "Enabled": {
+     "enabled": true
+    },
+    "Image": {
+     "Image URL": {
+      "text": "https://api.buienradar.nl/image/1.0/RadarMapNL?w=256&h=256"
+     },
+     "Fractal interval": {
+      "value": 14
+     },
+     "Preset": {
+      "selected": "2"
+     },
+     "animation control": {
+      "Movie interval": {
+       "value": 4
+      },
+      "Movie interval randomizer": {
+       "value": 0
+      },
+      "Rotate interval": {
+       "value": 31
+      },
+      "Rotate interval randomizer": {
+       "value": 0
+      },
+      "Rotate X step": {
+       "value": 0
+      },
+      "Rotate Y step": {
+       "value": 0
+      },
+      "delay multiplier": {
+       "value": 1
+      }
+     },
+     "fit": {
+      "selected": "cover"
+     },
+     "Render settings": {
+      "FPS": {
+       "value": 60
+      },
+      "Subpixel filtering": {
+       "enabled": false
+      },
+      "Enabled": {
+       "enabled": true
+      }
+     },
+     "cache forever": {
+      "enabled": false
+     },
+     "cache TTL (minutes)": {
+      "value": 10
+     },
+     "playback": {
+      "speed multiplier": {
+       "value": 1
+      },
+      "Enabled": {
+       "enabled": true
+      }
+     },
+     "Layers": {
+      "Z of animation": {
+       "value": 0
+      },
+      "Layer 1": {
+       "Animation": {
+        "selected": "(none)"
+       },
+       "Preset": {
+        "selected": "default"
+       },
+       "Z": {
+        "value": 10
+       },
+       "Enabled": {
+        "enabled": true
+       }
+      },
+      "Enabled": {
+       "enabled": true
+      }
+     },
+     "Enabled": {
+      "enabled": true
+     },
+     "auto-refresh": {
+      "enabled": true
+     }
+    }
+   },
+   "Enabled": {
+    "enabled": true
+   },
+   "Layer 2": {
+    "Animation": {
+     "selected": "(none)"
+    },
+    "Preset": {
+     "selected": "default"
+    },
+    "Z": {
+     "value": 20
+    },
+    "Enabled": {
+     "enabled": true
+    }
+   }
+  },
+  "Enabled": {
+   "enabled": true
+  }
+ }
+}

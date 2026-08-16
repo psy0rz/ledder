@@ -219,7 +219,7 @@ export default class Hackerhotel extends Animator {
 
            await showRandomstuff()
 
-            await animationManager.select("Image/Buienradar.nl", false)
+            await animationManager.select("Weather/Weather/buienradar", false)
             await scheduler.delayTime(4)
             animationManager.stop(true)
 
