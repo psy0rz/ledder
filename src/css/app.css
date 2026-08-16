@@ -97,3 +97,35 @@
     flex-grow: 1;
     min-width: 0;
 }
+
+/* Animation description, always visible (not a tooltip): a smaller/dimmer line under the
+   animation name in the animation list, and under the title on the controls page. */
+.ledder-animation-label
+{
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+.ledder-animation-description
+{
+    font-size: 0.8em;
+    opacity: 0.6;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Compact single-line description under the controls-page navbar: no card padding/margin,
+   ellipsize instead of wrapping so it doesn't push the control list down. */
+.ledder-controls-description
+{
+    /*font-size: 0.8em;*/
+    opacity: 0.6;
+    padding: 2px 12px;
+    margin: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}

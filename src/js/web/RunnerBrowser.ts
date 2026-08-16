@@ -3,6 +3,7 @@ import {
     svelteAnimations,
     sveltePresets,
     svelteSelectedTitle,
+    svelteSelectedDescription,
     svelteDisplayWidth,
     svelteDisplayHeight,
     svelteDisplayZoom,
@@ -49,10 +50,11 @@ export class RunnerBrowser {
             sveltePresets.set(controlGroup)
         })
 
-        rpc.addMethod('selected', (animationName, presetName) => {
+        rpc.addMethod('selected', (animationName, presetName, description) => {
             // const [animationName, presetName]=pars
             console.log("Server animation changed:", animationName, presetName)
             svelteSelectedTitle.set(`${animationName}/${presetName}`)
+            svelteSelectedDescription.set(description ?? "")
             this.animationName = animationName
             this.presetName = presetName
         })

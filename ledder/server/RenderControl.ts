@@ -43,7 +43,7 @@ export default class RenderControl {
         wsContext.renderControl = this
 
         //tell new client of the current animation name and controls
-        wsContext.notify("selected", this.renderer.animationManager.animationName, this.renderer.animationManager.presetName)
+        wsContext.notify("selected", this.renderer.animationManager.animationName, this.renderer.animationManager.presetName, this.renderer.animationManager.animationClass?.description)
         wsContext.notify("resetControls")
         wsContext.notify("setControls", this.renderer.animationManager.controlGroup)
 
@@ -146,7 +146,7 @@ export default class RenderControl {
         })
 
         this.renderer.animationManager.selectedCallbacks.register((animationName, presetName) => {
-            this.notifyAll("selected", animationName, presetName)
+            this.notifyAll("selected", animationName, presetName, this.renderer.animationManager.animationClass?.description)
 
         })
 

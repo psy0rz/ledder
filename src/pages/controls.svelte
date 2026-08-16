@@ -1,7 +1,7 @@
 <script>
     import {Block, Button, Navbar, NavTitle, Page, Subnavbar, Treeview,} from "framework7-svelte"
 
-    import {svelteLive, sveltePresets, svelteSelectedTitle,} from "../js/web/svelteStore.js"
+    import {svelteLive, sveltePresets, svelteSelectedTitle, svelteSelectedDescription,} from "../js/web/svelteStore.js"
     import {runnerBrowser} from "../js/web/RunnerBrowser.js"
     import ControlGroup from "../components/ControlGroupUI.svelte"
     import {rpc} from "../js/web/RpcClient.js"
@@ -60,6 +60,9 @@
             />
         </Subnavbar>
     </Navbar>
+    {#if $svelteSelectedDescription}
+        <div class="ledder-controls-description" title={$svelteSelectedDescription}>{$svelteSelectedDescription}</div>
+    {/if}
     <Block strong>
         <Treeview >
             <ControlGroup

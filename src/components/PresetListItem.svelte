@@ -5,6 +5,7 @@
 
     export let presetListItem: PresetListItemType
     export let parentName: string
+    export let animationDescription: string = ""
 
     let label=parentName.replace(RegExp(".*/"),"")
     let icon="image"
@@ -15,12 +16,10 @@
         icon="photo_album"
     }
 
-
 </script>
 
 
 <TreeviewItem
-        label={label}
         opened={true}
         toggle={false}
         iconMaterial={icon}
@@ -29,6 +28,12 @@
 
 >
 
+    <div slot="label" class="ledder-animation-label">
+        <span>{label}</span>
+        {#if animationDescription}
+            <div class="ledder-animation-description">{animationDescription}</div>
+        {/if}
+    </div>
 
     <img class="ledder-preview-image" alt="{presetListItem.name}" slot="media" loading="lazy" decoding="async" src="{presetListItem.previewFile}"/>
 

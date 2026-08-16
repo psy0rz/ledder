@@ -26,16 +26,21 @@
     {:else}
 
         {#if animationListItem.presets.length === 1}
-                    <PresetListItem parentName={animationListItem.name} presetListItem={animationListItem.presets[0]}></PresetListItem>
+                    <PresetListItem parentName={animationListItem.name} presetListItem={animationListItem.presets[0]} animationDescription={animationListItem.description}></PresetListItem>
         {:else}
             <TreeviewItem
-                    label="{animationListItem.name}"
                     opened={true}
                     toggle={true}
                     itemToggle
                     iconMaterial="collections"
 
             >
+                <div slot="label" class="ledder-animation-label">
+                    <span>{animationListItem.name}</span>
+                    {#if animationListItem.description}
+                        <div class="ledder-animation-description">{animationListItem.description}</div>
+                    {/if}
+                </div>
                 {#each animationListItem.presets as presetListItem ( animationListItem.name+presetListItem.name+presetListItem.previewFile)}
                     <PresetListItem parentName={animationListItem.name} presetListItem={presetListItem}></PresetListItem>
                 {/each}
