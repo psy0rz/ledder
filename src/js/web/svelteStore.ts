@@ -13,7 +13,8 @@ export const svelteSelectedTitle =writable("")
 export const svelteSelectedDescription =writable("")
 export const svelteStats = writable("")
 
-// export const svelteSelectedAnimationName =writable("")
+//path of the selected animation relative to ledder/animations, e.g. "Clocks/Clock" (no extension)
+export const svelteSelectedAnimationName =writable("")
 
 export const svelteAnimations = writable<AnimationListType>([])
 

@@ -4,6 +4,7 @@ import {
     sveltePresets,
     svelteSelectedTitle,
     svelteSelectedDescription,
+    svelteSelectedAnimationName,
     svelteDisplayWidth,
     svelteDisplayHeight,
     svelteDisplayZoom,
@@ -55,6 +56,7 @@ export class RunnerBrowser {
             console.log("Server animation changed:", animationName, presetName)
             svelteSelectedTitle.set(`${animationName}/${presetName}`)
             svelteSelectedDescription.set(description ?? "")
+            svelteSelectedAnimationName.set(animationName)
             this.animationName = animationName
             this.presetName = presetName
         })

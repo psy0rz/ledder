@@ -1,7 +1,13 @@
 <script>
     import {Block, Button, Navbar, NavTitle, Page, Subnavbar, Treeview,} from "framework7-svelte"
 
-    import {svelteLive, sveltePresets, svelteSelectedTitle, svelteSelectedDescription,} from "../js/web/svelteStore.js"
+    import {
+        svelteLive,
+        sveltePresets,
+        svelteSelectedTitle,
+        svelteSelectedDescription,
+        svelteSelectedAnimationName,
+    } from "../js/web/svelteStore.js"
     import {runnerBrowser} from "../js/web/RunnerBrowser.js"
     import ControlGroup from "../components/ControlGroupUI.svelte"
     import {rpc} from "../js/web/RpcClient.js"
@@ -32,6 +38,11 @@
     async function onSaveAs() {
         await runnerBrowser.presetSave(true);
     }
+
+    $: sourceLink = $svelteSelectedAnimationName
+        ? ` <a href="https://github.com/psy0rz/ledder/blob/main/ledder/animations/${$svelteSelectedAnimationName}.ts">(View source)</a>`
+        : ""
+    $: descriptionHtml = externalizeLinks($svelteSelectedDescription + sourceLink)
 </script>
 
 <Page name="controls" on:pageMounted={() => {}}>
@@ -61,8 +72,8 @@
             />
         </Subnavbar>
     </Navbar>
-    {#if $svelteSelectedDescription}
-        <div class="ledder-controls-description">{@html externalizeLinks($svelteSelectedDescription)}</div>
+    {#if $svelteSelectedDescription || sourceLink}
+        <div class="ledder-controls-description">{@html descriptionHtml}</div>
     {/if}
     <Block strong>
         <Treeview >
