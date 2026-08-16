@@ -2,7 +2,6 @@ import PixelBox from "../PixelBox.js"
 import DrawText, {type HorizontalAlign, type VerticalAlign} from "../draw/DrawText.js"
 import PixelList from "../PixelList.js"
 import DrawBox from "../draw/DrawBox.js"
-import Pixel from "../Pixel.js"
 import {FxFadeOut} from "../fx/FxFadeOut.js"
 import Scheduler from "../Scheduler.js"
 import ControlGroup from "../ControlGroup.js"
@@ -13,7 +12,6 @@ import FxTwinkle from "../fx/FxTwinkle.js"
 import FxColorPattern from "../fx/FxColorPattern.js"
 import {interpretMacro} from "../macros.js"
 import FxWobble from "../fx/FxWobble.js";
-import {colorRed, colorWhite} from "../Colors.js";
 
 
 export default class Text extends Animator {
@@ -70,14 +68,7 @@ export default class Text extends Animator {
             wrapEnabled ? Math.max(1, roomForText) : undefined,
             hAlign, vAlign)
 
-        if (controls.group("Text anchor position").switch("Show anchor", false, true).enabled) {
-            const anchorColor = colorWhite.copy()
-            textPixels.add(new Pixel(positionControl.x, positionControl.y, colorRed))
-            textPixels.add(new Pixel(positionControl.x, positionControl.y, anchorColor))
-            scheduler.interval(15, () => {
-                anchorColor.a = anchorColor.a ? 0 : 1
-            })
-        }
+        positionControl.runAnchorMarker(scheduler, box)
 
 
         //The cursor sits at the end of the text: where the next character would be drawn, so it

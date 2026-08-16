@@ -3,9 +3,7 @@ import Scheduler from "../../Scheduler.js"
 import ControlGroup from "../../ControlGroup.js"
 import Animator from "../../Animator.js"
 import DrawText, {type HorizontalAlign, type VerticalAlign} from "../../draw/DrawText.js"
-import Pixel from "../../Pixel.js"
 import {fontSelect} from "../../fonts.js"
-import {colorRed, colorWhite} from "../../Colors.js"
 
 function pad(num: number): string {
     return num.toString().padStart(2, "0")
@@ -38,14 +36,7 @@ export default class Clock extends Animator {
         const hAlign = hAlignControl.selected as HorizontalAlign
         const vAlign = vAlignControl.selected as VerticalAlign
 
-        if (controls.group("Position").switch("Show anchor", false, true).enabled) {
-            const anchorColor = colorWhite.copy()
-            box.add(new Pixel(positionControl.x, positionControl.y, colorRed))
-            box.add(new Pixel(positionControl.x, positionControl.y, anchorColor))
-            scheduler.interval(15, () => {
-                anchorColor.a = anchorColor.a ? 0 : 1
-            })
-        }
+        positionControl.runAnchorMarker(scheduler, box)
 
         const use24Hour = controls.switch("24 hour", true, true).enabled
         const showLeadingZeroHour = controls.switch("Leading zero on hour", true, true).enabled

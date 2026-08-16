@@ -1,5 +1,10 @@
 import type ControlGroup from "./ControlGroup.js";
 import type BoxInterface from "./BoxInterface.js";
+import type ControlSwitch from "./ControlSwitch.js";
+import type Scheduler from "./Scheduler.js";
+import Pixel from "./Pixel.js";
+import PixelList from "./PixelList.js";
+import {colorRed, colorWhite} from "./Colors.js";
 
 //NOTE: this is a compound control that uses actual controls and does some calculations for the user. therefore its not a subclass from Control
 
@@ -15,6 +20,8 @@ export default class ControlPosition  {
     //the actual calculated x,y position
     x: number
     y: number
+
+    private showAnchorControl: ControlSwitch
 
     constructor(name: string = 'Position', parent: ControlGroup, box: BoxInterface, restartOnChange: boolean, xOrigin: XOrigin = "left", xOffset = 0, yOrigin: YOrigin = "top", yOffset = 0) {
 
@@ -87,10 +94,45 @@ export default class ControlPosition  {
 
         })
 
+        this.showAnchorControl = group.switch("Show anchor", false, true)
 
     }
 
+    /** Whether the user has enabled the "Show anchor" switch for this position */
+    get showsAnchor(): boolean {
+        return this.showAnchorControl.enabled
+    }
 
+    /**
+     * Add a cross-shaped marker at the current position to `target`, blinking between red and
+     * white, if the user has enabled "Show anchor" for this position. A no-op otherwise, so
+     * callers can call this unconditionally.
+     */
+    runAnchorMarker(scheduler: Scheduler, target: PixelList) {
+        if (!this.showsAnchor)
+            return
 
+        //shared mutable color: recoloring it in place updates all 5 pixels of the cross at once
+        const markerColor = colorRed.copy()
+
+        const cross = new PixelList()
+        cross.add(new Pixel(this.x, this.y, markerColor))
+        cross.add(new Pixel(this.x - 1, this.y, markerColor))
+        cross.add(new Pixel(this.x + 1, this.y, markerColor))
+        cross.add(new Pixel(this.x, this.y - 1, markerColor))
+        cross.add(new Pixel(this.x, this.y + 1, markerColor))
+        target.add(cross)
+
+        let showingWhite = false
+        scheduler.interval(15, () => {
+            target.delete(cross)
+            target.add(cross) //keep on top
+            showingWhite = !showingWhite
+            const source = showingWhite ? colorWhite : colorRed
+            markerColor.r = source.r
+            markerColor.g = source.g
+            markerColor.b = source.b
+        })
+    }
 
 }
