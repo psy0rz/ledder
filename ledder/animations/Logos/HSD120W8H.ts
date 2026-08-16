@@ -2,18 +2,8 @@ import PixelBox from "../../PixelBox.js"
 import Scheduler from "../../Scheduler.js"
 import ControlGroup from "../../ControlGroup.js"
 import Animator from "../../Animator.js"
-import Pixel from "../../Pixel.js"
 import PixelList from "../../PixelList.js"
-import Clock from "../Clocks/Clock.js"
-import MQTTClimate from "../Remote/MQTTclimate.js"
-import FxMovie from "../../fx/FxMovie.js"
-import Color from "../../Color.js"
 import DrawAsciiArtColor from "../../draw/DrawAsciiArtColor.js"
-import DrawText from "../../draw/DrawText.js"
-
-
-
-
 
 
 const hsdLogo70W8H =`

@@ -9,7 +9,9 @@ import PixelList from "../../PixelList.js"
 import Color from "../../Color.js"
 
 
-export default class Clock extends Animator {
+export default class ArtClock extends Animator {
+
+    static description = "Digital clock with a border ring where hour, minute, second, and millisecond dots orbit with fading tails."
 
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup, x = 0, y = 0) 
     {
