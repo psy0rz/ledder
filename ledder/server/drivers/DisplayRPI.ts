@@ -54,25 +54,87 @@ export class DisplayRPI extends Display {
 
         const offset = this.mapper[floor_x][floor_y]
 
-        if (this.rgbOrder==0)
-            leds.setPixel(
-                ~~(offset / this.pixelsPerChannel), // channel
-                offset % this.pixelsPerChannel, //led nr
-                this.gammaMapper[Math.round(color.r)],
-                this.gammaMapper[Math.round(color.g)],
-                this.gammaMapper[Math.round(color.b)],
-                color.a
-            )
-        else
-            leds.setPixel(
-                ~~(offset / this.pixelsPerChannel), // channel
-                offset % this.pixelsPerChannel, //led nr
-                this.gammaMapper[Math.round(color.g)],
-                this.gammaMapper[Math.round(color.r)],
-                this.gammaMapper[Math.round(color.b)],
-                color.a
-            )
+        /**
+        * For compatibility reasons 0 = RGB 1 = GRB
+        * 0 = RGB
+        * 1 = GRB
+        * 2 = RBG
+        * 3 = GBR
+        * 4 = BRG
+        * 5 = BGR
+        */
 
+        switch (this.rgbOrder) {
+            case 0:
+                leds.setPixel(
+                    ~~(offset / this.pixelsPerChannel), // channel
+                    offset % this.pixelsPerChannel, //led nr
+                    this.gammaMapper[Math.round(color.r)],
+                    this.gammaMapper[Math.round(color.g)],
+                    this.gammaMapper[Math.round(color.b)],
+                    color.a
+                )
+                break;
+            case 1:
+                leds.setPixel(
+                    ~~(offset / this.pixelsPerChannel), // channel
+                    offset % this.pixelsPerChannel, //led nr
+                    this.gammaMapper[Math.round(color.g)],
+                    this.gammaMapper[Math.round(color.r)],
+                    this.gammaMapper[Math.round(color.b)],
+                    color.a
+                )
+                break;
+            case 2:
+                leds.setPixel(
+                    ~~(offset / this.pixelsPerChannel), // channel
+                    offset % this.pixelsPerChannel, //led nr
+                    this.gammaMapper[Math.round(color.r)],
+                    this.gammaMapper[Math.round(color.b)],
+                    this.gammaMapper[Math.round(color.g)],
+                    color.a
+                )
+                break;
+            case 3:
+                leds.setPixel(
+                    ~~(offset / this.pixelsPerChannel), // channel
+                    offset % this.pixelsPerChannel, //led nr
+                    this.gammaMapper[Math.round(color.b)],
+                    this.gammaMapper[Math.round(color.r)],
+                    this.gammaMapper[Math.round(color.g)],
+                    color.a
+                )
+                break;
+            case 4:
+                leds.setPixel(
+                    ~~(offset / this.pixelsPerChannel), // channel
+                    offset % this.pixelsPerChannel, //led nr
+                    this.gammaMapper[Math.round(color.g)],
+                    this.gammaMapper[Math.round(color.r)],
+                    this.gammaMapper[Math.round(color.b)],
+                    color.a
+                )
+                break;
+            case 5:
+                leds.setPixel(
+                    ~~(offset / this.pixelsPerChannel), // channel
+                    offset % this.pixelsPerChannel, //led nr
+                    this.gammaMapper[Math.round(color.b)],
+                    this.gammaMapper[Math.round(color.g)],
+                    this.gammaMapper[Math.round(color.r)],
+                    color.a
+                )
+                break;
+            default:
+                leds.setPixel(
+                    ~~(offset / this.pixelsPerChannel), // channel
+                    offset % this.pixelsPerChannel, //led nr
+                    this.gammaMapper[Math.round(color.r)],
+                    this.gammaMapper[Math.round(color.g)],
+                    this.gammaMapper[Math.round(color.b)],
+                    color.a
+                )
+        }
 
     }
 
