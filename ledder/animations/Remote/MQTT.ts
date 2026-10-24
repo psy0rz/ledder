@@ -14,9 +14,12 @@ Get variables: -t 'ledder/get' -m ''
 
 
 
+
  */
 
+
 export default class MQTT extends Animator {
+    static description = "Controls which animation is running via MQTT: select or stop an animation, and get or set its controls. See the <a href='https://github.com/psy0rz/ledder/wiki/MQTT'>MQTT wiki page</a> for the topics and messages."
     // private client: MqttClient
 
     private box: PixelBox
