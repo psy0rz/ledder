@@ -1,22 +1,20 @@
-version: '3.3'
+#NOTE: this docker compose is for development, normally use the github image.
+# Initial startup will take a while,
 
 services:
  ledder:
   stop_grace_period: 0s
   build:
    context: .
-   dockerfile: Dockerfile-local
+   dockerfile: Dockerfile
 
 
   ports:
    - 3000:3000
   environment:
    - NODE_ENV=production
+   - RUN_NPM_INSTALL=1
   volumes:
    - ./:/app
    - ./displayconf.js:/app/displayconf.js
    - ./presets:/app/presets
-
-# volumes:
-#  mongodb:
-#  mongodb_config:

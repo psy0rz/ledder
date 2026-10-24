@@ -9,4 +9,10 @@ if ! [ -e .rpicompiled ] && [ -e /proc/device-tree/model ]; then
   echo "Compile DONE!"
 fi
 
+if [ "$RUN_NPM_INSTALL" == "1" ]; then
+  echo "Running npm install.."
+  npm i
+
+fi
+
 exec node ledder/server/server.js

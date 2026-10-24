@@ -1,4 +1,0 @@
-#!/bin/bash
-npm run buildweb
-rsync --exclude settings.json --exclude node_modules --exclude .cache -avx . docker5:ledder/
-ssh docker5 "cd ledder; docker compose restart"

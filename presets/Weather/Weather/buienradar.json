@@ -4,7 +4,7 @@
  "values": {
   "Render settings": {
    "FPS": {
-    "value": 60
+    "value": 3
    },
    "Subpixel filtering": {
     "enabled": false
