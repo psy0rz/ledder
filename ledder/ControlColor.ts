@@ -37,7 +37,7 @@ export default class ControlColor extends Control implements ColorInterface {
     }
 
     //returns a copy thats an actual Color() object
-    copy(): ColorInterface {
+    copy(): Color {
 
         return (new Color(this.r, this.g, this.b, this.a))
     }

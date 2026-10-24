@@ -81,6 +81,29 @@ export default class Color implements ColorInterface {
 
     }
 
+
+    //sets r,g,b from '#rrggbb', 'rrggbb' or 'r,g,b' (decimal, 0-255). Alpha is left alone.
+    //Returns false (and leaves the color unchanged) if the text is neither.
+    setRgbText(colorText: string): boolean {
+        const trimmedText = colorText.trim()
+
+        const hexMatch = trimmedText.match(/^#?([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})$/i)
+        if (hexMatch) {
+            this.r = parseInt(hexMatch[1], 16)
+            this.g = parseInt(hexMatch[2], 16)
+            this.b = parseInt(hexMatch[3], 16)
+            return true
+        }
+
+        const decimalParts = trimmedText.split(/[\s,]+/).map(Number)
+        if (decimalParts.length === 3 && decimalParts.every(part => Number.isInteger(part) && part >= 0 && part <= 255)) {
+            [this.r, this.g, this.b] = decimalParts
+            return true
+        }
+
+        return false
+    }
+
     copy() {
         return new Color(this.r, this.g, this.b, this.a)
     }
