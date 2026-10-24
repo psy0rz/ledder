@@ -59,7 +59,14 @@ export function getRemoteData(resourceUrl = 'REMOTERESOURCEURL', cacheTime:numbe
     try {
         const url = resourceUrl //fixed for now..make flex when it works
         https.get(url, (res) => {
-     
+            if (res.statusCode < 200 || res.statusCode >= 300) {
+                console.error(`Fetching ${resourceUrl} failed: HTTP ${res.statusCode}`)
+                res.resume()
+                cache[resourceUrl].inProgress = false
+                cache[resourceUrl].callbacks = []
+                return
+            }
+
             let rawdata = ""
             res.on('data', (d) => {
                rawdata=rawdata.concat(d.toString())

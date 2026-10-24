@@ -52,7 +52,12 @@ export default class RemotePlaylist extends Animator {
      
 
         getRemoteData(playlistUrl.text,1000*cacheControl.value,(resourceUrl, resourceData) => {
-            this.playList=JSON.parse(resourceData)
+            try {
+                this.playList=JSON.parse(resourceData)
+            } catch (e) {
+                console.error(`Invalid playlist from ${resourceUrl}: ${e.message}`)
+                return
+            }
             this.playListReady=true
             //console.log(this.playList)
             if (this.playList && this.playList.length>0)
