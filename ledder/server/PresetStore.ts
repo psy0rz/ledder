@@ -49,16 +49,23 @@ export class PresetStore {
         //note: this path is relative to this javascript module instead of current working dir.
         const importFilename = path.join("..", "..", this.animationFilename(animationName))
 
+
+
         //cache-bust only when the file actually changed: a fixed query string per Date.now() call
         //would make every select() import a brand new ES module instance, and Node never garbage
         //collects those (every module-level cache/Map/etc. in the animation file leaks forever).
         //Keying on mtime instead means repeated selects of an unchanged file reuse the same module.
         const mtime = await getMtime(this.animationFilename(animationName))
+
+        //getMtime() returns 0 when the file cant be read: say so, instead of a raw import error with the full path in it
+        if (mtime === 0)
+            throw new Error(`Animation not found: ${animationName}`)
+
         let module = await import(importFilename + "?" + mtime)
 
         if (module.default === undefined || !(module.default.prototype instanceof Animator))
 
-            throw ("Not a valid Animation")
+            throw new Error(`Not a valid animation: ${animationName}`)
 
         return module.default
     }
@@ -89,8 +96,11 @@ export class PresetStore {
             return JSON.parse(await readFile(this.presetFilename(animationName, presetName), 'utf8'))
         } catch (e) {
             //default doesnt have to exist
-            if (presetName !== "default")
+            if (presetName !== "default") {
+                if (e.code === 'ENOENT')
+                    throw new Error(`Preset not found: ${animationName}/${presetName}`)
                 throw (e)
+            }
 
             return {
                 title: "",
