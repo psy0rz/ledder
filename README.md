@@ -27,4 +27,9 @@ Go to the [Wiki](https://github.com/psy0rz/ledder/wiki) for more info
 
 ![photo_6015022336098550508_y](https://github.com/user-attachments/assets/cf4434a4-1626-4e7f-85ec-732aaad85866)
 
+<img width="1536" height="2048" alt="0CBD1C7C-7CA1-4BF8-A162-70E19D957510_1_102_o" src="https://github.com/user-attachments/assets/1e1b319c-af7d-4c1d-97ba-9635cdc93738" />
+
+
+
+
 Go to the [Wiki](https://github.com/psy0rz/ledder/wiki) for more info
