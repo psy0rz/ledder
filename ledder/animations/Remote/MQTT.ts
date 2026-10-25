@@ -50,6 +50,8 @@ Commands:
                                wrapWidth: wrap lines wider than this (default: never wrap)
                                hAlign:    "left", "centered" or "right" (default "left")
                                vAlign:    "top", "middle" or "bottom" (default "top")
+                               blinkOn:   blink: show the text for this many seconds... (default: dont blink)
+                               blinkOff:  ...then hide it for this many seconds (default: same as blinkOn)
                              An empty payload removes the text with this id.
                              E.g.: ledder/text/clock = {"text":"12:00","x":10,"y":4,"color":"#ff0000"}
 
@@ -61,6 +63,7 @@ Example with mosquitto:
   mosquitto_pub -t ledder/set/Text -m '{"text":"hello"}'
   mosquitto_sub -t 'ledder/state/#' & mosquitto_pub -t ledder/get -m ''
   mosquitto_pub -t ledder/text/clock -m '{"text":"12:00","x":10,"y":4,"hAlign":"centered"}'
+  mosquitto_pub -t ledder/text/alert -m '{"text":"ALERT","color":"#ff0000","blinkOn":0.5,"blinkOff":0.25}'
   mosquitto_pub -t ledder/text/clock -m ''
 */
 
@@ -147,15 +150,31 @@ export default class MQTT extends Animator {
         //the texts of the "text" command, on top of the animation
         const textsContainer = new PixelList()
         box.add(textsContainer)
-        const textsById = new Map<string, DrawText>()
+        //blinkOffFrames is 0 for a text that doesnt blink
+        type ShownText = { drawText: DrawText, blinkOnFrames: number, blinkOffFrames: number, blinkFrameNr: number }
+        const shownTextsById = new Map<string, ShownText>()
 
         const removeText = (textId: string) => {
-            const existingText = textsById.get(textId)
-            if (existingText !== undefined) {
-                textsContainer.delete(existingText)
-                textsById.delete(textId)
+            const shownText = shownTextsById.get(textId)
+            if (shownText !== undefined) {
+                textsContainer.delete(shownText.drawText)
+                shownTextsById.delete(textId)
             }
         }
+
+        //blinking: each blinking text is shown for its blinkOnFrames, then hidden for its blinkOffFrames
+        scheduler.interval(1, () => {
+            for (const shownText of shownTextsById.values()) {
+                if (shownText.blinkOffFrames === 0)
+                    continue
+
+                shownText.blinkFrameNr = (shownText.blinkFrameNr + 1) % (shownText.blinkOnFrames + shownText.blinkOffFrames)
+                if (shownText.blinkFrameNr < shownText.blinkOnFrames)
+                    textsContainer.add(shownText.drawText)
+                else
+                    textsContainer.delete(shownText.drawText)
+            }
+        })
 
         const showText = (textId: string, payload: string) => {
             if (textId === "")
@@ -189,6 +208,18 @@ export default class MQTT extends Animator {
             if (!["top", "middle", "bottom"].includes(vAlign))
                 throw new Error(`Invalid vAlign: ${vAlign}`)
 
+            let blinkOnFrames = 0
+            let blinkOffFrames = 0
+            if (textParameters.blinkOn !== undefined) {
+                const blinkOnSeconds = Number(textParameters.blinkOn)
+                const blinkOffSeconds = Number(textParameters.blinkOff ?? blinkOnSeconds)
+                if (!(blinkOnSeconds > 0 && blinkOffSeconds > 0))
+                    throw new Error(`Invalid blink: ${textParameters.blinkOn}/${textParameters.blinkOff}`)
+                //at least one frame each, or a very short time would never show (or never hide) the text
+                blinkOnFrames = Math.max(1, scheduler.timeToFrames(blinkOnSeconds))
+                blinkOffFrames = Math.max(1, scheduler.timeToFrames(blinkOffSeconds))
+            }
+
             const drawText = new DrawText(
                 Number(textParameters.x ?? 0),
                 Number(textParameters.y ?? 0),
@@ -202,7 +233,7 @@ export default class MQTT extends Animator {
 
             //only replaced once the new one was created without errors
             removeText(textId)
-            textsById.set(textId, drawText)
+            shownTextsById.set(textId, {drawText, blinkOnFrames, blinkOffFrames, blinkFrameNr: 0})
             textsContainer.add(drawText)
         }
 
