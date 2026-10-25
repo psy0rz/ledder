@@ -53,6 +53,7 @@ Commands:
                                blinkOn:   blink: show the text for this many seconds... (default: dont blink)
                                blinkOff:  ...then hide it for this many seconds (default: same as blinkOn)
                              An empty payload removes the text with this id.
+                             An empty payload to ledder/text itself (without an id) removes all texts.
                              E.g.: ledder/text/clock = {"text":"12:00","x":10,"y":4,"color":"#ff0000"}
 
 Status and errors (connecting, disconnected, an invalid name or JSON) are shown in red in the top left
@@ -65,6 +66,18 @@ Example with mosquitto:
   mosquitto_pub -t ledder/text/clock -m '{"text":"12:00","x":10,"y":4,"hAlign":"centered"}'
   mosquitto_pub -t ledder/text/alert -m '{"text":"ALERT","color":"#ff0000","blinkOn":0.5,"blinkOff":0.25}'
   mosquitto_pub -t ledder/text/clock -m ''
+  mosquitto_pub -t ledder/text -m ''
+
+Node-RED:
+  doc/nodered/ledder-text-subflow.json is a "Ledder text" subflow that builds the messages of the text command.
+  Import it (Menu > Import), and connect its output to an "mqtt out" node for your broker.
+  All DrawText parameters are properties of the node, with dropdowns for the font and the alignments.
+  Input:
+    msg.payload           the text to show. Empty removes the text with this id.
+    msg.remove = true     removes the text with this id
+    msg.removeAll = true  removes all texts
+    msg.<property>        overrides that property of the node, e.g. msg.textId, msg.x or msg.color
+  Number properties use 0 for "not set": a wrap width of 0 doesnt wrap, a blink off time of 0 is the same as the on time.
 */
 
 
@@ -176,11 +189,22 @@ export default class MQTT extends Animator {
             }
         })
 
-        const showText = (textId: string, payload: string) => {
-            if (textId === "")
-                throw new Error("Text id missing")
+        const removeAllTexts = () => {
+            for (const textId of [...shownTextsById.keys()])
+                removeText(textId)
+        }
 
-            if (payload.trim() === "") {
+        const showText = (textId: string, payload: string) => {
+            const isPayloadEmpty = payload.trim() === ""
+
+            if (textId === "") {
+                if (!isPayloadEmpty)
+                    throw new Error("Text id missing")
+                removeAllTexts()
+                return
+            }
+
+            if (isPayloadEmpty) {
                 removeText(textId)
                 return
             }

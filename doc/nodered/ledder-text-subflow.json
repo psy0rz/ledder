@@ -1,0 +1,384 @@
+[
+  {
+    "id": "1edde4a0c5b7e101",
+    "type": "subflow",
+    "name": "Ledder text",
+    "info": "Builds the MQTT message for the `text` command of the ledder **MQTT** animation\n(`ledder/animations/Remote/MQTT.ts`). Connect the output to an *mqtt out* node.\n\n### Inputs\n: payload (string) : the text to show. `\\n` starts a new line. Empty removes the text.\n: remove (boolean) : `true` removes the text with this id.\n: removeAll (boolean) : `true` removes all texts, of every id.\n: *any property* : `msg.x`, `msg.color`, `msg.textId`, ... override the property of this node.\n\n### Outputs\n: topic (string) : `<MQTT topic>/text/<Text id>`\n: payload (string) : the DrawText parameters as JSON, or empty to remove the text.\n\nUse a different *Text id* per text: the same id replaces (or removes) the text that was shown with it.",
+    "category": "",
+    "in": [
+      {
+        "x": 60,
+        "y": 80,
+        "wires": [
+          {
+            "id": "1edde4a0c5b7e102"
+          }
+        ]
+      }
+    ],
+    "out": [
+      {
+        "x": 380,
+        "y": 80,
+        "wires": [
+          {
+            "id": "1edde4a0c5b7e102",
+            "port": 0
+          }
+        ]
+      }
+    ],
+    "env": [
+      {
+        "name": "baseTopic",
+        "type": "str",
+        "value": "ledder",
+        "ui": {
+          "label": {
+            "en-US": "MQTT topic"
+          },
+          "type": "input",
+          "opts": {
+            "types": [
+              "str",
+              "env"
+            ]
+          }
+        }
+      },
+      {
+        "name": "textId",
+        "type": "str",
+        "value": "text1",
+        "ui": {
+          "label": {
+            "en-US": "Text id"
+          },
+          "type": "input",
+          "opts": {
+            "types": [
+              "str",
+              "env"
+            ]
+          }
+        }
+      },
+      {
+        "name": "x",
+        "type": "num",
+        "value": "0",
+        "ui": {
+          "label": {
+            "en-US": "X"
+          },
+          "type": "input",
+          "opts": {
+            "types": [
+              "num",
+              "env"
+            ]
+          }
+        }
+      },
+      {
+        "name": "y",
+        "type": "num",
+        "value": "0",
+        "ui": {
+          "label": {
+            "en-US": "Y"
+          },
+          "type": "input",
+          "opts": {
+            "types": [
+              "num",
+              "env"
+            ]
+          }
+        }
+      },
+      {
+        "name": "font",
+        "type": "str",
+        "value": "C64",
+        "ui": {
+          "label": {
+            "en-US": "Font"
+          },
+          "type": "select",
+          "opts": {
+            "opts": [
+              {
+                "l": {
+                  "en-US": "Atari regular"
+                },
+                "v": "Atari regular"
+              },
+              {
+                "l": {
+                  "en-US": "C64 mono"
+                },
+                "v": "C64 mono"
+              },
+              {
+                "l": {
+                  "en-US": "C64"
+                },
+                "v": "C64"
+              },
+              {
+                "l": {
+                  "en-US": "IBM bios"
+                },
+                "v": "IBM bios"
+              },
+              {
+                "l": {
+                  "en-US": "MSX"
+                },
+                "v": "MSX"
+              },
+              {
+                "l": {
+                  "en-US": "ZX Sierra Quest"
+                },
+                "v": "ZX Sierra Quest"
+              },
+              {
+                "l": {
+                  "en-US": "Anarchist"
+                },
+                "v": "Anarchist"
+              },
+              {
+                "l": {
+                  "en-US": "Skid Row"
+                },
+                "v": "Skid Row"
+              },
+              {
+                "l": {
+                  "en-US": "Quasar"
+                },
+                "v": "Quasar"
+              },
+              {
+                "l": {
+                  "en-US": "Computer"
+                },
+                "v": "Computer"
+              },
+              {
+                "l": {
+                  "en-US": "Picopixel"
+                },
+                "v": "Picopixel"
+              },
+              {
+                "l": {
+                  "en-US": "ORG v01"
+                },
+                "v": "ORG v01"
+              },
+              {
+                "l": {
+                  "en-US": "Tiny 3x3"
+                },
+                "v": "Tiny 3x3"
+              },
+              {
+                "l": {
+                  "en-US": "Pixel-Gosub"
+                },
+                "v": "Pixel-Gosub"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "name": "color",
+        "type": "str",
+        "value": "#ffffff",
+        "ui": {
+          "label": {
+            "en-US": "Color (#rrggbb or r,g,b)"
+          },
+          "type": "input",
+          "opts": {
+            "types": [
+              "str",
+              "env"
+            ]
+          }
+        }
+      },
+      {
+        "name": "scale",
+        "type": "num",
+        "value": "1",
+        "ui": {
+          "label": {
+            "en-US": "Scale"
+          },
+          "type": "input",
+          "opts": {
+            "types": [
+              "num",
+              "env"
+            ]
+          }
+        }
+      },
+      {
+        "name": "wrapWidth",
+        "type": "num",
+        "value": "0",
+        "ui": {
+          "label": {
+            "en-US": "Wrap width (0 = no wrap)"
+          },
+          "type": "input",
+          "opts": {
+            "types": [
+              "num",
+              "env"
+            ]
+          }
+        }
+      },
+      {
+        "name": "hAlign",
+        "type": "str",
+        "value": "left",
+        "ui": {
+          "label": {
+            "en-US": "Horizontal align"
+          },
+          "type": "select",
+          "opts": {
+            "opts": [
+              {
+                "l": {
+                  "en-US": "Left"
+                },
+                "v": "left"
+              },
+              {
+                "l": {
+                  "en-US": "Centered"
+                },
+                "v": "centered"
+              },
+              {
+                "l": {
+                  "en-US": "Right"
+                },
+                "v": "right"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "name": "vAlign",
+        "type": "str",
+        "value": "top",
+        "ui": {
+          "label": {
+            "en-US": "Vertical align"
+          },
+          "type": "select",
+          "opts": {
+            "opts": [
+              {
+                "l": {
+                  "en-US": "Top"
+                },
+                "v": "top"
+              },
+              {
+                "l": {
+                  "en-US": "Middle"
+                },
+                "v": "middle"
+              },
+              {
+                "l": {
+                  "en-US": "Bottom"
+                },
+                "v": "bottom"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "name": "blink",
+        "type": "bool",
+        "value": "false",
+        "ui": {
+          "label": {
+            "en-US": "Blink"
+          },
+          "type": "checkbox"
+        }
+      },
+      {
+        "name": "blinkOn",
+        "type": "num",
+        "value": "0.5",
+        "ui": {
+          "label": {
+            "en-US": "Blink: on seconds"
+          },
+          "type": "input",
+          "opts": {
+            "types": [
+              "num",
+              "env"
+            ]
+          }
+        }
+      },
+      {
+        "name": "blinkOff",
+        "type": "num",
+        "value": "0.5",
+        "ui": {
+          "label": {
+            "en-US": "Blink: off seconds"
+          },
+          "type": "input",
+          "opts": {
+            "types": [
+              "num",
+              "env"
+            ]
+          }
+        }
+      }
+    ],
+    "meta": {},
+    "color": "#E2D96E",
+    "icon": "font-awesome/fa-font"
+  },
+  {
+    "id": "1edde4a0c5b7e102",
+    "type": "function",
+    "z": "1edde4a0c5b7e101",
+    "name": "build text json",
+    "func": "//Builds the message for the \"text\" command of the ledder MQTT animation.\n//msg.payload is the text. An empty payload (or msg.remove = true) removes the text.\n//msg.removeAll = true removes all texts, of every id.\n//Every property of this node can be overridden per message: msg.x = 5 wins over the X property.\n\nconst property = (name) => msg[name] !== undefined ? msg[name] : env.get(name)\n\nconst baseTopic = property(\"baseTopic\")\n\nif (msg.removeAll === true) {\n    msg.topic = `${baseTopic}/text`\n    msg.payload = \"\"\n    node.status({fill: \"grey\", shape: \"ring\", text: \"removed all\"})\n    return msg\n}\n\nconst textId = property(\"textId\")\nif (textId === undefined || textId === \"\") {\n    node.error(\"Text id missing\", msg)\n    return null\n}\n\nmsg.topic = `${baseTopic}/text/${textId}`\n\nconst text = msg.payload === undefined || msg.payload === null ? \"\" : String(msg.payload)\nif (text === \"\" || msg.remove === true) {\n    msg.payload = \"\"\n    node.status({fill: \"grey\", shape: \"ring\", text: \"removed\"})\n    return msg\n}\n\nconst textParameters = {\n    text: text,\n    x: Number(property(\"x\")),\n    y: Number(property(\"y\")),\n    font: property(\"font\"),\n    color: property(\"color\"),\n    scale: Number(property(\"scale\")),\n    hAlign: property(\"hAlign\"),\n    vAlign: property(\"vAlign\"),\n}\n\n//0 means: dont wrap\nconst wrapWidth = Number(property(\"wrapWidth\"))\nif (wrapWidth > 0)\n    textParameters.wrapWidth = wrapWidth\n\n//0 means: dont blink, a blinkOff of 0 means: same as blinkOn\nif (property(\"blink\") === true) {\n    const blinkOn = Number(property(\"blinkOn\"))\n    const blinkOff = Number(property(\"blinkOff\"))\n    if (blinkOn > 0) {\n        textParameters.blinkOn = blinkOn\n        if (blinkOff > 0)\n            textParameters.blinkOff = blinkOff\n    }\n}\n\nmsg.payload = JSON.stringify(textParameters)\nnode.status({fill: \"green\", shape: \"dot\", text: text.length > 20 ? text.substring(0, 20) + \"...\" : text})\nreturn msg\n",
+    "outputs": 1,
+    "timeout": 0,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 220,
+    "y": 80,
+    "wires": [
+      []
+    ]
+  }
+]
