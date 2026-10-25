@@ -7,7 +7,7 @@ import DrawText, {type HorizontalAlign, type VerticalAlign} from "../../draw/Dra
 import {fontSelect} from "../../fonts.js"
 
 export default class MQTTtext extends Animator {
-    static description = "Shows the text received on an MQTT topic, with its color and blinking set by two other topics"
+    static description = "Shows the text received on an MQTT topic, with its color and blinking set by two other topics. NOTE: If you want full control over texts and animation via mqtt, its better to use the MQTT animation."
 
     async run(box: PixelBox, scheduler: Scheduler, controls: ControlGroup) {
 

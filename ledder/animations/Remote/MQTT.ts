@@ -4,7 +4,10 @@ import ControlGroup from "../../ControlGroup.js"
 import Animator from "../../Animator.js"
 import mqtt from "mqtt"
 import {statusMessage} from "../../message.js"
-import DrawText from "../../draw/DrawText.js"
+import DrawText, {type HorizontalAlign, type VerticalAlign} from "../../draw/DrawText.js"
+import {fonts} from "../../fonts.js"
+import Color from "../../Color.js"
+import PixelList from "../../PixelList.js"
 import AnimationManager from "../../server/AnimationManager.js"
 
 /*
@@ -35,6 +38,21 @@ Commands:
                                switch/group: {"enabled": true}
                              E.g.: ledder/set/Text = {"text":"hello"}
 
+  ledder/text/<text id>      Show a simple drawText on top of the current animation, or replace the text with this id.
+                             There can be many texts at once, each with its own id. They stay when another
+                             animation is selected or stopped.
+                             Payload: the DrawText parameters as JSON. Only "text" is required:
+                               text:      the text to show, "\n" starts a new line
+                               x, y:      anchor position (default 0, 0)
+                               font:      one of the font names in fonts.ts (default "C64")
+                               color:     "#rrggbb" or "r,g,b" (default "#ffffff")
+                               scale:     font scale (default 1)
+                               wrapWidth: wrap lines wider than this (default: never wrap)
+                               hAlign:    "left", "centered" or "right" (default "left")
+                               vAlign:    "top", "middle" or "bottom" (default "top")
+                             An empty payload removes the text with this id.
+                             E.g.: ledder/text/clock = {"text":"12:00","x":10,"y":4,"color":"#ff0000"}
+
 Status and errors (connecting, disconnected, an invalid name or JSON) are shown in red in the top left
 corner of the display, until the next command arrives.
 
@@ -42,6 +60,8 @@ Example with mosquitto:
   mosquitto_pub -t ledder/select -m 'Text/default'
   mosquitto_pub -t ledder/set/Text -m '{"text":"hello"}'
   mosquitto_sub -t 'ledder/state/#' & mosquitto_pub -t ledder/get -m ''
+  mosquitto_pub -t ledder/text/clock -m '{"text":"12:00","x":10,"y":4,"hAlign":"centered"}'
+  mosquitto_pub -t ledder/text/clock -m ''
 */
 
 
@@ -73,7 +93,10 @@ export default class MQTT extends Animator {
 
         const selectedAnimationControls = controls.group('Current animation')
 
-        this.animationManager = new AnimationManager(box, scheduler, selectedAnimationControls)
+        //in a box of its own, so the texts below stay on top of it: the manager re-adds its child box at the end on every restart
+        const animationBox = new PixelBox(box)
+        box.add(animationBox)
+        this.animationManager = new AnimationManager(animationBox, scheduler, selectedAnimationControls)
 
         this.statusMessage(`conn ${mqttUrl.text}`)
         console.log(`MQTT: Connecting ${mqttUrl.text}`)
@@ -96,6 +119,7 @@ export default class MQTT extends Animator {
                 baseTopic.text + "/stop",
                 baseTopic.text + "/get",
                 baseTopic.text + "/set/#",
+                baseTopic.text + "/text/#",
             ])
         })
 
@@ -120,6 +144,69 @@ export default class MQTT extends Animator {
         })
 
 
+        //the texts of the "text" command, on top of the animation
+        const textsContainer = new PixelList()
+        box.add(textsContainer)
+        const textsById = new Map<string, DrawText>()
+
+        const removeText = (textId: string) => {
+            const existingText = textsById.get(textId)
+            if (existingText !== undefined) {
+                textsContainer.delete(existingText)
+                textsById.delete(textId)
+            }
+        }
+
+        const showText = (textId: string, payload: string) => {
+            if (textId === "")
+                throw new Error("Text id missing")
+
+            if (payload.trim() === "") {
+                removeText(textId)
+                return
+            }
+
+            const textParameters = JSON.parse(payload)
+
+            if (typeof textParameters.text !== "string")
+                throw new Error("Text missing")
+
+            const fontName = textParameters.font ?? "C64"
+            const font = fonts[fontName]
+            if (font === undefined)
+                throw new Error(`Unknown font: ${fontName}`)
+            font.load()
+
+            const textColor = new Color()
+            if (textParameters.color !== undefined && !textColor.setRgbText(String(textParameters.color)))
+                throw new Error(`Invalid color: ${textParameters.color}`)
+
+            const hAlign: HorizontalAlign = textParameters.hAlign ?? "left"
+            if (!["left", "centered", "right"].includes(hAlign))
+                throw new Error(`Invalid hAlign: ${hAlign}`)
+
+            const vAlign: VerticalAlign = textParameters.vAlign ?? "top"
+            if (!["top", "middle", "bottom"].includes(vAlign))
+                throw new Error(`Invalid vAlign: ${vAlign}`)
+
+            const drawText = new DrawText(
+                Number(textParameters.x ?? 0),
+                Number(textParameters.y ?? 0),
+                font,
+                textParameters.text,
+                textColor,
+                Number(textParameters.scale ?? 1),
+                textParameters.wrapWidth === undefined ? undefined : Number(textParameters.wrapWidth),
+                hAlign,
+                vAlign)
+
+            //only replaced once the new one was created without errors
+            removeText(textId)
+            textsById.set(textId, drawText)
+            textsContainer.add(drawText)
+        }
+
+
         //recursively publish all control values to mqtt
         function publishControlValues(topic: string, controlGroup: ControlGroup) {
 
@@ -133,7 +220,7 @@ export default class MQTT extends Animator {
 
         }
 
-        const handleCommand = async (command: string, controlPath: string[], payload: string) => {
+        const handleCommand = async (command: string, commandParameters: string[], payload: string) => {
             switch (command) {
                 case 'select':
                     console.log(`MQTT select ${payload}`)
@@ -155,9 +242,16 @@ export default class MQTT extends Animator {
                     publishControlValues(baseTopic.text + "/state", selectedAnimationControls)
                     break
                 case 'set':
-                    console.log("MQTT set: ", controlPath, payload)
-                    selectedAnimationControls.updateValue(controlPath, JSON.parse(payload))
+                    console.log("MQTT set: ", commandParameters, payload)
+                    selectedAnimationControls.updateValue(commandParameters, JSON.parse(payload))
                     break
+                case 'text': {
+                    //the id may contain slashes itself
+                    const textId = commandParameters.join("/")
+                    console.log(`MQTT text ${textId}: ${payload}`)
+                    showText(textId, payload)
+                    break
+                }
             }
         }
 
@@ -172,7 +266,7 @@ export default class MQTT extends Animator {
             const commandTopic = topic.substring(baseTopic.text.length + 1)
             const commandTopicParts = commandTopic.split('/')
             const command = commandTopicParts[0]
-            const controlPath = commandTopicParts.slice(1)
+            const commandParameters = commandTopicParts.slice(1)
 
             commandQueue = commandQueue.then(async () => {
                 if (isCleanedUp)
@@ -180,7 +274,7 @@ export default class MQTT extends Animator {
 
                 this.statusMessage("")
                 try {
-                    await handleCommand(command, controlPath, payload)
+                    await handleCommand(command, commandParameters, payload)
                 } catch (e) {
                     console.error(`MQTT ${command}: ${e.message}`)
                     this.statusMessage(e.message)
