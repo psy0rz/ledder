@@ -1,0 +1,220 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="860" viewBox="0 0 1440 860" font-family="Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="arrowhead" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#333"/>
+    </marker>
+    <style>
+      .box { fill: #ffffff; stroke: #c8ccd2; stroke-width: 1.5; }
+      .inner { fill: #fffdf3; stroke: #e2c25a; stroke-width: 1.5; }
+      .title { font-size: 17px; font-weight: bold; fill: #1d1f23; }
+      .innertitle { font-size: 15px; font-weight: bold; fill: #1d1f23; }
+      .text { font-size: 13px; fill: #3b3f46; }
+      .muted { font-size: 12px; fill: #6b7079; }
+      .mono { font-family: Menlo, Consolas, monospace; font-size: 12px; fill: #5a4a00; }
+      .monodriver { font-family: Menlo, Consolas, monospace; font-size: 11px; fill: #6b7079; }
+      .label { font-size: 13px; fill: #1d1f23; font-weight: bold; }
+      .group { font-size: 13px; font-weight: bold; letter-spacing: 1px; }
+      .flow { stroke: #333; stroke-width: 2; fill: none; marker-end: url(#arrowhead); }
+      .bus { stroke: #333; stroke-width: 2; fill: none; }
+    </style>
+  </defs>
+
+  <rect x="0" y="0" width="1440" height="860" rx="16" fill="#f6f7f9"/>
+
+  <!-- Title -->
+  <text x="40" y="52" font-size="30" font-weight="bold" fill="#1d1f23">Ledder</text>
+  <text x="152" y="52" font-size="16" fill="#6b7079">renders pixel animations and streams them to LED displays</text>
+  <g>
+    <rect x="40" y="64" width="10" height="10" fill="#e8413c"/>
+    <rect x="52" y="64" width="10" height="10" fill="#f28c28"/>
+    <rect x="64" y="64" width="10" height="10" fill="#f5c842"/>
+    <rect x="76" y="64" width="10" height="10" fill="#3fb950"/>
+    <rect x="88" y="64" width="10" height="10" fill="#2f81f7"/>
+    <rect x="100" y="64" width="10" height="10" fill="#8957e5"/>
+  </g>
+
+  <!-- ============ Left: control inputs ============ -->
+  <text x="30" y="104" class="group" fill="#6b7079">CONTROL</text>
+
+  <!-- Web browser -->
+  <rect x="30" y="120" width="250" height="150" rx="10" class="box"/>
+  <text x="50" y="148" class="title">Web browser</text>
+  <text x="50" y="174" class="text">Web GUI: choose an animation,</text>
+  <text x="50" y="192" class="text">change controls, save presets</text>
+  <g fill="#3fb950">
+    <rect x="50" y="210" width="8" height="8"/><rect x="60" y="210" width="8" height="8" fill="#2f81f7"/><rect x="70" y="210" width="8" height="8"/><rect x="80" y="210" width="8" height="8" fill="#f5c842"/><rect x="90" y="210" width="8" height="8"/><rect x="100" y="210" width="8" height="8" fill="#e8413c"/><rect x="110" y="210" width="8" height="8"/><rect x="120" y="210" width="8" height="8" fill="#2f81f7"/>
+    <rect x="50" y="220" width="8" height="8" fill="#e8413c"/><rect x="60" y="220" width="8" height="8"/><rect x="70" y="220" width="8" height="8" fill="#f5c842"/><rect x="80" y="220" width="8" height="8"/><rect x="90" y="220" width="8" height="8" fill="#2f81f7"/><rect x="100" y="220" width="8" height="8"/><rect x="110" y="220" width="8" height="8" fill="#e8413c"/><rect x="120" y="220" width="8" height="8"/>
+  </g>
+  <text x="138" y="225" class="text">live preview</text>
+  <text x="50" y="254" class="muted">http://localhost:3000</text>
+
+  <line x1="282" y1="180" x2="418" y2="180" class="flow"/>
+  <text x="350" y="172" class="label" text-anchor="middle" font-size="12">JSON-RPC</text>
+  <line x1="418" y1="218" x2="282" y2="218" class="flow"/>
+  <text x="350" y="236" class="muted" text-anchor="middle">websocket /ws</text>
+  <text x="350" y="252" class="muted" text-anchor="middle">+ preview frames</text>
+
+  <!-- MQTT -->
+  <rect x="30" y="300" width="250" height="130" rx="10" class="box"/>
+  <text x="50" y="328" class="title">MQTT broker</text>
+  <text x="50" y="352" class="mono">ledder/select</text>
+  <text x="50" y="370" class="mono">ledder/get</text>
+  <text x="50" y="388" class="mono">ledder/set/&lt;control&gt;</text>
+  <text x="50" y="414" class="muted">needs the MQTT animation running</text>
+
+  <line x1="282" y1="345" x2="418" y2="345" class="flow"/>
+  <text x="350" y="337" class="label" text-anchor="middle" font-size="12">commands</text>
+  <line x1="418" y1="385" x2="282" y2="385" class="flow"/>
+  <text x="350" y="403" class="muted" text-anchor="middle">control state</text>
+
+  <!-- Files -->
+  <rect x="30" y="460" width="250" height="160" rx="10" class="box"/>
+  <text x="50" y="488" class="title">Files</text>
+  <text x="50" y="512" class="mono">displayconf.js</text>
+  <text x="50" y="530" class="text">displays, sizes, LED layout</text>
+  <text x="50" y="558" class="mono">presets/&lt;Animation&gt;/</text>
+  <text x="50" y="576" class="text">preset .json + .png previews</text>
+  <text x="50" y="602" class="muted">previews rendered by DisplayApng</text>
+
+  <line x1="282" y1="510" x2="418" y2="510" class="flow"/>
+  <text x="350" y="502" class="label" text-anchor="middle" font-size="12">read at start</text>
+  <line x1="418" y1="565" x2="282" y2="565" class="flow"/>
+  <text x="350" y="583" class="muted" text-anchor="middle">saved presets</text>
+
+  <!-- ============ Center: Ledder server ============ -->
+  <rect x="420" y="110" width="420" height="670" rx="12" fill="#ffffff" stroke="#e2b93b" stroke-width="2.5"/>
+  <path d="M420,122 a12,12 0 0 1 12,-12 h396 a12,12 0 0 1 12,12 v28 h-420 z" fill="#f5c842"/>
+  <text x="630" y="137" font-size="18" font-weight="bold" fill="#1d1f23" text-anchor="middle">Ledder server (Node.js)</text>
+
+  <!-- 1 Animations -->
+  <rect x="445" y="170" width="370" height="96" rx="8" class="inner"/>
+  <text x="465" y="194" class="innertitle">Animations</text>
+  <text x="465" y="214" class="mono">ledder/animations/**</text>
+  <text x="465" y="232" class="mono">Animator.run(box, scheduler, controls)</text>
+  <text x="465" y="253" class="text">built from Draw*, Fx* and Components</text>
+  <line x1="630" y1="266" x2="630" y2="288" class="flow"/>
+
+  <!-- 2 AnimationManager -->
+  <rect x="445" y="290" width="370" height="70" rx="8" class="inner"/>
+  <text x="465" y="314" class="innertitle">AnimationManager</text>
+  <text x="465" y="334" class="text">selects animation, loads presets, controls</text>
+  <text x="465" y="351" class="muted">hot reload on file change · revocable proxies</text>
+  <line x1="630" y1="360" x2="630" y2="382" class="flow"/>
+
+  <!-- 3 Renderer -->
+  <rect x="445" y="384" width="370" height="70" rx="8" class="inner"/>
+  <text x="465" y="408" class="innertitle">Renderer + Scheduler</text>
+  <text x="465" y="428" class="text">one RenderRealtime per display</text>
+  <text x="465" y="445" class="muted">framerate · subpixel filtering (Render settings)</text>
+  <line x1="630" y1="454" x2="630" y2="476" class="flow"/>
+
+  <!-- 4 Mappers -->
+  <rect x="445" y="478" width="370" height="70" rx="8" class="inner"/>
+  <text x="465" y="502" class="innertitle">OffsetMapper + GammaMapper</text>
+  <text x="465" y="522" class="text">x/y to LED order: zigzag, flips, panel grids</text>
+  <text x="465" y="539" class="muted">gamma correction · brightness</text>
+  <line x1="630" y1="548" x2="630" y2="570" class="flow"/>
+
+  <!-- 5 Display drivers -->
+  <rect x="445" y="572" width="370" height="96" rx="8" fill="#fff4cc" stroke="#e2b93b" stroke-width="1.5"/>
+  <text x="465" y="596" class="innertitle">Display drivers</text>
+  <text x="465" y="616" class="text">one Display subclass per output</text>
+  <text x="465" y="634" class="text">DisplayMulti combines displays into one</text>
+  <text x="465" y="654" class="muted">DisplayWebsocket feeds the browser preview</text>
+
+  <!-- Runs on -->
+  <line x1="445" y1="694" x2="815" y2="694" stroke="#eadfb8" stroke-width="1.5"/>
+  <text x="630" y="718" class="label" text-anchor="middle">Runs on</text>
+  <text x="630" y="738" class="text" text-anchor="middle">Docker image psy0rz/ledder · NodeJS (npm start)</text>
+  <text x="630" y="756" class="text" text-anchor="middle">or a Raspberry Pi next to the LEDs</text>
+
+  <!-- ============ Bus from drivers to outputs ============ -->
+  <line x1="815" y1="620" x2="880" y2="620" class="bus"/>
+  <line x1="880" y1="172" x2="880" y2="674" class="bus"/>
+  <circle cx="880" cy="620" r="4" fill="#333"/>
+
+  <!-- ============ Right: outputs ============ -->
+  <text x="1090" y="128" class="group" fill="#2e9e5b">RECOMMENDED</text>
+
+  <!-- R1 WLED -->
+  <line x1="880" y1="172" x2="1086" y2="172" class="flow"/>
+  <text x="983" y="164" class="label" text-anchor="middle">UDP · DRGB</text>
+  <text x="983" y="189" class="monodriver" text-anchor="middle">DisplayWLED</text>
+  <rect x="1090" y="140" width="320" height="64" rx="8" class="box"/>
+  <rect x="1090" y="140" width="7" height="64" rx="3" fill="#2e9e5b"/>
+  <text x="1110" y="164" class="innertitle">WLED on ESP32</text>
+  <text x="1110" y="186" class="text">easiest setup · up to ~400 LEDs</text>
+
+  <!-- R2 Ledstream -->
+  <line x1="880" y1="250" x2="1086" y2="250" class="flow"/>
+  <text x="983" y="242" class="label" text-anchor="middle">HTTP stream · QOIS</text>
+  <text x="983" y="267" class="monodriver" text-anchor="middle">DisplayQOIShttp</text>
+  <rect x="1090" y="218" width="320" height="64" rx="8" class="box"/>
+  <rect x="1090" y="218" width="7" height="64" rx="3" fill="#2e9e5b"/>
+  <text x="1110" y="240" class="innertitle">ledstream on ESP32</text>
+  <text x="1110" y="258" class="text">8 × 256 WS2812, or HUB75 64×32</text>
+  <text x="1110" y="274" class="muted">the ESP32 opens the connection</text>
+
+  <!-- R3 Raspberry Pi -->
+  <line x1="880" y1="328" x2="1086" y2="328" class="flow"/>
+  <text x="983" y="320" class="label" text-anchor="middle">direct GPIO (SMI)</text>
+  <text x="983" y="345" class="monodriver" text-anchor="middle">DisplayRPI</text>
+  <rect x="1090" y="296" width="320" height="64" rx="8" class="box"/>
+  <rect x="1090" y="296" width="7" height="64" rx="3" fill="#2e9e5b"/>
+  <text x="1110" y="318" class="innertitle">Raspberry Pi GPIO</text>
+  <text x="1110" y="336" class="text">up to 16 × 256 WS2812, no network</text>
+  <text x="1110" y="352" class="muted">ledder runs on the Pi itself</text>
+
+  <text x="1090" y="396" class="group" fill="#4a7fc1">OTHER OUTPUTS</text>
+
+  <!-- R4 Colorlight -->
+  <line x1="880" y1="440" x2="1086" y2="440" class="flow"/>
+  <text x="983" y="432" class="label" text-anchor="middle">UDP</text>
+  <text x="983" y="457" class="monodriver" text-anchor="middle">Display5A75B</text>
+  <rect x="1090" y="408" width="320" height="64" rx="8" class="box"/>
+  <rect x="1090" y="408" width="7" height="64" rx="3" fill="#e8892b"/>
+  <text x="1110" y="430" class="innertitle">Colorlight 5A-75B</text>
+  <text x="1110" y="448" class="text">HUB75 panels</text>
+  <text x="1110" y="464" class="muted">experimental FPGA firmware</text>
+
+  <!-- R5 Pixelflut -->
+  <line x1="880" y1="518" x2="1086" y2="518" class="flow"/>
+  <text x="983" y="510" class="label" text-anchor="middle">TCP text / UDP binary</text>
+  <text x="983" y="535" class="monodriver" text-anchor="middle">DisplayPixelflut(Binary)</text>
+  <rect x="1090" y="486" width="320" height="64" rx="8" class="box"/>
+  <rect x="1090" y="486" width="7" height="64" rx="3" fill="#4a7fc1"/>
+  <text x="1110" y="510" class="innertitle">Pixelflut server</text>
+  <text x="1110" y="532" class="text">hacker events and LAN parties</text>
+
+  <!-- R6 Chromecast -->
+  <line x1="880" y1="596" x2="1086" y2="596" class="flow"/>
+  <text x="983" y="588" class="label" text-anchor="middle">HTTP JPEG + Cast v2</text>
+  <text x="983" y="613" class="monodriver" text-anchor="middle">DisplayChromecast</text>
+  <rect x="1090" y="564" width="320" height="64" rx="8" class="box"/>
+  <rect x="1090" y="564" width="7" height="64" rx="3" fill="#4a7fc1"/>
+  <text x="1110" y="588" class="innertitle">Google Chromecast</text>
+  <text x="1110" y="610" class="text">big pixels on your TV</text>
+
+  <!-- R7 IDM -->
+  <line x1="880" y1="674" x2="1086" y2="674" class="flow"/>
+  <text x="983" y="666" class="label" text-anchor="middle">Bluetooth</text>
+  <text x="983" y="691" class="monodriver" text-anchor="middle">DisplayIDM64x64</text>
+  <rect x="1090" y="642" width="320" height="64" rx="8" class="box"/>
+  <rect x="1090" y="642" width="7" height="64" rx="3" fill="#4a7fc1"/>
+  <text x="1110" y="666" class="innertitle">IDM 64×64 display</text>
+  <text x="1110" y="688" class="text">Bluetooth LED matrix (AliExpress)</text>
+  <text x="1260" y="666" class="muted">via Python bridge</text>
+
+  <!-- ============ Legend ============ -->
+  <g transform="translate(30,812)">
+    <line x1="0" y1="0" x2="44" y2="0" class="flow"/>
+    <text x="54" y="5" class="muted">data flow</text>
+    <rect x="140" y="-7" width="7" height="14" rx="3" fill="#2e9e5b"/>
+    <text x="154" y="5" class="muted">recommended</text>
+    <rect x="260" y="-7" width="7" height="14" rx="3" fill="#4a7fc1"/>
+    <text x="274" y="5" class="muted">other output</text>
+    <rect x="370" y="-7" width="7" height="14" rx="3" fill="#e8892b"/>
+    <text x="384" y="5" class="muted">experimental</text>
+    <text x="1380" y="5" class="muted" text-anchor="end">Details per output: github.com/psy0rz/ledder/wiki</text>
+  </g>
+</svg>

@@ -15,7 +15,7 @@ Go to the [Wiki](https://github.com/psy0rz/ledder/wiki) for more info
 
 Ledder can control leds in multiple ways:
 
-<img width="974" alt="image" src="https://github.com/user-attachments/assets/9ee2360f-804b-4347-aad5-07fc43c55c9b" />
+![Ledder overview](./doc/ledder-overview.svg)
 
 Go to the [Wiki](https://github.com/psy0rz/ledder/wiki) for more info
 
