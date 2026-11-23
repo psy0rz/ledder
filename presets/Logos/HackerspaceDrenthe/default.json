@@ -1,0 +1,74 @@
+{
+ "title": "",
+ "description": "",
+ "values": {
+  "Render settings": {
+   "FPS": {
+    "value": 60
+   },
+   "Subpixel filtering": {
+    "enabled": false
+   },
+   "Enabled": {
+    "enabled": true
+   }
+  },
+  "Effects": {
+   "Twinkle": {
+    "enabled": false
+   },
+   "Color cycle": {
+    "enabled": false
+   },
+   "Moving scan line": {
+    "enabled": false
+   },
+   "Glitch": {
+    "enabled": false
+   },
+   "Floating motion": {
+    "enabled": false
+   },
+   "Zoom": {
+    "enabled": false
+   },
+   "Vertical scroll": {
+    "enabled": true
+   },
+   "Enabled": {
+    "enabled": true
+   },
+   "Zoom speed": {
+    "value": 0.30000000000000004
+   },
+   "Vertical scroll speed (pixels/frame)": {
+    "value": -0.25
+   }
+  },
+  "Layers": {
+   "Z of animation": {
+    "value": 0
+   },
+   "Layer 1": {
+    "Animation": {
+     "selected": "(none)"
+    },
+    "Preset": {
+     "selected": "default"
+    },
+    "Z": {
+     "value": 10
+    },
+    "Enabled": {
+     "enabled": true
+    }
+   },
+   "Enabled": {
+    "enabled": true
+   }
+  },
+  "Enabled": {
+   "enabled": true
+  }
+ }
+}
